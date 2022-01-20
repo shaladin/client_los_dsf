@@ -31,6 +31,8 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
+  OriOfficeCode: string;
+
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -102,6 +104,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response: NapAppModel) => {
         this.AppNo = response.AppNo;
+        this.OriOfficeCode = response.OriOfficeCode;
         this.GetProdOfferingDCompt(response.ProdOfferingCode);
       }
     );
@@ -133,6 +136,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
     this.InputObj.SchemeCode = schemeCode;
     this.InputObj.Reason = this.itemReason;
     this.InputObj.TrxNo = this.AppNo;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.IsReady = true;
   }
 
