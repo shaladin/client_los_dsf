@@ -43,6 +43,8 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
   IsReady: boolean;
   ChangeMouCustId: number;
   TrxType: string;
+  OriOfficeCode: string;
+
   private createComponent: UcapprovalcreateComponent;
   @ViewChild("ApprovalComponent") set content(
     content: UcapprovalcreateComponent
@@ -88,6 +90,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
       .toPromise()
       .then((response: MouCustObj) => {
         this.MrCustTypeCode = response.MrCustTypeCode;
+        this.OriOfficeCode = response.OriOfficeCode;
       });
     await this.http
       .post(URLConstant.GetChangeMouCustbyChangeMouTrxId, { Id: this.ChangeMouTrxId })
@@ -224,7 +227,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
     };
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
     
