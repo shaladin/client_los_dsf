@@ -48,6 +48,7 @@ export class MouReviewGeneralXComponent implements OnInit {
   dmsObj: DMSObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   RFAInfo: Object = new Object();
+  OriOfficeCode: string;
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -73,6 +74,7 @@ export class MouReviewGeneralXComponent implements OnInit {
 
   async ngOnInit() : Promise<void>{
     this.claimTask();
+
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -81,6 +83,7 @@ export class MouReviewGeneralXComponent implements OnInit {
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
+        this.OriOfficeCode = this.resultData.OriOfficeCode;
         this.PlafondAmt = response.PlafondAmt;
         this.MrCustTypeCode = response.MrCustTypeCode;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -175,7 +178,8 @@ export class MouReviewGeneralXComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_APV_GENERAL;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_APV_GENERAL;
     this.InputObj.Reason = this.listReason;
-    this.InputObj.TrxNo = this.resultData["MouCustNo"]
+    this.InputObj.TrxNo = this.resultData["MouCustNo"];
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.IsReady = true;
   }
   

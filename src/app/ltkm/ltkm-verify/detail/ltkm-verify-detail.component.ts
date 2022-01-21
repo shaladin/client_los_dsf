@@ -39,6 +39,8 @@ export class LtkmVerifyDetailComponent implements OnInit {
     AppId: number;
     IsFromApp: boolean = false;
     InputObj: UcInputRFAObj;
+    OriOfficeCode: string;
+
     private createComponent: UcapprovalcreateComponent;
     @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
         if (content) {
@@ -172,6 +174,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
                 if (this.ltkmReq != undefined) {
                     this.ltkmAnalysisNotes = this.ltkmReq['LtkmAnalysisNotes'];
                 }
+                this.OriOfficeCode = this.ltkmReq.OfficeCode;
             });
     }
 
@@ -316,6 +319,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
         this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_AML_APV;
         this.InputObj.Reason = this.DDLReason;
         this.InputObj.TrxNo = this.LtkmNo;
+        this.InputObj.OfficeCode = this.OriOfficeCode;
         this.IsReady = true;
     }
 
