@@ -28,6 +28,7 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
   IsReady: boolean = false;
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
+  OriOfficeCode: string;
 
   arrValue = [];
   constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private toastr: NGXToastrService, private http: HttpClient, private cookieService: CookieService) {
@@ -50,6 +51,7 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
       async (response) => {
         if (!response) return;
         await this.initInputApprovalObj(response.ProdOfferingCode, response.ProdOfferingVersion);
+        this.OriOfficeCode = response.OfficeCode;
       });
 
   }
@@ -74,6 +76,7 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
         this.InputObj.SchemeCode = response["CompntValue"];
         this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
         this.InputObj.TrxNo = this.TrxNo;
+        this.InputObj.OfficeCode = this.OriOfficeCode;
         this.IsReady = true;
       }
     );

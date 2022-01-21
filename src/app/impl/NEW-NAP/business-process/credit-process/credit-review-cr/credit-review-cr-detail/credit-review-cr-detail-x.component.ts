@@ -52,6 +52,8 @@ export class CreditReviewCrDetailXComponent implements OnInit {
   IsViewReady: boolean = false;
   RFAInfo: Object = new Object();
   apvSchmCode: string = "";
+  OriOfficeCode: string;
+
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -202,6 +204,7 @@ export class CreditReviewCrDetailXComponent implements OnInit {
           this.lobCode = response.LobCode;
           this.ProdOfferingCode = response.ProdOfferingCode;
           this.ProdOfferingVersion = response.ProdOfferingVersion;
+          this.OriOfficeCode = response.OriOfficeCode;
           await this.GetCreditScoring(response.AppNo);
         }
       });
@@ -370,6 +373,8 @@ export class CreditReviewCrDetailXComponent implements OnInit {
     this.InputObj.SchemeCode = this.apvSchmCode;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
+    this.InputObj.RequestedBy = this.UserAccess.UserName;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.IsReady = true;
   }
 
