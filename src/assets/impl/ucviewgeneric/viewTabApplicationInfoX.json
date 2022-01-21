@@ -1,10 +1,12 @@
 {
   "title": "",
-  "subsection": [{
+  "subsection": [
+    {
       "subSectionId": "SalesInfoId",
       "subSectionTitle": "Sales Information",
       "mainInfoPath": "/Generic/GetDataViewBySQL",
-      "mainInfo": [{
+      "mainInfo": [
+        {
           "type": "text",
           "label": "Sales Officer",
           "property": "SalesOfficer"
@@ -33,7 +35,8 @@
       "subSectionId": "AppsInfoId",
       "subSectionTitle": "Application Information",
       "mainInfoPath": "/Generic/GetDataViewBySQL",
-      "mainInfo": [{
+      "mainInfo": [
+        {
           "type": "text",
           "label": "Application Source",
           "property": "AppSource"
@@ -91,42 +94,44 @@
           "environment": "LOSR3WEB",
           "path": "VIEW_MOU_CUST",
           "target": "_blank",
-          "param": [{
-            "type": "MouCustId",
-            "property": "MouCustId"
-          }]
-        },
-		    {            
-          "type" : "switch",
-          "case" : [ 
+          "param": [
             {
-              "conditions": [                  
+              "type": "MouCustId",
+              "property": "MouCustId"
+            }
+          ]
+        },
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
                 {
-                  "property" : "WopCode",
-                  "value" : "AD",
-                  "restriction" : "EQ"
+                  "property": "WopCode",
+                  "value": "AD",
+                  "restriction": "EQ"
                 }
               ],
               "result": {
                 "type": "concat",
                 "label": "Customer Bank Info",
                 "propertyList": [
-                        {
-                        "property": "BankName",
-                        "prefix": "",
-                        "suffix": " - "
-                        },
-                        {
-                        "property": "BankAccNo",
-                        "prefix": "",
-                        "suffix": " - "
-                        },
-                        {
-                        "property": "BankAccName",
-                        "prefix": "",
-                        "suffix": ""
-                        }
-                      ],
+                  {
+                    "property": "BankName",
+                    "prefix": "",
+                    "suffix": " - "
+                  },
+                  {
+                    "property": "BankAccNo",
+                    "prefix": "",
+                    "suffix": " - "
+                  },
+                  {
+                    "property": "BankAccName",
+                    "prefix": "",
+                    "suffix": ""
+                  }
+                ],
                 "hideIfEmpty": true
               }
             }
@@ -136,6 +141,11 @@
           "type": "text",
           "label": "Credit Scoring",
           "property": "CreditScore"
+        },
+        {
+          "type": "text",
+          "label": "Order Status",
+          "property": "OrderStatus"
         }
       ],
       "querystring": {
