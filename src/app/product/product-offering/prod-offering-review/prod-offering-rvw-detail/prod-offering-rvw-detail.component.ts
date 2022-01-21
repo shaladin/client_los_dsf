@@ -38,6 +38,7 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   ReqReviewProdOfferingObj: ReqReviewProdOfferingObj = new ReqReviewProdOfferingObj();
   RFAInfo: Object = new Object();
   itemReason: any;
+  OriOfficeCode: string;
   readonly CancelLink: string = NavigationConstant.PRODUCT_OFFERING_REVIEW;
 
   FormObj = this.fb.group({
@@ -94,8 +95,9 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
 
     this.GenericByIdObj.Id = this.ProdOfferingId;
     this.http.post(URLConstant.GetProdOfferingByProdOfferingId, this.GenericByIdObj).subscribe(
-      (response : GenericObj) => {
-        this.InputObj.TrxNo = response.Code;
+      (response) => {
+        this.InputObj.TrxNo = response["ProdOfferingCode"];
+        this.InputObj.OfficeCode = response["OfficeCode"];
         this.IsReady = true;
       });
   }

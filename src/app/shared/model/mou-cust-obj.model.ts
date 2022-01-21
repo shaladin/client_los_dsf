@@ -31,6 +31,10 @@ export class MouCustObj {
     PlafondType: string;
     PlafondCollateralAmt: number;
     IsAffiliateWithMf: boolean;
+    OriOfficeCode: string;
+    OriOfficeName: string;
+    CrtOfficeCode: string;
+    CrtOfficeName: string;
     constructor() { this.MouCustId = 0; this.RowVersion = '' }
 }
 

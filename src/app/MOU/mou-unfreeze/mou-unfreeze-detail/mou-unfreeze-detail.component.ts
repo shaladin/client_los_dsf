@@ -35,7 +35,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouFreezeTrxObj: MouFreezeTrxObj = new MouFreezeTrxObj();
   ReqByUserId: String;
-  OfficeCode: String;
+  OriOfficeCode: string;
   selected: String;
   selectedReasonCode: String;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
@@ -43,6 +43,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
   InputObj: UcInputRFAObj;
   IsReady: Boolean = false;
   MouTypeCode:string ="";
+
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -81,7 +82,6 @@ export class MouUnfreezeDetailComponent implements OnInit {
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
     this.ReqByUserId = currentUserContext[CommonConstant.USER_NAME];
-    this.OfficeCode = currentUserContext["OfficeCode"];
     await this.http
       .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
       .toPromise().then((response: MouCustObj) => {
@@ -92,6 +92,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
         });
         this.IsFreezeOld = this.result.IsFreeze;
         this.MouTypeCode = this.result.MrMouTypeCode;
+        this.OriOfficeCode = this.result.OriOfficeCode;
       });
     this.initInputApprovalObj();
   }
@@ -128,7 +129,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
       this.mouFreezeTrxObj.RefReasonCode = this.RFAInfo.RFAInfo.ReasonCode;
       var sendObj = {
         RequestMouFreezeTrxObj: this.mouFreezeTrxObj,
-        OfficeCode: this.OfficeCode,
+        OfficeCode: this.OriOfficeCode,
         RequestRFAObj: this.RFAInfo
       };
 
@@ -150,7 +151,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
     }
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_FREEZE_UNFREEZE;
     this.InputObj.Reason = this.listReason;

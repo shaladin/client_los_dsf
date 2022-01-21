@@ -42,6 +42,8 @@ export class CreditReviewMainComponent implements OnInit {
   ReturnHandlingDId: number = 0;
   BizTemplateCode: string = "";
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
+  OriOfficeCode: string;
+
   private createComponent: UcapprovalcreateComponent;
   responseListTypeCodes: Array<any>;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -163,6 +165,7 @@ export class CreditReviewMainComponent implements OnInit {
       forkJoin([getApp, getAppCust]).subscribe(
         (response) => {
           this.appNo = response[0]['AppNo'];
+          this.OriOfficeCode = response[0]['OriOfficeCode'];
           this.custNo = response[1]['CustNo'];
           if (this.custNo != null && this.custNo != '') {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
@@ -454,7 +457,7 @@ export class CreditReviewMainComponent implements OnInit {
     }
 
     this.InputObj.RequestedBy = this.UserAccess.UserName;
-    this.InputObj.OfficeCode = this.UserAccess.OfficeCode;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;

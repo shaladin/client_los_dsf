@@ -48,6 +48,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
   ApprovalCreateOutput: any;  
+  OriOfficeCode: string;
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -312,7 +313,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     };
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APP_OPL_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_RENT_APP;
