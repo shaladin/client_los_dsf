@@ -37,40 +37,16 @@
             "ddlType": "all",
             "items": [
                 {
-                    "key": "NEW",
-                    "value": "New"
-                },
-                {
                     "key": "PRP",
                     "value": "Preparation"
-                },
-                {
-                    "key": "CAN",
-                    "value": "Cancel"
                 },
                 {
                     "key": "LIV",
                     "value": "Live"
                 },
                 {
-                    "key": "CPY",
-                    "value": "Copy"
-                },
-                {
-                    "key": "ApproveFinal",
-                    "value": "Approve Final"
-                },
-                {
-                    "key": "RejectFinal",
-                    "value": "Reject Final"
-                },
-                {
-                    "key": "Return",
-                    "value": "Return"
-                },
-                {
-                    "key": "RJC",
-                    "value": "Reject"
+                    "key": "RRD",
+                    "value": "Ready Release Document"
                 }
             ],
             "itemsUrl": []
