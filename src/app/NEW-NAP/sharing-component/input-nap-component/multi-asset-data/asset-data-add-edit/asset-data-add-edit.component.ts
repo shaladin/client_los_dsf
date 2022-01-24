@@ -1450,7 +1450,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
 
-    this.allAssetDataObj.AppAssetObj.AssetSeqNo = 1;
+    this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.mode == "editAsset" ? this.returnAppAssetObj.AssetSeqNo : 1;
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
 
     if (this.AppAssetId == 0) {
@@ -1478,7 +1478,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls["TaxIssueDt"].value;
 
     this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
-    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
+    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.mode == "editAsset" ? this.returnAppCollateralObj.CollateralSeqNo : 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
