@@ -63,7 +63,7 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
 
         for (var i = 0; i < this.listAppAssetObj.length; i++) {
           if (this.listAppAssetObj[i].PaidAmtByCust != null)
-            this.PaidAmtByCust += this.listAppAssetObj[i].PaidAmtByCust;
+            this.PaidAmtByCust = this.listAppAssetObj[i].PaidAmtByCust;
 
           if (this.listAppAssetObj[i].InsCpltzAmt != null)
             this.InsCpltzAmt += this.listAppAssetObj[i].InsCpltzAmt;
@@ -72,7 +72,7 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
             this.InsDiscAmt += this.listAppAssetObj[i].InsDiscAmt;
 
           if (this.listAppAssetObj[i].TotalCustPremiAmt != null)
-            this.TotalPremiumToCust += this.listAppAssetObj[i].TotalCustPremiAmt;
+            this.TotalPremiumToCust = this.listAppAssetObj[i].TotalCustPremiAmt;
         }
       });
   }
