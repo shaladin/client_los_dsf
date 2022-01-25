@@ -119,7 +119,7 @@
             <mat-tab *ngIf="IsPurchaseOrder" label="Purchase Order">
               <ng-template matTabContent>
                 <app-view-purchase-order-list [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode" *ngIf="BizTemplateCode != 'CFNA'"></app-view-purchase-order-list>
-                <app-view-purchase-order-new-list [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode" [AppId]="AppId" *ngIf="BizTemplateCode == 'CFNA'" ></app-view-purchase-order-new-list>
+                <app-view-purchase-order-new-list-x [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode" [AppId]="AppId" *ngIf="BizTemplateCode == 'CFNA'" ></app-view-purchase-order-new-list-x>
                 <!-- <app-view-purchase-order [agrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></app-view-purchase-order> -->
               </ng-template>
             </mat-tab>
