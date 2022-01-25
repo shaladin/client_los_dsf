@@ -255,7 +255,7 @@
               </div>
               
               <div class="form-group row">
-                <label class="col-md-4 adInsLabel" translate>Job Position</label>
+                <label class="col-md-4 " [ngClass]="{ 'adins-required-label' : custMainDataMode == CustMainDataMgmntShrholder}" translate>Job Position</label>
                 <div class="col-md-8" *ngIf="jobPositionLookupObj?.isReady">
                   <lib-uclookupgeneric [lookupInput]="jobPositionLookupObj" [parentForm]="CustMainDataForm"
                     [enjiForm]="enjiForm" [identifier]="'JobPosition'" (lookup)=getLookUpJobPosition($event)>

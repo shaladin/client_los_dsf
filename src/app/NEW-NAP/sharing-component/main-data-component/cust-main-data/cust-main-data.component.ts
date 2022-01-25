@@ -419,7 +419,7 @@ export class CustMainDataComponent implements OnInit {
   jobPositionLookupObj: InputLookupObj = new InputLookupObj();
   BindLookupJobPosition() {
     this.jobPositionLookupObj = new InputLookupObj();
-    this.jobPositionLookupObj.isRequired = false;
+    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder? true : false ;
     this.jobPositionLookupObj.urlJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.pagingJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.genericJson = "./assets/uclookup/customer/lookupJobPosition.json";
