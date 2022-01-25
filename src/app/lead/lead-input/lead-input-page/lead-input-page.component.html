@@ -11,9 +11,9 @@
               <button *ngIf="this.titlePageType != 'UPDATE'" type="button" class="btn btn-raised btn-success mr-1" (click)="editMainInfoHandler()" translate>
                 Edit Main Info
               </button>
-              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()" translate>
+              <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()" translate>
                 Cancel
-              </button>
+              </button> -->
             </div>
           </div>
         </div>
@@ -57,15 +57,15 @@
       <br><br>
       <!-- <div class="bs-stepper-content"> -->
       <div id="customer-data-tab" class="content" role="tabpanel" aria-labelledby="customer-data-tab-trigger">
-        <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
+        <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)" [showCancelButton]="true" (outputCancel)="cancelHandler()">
         </app-lead-input-cust-data>
       </div>
       <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-        <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue">
+        <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue" [showCancelButton]="true" (outputCancel)="cancelHandler()">
         </app-lead-input-lead-data>
       </div>
       <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
-        <app-dms-iframe *ngIf="isDmsData && AppStepIndex == 3 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
+        <app-dms-iframe *ngIf="isDmsData && AppStepIndex == 3 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="cancelHandler()">></app-dms-iframe>
       </div>
       <!-- </div> -->
     </div>
