@@ -23,7 +23,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 adins-required" translate>Collateral Type</label>
                     <div class="col-md-8">
-                      <select class="form-control" formControlName="AssetTypeCode" (change)="collateralTypeHandler()"
+                      <select class="form-control" formControlName="AssetTypeCode" (change)="collateralTypeHandler(false)"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AssetTypeCode.invalid }">
                         <option *ngFor="let item of returnCollTypeObj" [value]="item.Key">
                           {{item.Value}}
@@ -34,7 +34,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>Manufacturing Year</label>
+                    <label class="col-md-4" [ngClass]="{ 'adins-required-label' : isMandatoryManufacturingYear == true}" translate>Manufacturing Year</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="ManufacturingYear"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.ManufacturingYear.invalid }">
@@ -417,7 +417,7 @@
                     <div class="form-group row">
                       <label class="col-md-4 adins-required" translate>Collateral Type</label>
                       <div class="col-md-8">
-                        <select class="form-control" formControlName="AssetTypeCode" (change)="collateralTypeHandler()"
+                        <select class="form-control" formControlName="AssetTypeCode" (change)="collateralTypeHandler(false)"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AssetTypeCode.invalid }">
                           <option *ngFor="let item of returnCollTypeObj" [value]="item.Key">
                             {{item.Value}}
@@ -428,7 +428,7 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 adins-required-label" translate>Manufacturing Year</label>
+                      <label class="col-md-4" [ngClass]="{ 'adins-required-label' : isMandatoryManufacturingYear == true}" translate>Manufacturing Year</label>
                       <div class="col-md-8">
                         <input type="text" class="form-control" formControlName="ManufacturingYear"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.ManufacturingYear.invalid }">

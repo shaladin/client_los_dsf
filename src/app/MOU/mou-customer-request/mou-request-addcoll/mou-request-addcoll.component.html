@@ -151,7 +151,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>BPKB City Issuer</label>
+            <label class="col-md-4 adins-required-label" translate>Collateral City Issuer</label>
             <div class="col-md-8">
               <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
                 [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AddCollForm'
@@ -160,7 +160,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>BPKB Issue Date</label>
+            <label class="col-md-4 adins-required-label" translate>Collateral Issue Date</label>
             <div class="col-md-8">
               <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt">
               <lib-uc-show-errors [control]="AddCollForm.controls.TaxIssueDt" [submit]="enjiForm.submitted">
@@ -186,7 +186,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>Manufacturing Year</label>
+            <label class="col-md-4" [ngClass]="{ 'adins-required-label' : isMandatoryManufacturingYear == true}" translate>Manufacturing Year</label>
             <div class="col-md-8">
               <input type="text" class="form-control" formControlName="ManufacturingYear">
               <lib-uc-show-errors [control]="AddCollForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
@@ -496,7 +496,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>BPKB City Issuer</label>
+            <label class="col-md-4 adins-required-label" translate>Collateral City Issuer</label>
             <div class="col-md-8">
               <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
                 [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AddCollForm'
@@ -505,7 +505,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4 adins-required-label" translate>BPKB Issue Date</label>
+            <label class="col-md-4 adins-required-label" translate>Collateral Issue Date</label>
             <div class="col-md-8">
               <input type="date" class="form-control adInsInput" formControlName="TaxIssueDt">
               <lib-uc-show-errors [control]="AddCollForm.controls.TaxIssueDt" [submit]="enjiForm.submitted">
@@ -530,7 +530,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4" translate>Manufacturing Year</label>
+            <label class="col-md-4" [ngClass]="{ 'adins-required-label' : isMandatoryManufacturingYear == true}" translate>Manufacturing Year</label>
             <div class="col-md-8">
               <input type="text" class="form-control" formControlName="ManufacturingYear">
               <lib-uc-show-errors [control]="AddCollForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">

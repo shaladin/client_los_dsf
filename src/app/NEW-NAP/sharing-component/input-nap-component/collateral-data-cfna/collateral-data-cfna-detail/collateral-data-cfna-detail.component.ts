@@ -140,6 +140,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   LastRequestedDate: string = "";
   indexChassis: number = 0  ;
   IsIntegrator: boolean = false;
+  listCollTypeMandatoryManufacturingYear: Array<string> = new Array<string>();
+  isMandatoryManufacturingYear: boolean = false;
 
   AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
@@ -160,6 +162,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
     this.GetLegalAddr();
     this.initUcLookup();
+    await this.SetManufacturingYearMandatory();
     await this.bindOwnerTypeObj();
     await this.bindCompanyTypeObj();
     await this.GetGS();
@@ -812,6 +815,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         );
       }
     }
+    this.CheckManufacturingYearMandatory();
   }
 
   async getExistingColl(event) {
@@ -833,7 +837,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     });
   }
 
-  onItemChange(AssetTypeCode: string, isInit: boolean = false) {
+  async onItemChange(AssetTypeCode: string, isInit: boolean = false) {
     var arrAddCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -850,7 +854,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.isUsed = false;
     }
 
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AssetTypeCode }).subscribe(
+    await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AssetTypeCode }).toPromise().then(
       (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -897,6 +901,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         this.collateralPortionHandler();
       });
       this.GenerateAppCollateralAttr(false);
+
+      this.CheckManufacturingYearMandatory();
   }
 
   changeSerialNoValidators(MrCollateralConditionCode: string) {
@@ -1326,6 +1332,31 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       if(svcType != null){
         this.IsSvcExist = true;
       }
+    }
+  }
+
+  async SetManufacturingYearMandatory(){
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsCodeManufacturingYearMandatoryByCollType }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          this.listCollTypeMandatoryManufacturingYear  = result.GsValue.split(';');
+          console.log(this.listCollTypeMandatoryManufacturingYear);
+        }
+      }
+    );
+  }
+
+  CheckManufacturingYearMandatory(){
+    let temp = this.AddCollForm.controls.AssetTypeCode.value;
+    this.isMandatoryManufacturingYear = this.listCollTypeMandatoryManufacturingYear.includes(temp);
+
+    if (this.isMandatoryManufacturingYear) {
+      this.AddCollForm.controls.ManufacturingYear.setValidators([Validators.required]);
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
+    else{
+      this.AddCollForm.controls.ManufacturingYear.clearValidators();
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
     }
   }
 
