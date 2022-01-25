@@ -37,7 +37,9 @@ import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-
 export class LeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string = "";
   @Input() isEndOfTab: string = "";
+  @Input() showCancelButton: boolean = true;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   typePage: string = "";
   CopyFrom: number = 0;
   LeadId: number;
@@ -1098,5 +1100,9 @@ export class LeadInputLeadDataComponent implements OnInit {
             }
         });
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 }
