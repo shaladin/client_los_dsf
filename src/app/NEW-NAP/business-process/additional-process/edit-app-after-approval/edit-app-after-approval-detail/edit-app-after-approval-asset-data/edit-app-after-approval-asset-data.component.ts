@@ -119,12 +119,12 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.SetAssetInformation()
     await this.GetAppData();
     await this.GetRefProdCompt();
+    await this.GetAppCust();
     this.bindIdTypeObj();
     this.bindUserOwnerRelationshipObj();
     this.setAddrOwnerObj();
     await this.GetListAddr();
     await this.SetOwnerData();
-    await this.GetAppCust();
     this.GenerataAppAssetAttr(false);
     await this.bindInscoBranchObj();
     await this.getInsuranceData();
