@@ -295,7 +295,7 @@ export class FormCommissionGenerateV2Component implements OnInit {
               Value: response["ReturnObject"][i]["BankAccountName"],
               BankCode: response["ReturnObject"][i]["BankCode"],
               BankName: response["ReturnObject"][i]["BankName"],
-              BankBranch: ""
+              BankBranch: response["ReturnObject"][i]["BankBranch"]
             }) as FormGroup;
             this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
           }
@@ -306,7 +306,7 @@ export class FormCommissionGenerateV2Component implements OnInit {
       let ReqGetListBankObj: ReqGetListBankByVendorEmpNoAndCodeObj = new ReqGetListBankByVendorEmpNoAndCodeObj();
       ReqGetListBankObj.VendorEmpNo = code;
       ReqGetListBankObj.VendorCode = this.parentForm.value[this.identifier][idx].SupplCode;
-      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, ReqGetListBankObj).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListActiveBankByVendorEmpNoAndVendorCode, ReqGetListBankObj).subscribe(
         (response) => {
           var len = response["ReturnObject"].length;
           for (var i = 0; i < len; i++) {
@@ -316,7 +316,7 @@ export class FormCommissionGenerateV2Component implements OnInit {
               Value: response["ReturnObject"][i]["BankAccountName"],
               BankCode: response["ReturnObject"][i]["BankCode"],
               BankName: response["ReturnObject"][i]["BankName"],
-              BankBranch: ""
+              BankBranch: response["ReturnObject"][i]["BankBranch"]
             }) as FormGroup;
             this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
           }
