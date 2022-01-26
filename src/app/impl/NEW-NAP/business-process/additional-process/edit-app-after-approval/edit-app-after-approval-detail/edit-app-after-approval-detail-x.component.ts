@@ -125,7 +125,6 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     this.InputObj.Reason = this.DDLReason;
     this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.TrxNo = "-";
-    this.IsReady = true;
   }
 
   async getData() {
@@ -511,6 +510,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
             TotalCommissionAmt: [AgrCommH.controls.TotalCommissionAmt.value],
             CommissionRecipientPositionDesc: [response.MrVendorEmpPositionCodeDesc],
             SupplierName: [response.VendorName],
+            CommissionRecipientRefNo: e.VendorEmpNo,
             CurrentVendorBankAccId: []
           });
 

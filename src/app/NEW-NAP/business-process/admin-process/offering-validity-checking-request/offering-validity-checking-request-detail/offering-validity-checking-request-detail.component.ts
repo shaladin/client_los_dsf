@@ -69,7 +69,6 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
           Attributes: [],
         };
         listTypeCode.push(TypeCode);
-
         this.OriOfficeCode = officeCode ;
         this.InputObj.ApvTypecodes = listTypeCode;
         this.InputObj.CategoryCode = CommonConstant.CAT_CODE_OFF_VLD_APV;
