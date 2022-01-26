@@ -50,12 +50,11 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
     await this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntNo, { TrxNo: this.TrxNo }).toPromise().then(
       async (response) => {
         if (!response) return;
-        await this.initInputApprovalObj(response.ProdOfferingCode, response.ProdOfferingVersion);
-        this.OriOfficeCode = response.OfficeCode;
+        await this.initInputApprovalObj(response.ProdOfferingCode, response.ProdOfferingVersion, response.OfficeCode);
       });
 
   }
-  async initInputApprovalObj(prodOfferingCode: string, prodOfferingVersion: string) {
+  async initInputApprovalObj(prodOfferingCode: string, prodOfferingVersion: string, officeCode: string) {
     let obj = {
       prodOfferingCode: prodOfferingCode,
       prodOfferingVersion: prodOfferingVersion,
@@ -71,6 +70,7 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
         };
         listTypeCode.push(TypeCode);
 
+        this.OriOfficeCode = officeCode ;
         this.InputObj.ApvTypecodes = listTypeCode;
         this.InputObj.CategoryCode = CommonConstant.CAT_CODE_OFF_VLD_APV;
         this.InputObj.SchemeCode = response["CompntValue"];
