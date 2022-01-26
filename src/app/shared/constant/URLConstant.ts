@@ -663,6 +663,8 @@ export class URLConstant {
   public static SubmitChangeMouReturn = environment.losUrl + "/v1" + "/ChangeMou/SubmitChangeMouReturn";
   public static SubmitChangeMouReturnV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitChangeMouReturn";
   public static GetChangeMouCustbyChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxId";
+  public static GetChangeMouCustbyChangeMouTrxNo = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxNo";
+
   //CHANGE MOU CUST COLLATERAL
   public static GetChangeMouCustCollateralDocByChangeMouCustCollateralId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDocByChangeMouCustCollateralId";
   public static GetChangeMouCustCollateralForChangeMouViewByMouCustId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralForChangeMouViewByMouCustId"
