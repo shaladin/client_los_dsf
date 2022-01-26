@@ -46,7 +46,6 @@ import { AddrObj } from 'app/shared/model/addr-obj.model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/response-job-data-personal-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 import { RefCoyObj } from 'app/shared/model/ref-coy-obj.model';
-import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 
 @Component({
@@ -128,7 +127,7 @@ export class AssetDataAddEditComponent implements OnInit {
   isUsed: boolean = false;
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
-
+  RoundedAmt: number = 2;
 
   InputLookupAccObj: any;
   InputLookupAccSupObj: any;
@@ -788,6 +787,7 @@ export class AssetDataAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
       map((response: AppObj) => {
         this.appData = response;
+        this.getRoundedAmt();
         return response;
       }),
       mergeMap((response: AppObj) => {
@@ -1436,21 +1436,15 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.SupplCode = this.AssetDataForm.controls["SupplCode"].value;
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
 
-    if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["DownPayment"];
-      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm["DownPayment"] / assetForm["AssetPrice"]) * 100;
-    }
-    else {
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["AssetPrice"] * (assetForm["DownPaymentPrctg"] / 100);
-      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm["DownPaymentPrctg"];
-    }
+    this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["DownPayment"];
+    this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm["DownPaymentPrctg"];
     this.allAssetDataObj.AppAssetObj.MinDownPaymentPrcnt = this.AssetValidationResult && this.AssetValidationResult.DPMin ? this.AssetValidationResult.DPMin : 0;
     this.allAssetDataObj.AppAssetObj.MaxDownPaymentPrcnt = this.AssetValidationResult && this.AssetValidationResult.DPMax ? this.AssetValidationResult.DPMax : 0;
 
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls["Notes"].value;
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
 
-    this.allAssetDataObj.AppAssetObj.AssetSeqNo = 1;
+    this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.mode == "editAsset" ? this.returnAppAssetObj.AssetSeqNo : 1;
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
 
     if (this.AppAssetId == 0) {
@@ -1478,7 +1472,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.AssetDataForm.controls["TaxIssueDt"].value;
 
     this.allAssetDataObj.AppCollateralObj.AppId = this.AppId;
-    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
+    this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.mode == "editAsset" ? this.returnAppCollateralObj.CollateralSeqNo : 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
@@ -1491,7 +1485,8 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   updateValueDownPayment() {
-    let DownPayment = this.AssetDataForm.controls.AssetPrice.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
+    let DownPaymentPrctg = Math.round(this.AssetDataForm.controls.DownPaymentPrctg.value * 1000000) / 1000000;
+    let DownPayment = this.AssetDataForm.controls.AssetPrice.value * DownPaymentPrctg / 100;
     if (DownPayment > this.AssetDataForm.controls.AssetPrice.value) {
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
       this.AssetDataForm.patchValue({
@@ -1501,12 +1496,27 @@ export class AssetDataAddEditComponent implements OnInit {
     }
     else {
       this.AssetDataForm.patchValue({
-        DownPayment: this.AssetDataForm.controls.AssetPrice.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
+        DownPayment: DownPayment
+      });
+
+      let roundedAmt = 0;
+      if(this.RoundedAmt == 0){
+        DownPayment = Math.ceil(this.AssetDataForm.controls.DownPayment.value);
+      }else{
+        roundedAmt = Math.pow(10, this.RoundedAmt);
+        DownPayment = Math.round(this.AssetDataForm.controls.DownPayment.value / roundedAmt) * roundedAmt;
+      }
+
+      DownPaymentPrctg = Math.round((DownPayment / this.AssetDataForm.controls.AssetPrice.value) * 100 * 1000000) / 1000000;
+      this.AssetDataForm.patchValue({
+        DownPayment: DownPayment,
+        DownPaymentPrctg: DownPaymentPrctg
       });
     }
   }
+
   updateValueDownPaymentPrctg() {
-    let DownPaymentPrctg = this.AssetDataForm.controls.DownPayment.value / this.AssetDataForm.controls.AssetPrice.value * 100;
+    let DownPaymentPrctg = Math.ceil(this.AssetDataForm.controls.DownPayment.value) / this.AssetDataForm.controls.AssetPrice.value * 100;
     if (DownPaymentPrctg > 100) {
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
       this.AssetDataForm.patchValue({
@@ -1516,7 +1526,22 @@ export class AssetDataAddEditComponent implements OnInit {
     }
     else {
       this.AssetDataForm.patchValue({
-        DownPaymentPrctg: this.AssetDataForm.controls.DownPayment.value / this.AssetDataForm.controls.AssetPrice.value * 100
+        DownPaymentPrctg: DownPaymentPrctg
+      });
+
+      DownPaymentPrctg = Math.round(DownPaymentPrctg * 1000000) / 1000000;
+      let DownPayment = 0;
+      let roundedAmt = 0;
+      if(this.RoundedAmt == 0){
+        DownPayment = Math.ceil((DownPaymentPrctg / 100) * this.AssetDataForm.controls.AssetPrice.value);
+      }else{
+        roundedAmt = Math.pow(10, this.RoundedAmt);
+        DownPayment = Math.round(((DownPaymentPrctg / 100) * this.AssetDataForm.controls.AssetPrice.value) * roundedAmt) / roundedAmt ;
+      }
+
+      this.AssetDataForm.patchValue({
+        DownPayment: DownPayment,
+        DownPaymentPrctg: DownPaymentPrctg
       });
     }
   }
@@ -2401,5 +2426,21 @@ export class AssetDataAddEditComponent implements OnInit {
         });
       }
     }
+  }
+
+  async getRoundedAmt(){
+    const prodObj = {
+      ProdOfferingCode: this.appData.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CURR,
+      ProdOfferingVersion: this.appData.ProdOfferingVersion
+    }
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
+      async (response: any) => {
+        await this.http.post(URLConstant.GetRefCurrByCode, {Code : response.CompntValue}).toPromise().then(
+          (response: any) => {
+            this.RoundedAmt = response.RoundedAmt;
+          });
+      });
   }
 }
