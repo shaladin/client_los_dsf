@@ -314,7 +314,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
               Value: response["ReturnObject"][i]["BankAccountName"],
               BankCode: response["ReturnObject"][i]["BankCode"],
               BankName: response["ReturnObject"][i]["BankName"],
-              BankBranch: ""
+              BankBranch: response["ReturnObject"][i]["BankBranch"],
             }) as FormGroup;
             this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
           }
@@ -335,7 +335,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
               Value: response["ReturnObject"][i]["BankAccountName"],
               BankCode: response["ReturnObject"][i]["BankCode"],
               BankName: response["ReturnObject"][i]["BankName"],
-              BankBranch: ""
+              BankBranch: response["ReturnObject"][i]["BankBranch"]
             }) as FormGroup;
             this.parentForm.controls[this.identifier]["controls"][idx].controls.DropDownList.push(eachDDLDetail);
           }
