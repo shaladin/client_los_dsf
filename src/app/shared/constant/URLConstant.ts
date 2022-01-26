@@ -67,6 +67,7 @@ export class URLConstant {
   public static CheckMouCustIntegrator = environment.losUrl + "/v1" + "/MouCust/CheckMouCustIntegrator";
   public static AddNap1FromLead = environment.losUrl + "/v1" + "/Application/AddNap1FromLead";
   public static AddNap1FromLeadV2 = environment.losUrl + "/v2" + "/Application/AddNap1FromLead";
+  public static UpdateAppNumOfAsset = environment.losUrl + "/v2" + "/Application/UpdateAppNumOfAsset";
 
   public static CheckIsMouFreeze = environment.losUrl + "/v1" + "/MouCust/CheckIsMouFreeze";
   //App Loan Purpose

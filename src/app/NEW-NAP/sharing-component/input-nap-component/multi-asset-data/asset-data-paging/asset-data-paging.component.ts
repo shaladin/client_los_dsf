@@ -399,6 +399,13 @@ export class AssetDataPagingComponent implements OnInit {
       }
     }
     if (await this.checkValidityAssetUsed()) return;
+
+    let checkAppNumOfAssetObj = { Id: this.AppId };
+    await this.http.post(URLConstant.UpdateAppNumOfAsset, checkAppNumOfAssetObj).toPromise().then(
+      (response) => {
+      }
+    );
+
     this.outputValue.emit({ mode: 'submit' });
   }
 
