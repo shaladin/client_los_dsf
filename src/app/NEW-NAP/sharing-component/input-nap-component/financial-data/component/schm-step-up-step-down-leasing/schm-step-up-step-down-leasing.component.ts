@@ -196,8 +196,8 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
-    if (this.ParentForm.controls.DownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
-      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
+    if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
       return;
     }
     if (!this.IsTrialCalc) {
