@@ -22,7 +22,7 @@ import { ReturnHandlingSurveyComponent } from './return-handling/return-handling
 import { ReturnHandlingCollateralDetailComponent } from "./return-handling/return-handling-collateral-detail/return-handling-collateral-detail.component";
 import { ReturnHandlingCollateralEditComponent } from "./return-handling/return-handling-collateral-edit/return-handling-collateral-edit.component";
 import { ReturnHandlingCollateralPagingComponent } from "./return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component";
-import { MatCheckboxModule, MatTabsModule } from "@angular/material";
+import { MatCheckboxModule, MatRadioModule, MatTabsModule } from "@angular/material";
 import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component";
 import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
@@ -100,7 +100,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalgeneralinfoModule,
     MatTabsModule,
     InputNapComponentModule,
-    ProcessComponentModule
+    ProcessComponentModule,
+    MatRadioModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,

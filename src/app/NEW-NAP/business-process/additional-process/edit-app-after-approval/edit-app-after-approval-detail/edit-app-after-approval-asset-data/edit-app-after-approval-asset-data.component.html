@@ -1,5 +1,5 @@
-<form class="form form-horizontal" [formGroup]="EditAppAssetForm" #formDirective="ngForm" (ngSubmit)="EditAppAssetForm.valid  && SaveData()"
-            #enjiForm="ngForm">
+<form class="form form-horizontal" [formGroup]="EditAppAssetForm" #formDirective="ngForm"
+  (ngSubmit)="EditAppAssetForm.valid  && SaveData()" #enjiForm="ngForm">
   <lib-ucSubsection [id]="'AssetInfo'" [title]="'Asset Information'" [panel]="'AssetInfo'">
   </lib-ucSubsection>
   <div id="AssetInfo">
@@ -10,10 +10,13 @@
         <label class="adInsLabel"> {{AppAssetObj.FullAssetName}} </label>
       </div>
 
-      <label class="col-md-2" [ngClass]="(SerialNoLabelMandatory[0] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"  *ngIf="SerialNoLabelList[0]" translate>{{SerialNoLabelList[0]}}</label>
+      <label class="col-md-2"
+        [ngClass]="(SerialNoLabelMandatory[0] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"
+        *ngIf="SerialNoLabelList[0]" translate>{{SerialNoLabelList[0]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo1" *ngIf="SerialNoLabelList[0]">
-          <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo1" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.SerialNo1" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
     </div><br>
 
@@ -24,10 +27,13 @@
         <label class="adInsLabel"> {{AppAssetObj.SupplName}} </label>
       </div>
 
-      <label class="col-md-2" [ngClass]="(SerialNoLabelMandatory[1] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'" *ngIf="SerialNoLabelList[1]" translate>{{SerialNoLabelList[1]}}</label>
+      <label class="col-md-2"
+        [ngClass]="(SerialNoLabelMandatory[1] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"
+        *ngIf="SerialNoLabelList[1]" translate>{{SerialNoLabelList[1]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo2" *ngIf="SerialNoLabelList[1]">
-          <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo2" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.SerialNo2" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
     </div><br>
 
@@ -36,28 +42,36 @@
       <label class="col-md-2 adins-required-label" translate>Manufacturing Year</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="ManufacturingYear">
-          <lib-uc-show-errors [control]= "EditAppAssetForm.controls.ManufacturingYear" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.ManufacturingYear" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
 
-      <label class="col-md-2 " [ngClass]="(SerialNoLabelMandatory[2] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'" *ngIf="SerialNoLabelList[2]" translate>{{SerialNoLabelList[2]}}</label>
+      <label class="col-md-2 "
+        [ngClass]="(SerialNoLabelMandatory[2] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"
+        *ngIf="SerialNoLabelList[2]" translate>{{SerialNoLabelList[2]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo3" *ngIf="SerialNoLabelList[2]">
-          <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo3" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.SerialNo3" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
     </div><br>
 
     <!--ROW 4-->
     <div class="form-group row">
-      <label class="col-md-2 " [ngClass]="(tempColor)?'adins-required-label':'adInsLabel'"  translate>Color</label>
+      <label class="col-md-2 " [ngClass]="(tempColor)?'adins-required-label':'adInsLabel'" translate>Color</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="AssetColor">
-          <lib-uc-show-errors [control]= "EditAppAssetForm.controls.AssetColor" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.AssetColor" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
 
-      <label class="col-md-2 " [ngClass]="(SerialNoLabelMandatory[3] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'" *ngIf="SerialNoLabelList[3]" translate>{{SerialNoLabelList[3]}}</label>
+      <label class="col-md-2 "
+        [ngClass]="(SerialNoLabelMandatory[3] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"
+        *ngIf="SerialNoLabelList[3]" translate>{{SerialNoLabelList[3]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo4" *ngIf="SerialNoLabelList[3]">
-          <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo4" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.SerialNo4" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
     </div><br>
 
@@ -66,10 +80,13 @@
       <label class="col-md-2  adInsLabel" translate></label>
       <div class="col-md-4"></div>
 
-      <label class="col-md-2 " [ngClass]="(SerialNoLabelMandatory[4] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"  *ngIf="SerialNoLabelList[4]" translate>{{SerialNoLabelList[4]}}</label>
+      <label class="col-md-2 "
+        [ngClass]="(SerialNoLabelMandatory[4] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"
+        *ngIf="SerialNoLabelList[4]" translate>{{SerialNoLabelList[4]}}</label>
       <div class="col-md-4">
         <input type="text" class="form-control" formControlName="SerialNo5" *ngIf="SerialNoLabelList[4]">
-          <lib-uc-show-errors [control]= "EditAppAssetForm.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.SerialNo5" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
     </div>
   </div>
@@ -81,6 +98,15 @@
       <label class="col-md-2" for="selfOwner" translate>Self Owner</label>
       <div class="col-md-4">
         <mat-checkbox formControlName="SelfOwner" (change)="SelfOwnerChange($event)"></mat-checkbox>
+      </div>
+      <label class="col-md-2" translate>Owner Type</label>
+      <div class="col-md-4">
+        <mat-radio-group formControlName="MrOwnerTypeCode" (change)="OwnerTypeChange($event.value, true)">
+          <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of OwnerTypeObj"
+            [value]="item.Key">
+            {{item.Value}}
+          </mat-radio-button>
+        </mat-radio-group>
       </div>
     </div>
     <div class="form-group row">
@@ -113,8 +139,8 @@
             {{item.Value}}
           </option>
         </select>
-        <lib-uc-show-errors [control]= "EditAppAssetForm.controls.MrOwnerRelationshipCode"
-          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.MrOwnerRelationshipCode" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
       <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
       <div class="col-md-4">
@@ -122,11 +148,37 @@
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-md-2" translate >Copy Address</label>
+      <label class="col-md-2 adins-required-label" translate>Owner Profession</label>
+      <div class="col-md-4" *ngIf="EditAppAssetForm.controls.MrOwnerTypeCode.value == 'PERSONAL'">
+        <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+          [lookupInput]="InputLookupProfessionObj" [parentForm]="EditAppAssetForm" [identifier]="'lookupProfessionData'"
+          (lookup)="GetProfession($event)" #LookupProfession>
+        </lib-uclookupgeneric>
+      </div>
+      <div class="col-md-4" *ngIf="EditAppAssetForm.controls.MrOwnerTypeCode.value == 'COMPANY'">
+        <select class="form-control adInsInput" style="width: auto" formControlName="OwnerProfessionCode"
+          [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls.OwnerProfessionCode.invalid }">
+          <option value="">Select One</option>
+          <option *ngFor="let it of OwnerProfessionObj " [value]="it.Key">
+            {{it.Value}}
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.OwnerProfessionCode" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
+      </div>
+      <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.OwnerMobilePhnNo" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2" translate>Copy Address</label>
       <div class="col-md-4">
         <div class="input-group">
-          <select class="form-control" formControlName="OwnerAddrType"
-            [(ngModel)] = "copyFromAppCustAddrForOwner" (change)="SetOwnerAddrType($event.target.value)">
+          <select class="form-control" formControlName="OwnerAddrType" [(ngModel)]="copyFromAppCustAddrForOwner"
+            (change)="SetOwnerAddrType($event.target.value)">
             <option value="">-Select One-</option>
             <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
               {{item.MrCustAddrTypeCode}}
@@ -141,19 +193,12 @@
           </div>
         </div>
       </div>
-      <label class="col-md-2  adInsLabel" translate>Mobile Phone </label>
-      <div class="col-md-4">
-        <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
-        <lib-uc-show-errors [control]="EditAppAssetForm.controls.OwnerMobilePhnNo"
-          [submit]="enjiForm.submitted">
-        </lib-uc-show-errors>
-      </div>
     </div>
   </div>
   <div class="form-group row">
     <div class="col-md-12">
-      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm"
-        [identifier]="'ownerData'" [UCAddrForm]="EditAppAssetForm"></lib-ucaddress>
+      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm" [identifier]="'ownerData'"
+        [UCAddrForm]="EditAppAssetForm"></lib-ucaddress>
       <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
                    [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj"
                    [showAllPhn]="false"></lib-ucaddress> -->
@@ -163,7 +208,7 @@
   <div *ngIf="AppAssetAttrObj != null">
     <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
     </lib-ucSubsection>
-    <div id= "assetAttr">
+    <div id="assetAttr">
       <!-- <div class="form-actions right">
         <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
           class="btn btn-raised btn-primary">
@@ -230,8 +275,8 @@
             {{item.Value}}
           </option>
         </select>
-        <lib-uc-show-errors [control]="EditAppAssetForm.controls.InscoBranchCode"
-          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.InscoBranchCode" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
     </div>
     <div class="form-group row">
@@ -244,7 +289,8 @@
     </div>
     <div class="form-group row">
       <label class="col-md-3 adInsLabel" translate>Total Fee from Insco</label>
-      <label class="col-md-3 text-right"> {{appInsObjObj.InscoAdminFeeAmt + appInsObjObj.InscoStampDutyFee | number:'.2':'en-US'}} </label>
+      <label class="col-md-3 text-right"> {{appInsObjObj.InscoAdminFeeAmt + appInsObjObj.InscoStampDutyFee |
+        number:'.2':'en-US'}} </label>
     </div>
     <div class="form-group row">
       <label class="col-md-3 adInsLabel" translate>Total Premi from Insco</label>
@@ -253,12 +299,11 @@
   </div>
   <br>
   <div class="form-actions right">
-    <button type="button"  class="btn btn-raised btn-warning mr-1" (click)="CancelClick()">
-        <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="CancelClick()">
+      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
     </button>
-    <button type="submit"
-        class="btn btn-raised btn-primary">
-        <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+    <button type="submit" class="btn btn-raised btn-primary">
+      <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
     </button>
   </div>
 </form>
