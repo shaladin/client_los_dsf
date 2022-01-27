@@ -301,7 +301,7 @@ export class PoEntryXComponent implements OnInit {
     if (this.IsDisburseToCust) {
       for (const item of this.custBankAccList) {
         if (item["BankAccNo"] == value) {
-          this.CustBankAcc;
+          this.CustBankAcc = item as AppCustBankAccObj;
           break;
         }
       }
@@ -320,7 +320,7 @@ export class PoEntryXComponent implements OnInit {
         GetProduct.Code  = response1["ProdOfferingCode"]
         this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
-            var datePipe = new DatePipe("locale");
+            var datePipe = new DatePipe("en-US");
             this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: response2.Id, GroupCodes: ["OTHR"] }).subscribe(
               (response) => {
                 var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
