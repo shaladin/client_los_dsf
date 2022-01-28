@@ -48,12 +48,12 @@ export class CustSyncComponent implements OnInit {
   GetCallBack(e: any) {
     if (e.Key == "Sync") {
       if(confirm("Are You Sure To Sync This Data ?")){
-        this.http.post(URLConstant.SyncAppCustWithCustFOU, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo }).pipe(
+        this.http.post(URLConstantX.SyncAppCustWithCustFOU, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo }).pipe(
           map((response) => {
             return response;
           }),
           mergeMap((response) => {
-            return this.http.post(URLConstant.SyncAppCustWithCustFOUSecondary, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo });
+            return this.http.post(URLConstantX.SyncAppCustWithCustFOUSecondary, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo });
           })
         ).toPromise().then(
           async (response) => {
