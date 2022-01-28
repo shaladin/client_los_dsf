@@ -35,11 +35,11 @@ export class MouCustomerApprovalComponent implements OnInit {
   user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   MrMouTypeCode: string;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {   
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-    if (params["MrMouTypeCode"] != null) {
-      this.MrMouTypeCode = params["MrMouTypeCode"];
-    }});
+      if (params["MrMouTypeCode"] != null) {
+        this.MrMouTypeCode = params["MrMouTypeCode"];
+      }});
   }
 
   ngOnInit() {
@@ -65,16 +65,18 @@ export class MouCustomerApprovalComponent implements OnInit {
       this.apvReqObj.CategoryCode = CategoryCode;
       this.apvReqObj.Username = this.user.UserName;
       this.apvReqObj.RoleCode = this.user.RoleCode;
+      this.apvReqObj.OfficeCode = this.user.OfficeCode;
+
       this.integrationObj.requestObj = this.apvReqObj;
       this.integrationObj.leftColumnToJoin = "MouCustNo";
       this.integrationObj.rightColumnToJoin = "TransactionNo";
       this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
-      this.inputPagingObj.integrationObj = this.integrationObj; 
+      this.inputPagingObj.integrationObj = this.integrationObj;
     }
     else{
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCustomerApproval.json";
-  
+
       this.arrCrit = new Array<CriteriaObj>();
       var critObj = new CriteriaObj();
       critObj.DataType = 'text';
@@ -84,9 +86,9 @@ export class MouCustomerApprovalComponent implements OnInit {
       this.arrCrit.push(critObj);
       this.inputPagingObj.addCritInput = this.arrCrit;
     }
-    
+
   }
-  
+
   async getEvent(event) {
     var isRoleAssignment = event.RowObj.IsRoleAssignment.toString();
     if (event.Key == "customer") {
@@ -106,28 +108,28 @@ export class MouCustomerApprovalComponent implements OnInit {
         if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
           this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
           return;
-        } 
+        }
       }
       else if (event.RowObj.CurrentUser == "-") {
         await this.apvTaskService.ClaimApvTask(event.RowObj.TaskId);
       }
-        
+
       switch (event.RowObj.MouType) {
         case CommonConstant.FACTORING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
-            break;
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_FCTR],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
+          break;
         case CommonConstant.GENERAL:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
-            break;
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
+          break;
         case CommonConstant.FINANCING:
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
-            break;
-      }  
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV_GENERAL],{ "MouCustId": event.RowObj.MouCustId, "TaskId" : event.RowObj.TaskId, "InstanceId": event.RowObj.InstanceId ,"ApvReqId": environment.isCore ? event.RowObj.RequestId : event.RowObj.ApvReqId});
+          break;
+      }
     }
     else if (event.Key == "HoldTask") {
       if (String.Format("{0:L}", event.RowObj.CurrentUser) != String.Format("{0:L}", this.user.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
-      } 
+      }
       else {
         this.apvTaskService.HoldApvTask(event.RowObj.TaskId);
       }

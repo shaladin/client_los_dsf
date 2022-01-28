@@ -310,7 +310,7 @@ export class CommonConstant {
   public static AttrInputTypeRefMaster = "RM";
 
   //ATTR CODE
-  public static AttrCodeDeptAml = "DEPT_AML";
+  public static AttrCodeDeptAml = "AML_CUST_DEPARTMENT";
   public static AttrCodeAuthAml = "AUTH_AML";
   
   //Interest Type

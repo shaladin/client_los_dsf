@@ -593,6 +593,7 @@ export class URLConstant {
   public static GetVendorEmpByVendorEmpNoAndVendorCode = environment.FoundationR3Url + "/v1" + "/VendorEmp/GetVendorEmpByVendorEmpNoAndVendorCode";
   public static GetListVendorBankAccObjByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListVendorBankAccObjByVendorEmpNo";
   public static GetListActiveVendorBankAccObjByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccObjByVendorEmpNo";
+  public static GetListActiveBankByVendorEmpNoAndVendorCode = environment.FoundationR3Url + "/v1" + "/VendorEmp/GetListActiveBankByVendorEmpNoAndVendorCode";
 
   //Life Ins
   public static AddAppLifeInsH = environment.losUrl + "/v1" + "/AppLifeIns/AddAppLifeInsH";
