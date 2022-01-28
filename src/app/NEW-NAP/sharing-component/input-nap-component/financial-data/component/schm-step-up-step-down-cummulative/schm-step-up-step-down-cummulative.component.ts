@@ -227,10 +227,12 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '0.');
       return;
     }
+    /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
     if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
       return;
     }
+    */
     if (!this.IsTrialCalc) {
       this.calcStepUpStepDownObj = this.ParentForm.getRawValue();
       this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
@@ -266,6 +268,14 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
             DownPaymentNettAmt: response.DownPaymentNettAmt
 
           })
+
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
 
           this.ParentForm.patchValue({
             IsReCalculate: true
@@ -306,6 +316,15 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
             DownPaymentNettAmt: response["DownPaymentNettAmt"]
 
           })
+
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
+
           this.SetInstallmentTable();
           this.SetInstStepSchm();
           this.SetNeedReCalculate(false);
