@@ -1,5 +1,3 @@
-
-
 <section id="login" class="">
   <div class="container-fluid">
     <div class="row full-height-vh">
@@ -10,7 +8,7 @@
           </div>
           <h4 class="mt-1 text-title">Loan Origination System</h4>
           <p>{{version}}</p>
-          <div *ngIf="!isLocked">
+          <div *ngIf="mode === 'login'">
 
             <form novalidate="" (ngSubmit)="onSubmit($event)" #f="ngForm">
               <div class="form-group" class="mt-3">
@@ -19,25 +17,23 @@
                 </div>
                 <div class="col-md-12 mt-2 input-field">
                   <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path id="custom-fill-red" d="M8.5 0C7.56603 0 6.65304 0.277811 5.87647 0.798302C5.09991 1.31879 4.49465 2.05859 4.13724 2.92413C3.77982 3.78968 3.68631 4.7421 3.86851 5.66095C4.05072 6.57981 4.50047 7.42384 5.16088 8.0863C5.8213 8.74875 6.66272 9.1999 7.57874 9.38267C8.49476 9.56544 9.44424 9.47163 10.3071 9.11311C11.17 8.75459 11.9075 8.14746 12.4264 7.36849C12.9453 6.58952 13.2222 5.6737 13.2222 4.73684C13.2222 3.48055 12.7247 2.27572 11.8391 1.38739C10.9535 0.499059 9.75241 0 8.5 0ZM8.5 7.57895C7.93962 7.57895 7.39182 7.41226 6.92588 7.09997C6.45994 6.78767 6.09679 6.3438 5.88234 5.82447C5.66789 5.30514 5.61178 4.73369 5.72111 4.18237C5.83043 3.63106 6.10028 3.12465 6.49653 2.72717C6.89278 2.32969 7.39763 2.05901 7.94724 1.94935C8.49686 1.83968 9.06655 1.89597 9.58427 2.11108C10.102 2.32619 10.5445 2.69047 10.8558 3.15785C11.1672 3.62523 11.3333 4.17473 11.3333 4.73684C11.3333 5.49062 11.0348 6.21352 10.5035 6.74651C9.97212 7.27951 9.25145 7.57895 8.5 7.57895ZM17 18V17.0526C17 15.2938 16.3035 13.6071 15.0636 12.3634C13.8238 11.1197 12.1423 10.4211 10.3889 10.4211H6.61111C4.85774 10.4211 3.17617 11.1197 1.93635 12.3634C0.696526 13.6071 0 15.2938 0 17.0526V18H1.88889V17.0526C1.88889 15.7963 2.38641 14.5915 3.272 13.7032C4.15758 12.8148 5.3587 12.3158 6.61111 12.3158H10.3889C11.6413 12.3158 12.8424 12.8148 13.728 13.7032C14.6136 14.5915 15.1111 15.7963 15.1111 17.0526V18H17Z" />
+                    <path class="custom-fill-adins" d="M8.5 0C7.56603 0 6.65304 0.277811 5.87647 0.798302C5.09991 1.31879 4.49465 2.05859 4.13724 2.92413C3.77982 3.78968 3.68631 4.7421 3.86851 5.66095C4.05072 6.57981 4.50047 7.42384 5.16088 8.0863C5.8213 8.74875 6.66272 9.1999 7.57874 9.38267C8.49476 9.56544 9.44424 9.47163 10.3071 9.11311C11.17 8.75459 11.9075 8.14746 12.4264 7.36849C12.9453 6.58952 13.2222 5.6737 13.2222 4.73684C13.2222 3.48055 12.7247 2.27572 11.8391 1.38739C10.9535 0.499059 9.75241 0 8.5 0ZM8.5 7.57895C7.93962 7.57895 7.39182 7.41226 6.92588 7.09997C6.45994 6.78767 6.09679 6.3438 5.88234 5.82447C5.66789 5.30514 5.61178 4.73369 5.72111 4.18237C5.83043 3.63106 6.10028 3.12465 6.49653 2.72717C6.89278 2.32969 7.39763 2.05901 7.94724 1.94935C8.49686 1.83968 9.06655 1.89597 9.58427 2.11108C10.102 2.32619 10.5445 2.69047 10.8558 3.15785C11.1672 3.62523 11.3333 4.17473 11.3333 4.73684C11.3333 5.49062 11.0348 6.21352 10.5035 6.74651C9.97212 7.27951 9.25145 7.57895 8.5 7.57895ZM17 18V17.0526C17 15.2938 16.3035 13.6071 15.0636 12.3634C13.8238 11.1197 12.1423 10.4211 10.3889 10.4211H6.61111C4.85774 10.4211 3.17617 11.1197 1.93635 12.3634C0.696526 13.6071 0 15.2938 0 17.0526V18H1.88889V17.0526C1.88889 15.7963 2.38641 14.5915 3.272 13.7032C4.15758 12.8148 5.3587 12.3158 6.61111 12.3158H10.3889C11.6413 12.3158 12.8424 12.8148 13.728 13.7032C14.6136 14.5915 15.1111 15.7963 15.1111 17.0526V18H17Z" />
                   </svg>
                   <input size="35" class="align-middle" type="text" name="inputUser" id="inputUser" placeholder="Enter your username" ngModel required #user>
                 </div>
               </div>
   
-              <div class="form-group" class="mt-3">
+              <div class="form-group mt-3">
                 <div class="text-left">
                   <p class="text-user">Password</p>
                 </div>
                 <div class="col-md-12 mt-2 input-field">
-                  <div class="row">
-                    <div class="svg-password"></div>
-                    <input size="33" class="align-middle" [type]="showPass ? 'text' : 'password'" name="inputPass" id="inputPass" placeholder="Enter your password" ngModel required #pass>
-                    <div class="mt-1 ml-2">
-                      <span *ngIf="!showPass" class="show-hide-pass" style="font-weight: bold;" (click)="onClickShowPass()">show</span>
-                      <span *ngIf="showPass" class="show-hide-pass" style="font-weight: bold;" (click)="onClickShowPass()">hide</span>  
-                    </div>
-                  </div>
+                  <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="custom-stroke-adins" d="M9 13V15V13ZM3 19H15C15.5304 19 16.0391 18.7893 16.4142 18.4142C16.7893 18.0391 17 17.5304 17 17V11C17 10.4696 16.7893 9.96086 16.4142 9.58579C16.0391 9.21071 15.5304 9 15 9H3C2.46957 9 1.96086 9.21071 1.58579 9.58579C1.21071 9.96086 1 10.4696 1 11V17C1 17.5304 1.21071 18.0391 1.58579 18.4142C1.96086 18.7893 2.46957 19 3 19ZM13 9V5C13 3.93913 12.5786 2.92172 11.8284 2.17157C11.0783 1.42143 10.0609 1 9 1C7.93913 1 6.92172 1.42143 6.17157 2.17157C5.42143 2.92172 5 3.93913 5 5V9H13Z" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <input size="33" class="align-middle" [type]="showPass ? 'text' : 'password'" name="inputPass" id="inputPass" placeholder="Enter your password" ngModel required #pass>
+                  <span *ngIf="!showPass" class="show-hide-pass" style="font-weight: bold;" (click)="onClickShowPass()">show</span>
+                  <span *ngIf="showPass" class="show-hide-pass" style="font-weight: bold;" (click)="onClickShowPass()">hide</span>  
                 </div>
               </div>
   
@@ -53,13 +49,13 @@
 
               <div class="form-group row mt-3">
                 <div class=" col-md-12">
-                  <button type="submit" class="custom-pill-button">LOGIN</button>
+                  <button type="submit" class="custom-button-adins">LOGIN</button>
                 </div>
               </div>
             </form>
           </div>
 
-          <div *ngIf="isLocked">
+          <div *ngIf="mode === 'locked'">
             <p style="font-size:14px;">
               Your Account has been locked
               due to several wrong password attempts.
@@ -71,6 +67,55 @@
             </div>
           </div>
 
+          <div *ngIf="mode === 'otp'">
+            <form (ngSubmit)="onSubmitOtp()" #o="ngForm">
+              <br>
+              <div class="form-group row">
+                <div class="col-md-2 text-left">
+                  <p class="text-user" translate>User</p>
+                </div>
+                <div class="col-md-10 text-left">
+                  <p class="text-user" translate>{{result.Username}}</p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-2 text-left">
+                  <p class="text-user" translate>Phone</p>
+                </div>
+                <div class="col-md-10 text-left">
+                  <p class="text-user" translate>{{result.MobilePhnNo1}}</p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-2 text-left">
+                  <p class="text-user" translate>Email</p>
+                </div>
+                <div class="col-md-10 text-left">
+                  <p class="text-user" translate>{{result.Email1}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="text-left">
+                  <p class="text-user">Input OTP</p>
+                </div>
+                <div class="col-md-12 mt-2 input-field">
+                  <input style="margin-left: 0;" size="35" class="align-middle" type="text" name="inputOtp" id="inputOtp" placeholder="One Time Password" ngModel required #otp>
+                </div>
+              </div>
+              <div class="form-group row mt-3">
+                <div class="col-md-12">
+                  <button type="submit" class="custom-button-adins">CONFRIM</button>
+                </div>
+                <div class="col-md-12">
+                  <span>Didn't receive OTP code?
+                  <a (click)="onRegenerateClick()" class="link-text"> Resend OTP</a></span>
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="isInvalidOtp">
+                <label class="col-md-12 text-left" style="color: red;" translate>Invalid Code</label>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
