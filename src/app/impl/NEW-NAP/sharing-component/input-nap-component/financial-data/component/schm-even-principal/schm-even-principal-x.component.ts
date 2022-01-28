@@ -174,10 +174,12 @@ export class SchmEvenPrincipalXComponent implements OnInit {
     if (this.ValidateFee() == false) {
       return;
     }
-    if (this.ParentForm.controls.DownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
-      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
+    /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+    if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
       return;
     }
+    */
     if (!this.IsTrialCalc) {
       this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
 
@@ -226,6 +228,13 @@ export class SchmEvenPrincipalXComponent implements OnInit {
           this.ParentForm.patchValue({
             IsReCalculate: true
           });
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
 
@@ -266,6 +275,13 @@ export class SchmEvenPrincipalXComponent implements OnInit {
             AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
             //End SITDSFCFRTHREE-171
           })
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
 
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
