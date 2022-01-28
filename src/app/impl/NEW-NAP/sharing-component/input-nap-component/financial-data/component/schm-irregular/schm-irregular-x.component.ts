@@ -156,10 +156,12 @@ export class SchmIrregularXComponent implements OnInit {
   }
 
   CalculateAmortization() {
+    /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya   
     if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
       return;
     }
+    */
     if (this.ValidateFee() == false) {
       return;
     }
@@ -214,6 +216,14 @@ export class SchmIrregularXComponent implements OnInit {
             //End SITDSFCFRTHREE-171
           })
 
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
+
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
           this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
@@ -255,6 +265,14 @@ export class SchmIrregularXComponent implements OnInit {
             AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
             //End SITDSFCFRTHREE-171
           })
+
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
 
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
