@@ -29,7 +29,7 @@ export class ChangeMouRequestDetailCustomerComponent
   mouType: string;
   mouCustId: number;
   ChangeMouCustId: number;
-  changeMouTrxNo: number;
+  changeMouTrxNo: string;
   currentStepIndex: number;
   ChangeMouStatus: string;
   mode: string;
