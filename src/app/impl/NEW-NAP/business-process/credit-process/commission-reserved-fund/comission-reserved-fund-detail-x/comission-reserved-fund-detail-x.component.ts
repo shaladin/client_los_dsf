@@ -235,6 +235,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
 
   //Submit
   SubmitReturnHandling() {
+    console.log("nyan");
     if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
