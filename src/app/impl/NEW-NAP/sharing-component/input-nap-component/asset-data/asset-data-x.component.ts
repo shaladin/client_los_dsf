@@ -2835,6 +2835,9 @@ export class AssetDataXComponent implements OnInit {
 
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
     if(OwnerType == CommonConstant.CustTypePersonal){
+      this.InputLookupProfessionObj.isRequired = false;
+      this.AssetDataForm.controls.OwnerProfessionCode.clearValidators();
+      
       if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
           OwnerProfessionCode : ""
@@ -2854,6 +2857,9 @@ export class AssetDataXComponent implements OnInit {
         );
       }
     }else{
+      this.InputLookupProfessionObj.isRequired = true;
+      this.AssetDataForm.controls.OwnerProfessionCode.setValidators([Validators.required]);
+      
       if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
           OwnerProfessionCode : ""
