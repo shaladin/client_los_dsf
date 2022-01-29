@@ -36,16 +36,6 @@
                 </div>
               </form>
             </div>
-            <div class="form-action pull-right">
-              <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0" type="button"
-                class="btn btn-raised btn-warning margin-r-5" (click)="Back()" translate>
-                <i class="ft-x"></i> Cancel
-              </button>
-              <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && IsLastStep" type="button"
-                (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary" translate>
-                <i class="far fa-check-square"></i> Submit
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -143,6 +133,20 @@
           <app-commission-v2-x *ngIf="StepIndex == 2 && isView && isRefundNotDouble" [LobCode]="NapObj.LobCode" [ReturnHandlingHObj]="ReturnHandlingHObj" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo"  [showCancel]="showCancel" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode" [maxAllocRefundAmt]="viewIncomeInfoObj.MaxAllocatedRefundAmt" [NapObj]="NapObj"
           (outputTab)="LastStepHandler($event)" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)">
         </app-commission-v2-x>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="ReturnHandlingHObj.ReturnHandlingHId  > 0">
+      <div class="card-body">
+        <div class="form-action pull-right">
+          <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0" type="button"
+            class="btn btn-raised btn-warning margin-r-5" (click)="Back()" translate>
+            <i class="ft-x"></i> Cancel
+          </button>
+          <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && IsLastStep" type="button"
+            (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary" translate>
+            <i class="far fa-check-square"></i> Submit
+          </button>
         </div>
       </div>
     </div>

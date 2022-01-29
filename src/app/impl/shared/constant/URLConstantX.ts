@@ -22,7 +22,8 @@ export class URLConstantX {
   public static EditCustMainDataPersonalX = environment.losUrl + "/v1" + "/AppCustX/EditCustMainDataPersonal";
   public static EditCustMainDataPersonalXV2 = environment.losUrl + "/v2" + "/AppCustX/EditCustMainDataPersonal";
   public static GetAppCustMainDataByAppCustIdX = environment.losUrl + "/v1" + "/AppCustX/GetAppCustMainDataByAppCustId";
-
+  public static SyncAppCustWithCustFOU = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOU";
+  public static SyncAppCustWithCustFOUSecondary = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOUSecondary";
 
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";

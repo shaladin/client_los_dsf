@@ -17,6 +17,7 @@ import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.m
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
 
 @Component({
   selector: 'app-loan-object-x',
@@ -299,6 +300,10 @@ export class LoanObjectXComponent implements OnInit {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
       if (this.isCFNA) {
+        if (this.AppLoanPurposeObj.FinancingAmt <= 0) {
+          this.toastr.errorMessage(ExceptionConstantX.FINANCING_AMT_CANNOT_LESS_THAN_ZERO);
+          return;
+        }
         //INTERNAL-0142 X: Sengaja di disable karena sudah ada penjagaan dari Max Plafond dari Agreement Parent
         //this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           //(response) => {
@@ -323,6 +328,10 @@ export class LoanObjectXComponent implements OnInit {
     }
     else {
       if (this.isCFNA) {
+        if (this.AppLoanPurposeObj.FinancingAmt <= 0) {
+          this.toastr.errorMessage(ExceptionConstantX.FINANCING_AMT_CANNOT_LESS_THAN_ZERO);
+          return;
+        }
         //INTERNAL-0142 X: Sengaja di disable karena sudah ada penjagaan dari Max Plafond dari Agreement Parent
         //this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           //(response) => {
