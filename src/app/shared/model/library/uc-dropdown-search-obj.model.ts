@@ -6,7 +6,7 @@ export class UcDropdownSearchObj {
     enviromentUrl: string;
     apiPath: string;
     apiUrl: string;
-    ddlType: string;
+    ddsType: string;
     customKey: string;
     customValue: string;
     requestObj: Object;
@@ -23,7 +23,7 @@ export class UcDropdownSearchObj {
         this.enviromentUrl = environment.FoundationR3Url + "/v1";
         this.apiPath = "";
         this.apiUrl = "";
-        this.ddlType = UcDropdownSearchConstant.DDL_TYPE_ONE; // one | all | none | blank
+        this.ddsType = UcDropdownSearchConstant.DDL_TYPE_ONE; // one | all | none | blank
         this.customKey = "Key";
         this.customValue = "Value";
         this.requestObj = new Object();
