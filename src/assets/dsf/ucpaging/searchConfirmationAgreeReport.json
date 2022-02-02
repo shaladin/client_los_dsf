@@ -90,6 +90,24 @@
             "value": "",
             "label": "Product Offering",
             "placeholder": "Placeholder"
+        },
+        {
+          "type": "datepicker",
+          "name": "A.APV_DT",
+          "id": "approveDtgte",
+          "value": "",
+          "label": "Approve Date >=",
+          "restriction": "gte",
+          "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "A.APV_DT",
+            "id": "approveDtlte",
+            "value": "",
+            "label": "Approve Date <=",
+            "restriction": "lte",
+            "datatype": "date"
         }
     ],
   "querystring": {
