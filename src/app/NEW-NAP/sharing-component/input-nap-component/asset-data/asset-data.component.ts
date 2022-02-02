@@ -326,6 +326,7 @@ export class AssetDataComponent implements OnInit {
   LastRequestedDate: any = "";
   OwnerTypeObj: Array<KeyValueObj> = new Array();
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
+  RoundedAmt: number = 2;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
@@ -1106,15 +1107,8 @@ export class AssetDataComponent implements OnInit {
         }
       }
 
-      if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
-        // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
-        this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm.DownPaymentPrctg;
-        this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm.AssetPriceAmt * assetForm.DownPaymentPrctg / 100;
-      }
-      else {
-        this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm.DownPaymentAmt;
-        this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm.DownPaymentAmt / assetForm.AssetPriceAmt) * 100;
-      }
+      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm.DownPaymentPrctg;
+      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm.DownPaymentAmt;
 
       for (let i = 0; i < this.items.length; i++) {
         if (this.items.controls[i] != null) {
@@ -1340,7 +1334,8 @@ export class AssetDataComponent implements OnInit {
     }
   }
   updateValueDownPaymentAmt() {
-    let DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
+    let DownPaymentPrctg = Math.round(this.AssetDataForm.controls.DownPaymentPrctg.value * 1000000) / 1000000;
+    let DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * DownPaymentPrctg / 100;
     if (DownPaymentAmt > this.AssetDataForm.controls.AssetPriceAmt.value) {
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount!");
       this.AssetDataForm.patchValue({
@@ -1350,13 +1345,27 @@ export class AssetDataComponent implements OnInit {
     }
     else {
       this.AssetDataForm.patchValue({
-        DownPaymentAmt: this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100
+        DownPaymentAmt: DownPaymentAmt
+      });
+
+      let roundedAmt = 0;
+      if(this.RoundedAmt == 0){
+        DownPaymentAmt = Math.ceil(this.AssetDataForm.controls.DownPaymentAmt.value);
+      }else{
+        roundedAmt = Math.pow(10, this.RoundedAmt);
+        DownPaymentAmt = Math.round(this.AssetDataForm.controls.DownPaymentAmt.value / roundedAmt) * roundedAmt;
+      }
+
+      DownPaymentPrctg = Math.round((DownPaymentAmt / this.AssetDataForm.controls.AssetPriceAmt.value) * 100 * 1000000) / 1000000;
+      this.AssetDataForm.patchValue({
+        DownPaymentAmt: DownPaymentAmt,
+        DownPaymentPrctg: DownPaymentPrctg
       });
     }
   }
 
   updateValueDownPaymentPrctg() {
-    let DownPaymentPrctg = this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
+    let DownPaymentPrctg = Math.ceil(this.AssetDataForm.controls.DownPaymentAmt.value) / this.AssetDataForm.controls.AssetPriceAmt.value * 100;
     if(isNaN(DownPaymentPrctg)){
       this.AssetDataForm.patchValue({
         DownPaymentAmt: 0,
@@ -1370,11 +1379,26 @@ export class AssetDataComponent implements OnInit {
         DownPaymentPrctg: 0
       });
     }
-    else {
-      this.AssetDataForm.patchValue({
-        DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value / this.AssetDataForm.controls.AssetPriceAmt.value * 100
-      });
-    }
+      else {
+        this.AssetDataForm.patchValue({
+          DownPaymentPrctg: DownPaymentPrctg
+        });
+
+        DownPaymentPrctg = Math.round(DownPaymentPrctg * 1000000) / 1000000;
+        let DownPaymentAmt = 0;
+        let roundedAmt = 0;
+        if(this.RoundedAmt == 0){
+          DownPaymentAmt = Math.ceil((DownPaymentPrctg / 100) * this.AssetDataForm.controls.AssetPriceAmt.value);
+        }else{
+          roundedAmt = Math.pow(10, this.RoundedAmt);
+          DownPaymentAmt = Math.round(((DownPaymentPrctg / 100) * this.AssetDataForm.controls.AssetPriceAmt.value) * roundedAmt) / roundedAmt ;
+        }
+
+        this.AssetDataForm.patchValue({
+          DownPaymentAmt: DownPaymentAmt,
+          DownPaymentPrctg: DownPaymentPrctg
+        });
+      }
   }
 
   async SelfUsageChange(event) {
@@ -1991,6 +2015,7 @@ export class AssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response: any) => {
         this.AppObj = response;
+        this.getRoundedAmt();
         this.BizTemplateCode = this.AppObj.BizTemplateCode;
         this.OfficeCode = this.AppObj.OriOfficeCode;
         if (this.BizTemplateCode != CommonConstant.OPL) {
@@ -2923,5 +2948,21 @@ export class AssetDataComponent implements OnInit {
         tempSerialNo.updateValueAndValidity();
       }
     }
+  }
+  
+  async getRoundedAmt(){
+    const prodObj = {
+      ProdOfferingCode: this.AppObj.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CURR,
+      ProdOfferingVersion: this.AppObj.ProdOfferingVersion
+    }
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
+      async (response: any) => {
+        await this.http.post(URLConstant.GetRefCurrByCode, {Code : response.CompntValue}).toPromise().then(
+          (response: any) => {
+            this.RoundedAmt = response.RoundedAmt;
+          });
+      });
   }
 }

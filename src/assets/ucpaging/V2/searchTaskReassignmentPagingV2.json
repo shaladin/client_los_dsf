@@ -14,7 +14,7 @@
             "environment": "LOSV2",
             "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
             "label": "Activity Name",
-            "wfKeyFilter" : "TaskDefinitionKey"
+            "wfKeyFilter" : "ProcessKey;TaskDefinitionKey"
         },
         {
             "type": "textbox",

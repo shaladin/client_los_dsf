@@ -28,6 +28,7 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
   IsReady: boolean = false;
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
+  OriOfficeCode: string;
 
   arrValue = [];
   constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private toastr: NGXToastrService, private http: HttpClient, private cookieService: CookieService) {
@@ -49,11 +50,11 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
     await this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntNo, { TrxNo: this.TrxNo }).toPromise().then(
       async (response) => {
         if (!response) return;
-        await this.initInputApprovalObj(response.ProdOfferingCode, response.ProdOfferingVersion);
+        await this.initInputApprovalObj(response.ProdOfferingCode, response.ProdOfferingVersion, response.OfficeCode);
       });
 
   }
-  async initInputApprovalObj(prodOfferingCode: string, prodOfferingVersion: string) {
+  async initInputApprovalObj(prodOfferingCode: string, prodOfferingVersion: string, officeCode: string) {
     let obj = {
       prodOfferingCode: prodOfferingCode,
       prodOfferingVersion: prodOfferingVersion,
@@ -68,12 +69,13 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
           Attributes: [],
         };
         listTypeCode.push(TypeCode);
-
+        this.OriOfficeCode = officeCode ;
         this.InputObj.ApvTypecodes = listTypeCode;
         this.InputObj.CategoryCode = CommonConstant.CAT_CODE_OFF_VLD_APV;
         this.InputObj.SchemeCode = response["CompntValue"];
         this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
         this.InputObj.TrxNo = this.TrxNo;
+        this.InputObj.OfficeCode = this.OriOfficeCode;
         this.IsReady = true;
       }
     );

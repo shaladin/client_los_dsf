@@ -41,6 +41,8 @@ export class MouReviewDlfnXComponent implements OnInit {
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   RFAInfo: Object = new Object();
+  OriOfficeCode: string;
+
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -84,8 +86,9 @@ export class MouReviewDlfnXComponent implements OnInit {
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
+        this.OriOfficeCode = this.resultData.OriOfficeCode;
         this.PlafondAmt = response.PlafondAmt;
-        this.MrCustTypeCode = response.MrCustTypeCode;
+        this.MrCustTypeCode = response.MrCustTypeCode;        
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext[CommonConstant.USER_NAME];
@@ -179,7 +182,8 @@ export class MouReviewDlfnXComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_APV_DLFN;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_APV_DLFN;
     this.InputObj.Reason = this.listReason;
-    this.InputObj.TrxNo = this.resultData["MouCustNo"]
+    this.InputObj.TrxNo = this.resultData["MouCustNo"];
+    this.InputObj.OfficeCode = this.OriOfficeCode;
     this.IsReady = true;
   }
 

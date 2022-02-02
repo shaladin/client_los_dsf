@@ -45,12 +45,12 @@ export class CustCompletionDetailXComponent implements OnInit {
   ListAppCustCompletion: Array<AppCustCompletionObj> = new Array();
   AppObj: AppObj = new AppObj();
   IsDisburseToCust: boolean = false;
-  
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private toastr: NGXToastrService, 
+    private toastr: NGXToastrService,
     private fb: FormBuilder,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService) {
@@ -206,12 +206,12 @@ export class CustCompletionDetailXComponent implements OnInit {
   Submit() {
     if (this.ReturnHandlingHId > 0) {
 
-      for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
-        if (this.ListAppCustCompletion[i].IsCompletion === false) {
-          this.toastr.warningMessage(ExceptionConstantX.PLEASE_COMPLETE_DATA_CUSTOMER + " {" + this.ListAppCustCompletion[i].CustName + "}");
-          return;
-        }
-      }
+      // for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
+      //   if (this.ListAppCustCompletion[i].IsCompletion === false) {
+      //     this.toastr.warningMessage(ExceptionConstantX.PLEASE_COMPLETE_DATA_CUSTOMER + " {" + this.ListAppCustCompletion[i].CustName + "}");
+      //     return;
+      //   }
+      // }
 
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;

@@ -3,7 +3,17 @@
     <lib-ucSubsection [id]="'surveyListId'" [title]="'Survey List'" [panel]="'surveyList'">
     </lib-ucSubsection>
     <div id="surveyList">
-      <table class="table table-responsive-md text-center table-hover">
+      <div class="col-md-12" *ngIf="!isSurvey">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Is Survey Skip</label>
+          <label class="col-md-9 adInsLabel">Yes</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Notes</label>
+          <label class="col-md-9 adInsLabel">{{verifResultObj?.Notes}}</label>
+        </div>
+      </div>
+      <table class="table table-responsive-md text-center table-hover" *ngIf="isSurvey">
         <thead>
           <tr class="table-header">
             <th>

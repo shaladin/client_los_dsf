@@ -399,27 +399,12 @@ export class AssetDataPagingXComponent implements OnInit {
     }
     // if (await this.checkValidityAssetUsed()) return;
 
-    //DSF TIDAK PAKAI RAPINDO
-    // if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
+    let checkAppNumOfAssetObj = { Id: this.AppId };
+    await this.http.post(URLConstant.UpdateAppNumOfAsset, checkAppNumOfAssetObj).toPromise().then(
+      (response) => {
+      }
+    );
 
-    //   if (!this.IsCalledIntegrator) {
-    //     if (confirm("Submit without Integrator ? ")) {
-    //       this.outputValue.emit({ mode: 'submit' });
-    //     }
-    //   }
-    //   else {
-    //     this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDOMultiAsset, { AppId: this.AppId }).toPromise().then(
-    //       (response) => {
-    //         this.toastr.successMessage("Success !");
-    //         this.outputValue.emit({ mode: 'submit' });
-    //       }
-    //     );
-    //   }
-    // }
-    // else {
-    //   this.outputValue.emit({ mode: 'submit' });
-    // }
-    this.toastr.successMessage("Success !");
     this.outputValue.emit({ mode: 'submit' });
   }
 

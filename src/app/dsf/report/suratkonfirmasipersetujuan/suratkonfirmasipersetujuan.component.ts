@@ -65,10 +65,17 @@ export class SuratkonfirmasipersetujuanComponent implements OnInit {
         reportParamObj2.paramValue = this.SKPCode;
         reportParamObj2.paramAssignment = 1;
         this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj2);
-
+        
         let reportParamObj3: ReportParamObj = new ReportParamObj();
         reportParamObj3.paramKey = "AgrNo";
-        reportParamObj3.paramValue = ev.RowObj.AgrmntNo;
+        if(ev.RowObj.AgrmntNo != null)
+        {
+          reportParamObj3.paramValue = ev.RowObj.AgrmntNo;
+        }
+        else
+        {
+          reportParamObj3.paramValue = "";
+        }        
         reportParamObj3.paramAssignment = 1;
         this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj3);
         

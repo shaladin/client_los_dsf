@@ -67,6 +67,7 @@ export class URLConstant {
   public static CheckMouCustIntegrator = environment.losUrl + "/v1" + "/MouCust/CheckMouCustIntegrator";
   public static AddNap1FromLead = environment.losUrl + "/v1" + "/Application/AddNap1FromLead";
   public static AddNap1FromLeadV2 = environment.losUrl + "/v2" + "/Application/AddNap1FromLead";
+  public static UpdateAppNumOfAsset = environment.losUrl + "/v2" + "/Application/UpdateAppNumOfAsset";
 
   public static CheckIsMouFreeze = environment.losUrl + "/v1" + "/MouCust/CheckIsMouFreeze";
   //App Loan Purpose
@@ -820,8 +821,6 @@ export class URLConstant {
   public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
   public static GetCustCompanyForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
   public static GetListKeyValueMobilePhnByAppId = environment.losUrl + "/v1" + "/AppCust/GetListKeyValueMobilePhnByAppId";
-  public static SyncAppCustWithCustFOU = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOU";
-  public static SyncAppCustWithCustFOUSecondary = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOUSecondary";
 
   public static AddAppCustHighlightComment = environment.losUrl + "/v1" + "/AppCust/AddAppCustHighlightComment";
   public static GetAppCustHighlightCommentByCustNo = environment.losUrl + "/v1" + "/AppCust/GetAppCustHighlightCommentByCustNo";
