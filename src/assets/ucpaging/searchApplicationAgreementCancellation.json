@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "agr.AGRMNT_NO",
+      "name": "agrPrp.AGRMNT_NO",
       "id": "AgrmntNoId",
       "value": "",
       "label": "Agreement No",
