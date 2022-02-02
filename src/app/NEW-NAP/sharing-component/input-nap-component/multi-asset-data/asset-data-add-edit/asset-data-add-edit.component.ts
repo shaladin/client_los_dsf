@@ -128,6 +128,7 @@ export class AssetDataAddEditComponent implements OnInit {
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   RoundedAmt: number = 2;
+  prevAssetCategoryCode : string = "";
 
   InputLookupAccObj: any;
   InputLookupAccSupObj: any;
@@ -989,6 +990,8 @@ export class AssetDataAddEditComponent implements OnInit {
           });
 
           if (this.returnAppAssetObj != null) {
+            this.prevAssetCategoryCode =  this.returnAppAssetObj.AssetCategoryCode;
+
             for (let i = 0; i < this.items.length; i++) {
               if (this.items.controls[i] != null) {
                 this.items.controls[i]["controls"]["SerialNoValue"].value = this.returnAppAssetObj["SerialNo" + (i + 1)];
@@ -1023,7 +1026,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
       let reqByCode = new GenericObj();
       reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
-      this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).subscribe(
+      this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).toPromise().then(
         (response) => {
           this.resAssetMasterObj = response;
           this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
@@ -1036,7 +1039,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
       let ReqGetVendorLookup: GenericObj = new GenericObj();
       ReqGetVendorLookup.Code = this.returnAppAssetObj.SupplCode;
-      this.http.post(URLConstant.GetVendorForLookup, ReqGetVendorLookup).subscribe(
+      this.http.post(URLConstant.GetVendorForLookup, ReqGetVendorLookup).toPromise().then(
         (response) => {
           this.returnVendorObj = response;
           this.InputLookupSupplierObj.nameSelect = this.returnVendorObj.VendorName;
@@ -1100,7 +1103,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppAssetId = this.AppAssetId;
       this.appCollateralObj.Id = this.AppAssetId;
-      this.http.post(URLConstant.GetAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
+      this.http.post(URLConstant.GetAppCollateralByAppAssetId, this.appCollateralObj).toPromise().then(
         (response) => {
           this.returnAppCollateralObj = response;
           this.appCollateralObj.IsMainCollateral = this.returnAppCollateralObj.IsMainCollateral;
@@ -1790,105 +1793,118 @@ export class AssetDataAddEditComponent implements OnInit {
         return false;
       }
 
-      this.allAssetDataObj.LOBCode = CommonConstant.FL4W;
+      if(this.prevAssetCategoryCode != this.allAssetDataObj.AppAssetObj.AssetCategoryCode){
+        if (confirm(String.Format(ExceptionConstant.ASSET_CATEGORY_CHANGED_CONFIRMATION , this.AssetDataForm.controls["FullAssetName"].value))) {
+          this.submitEditAssetData();
+        }
+      }
+      else{
+        this.submitEditAssetData();
+      }
 
-      if (this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
-        if (this.originalAssetAccs && this.originalAssetAccs.length > 0) {
-          for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
-            if (!this.allAssetDataObj.IsAppAssetAccessoryChanged) {
-              for (const oriAcc of this.originalAssetAccs) {
-                if (newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode) {
-                  if (newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName) {
-                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                    break;
-                  }
-                  if (newAcc.SupplCode != oriAcc.SupplCode) {
-                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                    break;
-                  }
-                  if (newAcc.SupplName != oriAcc.SupplName) {
-                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                    break;
-                  }
-                  if (newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt) {
-                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                    break;
-                  }
-                  if (newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
-                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                    break;
-                  }
-                  if (newAcc.AccessoryNotes != oriAcc.AccessoryNotes) {
-                    this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-                    break;
-                  }
+    }
+  }
+
+  submitEditAssetData(){
+    this.allAssetDataObj.LOBCode = CommonConstant.FL4W;
+
+    if (this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
+      if (this.originalAssetAccs && this.originalAssetAccs.length > 0) {
+        for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
+          if (!this.allAssetDataObj.IsAppAssetAccessoryChanged) {
+            for (const oriAcc of this.originalAssetAccs) {
+              if (newAcc.AssetAccessoryCode == oriAcc.AssetAccessoryCode) {
+                if (newAcc.AssetAccessoryName != oriAcc.AssetAccessoryName) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.SupplCode != oriAcc.SupplCode) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.SupplName != oriAcc.SupplName) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.AccessoryPriceAmt != oriAcc.AccessoryPriceAmt) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.DownPaymentAmt != oriAcc.DownPaymentAmt) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
+                }
+                if (newAcc.AccessoryNotes != oriAcc.AccessoryNotes) {
+                  this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+                  break;
                 }
               }
             }
-            else {
-              break;
-            }
-          }
-        }
-        else {
-          this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
-        }
-      }
-
-      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
-        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
-          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.AssetDataForm.reset();
-                //this.router.navigate(["/Nap/AssetData/Paging"]);
-                this.assetValue.emit({ mode: 'paging' });
-              });
-          }
-        }
-        else if (!this.IsIntegrator) {
-
-          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.AssetDataForm.reset();
-                this.assetValue.emit({ mode: 'paging' });
-              });
           }
           else {
-            if (confirm("Submit data without Integrator ?")) {
-              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-                (response) => {
-                  this.toastr.successMessage(response["message"]);
-                  this.AssetDataForm.reset();
-                  this.assetValue.emit({ mode: 'paging' });
-                });
-            }
+            break;
           }
         }
-        else if (this.IsIntegrator) {
+      }
+      else {
+        this.allAssetDataObj.IsAppAssetAccessoryChanged = true;
+      }
+    }
+
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0" && this.IsSvcExist) {
+      if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+        if (confirm("Chassis No not filled, submit data without Integrator ?")) {
           this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
-              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
-                (response) => {
-                });
+              this.AssetDataForm.reset();
+              //this.router.navigate(["/Nap/AssetData/Paging"]);
+              this.assetValue.emit({ mode: 'paging' });
+            });
+        }
+      }
+      else if (!this.IsIntegrator) {
+
+        if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
+          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
               this.AssetDataForm.reset();
               this.assetValue.emit({ mode: 'paging' });
             });
         }
-      } else {
+        else {
+          if (confirm("Submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                this.assetValue.emit({ mode: 'paging' });
+              });
+          }
+        }
+      }
+      else if (this.IsIntegrator) {
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
+            this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+              (response) => {
+              });
             this.AssetDataForm.reset();
             this.assetValue.emit({ mode: 'paging' });
           });
       }
+    } else {
+      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.AssetDataForm.reset();
+          this.assetValue.emit({ mode: 'paging' });
+        });
     }
   }
+
   addGroup(appAssetAccessoriesObj, i) {
     if (appAssetAccessoriesObj == undefined) {
       return this.fb.group({

@@ -84,7 +84,7 @@ export class ExceptionConstant {
     public static SETTING_COMPONENT_RULE_FIRST = "Please setting rule {0}, component {1} for Year No {2}.";
     public static CANNOT_INPUT_TWO_EMERGENCY_CONTACT_MOU = "Cannot Add More Than 1 Emergency Contact";
     public static SALES_PERSON_NOT_AVAILABLE_IN_OFFICE = "Sales Person not available in {0}";
-
+    public static ASSET_CATEGORY_CHANGED_CONFIRMATION = "This {0}'s Category has changed, do you want to proceed ?";
     public static INSERT_ESTIMATION_EFFECTIVE_DATE = "Insert Estimation Effective Date";
     public static GRACE_PERIOD_MUST_SET = "Grace Period must be set";
     public static OTHER_BANK_ACCOUNT_ALREADY_DEFAULT = "Other bank account is already default";
