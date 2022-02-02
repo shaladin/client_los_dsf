@@ -69,7 +69,7 @@
         },
         {
           "type": "datepicker",
-          "name": "A.APV_DT",
+          "name": "APV.FINAL_APV_DT",
           "id": "approveDtgte",
           "value": "",
           "label": "Approve Date >=",
@@ -78,7 +78,7 @@
         },
         {
             "type": "datepicker",
-            "name": "A.APV_DT",
+            "name": "APV.FINAL_APV_DT",
             "id": "approveDtlte",
             "value": "",
             "label": "Approve Date <=",
