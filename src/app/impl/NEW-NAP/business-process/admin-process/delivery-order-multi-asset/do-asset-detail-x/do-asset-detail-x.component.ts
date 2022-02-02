@@ -283,7 +283,7 @@ export class DoAssetDetailXComponent implements OnInit {
     this.setAssetAttr();
     this.setCollateralRegistration();
 
-    this.httpClient.post(URLConstantX.EditAppAssetDOMultiAsset, this.reqAssetDataObj).subscribe(
+    this.httpClient.post(URLConstant.EditAppAssetDOMultiAssetV2, this.reqAssetDataObj).subscribe(
       (response) => {
         this.activeModalAsset.close(response);
       });
