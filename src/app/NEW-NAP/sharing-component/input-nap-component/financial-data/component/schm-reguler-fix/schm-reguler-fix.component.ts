@@ -158,10 +158,12 @@ export class SchmRegulerFixComponent implements OnInit {
       return;
     }
 
-    if (this.ParentForm.controls.DownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
-      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
+    /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+    if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
       return;
     }
+    */
     if (this.ValidateFee() == false) {
       return;
     }
@@ -201,6 +203,14 @@ export class SchmRegulerFixComponent implements OnInit {
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
             AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
           })
+
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
 
           this.ParentForm.patchValue({
             IsReCalculate: true
@@ -261,6 +271,15 @@ export class SchmRegulerFixComponent implements OnInit {
             CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
             AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
           })
+
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
+
           this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
           this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
           this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);

@@ -36,7 +36,7 @@ export class ExceptionConstant {
     public static ISSUED_DATE_CANNOT_MORE_THAN_EXP_DT = "Issued Date can not be more than Expired Date";
     public static DOWN_PAYMENT_MUST_LESS_THAN = "Down Payment Must Be Less Than ";
     public static DOWN_PAYMENT_MUST_MORE_THAN = "Down Payment Must Be More Than ";
-    public static TOTAL_PAID_AT_COY_MUST_LESS_THAN = "TDP Paid at MF Must Be Less Than ";
+    public static TOTAL_PAID_AT_COY_MUST_LESS_THAN = "TDP Paid at MF Must Be Less Than or Equal to ";
     public static DISCOUNT_AMOUNT_CANNOT_HIGHER_THAN = "Discount Amount can't be higher than ";
     public static CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN = "Capitalize Amount can't be higher than ";
     public static END_DATE_CANNOT_LOWER_THAN = "End Date can't be lower than ";
@@ -83,6 +83,7 @@ export class ExceptionConstant {
     public static CANNOT_INSURE_SAME_PERSON = "Cannot insure same person";
     public static SETTING_COMPONENT_RULE_FIRST = "Please setting rule {0}, component {1} for Year No {2}.";
     public static CANNOT_INPUT_TWO_EMERGENCY_CONTACT_MOU = "Cannot Add More Than 1 Emergency Contact";
+    public static SALES_PERSON_NOT_AVAILABLE_IN_OFFICE = "Sales Person not available in {0}";
 
     public static INSERT_ESTIMATION_EFFECTIVE_DATE = "Insert Estimation Effective Date";
     public static GRACE_PERIOD_MUST_SET = "Grace Period must be set";

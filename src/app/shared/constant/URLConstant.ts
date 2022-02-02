@@ -315,6 +315,7 @@ export class URLConstant {
   public static GetCountRefUserByRefEmpId = "/UserManagement/GetCountRefUserByRefEmpId";
   public static ResetPassword = "/UserManagement/ResetPassword";
   public static GetRefUserByUsername = environment.FoundationR3Url + "/v1" + "/RefUser/GetRefUserByUsername";
+  public static GetUserEmpByUsername = environment.FoundationR3Url + "/v1" + "/RefUser/GetUserEmpByUsername";
   public static GetRefUserByResetCode = environment.FoundationR3Url + "/v1" + "/RefUser/GetRefUserByResetCode";
   public static ResetPasswordByUsername = environment.FoundationR3Url + "/v1" + "/RefUser/ResetPasswordByUsername";
   public static ChangePasswordRefUserByUsername = environment.FoundationR3Url + "/v1" + "/RefUser/ChangePasswordRefUserByUsername";
@@ -601,6 +602,7 @@ export class URLConstant {
   public static GetListActiveVendorBankAccObjByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccObjByVendorEmpNo";
   public static GetListActiveVendorBankAccByVendorEmpId = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccByVendorEmpId";
   public static GetListActiveVendorBankAccByVendorEmpNo = environment.FoundationR3Url + "/v1" + "/VendorBankAcc/GetListActiveVendorBankAccByVendorEmpNo";
+  public static GetListActiveBankByVendorEmpNoAndVendorCode = environment.FoundationR3Url + "/v1" + "/VendorEmp/GetListActiveBankByVendorEmpNoAndVendorCode";
 
   //Life Ins
   public static AddAppLifeInsH = environment.losUrl + "/v1" + "/AppLifeIns/AddAppLifeInsH";
@@ -663,6 +665,8 @@ export class URLConstant {
   public static SubmitChangeMouReturn = environment.losUrl + "/v1" + "/ChangeMou/SubmitChangeMouReturn";
   public static SubmitChangeMouReturnV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitChangeMouReturn";
   public static GetChangeMouCustbyChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxId";
+  public static GetChangeMouCustbyChangeMouTrxNo = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxNo";
+
   //CHANGE MOU CUST COLLATERAL
   public static GetChangeMouCustCollateralDocByChangeMouCustCollateralId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDocByChangeMouCustCollateralId";
   public static GetChangeMouCustCollateralForChangeMouViewByMouCustId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralForChangeMouViewByMouCustId"
@@ -1070,6 +1074,7 @@ export class URLConstant {
 
   // App Collateral Doc
   public static GetListAppCollateralDocsByAppCollateralId = environment.losUrl + "/v1" + "/AppCollateralDoc/GetListAppCollateralDocsByAppCollateralId";
+  public static CheckAppCollateralDocValidityByListAppAssetId = environment.losUrl + "/v1" + "/AppCollateralDoc/CheckAppCollateralDocValidityByListAppAssetId";
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/SubmitAgrmntSignerData";
@@ -1931,5 +1936,10 @@ export class URLConstant {
 
   //Ref Tax Office
   public static GetRefTaxOfficeDetailByRefOfficeCode = environment.FoundationR3Url + "/v1" + "/RefTaxOffice/GetRefTaxOfficeDetailByRefOfficeCode";
+
+  //OTP
+  public static SendOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/SendOtp";
+  public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
+  public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
   
 }
