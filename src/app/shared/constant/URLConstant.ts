@@ -1074,6 +1074,7 @@ export class URLConstant {
 
   // App Collateral Doc
   public static GetListAppCollateralDocsByAppCollateralId = environment.losUrl + "/v1" + "/AppCollateralDoc/GetListAppCollateralDocsByAppCollateralId";
+  public static CheckAppCollateralDocValidityByListAppAssetId = environment.losUrl + "/v1" + "/AppCollateralDoc/CheckAppCollateralDocValidityByListAppAssetId";
 
   //AGRMNT SIGNER
   public static SubmitAgrmntSignerData = environment.losUrl + "/v1" + "/AgrmntSigner/SubmitAgrmntSignerData";
