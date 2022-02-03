@@ -88,7 +88,25 @@
             "restriction" : "lte",
             "datatype" : "date",
             "paramAssignment": 1 
-        }      
+        },
+        {
+            "type" : "datepicker",
+            "label" : "GoLive Date >=",
+            "name" : "LeadDtGteGoLive",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "GoLive Date =<",
+            "name" : "LeadDtLteGoLive",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }     
     ],
     "exportTypeList": [
         {
