@@ -124,7 +124,7 @@ export class DoAssetDetailComponent implements OnInit {
         this.InputLookupCityIssuerObj.nameSelect = appAsset.TaxCityIssuer;
         this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: appAsset.TaxCityIssuer };
 
-        if(appAsset.MrAssetConditionCode == "USED") { 
+        if(appAsset.MrAssetConditionCode == CommonConstant.AssetConditionUsed) { 
           this.isUsed = true;
           this.InputLookupCityIssuerObj.isRequired = true;
         }
@@ -214,7 +214,7 @@ export class DoAssetDetailComponent implements OnInit {
               IsValueNeeded: RefAssetDoc.IsValueNeeded,
               IsMandatoryNew: RefAssetDoc.IsMandatoryNew,
               IsMandatoryUsed: RefAssetDoc.IsMandatoryUsed,
-              MrCollateralConditionCode: CommonConstant.AssetConditionUsed,
+              MrCollateralConditionCode: this.isUsed == true? CommonConstant.AssetConditionUsed : CommonConstant.AssetConditionNew,
             })    
           });
           this.GenerateAppCollateralDocs(assetDocs);

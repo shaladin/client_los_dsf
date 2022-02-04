@@ -13,6 +13,21 @@
         },
         {
           "type": "text",
+          "label": "Salutation",
+          "property": "Salutation"
+        },
+        {
+          "type": "text",
+          "label": "Gelar Depan Nama",
+          "property": "CustPrefixName"
+        },
+        {
+          "type": "text",
+          "label": "Gelar Belakang Nama",
+          "property": "CustSuffixName"
+        },
+        {
+          "type": "text",
           "label": "Gender",
           "property": "GenderName"
         },
