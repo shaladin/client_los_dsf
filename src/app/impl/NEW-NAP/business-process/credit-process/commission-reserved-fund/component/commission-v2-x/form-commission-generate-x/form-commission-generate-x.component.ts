@@ -325,7 +325,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       let ReqGetListBankObj: ReqGetListBankByVendorEmpNoAndCodeObj = new ReqGetListBankByVendorEmpNoAndCodeObj();
       ReqGetListBankObj.VendorEmpNo = code;
       ReqGetListBankObj.VendorCode = this.parentForm.value[this.identifier][idx].SupplCode;
-      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, ReqGetListBankObj).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListActiveBankByVendorEmpNoAndVendorCode, ReqGetListBankObj).subscribe(
         (response) => {
           let len = response["ReturnObject"].length;
           for (let i = 0; i < len; i++) {

@@ -196,10 +196,12 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
+    /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
     if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
       return;
     }
+    */
     if (!this.IsTrialCalc) {
       this.calcStepUpStepDownObj = this.ParentForm.value;
       this.calcStepUpStepDownObj["IsRecalculate"] = false;
@@ -232,6 +234,15 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
             LifeInsCptlzAmt: response.LifeInsCptlzAmt
 
           })
+
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
+
           this.SetInstallmentTable();
           this.SetInstStepSchm();
           this.SetNeedReCalculate(false);
@@ -269,6 +280,15 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
             LifeInsCptlzAmt: response.LifeInsCptlzAmt
 
           })
+
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
+
           this.SetInstallmentTable();
           this.SetInstStepSchm();
           this.SetNeedReCalculate(false);

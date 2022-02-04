@@ -25,6 +25,8 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product
 import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/request/vendor/req-vendor.model';
 import { ResProdOfferingDObj } from 'app/shared/model/response/product/res-get-prod-offering-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
+import { ResponseJobDataPersonalObj } from 'app/shared/model/response-job-data-personal-obj.model';
 
 @Component({
   selector: 'app-edit-app-after-approval-asset-data',
@@ -56,6 +58,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     OwnerAreaCode4: ['', Validators.maxLength(50)],
     OwnerCity: ['', Validators.maxLength(50)],
     OwnerZipcode: ['', Validators.maxLength(50)],
+    OwnerProfessionCode: [''],
+    MrOwnerTypeCode: [''],
     AppAssetAttrObjs: this.fb.array([]),
     InscoBranchCode: [''],
     InscoBranchName: [''],
@@ -71,7 +75,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   AppObj: NapAppModel;
   AppId: number;
   AppCustObj: AppCustObj;
-
+  AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
+  
   CustType: string = "";
   IdTypeObj: Array<KeyValueObj>;
   refMasterObj : RefMasterObj = new RefMasterObj();
@@ -82,6 +87,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
   inputAddressObjForOwner: InputAddressObj;
+  InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
   copyFromAppCustAddrForOwner: string;
   ListAttrAnswer = [];
   AppAssetAttrObj: Array<AppAssetAttrObj>;
@@ -99,6 +105,10 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   SerialNoLabelMandatory:Array<boolean> = new Array();
   ListAgrStepToCheckMandatory: Array<string> = new Array();
   IsCheckSerialMandatory: boolean = false;
+  OwnerTypeObj: Array<KeyValueObj> = new Array();
+  OwnerProfessionObj: Array<KeyValueObj> = new Array();
+
+  isFromDB = true;
 
   constructor(
     private fb: FormBuilder,
@@ -106,6 +116,11 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     private http: HttpClient) { }
 
   async ngOnInit(): Promise<void> {
+
+    this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
+    this.InputLookupProfessionObj.isReady = true;
 
     this.inputAddressObjForOwner = new InputAddressObj();
     this.inputAddressObjForOwner.showSubsection = false;
@@ -115,6 +130,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.ownerAddrObj = new AddrObj();
     this.AppId = this.AppAssetObj.AppId;
 
+    await this.bindOwnerTypeObj();
+    await this.bindCompanyTypeObj();
     await this.SetAssetTypeData()
     await this.SetAssetInformation()
     await this.GetAppData();
@@ -125,13 +142,18 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.setAddrOwnerObj();
     await this.GetListAddr();
     await this.SetOwnerData();
+    await this.GetAppCust();
+    await this.GetAppCustPersonalJobData();
     this.GenerataAppAssetAttr(false);
     await this.bindInscoBranchObj();
     await this.getInsuranceData();
     await this.bindAppInsObj();
+    
     await this.setFormValidators();
 
-    if (this.EditAppAssetForm.controls['SelfOwner'].value) this.SelfOwnerChange({ 'checked': this.EditAppAssetForm.controls['SelfOwner'].value })
+    if (this.EditAppAssetForm.controls['SelfOwner'].value) this.SelfOwnerChange({ 'checked': this.EditAppAssetForm.controls['SelfOwner'].value }, this.EditAppAssetForm.controls['MrOwnerTypeCode'].value); 
+
+    if (this.EditAppAssetForm.controls['MrOwnerTypeCode'].value) this.OwnerTypeChange(this.EditAppAssetForm.controls['MrOwnerTypeCode'].value, !this.isFromDB); 
   }
 
   async SetAssetTypeData()
@@ -276,6 +298,16 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     );
   }
 
+  async GetAppCustPersonalJobData() {
+    await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustObj.AppCustId }).toPromise().then(
+      (response) => {
+        if (response.AppCustPersonalJobDataObj != null) {
+          this.AppCustPersonalJobData = response.AppCustPersonalJobDataObj;
+        }
+      }
+    );
+  }
+  
   bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -318,7 +350,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
   }
 
-  async SelfOwnerChange(event) {
+  async SelfOwnerChange(event, OwnerType: string = this.CustType) {
     if (event.checked == true) {
       this.EditAppAssetForm.patchValue({
         OwnerName: this.AppCustObj.CustName,
@@ -334,6 +366,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
         OwnerZipcode: this.AddrLegalObj[0].Zipcode,
         OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
         OwnerAddrType: CommonConstant.AddrTypeLegal,
+        OwnerProfessionCode: this.AppCustPersonalJobData.MrProfessionCode,
+        MrOwnerTypeCode: OwnerType
       });
       this.inputFieldOwnerAddrObj = new InputFieldObj();
       this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
@@ -348,8 +382,11 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
       this.inputAddressObjForOwner.default = this.ownerAddrObj;
       this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
+      this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
+      this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName };
 
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = true;
+      this.InputLookupProfessionObj.isDisable = true;
       this.EditAppAssetForm.controls["OwnerName"].disable();
       this.EditAppAssetForm.controls["MrIdTypeCode"].disable();
       this.EditAppAssetForm.controls["OwnerIdNo"].disable();
@@ -357,8 +394,10 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       this.EditAppAssetForm.controls["OwnerMobilePhnNo"].disable();
       this.EditAppAssetForm.controls["ownerData"].disable();
       this.EditAppAssetForm.controls["OwnerAddrType"].disable();
+      this.EditAppAssetForm.controls["MrOwnerTypeCode"].disable();
     } else {
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
+      this.InputLookupProfessionObj.isDisable = false;
       this.EditAppAssetForm.controls["OwnerName"].enable();
       this.EditAppAssetForm.controls["MrIdTypeCode"].enable();
       this.EditAppAssetForm.controls["OwnerIdNo"].enable();
@@ -366,7 +405,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       this.EditAppAssetForm.controls["OwnerMobilePhnNo"].enable();
       this.EditAppAssetForm.controls["ownerData"].enable();
       this.EditAppAssetForm.controls["OwnerAddrType"].enable();
-
+      this.EditAppAssetForm.controls["MrOwnerTypeCode"].enable();
     };
   }
 
@@ -407,7 +446,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       Id: this.AppId,
     };
     await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
-      (response: AppCustObj) => {
+      async (response: AppCustObj) => {
         this.AppCustObj = response['AppCustObj'];
         if(response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'] != null)  
           this.AppCustObj.MobilePhnNo1 = response['AppCustPersonalObj']['MobilePhnNo1'];
@@ -417,6 +456,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
           this.EditAppAssetForm.controls.MrIdTypeCode.setValidators([Validators.required, Validators.maxLength(50)]);
           this.EditAppAssetForm.controls.MrIdTypeCode.updateValueAndValidity();
         }
+        await this.OwnerTypeChange(this.CustType, true);
       }
     );
   }
@@ -430,6 +470,12 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
           emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
       }
     );
+  }
+
+  GetProfession(event) {
+    this.EditAppAssetForm.patchValue({
+      OwnerProfessionCode: event.ProfessionCode
+    });
   }
 
   async SetOwnerData() {
@@ -447,6 +493,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       OwnerCity: this.AppCollateralRegistrationObj.OwnerCity,
       OwnerZipcode: this.AppCollateralRegistrationObj.OwnerZipcode,
       OwnerMobilePhnNo: this.AppCollateralRegistrationObj.OwnerMobilePhnNo,
+      OwnerProfessionCode: this.AppCollateralRegistrationObj.OwnerProfessionCode,
+      MrOwnerTypeCode: this.AppCollateralRegistrationObj.MrOwnerTypeCode
     });
   }
 
@@ -675,6 +723,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
         OwnerAreaCode4: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode4.value,
         OwnerCity: this.EditAppAssetForm.controls.ownerData['controls'].City.value,
         OwnerZipcode: this.EditAppAssetForm.controls.OwnerZipcode.value,
+        MrOwnerTypeCode: this.EditAppAssetForm.controls.MrOwnerTypeCode.value,
+        OwnerProfessionCode: this.EditAppAssetForm.controls.OwnerProfessionCode.value
       },
       AppAssetAttrObjs: [],
       AppInsObj:
@@ -720,6 +770,60 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     }
 
     this.outputPage.emit({ AppAssetRelatedOutput: this.AppAssetRelatedOutput, pageType: "submitAssetData" });
+  }
+
+  async bindOwnerTypeObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.OwnerTypeObj = response[CommonConstant.ReturnObj];
+        this.EditAppAssetForm.patchValue({
+          MrOwnerTypeCode : this.CustType
+        });
+      }
+    );
+  }
+
+  async bindCompanyTypeObj(){
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+      (response) => {
+        this.OwnerProfessionObj = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
+    if(OwnerType == CommonConstant.CustTypePersonal){
+      if(IsOwnerTypeChanged){
+        this.EditAppAssetForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+
+        this.InputLookupProfessionObj.nameSelect = "";
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
+      }else{
+        let reqByCode: GenericObj = new GenericObj();
+        reqByCode.Code = this.AppCollateralRegistrationObj.OwnerProfessionCode;
+        
+        await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
+          (response) =>{
+            this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
+            this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response["ProfessionName"] };
+          }
+        );
+      }
+    }else{
+      if(IsOwnerTypeChanged){
+        this.EditAppAssetForm.patchValue({
+          OwnerProfessionCode : ""
+        });
+      }else{
+        this.EditAppAssetForm.patchValue({
+          OwnerProfessionCode : this.AppCollateralRegistrationObj.OwnerProfessionCode
+        });
+      }
+    }
   }
 
 }

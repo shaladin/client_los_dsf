@@ -52,6 +52,12 @@ import { ViewPurchaseOrderDetailComponent } from "./view-purchase-order-detail/v
 import { ViewPurchaseOrderNewListComponent } from "./view-purchase-order-new-list/view-purchase-order-new-list.component";
 import { ViewPurchaseOrderNewDetailComponent } from "./view-purchase-order-new-detail/view-purchase-order-new-detail.component";
 import { ViewPurchaseOrderNewListXComponent } from 'app/impl/view-enhancing/agr-view/view-purchase-order-new-list/view-purchase-order-new-list-x.component';
+import {
+  ViewPurchaseOrderListXComponent
+} from 'app/impl/view-enhancing/agr-view/view-purchase-order-list/view-purchase-order-list-x.component';
+import {
+  ViewPurchaseOrderDetailXComponent
+} from 'app/impl/view-enhancing/agr-view/view-purchase-order-detail/view-purchase-order-detail-x.component';
 
 @NgModule({
     imports: [
@@ -111,6 +117,8 @@ import { ViewPurchaseOrderNewListXComponent } from 'app/impl/view-enhancing/agr-
         ViewPurchaseOrderNewListComponent,
         ViewPurchaseOrderNewDetailComponent,
         ViewPurchaseOrderNewListXComponent,
+        ViewPurchaseOrderListXComponent,
+        ViewPurchaseOrderDetailXComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -121,7 +129,8 @@ import { ViewPurchaseOrderNewListXComponent } from 'app/impl/view-enhancing/agr-
         ViewDeliveryOrderAssetSingleComponent,
         ViewPurchaseOrderDetailComponent,
         ViewPurchaseOrderNewDetailComponent,
-        ViewInsuranceDataDetailXComponent
+        ViewInsuranceDataDetailXComponent,
+        ViewPurchaseOrderDetailXComponent,
     ],
     exports: [
         AgrMainInfoXComponent

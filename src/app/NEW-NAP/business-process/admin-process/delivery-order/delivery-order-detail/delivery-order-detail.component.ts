@@ -170,7 +170,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
         this.InputLookupCityIssuerObj.nameSelect = this.appAssetObj.TaxCityIssuer;
         this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.appAssetObj.TaxCityIssuer };
 
-        if(this.MrAssetConditionCode == "USED") { 
+        if(this.MrAssetConditionCode == CommonConstant.AssetConditionUsed) { 
           this.isUsed = true;
           this.InputLookupCityIssuerObj.isRequired = true;
         }
@@ -519,7 +519,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
               IsValueNeeded: RefAssetDoc.IsValueNeeded,
               IsMandatoryNew: RefAssetDoc.IsMandatoryNew,
               IsMandatoryUsed: RefAssetDoc.IsMandatoryUsed,
-              MrCollateralConditionCode: CommonConstant.AssetConditionUsed,
+              MrCollateralConditionCode: this.isUsed == true? CommonConstant.AssetConditionUsed : CommonConstant.AssetConditionNew,
             })    
           });
           this.GenerateAppCollateralDocs(assetDocs);
