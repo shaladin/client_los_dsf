@@ -545,7 +545,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
       return;
     }
 
-    if(this.CheckSupplEmpComm()) return;
+    this.SetSupplEmpComm();
 
     this.ApprovalCreateOutput = this.createComponent.output();
 
@@ -569,16 +569,10 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
     );
   }
 
-  CheckSupplEmpComm(){
+  SetSupplEmpComm(){
     var SupplEmpCommList = (this.EditAppForm.get("SupplierEmpCommissionList") as FormArray).value;
 
     for (let i = 0; i < SupplEmpCommList.length; i++) {
-      let foundDupSupplEmp = SupplEmpCommList.find(x => x.CommissionRecipientRefNo == SupplEmpCommList[i].CommissionRecipientRefNo && x.AgrmntCommissionHId != SupplEmpCommList[i].AgrmntCommissionHId);
-      if(foundDupSupplEmp != undefined){
-        this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_SUPPL_EMP, foundDupSupplEmp["CommissionRecipientRefNoDesc"]));
-        return true;
-      }
-      
       let editedIdx = this.listEditedCommissionData.findIndex(x => x.AgrmntCommissionHId == SupplEmpCommList[i].AgrmntCommissionHId);
       let listBankSupplier = this.listTempVba[SupplEmpCommList[i].AgrmntCommissionHId];
       let selectedVba = listBankSupplier.find(x => x.VendorBankAccId == SupplEmpCommList[i].CurrentVendorBankAccId);
@@ -598,6 +592,5 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         this.listEditedCommissionData.push(SupplEmpCommList[i])
       }
     }
-    return false;
   }
 }
