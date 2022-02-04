@@ -56,6 +56,8 @@
                       {{item.Value}}
                     </option>
                   </select>
+                  <lib-uc-show-errors [control]="JobDataForm.controls.MrJobPositionCode" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
                 <!-- <label class="col-md-2" translate>Company Scale</label>
                 <div class="col-md-4">
@@ -77,6 +79,8 @@
                         {{item.Value}}
                       </option>
                     </select>
+                    <lib-uc-show-errors [control]="JobDataForm.controls.MrJobStatCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
 

@@ -133,16 +133,15 @@ export class DoAssetDetailXComponent implements OnInit {
         var appCollateral = response["AppCollateralDoc"];
         appAsset.TempRegisLettDt = this.datePipe.transform(appAsset.TempRegisLettDt, "yyyy-MM-dd");
         appAsset.TaxIssueDt = this.datePipe.transform(appAsset.TaxIssueDt, "yyyy-MM-dd");
-
+        
         this.InputLookupCityIssuerObj.nameSelect = appAsset.TaxCityIssuer;
         this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: appAsset.TaxCityIssuer };
 
-        if(appAsset.MrAssetConditionCode == "USED") {
+        if(appAsset.MrAssetConditionCode == CommonConstant.AssetConditionUsed) { 
           this.isUsed = true;
           this.InputLookupCityIssuerObj.isRequired = true;
-
         }
-
+        
         await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: appAsset.AssetTypeCode }).toPromise().then(
           (response: GenericListObj) => {
             while (this.listItem.length) {
@@ -176,8 +175,8 @@ export class DoAssetDetailXComponent implements OnInit {
                 }
               }
             }
-          });
-
+        });
+          
         this.DOAssetDetail.patchValue({
           ...appAsset
         });
@@ -186,13 +185,13 @@ export class DoAssetDetailXComponent implements OnInit {
         await this.GetAppData();
 
         // jika first input, ambil isian collateral doc by type
-        if(!appCollateral || appCollateral.length <= 0)
+        if(!appCollateral || appCollateral.length <= 0) 
           this.GenerateDefaultAssetDocs(appAsset.AssetTypeCode);
         else
           this.GenerateAppCollateralDocs(appCollateral);
       }
     );
-
+    
 
     console.log(this.DOAssetDetail.controls);
     //INTERNAL-0217 - hide rapindo di menu DO
@@ -230,8 +229,8 @@ export class DoAssetDetailXComponent implements OnInit {
               IsValueNeeded: RefAssetDoc.IsValueNeeded,
               IsMandatoryNew: RefAssetDoc.IsMandatoryNew,
               IsMandatoryUsed: RefAssetDoc.IsMandatoryUsed,
-              MrCollateralConditionCode: CommonConstant.AssetConditionUsed,
-            })
+              MrCollateralConditionCode: this.isUsed == true? CommonConstant.AssetConditionUsed : CommonConstant.AssetConditionNew,
+            })    
           });
           this.GenerateAppCollateralDocs(assetDocs);
         }
@@ -243,7 +242,7 @@ export class DoAssetDetailXComponent implements OnInit {
   GenerateAppCollateralDocs(appCollateralDocs)
   {
     var formArray = this.DOAssetDetail.get('DOAssetDocList') as FormArray;
-
+    
     for (let i = 0; i < appCollateralDocs.length; i++) {
       var isMandatory = false;
       if(appCollateralDocs[i].MrCollateralConditionCode == CommonConstant.AssetConditionNew){
@@ -284,9 +283,9 @@ export class DoAssetDetailXComponent implements OnInit {
     this.setCollateralRegistration();
 
     this.httpClient.post(URLConstant.EditAppAssetDOMultiAssetV2, this.reqAssetDataObj).subscribe(
-      (response) => {
-        this.activeModalAsset.close(response);
-      });
+    (response) => {
+      this.activeModalAsset.close(response);
+    });
   }
 
   setAsset(formData){
@@ -405,12 +404,12 @@ export class DoAssetDetailXComponent implements OnInit {
 
   GenerataAppAssetAttr(isRefresh: boolean) {
     let GenObj =
-      {
-        AppAssetId: this.AppAssetId,
-        AssetTypeCode: this.AppAssetTypeCode,
-        AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-        IsRefresh: isRefresh
-      };
+    {
+      AppAssetId: this.AppAssetId,
+      AssetTypeCode: this.AppAssetTypeCode,
+      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
+      IsRefresh: isRefresh
+    };
     this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
       (response) => {
         this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
@@ -462,7 +461,7 @@ export class DoAssetDetailXComponent implements OnInit {
 
     return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
   }
-
+  
   private setFbGroupAssetAttribute(appAssetAttrObj: AppAssetAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>) {
     let tempFB = this.fb.group({
       No: [i],
