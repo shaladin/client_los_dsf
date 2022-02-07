@@ -267,4 +267,7 @@ export class URLConstantX {
   public static GetR2CustExposureByCustNo = environment.FoundationR3Url + "/v1" + "/CustX/GetR2CustExposureByCustNo";
   public static GetR2CustGroupExposureByCustNo = environment.FoundationR3Url + "/v1" + "/CustX/GetR2CustGroupExposureByCustNo";
 
+  //App Agrmnt Cancellation
+  public static AddAppAgrmntCancelV2_1X = environment.losUrl + "/v2.1" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
+
 }

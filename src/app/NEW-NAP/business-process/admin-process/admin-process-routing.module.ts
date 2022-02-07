@@ -70,6 +70,7 @@ import { DeliveryOrderMultiAssetXComponent } from 'app/impl/NEW-NAP/business-pro
 import { CustConfirmationPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/cust-confirmation/cust-confirmation-paging/cust-confirmation-paging-x.component';
 import { OfferingValidityCheckingRequestPagingComponent } from './offering-validity-checking-request/offering-validity-checking-request-paging/offering-validity-checking-request-paging.component';
 import { OfferingValidityCheckingRequestDetailComponent } from './offering-validity-checking-request/offering-validity-checking-request-detail/offering-validity-checking-request-detail.component';
+import { ApplicationAgreementCancellationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail-x.component';
 
 const routes: Routes = [
   {
@@ -543,7 +544,14 @@ const routes: Routes = [
         data: {
           title: 'Customer Confirmation Paging'
         }
-      }
+      },
+      {
+        path: PathConstantX.AGRMNT_CANCEL_DETAIL,
+        component: ApplicationAgreementCancellationDetailXComponent,
+        data: {
+          title: 'Agreement Cancellation Detail'
+        }
+      },
     ]
   }
 ];

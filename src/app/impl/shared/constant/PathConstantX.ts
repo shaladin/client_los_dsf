@@ -1,4 +1,4 @@
-import {PathConstant} from 'app/shared/constant/PathConstant';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 export class PathConstantX {
 
@@ -19,7 +19,7 @@ export class PathConstantX {
   public static COY_X = "CompanyX";
   public static INSURANCE_ORDER_X = "InsuranceOrder"
   public static REVIEW_FACTORING_X = "ReviewFactoringX";
-  public static APPROVAL_FACTORING_X ="ApprovalFactoringX";
+  public static APPROVAL_FACTORING_X = "ApprovalFactoringX";
   public static NAP1_X = 'NAP1X';
   public static VIEW = 'ViewX';
   public static REQ_X = "RequestX";
@@ -60,7 +60,7 @@ export class PathConstantX {
   public static NAP1_PAGING = PathConstant.NAP1 + '/' + PathConstantX.PAGING;
   public static NAP1_ADD = PathConstant.NAP1 + '/' + PathConstantX.ADD;
 
-  public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X; 
+  public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X;
   public static DO_MULTI_ASSET_PAGING_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.PAGING;
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
   public static CUST_CONFIRM_PAGING_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
@@ -178,9 +178,9 @@ export class PathConstantX {
   public static COPY_CANCEL_APP_CROSS_BL_DETAIL_X = PathConstant.COPY_CANCEL_APP_CROSS_BL + "/" + PathConstantX.DETAIL_X;
   //endregion
 
-    //#region Nap-Sharing-Page
-    public static NAP_SIMPLE_LEAD_DETAIL_X = PathConstant.NAP_SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
-    //#endregion
+  //#region Nap-Sharing-Page
+  public static NAP_SIMPLE_LEAD_DETAIL_X = PathConstant.NAP_SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
+  //#endregion
 
 
   //region LEAD
@@ -191,6 +191,9 @@ export class PathConstantX {
   public static CUST_SYNC = "CustSync";
   public static CUST_SYNC_PAGING = PathConstantX.CUST_SYNC + "/" + PathConstantX.PAGING;
   //#endregion Cust Sync
+
+  //app agrmnt cancellation
+  public static AGRMNT_CANCEL_DETAIL = PathConstant.AGRMNT_CANCEL + "/" + PathConstantX.DETAIL_X;
 }
 
 
