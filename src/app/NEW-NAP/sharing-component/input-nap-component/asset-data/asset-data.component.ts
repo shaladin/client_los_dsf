@@ -1425,8 +1425,9 @@ export class AssetDataComponent implements OnInit {
     };
   }
 
-  async SelfOwnerChange(event: any, OwnerType: string = this.CustType) {
-    if (event.checked == true) {
+  async SelfOwnerChange(isEdit: boolean = false, OwnerType: string = this.CustType) {
+    let isChecked: boolean = this.AssetDataForm.get("SelfOwner").value;
+    if (isChecked == true) {
       this.AssetDataForm.patchValue({
         OwnerName: this.AppCustObj.CustName,
         MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
@@ -1441,25 +1442,29 @@ export class AssetDataComponent implements OnInit {
         OwnerZipcode: this.AddrLegalObj[0].Zipcode,
         OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
         OwnerAddrType: CommonConstant.AddrTypeLegal,
-        OwnerProfessionCode: OwnerType == CommonConstant.CustTypePersonal ? this.AppCustPersonalJobData.MrProfessionCode : this.AppCustCoyObj.MrCompanyTypeCode,
         MrOwnerTypeCode: OwnerType
       });
 
-      this.inputFieldOwnerAddrObj = new InputFieldObj();
-      this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
-      this.ownerAddrObj = new AddrObj();
-      this.ownerAddrObj.Addr = this.AddrLegalObj[0].Addr;
-      this.ownerAddrObj.AreaCode1 = this.AddrLegalObj[0].AreaCode1;
-      this.ownerAddrObj.AreaCode2 = this.AddrLegalObj[0].AreaCode2;
-      this.ownerAddrObj.AreaCode3 = this.AddrLegalObj[0].AreaCode3;
-      this.ownerAddrObj.AreaCode4 = this.AddrLegalObj[0].AreaCode4;
-      this.ownerAddrObj.City = this.AddrLegalObj[0].City;
-      this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
-      this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
-      this.inputAddressObjForOwner.default = this.ownerAddrObj;
-      this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
-      this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
-      this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName };
+      if (!isEdit) {
+        this.AssetDataForm.patchValue({
+          OwnerProfessionCode: OwnerType == CommonConstant.CustTypePersonal ? this.AppCustPersonalJobData.MrProfessionCode : this.AppCustCoyObj.MrCompanyTypeCode
+        });
+        this.inputFieldOwnerAddrObj = new InputFieldObj();
+        this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
+        this.ownerAddrObj = new AddrObj();
+        this.ownerAddrObj.Addr = this.AddrLegalObj[0].Addr;
+        this.ownerAddrObj.AreaCode1 = this.AddrLegalObj[0].AreaCode1;
+        this.ownerAddrObj.AreaCode2 = this.AddrLegalObj[0].AreaCode2;
+        this.ownerAddrObj.AreaCode3 = this.AddrLegalObj[0].AreaCode3;
+        this.ownerAddrObj.AreaCode4 = this.AddrLegalObj[0].AreaCode4;
+        this.ownerAddrObj.City = this.AddrLegalObj[0].City;
+        this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.AddrLegalObj[0].Zipcode;
+        this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AddrLegalObj[0].Zipcode };
+        this.inputAddressObjForOwner.default = this.ownerAddrObj;
+        this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
+        this.InputLookupProfessionObj.nameSelect = this.AppCustPersonalJobData.MrProfessionName;
+        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.AppCustPersonalJobData.MrProfessionName };
+      }
 
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = true;
       this.InputLookupProfessionObj.isDisable = true;
@@ -1613,7 +1618,7 @@ export class AssetDataComponent implements OnInit {
             });
 
             await this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
-            await this.SelfOwnerChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF")}, MrOwnerTypeCode);
+            await this.SelfOwnerChange(true, MrOwnerTypeCode);
             await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
           }
 
@@ -2114,6 +2119,7 @@ export class AssetDataComponent implements OnInit {
     this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, { Code: this.districtObj.ProvDistrictCode }).subscribe(
       (response: any) => {
         this.DistrictObj = response;
+        if(this.DistrictObj.RefProvDistrictId == 0) return;
         this.AssetDataForm.patchValue({
           TaxCityIssuer: this.DistrictObj.ProvDistrictCode
         });
@@ -2892,6 +2898,9 @@ export class AssetDataComponent implements OnInit {
   }
 
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
+    let ownerCode: string = "";
+    if (this.returnAppCollateralRegistObj) ownerCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
+
     if(OwnerType == CommonConstant.CustTypePersonal){
       this.InputLookupProfessionObj.isRequired = false;
       this.AssetDataForm.controls.OwnerProfessionCode.clearValidators();
@@ -2905,7 +2914,7 @@ export class AssetDataComponent implements OnInit {
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
       }else{
         let reqByCode: GenericObj = new GenericObj();
-        reqByCode.Code = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
+        reqByCode.Code = ownerCode;
         
         await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
           (response) =>{
@@ -2924,7 +2933,7 @@ export class AssetDataComponent implements OnInit {
         });
       }else{
         this.AssetDataForm.patchValue({
-          OwnerProfessionCode : this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode
+          OwnerProfessionCode : ownerCode
         });
       }
     }
