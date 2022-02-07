@@ -4,7 +4,7 @@
   </div>
   <h2 class="text-title">Choose Your Role </h2>
   <form class="form form-group form-horizontal" name="enjiForm" [formGroup]="RolepickForm" #enjiForm="ngForm" novalidate
-    (ngSubmit)="enjiForm.form.valid && chooseRole()">
+    (ngSubmit)="enjiForm.form.valid">
 
     <div class="ml-5 mr-5">
       <div class="text-left">
@@ -27,7 +27,7 @@
 
     <div *ngIf="listRole.length > 1 || listRole[0].Roles.length > 1" class="form-group row mt-5">
       <div class="col-md-12">
-        <button type="submit" class="custom-button-adins">Choose Role</button>
+        <button type="button" class="custom-button-adins" (click)="chooseRole()">Choose Role</button>
       </div>
     </div>
   </form>
