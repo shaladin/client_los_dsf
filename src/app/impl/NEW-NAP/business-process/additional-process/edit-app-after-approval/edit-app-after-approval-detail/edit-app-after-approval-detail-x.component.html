@@ -83,7 +83,7 @@
                 </lib-ucSubsection>
                 <div formArrayName="SupplierCommissionList">
                   <div class="form-body" id="SupplierCommission">
-                    <div *ngFor="let CommData of EditAppForm.controls['SupplierCommissionList']['controls']; let i = index" [formGroupName]="i">
+                    <div *ngFor="let CommData of EditAppForm.controls['SupplierCommissionList']['controls']; let i = index">
                       <div [formGroupName]="i" class="row">
                         <div class="col-md-6">
                           <div class="row">
@@ -91,12 +91,16 @@
                             <label class="col-md-6 adInsLabel"> {{CommData.controls.CommissionRecipientRefNoDesc.value}} </label>
                           </div>
                           <div class="row">
-                            <label class="col-md-6 adInsLabel"> Supplier Bank Account</label>
+                            <label class="col-md-6 adins-required-label"> Supplier Bank Account</label>
                             <div class="col-md-6">
-                                <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPL')" [value]="CommData.controls.CurrentVendorBankAccId.value">
-                                  <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" 
+                                <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPL')" formControlName="CurrentVendorBankAccId"
+                                        [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppForm['controls'].SupplierCommissionList['controls'][i]['controls'].CurrentVendorBankAccId.invalid }">
+                                  <option value=""> --Select One-- </option>
+                                  <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]"
                                    [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
                                 </select>
+                              <lib-uc-show-errors [control]="EditAppForm['controls'].SupplierCommissionList['controls'][i]['controls'].CurrentVendorBankAccId" [submit]="enjiForm.submitted">
+                              </lib-uc-show-errors>
                             </div>
                           </div>
                           <div class="row">
@@ -114,7 +118,7 @@
                 <div formArrayName="SupplierEmpCommissionList">
                   <div class="form-body" id="SupplierEmpCommission">
                     <div *ngFor="let CommData of EditAppForm.controls['SupplierEmpCommissionList']['controls']; let i = index">
-                      <div class="row">
+                      <div [formGroupName]="i" class="row">
                         <div class="col-md-6">
                           <div class="row">
                             <label class="col-md-6 adInsLabel"> Supplier Employee Name</label>
@@ -136,11 +140,15 @@
                             <label class="col-md-6 adInsLabel"> {{CommData.controls.SupplierName.value}} </label>
                           </div>
                           <div class="row">
-                            <label class="col-md-6 adInsLabel"> Supplier Employee Bank Account</label>
+                            <label class="col-md-6 adins-required-label"> Supplier Employee Bank Account</label>
                             <div class="col-md-6">
-                              <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPLEMP')" [value]="CommData.controls.CurrentVendorBankAccId.value">
-                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                              <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPLEMP')" formControlName="CurrentVendorBankAccId"
+                                      [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppForm['controls'].SupplierEmpCommissionList['controls'][i]['controls'].CurrentVendorBankAccId.invalid }">
+                                <option value=""> --Select One-- </option>
+                                <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
                               </select>
+                              <lib-uc-show-errors [control]="EditAppForm['controls'].SupplierEmpCommissionList['controls'][i]['controls'].CurrentVendorBankAccId" [submit]="enjiForm.submitted">
+                              </lib-uc-show-errors>
                             </div>
                           </div>
                           <div class="row">
@@ -158,18 +166,22 @@
                 </lib-ucSubsection>
                 <div class="form-body" id="ReferantorCommission">
                   <div *ngFor="let CommData of EditAppForm.controls['SupplierReferantorCommissionList']['controls']; let i = index">
-                    <div class="row">
+                    <div [formGroupName]="i" class="row">
                       <div class="col-md-6">
                         <div class="row">
                           <label class="col-md-6 adInsLabel"> Referantor Name</label>
                           <label class="col-md-6 adInsLabel"> {{CommData.controls.CommissionRecipientRefNoDesc.value}} </label>
                         </div>
                         <div class="row">
-                          <label class="col-md-6 adInsLabel"> Referantor Bank Account</label>
+                          <label class="col-md-6 adins-required-label"> Referantor Bank Account</label>
                           <div class="col-md-6">
-                            <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'REF')" [value]="CommData.controls.CurrentVendorBankAccId.value">
+                            <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'REF')" formControlName="CurrentVendorBankAccId"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppForm['controls'].SupplierReferantorCommissionList['controls'][i]['controls'].CurrentVendorBankAccId.invalid }">
+                              <option value=""> --Select One-- </option>
                               <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
                             </select>
+                            <lib-uc-show-errors [control]="EditAppForm['controls'].SupplierReferantorCommissionList['controls'][i]['controls'].CurrentVendorBankAccId" [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
                           </div>
                         </div>
                         <div class="row">
@@ -181,7 +193,7 @@
                   </div>
                 </div>
 
-              
+
 
               <lib-ucSubsection [id]= "" [title]="'Notes'" [panel]="'divNotes'">
               </lib-ucSubsection>
@@ -236,7 +248,7 @@
                   </div>
                 </div>
               </div>
-              
+
             </div>
 
             <div *ngIf="isEditAssetData">
@@ -253,7 +265,7 @@
               <app-edit-app-after-approval-purchase-order-data-x [PurchaseOrderHObj]="selectedPurchaseOrderHObj" [CustBankAccList]="CustBankAccList" [LobCode]="LobCode"
                 (outputPage)="getPage($event)"></app-edit-app-after-approval-purchase-order-data-x>
             </div>
-          
+
           </form>
         </div>
       </div>

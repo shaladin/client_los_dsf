@@ -64,7 +64,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
   InputObj: UcInputRFAObj;
   ApprovalCreateOutput: any;
   listTempVba = new Array();
-  arrAddCrit = new Array();;
+  arrAddCrit = new Array();
   IsPOEdited: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   DDLReason;
@@ -153,7 +153,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     let addCritVendor = new CriteriaObj();
     await this.http.post(URLConstant.GetAppAssetByAgrmntId, reqObj).toPromise().then(
       (response) => {
-        
+
         addCritVendor.propName = "V.VENDOR_CODE";
         addCritVendor.restriction = AdInsConstant.RestrictionEq;
         addCritVendor.value = response["SupplCode"];
@@ -186,10 +186,10 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
         AgrmntCommissionHId: [currentAgrmntCommissionHId],
         CommissionRecipientRefNoDesc: [this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].CommissionRecipientRefNoDesc],
         TotalCommissionAmt: [this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].TotalCommissionAmt],
-        CurrentVendorBankAccId: []
+        CurrentVendorBankAccId: ["", [Validators.required]]
       });
 
-      var vendorBankAccObj = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].VendorBankAccObjs;
+      const vendorBankAccObj = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].VendorBankAccObjs;
 
       this.listTempVba[currentAgrmntCommissionHId] = vendorBankAccObj;
 
@@ -200,7 +200,9 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       let currentVba = vendorBankAccObj.find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo &&
         x.BankAccountName == currentBankAccountName);
 
-      formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
+      if(currentVba){
+        formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
+      }
 
       (this.EditAppForm.get("SupplierCommissionList") as FormArray).push(formGroupComm);
     }
@@ -223,7 +225,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
         TotalCommissionAmt: [this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].TotalCommissionAmt],
         CommissionRecipientPositionDesc: [this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientPositionDesc],
         SupplierName: [this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].SupplierName],
-        CurrentVendorBankAccId: []
+        CurrentVendorBankAccId: ["", [Validators.required]]
       })
 
       this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId] = new InputLookupObj();
@@ -244,7 +246,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       addCrit.listValue = [this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientRefNo];
       this.arrAddCrit.push(addCrit);
 
-      var vendorBankAccObj = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].VendorBankAccObjs;
+      const vendorBankAccObj = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].VendorBankAccObjs;
 
       this.listTempVba[currentAgrmntCommissionHId] = vendorBankAccObj;
 
@@ -255,7 +257,9 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       let currentVba = vendorBankAccObj.find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo &&
         x.BankAccountName == currentBankAccountName);
 
-      formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
+      if(currentVba){
+        formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
+      }
 
       (this.EditAppForm.get("SupplierEmpCommissionList") as FormArray).push(formGroupComm);
     }
@@ -271,10 +275,10 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
         AgrmntCommissionHId: [currentAgrmntCommissionHId],
         CommissionRecipientRefNoDesc: [this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].CommissionRecipientRefNoDesc],
         TotalCommissionAmt: [this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].TotalCommissionAmt],
-        CurrentVendorBankAccId: []
+        CurrentVendorBankAccId: ["", [Validators.required]]
       });
 
-      var vendorBankAccObj = this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].VendorBankAccObjs;
+      const vendorBankAccObj = this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].VendorBankAccObjs;
 
       this.listTempVba[currentAgrmntCommissionHId] = vendorBankAccObj;
 
@@ -285,7 +289,9 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       let currentVba = vendorBankAccObj.find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo &&
         x.BankAccountName == currentBankAccountName);
 
-      formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
+      if(currentVba){
+        formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
+      }
 
       (this.EditAppForm.get("SupplierReferantorCommissionList") as FormArray).push(formGroupComm);
     }
@@ -400,8 +406,9 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
   }
 
   CommBankAccHandler(e, AgrCommH, type) {
-    let selectedCommH;
+    if(!e.target.value) return
 
+    let selectedCommH;
     if (type == 'SUPPL')
       selectedCommH = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs.find(x => x.AgrmntCommissionHId == AgrCommH.controls.AgrmntCommissionHId.value);
     else if (type == 'SUPPLEMP')
@@ -511,7 +518,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
             CommissionRecipientPositionDesc: [response.MrVendorEmpPositionCodeDesc],
             SupplierName: [response.VendorName],
             CommissionRecipientRefNo: e.VendorEmpNo,
-            CurrentVendorBankAccId: []
+            CurrentVendorBankAccId: ["", [Validators.required]]
           });
 
           let reqByVendorEmpNo: GenericObj = new GenericObj();
@@ -522,7 +529,9 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
 
               this.listTempVba[AgrmntCommissionHId] = vendorBankAccObj;
 
-              formGroupComm.controls.CurrentVendorBankAccId.patchValue(vendorBankAccObj[0].VendorBankAccId);
+              if(vendorBankAccObj && vendorBankAccObj.length>0){
+                formGroupComm.controls.CurrentVendorBankAccId.patchValue(vendorBankAccObj[0].VendorBankAccId);
+              }
 
               SupplEmpCommList.push(formGroupComm);
             });
