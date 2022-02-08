@@ -503,8 +503,23 @@ export class PreGoLiveXComponent implements OnInit {
       ProdOfferingVersion: this.AgrmntResult.ProdOfferingVersion
     };
     if (this.BizTemplateCode != CommonConstant.DF) {
-      obj.RefProdCompntCode = 'END_DATE_GO_LIVE_APV';
+      obj.RefProdCompntCode = 'END_DATE_GO_LIVE_APV_SCHM';
+      let endGoliveSchm = "END_DATE_GO_LIVE_APV_SCHM";
+      await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+        (response) => {
+          if (response && response['StatusCode'] == '200') {
+            endGoliveSchm = response['CompntValue'];
+          } else {
+            this.toastr.warningMessage('No Setting for Prod Offering Component END_DATE_GO_LIVE_APV_SCHM');
+            this.isOk = false;
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
 
+      obj.RefProdCompntCode = 'END_DATE_GO_LIVE_APV';
       await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
         (response) => {
           if (response && response['StatusCode'] == '200') {
@@ -534,7 +549,7 @@ export class PreGoLiveXComponent implements OnInit {
               this.InputEndDateProdObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
               this.InputEndDateProdObj.ApvTypecodes = [TypeEndDateCode];
               this.InputEndDateProdObj.CategoryCode = 'END_DATE_GO_LIVE_APV';
-              this.InputEndDateProdObj.SchemeCode = 'END_DATE_GO_LIVE_APV_SCHM';
+              this.InputEndDateProdObj.SchemeCode = endGoliveSchm;
               this.InputEndDateProdObj.TrxNo = this.AgrmntNo;
               this.InputEndDateProdObj.Reason = this.itemReasonEndDate;
 
