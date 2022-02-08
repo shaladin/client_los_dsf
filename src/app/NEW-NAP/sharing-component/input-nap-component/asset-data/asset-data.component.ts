@@ -2899,7 +2899,7 @@ export class AssetDataComponent implements OnInit {
 
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
     let ownerCode: string = "";
-    if (this.returnAppCollateralRegistObj) ownerCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
+    if (this.appAssetObj) ownerCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
 
     if(OwnerType == CommonConstant.CustTypePersonal){
       this.InputLookupProfessionObj.isRequired = false;
