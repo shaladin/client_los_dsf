@@ -1151,7 +1151,7 @@ export class AssetDataAddEditComponent implements OnInit {
               });
 
               await this.SelfUsageChange({ checked: (this.returnAppCollateralRegistObj.MrUserRelationshipCode == CommonConstant.SelfCustomer) });
-              await this.SelfOwnerChange(false, MrOwnerTypeCode);
+              await this.SelfOwnerChange(true, MrOwnerTypeCode);
               await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
 
               this.inputFieldOwnerAddrObj = new InputFieldObj();
@@ -2232,11 +2232,14 @@ export class AssetDataAddEditComponent implements OnInit {
         OwnerZipcode: this.AddrLegalObj.Zipcode,
         OwnerMobilePhnNo: typeof (this.appCustObj.MobilePhnNo1) != 'undefined' ? this.appCustObj.MobilePhnNo1 : '',
         OwnerAddrType: CommonConstant.AddrTypeLegal,
-        OwnerProfessionCode: OwnerType == CommonConstant.CustTypePersonal ? this.AppCustPersonalJobData.MrProfessionCode : this.AppCustCoyObj.MrCompanyTypeCode,
         MrOwnerTypeCode : OwnerType
       });
 
       if (!isEdit) {
+        this.AssetDataForm.patchValue({
+          OwnerProfessionCode: OwnerType == CommonConstant.CustTypePersonal ? this.AppCustPersonalJobData.MrProfessionCode : this.AppCustCoyObj.MrCompanyTypeCode
+        });
+        
         this.inputFieldOwnerAddrObj = new InputFieldObj();
         this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
         let ownerAddrObj = new AddrObj();
