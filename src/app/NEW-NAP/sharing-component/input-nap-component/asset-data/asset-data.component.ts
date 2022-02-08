@@ -47,7 +47,6 @@ import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-do
 import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
-import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 
 @Component({
   selector: 'app-asset-data',
