@@ -190,6 +190,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputAddressObjForLocAddr.showAllPhn = false;
 
     this.items = this.AddCollForm.get('items') as FormArray;
+    this.SetLookupBpkpCityIssuer();
     this.bindUcLookup()
     this.initAddrObj();
     this.GetMouCustListAddrByMouCustId();
