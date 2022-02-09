@@ -81,6 +81,11 @@
           "type": "text",
           "label": "Customer Checking Step",
           "property": "CustCheckingStep"
+        },
+        {
+          "type": "text",
+          "label": "Credit Score",
+          "property": "CreditScore"
         }
       ],
       "querystring": {
