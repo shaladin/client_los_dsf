@@ -108,6 +108,11 @@
           "key": "HighlightComment",
           "label": "Highlight Comment",
           "property": "Comment"
+        },
+        {
+          "type": "text",
+          "label": "Credit Score",
+          "property": "CreditScore"
         }
       ],
       "querystring": {
