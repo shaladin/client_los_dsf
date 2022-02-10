@@ -41,7 +41,7 @@
     "@adins/ucgridview": "^2.2.0",
     "@adins/ucinputnumber": "^1.0.2",
     "@adins/uclookupgeneric": "^2.3.3",
-    "@adins/ucmoduleselection": "^1.0.2",
+    "@adins/ucmoduleselection": "^1.0.4",
     "@adins/ucpaging": "^2.3.0",
     "@adins/ucreport": "^2.2.1",
     "@adins/ucsearch": "^2.12.1",

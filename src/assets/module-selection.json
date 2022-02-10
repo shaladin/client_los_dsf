@@ -17,6 +17,15 @@
             "desc": "Loan Origination System",
             "module": "LOS_WEB",
             "baseColor": "#ff8717"
+        },
+        {
+            "id": "CMS",
+            "title": "CMS",
+            "imgSrc": "",
+            "imgSrcUrl": "./assets/img/svg/icon-cms-module.svg",
+            "desc": "Collection Management System",
+            "module": "CMS_WEB",
+            "baseColor": "#d24349"
         }
     ]
 }
