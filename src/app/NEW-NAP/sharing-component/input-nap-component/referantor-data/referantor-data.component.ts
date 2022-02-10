@@ -218,7 +218,7 @@ export class ReferantorDataComponent implements OnInit {
         this.appReferantorObj.RefBankCode = bankItem.BankCode;
         this.appReferantorObj.BankAccNo = bankItem.BankAccountNo;
         this.appReferantorObj.BankAccName = bankItem.BankAccountName;
-
+        this.appReferantorObj.BankBranch = bankItem.BankBranch;
 
         this.NapAppReferantorForm.patchValue({
           AccountBank: bankItem.BankCode != null ? bankItem.BankAccountNo : ""
@@ -233,6 +233,7 @@ export class ReferantorDataComponent implements OnInit {
     this.appReferantorObj.RefBankCode = this.bankItems[idx].BankCode;
     this.appReferantorObj.BankAccNo = this.bankItems[idx].BankAccountNo;
     this.appReferantorObj.BankAccName = this.bankItems[idx].BankAccountName;
+    this.appReferantorObj.BankBranch = this.bankItems[idx].BankBranch;
     this.NapAppReferantorForm.patchValue({
       AccountBank: this.bankItems[idx].BankAccountNo
     });
