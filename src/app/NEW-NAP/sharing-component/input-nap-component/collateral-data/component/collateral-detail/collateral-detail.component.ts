@@ -1020,7 +1020,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AddCollForm.controls.MrUserRelationshipCode.updateValueAndValidity();
     }
     else {
-      this.AddCollForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.AddCollForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(500)]);
       this.AddCollForm.controls.UserName.updateValueAndValidity();
       this.AddCollForm.controls.MrUserRelationshipCode.setValidators([Validators.required, Validators.maxLength(50)]);
       this.AddCollForm.controls.MrUserRelationshipCode.updateValueAndValidity();

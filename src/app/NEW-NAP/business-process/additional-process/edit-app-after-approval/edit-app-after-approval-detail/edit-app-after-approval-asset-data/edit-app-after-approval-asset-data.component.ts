@@ -45,7 +45,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   EditAppAssetForm = this.fb.group({
     SelfOwner: [false],
-    OwnerName: ['', Validators.maxLength(50)],
+    OwnerName: ['', Validators.maxLength(500)],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
     OwnerIdNo: ['', Validators.maxLength(50)],

@@ -110,7 +110,7 @@ export class AssetDataComponent implements OnInit {
 
     /* AppAsset Value That required but not in form*/
     AssetSeqNo: ['1', Validators.required],
-    FullAssetCode: ['', [Validators.required, Validators.maxLength(500)]],
+    FullAssetCode: ['', [Validators.required, Validators.maxLength(50)]],
     AssetStat: ['NEW', [Validators.required, Validators.maxLength(50)]],
     AssetTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     AssetCategoryCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -138,9 +138,9 @@ export class AssetDataComponent implements OnInit {
     BranchManagerPositionCode: ['', Validators.maxLength(50)],
 
     /*App Collateral Regist*/
-    UserName: ['', Validators.maxLength(50)],
+    UserName: ['', Validators.maxLength(500)],
     MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-    OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
+    OwnerName: ['', [Validators.required, Validators.maxLength(500)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     OwnerIdNo: ['', Validators.maxLength(50)],
     MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -1415,7 +1415,7 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls["MrUserRelationshipCode"].disable();
     };
     if (event.checked == false) {
-      this.AssetDataForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.AssetDataForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(500)]);
       this.AssetDataForm.controls.UserName.updateValueAndValidity();
       this.AssetDataForm.controls.MrUserRelationshipCode.setValidators([Validators.required, Validators.maxLength(50)]);
       this.AssetDataForm.controls.MrUserRelationshipCode.updateValueAndValidity();
@@ -2371,9 +2371,9 @@ export class AssetDataComponent implements OnInit {
       return this.fb.group({
         No: [i],
         AssetAccessoryCode: ['', [Validators.required, Validators.maxLength(50)]],
-        AssetAccessoryName: ['', [Validators.maxLength(100)]],
+        AssetAccessoryName: ['', [Validators.maxLength(1000)]],
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
-        SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
+        SupplNameAccessory: ['', [Validators.required, Validators.maxLength(500)]],
         AccessoryPriceAmt: [0, [Validators.required,Validators.min(0.00)]],
         AccessoryDownPaymentType: [''],
         AccessoryDownPaymentPrcnt: [0, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
@@ -2385,9 +2385,9 @@ export class AssetDataComponent implements OnInit {
       return this.fb.group({
         No: [i],
         AssetAccessoryCode: [appAssetAccessoriesObj.AssetAccessoryCode, [Validators.required, Validators.maxLength(50)]],
-        AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(100)]],
+        AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(1000)]],
         SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
-        SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
+        SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(500)]],
         AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required,Validators.min(0.00)]],
         AccessoryDownPaymentType: [this.DpObj[0].Key],
         AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],

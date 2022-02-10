@@ -1262,9 +1262,9 @@ export class AssetDataOplComponent implements OnInit {
       return this.fb.group({
         No: [i],
         AssetAccessoryCode: ['', [Validators.required, Validators.maxLength(50)]],
-        AssetAccessoryName: ['', [Validators.maxLength(100)]],
+        AssetAccessoryName: ['', [Validators.maxLength(1000)]],
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
-        SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
+        SupplNameAccessory: ['', [Validators.required, Validators.maxLength(1000)]],
         AccessoryPriceAmt: ['', Validators.required],
         AccessoryDownPaymentAmt: [0, Validators.required],
         AccessoryNotes: ['']
@@ -1274,9 +1274,9 @@ export class AssetDataOplComponent implements OnInit {
       return this.fb.group({
         No: [i],
         AssetAccessoryCode: [appAssetAccessoriesObj.AssetAccessoryCode, [Validators.required, Validators.maxLength(50)]],
-        AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(100)]],
+        AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(1000)]],
         SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
-        SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
+        SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(1000)]],
         AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, Validators.required],
         AccessoryDownPaymentAmt: [appAssetAccessoriesObj.DownPaymentAmt, Validators.required],
         AccessoryNotes: [appAssetAccessoriesObj.AccessoryNotes, Validators.maxLength(4000)]

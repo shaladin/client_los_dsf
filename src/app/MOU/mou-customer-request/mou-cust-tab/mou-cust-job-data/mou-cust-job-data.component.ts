@@ -88,7 +88,7 @@ export class MouCustJobDataComponent implements OnInit {
       EstablishmentDt: [''],
       JobTitleName: ['', Validators.maxLength(50)],
       IsMfEmp: [false],
-      CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
+      CompanyName: ['', [Validators.required, Validators.maxLength(500)]],
       MrJobPositionCode: ['', Validators.maxLength(50)],
       MrCompanyScaleCode: ['', Validators.maxLength(50)],
       NumOfEmployee: [0, Validators.min(0)],
@@ -129,10 +129,10 @@ export class MouCustJobDataComponent implements OnInit {
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
     }
     if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "EMP") {
-      this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(500)]);
     }
     if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "SME") {
-      this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(500)]);
     }
   }
 

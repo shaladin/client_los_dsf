@@ -525,7 +525,7 @@ export class AssetDataAddEditComponent implements OnInit {
     };
 
     if (event.checked == false) {
-      this.AssetDataForm.controls.Username.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.AssetDataForm.controls.Username.setValidators([Validators.required, Validators.maxLength(500)]);
       this.AssetDataForm.controls.Username.updateValueAndValidity();
       this.AssetDataForm.controls.UserRelationship.setValidators([Validators.required, Validators.maxLength(50)]);
       this.AssetDataForm.controls.UserRelationship.updateValueAndValidity();
@@ -1910,9 +1910,9 @@ export class AssetDataAddEditComponent implements OnInit {
       return this.fb.group({
         No: [i],
         AssetAccessoryCode: ['', [Validators.required, Validators.maxLength(50)]],
-        AssetAccessoryName: ['', [Validators.maxLength(100)]],
+        AssetAccessoryName: ['', [Validators.maxLength(1000)]],
         SupplCodeAccessory: ['', [Validators.required, Validators.maxLength(50)]],
-        SupplNameAccessory: ['', [Validators.required, Validators.maxLength(100)]],
+        SupplNameAccessory: ['', [Validators.required, Validators.maxLength(1000)]],
         AccessoryPriceAmt: ['', [Validators.required, Validators.min(0.00)]],
         AccessoryDownPaymentType: [''],
         AccessoryDownPaymentPrcnt: [0, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],
@@ -1923,9 +1923,9 @@ export class AssetDataAddEditComponent implements OnInit {
       return this.fb.group({
         No: [i],
         AssetAccessoryCode: [appAssetAccessoriesObj.AssetAccessoryCode, [Validators.required, Validators.maxLength(50)]],
-        AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(100)]],
+        AssetAccessoryName: [appAssetAccessoriesObj.AssetAccessoryName, [Validators.maxLength(1000)]],
         SupplCodeAccessory: [appAssetAccessoriesObj.SupplCode, [Validators.required, Validators.maxLength(50)]],
-        SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(100)]],
+        SupplNameAccessory: [appAssetAccessoriesObj.SupplName, [Validators.required, Validators.maxLength(1000)]],
         AccessoryPriceAmt: [appAssetAccessoriesObj.AccessoryPriceAmt, [Validators.required, Validators.min(0.00)]],
         AccessoryDownPaymentType: [this.DpObj[0].Key],
         AccessoryDownPaymentPrcnt: [appAssetAccessoriesObj.DownPaymentPrcnt, [Validators.required, Validators.min(0.00), Validators.max(100.00)]],

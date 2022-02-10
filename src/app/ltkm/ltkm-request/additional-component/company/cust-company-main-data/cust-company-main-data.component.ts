@@ -89,7 +89,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
         CustNo: [''],
         IndustryTypeCode: [''],
         CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
-        CompanyBrandName: ['', Validators.maxLength(100)],
+        CompanyBrandName: ['', Validators.maxLength(500)],
         MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
         NumOfEmp: [0],
         IsAffiliated: [false],

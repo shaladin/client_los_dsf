@@ -45,7 +45,7 @@ export class DeliveryOrderAssetOwnerComponent implements OnInit {
 
   async ngOnInit() {
     this.parentForm.addControl(this.identifier, this.fb.group({
-      OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
+      OwnerName: ['', [Validators.required, Validators.maxLength(500)]],
       MrIdTypeCode: ['', Validators.maxLength(50)],
       OwnerIdNo: ['', Validators.maxLength(50)],
       MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
