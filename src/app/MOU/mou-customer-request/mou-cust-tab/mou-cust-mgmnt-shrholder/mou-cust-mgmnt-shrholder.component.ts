@@ -434,7 +434,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       let d2 = new Date(this.MaxDate);
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
-      if (d1 > d2) {
+      if (d1 < d2) {
         this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
         flag = false;
       }
