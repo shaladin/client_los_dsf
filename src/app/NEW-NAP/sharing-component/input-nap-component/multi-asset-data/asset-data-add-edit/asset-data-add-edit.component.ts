@@ -335,6 +335,7 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     );
   }
+
   HitAPI() {
     if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '') {
       this.toastr.warningMessage("Please Input Chassis No !");
@@ -344,6 +345,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.IsIntegrator = true;
     }
   }
+
   async GetListAddr() {
     this.appObj.Id = this.AppId;
     await this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
@@ -1739,14 +1741,25 @@ export class AssetDataAddEditComponent implements OnInit {
           }
         }
         else if (!this.IsIntegrator) {
-          if (confirm("Submit data without Integrator ?")) {
+          if(this.allAssetDataObj.AppAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed){
+            if (confirm("Submit data without Integrator ?")) {
+              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  this.AssetDataForm.reset();
+                  //this.router.navigate(["/Nap/AssetData/Paging"]);
+                  this.assetValue.emit({ mode: 'paging' });
+              });
+            }
+          }
+          else{
             this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
                 //this.router.navigate(["/Nap/AssetData/Paging"]);
                 this.assetValue.emit({ mode: 'paging' });
-              });
+            });
           }
         }
         else if (this.IsIntegrator) {
@@ -1864,7 +1877,6 @@ export class AssetDataAddEditComponent implements OnInit {
         }
       }
       else if (!this.IsIntegrator) {
-
         if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
           this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
             (response) => {
@@ -1874,13 +1886,23 @@ export class AssetDataAddEditComponent implements OnInit {
             });
         }
         else {
-          if (confirm("Submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          if(this.allAssetDataObj.AppAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed){
+            if (confirm("Submit data without Integrator ?")) {
+              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
                 this.assetValue.emit({ mode: 'paging' });
               });
+            }
+          }
+          else{
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.AssetDataForm.reset();
+              this.assetValue.emit({ mode: 'paging' });
+            });
           }
         }
       }
@@ -2143,6 +2165,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   ChangeAssetCondition() {
     if (this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed) {
+      this.isUsed = true;
       this.AssetDataForm.controls.TaxIssueDt.setValidators([Validators.required]);
       this.InputLookupCityIssuerObj.isRequired = true;
     } else {

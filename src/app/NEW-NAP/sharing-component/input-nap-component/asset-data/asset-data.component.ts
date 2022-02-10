@@ -825,7 +825,17 @@ export class AssetDataComponent implements OnInit {
             );
           }
           else {
-            if (confirm("Submit data without Integrator ?")) {
+            if(this.allAssetDataObj.AppAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed){
+              if (confirm("Submit data without Integrator ?")) {
+                this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                  (response) => {
+                    this.toastr.successMessage(response["message"]);
+                    this.outputTab.emit();
+                  }
+                );
+              }
+            }
+            else{
               this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
