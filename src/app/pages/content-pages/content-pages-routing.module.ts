@@ -7,6 +7,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { RequestNewPasswordComponent } from './request-new-password/request-new-password.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ModuleSelectionComponent } from './module-selection/module-selection.component';
  
 
 const routes: Routes = [
@@ -53,6 +54,13 @@ const routes: Routes = [
         component: ChangePasswordComponent,
         data: {
           title: 'Change Password Page'
+        }
+      },
+      {
+        path: PathConstant.CONTENT_PAGE_SELECT_MODULE,
+        component: ModuleSelectionComponent,
+        data: {
+          title: 'Select Module Page'
         }
       }
     ]
