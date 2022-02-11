@@ -163,7 +163,7 @@
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
-                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                    max="{{MaxDate | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -188,7 +188,7 @@
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
-                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                    max="{{MaxDate | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -300,7 +300,7 @@
                 <label class="col-md-2" translate>Previous Employment Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="PrevEmploymentDt"
-                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                    max="{{MaxDate | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.PrevEmploymentDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -382,7 +382,7 @@
                 <label class="col-md-2" translate>Establishment Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="OthBizEstablishmentDt"
-                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                    max="{{MaxDate | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="JobDataForm.controls.OthBizEstablishmentDt"
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
