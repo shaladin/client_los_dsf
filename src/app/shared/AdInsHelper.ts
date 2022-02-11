@@ -247,7 +247,7 @@ export class AdInsHelper {
   }
 
   public static SetCookie(cookieService: CookieService, key: string, value: string) {
-    cookieService.put(key, this.EncryptString(value, environment.ChipperKeyCookie));
+    cookieService.put(key, this.EncryptString(value, environment.ChipperKeyCookie), {secure : true, sameSite : "strict"});
   }
 
   public static GetCookie(cookieService: CookieService, key: string) {
