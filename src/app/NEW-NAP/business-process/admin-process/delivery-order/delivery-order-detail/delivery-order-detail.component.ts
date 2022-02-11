@@ -257,6 +257,13 @@ export class DeliveryOrderDetailComponent implements OnInit {
     await this.GetGS();
     await this.GetListAddr();
     await this.GetAllAssetData();
+
+    if(this.MrAssetConditionCode == CommonConstant.AssetConditionUsed){
+      this.DeliveryOrderForm.controls['TempRegisLettNo'].clearValidators();
+      this.DeliveryOrderForm.controls['TempRegisLettDt'].clearValidators();
+      this.DeliveryOrderForm.controls['TempRegisLettNo'].updateValueAndValidity();
+      this.DeliveryOrderForm.controls['TempRegisLettDt'].updateValueAndValidity();
+    }
     this.isOwnerReady = true;
   }
 
