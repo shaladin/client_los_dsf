@@ -479,7 +479,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   async SetOwnerData() {
     this.EditAppAssetForm.patchValue({
-      SelfOwner: (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
+      // SelfOwner: (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
       OwnerName: this.AppCollateralRegistrationObj.OwnerName,
       MrIdTypeCode: this.AppCollateralRegistrationObj.MrIdTypeCode,
       OwnerIdNo: this.AppCollateralRegistrationObj.OwnerIdNo,
