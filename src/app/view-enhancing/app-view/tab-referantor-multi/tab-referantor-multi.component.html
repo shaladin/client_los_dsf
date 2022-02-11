@@ -1,0 +1,74 @@
+<div *ngIf="IsHidden">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3" *ngIf="IsReady">
+
+          <lib-ucSubsection [id]="'ViewReferantorId'" [title]="'REFERANTOR'"
+            [panel]="'ViewReferantor'"></lib-ucSubsection>
+          <div id="ViewReferantor">
+            <div class="col-md-12">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>No.</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>Referantor Category</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" translate>Referantor Name</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header" translate>Referantor Type</span>
+                    </th>
+                    <th style="text-align: left;">
+                      <span class="thead-header"  translate>Bank Account</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header"  translate>Tax Calculation Method</span>
+                    </th>
+                    <th tyle="text-align: center;">
+                      <span translate class="thead-header">View</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="ListAppReferantors.length == 0">
+                  <tr>
+                    <td style="text-align: center;" colspan="8">No data available</td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr *ngFor="let item of ListAppReferantors; let i = index">
+                    <td style="text-align: center;">
+                      {{i+1}}
+                    </td>
+                    <td style="text-align: center;">
+                      {{item.ReferantorCategory}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{item.ReferantorName}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{item.MrReferantorTypeName}}
+                    </td>
+                    <td style="text-align: left;">
+                      {{item.BankName + ' - ' + item.BankAccName + ' - ' + item.BankAccNo}}
+                    </td>
+                    <td style="text-align: center;">
+                      {{item.MrTaxCalcMethod}}
+                    </td>
+                    <td class="text-center">
+                      <a (click)="viewDetailReferantor(i)"><i class="fas fa-pencil-alt"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

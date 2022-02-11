@@ -1,0 +1,112 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>NPWP REFERANTOR INFO DETAIL</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="px-3">
+            <!-- Purchase Order Information -->
+            <lib-ucSubsection [id]="'NPWPReferantorInfoId'" [title]="'NPWP REFERANTOR INFO'"
+                [panel]="'NpwpReferantorInfoId'">
+            </lib-ucSubsection>
+            <div class="form-body" id="NpwpReferantorInfoId">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-2 form-inline">
+                    <label translate> NPWP No </label>
+                  </div>
+                  <div class="col-md-4 form-inline">
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdNo != null"> {{AppReferantorTaxInfoObj.TaxIdNo}} </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdNo == null || AppReferantorTaxInfoObj.TaxIdNo == ''"> - </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 form-inline">
+                    <label translate> NPWP Name </label>
+                  </div>
+                  <div class="col-md-4 form-inline">
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdName != null"> {{AppReferantorTaxInfoObj.TaxIdName}} </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdName == null || AppReferantorTaxInfoObj.TaxIdName == ''"> - </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 form-inline">
+                    <label translate> Address </label>
+                  </div>
+                  <div class="col-md-4 form-inline">
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAddr != null"> {{AppReferantorTaxInfoObj.TaxIdAddr}} </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAddr == null || AppReferantorTaxInfoObj.TaxIdAddr == ''"> - </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 form-inline">
+                    <label translate> RT / RW </label>
+                  </div>
+                  <div class="col-md-4 form-inline">
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAreaCode4 != null"> {{AppReferantorTaxInfoObj.TaxIdAreaCode4}} &nbsp; </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAreaCode4 == null || AppReferantorTaxInfoObj.TaxIdAreaCode4 == ''"> - &nbsp; </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAreaCode3 != null">  / {{AppReferantorTaxInfoObj.TaxIdAreaCode3}} </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAreaCode3 == null || AppReferantorTaxInfoObj.TaxIdAreaCode3 == ''">  / - </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 form-inline">
+                    <label translate> Kelurahan </label>
+                  </div>
+                  <div class="col-md-4 form-inline">
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAreaCode2 != null"> {{AppReferantorTaxInfoObj.TaxIdAreaCode2}} </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAreaCode2 == null || AppReferantorTaxInfoObj.TaxIdAreaCode2 == ''"> - </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 form-inline">
+                    <label translate> Kecamatan </label>
+                  </div>
+                  <div class="col-md-4 form-inline">
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAreaCode1 != null"> {{AppReferantorTaxInfoObj.TaxIdAreaCode1}} </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdAreaCode1 == null || AppReferantorTaxInfoObj.TaxIdAreaCode1 == ''"> - </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 form-inline">
+                    <label translate> City </label>
+                  </div>
+                  <div class="col-md-4 form-inline">
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdCity != null"> {{AppReferantorTaxInfoObj.TaxIdCity}} </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdCity == null || AppReferantorTaxInfoObj.TaxIdCity == ''"> - </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 form-inline">
+                    <label translate> Zip Code </label>
+                  </div>
+                  <div class="col-md-4 form-inline">
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdZipcode != null"> {{AppReferantorTaxInfoObj.TaxIdZipcode}} </label>
+                    <label *ngIf="AppReferantorTaxInfoObj.TaxIdZipcode == null || AppReferantorTaxInfoObj.TaxIdZipcode == ''"> - </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+  
+        </div>
+
+      </div>
+    </div>
+
+      
+
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+</div>
