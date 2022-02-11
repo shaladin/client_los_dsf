@@ -16,7 +16,6 @@ import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/response-job-data-personal-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
@@ -32,7 +31,6 @@ import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/mode
 import { ResThirdPartyRsltHObj } from 'app/shared/model/response/third-party-result/res-third-party-rslt-h-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
-import { AddressService } from 'app/shared/services/custAddr.service';
 
 @Component({
   selector: 'app-job-tab',
@@ -84,6 +82,8 @@ export class JobTabComponent implements OnInit {
   IsCustomer: boolean = false;
   IsWellknownCoy: boolean = false;
   BusinessDt: Date;
+  MaxDate: Date;
+  MaxDtValidate: string;
   UserAccess: CurrentUserContext;
   bizTemplateCode: string = "";
   RowVersion: string[];
@@ -138,11 +138,16 @@ export class JobTabComponent implements OnInit {
   async ngOnInit() {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
+    var datePipe = new DatePipe("en-US");
+    this.MaxDate = new Date(this.UserAccess.BusinessDt);
+    this.MaxDate.setDate(this.MaxDate.getDate() - 1);
+    this.MaxDtValidate = datePipe.transform(this.MaxDate, "yyyy-MM-dd");
+
     await this.GetGeneralSetting();
     await this.InitLookup();
 
     await this.GetCustMainData();
-    this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
+    this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).toPromise().then(
       (response) => {
         this.MrCustModelDescr = response.Value;
         this.CheckCustModel();
@@ -330,11 +335,11 @@ export class JobTabComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.JobDataForm.controls.EmploymentEstablishmentDt.value > this.BusinessDt) {
-      var businessDtStr = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
-      this.toastr.errorMessage(String.Format(ExceptionConstant.EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN + businessDtStr));
-      return false;
-    }
+    // if (this.JobDataForm.controls.EmploymentEstablishmentDt.value > this.BusinessDt) {
+    //   var businessDtStr = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    //   this.toastr.errorMessage(String.Format(ExceptionConstant.EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN + businessDtStr));
+    //   return false;
+    // }
     if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.IsSvcExist && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
       if (this.IsCustomer) {
         if (!this.IsNeedIntegrator) {
@@ -467,8 +472,26 @@ export class JobTabComponent implements OnInit {
       OthBizAddrObj: this.OthBizDataAddrObj
     }
 
+    if(this.CustModelCode == CommonConstant.CustModelEmployee){
+      if(this.JobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtValidate){
+        this.toastr.warningMessage(String.Format(ExceptionConstant.START_WORKING_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+        return false;
+      }
+
+      if(this.JobDataObj.OthBizEstablishmentDt.toString() > this.MaxDtValidate){
+        this.toastr.warningMessage(String.Format(ExceptionConstant.OTHER_BIZ_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+        return false;
+      }
+    }
+    if(this.CustModelCode == CommonConstant.CustModelProfessional){
+
+    }
+    if(this.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise){
+
+    }
+
     if (!this.isDataEdit) {
-      this.http.post(URLConstant.AddAppCustPersonalJobData, requestObj).subscribe(
+      this.http.post(URLConstant.AddAppCustPersonalJobData, requestObj).toPromise().then(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.OutputTab.emit({ IsComplete: true });
@@ -477,7 +500,7 @@ export class JobTabComponent implements OnInit {
           console.log(error);
         });
     } else {
-      this.http.post(URLConstant.EditAppCustPersonalJobData, requestObj).subscribe(
+      this.http.post(URLConstant.EditAppCustPersonalJobData, requestObj).toPromise().then(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.OutputTab.emit({ IsComplete: true });

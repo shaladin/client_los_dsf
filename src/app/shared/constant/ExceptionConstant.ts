@@ -141,6 +141,8 @@ export class ExceptionConstant {
     public static STATEMENT_WITH_SAME_MONTH_AND_YEAR = "Cannot Input Statement With The Same Month and Year";
 
     public static EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN = "Employment Establishment Date can not be less than ";
+    public static START_WORKING_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Start Working Date Date Must Be Less Than Business Date";
+    public static OTHER_BIZ_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Other Business Establishment Date Must Be Less Than Business Date";
     
     public static START_DT_MUST_LESS_THAN_END_DT = "Start Date Must be Less than End Date";
     public static END_DT_MUST_GREATER_THAN_BUSINESS_DT = "End Date Must be Greater than Business Date";
