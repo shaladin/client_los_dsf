@@ -76,7 +76,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   AppId: number;
   AppCustObj: AppCustObj;
   AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
-  
+
   CustType: string = "";
   IdTypeObj: Array<KeyValueObj>;
   refMasterObj : RefMasterObj = new RefMasterObj();
@@ -136,23 +136,23 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.SetAssetInformation()
     await this.GetAppData();
     await this.GetRefProdCompt();
+    await this.GetAppCust();
     this.bindIdTypeObj();
     this.bindUserOwnerRelationshipObj();
     this.setAddrOwnerObj();
     await this.GetListAddr();
     await this.SetOwnerData();
-    await this.GetAppCust();
     await this.GetAppCustPersonalJobData();
     this.GenerataAppAssetAttr(false);
     await this.bindInscoBranchObj();
     await this.getInsuranceData();
     await this.bindAppInsObj();
-    
+
     await this.setFormValidators();
 
-    if (this.EditAppAssetForm.controls['SelfOwner'].value) this.SelfOwnerChange({ 'checked': this.EditAppAssetForm.controls['SelfOwner'].value }, this.EditAppAssetForm.controls['MrOwnerTypeCode'].value); 
+    if (this.EditAppAssetForm.controls['SelfOwner'].value) this.SelfOwnerChange({ 'checked': this.EditAppAssetForm.controls['SelfOwner'].value }, this.EditAppAssetForm.controls['MrOwnerTypeCode'].value);
 
-    if (this.EditAppAssetForm.controls['MrOwnerTypeCode'].value) this.OwnerTypeChange(this.EditAppAssetForm.controls['MrOwnerTypeCode'].value, !this.isFromDB); 
+    if (this.EditAppAssetForm.controls['MrOwnerTypeCode'].value) this.OwnerTypeChange(this.EditAppAssetForm.controls['MrOwnerTypeCode'].value, !this.isFromDB);
   }
 
   async SetAssetTypeData()
@@ -188,7 +188,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
           this.IsCheckSerialMandatory = true;
         }
       });
-    
+
     if(this.EditAppAssetForm.controls.AssetColor.value != null && this.EditAppAssetForm.controls.AssetColor.value != "")
     {
       this.tempColor = true;
@@ -306,7 +306,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       }
     );
   }
-  
+
   bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -447,7 +447,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
       async (response: AppCustObj) => {
         this.AppCustObj = response['AppCustObj'];
-        if(response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'] != null)  
+        if(response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'] != null)
           this.AppCustObj.MobilePhnNo1 = response['AppCustPersonalObj']['MobilePhnNo1'];
 
         this.CustType = this.AppCustObj.MrCustTypeCode;
@@ -590,11 +590,11 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   }
 
   async GetRefProdCompt() {
-    var appObj : ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion(); 
+    var appObj : ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
     appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetType,
     appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
-    
+
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response: ProdOfferingDObj) => {
         this.RefProdCmptAssetType = response;
@@ -804,7 +804,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       }else{
         let reqByCode: GenericObj = new GenericObj();
         reqByCode.Code = this.AppCollateralRegistrationObj.OwnerProfessionCode;
-        
+
         await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
           (response) =>{
             this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
