@@ -110,7 +110,7 @@ export class AssetDataComponent implements OnInit {
 
     /* AppAsset Value That required but not in form*/
     AssetSeqNo: ['1', Validators.required],
-    FullAssetCode: ['', [Validators.required, Validators.maxLength(50)]],
+    FullAssetCode: ['', [Validators.required, Validators.maxLength(500)]],
     AssetStat: ['NEW', [Validators.required, Validators.maxLength(50)]],
     AssetTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     AssetCategoryCode: ['', [Validators.required, Validators.maxLength(50)]],
