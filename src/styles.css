@@ -484,6 +484,7 @@ mat-dialog-container#role-modal {
     text-align: left;
     border: 0.5px solid rgb(202, 202, 202);
     padding: 1rem;
+    border-radius: 8px;
 }
 
 .input-field i {
