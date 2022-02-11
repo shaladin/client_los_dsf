@@ -194,7 +194,8 @@ export class ExceptionConstant {
     public static MANUFACTURING_YEAR_CAN_NOT_LESS_THAN = "Manufacturing Year can not less than ";
     public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
     
-    public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
+    public static EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
+    public static EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Employee Establishment Date Must Be Less Than Business Date";
     
     public static JOB_POSITION_CANT_BE_EMPTY = "Job Position Cannot Be Empty - Shareholder {0}";
     public static INS_ASSET_CATEGORY_NOT_FOUND = "Ins Asset Category Not Found, Please Setting Rule First";

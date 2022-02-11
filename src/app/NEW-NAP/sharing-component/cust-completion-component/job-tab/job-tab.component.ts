@@ -472,7 +472,7 @@ export class JobTabComponent implements OnInit {
       OthBizAddrObj: this.OthBizDataAddrObj
     }
 
-    if(this.CustModelCode == CommonConstant.CustModelEmployee){
+    if(this.CustModelCode != CommonConstant.CustModelNonProfessional){
       if(this.JobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtValidate){
         this.toastr.warningMessage(String.Format(ExceptionConstant.START_WORKING_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
         return false;
@@ -482,12 +482,6 @@ export class JobTabComponent implements OnInit {
         this.toastr.warningMessage(String.Format(ExceptionConstant.OTHER_BIZ_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
         return false;
       }
-    }
-    if(this.CustModelCode == CommonConstant.CustModelProfessional){
-
-    }
-    if(this.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise){
-
     }
 
     if (!this.isDataEdit) {
