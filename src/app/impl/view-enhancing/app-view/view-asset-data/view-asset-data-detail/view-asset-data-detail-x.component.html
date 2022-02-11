@@ -52,7 +52,7 @@
         </div>
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Asset Usage</label>
-          <label class="col-md-9 adInsLabel">{{appAsset?.MrAssetUsageCode}}</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.MrAssetUsageCodeDesc}}</label>
         </div>
       </div>
 
@@ -116,7 +116,7 @@
       </div>
     </div>
   </div>
-  
+
   <lib-ucSubsection [id]="'assetAccId'"
     [title]="'Asset Accessory'" [panel]="'assetAcc'">
   </lib-ucSubsection>
@@ -137,7 +137,7 @@
       </div>
     </div>
   </div>
-  
+
   <div *ngIf="BizTemplateCode == 'CF4W'">
     <lib-ucSubsection [id]="'assetOwnerId'"
       [title]="'Asset Owner'" [panel]="'assetOwner'">
