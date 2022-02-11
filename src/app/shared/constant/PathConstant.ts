@@ -521,6 +521,7 @@ export class PathConstant {
     public static CONTENT_PAGE_REQ_PASSWORD = "RequestPassword";
     public static CONTENT_PAGE_RESET_PASSWORD = "ResetPassword/:code";
     public static CONTENT_PAGE_CHANGE_PASSWORD = "ChangePassword";
+    public static CONTENT_PAGE_SELECT_MODULE = "SelectModule";
     //#endregion
 
     //#region Dashboard-Module

@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.5.1-90",
+  "version": "1.5.1-93",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -36,11 +36,12 @@
     "@adins/ucapproveby": "^1.0.2",
     "@adins/ucdashboard2": "^1.0.17",
     "@adins/ucdropdownlist": "^1.0.27",
-    "@adins/ucdropdownsearch": "^1.1.11",
+    "@adins/ucdropdownsearch": "^1.2.0",
     "@adins/ucgridfooter": "^1.0.2",
     "@adins/ucgridview": "^2.2.0",
     "@adins/ucinputnumber": "^1.0.2",
     "@adins/uclookupgeneric": "^2.3.3",
+    "@adins/ucmoduleselection": "^1.0.4",
     "@adins/ucpaging": "^2.3.0",
     "@adins/ucreport": "^2.2.1",
     "@adins/ucsearch": "^2.12.1",

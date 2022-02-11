@@ -30,7 +30,7 @@
                     <img src="assets/img/AdIns.png" style="width: 100px;" />
                 </div>
                 <ul class="navbar-nav">
-                    <li class="nav-item" ngbDropdown [placement]="placement">
+                    <!-- <li class="nav-item" ngbDropdown [placement]="placement">
                         <a class="nav-link position-relative" id="dropdownModul" ngbDropdownToggle>
                             <i class="ft-folder font-medium-3 blue-grey darken-4"></i>
                             <p class="d-none">Modul</p>
@@ -40,6 +40,12 @@
                                 <span>Foundation</span>
                             </a>
                         </div>
+                    </li> -->
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" id="dropdownModul" placement="bottom" triggers="mouseenter:mouseleave" ngbPopover="Change Module" (click)="changeModul('cm')">
+                            <i class="ft-folder font-medium-3 blue-grey darken-4"></i>
+                            <p class="d-none">Modul</p>
+                        </a>
                     </li>
                     <li class="nav-item mr-2  d-none d-lg-block">
                         <a href="javascript:;" class="nav-link" id="navbar-fullscreen" appToggleFullscreen
