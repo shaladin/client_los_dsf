@@ -5,7 +5,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { PurchaseOrderHObj } from 'app/shared/model/purchase-order-h-obj.model';
 import { ReqAssetDataObj } from 'app/shared/model/request/app-asset/req-app-asset-obj.model';
-import { ResGetAllAssetDataForPOViewByAsset, ResGetAllAssetDataForPOViewByAssetObj } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
+import { ResGetAllAssetDataForPOViewByAsset, ResGetAllAssetDataForPOViewByAssetObj, ResPurchaseOrderDObj } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
 
 @Component({
   selector: 'app-view-purchase-order-detail',
@@ -27,6 +27,14 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
   TotalPurchaseOrderAmt: number;
   PurchaseOrderExpiredDt: Date;
   DiffRateAmt : number;
+  TotalAssetPriceAmt: number;
+  DpNettAmt: number;
+  TdpAtCoy: number;
+  AdminFeeAmt: number;
+  NotaryFeeAmt: number;
+  FiduciaFeeAmt: number;
+  FirstInstallmentAmt: number;
+  ProvisionFeeAmt: number;
   Notes: string = "";
   Address: string = "";
   purchaseOrderHObj: PurchaseOrderHObj = new PurchaseOrderHObj();;
@@ -51,15 +59,13 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
       (response) => {
         this.AssetObj = response.ReturnObject;
         if(this.AssetObj.PurchaseOrderHId != 0){
+          this.setPurchaseOrderD(this.AssetObj.PurchaseOrderDObj);
           this.isDataExist = true;
           this.Notes = this.AssetObj.Notes;
           this.purchaseOrderHObj.RowVersion = this.AssetObj.RowVersionPO;
 
           this.ProportionalValue = this.AssetObj.ProportionalValue;
-          this.TotalInsCustAmt = this.AssetObj.TotalInsCustAmt;
-          this.TotalLifeInsCustAmt = this.AssetObj.TotalLifeInsCustAmt;
           this.TotalPurchaseOrderAmt = this.AssetObj.TotalPurchaseOrderAmt;
-          this.DiffRateAmt = this.AssetObj.DiffRateAmt;
           var tempAddr = this.AssetObj.AppCustAddrObj.Addr == null ? '-' : this.AssetObj.AppCustAddrObj.Addr;
           var areaCode4 = this.AssetObj.AppCustAddrObj.AreaCode4 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode4;
           var areaCode3 = this.AssetObj.AppCustAddrObj.AreaCode3 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode3;
@@ -84,6 +90,20 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
       });
 
     this.isReady = true;
+  }
+
+  setPurchaseOrderD(purchaseOrderD: Array<ResPurchaseOrderDObj>){
+    this.TotalInsCustAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeInsNotCptlz).PurchaseOrderAmt;
+    this.TotalLifeInsCustAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeLfiNotCptlz).PurchaseOrderAmt;
+    this.TotalAssetPriceAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeTotalAssetPrice).PurchaseOrderAmt;
+    this.DpNettAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeDpNett).PurchaseOrderAmt;
+    this.TdpAtCoy = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeTdpAtCoy).PurchaseOrderAmt;
+    this.AdminFeeAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeAdminFee).PurchaseOrderAmt;
+    this.NotaryFeeAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeNotaryFee).PurchaseOrderAmt;
+    this.FiduciaFeeAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeFiduciaFee).PurchaseOrderAmt;
+    this.DiffRateAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeDiffRateAmt).PurchaseOrderAmt;
+    this.FirstInstallmentAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeFirstInstAmt).PurchaseOrderAmt;
+    this.ProvisionFeeAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeProvisionFee).PurchaseOrderAmt;
   }
   
 }

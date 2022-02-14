@@ -121,20 +121,35 @@
                     <div class="col-md-6">
                         <div class="row">
                             <label class="col-md-6" translate>Total Asset Price </label>
-                            <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}}
+                            <label class="col-md-6 text-right">{{TotalAssetPriceAmt | number:'.2':'en-US'}}
                             </label>
                         </div>
                         <div class="row">
                             <label *ngIf="LobCode != 'FL4W'" class="col-md-6" translate>Down Payment Nett </label>
                             <label *ngIf="LobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
                             <label
-                                class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj?.DownPaymentNettAmt | number:'.2':'en-US'}}
+                                class="col-md-6 text-right">{{DpNettAmt | number:'.2':'en-US'}}
                             </label>
                         </div>
                         <div class="row">
                             <label class="col-md-6" *ngIf="LobCode != lobCodeFl4w" translate>TDP At Coy </label>
                             <label class="col-md-6" *ngIf="LobCode == lobCodeFl4w" translate>Total Security Deposit At Coy </label>
-                            <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}}
+                            <label class="col-md-6 text-right">{{TdpAtCoy | number:'.2':'en-US'}}
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6" translate>Admin Fee </label>
+                            <label class="col-md-6 text-right">{{AdminFeeAmt | number:'.2':'en-US'}}
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6" translate>Notary Fee </label>
+                            <label class="col-md-6 text-right">{{NotaryFeeAmt | number:'.2':'en-US'}}
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6" translate>Fiducia Fee </label>
+                            <label class="col-md-6 text-right">{{FiduciaFeeAmt | number:'.2':'en-US'}}
                             </label>
                         </div>
                     </div>
@@ -151,13 +166,16 @@
                         </div>
                         <div *ngIf="AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD'" class="row">
                             <label class="col-md-6" translate>First Installment Amount </label>
-                            <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.InstAmt | number:'.2':'en-US'}} </label>
+                            <label class="col-md-6 text-right">{{FirstInstallmentAmt | number:'.2':'en-US'}} </label>
                         </div>
-                    </div>
-                    <div class="col-md-6" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
-                        <div class="row">
+                        <div class="row" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
                             <label class="col-md-6" translate>{{item.FeeName}} </label>
                             <label class="col-md-6 text-right">{{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6" translate>Provision Fee </label>
+                            <label class="col-md-6 text-right">{{ProvisionFeeAmt | number:'.2':'en-US'}}
+                            </label>
                         </div>
                     </div>
                     <div class="col-md-6">
