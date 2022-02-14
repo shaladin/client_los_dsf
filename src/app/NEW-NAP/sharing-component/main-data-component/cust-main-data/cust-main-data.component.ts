@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { DatePipe, formatDate, KeyValue } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
@@ -1289,7 +1289,12 @@ export class CustMainDataComponent implements OnInit {
     if (this.custMainDataMode == this.CustMainDataFamily) {
       tempReqObj.EmploymentEstablishmentDt = tempForm["EmploymentEstablishmentDt"];
       if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode && !tempReqObj.EmploymentEstablishmentDt) tempReqObj = null;
-    } else {
+    }
+    else if(this.custMainDataMode == this.CustMainDataMgmntShrholder) {
+      tempReqObj.EmploymentEstablishmentDt = tempForm["EstablishmentDt"];
+      if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode && !tempReqObj.EmploymentEstablishmentDt) tempReqObj = null;
+    }
+    else {
       if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode) tempReqObj = null;
     }
     return tempReqObj
@@ -1360,10 +1365,12 @@ export class CustMainDataComponent implements OnInit {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.setDataCustomerPersonalForSave();
 
-      if(this.custDataPersonalObj.AppCustPersonalJobDataObj != null){
-        if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtEmpEstblshmntDtValidate){
-          this.toastr.warningMessage(String.Format(ExceptionConstant.EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
-          return false;
+      if(this.custMainDataMode != CommonConstant.CustMainDataModeCust && this.custMainDataMode != CommonConstant.CustMainDataModeGuarantor){
+        if(this.custDataPersonalObj.AppCustPersonalJobDataObj != null){
+          if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtEmpEstblshmntDtValidate){
+            this.toastr.warningMessage(String.Format(ExceptionConstant.EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+            return false;
+          }
         }
       }
 
