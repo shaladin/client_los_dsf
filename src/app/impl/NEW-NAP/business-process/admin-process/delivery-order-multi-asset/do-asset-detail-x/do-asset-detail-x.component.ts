@@ -199,7 +199,12 @@ export class DoAssetDetailXComponent implements OnInit {
 
     await this.GetAppCustData();
     await this.GetListAddr();
-    await this.GetAllAssetData();
+    //Start Express Rework : Jangan di rollback dulu, coding dari core menyusul - Udin 14 Feb
+    //Issue Non Jira: DO Multi asset tapi col regis masih ambil asset pertama saja
+    //await this.GetAllAssetData();
+    await this.GetCurrentAssetCollRegis();
+    //End Express Rework
+    
     this.InputLookupCityIssuerObj.isReady = true;
     this.isOwnerReady = true;
   }
@@ -617,5 +622,16 @@ export class DoAssetDetailXComponent implements OnInit {
       DocReceived['controls']['DocNo'].updateValueAndValidity();
     }
   }
+
+  //Start Express Rework : Jangan di rollback dulu, coding dari core menyusul - Udin 14 Feb
+  //Issue Non Jira: DO Multi asset tapi col regis masih ambil asset pertama saja
+  async GetCurrentAssetCollRegis() {
+    await this.http.post(URLConstant.GetAppCollateralRegistrationByAppAssetId, { Id: this.AppAssetId }).toPromise().then(
+      response => {
+        this.AppCollateralRegistrationObj = response;
+      }
+    )
+  }
+  //End Express Rework   
 
 }
