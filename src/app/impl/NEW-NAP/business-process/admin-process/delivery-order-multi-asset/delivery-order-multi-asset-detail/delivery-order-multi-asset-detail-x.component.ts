@@ -217,7 +217,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         this.isFinal = response["IsFinal"];
       }
     );
-    // END X DSF Non JIRA, Udin 
+    // END X DSF Non JIRA, Udin
 
     await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
@@ -472,73 +472,77 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.doList.length > 0) {
-      if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
-        this.toastr.warningMessage(ExceptionConstantX.EFF_DATE_MUST_LOWER_THAN_DEL_DT);
-        return;
-      }
-      var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
-      reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
-      reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
-      var agrmntObj = {
-        AgrmntId: this.agrmntId,
-        AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
-        EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
-        AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
-        GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
-      };
-      let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
-      let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
-      forkJoin([editTc, updateAgrmntDt]).subscribe(
-        (response) => {
-          this.toastr.successMessage(response[1]["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+    if (this.AppTcForm.valid && this.DOAssetForm.valid) {
+      if (this.doList.length > 0) {
+        if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
+          this.toastr.warningMessage(ExceptionConstantX.EFF_DATE_MUST_LOWER_THAN_DEL_DT);
+          return;
         }
-      );
-    }
-    else {
-      this.toastr.warningMessage(ExceptionConstant.ONE_DELIVERY_ORDER_NEEDED_TO_SAVE);
+        var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+        reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
+        reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
+        var agrmntObj = {
+          AgrmntId: this.agrmntId,
+          AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
+          EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
+          AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
+          GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
+        };
+        let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
+        let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
+        forkJoin([editTc, updateAgrmntDt]).subscribe(
+          (response) => {
+            this.toastr.successMessage(response[1]["Message"]);
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+          }
+        );
+      }
+      else {
+        this.toastr.warningMessage(ExceptionConstant.ONE_DELIVERY_ORDER_NEEDED_TO_SAVE);
+      }
     }
   }
 
   DOSubmitHandler() {
-    if (!this.DOAssetForm.valid) {
-      return;
-    }
-
-    if (!this.isFinal) {
-      this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
-    }
-    else {
-      if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
-        this.toastr.warningMessage(ExceptionConstantX.EFF_DATE_MUST_LOWER_THAN_DEL_DT);
+    if (this.AppTcForm.valid && this.DOAssetForm.valid) {
+      if (!this.DOAssetForm.valid) {
         return;
       }
-      var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
-      reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
-      reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
-      var agrmntObj = {
-        AgrmntId: this.agrmntId,
-        AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
-        EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
-        AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
-        GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
-      };
-      let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
-      var submitDO = null;
-      if (environment.isCore) {
-        submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+
+      if (!this.isFinal) {
+        this.toastr.warningMessage(ExceptionConstant.ALL_ASSET_MUST_PROCESSED_TO_SUBMIT);
       }
       else {
-        submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
-      }
-      let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
-      forkJoin([editTc, submitDO, updateAgrmntDt]).subscribe(
-        (response) => {
-          this.toastr.successMessage(response[1]["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+        if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
+          this.toastr.warningMessage(ExceptionConstantX.EFF_DATE_MUST_LOWER_THAN_DEL_DT);
+          return;
         }
-      );
+        var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+        reqSubmitAgrmntTcObj.AgrmntId = this.agrmntId;
+        reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.SetTcForm();
+        var agrmntObj = {
+          AgrmntId: this.agrmntId,
+          AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
+          EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
+          AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
+          GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
+        };
+        let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
+        var submitDO = null;
+        if (environment.isCore) {
+          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAssetV2, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+        }
+        else {
+          submitDO = this.httpClient.post(URLConstant.SubmitDeliveryOrderMultiAsset, { TaskListId: this.wfTaskListId, AgrmntId: this.agrmntId });
+        }
+        let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
+        forkJoin([editTc, submitDO, updateAgrmntDt]).subscribe(
+          (response) => {
+            this.toastr.successMessage(response[1]["Message"]);
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+          }
+        );
+      }
     }
   }
 

@@ -42,6 +42,7 @@ import { RefAttrGenerateObj } from 'app/shared/model/ref-attr-generate.model';
 import { ResMouCustCollateralAttrObj, MouCustCollateralAttrObj } from 'app/shared/model/mou-cust-collateral-attr-obj.model';
 import { MouCustObjForAddTrxData } from 'app/shared/model/mou-cust-obj-for-add-trx-data.model';
 import { RefProvDistrictObj } from 'app/shared/model/ref-prov-district-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll-x',
@@ -73,6 +74,8 @@ export class MouRequestAddcollXComponent implements OnInit {
   resultPattern: Array<KeyValueObj>;
   customPattern: CustomPatternObj[];
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  listCollTypeMandatoryManufacturingYear: Array<string> = new Array<string>();
+  isMandatoryManufacturingYear: boolean = false;
 
   @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
     if (content) {
@@ -206,6 +209,7 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.inputAddressObjForLocAddr.inputField.inputLookupObj.isRequired = false;
 
     this.items = this.AddCollForm.get('items') as FormArray;
+    this.SetLookupBpkpCityIssuer();
     this.bindUcLookup()
     this.initAddrObj();
     this.GetMouCustListAddrByMouCustId();
@@ -216,6 +220,7 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.bindUcAddToTempData();
     this.tempPagingObj.isReady = true;
     this.GetGS();
+    await this.SetManufacturingYearMandatory();
     this.validateIfAddExisting();
 
     this.InputLookupProfessionObj = new InputLookupObj();
@@ -299,7 +304,7 @@ export class MouRequestAddcollXComponent implements OnInit {
         this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
         this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
         this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
-        
+
         this.AddCollForm.patchValue({
           MrOwnerTypeCode: this.returnMouCust.MrCustTypeCode,
         });
@@ -812,7 +817,7 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.inputFieldLocationObj.inputLookupObj.isRequired = false;
   }
 
-  getLookupCollateralTypeResponse(e) {
+  async getLookupCollateralTypeResponse(e) {
     if (this.type == "AddEdit") {
       this.AddCollForm.patchValue({
         FullAssetCode: e.FullAssetCode,
@@ -820,8 +825,8 @@ export class MouRequestAddcollXComponent implements OnInit {
         AssetCategoryCode: e.AssetCategoryCode
       });
     } else {
-      this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, { TrxNo: e.CollateralNo }).subscribe(
-        (response) => {
+      await this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, { TrxNo: e.CollateralNo }).toPromise().then(
+        async (response) => {
           this.collateralObj = response['MouCustCollateral'];
           this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
           this.setMouCustCollateralExistingDoc(this.collateralObj.MouCustCollateralId);
@@ -911,7 +916,7 @@ export class MouRequestAddcollXComponent implements OnInit {
 
           this.CopyUserForSelfOwner();
           this.OwnerTypeChange(this.collateralRegistrationObj.MrOwnerTypeCode);
-          
+
           this.GenerateCollateralAttr(true, this.collateralObj["MouCustCollateralId"], true);
           this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
           this.legalAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
@@ -997,13 +1002,14 @@ export class MouRequestAddcollXComponent implements OnInit {
           this.InputLookupProfessionObj.isDisable = true;
           this.InputLookupProfessionObj.isReady = true;
           this.UpdateValueCollateralPortionAmt();
+          await this.CheckManufacturingYearMandatory();
         })
     }
   }
 
-  onItemChange(value, UserChange: boolean = false) {
+  async onItemChange(value, UserChange: boolean = false) {
     this.getRefAssetDocList(value);
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).subscribe(
+    await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).toPromise().then(
       (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -1024,6 +1030,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       });
     this.updateUcLookup(value, UserChange ? false : true, this.type);
     this.GenerateCollateralAttr(false, this.MouCustCollateralId);
+    await this.CheckManufacturingYearMandatory();
   }
 
   async SaveForm() {
@@ -1052,7 +1059,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       CollateralReceivedDt: this.AddCollForm.controls.CollateralReceivedDt.value,
       CollateralReleasedDt: this.AddCollForm.controls.CollateralReleasedDt.value
     }
-    
+
     let mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
     mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
 
@@ -1584,7 +1591,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       const custCollObj = {
         MouCustCollateral: this.mouCustCollateralObj,
         MouCustCollateralRegistration: this.mouCustCollateralRegistrationObj,
-        ListMouCustCollaterals: this.SetCollateralAttr(), 
+        ListMouCustCollaterals: this.SetCollateralAttr(),
         CollateralReceivedDt: this.AddCollForm.controls.CollateralReceivedDt.value,
         CollateralReleasedDt: this.AddCollForm.controls.CollateralReleasedDt.value
       }
@@ -1875,15 +1882,41 @@ export class MouRequestAddcollXComponent implements OnInit {
       var refSvcType = "";
       await this.http.post(URLConstant.GetRuleIntegratorPackageMapAsset, { TrxNo: "-"}).toPromise().then(
         (response) => {
-            refSvcType = response["Result"];
+          refSvcType = response["Result"];
         });
 
-        var svcType = listSvcType.find(x => x == refSvcType);
+      var svcType = listSvcType.find(x => x == refSvcType);
       if(svcType != null){
         this.IsSvcExist = true;
       }
     }
   }
+
+  async SetManufacturingYearMandatory(){
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsCodeManufacturingYearMandatoryByCollType }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          this.listCollTypeMandatoryManufacturingYear  = result.GsValue.split(';');
+          console.log(this.listCollTypeMandatoryManufacturingYear);
+        }
+      }
+    );
+  }
+
+  CheckManufacturingYearMandatory(){
+    let temp = this.AddCollForm.controls.AssetTypeCode.value;
+    this.isMandatoryManufacturingYear = this.listCollTypeMandatoryManufacturingYear.includes(temp);
+
+    if (this.isMandatoryManufacturingYear) {
+      this.AddCollForm.controls.ManufacturingYear.setValidators([Validators.required]);
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
+    else{
+      this.AddCollForm.controls.ManufacturingYear.clearValidators();
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
+  }
+
   ChangeCollStat() {
     if (this.AddCollForm.controls.CollateralStatus.value == 'RECEIVED' && this.AddCollForm.controls.IsRequiredStatus.value == true) {
       this.AddCollForm.controls.CollateralReceivedDt.enable();
@@ -1919,6 +1952,6 @@ export class MouRequestAddcollXComponent implements OnInit {
     }
     temp.updateValueAndValidity();
   }
-  
-  
+
+
 }

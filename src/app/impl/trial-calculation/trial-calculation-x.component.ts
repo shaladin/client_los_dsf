@@ -40,7 +40,7 @@ export class TrialCalculationXComponent implements OnInit {
   DictRefPayFreq: { [id: string]: RefPayFreqObj } = {};
   TrialForm = this.fb.group({
     OfficeCode: [''],
-    CustName: ['', [Validators.maxLength(50)]],
+    CustName: ['', [Validators.maxLength(500)]],
     Addr: ['', [Validators.maxLength(100)]],
     MobilePhone: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     AssetPriceAmt: ['', Validators.required],

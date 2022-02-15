@@ -34,6 +34,8 @@ import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { String } from 'typescript-string-operations';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-application-data-dlfn-x',
@@ -58,7 +60,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   salesRecommendationItems = [];
   isInputLookupObj: boolean;
   isInterestCalcBasedTOP: boolean = false;
-  
+
   SalesAppInfoForm = this.fb.group({
     MouCustId: [''],
     TopBased: [''],
@@ -127,7 +129,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   allCharacteristicCredit: Array<KeyValueObj>;
   responseApp: AppObj;
   responseProd: ProdOfferingDObj;
-
+  userContext: CurrentUserContext;
   listCustBankAcc: Array<AppCustBankAccObj>;
   selectedBankAcc: any;
   GetBankInfo: any;
@@ -154,6 +156,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.ListCrossAppObj['appId'] = this.AppId;
     this.ListCrossAppObj['result'] = [];
 
@@ -163,7 +166,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       (response: any) => {
         this.listAllActivePayFreq = response[CommonConstant.ReturnObj];
       });
-      
+
     this.initCustBankAccDetail();
     this.initAddressCustBankAcc();
     await this.loadData();
@@ -403,9 +406,14 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
+    this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).toPromise().then(
       (response) => {
         this.allInSalesOffice = response[CommonConstant.ReturnObj];
+
+        if(this.allInSalesOffice.length == 0){
+          this.toastr.warningMessage(String.Format(ExceptionConstant.SALES_PERSON_NOT_AVAILABLE_IN_OFFICE, this.userContext.OfficeName));
+        }
+
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
             SalesOfficerNo: this.allInSalesOffice[0].empNo,
@@ -778,7 +786,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     }
     await this.getDropDown();
     await this.setDropdown();
-    
+
     this.http.post(URLConstant.GetMouCustDlrFncngByAppId, { Id: this.AppId }).subscribe(
       (responseMouCustDlrFncng) => {
         if(this.isSingle){
@@ -912,7 +920,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         }
 
 
-        
+
         if (this.mode == 'add') {
           let obj = {
             RequestApplicationDataObj: this.salesAppInfoObj,

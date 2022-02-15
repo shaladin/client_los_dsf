@@ -130,7 +130,7 @@ import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail
         ApprovalHistXComponent,
         ViewCreditProcessFlowComponent,
         ViewDeviationComponent,
-        TabCommissionXComponent
+        TabCommissionXComponent,
         TabReferantorMultiComponent,
         TabReferantorMultiDetailComponent
     ],
@@ -141,7 +141,7 @@ import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail
         UcapprovalhistComponent,
         AppMainInfoComponent,
         AppAssetDataDetailComponent,
-        TabReferantorMultiDetailComponent
+        TabReferantorMultiDetailComponent,
         AppMainInfoXComponent,
         AppAssetDataDetailComponent
     ]

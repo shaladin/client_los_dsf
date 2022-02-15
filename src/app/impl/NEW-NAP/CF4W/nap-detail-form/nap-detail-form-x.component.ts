@@ -22,7 +22,7 @@ import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
-
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 @Component({
   selector: 'app-nap-detail-form-x',
   templateUrl: './nap-detail-form-x.component.html',
@@ -48,6 +48,7 @@ export class NapDetailFormXComponent implements OnInit {
   IsSavedTC: boolean = false;
   IsDataReady: boolean = false;
   bizTemplateCode: string;
+  IsShowMultiReferantor: number = 0;
   readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
@@ -96,6 +97,7 @@ export class NapDetailFormXComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     // check DMS
+    await this.GetGSValueShowRferantor();
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
@@ -137,6 +139,13 @@ export class NapDetailFormXComponent implements OnInit {
     this.MakeViewReturnInfoObj();
 
 
+  }
+
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+      (response) => {
+        this.IsShowMultiReferantor = parseInt(response.GsValue);
+      });
   }
 
   async initDms() {

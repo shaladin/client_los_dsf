@@ -64,6 +64,11 @@
         },
         {
           "type": "text",
+          "label": "Office",
+          "property": "Office"
+        },
+        {
+          "type": "text",
           "label": "MOU Type",
           "property": "MouType"
         },

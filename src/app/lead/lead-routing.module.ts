@@ -35,10 +35,10 @@ import { NewLeadInputPageComponent } from './new-lead-input/new-lead-input-page/
 import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-lead-monitoring.component';
 import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
 import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
-import { NewLeadInputPageXComponent } from 'app/impl/lead/new-lead-input/new-lead-input-page-x/new-lead-input-page-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { RoTelemkOfferDetailXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail-x.component';
 import { RoTelemkOfferVerifXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component';
+import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-page/new-lead-input-page-x.component';
 
 
 const routes: Routes = [
