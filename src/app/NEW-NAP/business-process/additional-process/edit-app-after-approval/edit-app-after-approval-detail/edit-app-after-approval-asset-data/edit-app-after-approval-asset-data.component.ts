@@ -45,7 +45,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   EditAppAssetForm = this.fb.group({
     SelfOwner: [false],
-    OwnerName: ['', Validators.maxLength(50)],
+    OwnerName: ['', Validators.maxLength(500)],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
     OwnerIdNo: ['', Validators.maxLength(50)],
@@ -74,9 +74,10 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   AppObj: NapAppModel;
   AppId: number;
+  AppAssetId: number;
   AppCustObj: AppCustObj;
   AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
-  
+
   CustType: string = "";
   IdTypeObj: Array<KeyValueObj>;
   refMasterObj : RefMasterObj = new RefMasterObj();
@@ -129,6 +130,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
     this.ownerAddrObj = new AddrObj();
     this.AppId = this.AppAssetObj.AppId;
+    this.AppAssetId = this.AppAssetObj.AppAssetId;
 
     await this.bindOwnerTypeObj();
     await this.bindCompanyTypeObj();
@@ -136,23 +138,23 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.SetAssetInformation()
     await this.GetAppData();
     await this.GetRefProdCompt();
+    await this.GetAppCust();
     this.bindIdTypeObj();
     this.bindUserOwnerRelationshipObj();
     this.setAddrOwnerObj();
     await this.GetListAddr();
     await this.SetOwnerData();
-    await this.GetAppCust();
     await this.GetAppCustPersonalJobData();
     this.GenerataAppAssetAttr(false);
     await this.bindInscoBranchObj();
     await this.getInsuranceData();
     await this.bindAppInsObj();
-    
+
     await this.setFormValidators();
 
-    if (this.EditAppAssetForm.controls['SelfOwner'].value) this.SelfOwnerChange({ 'checked': this.EditAppAssetForm.controls['SelfOwner'].value }, this.EditAppAssetForm.controls['MrOwnerTypeCode'].value); 
+    if (this.EditAppAssetForm.controls['SelfOwner'].value) this.SelfOwnerChange({ 'checked': this.EditAppAssetForm.controls['SelfOwner'].value }, this.EditAppAssetForm.controls['MrOwnerTypeCode'].value);
 
-    if (this.EditAppAssetForm.controls['MrOwnerTypeCode'].value) this.OwnerTypeChange(this.EditAppAssetForm.controls['MrOwnerTypeCode'].value, !this.isFromDB); 
+    if (this.EditAppAssetForm.controls['MrOwnerTypeCode'].value) this.OwnerTypeChange(this.EditAppAssetForm.controls['MrOwnerTypeCode'].value, !this.isFromDB);
   }
 
   async SetAssetTypeData()
@@ -188,7 +190,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
           this.IsCheckSerialMandatory = true;
         }
       });
-    
+
     if(this.EditAppAssetForm.controls.AssetColor.value != null && this.EditAppAssetForm.controls.AssetColor.value != "")
     {
       this.tempColor = true;
@@ -306,7 +308,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       }
     );
   }
-  
+
   bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -447,7 +449,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
       async (response: AppCustObj) => {
         this.AppCustObj = response['AppCustObj'];
-        if(response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'] != null)  
+        if(response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'] != null)
           this.AppCustObj.MobilePhnNo1 = response['AppCustPersonalObj']['MobilePhnNo1'];
 
         this.CustType = this.AppCustObj.MrCustTypeCode;
@@ -479,7 +481,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   async SetOwnerData() {
     this.EditAppAssetForm.patchValue({
-      SelfOwner: (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
+      // SelfOwner: (this.AppCollateralRegistrationObj.MrOwnerRelationshipCode == "SELF"),
       OwnerName: this.AppCollateralRegistrationObj.OwnerName,
       MrIdTypeCode: this.AppCollateralRegistrationObj.MrIdTypeCode,
       OwnerIdNo: this.AppCollateralRegistrationObj.OwnerIdNo,
@@ -499,12 +501,12 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   GenerataAppAssetAttr(isRefresh: boolean) {
     var GenObj =
-    {
-      AppAssetId: this.AppAssetObj.AppAssetId,
-      AssetTypeCode: this.RefProdCmptAssetType.CompntValue,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-      IsRefresh: isRefresh
-    };
+      {
+        AppAssetId: this.AppAssetObj.AppAssetId,
+        AssetTypeCode: this.RefProdCmptAssetType.CompntValue,
+        AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
+        IsRefresh: isRefresh
+      };
     this.http.post(URLConstant.GenerateAppAssetAttrForEditAppAftApv, GenObj).subscribe(
       (response) => {
         this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
@@ -590,16 +592,16 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   }
 
   async GetRefProdCompt() {
-    var appObj : ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion(); 
+    var appObj : ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
-    appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetType,
-    appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
-    
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
-      (response: ProdOfferingDObj) => {
-        this.RefProdCmptAssetType = response;
-      }
-    );
+      appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetType,
+      appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
+
+      await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+        (response: ProdOfferingDObj) => {
+          this.RefProdCmptAssetType = response;
+        }
+      );
 
   }
 
@@ -621,8 +623,11 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   }
 
   async getInsuranceData() {
-    var reqObj = { Id: this.AppId }
-    await this.http.post(URLConstant.GetInsuranceDataByAppId, reqObj).toPromise().then(
+    const reqObj = {
+      AppId: this.AppId,
+      AppAssetId: this.AppAssetId
+    }
+    await this.http.post(URLConstant.GetInsDataByAppIdAndAssetId, reqObj).toPromise().then(
       (response) => {
         // this.appObj = response["AppObj"];
         // this.appAssetObj = response["AppAssetObj"];
@@ -676,64 +681,88 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   async bindAppInsObj() {
     if (this.appInsObjObj != null) {
-      if (this.appInsObjObj.InsAssetCoveredBy == CommonConstant.InsuredByCompany)
-        this.EditAppAssetForm.patchValue({
-          InscoBranchCode: this.appInsObjObj.InscoBranchCode,
-          InscoBranchName: this.appInsObjObj.InscoBranchName,
-        });
+      switch(this.appInsObjObj.InsAssetCoveredBy){
+        case CommonConstant.InsuredByCustomer:
+          this.EditAppAssetForm.patchValue({
+            InscoBranchCode: "",
+            InscoBranchName: this.appInsObjObj.CustInscoBranchName,
+          });
+          break;
+        case CommonConstant.InsuredByCompany:
+          this.EditAppAssetForm.patchValue({
+            InscoBranchCode: this.appInsObjObj.InscoBranchCode,
+            InscoBranchName: this.appInsObjObj.InscoBranchName,
+          });
+          break;
+      }
     }
   }
 
   async setFormValidators() {
-    if (this.appInsObjObj.InsAssetCoveredBy != 'OFF')
-      this.EditAppAssetForm.controls.InscoBranchCode.setValidators([Validators.required]);
+    switch(this.appInsObjObj.InsAssetCoveredBy){
+      case CommonConstant.InsuredByOffSystem:
+        this.EditAppAssetForm.controls.InscoBranchCode.clearValidators();
+        this.EditAppAssetForm.controls.InscoBranchName.clearValidators();
+        break;
+      case CommonConstant.InsuredByCustomer:
+        this.EditAppAssetForm.controls.InscoBranchCode.clearValidators();
+        this.EditAppAssetForm.controls.InscoBranchName.setValidators([Validators.required]);
+        break;
+      case CommonConstant.InsuredByCompany:
+        this.EditAppAssetForm.controls.InscoBranchCode.setValidators([Validators.required]);
+        this.EditAppAssetForm.controls.InscoBranchName.clearValidators();
+        break;
+    }
+    this.EditAppAssetForm.controls.InscoBranchCode.updateValueAndValidity();
+    this.EditAppAssetForm.controls.InscoBranchName.updateValueAndValidity();
   }
+
   CancelClick() {
     this.outputPage.emit({ pageType: "cancelAssetData" });
   }
 
   SaveData() {
     this.AppAssetRelatedOutput =
-    {
-      AppAssetId: this.AppAssetObj.AppAssetId,
-      AppAssetObj:
       {
-        ManufacturingYear: this.EditAppAssetForm.controls.ManufacturingYear.value,
-        Color:this.EditAppAssetForm.controls.AssetColor.value,
-        SerialNo1: this.EditAppAssetForm.controls.SerialNo1.value,
-        SerialNo2: this.EditAppAssetForm.controls.SerialNo2.value,
-        SerialNo3: this.EditAppAssetForm.controls.SerialNo3.value,
-        SerialNo4: this.EditAppAssetForm.controls.SerialNo4.value,
-        SerialNo5: this.EditAppAssetForm.controls.SerialNo5.value
-      },
-      AppCollateralRegistrationObj:
-      {
-        AppCollateralRegistrationId: this.AppCollateralRegistrationObj.AppCollateralRegistrationId,
-        OwnerName: this.EditAppAssetForm.controls.OwnerName.value,
-        MrIdTypeCode: this.EditAppAssetForm.controls.MrIdTypeCode.value,
-        MrOwnerRelationshipCode: this.EditAppAssetForm.controls.MrOwnerRelationshipCode.value,
-        OwnerIdNo: this.EditAppAssetForm.controls.OwnerIdNo.value,
-        OwnerAddrType: this.EditAppAssetForm.controls.OwnerAddrType.value,
-        OwnerMobilePhnNo: this.EditAppAssetForm.controls.OwnerMobilePhnNo.value,
-        OwnerAddr: this.EditAppAssetForm.controls.ownerData['controls'].Addr.value,
-        OwnerAreaCode1: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode1.value,
-        OwnerAreaCode2: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode2.value,
-        OwnerAreaCode3: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode3.value,
-        OwnerAreaCode4: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode4.value,
-        OwnerCity: this.EditAppAssetForm.controls.ownerData['controls'].City.value,
-        OwnerZipcode: this.EditAppAssetForm.controls.OwnerZipcode.value,
-        MrOwnerTypeCode: this.EditAppAssetForm.controls.MrOwnerTypeCode.value,
-        OwnerProfessionCode: this.EditAppAssetForm.controls.OwnerProfessionCode.value
-      },
-      AppAssetAttrObjs: [],
-      AppInsObj:
-      {
-        InsAssetCoverPeriod: '-',
-        InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy,
-        InscoBranchCode: "",
-        InscoBranchName: "",
+        AppAssetId: this.AppAssetObj.AppAssetId,
+        AppAssetObj:
+          {
+            ManufacturingYear: this.EditAppAssetForm.controls.ManufacturingYear.value,
+            Color:this.EditAppAssetForm.controls.AssetColor.value,
+            SerialNo1: this.EditAppAssetForm.controls.SerialNo1.value,
+            SerialNo2: this.EditAppAssetForm.controls.SerialNo2.value,
+            SerialNo3: this.EditAppAssetForm.controls.SerialNo3.value,
+            SerialNo4: this.EditAppAssetForm.controls.SerialNo4.value,
+            SerialNo5: this.EditAppAssetForm.controls.SerialNo5.value
+          },
+        AppCollateralRegistrationObj:
+          {
+            AppCollateralRegistrationId: this.AppCollateralRegistrationObj.AppCollateralRegistrationId,
+            OwnerName: this.EditAppAssetForm.controls.OwnerName.value,
+            MrIdTypeCode: this.EditAppAssetForm.controls.MrIdTypeCode.value,
+            MrOwnerRelationshipCode: this.EditAppAssetForm.controls.MrOwnerRelationshipCode.value,
+            OwnerIdNo: this.EditAppAssetForm.controls.OwnerIdNo.value,
+            OwnerAddrType: this.EditAppAssetForm.controls.OwnerAddrType.value,
+            OwnerMobilePhnNo: this.EditAppAssetForm.controls.OwnerMobilePhnNo.value,
+            OwnerAddr: this.EditAppAssetForm.controls.ownerData['controls'].Addr.value,
+            OwnerAreaCode1: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode1.value,
+            OwnerAreaCode2: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode2.value,
+            OwnerAreaCode3: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode3.value,
+            OwnerAreaCode4: this.EditAppAssetForm.controls.ownerData['controls'].AreaCode4.value,
+            OwnerCity: this.EditAppAssetForm.controls.ownerData['controls'].City.value,
+            OwnerZipcode: this.EditAppAssetForm.controls.OwnerZipcode.value,
+            MrOwnerTypeCode: this.EditAppAssetForm.controls.MrOwnerTypeCode.value,
+            OwnerProfessionCode: this.EditAppAssetForm.controls.OwnerProfessionCode.value
+          },
+        AppAssetAttrObjs: [],
+        AppInsObj:
+          {
+            InsAssetCoverPeriod: '-',
+            InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy,
+            InscoBranchCode: "",
+            InscoBranchName: "",
+          }
       }
-    }
 
     var listAppAssetAttrs = this.EditAppAssetForm.controls["AppAssetAttrObjs"] as FormArray;
 
@@ -741,31 +770,43 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       const assetAttr = listAppAssetAttrs.at(i).value;
 
       var appAssetAttr =
-      {
-        AssetAttrCode: assetAttr.AssetAttrCode,
-        AssetAttrName: assetAttr.AssetAttrName,
-        AttrValue: assetAttr.AttrValue
-      }
+        {
+          AssetAttrCode: assetAttr.AssetAttrCode,
+          AssetAttrName: assetAttr.AssetAttrName,
+          AttrValue: assetAttr.AttrValue
+        }
 
       this.AppAssetRelatedOutput.AppAssetAttrObjs.push(appAssetAttr);
     }
 
-    if (this.appInsObjObj.InsAssetCoveredBy != 'OFF') {
-      this.AppAssetRelatedOutput.AppInsObj =
-      {
-        InscoBranchCode: this.EditAppAssetForm.controls.InscoBranchCode.value,
-        InscoBranchName: this.EditAppAssetForm.controls.InscoBranchName.value,
-        InsAssetCoverPeriod: this.appInsObjObj.InsAssetCoverPeriod,
-        InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy
-      };
-    }else{
-      this.AppAssetRelatedOutput.AppInsObj =
-      {
-        InscoBranchCode: "",
-        InscoBranchName: "",
-        InsAssetCoverPeriod: '-',
-        InsAssetCoveredBy: '-',
-      };
+    switch(this.appInsObjObj.InsAssetCoveredBy){
+      case CommonConstant.InsuredByOffSystem:
+        this.AppAssetRelatedOutput.AppInsObj =
+          {
+            InscoBranchCode: "",
+            InscoBranchName: "",
+            InsAssetCoverPeriod: '-',
+            InsAssetCoveredBy: '-',
+          };
+        break;
+      case CommonConstant.InsuredByCustomer:
+        this.AppAssetRelatedOutput.AppInsObj =
+          {
+            InscoBranchCode: "",
+            InscoBranchName: this.EditAppAssetForm.controls.InscoBranchName.value,
+            InsAssetCoverPeriod: this.appInsObjObj.InsAssetCoverPeriod,
+            InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy
+          };
+        break;
+      case CommonConstant.InsuredByCompany:
+        this.AppAssetRelatedOutput.AppInsObj =
+          {
+            InscoBranchCode: this.EditAppAssetForm.controls.InscoBranchCode.value,
+            InscoBranchName: this.EditAppAssetForm.controls.InscoBranchName.value,
+            InsAssetCoverPeriod: this.appInsObjObj.InsAssetCoverPeriod,
+            InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy
+          };
+        break;
     }
 
     this.outputPage.emit({ AppAssetRelatedOutput: this.AppAssetRelatedOutput, pageType: "submitAssetData" });
@@ -804,7 +845,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       }else{
         let reqByCode: GenericObj = new GenericObj();
         reqByCode.Code = this.AppCollateralRegistrationObj.OwnerProfessionCode;
-        
+
         await this.http.post(URLConstant.GetRefProfessionByCode, reqByCode).toPromise().then(
           (response) =>{
             this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];

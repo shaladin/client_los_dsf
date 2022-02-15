@@ -13,7 +13,7 @@ import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
+  templateUrl: './change-password-new.component.html',
   providers: [NGXToastrService]
 })
 export class ChangePasswordComponent implements OnInit {
@@ -28,6 +28,7 @@ export class ChangePasswordComponent implements OnInit {
     ConfirmNewPassword: ['', [Validators.required, Validators.maxLength(50)]]
   });
   customPattern = new Array<CustomPatternObj>();
+  showPass: Array<boolean> = Array<boolean>(3);
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -81,6 +82,10 @@ export class ChangePasswordComponent implements OnInit {
     }
     else
       this.toastr.errorMessage("Password Mismatch.");
+  }
+
+  onClickShowPass(i) {
+    this.showPass[i] = !this.showPass[i];
   }
 
 }

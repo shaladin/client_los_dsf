@@ -87,7 +87,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
 
 
   ContactInfoPersonalForm = this.fb.group({
-    ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
+    ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     MrCustRelationshipCode: ['', Validators.maxLength(50)],

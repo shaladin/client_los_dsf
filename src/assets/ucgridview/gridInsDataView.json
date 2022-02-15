@@ -27,6 +27,12 @@
         {
             "type": "label",
             "position": "left",
+            "label": "Payment Type",
+            "name": "PayPeriodToInsco"
+        },
+        {
+            "type": "label",
+            "position": "left",
             "label": "Cover Period",
             "name": "CoverPeriod"
         },
@@ -81,6 +87,11 @@
             "type": "text",
             "position": "left",
             "property": "InscoName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PayPeriodToInsco"
         },
         {
             "type": "text",

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, ControlContainer, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { DatePipe, formatDate, KeyValue } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
@@ -48,6 +48,7 @@ import { CustAttrFormComponent } from '../components/cust-attr-form/cust-attr-fo
 import { AppCustAttrContentObj } from 'app/shared/model/app-cust/cust-attr-content/app-cust-attr-content-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { AddressService } from 'app/shared/services/custAddr.service';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -143,6 +144,8 @@ export class CustMainDataComponent implements OnInit {
   rowVersionAppCustAddr: string[];
   rowVersionMgmntShrholder: string[];
   custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
+  MaxDateEmpEstblshmntDt: Date;
+  MaxDtEmpEstblshmntDtValidate: string;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly MasterGender = CommonConstant.RefMasterTypeCodeGender;
   MasterCustType: string = "";
@@ -214,6 +217,10 @@ export class CustMainDataComponent implements OnInit {
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
     this.max17Yodt = new Date(this.MaxDate);
     this.max17Yodt.setFullYear(this.max17Yodt.getFullYear() - 17);
+    var datePipe = new DatePipe("en-US");
+    this.MaxDateEmpEstblshmntDt = new Date(this.UserAccess[CommonConstant.BUSINESS_DT]);
+    this.MaxDateEmpEstblshmntDt.setDate(this.MaxDateEmpEstblshmntDt.getDate() - 1);
+    this.MaxDtEmpEstblshmntDtValidate = datePipe.transform(this.MaxDateEmpEstblshmntDt, "yyyy-MM-dd");
 
     this.DictUcDDLObj[this.RefMasterTypeCodeNationality] = CustSetData.initDdlRefMaster(this.RefMasterTypeCodeNationality, null, true);
     if (this.MrCustTypeCode == CommonConstant.CustTypePublic) {
@@ -1282,7 +1289,12 @@ export class CustMainDataComponent implements OnInit {
     if (this.custMainDataMode == this.CustMainDataFamily) {
       tempReqObj.EmploymentEstablishmentDt = tempForm["EmploymentEstablishmentDt"];
       if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode && !tempReqObj.EmploymentEstablishmentDt) tempReqObj = null;
-    } else {
+    }
+    else if(this.custMainDataMode == this.CustMainDataMgmntShrholder) {
+      tempReqObj.EmploymentEstablishmentDt = tempForm["EstablishmentDt"];
+      if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode && !tempReqObj.EmploymentEstablishmentDt) tempReqObj = null;
+    }
+    else {
       if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode) tempReqObj = null;
     }
     return tempReqObj
@@ -1352,6 +1364,16 @@ export class CustMainDataComponent implements OnInit {
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.setDataCustomerPersonalForSave();
+
+      if(this.custMainDataMode != CommonConstant.CustMainDataModeCust && this.custMainDataMode != CommonConstant.CustMainDataModeGuarantor){
+        if(this.custDataPersonalObj.AppCustPersonalJobDataObj != null){
+          if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtEmpEstblshmntDtValidate){
+            this.toastr.warningMessage(String.Format(ExceptionConstant.EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+            return false;
+          }
+        }
+      }
+
       if (this.appCustId == null || this.appCustId == 0) {
         this.http.post(URLConstant.AddCustMainDataPersonal, this.custDataPersonalObj).subscribe(
           (response) => {

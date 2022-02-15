@@ -84,7 +84,7 @@ export class ExceptionConstant {
     public static SETTING_COMPONENT_RULE_FIRST = "Please setting rule {0}, component {1} for Year No {2}.";
     public static CANNOT_INPUT_TWO_EMERGENCY_CONTACT_MOU = "Cannot Add More Than 1 Emergency Contact";
     public static SALES_PERSON_NOT_AVAILABLE_IN_OFFICE = "Sales Person not available in {0}";
-
+    public static ASSET_CATEGORY_CHANGED_CONFIRMATION = "This {0}'s Category has changed, do you want to proceed ?";
     public static INSERT_ESTIMATION_EFFECTIVE_DATE = "Insert Estimation Effective Date";
     public static GRACE_PERIOD_MUST_SET = "Grace Period must be set";
     public static OTHER_BANK_ACCOUNT_ALREADY_DEFAULT = "Other bank account is already default";
@@ -141,6 +141,8 @@ export class ExceptionConstant {
     public static STATEMENT_WITH_SAME_MONTH_AND_YEAR = "Cannot Input Statement With The Same Month and Year";
 
     public static EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN = "Employment Establishment Date can not be less than ";
+    public static START_WORKING_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Start Working Date Date Must Be Less Than Business Date";
+    public static OTHER_BIZ_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Other Business Establishment Date Must Be Less Than Business Date";
     
     public static START_DT_MUST_LESS_THAN_END_DT = "Start Date Must be Less than End Date";
     public static END_DT_MUST_GREATER_THAN_BUSINESS_DT = "End Date Must be Greater than Business Date";
@@ -192,7 +194,8 @@ export class ExceptionConstant {
     public static MANUFACTURING_YEAR_CAN_NOT_LESS_THAN = "Manufacturing Year can not less than ";
     public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
     
-    public static  EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
+    public static EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
+    public static EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Employee Establishment Date Must Be Less Than Business Date";
     
     public static JOB_POSITION_CANT_BE_EMPTY = "Job Position Cannot Be Empty - Shareholder {0}";
     public static INS_ASSET_CATEGORY_NOT_FOUND = "Ins Asset Category Not Found, Please Setting Rule First";
@@ -200,5 +203,6 @@ export class ExceptionConstant {
     public static PWD_EXCEPTION = "Minimum 8 characters, at least 1 letter, 1 number and 1 special character.";
 
     public static MAX_REFERANTOR_EXCEPTION = "Number of Referantor Cannot Be More than {0}";
+    public static DUPLICATE_SUPPL_EMP = "Supplier Employee {0} Receiving More Than 1 Commission";
 }
 

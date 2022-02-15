@@ -109,6 +109,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.initLookup();
     this.bindAllRefMasterObj();
   }
+
   SavePublicType(ev: { Key: string, Value: MouCustCompanyMgmntShrholderObj }) {
     if (ev.Key == "save") {
       if (this.mode == "add") this.listShareholder.push(ev.Value);
@@ -118,6 +119,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.modalService.dismissAll();
     this.clearForm();
   }
+
   SaveForm() {
     this.appCustCompanyMgmntShrholderObj = new MouCustCompanyMgmntShrholderObj();
     if (this.setAppCustCompanyMgmntShrholder() == false) return;
@@ -434,10 +436,13 @@ export class MouCustMgmntShrholderComponent implements OnInit {
       let d2 = new Date(this.MaxDate);
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
-      if (d1 > d2) {
-        this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
-        flag = false;
+      if(this.appCustCompanyMgmntShrholderObj.MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP){
+        if (d1 < d2) {
+          this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
+          flag = false;
+        }
       }
+      
       if (d3 > d4) {
         // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
         this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
@@ -529,6 +534,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
 
     this.positionSlikLookUpObj = CustSetData.BindLookupPositionSlik();
   }
+
   getLookUpSlik(ev: { Code: string, Jabatan: string }) {
     let tempMrPositionSlikCode = this.CustShareholderForm.get("MrPositionSlikCode");
     tempMrPositionSlikCode.patchValue(ev.Code);
@@ -544,7 +550,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
 
   dictCustType: { [id: string]: string } = {};
   bindCustTypeObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeShareholderCustType }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeShareholderCustType }).toPromise().then(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
@@ -561,7 +567,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindGenderObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -572,7 +578,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindIdTypeObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
@@ -583,7 +589,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindJobPositionObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).toPromise().then(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
         if (this.JobPositionObj.length > 0) {
@@ -595,7 +601,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindCompanyTypeObj() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).toPromise().then(
       (response) => {
         this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if (this.CompanyTypeObj.length > 0) {

@@ -21,7 +21,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class RequestNewPasswordComponent implements OnInit {
 
   ReqPassForm = this.fb.group({
-    Username: ['', [Validators.required, Validators.maxLength(50)]],
+    Username: ['', [Validators.required, Validators.maxLength(500)]],
   });
   version: string;
   isRequested: boolean = false;

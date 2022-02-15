@@ -125,6 +125,58 @@
             "type": "text",
             "label": "Application Last Step",
             "property": "LastStep"
+          },
+          {
+            "type": "switch",
+            "case": [{
+                "conditions": [{
+                  "property": "BizTemplateCode",
+                  "value": "CFNA",
+                  "restriction": "EQ"
+                }],
+                "result": {
+                  "type": "text",
+                  "label": "Credit Score",
+                  "property": "CreditScore"
+                }
+              },
+              {
+                "conditions": [{
+                  "property": "BizTemplateCode",
+                  "value": "CF4W",
+                  "restriction": "EQ"
+                }],
+                "result": {
+                  "type": "text",
+                  "label": "Credit Score",
+                  "property": "CreditScore"
+                }
+              },
+              {
+                "conditions": [{
+                  "property": "BizTemplateCode",
+                  "value": "FL4W",
+                  "restriction": "EQ"
+                }],
+                "result": {
+                  "type": "text",
+                  "label": "Credit Score",
+                  "property": "CreditScore"
+                }
+              },
+              {
+                "conditions": [{
+                  "property": "BizTemplateCode",
+                  "value": "CFRFN4W",
+                  "restriction": "EQ"
+                }],
+                "result": {
+                  "type": "text",
+                  "label": "Credit Score",
+                  "property": "CreditScore"
+                }
+              }
+            ]
           }
         ],
         "querystring": {

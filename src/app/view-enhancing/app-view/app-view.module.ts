@@ -54,6 +54,8 @@ import { ViewSrvyTaskComponent } from "./view-srvy-task/view-srvy-task.component
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { ViewDeviationComponent } from "./view-deviation/view-deviation.component";
+import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referantor-multi.component";
+import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail/tab-referantor-multi-detail.component";
 
 
 @NgModule({
@@ -116,6 +118,8 @@ import { ViewDeviationComponent } from "./view-deviation/view-deviation.componen
         ViewSrvyTaskComponent,
         ViewCreditProcessFlowComponent,
         ViewDeviationComponent,
+        TabReferantorMultiComponent,
+        TabReferantorMultiDetailComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -124,6 +128,7 @@ import { ViewDeviationComponent } from "./view-deviation/view-deviation.componen
         UcapprovalhistComponent,
         AppMainInfoComponent,
         AppAssetDataDetailComponent,
+        TabReferantorMultiDetailComponent
     ]
 })
 export class AppViewModule { }

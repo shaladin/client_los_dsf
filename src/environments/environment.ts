@@ -18,6 +18,7 @@ export const environment = {
   FoundationR3Web: 'http://r3web-server.ad-ins.com/Foundation',
   losR3Web: 'http://r3web-server.ad-ins.com/LOSR3',
   lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
+  cmsR3Web: 'http://r3web-server.ad-ins.com/CMS',
   WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3',
   WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',

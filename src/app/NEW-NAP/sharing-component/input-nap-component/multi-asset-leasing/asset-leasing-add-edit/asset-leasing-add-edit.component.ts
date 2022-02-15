@@ -273,7 +273,7 @@ export class AssetLeasingAddEditComponent implements OnInit {
     };
 
     if (event.checked == false) {
-      this.AssetDataForm.controls.Username.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.AssetDataForm.controls.Username.setValidators([Validators.required, Validators.maxLength(500)]);
       this.AssetDataForm.controls.Username.updateValueAndValidity();
       this.AssetDataForm.controls.UserRelationship.setValidators([Validators.required, Validators.maxLength(50)]);
       this.AssetDataForm.controls.UserRelationship.updateValueAndValidity();

@@ -32,7 +32,7 @@ export class AppMainInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
-      if(params["AppId"] == "undefined"){
+      if(params["AppId"] === undefined){
         this.AppNo = params["AppNo"]
 
       }else{

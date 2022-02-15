@@ -457,24 +457,6 @@ mat-dialog-container#role-modal {
     height: auto;
 }
 
-#login {
-    font-family: 'Poppins', sans-serif;
-    background: #fcefee;
-    background-image: url("assets/img/bg-login-2.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    
-}
-
-#custom-fill-red {
-    fill: #B42317;
-}
-
-#custom-stroke-red {
-    stroke: #B42317;
-}
-
 .custom-card {
     border-radius: 10%;
     padding: 1.5rem 3rem;
@@ -491,6 +473,7 @@ mat-dialog-container#role-modal {
 .text-title {
     font-style: normal;
     font-weight: 700;
+    font-size: 17px;
     line-height: 44px;
     text-align: center;
     letter-spacing: 0.04em;
@@ -499,8 +482,8 @@ mat-dialog-container#role-modal {
 
 .input-field {
     text-align: left;
+    border: 0.5px solid rgb(202, 202, 202);
     padding: 1rem;
-    border: 1px solid #b4241721;
     border-radius: 8px;
 }
 
@@ -518,30 +501,25 @@ mat-dialog-container#role-modal {
     margin-left: 1.5rem;
 }
 
-.custom-pill-button {
-    margin: 10px;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 0.2rem;
-    padding: 1.3rem;
-    text-align: center;
-    text-transform: uppercase;
-    color: #FFF;
-    border-radius: 5px;
-    width: 13rem;
-    cursor: pointer;
-    display: inline-block;
-    outline: none;
-    border: none;
-    border-radius: 100px;
-    background: #B42317;
-}
-
-.custom-pill-button:hover { 
+.custom-button-adins:hover { 
     filter: brightness(90%);
 }
 
 .input-field input:-webkit-autofill {
     -webkit-text-fill-color: black;
     box-shadow: 0 0 0px 1000px white inset;
+}
+
+.is-invalid-input-field {
+    border: 1px solid #ff8290 !important;
+}
+
+.link-text {
+    cursor: pointer;
+    color: #089ea3;
+    font-weight: 400;
+}
+
+.link-text:hover {
+    filter: brightness(80%);
 }

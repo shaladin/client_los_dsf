@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "agr.AGRMNT_NO",
+      "name": "agrPrp.AGRMNT_NO",
       "id": "AgrmntNoId",
       "value": "",
       "label": "Agreement No",
@@ -61,31 +61,31 @@
       "type": "sort",
       "position": "left",
       "label": "Office Name",
-      "name": "OriOfficeName"
+      "name": "ap.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "APPLICATION NO",
-      "name": "AppNo"
+      "name": "ap.APP_NO"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "AGREEMENT NO",
-      "name": "AgrmntNo"
+      "name": "agrPrp.AGRMNT_NO"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "CUSTOMER NAME",
-      "name": "CustName"
+      "name": "apcust.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "PRODUCT OFFERING NAME",
-      "name": "ProdOfferingName"
+      "name": "ap.PROD_OFFERING_NAME"
     },
     {
       "type": "sort",

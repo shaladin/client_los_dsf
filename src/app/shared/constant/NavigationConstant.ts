@@ -2,7 +2,7 @@ import { PathConstant } from "./PathConstant";
 
 export class NavigationConstant {
 
-  public static PAGES_LOGIN = PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CONTENT_PAGE_LOGIN; //'Pages/Login'
+  public static PAGES_LOGIN = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CONTENT_PAGE_LOGIN; //'Pages/Login'
   public static PAGES_CONTENT = PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CONTENT_PAGE; //'Pages/Content'
   public static DASHEMPTY = "/" + PathConstant.LR_DASHBOARD + "/" + PathConstant.DASHEMPTY; //'/Dashboard/Dash-Empty'
   public static DASHBOARD = "/" + PathConstant.LR_DASHBOARD + "/" + PathConstant.DASHBOARD; //'/Dashboard/Dash-Board'
@@ -22,6 +22,7 @@ export class NavigationConstant {
   public static FORMS_REPORT = "/" + PathConstant.LR_FORMS + "/" + PathConstant.REPORT; //'/Forms/Report'
   public static INTEGRATION_LOS_ERR_DATA_MONITORING = "/" + PathConstant.LR_INTEGRATION + "/" + PathConstant.LOS_ERR_DATA_MONITORING; //'/Integration/LosErrorDataMonitoring'
   public static PAGES_CHANGE_PASSWORD = "/" + PathConstant.LR_PAGES + "/" + PathConstant.CONTENT_PAGE_CHANGE_PASSWORD; //'/Pages/ChangePassword'
+  public static PAGES_MODULE_SELECTION = "/" + PathConstant.LR_PAGES + "/" + PathConstant.CONTENT_PAGE_SELECT_MODULE; //'/Pages/SelectModule'
 
   //#region Inquiry
   public static APP_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_INQUIRY; //'/Inquiry/AppInquiry'
