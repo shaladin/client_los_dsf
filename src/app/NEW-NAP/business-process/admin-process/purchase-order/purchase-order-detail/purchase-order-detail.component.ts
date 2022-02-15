@@ -9,12 +9,15 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqAssetDataObj } from 'app/shared/model/request/app-asset/req-app-asset-obj.model';
-import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
+import { ResAgrmntFeeForPOObj, ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
 import { VendorBankAccObj } from 'app/shared/model/vendor-bank-acc.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -32,10 +35,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   // Notes: string = "";
   Address: string = "";
   ProportionalValue: number;
-  TotalInsCustAmt: number;
-  TotalLifeInsCustAmt: number;
   TotalPurchaseOrderAmt: number;
-  DiffRateAmt : number;
   PurchaseOrderExpiredDt: Date;
   purchaseOrderHObj: PurchaseOrderHObj;
   lobCode: string;
@@ -43,6 +43,10 @@ export class PurchaseOrderDetailComponent implements OnInit {
   vendorBankAccList: Array<Object>;
   VendorBankAcc: VendorBankAccObj;
   isHasVendorBankAcc : boolean = true;
+  ReqByCode: GenericObj = new GenericObj();
+  ListRefMaster: Array<RefMasterObj> = new Array<RefMasterObj>();
+  ListPurchaseOrder: Array<PurchaseOrderDObj> = new Array<PurchaseOrderDObj>();
+  isReady : boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService, private fb: FormBuilder) {
@@ -93,6 +97,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     await this.http.post<ResGetAllAssetDataForPOByAssetObj>(poUrl, appAssetObj).toPromise().then(
       (response) => {
         this.AssetObj = response.ReturnObject;
+        this.getDataFromRefMaster();
         if(this.AssetObj.PurchaseOrderHId != 0){
           this.isDataExist = true;
           this.PODetailForm.patchValue({
@@ -116,10 +121,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
         }
 
         this.ProportionalValue = this.AssetObj.ProportionalValue;
-        this.TotalInsCustAmt = this.AssetObj.TotalInsCustAmt;
-        this.TotalLifeInsCustAmt = this.AssetObj.TotalLifeInsCustAmt;
         this.TotalPurchaseOrderAmt = this.AssetObj.TotalPurchaseOrderAmt;
-        this.DiffRateAmt = this.AssetObj.DiffRateAmt;
         var tempAddr = this.AssetObj.AppCustAddrObj.Addr == null ? '-' : this.AssetObj.AppCustAddrObj.Addr;
         var areaCode4 = this.AssetObj.AppCustAddrObj.AreaCode4 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode4;
         var areaCode3 = this.AssetObj.AppCustAddrObj.AreaCode3 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode3;
@@ -136,6 +138,37 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.purchaseOrderHObj.SupplCode = this.SupplCode;
         this.purchaseOrderHObj.TotalPurchaseOrderAmt = this.TotalPurchaseOrderAmt;
       });
+  }
+
+  async getDataFromRefMaster(){
+    this.ReqByCode.Code = CommonConstant.RefMasterTypeCodePoItemCode;
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCodeOrderedBySeqNo, this.ReqByCode).toPromise().then(
+      (response : RefMasterObj) => {
+        this.ListRefMaster = response[CommonConstant.RefMasterObjs];
+
+        for(var i=0;i < this.ListRefMaster.length; i++){
+          var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+          if (this.ListRefMaster[i].ReserveField2 == CommonConstant.PurchaseOrderItemTypeNonFee) {
+            tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
+            tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
+            tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[this.ListRefMaster[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][this.ListRefMaster[i].ReserveField3] : 0;
+            this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
+          }
+          if (this.ListRefMaster[i].ReserveField2 == CommonConstant.PurchaseOrderItemTypeFee) {
+            let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == this.ListRefMaster[i].ReserveField3);
+            tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
+            tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
+
+            if(tempAgrmntFeeObj != undefined)
+              tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
+            else
+              tempPurchaseOrderDObj.PurchaseOrderAmt = 0;
+    
+            this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
+          }
+        }
+      });
+      this.isReady = true;
   }
 
   async initBancAcc(){
