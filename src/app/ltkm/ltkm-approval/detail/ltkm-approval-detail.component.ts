@@ -147,6 +147,7 @@ export class LtkmApprovalDetailComponent implements OnInit {
 
         this.http.post(URLConstant.LtkmApproval, ReqLtkmApvCustomObj).subscribe(
             () => {
+                this.toastr.successMessage("Success");
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_APV_PAGING], {});
             }
         );
