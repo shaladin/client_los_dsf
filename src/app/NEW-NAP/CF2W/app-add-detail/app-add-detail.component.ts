@@ -14,6 +14,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-hand
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -50,6 +51,7 @@ export class AppAddDetailComponent implements OnInit {
     ReturnExecNotes: ['']
   });
   OnFormReturnInfo = false;
+  IsShowMultiReferantor: number = 0;
 
   readonly CancelLink: string = NavigationConstant.NAP_CF2W_PAGING;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
@@ -70,8 +72,9 @@ export class AppAddDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     //this.ClaimTask();
+    await this.GetGSValueShowRferantor();
     this.AppStepIndex = 0;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
@@ -94,6 +97,13 @@ export class AppAddDetailComponent implements OnInit {
       animation: true
     })
     this.MakeViewReturnInfoObj();
+  }
+
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+    (response) => {
+      this.IsShowMultiReferantor = parseInt(response.GsValue);
+    });
   }
 
   Cancel() {

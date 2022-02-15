@@ -16,6 +16,7 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { environment } from 'environments/environment';
 import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
@@ -37,6 +38,9 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   BizTemplateCode: string;
   PlafondAmt: number = 0;
   OriOfficeCode: string;
+  prodOfferingCode: string = "";
+  prodOfferingVersion: string = "";
+  apvSchmCode: string = "";
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -48,10 +52,10 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   ApprovalCreateOutput: any;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
   constructor(
-    private router: Router, 
-    private fb: FormBuilder, 
-    private route: ActivatedRoute, 
-    private http: HttpClient, 
+    private router: Router,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private http: HttpClient,
     private cookieService: CookieService,
     private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
@@ -74,7 +78,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     else {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
     }
-
+    await this.GetApvSchemeFromRefProdCompnt();
     await this.LoadRefReason();
     await this.BindAppvAmt();
     this.initInputApprovalObj();
@@ -108,6 +112,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       }
     );
   }
+
   SaveForm() {
     this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
     this.RFAPreGoLive = new RFAPreGoLiveObj();
@@ -150,17 +155,21 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_PRE_GO_LIVE;
+    this.InputObj.SchemeCode = this.apvSchmCode;
     this.InputObj.Reason = this.itemReason;
     this.InputObj.TrxNo = this.AgrmntNo;
     this.IsReady = true;
   }
 
   async GetBizTemplateCode(){
-    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+    await this.http.post<NapAppModel>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
-          this.BizTemplateCode = response['BizTemplateCode'];
-          this.OriOfficeCode = response['OriOfficeCode'];
+        if (response != undefined) {
+          this.BizTemplateCode = response.BizTemplateCode;
+          this.OriOfficeCode = response.OriOfficeCode;
+          this.prodOfferingCode = response.ProdOfferingCode;
+          this.prodOfferingVersion = response.ProdOfferingVersion;
+        }
       }
     ).catch(
         (error) => {
@@ -169,4 +178,18 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     );
   }
 
+  async GetApvSchemeFromRefProdCompnt() {
+    let obj = {
+      prodOfferingCode: this.prodOfferingCode,
+      prodOfferingVersion: this.prodOfferingVersion,
+      refProdCompntCode: CommonConstant.ApvCategoryPreGoLive
+    };
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      response => {
+        if(response != undefined){
+          this.apvSchmCode = response["CompntValue"];
+        }
+      }
+    );
+  }
 }

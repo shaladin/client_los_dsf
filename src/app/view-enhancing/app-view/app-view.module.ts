@@ -61,6 +61,8 @@ import { ViewDeviationComponent } from "./view-deviation/view-deviation.componen
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
 import { AppMainInfoXComponent } from "../app-main-info-x/app-main-info-x.component";
 import { TabCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/tab-commission-x.component";
+import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referantor-multi.component";
+import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail/tab-referantor-multi-detail.component";
 
 
 @NgModule({
@@ -129,6 +131,8 @@ import { TabCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-co
         ViewCreditProcessFlowComponent,
         ViewDeviationComponent,
         TabCommissionXComponent
+        TabReferantorMultiComponent,
+        TabReferantorMultiDetailComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -136,6 +140,8 @@ import { TabCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-co
         UcgridviewComponent,
         UcapprovalhistComponent,
         AppMainInfoComponent,
+        AppAssetDataDetailComponent,
+        TabReferantorMultiDetailComponent
         AppMainInfoXComponent,
         AppAssetDataDetailComponent
     ]

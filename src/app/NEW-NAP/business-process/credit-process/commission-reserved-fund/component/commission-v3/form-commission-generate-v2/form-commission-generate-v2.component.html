@@ -1,0 +1,236 @@
+<div formArrayName="{{identifier}}">
+  <lib-ucSubsection [id]="'formInformation' + FormInputObj['content'] + 'id'" [title]="FormInputObj['title']"
+    [panel]="'formInformation' + FormInputObj['content']">
+  </lib-ucSubsection>
+  <div class="form-body" [id]="'formInformation' + FormInputObj['content']">
+    <div class="form-actions right">
+      <button type="button" (click)="AddNewDataForm()" class="btn btn-raised btn-primary" [hidden]="lenDDLContentName == 0">
+        <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
+      </button>
+    </div>
+
+    <div *ngFor="let item of parentForm.controls[identifier]['controls']; let i = index;" style="margin-bottom: 2em;">
+      <div [formGroupName]="i">
+
+        <div class="form-group row">
+          <!-- Content Name -->
+          <div class="col-md-2 adins-required">
+            <label class="adInsLabel" translate>{{FormInputObj['labelName']}} Name</label>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-10">
+                <select *ngIf="item.controls.ContentName.value == ''" class="form-control adInsInput"
+                  style="width: auto" formControlName="ContentName" (change)="ChooseContentName($event, i)">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DDLContentName" value="{{it.Key}}">
+                    {{it.Value}} </option>
+                </select>
+                <lib-uc-show-errors [control]="item.controls.ContentName" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+                <label class="adInsLabel"
+                  *ngIf="item.controls.ContentName.value != ''">{{item.controls.ContentNameValue.value}}</label>
+              </div>
+              <div class="col-md-2">
+                <button type="button" (click)="DeleteDataForm(i)" class="btn btn-raised" style="vertical-align: middle;">
+                  <i class="ft-trash-2 font-medium-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row"
+          *ngIf="item.controls.ContentName.value != '' && FormInputObj['content'] == 'SupplierEmployee'">
+          <div class="form-group col-md-2">
+            <label class="adInsLabel" translate> Supplier Position</label>
+          </div>
+          <div class="col-md-4">
+            <label class="adInsLabel"> {{item.controls.MrSupplEmpPositionCodeDesc.value}} </label>
+          </div>
+          <div class="form-group col-md-2">
+            <label class="adInsLabel" translate> Supplier Name</label>
+          </div>
+          <div class="col-md-4">
+            <label class="adInsLabel"> {{FormInputObj['dictSuppl'][item.controls.SupplCode.value]}} </label>
+          </div>
+        </div>
+        <div [hidden]="item.controls.ContentName.value == ''">
+          <div class="form-group row">
+            <!-- Bank Account -->
+            <div class="col-md-2 adins-required">
+              <label class="adInsLabel" translate>Bank Account</label>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control full-width adInsInput" formControlName="BankAccountNo"
+                (change)="ChangeBankAcc($event, i)">
+                <option value="">-Select One-</option>
+                <option *ngFor="let it of item.controls.DropDownList.controls" value="{{it.value.Key}}">
+                  {{it.value.Value}} - {{it.value.Key}} ({{it.value.BankName}}) </option>
+              </select>
+              <lib-uc-show-errors [control]="item.controls.BankAccountNo" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+
+            <!-- Tax Amount -->
+            <label class="col-md-2 adInsLabel" translate>With Holding Tax Amount </label>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" currencyMask *ngIf="item.controls.HoldingTaxWithPenalty.value != ''">
+                {{item.controls.HoldingTaxWithPenalty.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.HoldingTaxWithPenalty.value == ''"> {{ 0 | number:'.2':'en-US' }}
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <!-- Total Commission Amount -->
+            <div class="col-md-2">
+              <label class="adInsLabel" translate>Total Commission Amount</label>
+            </div>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
+                {{item.controls.TotalCommisionAmount.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+            </div>
+
+            <!-- VAT Amount -->
+            <label class="col-md-2 adInsLabel" translate>VAT Amount </label>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value != ''">
+                {{item.controls.TotalVATAmount.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <!-- Total Commission After Tax Amount -->
+            <label class="col-md-2 adInsLabel" translate>Total Commission After Tax Amount </label>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" *ngIf="item.controls.TotalCommissionAfterTaxAmt.value != ''">
+                {{item.controls.TotalCommissionAfterTaxAmt.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalCommissionAfterTaxAmt.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+            </div>
+
+            <!-- Disburse Amount -->
+            <label class="col-md-2 adInsLabel" translate>Disburse Amount </label>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" *ngIf="item.controls.TotalDisburseAmount.value != ''">
+                {{item.controls.TotalDisburseAmount.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalDisburseAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <!-- Calculation Method -->
+            <div class="col-md-2">
+              <label class="adInsLabel" translate>Calculation Method</label>
+            </div>
+            <div class="col-md-4">
+              <label class="adInsLabel"> {{DictCalcMethod[item.controls.MrTaxCalcMethodCode.value]}} </label>
+            </div>
+
+            <!-- Expense Amount -->
+            <label class="col-md-2 adInsLabel" translate>Expense Amount </label>
+            <div class="col-md-4" style="text-align: right;">
+              <label class="adInsLabel" *ngIf="item.controls.TotalExpenseAmount.value != ''">
+                {{item.controls.TotalExpenseAmount.value | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel" *ngIf="item.controls.TotalExpenseAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+            </div>
+          </div>
+          
+          <!-- <div class="px-3" style="padding-right:0rem !important;"> -->
+            <!-- <lib-ucSubsection [id]="'ListAllocated' + item.controls.ContentName.value + 'id'" [title]="'Allocate Commission For ' + item.controls.ContentNameValue.value "
+              [panel]="'ListAllocated' + item.controls.ContentName.value">
+            </lib-ucSubsection> -->
+            <h4 class="form-section card-title" style="font-size: 1rem;" translate>Allocate Commission From</h4>
+            <div formArrayName="ListAllocated" [id]="'ListAllocated' + item.controls.ContentName.value">
+              <div class="form-group">
+                <div class="row">
+  
+                  <div class="col-md-6">
+                    <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
+                      <div class="form-group row" [formGroupName]="idx"
+                        *ngIf="ruleItem.controls.TotalListAllocatedDivided.value > idx">
+                        <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}} (Amt/%)
+                        </label>
+                        <div class="col-md-4" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                          <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                            class="form-control adInsInput text-right"
+                            formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
+                          <input type="text" currencyMask
+                            max="FormObj.controls.arr['controls'][i].controls.ListAllocated.controls[idx].controls.MaxAllocationAmount.value"
+                            *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
+                            formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
+                          <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <label class="col-md-1 adInsLabel">/</label>
+                        <div class="col-md-3" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                            <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                            class="form-control adInsInput  text-right"
+                            formControlName="AllocationPercentage" 
+                            (focusout)="ChangeAllocAmountBasedOnPercentage(i)">
+                            <input type="" currencyMask class="form-control adInsInput" 
+                            (focusout)="ChangeAllocAmountBasedOnPercentage(i)" 
+                            formControlName="AllocationPercentage" 
+                            *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationPercentage.invalid }"
+                            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }"/>
+                          <lib-uc-show-errors [control]="ruleItem.controls.AllocationPercentage" 
+                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6">
+                    <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
+                      <div class="form-group row" [formGroupName]="idx"
+                        *ngIf="ruleItem.controls.TotalListAllocatedDivided.value <= idx">
+                        <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}} (Amt/%)
+                        </label>
+                        <div class="col-md-4" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                          <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                            class="form-control adInsInput  text-right"
+                            formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
+                          <input type="text" max="ruleItem.controls.MaxAllocationAmount.value" currencyMask
+                            *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationAmount.invalid }"
+                            formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
+                          <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <label class="col-md-1 adInsLabel">/</label>
+                        <div class="col-md-3" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                          <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                          class="form-control adInsInput  text-right"
+                          formControlName="AllocationPercentage" 
+                          (focusout)="ChangeAllocAmountBasedOnPercentage(i)">
+                          <input type="" currencyMask class="form-control adInsInput" 
+                          (focusout)="ChangeAllocAmountBasedOnPercentage(i)" 
+                          formControlName="AllocationPercentage" 
+                          *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationPercentage.invalid }"
+                          [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }"/>
+                        <lib-uc-show-errors [control]="ruleItem.controls.AllocationPercentage" 
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+              <div class="form-group" *ngIf="item.controls.TotalCommisionAmount.value == 0" >
+                <label  style="color: red;">
+                  Please complete rule setting first for {{FormInputObj['labelName']}} Name : {{item.controls.ContentNameValue.value}} </label>
+              </div>
+            </div>
+          <!-- </div> -->
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>

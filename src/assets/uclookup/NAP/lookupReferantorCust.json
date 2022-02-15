@@ -1,0 +1,98 @@
+{
+    "title": "Lookup - Referantor Customer",
+    "sectionTitle": "Search",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "C.CUST_NO",
+        "id": "referantorCode",
+        "value": "",
+        "label": "Referantor Code",
+        "placeholder": "Referantor Code"
+      },
+      {
+        "type": "dropdown",
+        "name": "C.MR_CUST_TYPE_CODE",
+        "id": "referantorType",
+        "value": "",
+        "label": "Referantor Type",
+        "placeholder": "Referantor Type",
+        "ddlType": "all",
+        "items": [
+          {
+            "key": "PERSONAL",
+            "value": "Agency Personal"
+          },
+          {
+            "key": "COMPANY",
+            "value": "Agency Company"
+          }
+        ]
+      },
+      {
+        "type": "textbox",
+        "name": "C.CUST_NAME",
+        "id": "referantorName",
+        "value": "",
+        "label": "Referantor Name",
+        "placeholder": "Referantor Name"
+      }
+    ],
+    "querystring": {
+      "name": "lookupReferantorCustomer"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Referantor Code",
+        "name": "ReferantorCode"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Referantor Name",
+        "name": "ReferantorName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Referantor Type",
+        "name": "ReferantorTypeDesc"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Select"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ReferantorCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ReferantorName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ReferantorTypeDesc"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "ReferantorName"
+          }
+        ]
+      }
+    ],
+    "propertyId": "ReferantorName",
+    "propertyName": "ReferantorName"
+  }

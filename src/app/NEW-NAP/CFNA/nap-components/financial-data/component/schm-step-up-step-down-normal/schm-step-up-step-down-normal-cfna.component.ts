@@ -127,6 +127,11 @@ export class SchmStepUpStepDownNormalCFNAComponent implements OnInit {
       (this.ParentForm.controls.InstallmentTable as FormArray).removeAt(0);
     }
 
+    let findFirstInst = this.listInstallment.findIndex(x => x.InstSeqNo == 1);
+    this.ParentForm.patchValue({
+      InstAmt: this.listInstallment[findFirstInst].InstAmt
+    });
+    
     for (let i = 0; i < this.listInstallment.length; i++) {
       const group = this.fb.group({
         InstSeqNo: this.listInstallment[i].InstSeqNo,
@@ -195,7 +200,6 @@ export class SchmStepUpStepDownNormalCFNAComponent implements OnInit {
 
           EffectiveRatePrcnt: response.EffectiveRatePrcnt,
           FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
 
           GrossYieldPrcnt: response.GrossYieldPrcnt,
 

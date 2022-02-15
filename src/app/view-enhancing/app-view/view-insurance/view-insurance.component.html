@@ -13,12 +13,16 @@
           <label class="col-md-6 adInsLabel"> {{appInsObjObj.InscoBranchName}} </label>
         </div>
         <div class="row">
-          <label class="col-md-6 adInsLabel" translate> Coverage Amount </label>
-          <label class="col-md-6 adInsLabel"> {{appInsObjObj.CvgAmt | number:'.2':'en-US'}} </label>
+          <label class="col-md-6 adInsLabel" translate> Cover Period </label>
+          <label class="col-md-6 adInsLabel"> {{appInsObjObj.InsAssetCoverPeriodName}}</label>
         </div>
         <div class="row">
-          <label class="col-md-6 adInsLabel" translate> Insurance Admin Fee Amount </label>
-          <label class="col-md-6 adInsLabel"> {{appInsObjObj.CustAdminFeeAmt | number:'.2':'en-US'}} </label>
+          <label class="col-md-6 adInsLabel" translate> Insurance Length </label>
+          <label class="col-md-6 adInsLabel"> {{appInsObjObj.InsLength}} </label>
+        </div>
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate> Insurance Notes </label>
+          <label class="col-md-6 adInsLabel"> {{appInsObjObj.Notes}} </label>
         </div>
         <div class="row">
           <label class="col-md-6 adInsLabel" translate> Asset Region </label>
@@ -31,16 +35,20 @@
           <label class="col-md-6 adInsLabel"> {{appInsObjObj.InsAssetPaidByName}} </label>
         </div>
         <div class="row">
-          <label class="col-md-6 adInsLabel" translate> Cover Period </label>
-          <label class="col-md-6 adInsLabel"> {{appInsObjObj.InsAssetCoverPeriodName}}</label>
+          <label class="col-md-6 adInsLabel" translate> Payment Type </label>
+          <label class="col-md-6 adInsLabel"> {{appInsObjObj.PayPeriodToInsco}} </label>
         </div>
         <div class="row">
-          <label class="col-md-6 adInsLabel" translate> Insurance Length </label>
-          <label class="col-md-6 adInsLabel"> {{appInsObjObj.InsLength}} </label>
+          <label class="col-md-6 adInsLabel" translate> Coverage Amount </label>
+          <label class="col-md-6 adInsLabel"> {{appInsObjObj.CvgAmt | number:'.2':'en-US'}} </label>
         </div>
         <div class="row">
-          <label class="col-md-6 adInsLabel" translate> Insurance Notes </label>
-          <label class="col-md-6 adInsLabel"> {{appInsObjObj.Notes}} </label>
+          <label class="col-md-6 adInsLabel" translate> Insurance Admin Fee Amount </label>
+          <label class="col-md-6 adInsLabel"> {{appInsObjObj.CustAdminFeeAmt | number:'.2':'en-US'}} </label>
+        </div>
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate> Asset Region </label>
+          <label class="col-md-6 adInsLabel"> {{appInsObjObj.InsAssetRegion}} </label>
         </div>
       </div>
     </div>

@@ -49,7 +49,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-5 adins-required-label" translate>Manufacturing Year</label>
+                  <label class="col-md-5" [ngClass]="{ 'adins-required-label' : isMandatoryManufacturingYear == true}" translate>Manufacturing Year</label>
                   <div class="col-md-7">
                     <input type="text" class="form-control" formControlName="ManufacturingYear"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.ManufacturingYear.invalid }">
@@ -154,7 +154,7 @@
                 <div class="form-group row">
                   <label class="col-md-2" translate>RAPINDO</label>
                   <div class="col-md-8">
-                    <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary">
+                    <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary" [disabled]="AddCollForm.controls.MrCollateralConditionCode.value == 'NEW'">
                       Check Rapindo
                     </button>
                     <label *ngIf="LastRequestedDate != ''" class="col-md-4" translate>Last Requested At : {{LastRequestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>

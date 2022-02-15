@@ -19,6 +19,7 @@ import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model'
 import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { ResAssetTypeObj } from 'app/shared/model/app-asset-type/app-asset-type-obj.model';
+import { GenericListByIdObj } from 'app/shared/model/generic/generic-list-by-id-obj.model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -344,6 +345,23 @@ export class AssetDataPagingComponent implements OnInit {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
+  async checkValidityCollateralDoc() {
+    let listAsset: Array<AppAssetObj> = this.gridAssetDataObj.resultData.Data;
+    let reqByListId: GenericListByIdObj = new GenericListByIdObj();
+    let flag: boolean = true;
+    for(let i = 0; i < listAsset.length; i++) {
+      reqByListId.Ids.push(listAsset[i].AppAssetId);
+    }
+    await this.http.post(URLConstant.CheckAppCollateralDocValidityByListAppAssetId, reqByListId).toPromise().then(
+      response => {
+        if(response != undefined) {
+          flag = false;
+        }
+      }
+    );
+    return flag;
+  }
+
   async checkValidityAssetUsed() {
     let listAsset: Array<AppAssetObj> = this.gridAssetDataObj.resultData.Data;
     let flag: boolean = false;
@@ -398,6 +416,7 @@ export class AssetDataPagingComponent implements OnInit {
         }
       }
     }
+    if (await this.checkValidityCollateralDoc()) return;
     if (await this.checkValidityAssetUsed()) return;
 
     let checkAppNumOfAssetObj = { Id: this.AppId };

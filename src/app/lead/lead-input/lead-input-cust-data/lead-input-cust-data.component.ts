@@ -50,7 +50,9 @@ import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-
 
 export class LeadInputCustDataComponent implements OnInit {
   @Input() LeadId: string;
+  @Input() showCancelButton: boolean = true;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   businessDt: Date = new Date();
   CopyFrom: string;
   rowVersion: string;
@@ -1226,5 +1228,9 @@ export class LeadInputCustDataComponent implements OnInit {
         this.IsSvcExist = true;
       }
     }
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 }

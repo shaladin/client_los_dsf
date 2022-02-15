@@ -1,0 +1,45 @@
+$color: #3b9af7;
+
+#login {
+    font-family: 'Poppins', sans-serif;
+    background: #F1F8FF;
+    background-image: url("assets/img/bg-login-blue.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.custom-fill-adins {
+    fill: $color;
+}
+
+.custom-stroke-adins {
+    stroke: $color;
+}
+
+.custom-button-adins {
+    margin: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.2rem;
+    padding: 1.3rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFF;
+    border-radius: 5px;
+    width: 13rem;
+    cursor: pointer;
+    display: inline-block;
+    outline: none;
+    border: none;
+    border-radius: 100px;
+    background: $color;
+}
+
+.show-hide-pass {
+    cursor: pointer;
+    color: $color;
+}
+.show-hide-pass:hover {
+    filter: brightness(75%);
+}

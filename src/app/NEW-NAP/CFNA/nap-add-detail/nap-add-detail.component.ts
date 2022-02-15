@@ -20,6 +20,7 @@ import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -47,7 +48,7 @@ export class NapAddDetailComponent implements OnInit {
   BizTemplateCode: string = CommonConstant.CFNA;
   isMainCustMarried: boolean = false;
   IsDataReady: boolean = false;
-
+  IsShowMultiReferantor: number = 0;
   AppStep = {
     // "NEW": 1,
     "CUST": 1,
@@ -101,6 +102,7 @@ export class NapAddDetailComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     //check DMS
+    await this.GetGSValueShowRferantor();
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
@@ -138,6 +140,13 @@ export class NapAddDetailComponent implements OnInit {
     await this.GetCustMainData();
     
     this.MakeViewReturnInfoObj();
+  }
+
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+    (response) => {
+      this.IsShowMultiReferantor = parseInt(response.GsValue);
+    });
   }
 
   async GetCustMainData() {

@@ -136,10 +136,10 @@
                             <label class="col-md-6 adInsLabel"> {{CommData.controls.SupplierName.value}} </label>
                           </div>
                           <div class="row">
-                            <label class="col-md-6 adInsLabel"> Supplier Employee Bank Account</label>
+                            <label class="col-md-6 adins-required-label"> Supplier Employee Bank Account</label>
                             <div class="col-md-6">
-                              <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPLEMP')" [value]="CommData.controls.CurrentVendorBankAccId.value">
-                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                              <select [ngClass]="{ 'is-invalid': enjiForm.submitted && CommData.controls.CurrentVendorBankAccId.invalid }" class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPLEMP')" [value]="CommData.controls.CurrentVendorBankAccId.value">
+                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.VendorBankAccId == '' ? '-Select One-' : item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
                               </select>
                             </div>
                           </div>

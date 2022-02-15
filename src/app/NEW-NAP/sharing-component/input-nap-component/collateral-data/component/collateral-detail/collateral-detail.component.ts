@@ -36,6 +36,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -93,6 +94,8 @@ export class CollateralDetailComponent implements OnInit {
   SerialNoList: Array<AssetTypeSerialNoLabelObj>;
   isUsed: boolean = true;
   isCopy: boolean = true;
+  listCollTypeMandatoryManufacturingYear: Array<string> = new Array<string>();
+  isMandatoryManufacturingYear: boolean = false;
   AddCollForm = this.fb.group({
     AppCollateralId: [''],
     FullAssetCode: ['', Validators.required],
@@ -177,6 +180,7 @@ export class CollateralDetailComponent implements OnInit {
     this.initUcLookup();
     await this.GetAppCustByAppId();
     await this.initDropdownList();
+    await this.SetManufacturingYearMandatory();
     await this.getAppData();
 
     if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypeCompany){
@@ -799,6 +803,7 @@ export class CollateralDetailComponent implements OnInit {
           this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
         })
     }
+    this.CheckManufacturingYearMandatory();
   }
 
   async collateralPortionHandler() {
@@ -961,6 +966,7 @@ export class CollateralDetailComponent implements OnInit {
     if (IsChange) this.ucLookupCollateralExisting.setAddCritInput();
     //#endregion
     this.GenerateAppCollateralAttr(false);
+    this.CheckManufacturingYearMandatory();
   }
 
   findChassisIdx() {
@@ -1014,7 +1020,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AddCollForm.controls.MrUserRelationshipCode.updateValueAndValidity();
     }
     else {
-      this.AddCollForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.AddCollForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(500)]);
       this.AddCollForm.controls.UserName.updateValueAndValidity();
       this.AddCollForm.controls.MrUserRelationshipCode.setValidators([Validators.required, Validators.maxLength(50)]);
       this.AddCollForm.controls.MrUserRelationshipCode.updateValueAndValidity();
@@ -1453,5 +1459,30 @@ export class CollateralDetailComponent implements OnInit {
     this.AddCollForm.patchValue({
       OwnerProfessionCode: event.ProfessionCode
     });
+  }
+
+  async SetManufacturingYearMandatory(){
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsCodeManufacturingYearMandatoryByCollType }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          this.listCollTypeMandatoryManufacturingYear  = result.GsValue.split(';');
+          console.log(this.listCollTypeMandatoryManufacturingYear);
+        }
+      }
+    );
+  }
+
+  CheckManufacturingYearMandatory(){
+    let temp = this.AddCollForm.controls.AssetTypeCode.value;
+    this.isMandatoryManufacturingYear = this.listCollTypeMandatoryManufacturingYear.includes(temp);
+
+    if (this.isMandatoryManufacturingYear) {
+      this.AddCollForm.controls.ManufacturingYear.setValidators([Validators.required]);
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
+    else{
+      this.AddCollForm.controls.ManufacturingYear.clearValidators();
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
   }
 }

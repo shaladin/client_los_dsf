@@ -27,6 +27,8 @@ import { RequestNewPasswordComponent } from "./request-new-password/request-new-
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ModuleSelectionComponent } from './module-selection/module-selection.component';
+import { UcmoduleselectionModule } from '@adins/ucmoduleselection';
 
 export const customCurrencyMaskConfig = {     
     align: "right",
@@ -62,7 +64,8 @@ export const customCurrencyMaskConfig = {
         ArchwizardModule,
         MatRadioModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-        CustSharingComponentModule    
+        CustSharingComponentModule,
+        UcmoduleselectionModule
     ],
     declarations: [
         LoginPageComponent,
@@ -70,7 +73,8 @@ export const customCurrencyMaskConfig = {
         PagesComponent,
         RequestNewPasswordComponent,
         ResetPasswordComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        ModuleSelectionComponent
     ],
       entryComponents: [
         UclookupgenericComponent,

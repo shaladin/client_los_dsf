@@ -73,9 +73,6 @@ export class ViewAssetDataComponent implements OnInit {
         this.initUrl();
         await this.GetAllAssetData(this.appObj);
       }
-      if(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode != null || this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode != undefined) {
-        await this.GetProfessionName(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode);
-      }
 
       this.http.post(URLConstant.GetViewAppCollateralObjByAppId, {Id: this.appId}).subscribe(
         response => {
@@ -85,18 +82,6 @@ export class ViewAssetDataComponent implements OnInit {
 
       this.IsReady = true;
     }
-  }
-
-  async GetProfessionName(professionCode: string) {
-    await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
-      (response) => {
-        this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionName = response["ProfessionName"]
-      }
-    ).catch(
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 
   async GetAllAssetData(obj: any) {

@@ -32,6 +32,7 @@ import { CustomPatternObj } from "app/shared/model/custom-pattern-obj.model";
 import { RefAttrGenerateObj } from "app/shared/model/ref-attr-generate.model";
 import { RefAttrGenerate } from "app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service";
 import { MouCustCollateralAttrObj, ResMouCustCollateralAttrObj } from "app/shared/model/mou-cust-collateral-attr-obj.model";
+import { ChangeMouCustObj } from "app/shared/model/change-mou/change-mou-obj.model";
 
 @Component({
   selector: "app-change-mou-request-addcoll",
@@ -107,6 +108,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   OwnerTypeObj: Array<KeyValueObj> = new Array();
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
   CustCompanyObj: any;
+  ChangeMouCustObj: ChangeMouCustObj = new ChangeMouCustObj();
   readonly ownerTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly ownerTypeCompany: string = CommonConstant.CustTypeCompany;
 
@@ -195,53 +197,59 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   bindMouData() {
-    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
-      (response: MouCustObj) => {
-        this.returnMouCust = response;
-        this.custNo = this.returnMouCust.CustNo;
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
+    (response: MouCustObj) => {
+      this.returnMouCust = response;
+      this.custNo = this.returnMouCust.CustNo;
+      this.AddCollForm.patchValue({
+        MrOwnerTypeCode: this.returnMouCust.MrCustTypeCode
+      });
+    });
+
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship, }).toPromise().then(
+    (response) => {
+      this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
+      if (this.OwnerRelationshipObj.length > 0) {
         this.AddCollForm.patchValue({
-          MrOwnerTypeCode: this.returnMouCust.MrCustTypeCode
+          OwnerRelationship: this.OwnerRelationshipObj[0].Key,
+          CopyFromLegal: this.copyToLocationObj[0].Key,
         });
-      });
+      }
+    });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship, }).subscribe(
-      (response) => {
-        this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
-        if (this.OwnerRelationshipObj.length > 0) {
-          this.AddCollForm.patchValue({
-            OwnerRelationship: this.OwnerRelationshipObj[0].Key,
-            CopyFromLegal: this.copyToLocationObj[0].Key,
-          });
-        }
-      });
-
-    this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, { Id: this.ChangeMouCustId }).subscribe(
-      (response: GenericListObj) => {
-        if (response["ReturnObject"] != null || response["ReturnObject"].length > 0) {
-          this.listCollateralData = response["ReturnObject"];
-          this.isChangeMou = true;
-        }
-      });
+    this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, { Id: this.ChangeMouCustId }).toPromise().then(
+    (response: GenericListObj) => {
+      if (response["ReturnObject"] != null || response["ReturnObject"].length > 0) {
+        this.listCollateralData = response["ReturnObject"];
+        this.isChangeMou = true;
+      }
+    });
 
     let assetObj = {};
-    this.http.post(URLConstant.GetListAssetTypeByCode, assetObj).subscribe(
-      (response) => {
-        this.CollTypeList = response["ReturnObject"];
-        this.AddCollForm.patchValue({
-          AssetTypeCode: this.CollTypeList[0].Key,
-        });
-        this.onItemChange(this.CollTypeList[0].Key);
-        this.updateUcLookup(this.CollTypeList[0].Value, true, this.type);
+    this.http.post(URLConstant.GetListAssetTypeByCode, assetObj).toPromise().then(
+    (response) => {
+      this.CollTypeList = response["ReturnObject"];
+      this.AddCollForm.patchValue({
+        AssetTypeCode: this.CollTypeList[0].Key,
       });
+      this.onItemChange(this.CollTypeList[0].Key);
+      this.updateUcLookup(this.CollTypeList[0].Value, true, this.type);
+    });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType, }).subscribe(
-      (response) => {
-        this.IdTypeList = response["ReturnObject"];
-        this.AddCollForm.patchValue({
-          MrIdType: this.IdTypeList[0].Key,
-        });
-        this.setValidatorPattern(this.IdTypeList[0].Key);
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType, }).toPromise().then(
+    (response) => {
+      this.IdTypeList = response["ReturnObject"];
+      this.AddCollForm.patchValue({
+        MrIdType: this.IdTypeList[0].Key,
       });
+      this.setValidatorPattern(this.IdTypeList[0].Key);
+    });
+
+    this.http.post<ChangeMouCustObj>(URLConstant.GetChangeMouCustbyChangeMouTrxNo, { Code: this.ChangeMouTrxNo }).toPromise().then(
+    (response) => {
+      this.ChangeMouCustObj = response;
+      console.log(this.ChangeMouCustObj);
+    });
   }
 
   bindUcLookup() {
@@ -1122,7 +1130,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     }
 
     if (this.returnMouCust.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
-      if (sumCollateralValue < this.returnMouCust.PlafondAmt) {
+      if (sumCollateralValue < this.ChangeMouCustObj.PlafondAmt) {
         this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
         return;
       }

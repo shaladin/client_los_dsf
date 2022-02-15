@@ -76,7 +76,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   isEmergencyContactExist: boolean = false;
 
   ContactInfoPersonalForm = this.fb.group({
-    ContactPersonName: ['', [Validators.required, Validators.maxLength(1000)]],
+    ContactPersonName: ['', [Validators.required, Validators.maxLength(500)]],
     MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     MrCustRelationshipCode: ['', [Validators.required,Validators.maxLength(50)]],

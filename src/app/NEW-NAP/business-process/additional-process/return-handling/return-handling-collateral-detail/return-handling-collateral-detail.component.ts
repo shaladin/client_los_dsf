@@ -82,9 +82,9 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     IsMainCollateral: [false, Validators.required],
 
     SelfOwner: [false],
-    UserName: ['', [Validators.required, Validators.maxLength(50)]],
+    UserName: ['', [Validators.required, Validators.maxLength(500)]],
     MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(4)]],
-    OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
+    OwnerName: ['', [Validators.required, Validators.maxLength(500)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     OwnerIdNo: ['', [Validators.required, Validators.maxLength(50)]],
     MrOwnerRelationshipCode: ['', Validators.maxLength(50)],
@@ -403,7 +403,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
       this.CollateralDataForm.controls["MrUserRelationshipCode"].disable();
     };
     if (event.checked == false) {
-      this.CollateralDataForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(100)]);
+      this.CollateralDataForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(500)]);
       this.CollateralDataForm.controls.UserName.updateValueAndValidity();
       this.CollateralDataForm.controls.MrUserRelationshipCode.setValidators([Validators.required, Validators.maxLength(50)]);
       this.CollateralDataForm.controls.MrUserRelationshipCode.updateValueAndValidity();

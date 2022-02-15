@@ -111,9 +111,12 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
+              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady && IsShowMultiReferantor == 0" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
+              <app-referantor-data-new *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady && IsShowMultiReferantor == 1" [appId]="appId"
+                [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+              </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-FL4W *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady"
@@ -221,9 +224,12 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
+              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady && IsShowMultiReferantor == 0" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
+              <app-referantor-data-new *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady && IsShowMultiReferantor == 1" [appId]="appId"
+                [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+              </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"

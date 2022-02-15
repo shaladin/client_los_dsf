@@ -18,8 +18,9 @@ export const environment = {
   FoundationR3Web: 'http://r3impl-websvr.ad-ins.com/FOU_DSF_IMPL',
   losR3Web: 'http://localhost:4200',
   lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
-  WorkflowR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_DSF_IMPL',
-  WebSocketURL: 'http://r3impl-appsvr.ad-ins.com/FOU_DSF_IMPL',
+  cmsR3Web: 'http://r3web-server.ad-ins.com/CMS',
+  WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3',
+  WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
   dmsURL: 'http://kfx-svr/LITEDMS_OPL/LiteDMS/pageconfins.aspx',
   WfR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL/',
@@ -28,5 +29,6 @@ export const environment = {
   ChipperKeyCookie: 'AdInsFOU12345678', // 256 bit atau 16 karakter & harus sama dengan BE
   Module: 'LOS',
   Superset: 'http://linuxdev4:8091/',
-  isCore: true
+  isCore : true,
+  SpinnerOnHttpPost: true
 };
