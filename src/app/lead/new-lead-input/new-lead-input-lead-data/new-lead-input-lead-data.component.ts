@@ -29,7 +29,9 @@ import { environment } from 'environments/environment';
 export class NewLeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string;
   @Input() isEndOfTab: string = "";
+  @Input() showCancelButton: boolean = true;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   typePage: string;
   CopyFrom: number;
@@ -1027,4 +1029,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     }
   }
 
+  Cancel(){
+    this.outputCancel.emit();
+  }
 }

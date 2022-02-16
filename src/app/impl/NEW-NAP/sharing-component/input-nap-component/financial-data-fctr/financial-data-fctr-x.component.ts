@@ -178,6 +178,8 @@ export class FinancialDataFctrXComponent implements OnInit {
           LifeInsCptlzAmt: this.appFinDataObj.LifeInsCptlzAmt,
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
+          TotalDownPaymentGrossAmt: this.appFinDataObj.TotalDownPaymentGrossAmt,
+          TotalDownPaymentNettAmt: this.appFinDataObj.TotalDownPaymentNettAmt,
 
           EffectiveRatePrcnt: this.EffectiveRatePrcnt,
           EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,

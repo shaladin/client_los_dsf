@@ -40,6 +40,7 @@ import { RefAttrGenerateObj } from 'app/shared/model/ref-attr-generate.model';
 import { RefAttrGenerate } from 'app/components/sharing-components/ref-attr/ref-attr-form-generate/RefAttrGenerate.service';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { RefProvDistrictObj } from 'app/shared/model/ref-prov-district-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -71,6 +72,8 @@ export class MouRequestAddcollComponent implements OnInit {
   resultPattern: Array<KeyValueObj>;
   customPattern: CustomPatternObj[];
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  listCollTypeMandatoryManufacturingYear: Array<string> = new Array<string>();
+  isMandatoryManufacturingYear: boolean = false;
 
   @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
     if (content) {
@@ -187,6 +190,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputAddressObjForLocAddr.showAllPhn = false;
 
     this.items = this.AddCollForm.get('items') as FormArray;
+    this.SetLookupBpkpCityIssuer();
     this.bindUcLookup()
     this.initAddrObj();
     this.GetMouCustListAddrByMouCustId();
@@ -197,6 +201,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.bindUcAddToTempData();
     this.tempPagingObj.isReady = true;
     this.GetGS();
+    await this.SetManufacturingYearMandatory();
     this.validateIfAddExisting();
 
     this.InputLookupProfessionObj = new InputLookupObj();
@@ -779,7 +784,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputFieldLocationObj.inputLookupObj = new InputLookupObj();
   }
 
-  getLookupCollateralTypeResponse(e) {
+  async getLookupCollateralTypeResponse(e) {
     if (this.type == "AddEdit") {
       this.AddCollForm.patchValue({
         FullAssetCode: e.FullAssetCode,
@@ -787,8 +792,8 @@ export class MouRequestAddcollComponent implements OnInit {
         AssetCategoryCode: e.AssetCategoryCode
       });
     } else {
-      this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, { TrxNo: e.CollateralNo }).subscribe(
-        (response) => {
+      await this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, { TrxNo: e.CollateralNo }).toPromise().then(
+        async (response) => {
           this.collateralObj = response['MouCustCollateral'];
           this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
           this.setMouCustCollateralExistingDoc(this.collateralObj.MouCustCollateralId);
@@ -964,13 +969,14 @@ export class MouRequestAddcollComponent implements OnInit {
           this.InputLookupProfessionObj.isDisable = true;
           this.InputLookupProfessionObj.isReady = true;
           this.UpdateValueCollateralPortionAmt();
+          await this.CheckManufacturingYearMandatory();
         })
     }
   }
 
-  onItemChange(value, UserChange: boolean = false) {
+  async onItemChange(value, UserChange: boolean = false) {
     this.getRefAssetDocList(value);
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).subscribe(
+    await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).toPromise().then(
       (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -991,6 +997,7 @@ export class MouRequestAddcollComponent implements OnInit {
       });
     this.updateUcLookup(value, UserChange ? false : true, this.type);
     this.GenerateCollateralAttr(false, this.MouCustCollateralId);
+    await this.CheckManufacturingYearMandatory();
   }
 
   async SaveForm() {
@@ -1797,6 +1804,31 @@ export class MouRequestAddcollComponent implements OnInit {
       if(svcType != null){
         this.IsSvcExist = true;
       }
+    }
+  }
+
+  async SetManufacturingYearMandatory(){
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsCodeManufacturingYearMandatoryByCollType }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          this.listCollTypeMandatoryManufacturingYear  = result.GsValue.split(';');
+          console.log(this.listCollTypeMandatoryManufacturingYear);
+        }
+      }
+    );
+  }
+
+  CheckManufacturingYearMandatory(){
+    let temp = this.AddCollForm.controls.AssetTypeCode.value;
+    this.isMandatoryManufacturingYear = this.listCollTypeMandatoryManufacturingYear.includes(temp);
+
+    if (this.isMandatoryManufacturingYear) {
+      this.AddCollForm.controls.ManufacturingYear.setValidators([Validators.required]);
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
+    else{
+      this.AddCollForm.controls.ManufacturingYear.clearValidators();
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
     }
   }
 }

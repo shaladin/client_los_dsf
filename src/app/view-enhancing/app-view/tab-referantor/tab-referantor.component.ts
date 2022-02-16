@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({

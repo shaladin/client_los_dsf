@@ -28,7 +28,7 @@ export class ChangeMouRequestDetailCustomerXComponent
   mouType: string;
   mouCustId: number;
   ChangeMouCustId: number;
-  changeMouTrxNo: number;
+  changeMouTrxNo: string;
   currentStepIndex: number;
   ChangeMouStatus: string;
   mode: string;
@@ -308,7 +308,7 @@ export class ChangeMouRequestDetailCustomerXComponent
     this.viewGeneric.initiateForm();
   }
 
-    stepHandlerDealerfinancing(response) {
+  stepHandlerDealerfinancing(response) {
     switch (response["StatusCode"].toString()) {
       case "200":
         this.stepperDealerfinancing.next();

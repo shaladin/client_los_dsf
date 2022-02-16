@@ -128,6 +128,11 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
       (this.ParentForm.controls.InstallmentTable as FormArray).removeAt(0);
     }
 
+    let findFirstInst = this.listInstallment.findIndex(x => x.InstSeqNo == 1);
+    this.ParentForm.patchValue({
+      InstAmt: this.listInstallment[findFirstInst].InstAmt
+    });
+
     for (let i = 0; i < this.listInstallment.length; i++) {
       const group = this.fb.group({
         InstSeqNo: this.listInstallment[i].InstSeqNo,
@@ -215,7 +220,7 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (InstAmtKosong + 1));
       return;
     }
-    
+
     if (!this.IsTrialCalc) {
       this.calcStepUpStepDownObj = this.ParentForm.value;
       this.calcStepUpStepDownObj["IsRecalculate"] = false;
@@ -248,7 +253,7 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
 
             TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
             LifeInsCptlzAmt: response.LifeInsCptlzAmt,
-            
+
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,
             DiffGrossYieldAmt: response.DiffGrossYieldAmt,

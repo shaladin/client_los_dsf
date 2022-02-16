@@ -81,13 +81,14 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     SupplierReferantorCommissionList: this.fb.array([]),
     Notes: ['', [Validators.maxLength(4000), Validators.required]]
   });
+  IsCommissionChanged: boolean = false;
 
   constructor(private fb: FormBuilder,
-    private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private cookieService: CookieService) {
+              private http: HttpClient,
+              private toastr: NGXToastrService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.agrmntId = params["AgrmntId"];
@@ -238,13 +239,6 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
 
       this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].nameSelect = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientRefNoDesc;
       this.InputLookupSupplEmpObjs[currentAgrmntCommissionHId].jsonSelect = { VendorEmpName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientRefNoDesc };
-
-      var addCrit = new CriteriaObj();
-      addCrit.DataType = "text";
-      addCrit.propName = "VE.VENDOR_EMP_NO";
-      addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = [this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].CommissionRecipientRefNo];
-      this.arrAddCrit.push(addCrit);
 
       const vendorBankAccObj = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].VendorBankAccObjs;
 
@@ -411,21 +405,27 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     let selectedCommH;
     if (type == 'SUPPL')
       selectedCommH = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs.find(x => x.AgrmntCommissionHId == AgrCommH.controls.AgrmntCommissionHId.value);
-    else if (type == 'SUPPLEMP')
-      selectedCommH = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs.find(x => x.AgrmntCommissionHId == AgrCommH.controls.AgrmntCommissionHId.value);
-    else if (type == 'REF')
+    else if (type == 'SUPPLEMP'){
+      AgrCommH.patchValue({
+        CurrentVendorBankAccId : e.target.selectedOptions[0].value
+      });
+
+      return;
+    }else if (type == 'REF')
       selectedCommH = this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs.find(x => x.AgrmntCommissionHId == AgrCommH.controls.AgrmntCommissionHId.value);
 
     let selectedVba = selectedCommH.VendorBankAccObjs.find(x => x.VendorBankAccId == e.target.value);
 
     var commVbaData =
-    {
-      AgrmntCommissionHId: selectedCommH.AgrmntCommissionHId,
-      BankCode: selectedVba.BankCode,
-      BankBranch: selectedVba.BankBranch,
-      BankAccountNo: selectedVba.BankAccountNo,
-      BankAccountName: selectedVba.BankAccountName,
-    };
+      {
+        AgrmntCommissionHId: selectedCommH.AgrmntCommissionHId,
+        BankCode: selectedVba.BankCode,
+        BankBranch: selectedVba.BankBranch,
+        BankAccountNo: selectedVba.BankAccountNo,
+        BankAccountName: selectedVba.BankAccountName,
+        BankName: selectedVba.BankName,
+        CommissionRecipientRefNo: selectedCommH.CommissionRecipientRefNo
+      };
 
     let index = this.listEditedCommissionData.map(function (x) { return x.AgrmntCommissionHId; }).indexOf(selectedCommH.AgrmntCommissionHId);
     if (index > -1)
@@ -434,7 +434,9 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     this.listEditedCommissionData.push(commVbaData);
   }
 
-  SupplEmpHandler(e, AgrCommH, index) {
+  SupplEmpHandler(e, AgrCommH, index)
+  {
+    this.IsCommissionChanged = true;
     let isValid = true;
     let targetSupplEmp = this.ContentObjSupplierEmp.find(x => x.Key == e.target.value);
 
@@ -492,6 +494,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
   }
 
   SetSupplEmpVbaData(e, AgrCommH, index) {
+    this.IsCommissionChanged = true;
     var SupplEmpCommList = (this.EditAppForm.get("SupplierEmpCommissionList") as FormArray);
 
     var CommissionRecipientRefNo = SupplEmpCommList.at(index).get("CommissionRecipientRefNo").value;
@@ -513,12 +516,13 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
         (response: ResGetVendorEmpByVendorEmpNoAndVendorCodeObj) => {
           var formGroupComm = this.fb.group({
             AgrmntCommissionHId: [AgrmntCommissionHId],
+            CommissionRecipientRefNo: [e.VendorEmpNo],
             CommissionRecipientRefNoDesc: [response.VendorEmpName],
             TotalCommissionAmt: [AgrCommH.controls.TotalCommissionAmt.value],
             CommissionRecipientPositionDesc: [response.MrVendorEmpPositionCodeDesc],
             SupplierName: [response.VendorName],
-            CommissionRecipientRefNo: e.VendorEmpNo,
-            CurrentVendorBankAccId: ["", [Validators.required]]
+            CurrentVendorBankAccId: ["", [Validators.required]],
+            TaxpayerNo : [response.TaxpayerNo]
           });
 
           let reqByVendorEmpNo: GenericObj = new GenericObj();
@@ -526,6 +530,12 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
           this.http.post(URLConstant.GetListActiveVendorBankAccObjByVendorEmpNo, reqByVendorEmpNo).subscribe(
             (response) => {
               var vendorBankAccObj = response[CommonConstant.ReturnObj];
+
+              if(vendorBankAccObj.length == 0){
+                vendorBankAccObj.push({VendorBankAccId: ''});
+                formGroupComm.get("CurrentVendorBankAccId").setValidators(Validators.required);
+                formGroupComm.updateValueAndValidity();
+              }
 
               this.listTempVba[AgrmntCommissionHId] = vendorBankAccObj;
 
@@ -550,13 +560,14 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     this.RFAInfo = { RFAInfo: this.EditAppForm.controls.RFAInfo.value };
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    if (this.listEditedAssetData.length <= 0 && this.listEditedPoData.length <= 0) {
+    if(this.listEditedAssetData.length <= 0 && this.listEditedPoData.length <= 0 && !this.IsCommissionChanged)
+    {
       this.toastr.errorMessage(ExceptionConstant.NO_DATA_EDITED);
+      return;
     }
-    else {
-      this.ApprovalCreateOutput = this.createComponent.output();
+    this.ApprovalCreateOutput = this.createComponent.output();
 
-      var EditAppAftApvObj =
+    var EditAppAftApvObj =
       {
         AgrmntId: this.agrmntId,
         CurrentOfficeCode: currentUserContext[CommonConstant.OFFICE_CODE],
@@ -567,15 +578,38 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
         RequestRFAObj: this.RFAInfo
       };
 
-      let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqV2 : URLConstant.SubmitEditAppAftApvReq;
-      this.http.post(urlPost, EditAppAftApvObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING], { BizTemplateCode: this.BizTemplateCode });
-        }
-      );
-    }
+    let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqV2 : URLConstant.SubmitEditAppAftApvReq;
+    this.http.post(urlPost, EditAppAftApvObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING], { BizTemplateCode: this.BizTemplateCode });
+      }
+    );
+  }
 
+  SetSupplEmpComm(){
+    var SupplEmpCommList = (this.EditAppForm.get("SupplierEmpCommissionList") as FormArray).value;
+
+    for (let i = 0; i < SupplEmpCommList.length; i++) {
+      let editedIdx = this.listEditedCommissionData.findIndex(x => x.AgrmntCommissionHId == SupplEmpCommList[i].AgrmntCommissionHId);
+      let listBankSupplier = this.listTempVba[SupplEmpCommList[i].AgrmntCommissionHId];
+      let selectedVba = listBankSupplier.find(x => x.VendorBankAccId == SupplEmpCommList[i].CurrentVendorBankAccId);
+
+      if(editedIdx != -1){
+        this.listEditedCommissionData[editedIdx].BankCode = selectedVba.BankCode;
+        this.listEditedCommissionData[editedIdx].BankName = selectedVba.BankName;
+        this.listEditedCommissionData[editedIdx].BankBranch = selectedVba.BankBranch == null ? "" : selectedVba.BankBranch;
+        this.listEditedCommissionData[editedIdx].BankAccountNo = selectedVba.BankAccountNo;
+        this.listEditedCommissionData[editedIdx].BankAccountName = selectedVba.BankAccountName;
+      }else{
+        SupplEmpCommList[i].BankCode = selectedVba.BankCode;
+        SupplEmpCommList[i].BankName = selectedVba.BankName;
+        SupplEmpCommList[i].BankBranch = selectedVba.BankBranch == null ? "" : selectedVba.BankBranch;
+        SupplEmpCommList[i].BankAccountNo = selectedVba.BankAccountNo;
+        SupplEmpCommList[i].BankAccountName = selectedVba.BankAccountName;
+        this.listEditedCommissionData.push(SupplEmpCommList[i])
+      }
+    }
   }
 
 }

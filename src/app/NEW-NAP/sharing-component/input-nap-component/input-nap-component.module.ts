@@ -143,6 +143,8 @@ import { ApplicationDataXFL4WDsfComponent } from "app/NEW-NAP/DSF/input-nap-comp
 import { ApplicationDataDlfnXDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-dlfn-x-dsf/application-data-dlfn-x-dsf.component";
 import { LoanObjectXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/application-data/loan-object-x/loan-object-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ReferantorDataNewComponent } from "./referantor-data-new/referantor-data-new.component";
+import { ReferantorDataNewDetailComponent } from "./referantor-data-new-detail/referantor-data-new-detail.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -238,6 +240,7 @@ export const customCurrencyMaskConfig = {
     AppCustAssetDetailComponent,
     AppCustAssetOldNapComponent,
     AppCustAssetOldNapDetailComponent,
+    ReferantorDataNewComponent,
 
     ApplicationDataDlfnComponent,
     InvoiceDataDlfnComponent,
@@ -389,7 +392,8 @@ export const customCurrencyMaskConfig = {
     AppCustAssetComponent,
     AppCustAssetOldNapComponent,
     AppCustAssetOldNapDetailComponent,
-
+    ReferantorDataNewComponent,
+    ReferantorDataNewDetailComponent,
     ApplicationDataDlfnComponent,
     InvoiceDataDlfnComponent,
     EditInvoiceDataComponent,
@@ -448,7 +452,7 @@ export const customCurrencyMaskConfig = {
     ApplicationDataDlfnXDsfComponent,
     LoanObjectXComponent
   ],
-  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
+  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent, ReferantorDataNewDetailComponent],
   providers: [
     NGXToastrService
   ]

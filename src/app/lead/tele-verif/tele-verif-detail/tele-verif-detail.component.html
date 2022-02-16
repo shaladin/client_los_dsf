@@ -44,11 +44,11 @@
             <!-- <div class="bs-stepper-content"> -->
               <div id="customer-data-tab" class="content" role="tabpanel"
                 aria-labelledby="customer-data-tab-trigger">
-                <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)">
+                <app-lead-input-cust-data *ngIf="isCustData == true" (outputTab)="getValue($event)" [showCancelButton]="false">
                 </app-lead-input-cust-data>
               </div>
               <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-                <app-lead-input-lead-data *ngIf="isLeadData == true" originPage="teleVerif" (outputTab)="getValue($event)">
+                <app-lead-input-lead-data *ngIf="isLeadData == true" originPage="teleVerif" (outputTab)="getValue($event)" [showCancelButton]="false">
                 </app-lead-input-lead-data>
               </div>
             <!-- </div> -->

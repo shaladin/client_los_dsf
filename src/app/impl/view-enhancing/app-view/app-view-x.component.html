@@ -21,7 +21,7 @@
                 <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'">
                 </app-view-app-cust-data-personal>
                 <app-view-app-cust-data-company-x [appId]="AppId" [BizTemplateCode]="bizTemplateCode"
-                  *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company-x>
+                                                  *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company-x>
               </ng-template>
             </mat-tab>
 
@@ -42,7 +42,8 @@
 
             <mat-tab *ngIf="IsReferantor" label="Referantor">
               <ng-template matTabContent>
-                <app-tab-referantor [appId]="AppId"></app-tab-referantor>
+                <!-- <app-tab-referantor [appId]="AppId"></app-tab-referantor> -->
+                <app-tab-referantor-multi [AppId]="AppId" ></app-tab-referantor-multi>
               </ng-template>
             </mat-tab>
 

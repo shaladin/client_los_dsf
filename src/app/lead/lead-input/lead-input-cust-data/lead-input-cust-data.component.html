@@ -257,6 +257,8 @@
           <!-- </div> -->
         </div>
         <div class="form-actions right" style="text-align: right;">
+          <button type="button" *ngIf="showCancelButton" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>Cancel
+          </button>
           <button type="submit" class="btn btn-raised btn-primary">
             <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Save and Continue</span>
           </button>

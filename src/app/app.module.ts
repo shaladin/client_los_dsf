@@ -43,6 +43,8 @@ import { NGXToastrService } from './components/extra/toastr/toastr.service';
 import { ApprovalTaskService } from './shared/services/ApprovalTask.service';
 import { AdInsHelperService } from './shared/services/AdInsHelper.service';
 import { AddressService } from './shared/services/custAddr.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UcdropdownsearchModule } from '@adins/ucdropdownsearch';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -98,6 +100,9 @@ const urlConstantConfig = (urlConfig: UrlConstantService) => {
         BrowserAnimationsModule,
         GrowlModule,
         ClipboardModule,
+        FormsModule,
+        ReactiveFormsModule,
+        UcdropdownsearchModule,
         TreeViewModule
     ],
     providers: [

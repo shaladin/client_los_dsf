@@ -15,13 +15,13 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: "request-new-password",
-  templateUrl: "./request-new-password.component.html",
+  templateUrl: "./request-new-password-new.component.html",
   providers: [NGXToastrService]
 })
 export class RequestNewPasswordComponent implements OnInit {
 
   ReqPassForm = this.fb.group({
-    Username: ['', [Validators.required, Validators.maxLength(50)]],
+    Username: ['', [Validators.required, Validators.maxLength(500)]],
   });
   version: string;
   isRequested: boolean = false;

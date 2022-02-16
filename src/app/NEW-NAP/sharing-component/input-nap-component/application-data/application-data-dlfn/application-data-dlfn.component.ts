@@ -28,6 +28,8 @@ import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { String } from 'typescript-string-operations';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-application-data-dlfn',
@@ -110,7 +112,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   allCharacteristicCredit: Array<KeyValueObj>;
   responseApp: AppObj;
   responseProd: ProdOfferingDObj;
-
+  userContext: CurrentUserContext;
   listCustBankAcc: Array<AppCustBankAccObj>;
   selectedBankAcc: any;
   GetBankInfo: any;
@@ -135,6 +137,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.ListCrossAppObj['appId'] = this.AppId;
     this.ListCrossAppObj['result'] = [];
 
@@ -229,9 +232,14 @@ export class ApplicationDataDlfnComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
+    this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).toPromise().then(
       (response) => {
         this.allInSalesOffice = response[CommonConstant.ReturnObj];
+
+        if(this.allInSalesOffice.length == 0){
+          this.toastr.warningMessage(String.Format(ExceptionConstant.SALES_PERSON_NOT_AVAILABLE_IN_OFFICE, this.userContext.OfficeName));
+        }
+        
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
             SalesOfficerNo: this.allInSalesOffice[0].empNo,

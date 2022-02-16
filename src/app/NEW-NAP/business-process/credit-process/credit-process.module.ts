@@ -76,6 +76,8 @@ import { CreditReviewPagingXDsfComponent } from "app/NEW-NAP/DSF/business-proces
 import { CreditReviewDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-x-dsf/credit-review-detail-x-dsf/credit-review-detail-x-dsf.component";
 import { CreditApprovalDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-x-dsf/credit-approval-detail-x-dsf/credit-approval-detail-x-dsf.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { CommissionV3Component } from "./commission-reserved-fund/component/commission-v3/commission-v3.component";
+import { FormCommissionGenerateV2Component } from "./commission-reserved-fund/component/commission-v3/form-commission-generate-v2/form-commission-generate-v2.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -134,7 +136,9 @@ export const customCurrencyMaskConfig = {
     ReservedFundComponent,
     CreditInquiryComponent,
     CommissionV2Component,
+    CommissionV3Component,
     FormCommissionGenerateComponent,
+    FormCommissionGenerateV2Component,
     CommissionCfnaComponent,
     CreditReviewComponent,
     CreditReviewDetailPersonalComponent,

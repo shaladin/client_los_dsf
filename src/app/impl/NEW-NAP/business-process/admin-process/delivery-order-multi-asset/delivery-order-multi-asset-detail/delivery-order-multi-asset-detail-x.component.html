@@ -26,7 +26,7 @@
                 </div> -->
                 <div class="col-md-4">
                   <input type="date" id="AgrmntDt" class="form-control adInsInput name"
-                    formControlName="AgrmntCreatedDt">
+                         formControlName="AgrmntCreatedDt">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.AgrmntDt">
                   </lib-uc-show-errors>
                 </div>
@@ -39,22 +39,22 @@
               </div>
               <div class="form-group row">
                 <label *ngIf="IsGSAddInerestExists && bizTemplateCode != 'DLFN'"
-                  class="col-md-2 adins-required-label" translate>Additional Interest
+                       class="col-md-2 adins-required-label" translate>Additional Interest
                   Paid By</label>
                 <div *ngIf="IsGSAddInerestExists" class="col-md-4">
                   <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy" (change)="changeAddInterestPaidBy()"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetForm.controls.AdditionalInterestPaidBy.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetForm.controls.AdditionalInterestPaidBy.invalid }">
                     <option value="">--Select One--</option>
                     <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="DOAssetForm.controls.AdditionalInterestPaidBy"
-                    [submit]="AppTcForm.submitted">
+                                      [submit]="AppTcForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adins-required-label" for="GoLiveEstimated" translate>Golive Date Estimation</label>
                 <div class="col-md-4">
                   <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
-                    formControlName="GoLiveEstimated" min="{{minDt | date:'yyyy-MM-dd'}}">
+                         formControlName="GoLiveEstimated" min="{{minDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="DOAssetForm.controls.GoLiveEstimated">
                   </lib-uc-show-errors>
                 </div>
@@ -62,11 +62,11 @@
               <div class="form-group row">
                 <label class="col-md-2 adinsLabel" translate>Additional Interest</label>
                 <label class="col-md-4 adinsLabel"
-                  translate>{{DOAssetForm.controls.AddIntrstAmt.value | number:'.0':'en-US'}}</label>
+                       translate>{{DOAssetForm.controls.AddIntrstAmt.value | number:'.0':'en-US'}}</label>
               </div>
               <div class="form-actions right">
                 <button type="button" class="btn btn-raised btn-primary mr-2" (click)="calculateAddInterest()"
-                  translate>
+                        translate>
                   Calculate
                 </button>
               </div>
@@ -77,73 +77,73 @@
             <div class="form-body" id="AssetListSection">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
-                  <tr class="table-header">
-                    <th style="text-align: left;">
-                      <span class="thead-header" name='no' translate>CHECKBOX</span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" name='seqNo' translate>SEQ NO.</span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" name='assetName' translate>FULL ASSET NAME</span>
-                    </th>
-                    <th style="text-align: right;">
-                      <span class="thead-header" name='assetPrice' translate>ASSET PRICE</span>
-                    </th>
-                    <th style="text-align: right;" *ngIf="!isHideDP">
-                      <span class="thead-header" name='downPayment' translate>DOWN PAYMENT</span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" name='serialNo1' translate>SERIAL NO. 1</span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" name='serialNo2' translate>SERIAL NO. 2</span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" name='ownerName' translate>OWNER NAME</span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" name='deliveryNo' translate>DELIVERY NO.</span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" name='deliveryDate' translate>DELIVERY DATE</span>
-                    </th>
-                  </tr>
+                <tr class="table-header">
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='no' translate>CHECKBOX</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='seqNo' translate>SEQ NO.</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='assetName' translate>FULL ASSET NAME</span>
+                  </th>
+                  <th style="text-align: right;">
+                    <span class="thead-header" name='assetPrice' translate>ASSET PRICE</span>
+                  </th>
+                  <th style="text-align: right;" *ngIf="!isHideDP">
+                    <span class="thead-header" name='downPayment' translate>DOWN PAYMENT</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='serialNo1' translate>SERIAL NO. 1</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='serialNo2' translate>SERIAL NO. 2</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='ownerName' translate>OWNER NAME</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='deliveryNo' translate>DELIVERY NO.</span>
+                  </th>
+                  <th style="text-align: left;">
+                    <span class="thead-header" name='deliveryDate' translate>DELIVERY DATE</span>
+                  </th>
+                </tr>
                 </thead>
                 <tbody formArrayName="DOAssetList">
-                  <tr *ngFor="let item of DOAssetForm.get('DOAssetList')['controls']; index as i" [formGroupName]="i">
-                    <td style="text-align: left;">
-                      <input type="checkbox" formControlName="IsSelected"
-                        *ngIf="DOAssetForm.get('DOAssetList').at(i).controls.IsAvailable.value == true" />
-                    </td>
-                    <td style="text-align: left;">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.AssetSeqNo.value}}
-                    </td>
-                    <td style="text-align: left;">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.FullAssetName.value}}
-                    </td>
-                    <td style="text-align: right;">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.AssetPriceAmt.value | currency : "USD" : ""}}
-                    </td>
-                    <td style="text-align: right;" *ngIf="!isHideDP">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.DownPaymentAmt.value | currency : "USD" : ""}}
-                    </td>
-                    <td style="text-align: left;">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.SerialNo1.value}}
-                    </td>
-                    <td style="text-align: left;">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.SerialNo2.value}}
-                    </td>
-                    <td style="text-align: left;">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.OwnerName.value}}
-                    </td>
-                    <td style="text-align: left;">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.DeliveryNo.value}}
-                    </td>
-                    <td style="text-align: left;">
-                      {{DOAssetForm.get('DOAssetList').at(i).controls.DeliveryDt.value | date: "dd-MMM-yyyy"}}
-                    </td>
-                  </tr>
+                <tr *ngFor="let item of DOAssetForm.get('DOAssetList')['controls']; index as i" [formGroupName]="i">
+                  <td style="text-align: left;">
+                    <input type="checkbox" formControlName="IsSelected"
+                           *ngIf="DOAssetForm.get('DOAssetList').at(i).controls.IsAvailable.value == true" />
+                  </td>
+                  <td style="text-align: left;">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.AssetSeqNo.value}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.FullAssetName.value}}
+                  </td>
+                  <td style="text-align: right;">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.AssetPriceAmt.value | currency : "USD" : ""}}
+                  </td>
+                  <td style="text-align: right;" *ngIf="!isHideDP">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.DownPaymentAmt.value | currency : "USD" : ""}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.SerialNo1.value}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.SerialNo2.value}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.OwnerName.value}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.DeliveryNo.value}}
+                  </td>
+                  <td style="text-align: left;">
+                    {{DOAssetForm.get('DOAssetList').at(i).controls.DeliveryDt.value | date: "dd-MMM-yyyy"}}
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -153,7 +153,7 @@
               </button>
             </div>
             <div *ngIf="isCreateDOInvalid" class="invalid-feedback d-block col-md-12"
-              style="padding: 0; text-align: right;">
+                 style="padding: 0; text-align: right;">
               <div translate>{{createDOInvalidMsg}}</div>
             </div>
           </form>
@@ -164,56 +164,56 @@
           <div class="form-body" id="DeliveryListSection">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
-                <tr class="table-header">
-                  <th style="text-align: center;">
-                    <span class="thead-header" name='no' translate>DELIVERY ORDER NO.</span>
-                  </th>
-                  <th style="text-align: center;">
-                    <span class="thead-header" name='seqNo' translate>DELIVERY DATE</span>
-                  </th>
-                  <th style="text-align: left;">
-                    <span class="thead-header" name='assetName' translate>CUST RELATIONSHIP</span>
-                  </th>
-                  <th style="text-align: left;">
-                    <span class="thead-header" name='assetPrice' translate>RECIPIENT NAME</span>
-                  </th>
-                  <th style="text-align: left;">
-                    <span class="thead-header" name='downPayment' translate>Notes</span>
-                  </th>
-                  <th style="text-align: center;">
-                    <span class="thead-header" name='serialNo1' translate>ACTION</span>
-                  </th>
-                </tr>
+              <tr class="table-header">
+                <th style="text-align: center;">
+                  <span class="thead-header" name='no' translate>DELIVERY ORDER NO.</span>
+                </th>
+                <th style="text-align: center;">
+                  <span class="thead-header" name='seqNo' translate>DELIVERY DATE</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='assetName' translate>CUST RELATIONSHIP</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='assetPrice' translate>RECIPIENT NAME</span>
+                </th>
+                <th style="text-align: left;">
+                  <span class="thead-header" name='downPayment' translate>Notes</span>
+                </th>
+                <th style="text-align: center;">
+                  <span class="thead-header" name='serialNo1' translate>ACTION</span>
+                </th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of doList">
-                  <td style="text-align: center;">
-                    {{item.DeliveryNo}}
-                  </td>
-                  <td style="text-align: center;">
-                    {{item.DeliveryDt | date: "dd-MMM-yyyy"}}
-                  </td>
-                  <td style="text-align: left;">
-                    {{item.MrCustRelationshipCode}}
-                  </td>
-                  <td style="text-align: left;">
-                    {{item.RecipientName}}
-                  </td>
-                  <td style="text-align: left;">
-                    {{item.DeliveryAddr}}
-                  </td>
-                  <td style="text-align: center;">
-                    <a (click)="editDOHandler(item.DeliveryOrderHId)"><i class="fas fa-pencil-alt mr-2"></i></a>
-                    <a (click)="deleteDO(item.DeliveryOrderHId)"><i class="fas fa-trash"></i></a>
-                  </td>
-                </tr>
+              <tr *ngFor="let item of doList">
+                <td style="text-align: center;">
+                  {{item.DeliveryNo}}
+                </td>
+                <td style="text-align: center;">
+                  {{item.DeliveryDt | date: "dd-MMM-yyyy"}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.MrCustRelationshipCode}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.RecipientName}}
+                </td>
+                <td style="text-align: left;">
+                  {{item.DeliveryAddr}}
+                </td>
+                <td style="text-align: center;">
+                  <a (click)="editDOHandler(item.DeliveryOrderHId)"><i class="fas fa-pencil-alt mr-2"></i></a>
+                  <a (click)="deleteDO(item.DeliveryOrderHId)"><i class="fas fa-trash"></i></a>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
         </div>
         <div class="px-3" style="margin-top: 20px;">
           <form class="form form-horizontal" [formGroup]="AppTcForm"
-            (ngSubmit)="AppTcForm.valid && DOAssetForm.valid && SaveForm()" #enjiForm="ngForm">
+                (ngSubmit)="AppTcForm.valid && DOAssetForm.valid" #enjiForm="ngForm">
 
             <mat-tab-group>
               <mat-tab label="Term & Conditions">
@@ -233,10 +233,10 @@
               <button type="button" (click)="Back()" class="btn btn-raised btn-warning">
                 <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
-              <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1">
+              <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1" (click)="SaveForm()">
                 <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
               </button>
-              <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal">
+              <button type="submit" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal">
                 <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
               </button>
             </div>

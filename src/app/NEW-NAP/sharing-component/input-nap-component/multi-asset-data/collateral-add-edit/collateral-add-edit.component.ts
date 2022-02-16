@@ -40,10 +40,10 @@ import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.mod
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 import { UcAttributeComponent } from '@adins/uc-attribute';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -208,6 +208,8 @@ export class CollateralAddEditComponent implements OnInit {
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
   custType: string;
   AppCustCoyObj: AppCustCompanyObj;
+  listCollTypeMandatoryManufacturingYear: Array<string> = new Array<string>();
+  isMandatoryManufacturingYear: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService, public formValidate: FormValidateService) {
     this.inputLookupObj = new InputLookupObj();
@@ -430,7 +432,7 @@ export class CollateralAddEditComponent implements OnInit {
       OutstandingCollPrcnt: 0
     });
 
-    this.collateralTypeHandler();
+    this.collateralTypeHandler(false);
     this.enabledForm();
     this.bindDDLFromRefMaster();
     this.SetInputLookupCollExisting();
@@ -692,6 +694,7 @@ export class CollateralAddEditComponent implements OnInit {
     // };
     // this.attrSettingObj.GetQuestionReqObj = GenObj;
     // this.ucAttrComp.GetListAttribute();
+    await this.CheckManufacturingYearMandatory();
   }
 
 
@@ -843,6 +846,7 @@ export class CollateralAddEditComponent implements OnInit {
     }
     await this.bindDDLFromRefMaster();
     this.SetInputLookupCollExisting();
+    await this.SetManufacturingYearMandatory();
 
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -1433,6 +1437,31 @@ export class CollateralAddEditComponent implements OnInit {
 
   SaveForm() {
     
+  }
+
+  async SetManufacturingYearMandatory(){
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsCodeManufacturingYearMandatoryByCollType }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          this.listCollTypeMandatoryManufacturingYear  = result.GsValue.split(';');
+          console.log(this.listCollTypeMandatoryManufacturingYear);
+        }
+      }
+    );
+  }
+
+  CheckManufacturingYearMandatory(){
+    let temp = this.AddCollForm.controls.AssetTypeCode.value;
+    this.isMandatoryManufacturingYear = this.listCollTypeMandatoryManufacturingYear.includes(temp);
+
+    if (this.isMandatoryManufacturingYear) {
+      this.AddCollForm.controls.ManufacturingYear.setValidators([Validators.required]);
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
+    else{
+      this.AddCollForm.controls.ManufacturingYear.clearValidators();
+      this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
   }
   
   async GetAppCustCoy() {

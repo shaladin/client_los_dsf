@@ -555,7 +555,7 @@ export class GuarantorCompanyComponent implements OnInit {
 
   setValidatorContactInfo() {
     this.isContactMandatory = true;
-    this.CompanyForm.controls.ContactName.setValidators([Validators.required, Validators.maxLength(50)]);
+    this.CompanyForm.controls.ContactName.setValidators([Validators.required, Validators.maxLength(500)]);
     this.CompanyForm.controls.ContactName.updateValueAndValidity();
     this.CompanyForm.controls.MrJobPositionCode.setValidators([Validators.required, Validators.maxLength(50)]);
     this.CompanyForm.controls.MrJobPositionCode.updateValueAndValidity();

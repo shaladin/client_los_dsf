@@ -23,6 +23,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -46,6 +47,7 @@ export class NapDetailFormComponent implements OnInit {
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;
   IsDataReady: boolean = false;
+  IsShowMultiReferantor: number = 0;
   readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   
@@ -94,7 +96,7 @@ export class NapDetailFormComponent implements OnInit {
       (response) => {
         this.SysConfigResultObj = response;
     });
-
+    await this.GetGSValueShowRferantor();
     this.claimTask();
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
@@ -129,6 +131,13 @@ export class NapDetailFormComponent implements OnInit {
     }
     this.IsDataReady = true;
     this.MakeViewReturnInfoObj();
+  }
+
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+    (response) => {
+      this.IsShowMultiReferantor = parseInt(response.GsValue);
+    });
   }
 
   async initDms() {

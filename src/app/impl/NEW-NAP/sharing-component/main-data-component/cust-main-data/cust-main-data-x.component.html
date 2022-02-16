@@ -41,7 +41,7 @@
                   </lib-uclookupgeneric>
                 </div>
               </div>
-            </div>           
+            </div>
 
             <div class="col-md-6" *ngIf="MrCustTypeCode == CustTypePersonal">
               <div class="form-group row">
@@ -115,7 +115,7 @@
                     >
                 </div>
               </div>
-            </div>  
+            </div>
             <div class="col-md-6">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Birth Place</label>
@@ -258,7 +258,7 @@
                 <label class="col-md-4 adInsLabel" translate>Start Working Date</label>
                 <div class="col-md-8">
                   <input type="date" class="form-control adInsInput" formControlName="EmploymentEstablishmentDt"
-                    [max]="businessDtMin | date: 'yyyy-MM-dd'"
+                    [max]="MaxDateEmpEstblshmntDt | date: 'yyyy-MM-dd'"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.EmploymentEstablishmentDt.invalid}">
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.EmploymentEstablishmentDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -266,14 +266,14 @@
               </div>
             </div>
             <div class="col-md-6" *ngIf="custMainDataMode == CustMainDataMgmntShrholder ||custMainDataMode == CustMainDataFamily">
-              <div class="form-group row" *ngIf="custMainDataMode == CustMainDataFamily">      
+              <div class="form-group row" *ngIf="custMainDataMode == CustMainDataFamily">
                 <label class="col-md-4 adInsLabel" translate>Nationality</label>
                 <div class="col-md-8" *ngIf="DictUcDDLObj[RefMasterTypeCodeNationality]?.isReady">
                   <lib-ucdropdownlist [dropdownListObj]="DictUcDDLObj[RefMasterTypeCodeNationality]"
                     [parentForm]="CustMainDataForm" [enjiForm]="enjiForm" [identifier]="'MrNationalityCode'" (callback)="onOptionsNationality($event)"></lib-ucdropdownlist>
                 </div>
               </div>
-          
+
               <div class="form-group row"*ngIf="custMainDataMode == CustMainDataFamily">
                 <label class="col-md-4 adInsLabel" translate>Country </label>
                 <div class="col-md-8" [hidden]="!IsLocal" translate>{{CountryName}} </div>
@@ -283,7 +283,7 @@
                   </lib-uclookupgeneric>
                 </div>
               </div>
-              
+
               <div class="form-group row">
                 <label class="col-md-4 " [ngClass]="{ 'adins-required-label' : custMainDataMode == CustMainDataMgmntShrholder}" translate>Job Position</label>
                 <div class="col-md-8" *ngIf="jobPositionLookupObj?.isReady">
@@ -318,7 +318,7 @@
               </div>
             </div>
             <div class="col-md-6" *ngIf="MrCustTypeCode == CustTypePersonal">
-              <div class="form-group row">                
+              <div class="form-group row">
                 <label class="col-md-4" translate>Start Working Date</label>
                 <div class="col-md-8">
                   <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"

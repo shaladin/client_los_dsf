@@ -47,7 +47,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
 
   CustBankAccountForm = this.fb.group({
     BankBranch: ['', [Validators.required, Validators.maxLength(50)]],
-    BankAccName: ['', [Validators.required, Validators.maxLength(50)]],
+    BankAccName: ['', [Validators.required, Validators.maxLength(500)]],
     BankAccNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]*$")]],
     IsDefault: [false],
     BankStmntObjs: this.fb.array([])
@@ -145,7 +145,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
   clearForm() {
     this.CustBankAccountForm = this.fb.group({
       BankBranch: ['', [Validators.required, Validators.maxLength(50)]],
-      BankAccName: ['', [Validators.required, Validators.maxLength(50)]],
+      BankAccName: ['', [Validators.required, Validators.maxLength(500)]],
       BankAccNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]*$")]],
       IsDefault: [false],
       BankStmntObjs: this.fb.array([])

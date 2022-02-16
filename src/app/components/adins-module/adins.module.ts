@@ -31,6 +31,7 @@ import { UcDirectiveUpperCaseModule } from '@adins/uc-directive-upper-case';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { RefAttrModule } from '../sharing-components/ref-attr/ref-attr.module';
 import { TextSearchPipe } from './uc-testing/text-search.pipe';
+import { UcdropdownsearchModule } from '@adins/ucdropdownsearch';
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -78,6 +79,7 @@ export const customCurrencyMaskConfig = {
         UcreportModule,
         UcTestingComponent,
         UcTestComponent,
+        UcdropdownsearchModule
         //  UcapprovalModule
     ],
     imports: [
@@ -110,6 +112,7 @@ export const customCurrencyMaskConfig = {
         RefAttrModule,
         NgMultiSelectDropDownModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+        UcdropdownsearchModule
     ]
 })
 

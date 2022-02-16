@@ -107,7 +107,7 @@ export class LtkmCustJobDataComponent implements OnInit {
           EstablishmentDt: [''],
           JobTitleName: ['', Validators.maxLength(50)],
           IsMfEmp: [false],
-          CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
+          CompanyName: ['', [Validators.required, Validators.maxLength(500)]],
           MrJobPositionCode: ['', Validators.maxLength(50)],
           MrCompanyScaleCode: ['', Validators.maxLength(50)],
           NumOfEmployee: [0, Validators.min(0)],
@@ -125,7 +125,7 @@ export class LtkmCustJobDataComponent implements OnInit {
           EstablishmentDt: [''],
           JobTitleName: ['', Validators.maxLength(50)],
           IsMfEmp: [false],
-          CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
+          CompanyName: ['', [Validators.required, Validators.maxLength(500)]],
           MrJobPositionCode: ['', Validators.maxLength(50)],
           MrCompanyScaleCode: ['', Validators.maxLength(50)],
           NumOfEmployee: [0, Validators.min(0)],
@@ -198,13 +198,13 @@ export class LtkmCustJobDataComponent implements OnInit {
     if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelEmployee) {
       if (!this.isLockMode) {
         this.InputLookupIndustryTypeObj.isRequired = true;
-        this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
+        this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(500)]);
       }
     }
     if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelSmallMediumEnterprise) {
       if (!this.isLockMode) {
         this.InputLookupIndustryTypeObj.isRequired = true;
-        this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
+        this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(500)]);
       }
     }
   }

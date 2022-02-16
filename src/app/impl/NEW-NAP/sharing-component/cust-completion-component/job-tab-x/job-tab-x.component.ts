@@ -82,6 +82,8 @@ export class JobTabXComponent implements OnInit {
   IsCustomer: boolean = false;
   IsWellknownCoy: boolean = false;
   BusinessDt: Date;
+  MaxDate: Date;
+  MaxDtValidate: string;
   UserAccess: CurrentUserContext;
   bizTemplateCode: string = "";
   RowVersion: string[];
@@ -120,11 +122,11 @@ export class JobTabXComponent implements OnInit {
   TempRefSectorEconomySlikCode: any;
 
   constructor(private fb: FormBuilder,
-    private http: HttpClient,
-    private route: ActivatedRoute,
-    private toastr: NGXToastrService,
-    public formValidate: FormValidateService,
-    private cookieService: CookieService) {
+              private http: HttpClient,
+              private route: ActivatedRoute,
+              private toastr: NGXToastrService,
+              public formValidate: FormValidateService,
+              private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
       if (params['AppCustId'] != null) {
@@ -139,11 +141,16 @@ export class JobTabXComponent implements OnInit {
   async ngOnInit() {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
+    var datePipe = new DatePipe("en-US");
+    this.MaxDate = new Date(this.UserAccess.BusinessDt);
+    this.MaxDate.setDate(this.MaxDate.getDate() - 1);
+    this.MaxDtValidate = datePipe.transform(this.MaxDate, "yyyy-MM-dd");
+
     await this.GetGeneralSetting();
     await this.InitLookup();
 
     await this.GetCustMainData();
-    this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
+    this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).toPromise().then(
       (response) => {
         this.MrCustModelDescr = response.Value;
         this.CheckCustModel();
@@ -157,7 +164,7 @@ export class JobTabXComponent implements OnInit {
     this.InputJobAddrObj.title = "Job Address";
     this.InputJobAddrObj.showOwnership = true;
     this.InputJobAddrObj.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeJob);
-    
+
     this.InputPrevJobAddrObj.title = "Previous Job Address";
     this.InputPrevJobAddrObj.isRequired = false;
     this.InputPrevJobAddrObj.showOwnership = true;
@@ -181,7 +188,7 @@ export class JobTabXComponent implements OnInit {
 
   setOwnership(MrCustAddrTypeCode: string) : boolean {
     if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
-        return true;
+      return true;
     }
     return false;
   }
@@ -270,7 +277,7 @@ export class JobTabXComponent implements OnInit {
           this.JobDataObj.RowVersion = this.ReturnAppCustJobDataObj.AppCustPersonalJobDataObj.RowVersion;
           this.InputLookupProfessionObj.nameSelect = this.ReturnAppCustJobDataObj.AppCustPersonalJobDataObj.MrProfessionName;
           this.InputLookupProfessionObj.jsonSelect = { ProfessionName: this.ReturnAppCustJobDataObj.AppCustPersonalJobDataObj.MrProfessionName };
-          
+
           if(this.ReturnAppCustJobDataObj.AppCustPersonalJobDataObj.IndustryTypeCode && this.TempRefSectorEconomySlikCode) {
             this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, {Code: this.TempRefSectorEconomySlikCode}).subscribe(
               (response) => {
@@ -280,7 +287,7 @@ export class JobTabXComponent implements OnInit {
               }
             );
           }
-          
+
           if(this.IsWellknownCoy){
             this.InputLookupCompanyObj.nameSelect = this.ReturnAppCustJobDataObj.AppCustPersonalJobDataObj.CoyName;
             this.InputLookupCompanyObj.jsonSelect = { Descr: this.ReturnAppCustJobDataObj.AppCustPersonalJobDataObj.CoyName };
@@ -346,11 +353,11 @@ export class JobTabXComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.JobDataForm.controls.EmploymentEstablishmentDt.value > this.BusinessDt) {
-      var businessDtStr = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
-      this.toastr.errorMessage(String.Format(ExceptionConstant.EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN + businessDtStr));
-      return false;
-    }
+    // if (this.JobDataForm.controls.EmploymentEstablishmentDt.value > this.BusinessDt) {
+    //   var businessDtStr = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+    //   this.toastr.errorMessage(String.Format(ExceptionConstant.EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN + businessDtStr));
+    //   return false;
+    // }
     // if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.IsSvcExist && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
     //   if (this.IsCustomer) {
     //     if (!this.IsNeedIntegrator) {
@@ -490,9 +497,20 @@ export class JobTabXComponent implements OnInit {
       OthBizAddrObj: this.OthBizDataAddrObj,
       ReqAppCustPersonalJobDataObjX: reqAppCustPersonalJobDataObjX
     }
+    if(this.CustModelCode != CommonConstant.CustModelNonProfessional){
+      if(this.JobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtValidate){
+        this.toastr.warningMessage(String.Format(ExceptionConstant.START_WORKING_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+        return false;
+      }
+
+      if(this.JobDataObj.OthBizEstablishmentDt.toString() > this.MaxDtValidate){
+        this.toastr.warningMessage(String.Format(ExceptionConstant.OTHER_BIZ_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+        return false;
+      }
+    }
 
     if (!this.isDataEdit) {
-      this.http.post(URLConstantX.AddAppCustPersonalJobData, requestObj).subscribe(
+      this.http.post(URLConstantX.AddAppCustPersonalJobData, requestObj).toPromise().then(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.OutputTab.emit({ IsComplete: true });
@@ -501,7 +519,7 @@ export class JobTabXComponent implements OnInit {
           console.log(error);
         });
     } else {
-      this.http.post(URLConstantX.EditAppCustPersonalJobData, requestObj).subscribe(
+      this.http.post(URLConstantX.EditAppCustPersonalJobData, requestObj).toPromise().then(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.OutputTab.emit({ IsComplete: true });
@@ -794,10 +812,10 @@ export class JobTabXComponent implements OnInit {
       var refSvcType = "";
       await this.http.post(URLConstant.GetRuleIntegratorPackageMapCust, { TrxNo: this.bizTemplateCode}).toPromise().then(
         (response) => {
-            refSvcType = response["Result"];
+          refSvcType = response["Result"];
         });
 
-        var svcType = listSvcType.find(x => x == refSvcType);
+      var svcType = listSvcType.find(x => x == refSvcType);
       if(svcType != null){
         this.IsSvcExist = true;
       }

@@ -642,6 +642,7 @@ export class CommonConstant {
   public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
   public static RefMasterTypeCodeInterestCalcBased = "INTEREST_CALC_BASED"; 
   public static RefMasterTypeCodeTaxCalcMethod = "TAX_CALC_METHOD"; 
+  public static RefMasterTypeCodeReferantorCategory = "REFERANTOR_CATEGORY";
 
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
@@ -687,6 +688,12 @@ export class CommonConstant {
   public static MasteCodeGenderMale = "MALE";
   public static MasterCodeGenderFemaleName = "Female";
   public static MasterCodeGenderMaleName = "Male";
+
+  //REFERANTOR TYPE
+  public static ReferantorCategoryAgency = "AGENCY";
+  public static ReferantorCategoryCustomer = "CUSTOMER";
+  public static ReferantorCategorySupplierEmployee = "SUPPLIER EMPLOYEE";
+  public static ReferantorTypeSupplierEmployee = "SUPPL_EMP";
 
   //Martial Status
   public static MasteCodeMartialStatsMarried = "MARRIED";
@@ -749,7 +756,10 @@ export class CommonConstant {
   public static GSCodeAgrStepToCheckSerialMandatoryEaaa = "AGR_STEP_TO_CHECK_SERIAL_MANDATORY_EAAA";
   public static GSCodeOwnershipMandatoryAddrType = "OWNERSHIP_MANDATORY_BY_ADDR_TYPE";
   public static GsCodePasswordRegex = "PASSWORD_REGEX";
-  
+  public static GsCodeMaximumReferantor = "MAX_REFERANTOR";
+  public static GsCodeIsShowMultiReferantor = "IS_SHOW_MULTI_REFERANTOR";
+  public static GsCodeManufacturingYearMandatoryByCollType = "MANUFACTURING_YEAR_MANDATORY_BY_COLLATERAL_TYPE";
+
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
   public static PaymentTypeDirectPayment = "DIRECT_PAYMENT";

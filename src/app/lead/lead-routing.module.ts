@@ -45,6 +45,7 @@ import { NewLeadInputDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-i
 import { NewLeadInputMainInfoDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input-main-info-dsf/new-lead-input-main-info-dsf.component';
 import { RoTelemkOfferDetailXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail-x.component';
 import { RoTelemkOfferVerifXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component';
+import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-page/new-lead-input-page-x.component';
 
 
 const routes: Routes = [

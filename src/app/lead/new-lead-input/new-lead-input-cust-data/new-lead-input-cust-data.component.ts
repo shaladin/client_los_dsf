@@ -44,7 +44,9 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class NewLeadInputCustDataComponent implements OnInit {
   @Input() LeadId: number;
+  @Input() showCancelButton: boolean = true;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   businessDt: Date = new Date();
   CopyFrom: number;
   typePage: string;
@@ -1338,6 +1340,10 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
     this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
     this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 }
 

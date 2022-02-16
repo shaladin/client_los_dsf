@@ -60,6 +60,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { RoTelemkOfferDetailXComponent } from "app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail-x.component";
 import { RoTelemkOfferVerifXComponent } from "app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component";
+import {NewLeadInputLeadDataXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-lead-data/new-lead-input-lead-data-x.component';
+import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-page/new-lead-input-page-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "right",

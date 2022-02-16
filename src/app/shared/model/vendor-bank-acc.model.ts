@@ -11,6 +11,7 @@ export class VendorBankAccObj {
     BankAccountNo: string;
     BankAccountName: string;
     IsDefault: boolean;
+    IsActive: boolean;
     RefBankid: number;
     BankBranch: string;
     Notes: string;

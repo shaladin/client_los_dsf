@@ -52,6 +52,7 @@ import { AppCustAttrContentObj } from 'app/shared/model/app-cust/cust-attr-conte
 import { LeadCustObj } from 'app/shared/model/request/lead/lead-cust-obj.model';
 import { CustObj } from 'app/shared/model/cust-obj.model';
 import { AddressService } from 'app/shared/services/custAddr.service';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-cust-main-data-x',
@@ -151,6 +152,8 @@ export class CustMainDataXComponent implements OnInit {
   rowVersionAppCustAddr: string[];
   rowVersionMgmntShrholder: string[];
   custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
+  MaxDateEmpEstblshmntDt: Date;
+  MaxDtEmpEstblshmntDtValidate: string;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly MasterGender = CommonConstant.RefMasterTypeCodeGender;
   MasterCustType: string = "";
@@ -252,6 +255,10 @@ export class CustMainDataXComponent implements OnInit {
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
     this.max17Yodt = new Date(this.MaxDate);
     this.max17Yodt.setFullYear(this.max17Yodt.getFullYear() - 17);
+    var datePipe = new DatePipe("en-US");
+    this.MaxDateEmpEstblshmntDt = new Date(this.UserAccess[CommonConstant.BUSINESS_DT]);
+    this.MaxDateEmpEstblshmntDt.setDate(this.MaxDateEmpEstblshmntDt.getDate() - 1);
+    this.MaxDtEmpEstblshmntDtValidate = datePipe.transform(this.MaxDateEmpEstblshmntDt, "yyyy-MM-dd");
 
     this.DictUcDDLObj[this.RefMasterTypeCodeNationality] = CustSetData.initDdlRefMaster(this.RefMasterTypeCodeNationality, null, true);
     if (this.MrCustTypeCode == CommonConstant.CustTypePublic) {
@@ -314,14 +321,14 @@ export class CustMainDataXComponent implements OnInit {
   async getAddrTypeOwnershipRequired(){
     this.listAddrRequiredOwnership = await this.addressService.GetListAddrTypeOwnershipMandatory();
   }
-  
+
   setOwnership(MrCustAddrTypeCode: string) : boolean {
     if(this.listAddrRequiredOwnership.find(addrType => addrType == MrCustAddrTypeCode)){
       return true;
     }
     return false;
   }
-  
+
   //#region Country
   lookUpObjCountry: InputLookupObj = new InputLookupObj();
   async BindLookupCountry() {
@@ -347,7 +354,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-  
+
   ListNationality: Array<RefMasterObj> = new Array();
   GetListRefCountry() {
     this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).subscribe(
@@ -372,7 +379,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-  
+
   getLookUpCountry(ev) {
     this.CustMainDataForm.patchValue({
       WnaCountryCode: ev.CountryCode,
@@ -564,14 +571,14 @@ export class CustMainDataXComponent implements OnInit {
       critObj2.propName = 'C.IS_CUSTOMER'
       critObj2.restriction = AdInsConstant.RestrictionEq;
       critObj2.value = '1';
-  
+
       this.ArrAddCrit.push(critObj2);
     }
-    
+
     this.InputLookupCustObj.addCritInput = this.ArrAddCrit;
     this.InputLookupCustCoyObj.addCritInput = this.ArrAddCrit;
 
-    if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust) 
+    if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
     {
       let intR2ObjPer: IntegrationObj = new IntegrationObj();
       intR2ObjPer.baseUrl = URLConstantX.R2ApiAgrmntGetListCustNoHaveAgrmntMaster;
@@ -580,7 +587,7 @@ export class CustMainDataXComponent implements OnInit {
       intR2ObjPer.rightColumnToJoin = "CustNo";
 
       this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v2";
-      
+
       let intR2ObjCoy: IntegrationObj = new IntegrationObj();
       intR2ObjCoy.baseUrl = URLConstantX.R2ApiAgrmntGetListCustNoHaveAgrmntMaster;
       intR2ObjCoy.requestObj = { "CustType": "C" };
@@ -588,7 +595,7 @@ export class CustMainDataXComponent implements OnInit {
       intR2ObjCoy.rightColumnToJoin = "CustNo";
 
       this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url + "/v2";
-      
+
       /*
       //Didisable dulu karena kebanyakan data dari sisi R2 nya
       this.InputLookupCustObj.isJoinExAPI = true
@@ -596,7 +603,7 @@ export class CustMainDataXComponent implements OnInit {
       this.InputLookupCustCoyObj.isJoinExAPI = true;
       this.InputLookupCustCoyObj.integrationObj = intR2ObjCoy;
       */
-      
+
       this.disableInput();
     }
 
@@ -1286,23 +1293,23 @@ export class CustMainDataXComponent implements OnInit {
       this.checkIsAddressKnown = true;
     }
 
-      if (this.checkIsAddressKnown == false) {
-        this.CustMainDataForm.patchValue({
-          Address: {
-            Addr: '-',
-            AreaCode1: "",
-            AreaCode2: "",
-            AreaCode3: "",
-            AreaCode4: "",
-            City: "",
-            SubZipcode: "",
-            MrHouseOwnershipCode: ""
-          },
-          AddressZipcode: {
-            value: ""
-          }
-        });
-      }
+    if (this.checkIsAddressKnown == false) {
+      this.CustMainDataForm.patchValue({
+        Address: {
+          Addr: '-',
+          AreaCode1: "",
+          AreaCode2: "",
+          AreaCode3: "",
+          AreaCode4: "",
+          City: "",
+          SubZipcode: "",
+          MrHouseOwnershipCode: ""
+        },
+        AddressZipcode: {
+          value: ""
+        }
+      });
+    }
 
     if (this.isIncludeCustRelation)
       this.custDataPersonalObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
@@ -1423,7 +1430,12 @@ export class CustMainDataXComponent implements OnInit {
     if (this.custMainDataMode == this.CustMainDataFamily) {
       tempReqObj.EmploymentEstablishmentDt = tempForm["EmploymentEstablishmentDt"];
       if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode && !tempReqObj.EmploymentEstablishmentDt) tempReqObj = null;
-    } else {
+    }
+    else if(this.custMainDataMode == this.CustMainDataMgmntShrholder) {
+      tempReqObj.EmploymentEstablishmentDt = tempForm["EstablishmentDt"];
+      if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode && !tempReqObj.EmploymentEstablishmentDt) tempReqObj = null;
+    }
+    else {
       if (!tempReqObj.MrProfessionCode && !tempReqObj.MrJobPositionCode) tempReqObj = null;
     }
     return tempReqObj
@@ -1493,6 +1505,16 @@ export class CustMainDataXComponent implements OnInit {
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.setDataCustomerPersonalForSave();
+
+      if(this.custMainDataMode != CommonConstant.CustMainDataModeCust && this.custMainDataMode != CommonConstant.CustMainDataModeGuarantor){
+        if(this.custDataPersonalObj.AppCustPersonalJobDataObj != null){
+          if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtEmpEstblshmntDtValidate){
+            this.toastr.warningMessage(String.Format(ExceptionConstant.EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
+            return false;
+          }
+        }
+      }
+
       if (this.appCustId == null || this.appCustId == 0) {
         //this.http.post(URLConstant.AddCustMainDataPersonal, this.custDataPersonalObj).subscribe(
         this.http.post(URLConstantX.AddCustMainDataPersonalX, this.custDataPersonalObj).subscribe(
@@ -1569,8 +1591,8 @@ export class CustMainDataXComponent implements OnInit {
       BizTemplateCode: this.bizTemplateCode
     };
 
-    
-    if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust) 
+
+    if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
     {
       let isHaveAgrmntParent : boolean = false;
       await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
@@ -2070,7 +2092,7 @@ export class CustMainDataXComponent implements OnInit {
 
   }
 
-  
+
   isShareOwnerMandatory : boolean = false;
   ChangeValidityShareOwner() {
     console.log("nyan cat")
@@ -2083,7 +2105,7 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.get("SharePrcnt").setValidators([Validators.min(0.000001), Validators.max(100)]);
       this.CustMainDataForm.get("IsOwner").setValidators([Validators.requiredTrue]);
       this.isShareOwnerMandatory = true;
-      
+
     }
     this.CustMainDataForm.get("SharePrcnt").updateValueAndValidity();
     this.CustMainDataForm.get("IsOwner").updateValueAndValidity();

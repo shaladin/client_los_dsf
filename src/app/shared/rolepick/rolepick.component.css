@@ -1,3 +1,8 @@
 mat-dialog-container#role-modal {
     height: auto;
 }
+
+::ng-deep .blur-bg {
+    background-color: #bbbbbb2d;
+    backdrop-filter: blur(10px);
+}

@@ -72,8 +72,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     this.AppAgrmntCancelObj.CancelByRefNo = "null";
     this.AppAgrmntCancelObj.RowVersion = "";
 
-    let AddAppAgrmntCancelUrl = environment.isCore ? URLConstant.AddAppAgrmntCancelV2 : URLConstant.AddAppAgrmntCancel;
-    this.http.post(AddAppAgrmntCancelUrl, this.AppAgrmntCancelObj).subscribe((response) => {
+    this.http.post(URLConstant.AddAppAgrmntCancelV2_1, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING], { BizTemplateCode: this.BizTemplateCode });
     });
