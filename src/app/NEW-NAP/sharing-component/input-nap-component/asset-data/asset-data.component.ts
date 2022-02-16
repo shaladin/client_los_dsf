@@ -2834,41 +2834,54 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  CheckAccessoryDPValue(i: number, from: string){
+  CheckAccessoryDPValue(i: number) {
     let InputAccessoryPrice = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryPriceAmt.value
 
-    if(InputAccessoryPrice == 0){
-      this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i+1));
+    if (InputAccessoryPrice == 0) {
+      this.toastr.warningMessage(ExceptionConstant.ACCESSORY_PRICE_NOT_SET + " No " + (i + 1));
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
       return;
     }
 
-    let InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value
+    let InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value;
+    let InputDPAmt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.value;
 
-    if(InputDPAmt > InputAccessoryPrice){
-      this.toastr.warningMessage("Down Payment Amount " + (i+1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i+1));
+    if (InputDPAmt > InputAccessoryPrice) {
+      this.toastr.warningMessage("Security Deposit Amount " + (i + 1) + ExceptionConstant.CANNOT_BE_HIGHER_THAN_ACCESSORY_PRICE + " No " + (i + 1));
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(0);
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(0);
       return;
     }
 
-    let InputDPPrcnt = this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.value
-    
-    if(from == CommonConstant.DownPaymentTypeAmt){
-      let DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
-      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
-    }else if(from == CommonConstant.DownPaymentTypePrcnt){
-      let DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
-      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
-    }else{
-      if(this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt){
-        let DPPrcnt = InputDPAmt / InputAccessoryPrice * 100;
-        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DPPrcnt);
+    let DownPayment, DownPaymentPrctg, roundedAmt = 0;
+    if (this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt) {
+      let DownPaymentPrctg = Math.ceil(InputDPAmt) / InputAccessoryPrice * 100;
+      DownPaymentPrctg = Math.round(DownPaymentPrctg * 1000000) / 1000000;
+      if(this.RoundedAmt == 0){
+        DownPayment = Math.ceil((DownPaymentPrctg / 100) * InputAccessoryPrice);
       }else{
-        let DPAmt = InputAccessoryPrice * InputDPPrcnt / 100;
-        this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DPAmt);
+        roundedAmt = Math.pow(10, this.RoundedAmt);
+        DownPayment = Math.round(((DownPaymentPrctg / 100) * InputAccessoryPrice) * roundedAmt) / roundedAmt ;
       }
+
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DownPaymentPrctg);
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DownPayment);
+    } else{
+      DownPaymentPrctg = Math.round(InputDPPrcnt * 1000000) / 1000000;
+      DownPayment = InputAccessoryPrice * DownPaymentPrctg / 100;
+      
+      if(this.RoundedAmt == 0){
+        DownPayment = Math.ceil(DownPayment);
+      }else{
+        roundedAmt = Math.pow(10, this.RoundedAmt);
+        DownPayment = Math.round(DownPayment / roundedAmt) * roundedAmt;
+      }
+
+      DownPaymentPrctg = Math.round((DownPayment / InputAccessoryPrice) * 100 * 1000000) / 1000000;
+
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DownPayment);
+      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DownPaymentPrctg);
     }
   }
 
