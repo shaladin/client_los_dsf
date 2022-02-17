@@ -805,7 +805,6 @@ export class AssetDataAddEditComponent implements OnInit {
     ).toPromise().then(
       async (response) => {
         this.vendorSchmCode = response[0];
-        this.bindAccessories();
         this.returnAssetConditionObj = response[1]["DDLRefProdComptCode"];
         let assetType = response[2];
         let assetSchm = response[3];
@@ -1004,7 +1003,8 @@ export class AssetDataAddEditComponent implements OnInit {
           await this.UcAddressHandler();
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
-
+          this.bindAccessories();
+          
           if (this.returnAppAssetObj) 
           {
             for (let i = 0; i < this.items.length; i++) 
