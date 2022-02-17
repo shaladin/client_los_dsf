@@ -72,51 +72,55 @@
                 <label class="col-md-3 adins-label">{{MaintenanceObj?.MaintPackage}}</label>
               </div>
 
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th>
-                      <span class="thead-header" translate>Service Name</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" translate>Service Amount</span>
-                    </th>
-                  </tr>
-                </thead>
-  
-                <tbody>
-                  <tr *ngIf="MaintenanceObj?.AppAssetMaintDObjsForService?.length === 0">
-                    <td colspan="100%">No Data Available</td>
-                  </tr>
-                  <tr *ngFor="let item of MaintenanceObj?.AppAssetMaintDObjsForService">
-                    <td class="align-left">{{item.Service}}</td>
-                    <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div style="overflow-x: auto;">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>Service Name</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Service Amount</span>
+                      </th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngIf="MaintenanceObj?.AppAssetMaintDObjsForService?.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                    <tr *ngFor="let item of MaintenanceObj?.AppAssetMaintDObjsForService">
+                      <td class="align-left">{{item.Service}}</td>
+                      <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th>
-                      <span class="thead-header" translate>Sparepart Name</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" translate>Sparepart Amount</span>
-                    </th>
-                  </tr>
-                </thead>
-  
-                <tbody>
-                  <tr *ngIf="MaintenanceObj?.AppAssetMaintDObjsForSparepart?.length === 0">
-                    <td colspan="100%">No Data Available</td>
-                  </tr>
-                  <tr *ngFor="let item of MaintenanceObj?.AppAssetMaintDObjsForSparepart">
-                    <td class="align-left" translate>{{item.Sparepart}}</td>
-                    <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div style="overflow-x: auto;">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>Sparepart Name</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Sparepart Amount</span>
+                      </th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngIf="MaintenanceObj?.AppAssetMaintDObjsForSparepart?.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                    <tr *ngFor="let item of MaintenanceObj?.AppAssetMaintDObjsForSparepart">
+                      <td class="align-left" translate>{{item.Sparepart}}</td>
+                      <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Service Amount</label>
@@ -132,28 +136,30 @@
             <lib-ucSubsection [id]="'OthExpenseId'" [title]="'OTHER EXPENSE'" [panel]="'OthExpense'">
             </lib-ucSubsection>
             <div class="form-body" id="OthExpense">
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th>
-                      <span class="thead-header" translate>Other Expense Type</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" translate>Amount</span>
-                    </th>
-                  </tr>
-                </thead>
-  
-                <tbody>
-                  <tr *ngIf="ExpenseObj?.length === 0">
-                    <td colspan="100%">No Data Available</td>
-                  </tr>
-                  <tr *ngFor="let item of ExpenseObj">
-                    <td class="align-left">{{item.OthExpenseTypeOpl}}</td>
-                    <td class="text-right">{{item.OthExpenseAmt | number:'1.2-2':'en-US'}}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div style="overflow-x: auto;">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>Other Expense Type</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Amount</span>
+                      </th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngIf="ExpenseObj?.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                    <tr *ngFor="let item of ExpenseObj">
+                      <td class="align-left">{{item.OthExpenseTypeOpl}}</td>
+                      <td class="text-right">{{item.OthExpenseAmt | number:'1.2-2':'en-US'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Other Expense</label>
@@ -164,36 +170,38 @@
             <lib-ucSubsection [id]="'FeeId'" [title]="'FEE'" [panel]="'Fee'">
             </lib-ucSubsection>
             <div class="form-body" id="Fee">
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th>
-                      <span class="thead-header" translate>Fee Type</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" translate>Amount Before VAT</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" translate>VAT</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" translate>Fee Capitalize</span>
-                    </th>
-                  </tr>
-                </thead>
-  
-                <tbody>
-                  <tr *ngIf="FeeObj?.length === 0">
-                    <td colspan="100%">No Data Available</td>
-                  </tr>
-                  <tr *ngFor="let item of FeeObj">
-                    <td class="align-left">{{item.FeeType}}</td>
-                    <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
-                    <td class="text-right">{{item.VatAmt | number:'1.2-2':'en-US'}}</td>
-                    <td class="text-right">{{item.CapitalizedAmt | number:'1.2-2':'en-US'}}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div style="overflow-x: auto;">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>Fee Type</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Amount Before VAT</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>VAT</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Fee Capitalize</span>
+                      </th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngIf="FeeObj?.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                    <tr *ngFor="let item of FeeObj">
+                      <td class="align-left">{{item.FeeType}}</td>
+                      <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
+                      <td class="text-right">{{item.VatAmt | number:'1.2-2':'en-US'}}</td>
+                      <td class="text-right">{{item.CapitalizedAmt | number:'1.2-2':'en-US'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Fee Amount Before VAT</label>

@@ -35,40 +35,42 @@
                     </button>
                   </div>
 
-                  <table class="table table-responsive-md text-center table-hover">
-                    <thead>
-                      <tr class="table-header">
-                        <th>
-                          <span class="thead-header" translate>Term & Condition Name</span>
-                        </th>
-                        <th>
-                          <span class="thead-header" translate>Prior To</span>
-                        </th>
-                        <th>
-                          <span class="thead-header" translate>Required</span>
-                        </th>
-                        <th>
-                          <span class="thead-header" translate>Edit</span>
-                        </th>
-                      </tr>
-                    </thead>
-      
-                    <tbody>
-                      <tr *ngIf="ListTc.length === 0">
-                        <td colspan="100%">No Data Available</td>
-                      </tr>
-                      <tr *ngFor="let item of ListTc; let i = index">
-                        <td class="text-left">{{item.TcName}}</td>
-                        <td>{{item.PriorTo}}</td>
-                        <td>{{item.IsMandatory ? "Yes" : "No"}}</td>
-                        <td>
-                          <a class="success p-0" (click)="EditTc(i, item.AppTcId)" *ngIf="!item.IsChecked">
-                            <i class="ft-edit-2 font-medium-3 mr-2"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div style="overflow-x: auto;">
+                    <table class="table table-responsive-md text-center table-hover">
+                      <thead>
+                        <tr class="table-header">
+                          <th>
+                            <span class="thead-header" translate>Term & Condition Name</span>
+                          </th>
+                          <th>
+                            <span class="thead-header" translate>Prior To</span>
+                          </th>
+                          <th>
+                            <span class="thead-header" translate>Required</span>
+                          </th>
+                          <th>
+                            <span class="thead-header" translate>Edit</span>
+                          </th>
+                        </tr>
+                      </thead>
+        
+                      <tbody>
+                        <tr *ngIf="ListTc.length === 0">
+                          <td colspan="100%">No Data Available</td>
+                        </tr>
+                        <tr *ngFor="let item of ListTc; let i = index">
+                          <td class="text-left">{{item.TcName}}</td>
+                          <td>{{item.PriorTo}}</td>
+                          <td>{{item.IsMandatory ? "Yes" : "No"}}</td>
+                          <td>
+                            <a class="success p-0" (click)="EditTc(i, item.AppTcId)" *ngIf="!item.IsChecked">
+                              <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <div class="text-right">

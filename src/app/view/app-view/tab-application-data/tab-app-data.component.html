@@ -43,37 +43,39 @@
               </div>
             </div>
             <h5>Cross Application</h5>
-            <table class="table table-responsive-md text-center table-hover">
-              <thead>
-                <tr class="table-header">
-                  <th><span translate class="thead-header" mat-sort-header="No">No</span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="AgrmntNo">Agreement No</span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="CustName">Customer Name</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody *ngIf = "CrossData?.length == 0">
-                <tr>
-                  <td colspan="100%">No Data Available</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr *ngFor="let item of CrossData; let i = index">
-                  <td>{{i + 1}}</td>
-                  <td *ngIf="item.CrossAgrmntNo!=null">{{item.CrossAgrmntNo}}</td>
-                  <td *ngIf="item.CrossAgrmntNo==null"> - </td>
-                  <td *ngIf="item.CustName!=null">{{item.CustName}}</td>
-                  <td *ngIf="item.CustName==null"> - </td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="overflow-x: auto;">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th><span translate class="thead-header" mat-sort-header="No">No</span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="AgrmntNo">Agreement No</span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="CustName">Customer Name</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf = "CrossData?.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr *ngFor="let item of CrossData; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td *ngIf="item.CrossAgrmntNo!=null">{{item.CrossAgrmntNo}}</td>
+                    <td *ngIf="item.CrossAgrmntNo==null"> - </td>
+                    <td *ngIf="item.CustName!=null">{{item.CustName}}</td>
+                    <td *ngIf="item.CustName==null"> - </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <lib-ucSubsection [id]="'viewGuarantorInfoId'" [title]="'Guarantor'" [panel]="'viewGuarantorInfo'">
           </lib-ucSubsection>
-          <div class="form-body" id="viewGuarantorInfo">
+          <div class="form-body" id="viewGuarantorInfo" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortGuarantorData($event)">
               <thead>
                 <tr class="table-header">
@@ -214,7 +216,7 @@
 
           <lib-ucSubsection [id]="'viewLoanInfoId'" [title]="'Loan Object'" [panel]="'viewLoanInfo'">
           </lib-ucSubsection>
-          <div class="form-body" id="viewLoanInfo">
+          <div class="form-body" id="viewLoanInfo" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortLoanData($event)">
               <thead>
                 <tr class="table-header">
@@ -321,36 +323,38 @@
                 </div>
                 <div class="row">
                   <h5>List Commission</h5>
-                  <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
-                    <thead>
-                      <tr class="table-header">
-                        <th><span translate class="thead-header" > No </span>
-                        </th>
-                        <th><span translate class="thead-header" mat-sort-header="Subject">Subject</span>
-                        </th>
-                        <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="Name">Name</span>
-                        </th>
-                        <th style="text-align: right;"><span translate class="thead-header" mat-sort-header="TotalCommAmt">Total Commission</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody *ngIf = "CommData?.length == 0">
-                      <tr>
-                        <td colspan="100%">No Data Available</td>
-                      </tr>
-                    </tbody>
-                    <tbody>
-                      <tr *ngFor="let item of CommData; let idx = index">
-                        <td>{{idx + 1}}</td>
-                        <td *ngIf="item.Subject!=null">{{item.Subject}}</td>
-                        <td *ngIf="item.Subject==null"> - </td>
-                        <td style="text-align: left;" *ngIf="item.Name!=null">{{item.Name}}</td>
-                        <td style="text-align: left;" *ngIf="item.Name==null"> - </td>
-                        <td style="text-align: right;" *ngIf="item.TotalCommAmt!=null">{{item.TotalCommAmt | number:'.2':'en-US'}}</td>
-                        <td style="text-align: right;" *ngIf="item.TotalCommAmt==null"> - </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div style="overflow-x: auto;">
+                    <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
+                      <thead>
+                        <tr class="table-header">
+                          <th><span translate class="thead-header" > No </span>
+                          </th>
+                          <th><span translate class="thead-header" mat-sort-header="Subject">Subject</span>
+                          </th>
+                          <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="Name">Name</span>
+                          </th>
+                          <th style="text-align: right;"><span translate class="thead-header" mat-sort-header="TotalCommAmt">Total Commission</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf = "CommData?.length == 0">
+                        <tr>
+                          <td colspan="100%">No Data Available</td>
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <tr *ngFor="let item of CommData; let idx = index">
+                          <td>{{idx + 1}}</td>
+                          <td *ngIf="item.Subject!=null">{{item.Subject}}</td>
+                          <td *ngIf="item.Subject==null"> - </td>
+                          <td style="text-align: left;" *ngIf="item.Name!=null">{{item.Name}}</td>
+                          <td style="text-align: left;" *ngIf="item.Name==null"> - </td>
+                          <td style="text-align: right;" *ngIf="item.TotalCommAmt!=null">{{item.TotalCommAmt | number:'.2':'en-US'}}</td>
+                          <td style="text-align: right;" *ngIf="item.TotalCommAmt==null"> - </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -364,32 +368,34 @@
                 <br>
                 <div class="row">
                   <h5>List Reserved Fund</h5>
-                  <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
-                    <thead>
-                      <tr class="table-header">
-                        <th><span translate class="thead-header" > No </span>
-                        </th>
-                        <th><span translate class="thead-header" mat-sort-header="MrReservedFundCode">Reserved Fund Code</span>
-                        </th>
-                        <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="ReservedFundAmt">Total Reserved Amount</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody *ngIf = "RsvFundData?.length == 0">
-                      <tr>
-                        <td colspan="100%">No Data Available</td>
-                      </tr>
-                    </tbody>
-                    <tbody>
-                      <tr *ngFor="let item of RsvFundData; let idx = index">
-                        <td>{{idx + 1}}</td>
-                        <td *ngIf="item.MrReservedFundCode!=null">{{item.MrReservedFundCode}}</td>
-                        <td *ngIf="item.MrReservedFundCode==null"> - </td>
-                        <td style="text-align: right;" *ngIf="item.ReservedFundAmt!=null">{{item.ReservedFundAmt | number:'.2':'en-US'}}</td>
-                        <td style="text-align: right;" *ngIf="item.ReservedFundAmt==null"> - </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div style="overflow-x: auto;">
+                    <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortCommData($event)">
+                      <thead>
+                        <tr class="table-header">
+                          <th><span translate class="thead-header" > No </span>
+                          </th>
+                          <th><span translate class="thead-header" mat-sort-header="MrReservedFundCode">Reserved Fund Code</span>
+                          </th>
+                          <th style="text-align: left;"><span translate class="thead-header" mat-sort-header="ReservedFundAmt">Total Reserved Amount</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf = "RsvFundData?.length == 0">
+                        <tr>
+                          <td colspan="100%">No Data Available</td>
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <tr *ngFor="let item of RsvFundData; let idx = index">
+                          <td>{{idx + 1}}</td>
+                          <td *ngIf="item.MrReservedFundCode!=null">{{item.MrReservedFundCode}}</td>
+                          <td *ngIf="item.MrReservedFundCode==null"> - </td>
+                          <td style="text-align: right;" *ngIf="item.ReservedFundAmt!=null">{{item.ReservedFundAmt | number:'.2':'en-US'}}</td>
+                          <td style="text-align: right;" *ngIf="item.ReservedFundAmt==null"> - </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -570,7 +576,7 @@
           <lib-ucSubsection [id]="'instSchdlId'" [title]="'Installment Schedule'" [panel]="'instSchdl'">
           </lib-ucSubsection>
           <div class="form-body" id="instSchdl">
-            <div class="form-group row">
+            <div class="form-group row" style="overflow-x: auto;">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">

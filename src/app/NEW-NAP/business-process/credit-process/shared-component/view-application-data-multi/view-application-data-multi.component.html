@@ -118,7 +118,7 @@
   
             <lib-ucSubsection [id]="'viewDealerInfoId'" [title]="'List Asset'" [panel]="'viewDealerInfo'">
             </lib-ucSubsection>
-            <div class="form-body" id="viewDealerInfo">
+            <div class="form-body" id="viewDealerInfo" style="overflow-x: auto;">
               <table class="table table-responsive-md text-center table-hover" matSort>
                 <thead>
                   <tr class="table-header">
@@ -292,7 +292,7 @@
               <div class="px-3">
                 <lib-ucSubsection [id]="'viewCollateralInfoId'" [title]="'Collateral'" [panel]="'viewCollateralInfo'">
                 </lib-ucSubsection>
-                <div class="form-body" id="viewCollateralInfo">
+                <div class="form-body" id="viewCollateralInfo" style="overflow-x: auto;">
                   <table class="table table-responsive-md text-center table-hover" matSort>
                     <thead>
                       <tr class="table-header">
@@ -377,31 +377,33 @@
                   <br>
                   <br>
   
-                  <table class="table table-responsive-md text-center table-hover">
-                    <thead>
-                      <tr class="table-header">
-                        <th style="text-align: left;"><span translate class="thead-header"
-                            mat-sort-header="InsuredName">Insured Name</span>
-                        </th>
-                        <th style="text-align: left;"><span translate class="thead-header"
-                            mat-sort-header="MrCustTypeCode">Relationship</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngIf="LifeInsuranceData?.ListAppLifeInsD == null">
-                        <td colspan="100%">No Data Available</td>
-                      </tr>
-                    </tbody>
-                    <tbody>
-                      <tr *ngFor="let item of LifeInsuranceData?.ListAppLifeInsD">
-                        <td *ngIf="item.InsuredName!=null" style="text-align: left;">{{item.InsuredName}}</td>
-                        <td *ngIf="item.InsuredName==null" style="text-align: left;"> - </td>
-                        <td *ngIf="item.MrCustTypeCode!=null" style="text-align: left;">{{item.MrCustTypeCode}}</td>
-                        <td *ngIf="item.MrCustTypeCode==null" style="text-align: left;"> - </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div style="overflow-x: auto;">
+                    <table class="table table-responsive-md text-center table-hover">
+                      <thead>
+                        <tr class="table-header">
+                          <th style="text-align: left;"><span translate class="thead-header"
+                              mat-sort-header="InsuredName">Insured Name</span>
+                          </th>
+                          <th style="text-align: left;"><span translate class="thead-header"
+                              mat-sort-header="MrCustTypeCode">Relationship</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngIf="LifeInsuranceData?.ListAppLifeInsD == null">
+                          <td colspan="100%">No Data Available</td>
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <tr *ngFor="let item of LifeInsuranceData?.ListAppLifeInsD">
+                          <td *ngIf="item.InsuredName!=null" style="text-align: left;">{{item.InsuredName}}</td>
+                          <td *ngIf="item.InsuredName==null" style="text-align: left;"> - </td>
+                          <td *ngIf="item.MrCustTypeCode!=null" style="text-align: left;">{{item.MrCustTypeCode}}</td>
+                          <td *ngIf="item.MrCustTypeCode==null" style="text-align: left;"> - </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
                 <!-- <div class="row">
                     <div class="col-md-6 ">
@@ -438,7 +440,7 @@
   
             <lib-ucSubsection [id]="'viewCommissionInfoId'" [title]="'Commission'" [panel]="'viewCommissionInfo'">
             </lib-ucSubsection>
-            <div class="form-body" id="viewCommissionInfo">
+            <div class="form-body" id="viewCommissionInfo" style="overflow-x: auto;">
               <table class="table table-responsive-md text-center table-hover" matSort
                 (matSortChange)="sortCommData($event)">
                 <thead>

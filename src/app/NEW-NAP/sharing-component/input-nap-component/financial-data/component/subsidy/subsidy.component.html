@@ -2,65 +2,67 @@
 </lib-ucSubsection>
 <div id="FinData_Subsidy">
   <div class="float-right"> 
-  <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="AddReason()">
-    Add Subsidy
-  </button>
-</div>
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>From Type
-            Name
-          </span>
-        </th>
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromValueName" translate>From Value
-            Name
-          </span>
-        </th>
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyAllocName" translate>Subsidy
-            Allocation
-          </span>
-        </th>
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>Subsidy
-            Value Type
-          </span>
-        </th>
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidySourceName" translate>Subsidy
-          Source
-          </span>
-        </th>
-        <th style="text-align: right;"><span class="thead-header" name="SubsidyPrcnt" translate>Subsidy Percentage
-          </span>
-        </th>
-        <th style="text-align: right;"><span class="thead-header" name="SubsidyAmt" translate>Subsidy Amount
-          </span>
-        </th>
-        <th><span translate class="thead-header" name='action'>Action</span></th>
-      </tr>
-    </thead>
-    <tbody *ngIf = "listSubsidy.length == 0">
-      <tr>
-        <td colspan="100%">No Data Available</td>
-      </tr>
-    </tbody>
-    <tbody *ngIf = "listSubsidy.length > 0">
-      <tr *ngFor="let item of listSubsidy; let i = index">
-        <td style="text-align: left;">{{item.MrSubsidyFromTypeName}}</td>
-        <td style="text-align: left;">{{item.MrSubsidyFromValueName}}</td>
-        <td style="text-align: left;">{{item.MrSubsidyAllocName}}</td>
-        <td style="text-align: left;">{{item.MrSubsidyValueTypeName}}</td>
-        <td style="text-align: left;">{{item.MrSubsidySourceName}}</td>
-        <td style="text-align: right;">{{item.SubsidyPrcnt | number:'.6':'en-US' }} %</td>
-        <td style="text-align: right;">{{item.SubsidyAmt | number:'.2':'en-US' }}</td>
-        <td>
-          <a class="success p-0" (click)="editSubsidy(item)">
-            <i class="ft-edit-2 font-medium-3 mr-2"></i>
-          </a>
-          <a class="warning p-0" (click)="deleteSubsidy(item)">
-            <i class="ft-trash-2 font-medium-3 mr-2"></i>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="AddReason()">
+      Add Subsidy
+    </button>
+  </div>
+  <div style="overflow-x: auto;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>From Type
+              Name
+            </span>
+          </th>
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromValueName" translate>From Value
+              Name
+            </span>
+          </th>
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidyAllocName" translate>Subsidy
+              Allocation
+            </span>
+          </th>
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>Subsidy
+              Value Type
+            </span>
+          </th>
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidySourceName" translate>Subsidy
+            Source
+            </span>
+          </th>
+          <th style="text-align: right;"><span class="thead-header" name="SubsidyPrcnt" translate>Subsidy Percentage
+            </span>
+          </th>
+          <th style="text-align: right;"><span class="thead-header" name="SubsidyAmt" translate>Subsidy Amount
+            </span>
+          </th>
+          <th><span translate class="thead-header" name='action'>Action</span></th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "listSubsidy.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "listSubsidy.length > 0">
+        <tr *ngFor="let item of listSubsidy; let i = index">
+          <td style="text-align: left;">{{item.MrSubsidyFromTypeName}}</td>
+          <td style="text-align: left;">{{item.MrSubsidyFromValueName}}</td>
+          <td style="text-align: left;">{{item.MrSubsidyAllocName}}</td>
+          <td style="text-align: left;">{{item.MrSubsidyValueTypeName}}</td>
+          <td style="text-align: left;">{{item.MrSubsidySourceName}}</td>
+          <td style="text-align: right;">{{item.SubsidyPrcnt | number:'.6':'en-US' }} %</td>
+          <td style="text-align: right;">{{item.SubsidyAmt | number:'.2':'en-US' }}</td>
+          <td>
+            <a class="success p-0" (click)="editSubsidy(item)">
+              <i class="ft-edit-2 font-medium-3 mr-2"></i>
+            </a>
+            <a class="warning p-0" (click)="deleteSubsidy(item)">
+              <i class="ft-trash-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -6,62 +6,64 @@
       <label class="col-md-3 adInsLabel">Customer No</label>
       <label class="col-md-3 adInsLabel">{{appCustObj?.CustNo}} ({{custStat}})</label>
     </div>
-    <table class="table text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th><span class="thead-header" name='custNo' translate>Customer No</span>
-          </th>
-          <th><span class="thead-header" name='custName' translate>Customer
-              Name</span>
-          </th>
-          <th><span class="thead-header" name='idType' translate>ID Type</span>
-          </th>
-          <th><span class="thead-header" name='idNo' translate>ID Number</span>
-          </th>
-          <th><span class="thead-header" name='birthDt' translate>Birth Date</span>
-          </th>
-          <th><span class="thead-header" name='mobilePhoneNo' translate>Mobile
-              Phone
-              Number</span></th>
-          <th><span class="thead-header" name='motherMaidenName' translate>Mother
-              Maiden Name</span></th>
-          <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
-          <th><span class="thead-header" name='duplicateItem' translate>Duplicate
-              Item</span></th>
-          <th><span class="thead-header" name='isSelected'
-              translate>Selected</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="listCustDuplicate?.length == 0">
-          <td align="center" colspan="10">No Data Available</td>
-        </tr>
-        <tr *ngFor="let item of listCustDuplicate">
-          <td>{{item.CustNo}}</td>
-          <td>{{item.CustName}}</td>
-          <td *ngIf="item.MrIdType!=null">{{item.MrIdType}}</td>
-          <td *ngIf="item.MrIdType==null"> - </td>
-          <td *ngIf="item.IdNo!=null">{{item.IdNo}}</td>
-          <td *ngIf="item.IdNo==null"> - </td>
-          <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
-          <td *ngIf="item.MobilePhnNo1!=null">{{item.MobilePhnNo1}}</td>
-          <td *ngIf="item.MobilePhnNo1==null"> - </td>
-          <td *ngIf="item.MotherMaidenName!=null">{{item.MotherMaidenName}}</td>
-          <td *ngIf="item.MotherMaidenName==null"> - </td>
-          <td>{{item.TaxIdNo}}</td>
-          <td>{{item.DuplicateItem}}</td>
-          <td *ngIf="item.IsSelected">Selected</td>
-          <td *ngIf="!item.IsSelected">Not Selected</td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="overflow-x: auto;">
+      <table class="table text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th><span class="thead-header" name='custNo' translate>Customer No</span>
+            </th>
+            <th><span class="thead-header" name='custName' translate>Customer
+                Name</span>
+            </th>
+            <th><span class="thead-header" name='idType' translate>ID Type</span>
+            </th>
+            <th><span class="thead-header" name='idNo' translate>ID Number</span>
+            </th>
+            <th><span class="thead-header" name='birthDt' translate>Birth Date</span>
+            </th>
+            <th><span class="thead-header" name='mobilePhoneNo' translate>Mobile
+                Phone
+                Number</span></th>
+            <th><span class="thead-header" name='motherMaidenName' translate>Mother
+                Maiden Name</span></th>
+            <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
+            <th><span class="thead-header" name='duplicateItem' translate>Duplicate
+                Item</span></th>
+            <th><span class="thead-header" name='isSelected'
+                translate>Selected</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="listCustDuplicate?.length == 0">
+            <td align="center" colspan="10">No Data Available</td>
+          </tr>
+          <tr *ngFor="let item of listCustDuplicate">
+            <td>{{item.CustNo}}</td>
+            <td>{{item.CustName}}</td>
+            <td *ngIf="item.MrIdType!=null">{{item.MrIdType}}</td>
+            <td *ngIf="item.MrIdType==null"> - </td>
+            <td *ngIf="item.IdNo!=null">{{item.IdNo}}</td>
+            <td *ngIf="item.IdNo==null"> - </td>
+            <td>{{item.BirthDt | date: 'dd-MMM-yyyy'}}</td>
+            <td *ngIf="item.MobilePhnNo1!=null">{{item.MobilePhnNo1}}</td>
+            <td *ngIf="item.MobilePhnNo1==null"> - </td>
+            <td *ngIf="item.MotherMaidenName!=null">{{item.MotherMaidenName}}</td>
+            <td *ngIf="item.MotherMaidenName==null"> - </td>
+            <td>{{item.TaxIdNo}}</td>
+            <td>{{item.DuplicateItem}}</td>
+            <td *ngIf="item.IsSelected">Selected</td>
+            <td *ngIf="!item.IsSelected">Not Selected</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
 <div class="card px-3">
 <lib-ucSubsection [id]="'NegCustId'" [title]="'Negative Customer'" [panel]="'NegCust'">
 </lib-ucSubsection>
-<div class="form-body" id="NegCust">
+<div class="form-body" id="NegCust" style="overflow-x: auto;">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -227,7 +229,7 @@
 <div class="card px-3">
   <lib-ucSubsection [id]="'NegAssetId'" [title]="'Negative Asset'" [panel]="'NegAsset'">
   </lib-ucSubsection>
-  <div class="form-body" id="NegAsset">
+  <div class="form-body" id="NegAsset" style="overflow-x: auto;">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">

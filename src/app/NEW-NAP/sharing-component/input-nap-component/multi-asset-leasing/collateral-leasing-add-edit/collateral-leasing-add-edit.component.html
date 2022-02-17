@@ -283,45 +283,47 @@
                   <lib-UCSearch id="ucSearch" style="width:100%;" [searchInput]='inputObj' (result)="getResult($event)">
                   </lib-UCSearch>
                   <div [hidden]="resultData?.Data == null">
-                    <table class="table table-responsive-md text-center table-hover">
-                      <thead>
-                        <tr class="table-header">
-                          <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)"
-                              id="checkAll" name="CheckAll"></th>
-                          <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
-                          </th>
-                          <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
-                          </th>
-                          <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
-                          </th>
-                          <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Document Owner
-                              Name</span>
-                          </th>
-                          <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral
-                              Price</span>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let item of listCollExisting; let i = index">
-                          <td>
-                            <div *ngIf="listSelectedId.indexOf(item.CollateralId) >- 1">
-                              <input type="checkbox" id="checkSame" name="itemSame"
-                                (change)="Checked(item.CollateralId, $event.target.checked)" [checked]="true">
-                            </div>
-                            <div *ngIf="listSelectedId.indexOf(item.CollateralId) < 0">
-                              <input type="checkbox" id="checkDiff" name="itemDiff"
-                                (change)="Checked(item.CollateralId, $event.target.checked)" [checked]=false>
-                            </div>
-                          </td>
-                          <td>{{item.CollateralNo}}</td>
-                          <td align="left">{{item.FullAssetName}}</td>
-                          <td align="left">{{item.FullAssetCode}}</td>
-                          <td align="left">{{item.CustName}}</td>
-                          <td align="right">{{item.CollateralValueAmt | number}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                      <table class="table table-responsive-md text-center table-hover">
+                        <thead>
+                          <tr class="table-header">
+                            <th><input type="checkbox" [checked]="checkboxAll" (change)="SelectAll($event.target.checked)"
+                                id="checkAll" name="CheckAll"></th>
+                            <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
+                            </th>
+                            <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
+                            </th>
+                            <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
+                            </th>
+                            <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Document Owner
+                                Name</span>
+                            </th>
+                            <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral
+                                Price</span>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of listCollExisting; let i = index">
+                            <td>
+                              <div *ngIf="listSelectedId.indexOf(item.CollateralId) >- 1">
+                                <input type="checkbox" id="checkSame" name="itemSame"
+                                  (change)="Checked(item.CollateralId, $event.target.checked)" [checked]="true">
+                              </div>
+                              <div *ngIf="listSelectedId.indexOf(item.CollateralId) < 0">
+                                <input type="checkbox" id="checkDiff" name="itemDiff"
+                                  (change)="Checked(item.CollateralId, $event.target.checked)" [checked]=false>
+                              </div>
+                            </td>
+                            <td>{{item.CollateralNo}}</td>
+                            <td align="left">{{item.FullAssetName}}</td>
+                            <td align="left">{{item.FullAssetCode}}</td>
+                            <td align="left">{{item.CustName}}</td>
+                            <td align="right">{{item.CollateralValueAmt | number}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
         
                     <div class="card-header">
                       <div class="text-right">
@@ -331,41 +333,43 @@
                       </div>
                     </div>
         
-                    <table class="table table-responsive-md text-center table-hover">
-                      <thead>
-                        <tr class="table-header">
-                          <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
-                          </th>
-                          <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
-                          </th>
-                          <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
-                          </th>
-                          <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Document Owner
-                              Name</span>
-                          </th>
-                          <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral
-                              Price</span>
-                          </th>
-                          <th translate>Delete</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let item of tempData; let i = index">
-                          <td>
-                            <div>
-                              <a class="danger p-0"
-                                (click)="deleteFromTemp(item.MouCustCollateralId)">
-                                <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                              </a></div>
-                          </td>
-                          <td>{{item.CollateralNo}}</td>
-                          <td align="left">{{item.FullAssetName}}</td>
-                          <td align="left">{{item.FullAssetCode}}</td>
-                          <td align="left">{{item.CustName}}</td>
-                          <td align="right">{{item.CollateralValueAmt | number}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                      <table class="table table-responsive-md text-center table-hover">
+                        <thead>
+                          <tr class="table-header">
+                            <th><span class="thead-header" name='CollNo' translate>Collateral No</span>
+                            </th>
+                            <th><span style="float: left;" class="thead-header" name='CollName' translate>Collateral Name</span>
+                            </th>
+                            <th><span style="float: left;" class="thead-header" name='CollType' translate>Collateral Type</span>
+                            </th>
+                            <th><span style="float: left;" class="thead-header" name='MouCustName' translate>Document Owner
+                                Name</span>
+                            </th>
+                            <th><span style="float: right;" class="thead-header" name='CollPrice' translate>Collateral
+                                Price</span>
+                            </th>
+                            <th translate>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of tempData; let i = index">
+                            <td>
+                              <div>
+                                <a class="danger p-0"
+                                  (click)="deleteFromTemp(item.MouCustCollateralId)">
+                                  <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                                </a></div>
+                            </td>
+                            <td>{{item.CollateralNo}}</td>
+                            <td align="left">{{item.FullAssetName}}</td>
+                            <td align="left">{{item.FullAssetCode}}</td>
+                            <td align="left">{{item.CustName}}</td>
+                            <td align="right">{{item.CollateralValueAmt | number}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
         
                     <div class="card-header">
                       <div class="text-right">

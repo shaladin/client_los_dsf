@@ -153,7 +153,7 @@
   <lib-ucSubsection *ngIf="listedCusts?.length > 1" [id]="'MouListedCustFactoringId'"
     [title]="'MOU Listed Customer Factoring'" [panel]="'MouListedCustFactoringSection'">
   </lib-ucSubsection>
-  <div id="MouListedCustFactoringSection" *ngIf="listedCusts?.length > 1">
+  <div id="MouListedCustFactoringSection" *ngIf="listedCusts?.length > 1" style="overflow-x: auto;">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">

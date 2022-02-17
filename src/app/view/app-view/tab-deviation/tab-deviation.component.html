@@ -6,7 +6,7 @@
 
           <lib-ucSubsection [id]="'viewAutoDeviationId'" [title]="'Automatic Deviation'" [panel]="'viewAutoDeviation'">
           </lib-ucSubsection>
-          <div class="form-body" id="viewAutoDeviation">
+          <div class="form-body" id="viewAutoDeviation" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortAutoDeviationData($event)">
               <thead>
                 <tr class="table-header">
@@ -93,42 +93,44 @@
               </form>
             </div>
 
-            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortManualDeviationData($event)">
-              <thead>
-                <tr class="table-header">
-                  <th><span translate class="thead-header" mat-sort-header="SeqNo"> No. </span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="DeviationCategory">Deviation Criteria</span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="ApvAt">Approval At</span>
-                  </th>
-                    <th>
-                      <span translate class="thead-header" mat-sort-header="Notes">Notes</span>
-                    </th>               
-                  <th *ngIf="IsEditManualDeviation" translate>ACTION</th>
-                </tr>
-              </thead>
-              <tbody *ngIf="ManualDeviationData?.length == 0">
-                <tr>
-                  <td colspan="100%">No Data Available</td>
-                </tr>
-              </tbody>
-              <tbody *ngIf="ManualDeviationData?.length > 0">
-                <tr *ngFor="let item of ManualDeviationData; let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td style="text-align: left;">{{ item.DeviationCategory }}</td>
-                  <td>{{ item.ApvAt }}</td>
-                  <td>{{ item.Notes }}</td>
-                  <td *ngIf ="IsEditManualDeviation">
-                    <div>
-                      <a class="danger p-0" (click)="DeleteFromManualDeviationData(i)">
-                        <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="overflow-x: auto;">
+              <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortManualDeviationData($event)">
+                <thead>
+                  <tr class="table-header">
+                    <th><span translate class="thead-header" mat-sort-header="SeqNo"> No. </span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="DeviationCategory">Deviation Criteria</span>
+                    </th>
+                    <th><span translate class="thead-header" mat-sort-header="ApvAt">Approval At</span>
+                    </th>
+                      <th>
+                        <span translate class="thead-header" mat-sort-header="Notes">Notes</span>
+                      </th>               
+                    <th *ngIf="IsEditManualDeviation" translate>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="ManualDeviationData?.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="ManualDeviationData?.length > 0">
+                  <tr *ngFor="let item of ManualDeviationData; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td style="text-align: left;">{{ item.DeviationCategory }}</td>
+                    <td>{{ item.ApvAt }}</td>
+                    <td>{{ item.Notes }}</td>
+                    <td *ngIf ="IsEditManualDeviation">
+                      <div>
+                        <a class="danger p-0" (click)="DeleteFromManualDeviationData(i)">
+                          <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

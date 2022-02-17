@@ -4,7 +4,7 @@
     <div class="px-3">
         <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
         </lib-ucSubsection>
-        <div id="CustAddress">
+        <div id="CustAddress" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover">
                 <thead>
                 <tr class="table-header">
@@ -35,7 +35,7 @@
     <div class="px-3">
         <lib-ucSubsection [id]="'CustShareholderId'" [title]="'Management / Shareholder'" [panel]="'CustShareholder'">
         </lib-ucSubsection>
-        <div id="CustShareholder">
+        <div id="CustShareholder" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover">
                 <thead>
                 <tr class="table-header">
@@ -89,33 +89,35 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-responsive-md text-center table-hover">
-                        <thead>
-                        <tr class="table-header">
-                            <th class="text-center"><span class="thead-header" name='month' translate>Month</span> </th>
-                            <th class="text-center"><span class="thead-header" name='year' translate>Year</span></th>
-                            <th class="text-right"><span class="thead-header" name='debit' translate>Debit</span></th>
-                            <th class="text-right"><span class="thead-header" name='credit' translate>Credit</span></th>
-                            <th class="text-right"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
-                        </tr>
-                        </thead>
-                        <tbody *ngIf = "ltkmCustBankAccObjs[i].AppCustBankStmntObjs?.length == 0">
-                            <tr>
-                            <td colspan="100%">No Data Available</td>
+                    <div style="overflow-x: auto;">
+                        <table class="table table-responsive-md text-center table-hover">
+                            <thead>
+                            <tr class="table-header">
+                                <th class="text-center"><span class="thead-header" name='month' translate>Month</span> </th>
+                                <th class="text-center"><span class="thead-header" name='year' translate>Year</span></th>
+                                <th class="text-right"><span class="thead-header" name='debit' translate>Debit</span></th>
+                                <th class="text-right"><span class="thead-header" name='credit' translate>Credit</span></th>
+                                <th class="text-right"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
                             </tr>
-                        </tbody>
-                        <tbody>
-                        <ng-container *ngFor="let item of ltkmCustBankAccObjs[i].AppCustBankStmntObjs">
-                            <tr>
-                                <td class="text-center">{{item.MonthName}}</td>
-                                <td class="text-center">{{item.Year}}</td>
-                                <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
-                                <td class="text-right">{{item.CreditAmt | number:'.2':'en-US'}}</td>
-                                <td class="text-right">{{item.BalanceAmt | number:'.2':'en-US'}}</td>
-                            </tr>
-                        </ng-container>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody *ngIf = "ltkmCustBankAccObjs[i].AppCustBankStmntObjs?.length == 0">
+                                <tr>
+                                <td colspan="100%">No Data Available</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                            <ng-container *ngFor="let item of ltkmCustBankAccObjs[i].AppCustBankStmntObjs">
+                                <tr>
+                                    <td class="text-center">{{item.MonthName}}</td>
+                                    <td class="text-center">{{item.Year}}</td>
+                                    <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
+                                    <td class="text-right">{{item.CreditAmt | number:'.2':'en-US'}}</td>
+                                    <td class="text-right">{{item.BalanceAmt | number:'.2':'en-US'}}</td>
+                                </tr>
+                            </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,7 +125,7 @@
     <div class="px-3">
         <lib-ucSubsection [id]="'CustLegalDocId'" [title]="'Legal Document'" [panel]="'CustLegalDoc'">
         </lib-ucSubsection>
-        <div id="CustLegalDoc">
+        <div id="CustLegalDoc" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover">
                 <thead>
                 <tr class="table-header">
@@ -158,7 +160,7 @@
     <div class="px-3">
         <lib-ucSubsection [id]="'CustGrpId'" [title]="'Customer Group Member'" [panel]="'CustGrp'">
         </lib-ucSubsection>
-        <div id="CustGrp">
+        <div id="CustGrp" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover">
                 <thead>
                 <tr class="table-header">

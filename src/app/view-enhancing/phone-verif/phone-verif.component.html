@@ -36,7 +36,7 @@
           <label class="col-md-3" translate>Subject Relation</label>
           <label class="col-md-3">{{verifResultHObj.MrVerfSubjectRelationName}}</label>
         </div>
-        <div *ngIf="!isViewSubDetail">
+        <div *ngIf="!isViewSubDetail" style="overflow-x: auto;">
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">
@@ -84,7 +84,7 @@
               <div *ngFor="let item of listVerifResultDObj; let i = index">
                 <lib-ucSubsection [id]="'verfResult'+i+'id'" [title]="item.VerfQuestionGrpName" [panel]="'verfResult'+i">
                 </lib-ucSubsection>
-                <div id="verfResult{{i}}">
+                <div id="verfResult{{i}}" style="overflow-x: auto;">
                   <table class="table table-responsive-md text-center table-hover">
                     <thead>
                       <tr class="table-header">
