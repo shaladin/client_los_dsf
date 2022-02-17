@@ -52,7 +52,7 @@ export class EditAppAfterApprovalViewComponent implements OnInit {
 
   async ngOnInit() {
     await this.getData();
-    this.arrValue.push(this.agrmntId);
+    this.arrValue.push(this.EditAppAftApvTrxHId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoEditAppAfterApv.json";
     this.viewGenericObj.whereValue = this.arrValue;
     this.viewGenericObj.ddlEnvironments = [
