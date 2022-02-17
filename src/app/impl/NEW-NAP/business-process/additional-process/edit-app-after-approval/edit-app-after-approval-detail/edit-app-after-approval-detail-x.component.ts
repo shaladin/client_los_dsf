@@ -565,6 +565,8 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.NO_DATA_EDITED);
       return;
     }
+    this.SetSupplEmpComm();
+
     this.ApprovalCreateOutput = this.createComponent.output();
 
     var EditAppAftApvObj =
