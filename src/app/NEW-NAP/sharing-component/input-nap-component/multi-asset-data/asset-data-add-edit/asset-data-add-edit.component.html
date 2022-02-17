@@ -388,7 +388,7 @@
                         </td>
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="accessoryPriceAmt{{i}}" class="form-control"
-                            formControlName="AccessoryPriceAmt" [options]="{ nullable: true }" (focusout)="CheckAccessoryDPValue(i, 'PRICE')"
+                            formControlName="AccessoryPriceAmt" [options]="{ nullable: true }" (focusout)="CheckAccessoryDPValue(i)"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt.invalid }">
                           <lib-uc-show-errors
                             [control]="AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryPriceAmt"
@@ -412,7 +412,7 @@
                           <div class="row">
                             <div class="col-md-5" style="border-right: 1px solid grey">
                               <input type="" currencyMask id="AccessoryDownPaymentPrcnt{{i}}" class="form-control"
-                                (focusout)="CheckAccessoryDPValue(i, 'PRCNT')" formControlName="AccessoryDownPaymentPrcnt"
+                                (focusout)="CheckAccessoryDPValue(i)" formControlName="AccessoryDownPaymentPrcnt"
                                 [options]="CurrencyMaskPrct"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentPrcnt.invalid }">
                               <lib-uc-show-errors
@@ -421,7 +421,7 @@
                             </div>
                             <div class="col-md-6">
                               <input type="" currencyMask id="AccessoryDownPaymentAmt{{i}}" class="form-control"
-                                (focusout)="CheckAccessoryDPValue(i, 'AMT')" formControlName="AccessoryDownPaymentAmt"
+                                (focusout)="CheckAccessoryDPValue(i)" formControlName="AccessoryDownPaymentAmt"
                                 [options]="{ min: 0 }"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentAmt.invalid }">
                               <lib-uc-show-errors
