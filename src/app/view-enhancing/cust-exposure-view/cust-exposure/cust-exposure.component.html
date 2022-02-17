@@ -180,7 +180,7 @@
     </lib-ucSubsection>
     <div [id]="'BucketInfo' + exposureType">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" style="overflow-x: auto;">
           <table class="table table-responsive-md text-center table-hover">
             <thead>
               <tr class="table-header">
@@ -208,7 +208,7 @@
           </table>
         </div>
 
-        <div class="col-md-6" *ngIf="ListCrdRvwCustBucketObj.length > 0">
+        <div class="col-md-6" *ngIf="ListCrdRvwCustBucketObj.length > 0" style="overflow-x: auto;">
           <table class="table table-responsive-md text-center table-hover">
             <thead>
               <tr class="table-header">
@@ -241,7 +241,7 @@
     <lib-ucSubsection [id]="'ApplicationAgreementListInfo' + exposureType + 'Id'"
       [title]="'Application / Agreement List'" [panel]="'ApplicationAgreementListInfo' + exposureType">
     </lib-ucSubsection>
-    <div [id]="'ApplicationAgreementListInfo' + exposureType">
+    <div [id]="'ApplicationAgreementListInfo' + exposureType" style="overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">

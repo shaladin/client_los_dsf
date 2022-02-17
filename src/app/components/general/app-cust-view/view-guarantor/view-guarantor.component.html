@@ -261,7 +261,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="listAppGuarantorPersonal.length!=1">
+    <div *ngIf="listAppGuarantorPersonal.length!=1" style="overflow-x: auto;">
       <table class="table table-responsive-md table-hover" matSort>
         <thead>
           <tr class="table-header">
@@ -486,7 +486,7 @@
           </div>
           <lib-ucSubsection [id]="'legalDoc' + j +'Id'" [title]="'Legal Document'" [panel]="'legalDoc' + j">
           </lib-ucSubsection>
-          <div [id]="'legalDoc' + j">
+          <div [id]="'legalDoc' + j" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover px-3">
               <thead>
                 <tr class="table-header">
@@ -643,7 +643,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="listAppGuarantorCompany.length!=1">
+    <div *ngIf="listAppGuarantorCompany.length!=1" style="overflow-x: auto;">
       <table class="table table-responsive-md table-hover" matSort>
         <thead>
           <tr class="table-header">
@@ -1133,7 +1133,7 @@
           </div>
           <lib-ucSubsection [id]="'legalDocId'" [title]="'Legal Document'" [panel]="'legalDoc'">
           </lib-ucSubsection>
-          <div id="legalDoc">
+          <div id="legalDoc" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">

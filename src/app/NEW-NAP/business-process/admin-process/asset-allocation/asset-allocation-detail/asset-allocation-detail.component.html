@@ -16,7 +16,7 @@
                 (ngSubmit)="AssetAllocationForm.valid && SaveForm()" #enjiForm="ngForm">
             <lib-ucSubsection [id]="'listAssetDataId'" [title]="'List of Asset'" [panel]="'listAssetData'">
             </lib-ucSubsection>
-            <div id="listAssetData">
+            <div id="listAssetData" style="overflow-x: auto;">
 
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
@@ -98,7 +98,7 @@
             </div>
             <lib-ucSubsection [id]="'subjectListId'" [title]="'Requisition In Progress'" [panel]="'subjectList'">
             </lib-ucSubsection>
-            <div id="subjectList">
+            <div id="subjectList" style="overflow-x: auto;">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">

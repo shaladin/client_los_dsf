@@ -15,7 +15,7 @@
           <form class="form form-horizontal" [formGroup]="DOAssetForm" (ngSubmit)="createDOHandler()">
             <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetListSection'">
             </lib-ucSubsection>
-            <div class="form-body" id="AssetListSection">
+            <div class="form-body" id="AssetListSection" style="overflow-x: auto;">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
@@ -102,7 +102,7 @@
         <div class="px-3">
           <lib-ucSubsection [id]="'DeliveryListId'" [title]="'Delivery List'" [panel]="'DeliveryListSection'">
           </lib-ucSubsection>
-          <div class="form-body" id="DeliveryListSection">
+          <div class="form-body" id="DeliveryListSection" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">

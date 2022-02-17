@@ -6,7 +6,7 @@
 
           <lib-ucSubsection [id]="'viewAutoDeviationId'" [title]="'Automatic Deviation'" [panel]="'viewAutoDeviation'">
           </lib-ucSubsection>
-          <div class="form-body" id="viewAutoDeviation">
+          <div class="form-body" id="viewAutoDeviation" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortAutoDeviationData($event)">
               <thead>
                 <tr class="table-header">
@@ -43,7 +43,7 @@
 
           <lib-ucSubsection [id]="'viewManualDeviationId'" [title]="'Manual Deviation'" [panel]="'viewManualDeviation'">
           </lib-ucSubsection>
-          <div class="form-body" id="viewManualDeviation">
+          <div class="form-body" id="viewManualDeviation" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortManualDeviationData($event)">
               <thead>
                 <tr class="table-header">

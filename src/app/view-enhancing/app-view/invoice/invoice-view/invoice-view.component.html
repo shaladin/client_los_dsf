@@ -1,4 +1,4 @@
-<div *ngIf="appObj.BizTemplateCode == 'FCTR'">
+<div *ngIf="appObj.BizTemplateCode == 'FCTR'" style="overflow-x: auto;">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -24,7 +24,7 @@
   <button *ngIf="IsShowDetail" type="button" class="backButton" translate (click)="hideDetailInvoiceData()"><i
       class="fa fa-arrow-left"></i> Back</button>
 </div>
-<div *ngIf="appObj.BizTemplateCode != 'FCTR' && !IsShowDetail">
+<div *ngIf="appObj.BizTemplateCode != 'FCTR' && !IsShowDetail" style="overflow-x: auto;">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -45,7 +45,7 @@
     </tbody>
   </table>
 </div>
-<div *ngIf="IsShowDetail">
+<div *ngIf="IsShowDetail" style="overflow-x: auto;">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
