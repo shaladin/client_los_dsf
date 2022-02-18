@@ -2095,7 +2095,6 @@ export class CustMainDataXComponent implements OnInit {
 
   isShareOwnerMandatory : boolean = false;
   ChangeValidityShareOwner() {
-    console.log("nyan cat")
     if (this.CustMainDataForm.controls.SharePrcnt.value == 0 && this.CustMainDataForm.controls.IsOwner.value == false) {
       this.CustMainDataForm.get("SharePrcnt").setValidators([Validators.min(0), Validators.max(100)]);
       this.CustMainDataForm.get("IsOwner").clearValidators();

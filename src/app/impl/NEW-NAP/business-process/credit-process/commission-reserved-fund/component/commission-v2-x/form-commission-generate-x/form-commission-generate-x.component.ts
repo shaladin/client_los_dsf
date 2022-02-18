@@ -259,7 +259,6 @@ export class FormCommissionGenerateXComponent implements OnInit {
         RowVersion: ['']
       }) as FormGroup;
       TotalCommisionAmount += allocAmt;
-      console.log("nyan 2 cat");
       this.parentForm.controls[this.identifier]["controls"][formIdx].controls.ListAllocated.push(eachAllocationDetail);
 
       this.UpdateInputType();

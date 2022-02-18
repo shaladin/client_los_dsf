@@ -20,6 +20,7 @@ import { AppFinDataObj } from 'app/shared/model/app-fin-data/app-fin-data.model'
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
 
 @Component({
   selector: 'app-comission-reserved-fund-detail-x',
@@ -41,6 +42,7 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
   isShow: boolean = false;
   lockCommissionTab: boolean = false;
   isRefundNotDouble: boolean = true;
+  IsSave: boolean = false; 
 
   Step = {
     "RSV": 1,
@@ -225,34 +227,39 @@ export class ComissionReservedFundDetailXComponent implements OnInit {
     }
   }
 
-  LastStepHandler(returnHandlingId: number) {
-    if (returnHandlingId == 0) {
+  LastStepHandler(ev) {
+    this.IsSave = ev.IsSave; 
+    if (ev.returnHandlingId == 0) {
       var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING], { "BizTemplateCode": lobCode });
-
     }
   }
 
   //Submit
   SubmitReturnHandling() {
-    console.log("nyan");
     if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
-      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
-      ReturnHandlingResult.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
-      ReturnHandlingResult.ReturnHandlingHId = this.returnHandlingDObj.ReturnHandlingHId;
-      ReturnHandlingResult.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
-      ReturnHandlingResult.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
-      ReturnHandlingResult.ReturnStat = this.returnHandlingDObj.ReturnStat;
-      ReturnHandlingResult.ReturnHandlingNotes = this.returnHandlingDObj.ReturnHandlingNotes;
-      ReturnHandlingResult.ReturnHandlingExecNotes = this.HandlingForm.controls['ReturnHandlingExecNotes'].value;
-      ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
-
-      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
-      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
-        () => {
-          var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING], { "BizTemplateCode": lobCode });
-        })
+      if (!this.IsSave) {
+        this.toastr.warningMessage(ExceptionConstantX.PLEASE_CLICK_SAVE_FIRST);
+        return;
+      }
+      else {
+        var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+        ReturnHandlingResult.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
+        ReturnHandlingResult.ReturnHandlingHId = this.returnHandlingDObj.ReturnHandlingHId;
+        ReturnHandlingResult.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
+        ReturnHandlingResult.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
+        ReturnHandlingResult.ReturnStat = this.returnHandlingDObj.ReturnStat;
+        ReturnHandlingResult.ReturnHandlingNotes = this.returnHandlingDObj.ReturnHandlingNotes;
+        ReturnHandlingResult.ReturnHandlingExecNotes = this.HandlingForm.controls['ReturnHandlingExecNotes'].value;
+        ReturnHandlingResult.RowVersion = this.returnHandlingDObj.RowVersion;
+  
+        let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+        this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
+          () => {
+            var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING], { "BizTemplateCode": lobCode });
+          })
+      }
     }
   }
 

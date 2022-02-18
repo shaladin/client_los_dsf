@@ -394,7 +394,6 @@ export class CommissionV2XComponent implements OnInit {
       (response) => {
         let ResponseObj = response[CommonConstant.ReturnObj];
         // override hide suppl & suppl emp jika CFRFN4W ignore rule
-        console.log("meow meow");
         if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.LobCode == CommonConstantX.SLB) {
           ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
           ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp = null;
@@ -571,7 +570,6 @@ export class CommissionV2XComponent implements OnInit {
         idxStart = this.mapTaxData(this.identifierReferantor, response, idxStart, totalReferantorData);
         this.Summary.GrossYield = response.GrossYield;
         this.RemainingAllocAmt = this.maxAllocAmt - this.totalAlloc - this.totalRsvFundAmt;
-        console.log("nyan cat");
         if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
         if (this.totalExpenseAmt > this.maxAllocRefundAmt) return this.toastr.warningMessage("Total Expense (" + formatNumber(this.totalExpenseAmt, 'en-US', '.2') + ") Exceeded Total Max Refund Amount (" + formatNumber(this.maxAllocRefundAmt, 'en-US', '.2') + ")");
         this.IsCalculated = true;
@@ -730,7 +728,9 @@ export class CommissionV2XComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (this.ReturnHandlingHObj.ReturnHandlingHId != 0 || this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
-          this.outputTab.emit(this.ReturnHandlingHObj.ReturnHandlingHId);
+          // this.outputTab.emit(this.ReturnHandlingHObj.ReturnHandlingHId);
+          this.outputTab.emit({ ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
+                                IsSave: true});
         } else {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING], { "BizTemplateCode": lobCode });
         }
