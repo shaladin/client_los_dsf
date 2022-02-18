@@ -99,7 +99,6 @@ export class SchmEvenPrincipalXComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions.sort((a,b) => a.SeqNo - b.SeqNo);
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmEvenPrincipal) !== -1);
-        console.log("nyan nyan cat")
         if (this.CalcBaseOptions.length > 0) {
           if (this.ParentForm.get("EffectiveRateBhv").value == this.BhvLock) {
             this.ParentForm.patchValue({
