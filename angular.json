@@ -51,7 +51,6 @@
               "src/assets/css/demo.css",
               "src/assets/sass/app.scss",
               "src/styles.css",
-              "src/adins-theme/styles-theme-red.scss",
               "src/adInsStyles.css"
             ],
             "scripts": [
