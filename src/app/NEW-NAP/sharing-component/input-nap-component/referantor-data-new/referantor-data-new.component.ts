@@ -115,6 +115,12 @@ export class ReferantorDataNewComponent implements OnInit {
     this.dictBank[max + 1] = this.initBankAcc();
   }
 
+  removeReferantor(i: number){
+    let appReferantorObjs = this.NapAppReferantorForm.controls["AppReferantorObjs"] as FormArray;
+
+    appReferantorObjs.removeAt(i);
+  }
+
   setEditForm(){
     this.NapAppReferantorForm.removeControl("AppReferantorObjs");
     this.NapAppReferantorForm.addControl("AppReferantorObjs", this.fb.array([]));
@@ -246,8 +252,13 @@ export class ReferantorDataNewComponent implements OnInit {
     var url;
     this.SetAppReferantorObj();
     console.log(this.appReferantorListObj);
+    let length = this.NapAppReferantorForm.value["AppReferantorObjs"].length;
     if (this.ExistedData) {
       if (this.ReferantorOn) {
+        if(length < 1){
+          this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
+          return;
+        }
         // save
         url = URLConstant.EditListAppReferantor;
         this.SaveData(url);
@@ -262,6 +273,10 @@ export class ReferantorDataNewComponent implements OnInit {
       }
     } else {
       if (this.ReferantorOn) {
+        if(length < 1){
+          this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
+          return;
+        }
         // save
         url = URLConstant.AddListAppReferantor;
         this.SaveData(url);
