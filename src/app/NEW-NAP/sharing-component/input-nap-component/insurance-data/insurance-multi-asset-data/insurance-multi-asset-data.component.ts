@@ -1663,7 +1663,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
   }
 
-  IsMainCvgChaged(event, i) {
+  IsMainCvgChaged(i) {
     this.isCalculate = false;
     if (i != undefined && this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["MrInsPaidByCode"].value == CommonConstant.InsPaidByAtCost) {
       this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
@@ -1671,6 +1671,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       });
     }
     this.checkPaidBy();
+
+    var obj = {
+      target : {
+        value : this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["MrMainCvgTypeCode"].value
+      }
+    };
+    this.MainCvgTypeDetailChanged(obj, i);
   }
 
   IsAllPaidByCust: boolean = true;
