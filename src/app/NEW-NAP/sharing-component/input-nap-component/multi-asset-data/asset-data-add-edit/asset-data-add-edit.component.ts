@@ -1509,7 +1509,7 @@ export class AssetDataAddEditComponent implements OnInit {
         DownPayment = Math.round(this.AssetDataForm.controls.DownPayment.value);
       }else{
         roundedAmt = Math.pow(10, this.RoundedAmt);
-        DownPayment = Math.round(this.AssetDataForm.controls.DownPayment.value / roundedAmt) * roundedAmt;
+        DownPayment = Math.round(this.AssetDataForm.controls.DownPayment.value * roundedAmt) / roundedAmt;
       }
 
       DownPaymentPrctg = Math.round((DownPayment / this.AssetDataForm.controls.AssetPrice.value) * 100 * 1000000) / 1000000;
@@ -2218,7 +2218,7 @@ export class AssetDataAddEditComponent implements OnInit {
         DownPayment = Math.round(DownPayment);
       }else{
         roundedAmt = Math.pow(10, this.RoundedAmt);
-        DownPayment = Math.round(DownPayment / roundedAmt) * roundedAmt;
+        DownPayment = Math.round(DownPayment * roundedAmt) / roundedAmt;
       }
 
       DownPaymentPrctg = Math.round((DownPayment / InputAccessoryPrice) * 100 * 1000000) / 1000000;
