@@ -403,6 +403,7 @@ export class URLConstant {
   public static GetRefMasterByRefMasterTypeCodeAndMasterCode = environment.FoundationR3Url + "/v1" + "/RefMaster/GetRefMasterByRefMasterTypeCodeAndMasterCode";
   public static GetKvpRefMasterByRefMasterTypeCodeAndMasterCode = environment.FoundationR3Url + "/v1" + "/RefMaster/GetKvpRefMasterByRefMasterTypeCodeAndMasterCode";
   public static GetListActiveRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/v1" + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCode";
+  public static GetListActiveRefMasterByRefMasterTypeCodeOrderedBySeqNo = environment.FoundationR3Url + "/v1" + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCodeOrderedBySeqNo";
   public static GetListActiveRefMasterByRefMasterCodeAndMappingCodes = environment.FoundationR3Url + "/v1" + "/RefMaster/GetListActiveRefMasterByRefMasterCodeAndMappingCodes";
 
   //REF CUST MODEL
