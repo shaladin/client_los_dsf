@@ -1,241 +1,260 @@
 <div class="modal-header">
-  <h4 class="modal-title" translate>Purchase Order Detail</h4>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-
-  <div class="row text-left">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-
-          <div class="px-3">
-            <!-- Purchase Order Information -->
-            <lib-ucSubsection [id]="'PurchaseOrderInfoId'" [title]="'Purchase Order Information'"
-                [panel]="'PurchaseOrderInfo'">
-            </lib-ucSubsection>
-            <div class="form-body" id="PurchaseOrderInfo">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <label class="col-md-12 font-weight-bold" translate>To </label>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6" translate>Supplier Name </label>
-                            <label class="col-md-6">{{AssetObj?.VendorObj?.VendorName}} </label>
-                        </div>
-                        <div class="row" style="display:none;">
-                            <label class="col-md-6" translate>Address </label>
-                            <label class="col-md-6">{{AssetObj?.VendorAddrObj?.Addr}} </label>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6" translate>Supplier Bank Account</label>
-                            <label class="col-md-6">{{AssetObj?.VendorBankAccObj?.BankName}} - {{AssetObj?.VendorBankAccObj?.BankAccountName}} - {{AssetObj?.VendorBankAccObj?.BankAccountNo}} </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <label class="col-md-12 font-weight-bold" translate>Send To </label>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6" translate>Customer Name </label>
-                            <label class="col-md-6">{{AssetObj?.AgrmntObj?.CustName}} </label>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6" translate>Address </label>
-                            <label class="col-md-6">{{Address}} </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-  
-            <!-- Asset List -->
-            <div *ngIf="AssetObj?.AppAssetListObj">
-                <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
-                </lib-ucSubsection>
-                <div class="form-body" id="AssetInfo">
-                    <table class="table table-responsive-md text-center table-hover">
-                        <thead>
-                            <tr class="table-header">
-                                <th class="thead-header text-left"><span translate >ASSET NAME</span></th>
-                                <th class="thead-header text-right"><span translate >ASSET PRICE</span></th>
-                                <th class="thead-header text-right"><span translate >DOWN PAYMENT</span></th>
-                                <th class="thead-header text-center"><span translate >ASSET CONDITION</span></th>
-                                <th class="thead-header text-center"><span translate >ASSET USAGE</span></th>
-                                <th class="thead-header text-center"><span translate>SERIAL NO. 1</span></th>
-                                <th class="thead-header text-center"><span translate>SERIAL NO. 2</span></th>
-                                <th class="thead-header text-center"><span translate>SERIAL NO. 3</span></th>
-                                <th class="thead-header text-center"><span translate>NOTES</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of AssetObj?.AppAssetListObj">
-                                <td class="text-left">{{item.FullAssetName}}</td>
-                                <td class="text-right">{{item.AssetPriceAmt | number:'.2':'en-US'}}</td>
-                                <td class="text-right">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
-                                <td class="text-center">{{item.MrAssetConditionCodeDesc}}</td>
-                                <td class="text-center">{{item.MrAssetUsageCodeDesc}}</td>
-                                <td>{{item.SerialNo1}}</td>
-                                <td>{{item.SerialNo2}}</td>
-                                <td>{{item.SerialNo3}}</td>
-                                <td>{{item.AssetNotes}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-  
-            <!-- Asset Accessory List -->
-            <div *ngIf="AssetObj?.AppAssetAccListObj">
-                <lib-ucSubsection [id]="'AssetAccInfoId'" [title]="'Asset Accessory List'" [panel]="'AssetAccInfo'">
-                </lib-ucSubsection>
-                <div class="form-body" id="AssetAccInfo">
-                    <table class="table table-responsive-md text-center table-hover">
-                        <thead>
-                            <tr class="table-header">
-                                <th class="thead-header text-left"><span translate >ASSET ACCESSORY NAME</span></th>
-                                <th class="thead-header text-right"><span translate>ASSET ACCESSORY PRICE</span></th>
-                                <th class="thead-header text-right"><span translate>DOWN PAYMENT</span></th>
-                                <th class="thead-header text-center"><span translate >ACCESSORY NOTES</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of AssetObj?.AppAssetAccListObj">
-                                <td class="text-left">{{item.AssetAccessoryName}}</td>
-                                <td class="text-right">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
-                                <td class="text-right">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
-                                <td>{{item.AccessoryNotes}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-  
-            <!-- Summary -->
-            <lib-ucSubsection [id]="'SummaryPOId'" [title]="'Summary'" [panel]="'SummaryPO'">
-            </lib-ucSubsection>
-            <div class="form-body" id="SummaryPO">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <label class="col-md-6" translate>Total Asset Price </label>
-                            <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}}
-                            </label>
-                        </div>
-                        <div class="row">
-                            <label *ngIf="LobCode != 'FL4W'" class="col-md-6" translate>Down Payment Nett </label>
-                            <label *ngIf="LobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
-                            <label
-                                class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj?.DownPaymentNettAmt | number:'.2':'en-US'}}
-                            </label>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6" *ngIf="LobCode != lobCodeFl4w" translate>TDP At Coy </label>
-                            <label class="col-md-6" *ngIf="LobCode == lobCodeFl4w" translate>Total Security Deposit At Coy </label>
-                            <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <label class="col-md-6" translate>Insurance Premium </label>
-                            <label class="col-md-6 text-right">{{TotalInsCustAmt | number:'.2':'en-US'}}
-                            </label>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6" translate>Life Insurance Premium </label>
-                            <label class="col-md-6 text-right">{{TotalLifeInsCustAmt | number:'.2':'en-US'}}
-                            </label>
-                        </div>
-                        <div *ngIf="AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD'" class="row">
-                            <label class="col-md-6" translate>First Installment Amount </label>
-                            <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.InstAmt | number:'.2':'en-US'}} </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
-                        <div class="row">
-                            <label class="col-md-6" translate>{{item.FeeName}} </label>
-                            <label class="col-md-6 text-right">{{item.AppFeeAmt | number:'.2':'en-US'}} </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <label class="col-md-6" translate>Diff Rate Amount</label>
-                            <label class="col-md-6 text-right">{{DiffRateAmt | number:'.2':'en-US'}}</label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <label class="col-md-6" translate>Total Purchase Order </label>
-                                    <label class="col-md-6 text-right">{{TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-  
-            <!-- Subsidy List -->
-            <lib-ucSubsection [id]="'AgrmntSubsidyId'" [title]="'Subsidy Information'"
-                [panel]="'AgrmntSubsidy'">
-            </lib-ucSubsection>
-            <div class="form-body" id="AgrmntSubsidy">
-                <table class="table table-responsive-md text-center table-hover">
-                    <thead>
-                        <tr class="table-header">
-                            <th class = "text-left"><span translate class="thead-header">Subsidy Allocation</span></th>
-                            <th class = "text-left"><span translate class="thead-header">Subsidy Source</span></th>
-                            <th class = 'text-right'><span translate class="thead-header">Subsidy Amount</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of AssetObj?.AgrmntSubsidyListObj">
-                            <td class="text-left">{{item.MrSubdAllocCode}}</td>
-                            <td class="text-left">{{item.MrSubdSourceCode}}</td>
-                            <td class="text-right">{{item.SubsidyAmt | number:'.2':'en-US'}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-  
-            <!-- Other Information -->
-            <lib-ucSubsection [id]="'OtherInformationId'" [title]="'Other Information'"
-                [panel]="'OtherInformation'">
-            </lib-ucSubsection>
-            <div class="form-body" id="OtherInformation">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <label class="col-md-6" translate>Additional Notes </label>
-                            <div class="col-md-6">
-                                <label>{{Notes}}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <label class="col-md-6" translate>Expired Date </label>
-                            <label class="col-md-6">{{PurchaseOrderExpiredDt | date: 'dd-MMM-yyyy' }}</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        </div>
-      </div>
-
-      
-
-    </div>
+    <h4 class="modal-title" translate>Purchase Order Detail</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
-</div>
-
+  <div class="modal-body">
+  
+    <div class="row text-left">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+  
+            <div class="px-3">
+              <!-- Purchase Order Information -->
+              <lib-ucSubsection [id]="'PurchaseOrderInfoId'" [title]="'Purchase Order Information'"
+                  [panel]="'PurchaseOrderInfo'">
+              </lib-ucSubsection>
+              <div class="form-body" id="PurchaseOrderInfo">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="row">
+                              <label class="col-md-12 font-weight-bold" translate>To </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Supplier Name </label>
+                              <label class="col-md-6">{{AssetObj?.VendorObj?.VendorName}} </label>
+                          </div>
+                          <div class="row" style="display:none;">
+                              <label class="col-md-6" translate>Address </label>
+                              <label class="col-md-6">{{AssetObj?.VendorAddrObj?.Addr}} </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Supplier Bank Account</label>
+                              <label class="col-md-6">{{AssetObj?.VendorBankAccObj?.BankName}} - {{AssetObj?.VendorBankAccObj?.BankAccountName}} - {{AssetObj?.VendorBankAccObj?.BankAccountNo}} </label>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="row">
+                              <label class="col-md-12 font-weight-bold" translate>Send To </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Customer Name </label>
+                              <label class="col-md-6">{{AssetObj?.AgrmntObj?.CustName}} </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Address </label>
+                              <label class="col-md-6">{{Address}} </label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+    
+              <!-- Asset List -->
+              <div *ngIf="AssetObj?.AppAssetListObj">
+                  <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
+                  </lib-ucSubsection>
+                  <div class="form-body" id="AssetInfo">
+                      <table class="table table-responsive-md text-center table-hover">
+                          <thead>
+                              <tr class="table-header">
+                                  <th class="thead-header text-left"><span translate >ASSET NAME</span></th>
+                                  <th class="thead-header text-right"><span translate >ASSET PRICE</span></th>
+                                  <th class="thead-header text-right"><span translate >DOWN PAYMENT</span></th>
+                                  <th class="thead-header text-center"><span translate >ASSET CONDITION</span></th>
+                                  <th class="thead-header text-center"><span translate >ASSET USAGE</span></th>
+                                  <th class="thead-header text-center"><span translate>SERIAL NO. 1</span></th>
+                                  <th class="thead-header text-center"><span translate>SERIAL NO. 2</span></th>
+                                  <th class="thead-header text-center"><span translate>SERIAL NO. 3</span></th>
+                                  <th class="thead-header text-center"><span translate>NOTES</span></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let item of AssetObj?.AppAssetListObj">
+                                  <td class="text-left">{{item.FullAssetName}}</td>
+                                  <td class="text-right">{{item.AssetPriceAmt | number:'.2':'en-US'}}</td>
+                                  <td class="text-right">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
+                                  <td class="text-center">{{item.MrAssetConditionCodeDesc}}</td>
+                                  <td class="text-center">{{item.MrAssetUsageCodeDesc}}</td>
+                                  <td>{{item.SerialNo1}}</td>
+                                  <td>{{item.SerialNo2}}</td>
+                                  <td>{{item.SerialNo3}}</td>
+                                  <td>{{item.AssetNotes}}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+    
+              <!-- Asset Accessory List -->
+              <div *ngIf="AssetObj?.AppAssetAccListObj">
+                  <lib-ucSubsection [id]="'AssetAccInfoId'" [title]="'Asset Accessory List'" [panel]="'AssetAccInfo'">
+                  </lib-ucSubsection>
+                  <div class="form-body" id="AssetAccInfo">
+                      <table class="table table-responsive-md text-center table-hover">
+                          <thead>
+                              <tr class="table-header">
+                                  <th class="thead-header text-left"><span translate >ASSET ACCESSORY NAME</span></th>
+                                  <th class="thead-header text-right"><span translate>ASSET ACCESSORY PRICE</span></th>
+                                  <th class="thead-header text-right"><span translate>DOWN PAYMENT</span></th>
+                                  <th class="thead-header text-center"><span translate >ACCESSORY NOTES</span></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let item of AssetObj?.AppAssetAccListObj">
+                                  <td class="text-left">{{item.AssetAccessoryName}}</td>
+                                  <td class="text-right">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
+                                  <td class="text-right">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
+                                  <td>{{item.AccessoryNotes}}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+    
+              <!-- Summary -->
+              <lib-ucSubsection [id]="'SummaryPOId'" [title]="'Summary'" [panel]="'SummaryPO'">
+              </lib-ucSubsection>
+              <div class="form-body" id="SummaryPO">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="row">
+                              <label class="col-md-6" translate>Total Asset Price </label>
+                              <label class="col-md-6 text-right">{{TotalAssetPriceAmt | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                          <div class="row">
+                              <label *ngIf="LobCode != 'FL4W'" class="col-md-6" translate>Down Payment Nett </label>
+                              <label *ngIf="LobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
+                              <label
+                                  class="col-md-6 text-right">{{DpNettAmt | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" *ngIf="LobCode != lobCodeFl4w" translate>TDP At Coy </label>
+                              <label class="col-md-6" *ngIf="LobCode == lobCodeFl4w" translate>Total Security Deposit At Coy </label>
+                              <label class="col-md-6 text-right">{{TdpAtCoy | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Admin Fee </label>
+                              <label class="col-md-6 text-right">{{AdminFeeAmt | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Notary Fee </label>
+                              <label class="col-md-6 text-right">{{NotaryFeeAmt | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Fiducia Fee </label>
+                              <label class="col-md-6 text-right">{{FiduciaFeeAmt | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="row">
+                              <label class="col-md-6" translate>Insurance Premium </label>
+                              <label class="col-md-6 text-right">{{TotalInsCustAmt | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Life Insurance Premium </label>
+                              <label class="col-md-6 text-right">{{TotalLifeInsCustAmt | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                          <div *ngIf="AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD'" class="row">
+                              <label class="col-md-6" translate>First Installment Amount </label>
+                              <label class="col-md-6 text-right">{{FirstInstallmentAmt | number:'.2':'en-US'}} </label>
+                          </div>
+                          <div class="row" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
+                              <label class="col-md-6" translate>{{item.FeeName}} </label>
+                              <label class="col-md-6 text-right">{{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                          </div>
+                          <div class="row">
+                              <label class="col-md-6" translate>Provision Fee </label>
+                              <label class="col-md-6 text-right">{{ProvisionFeeAmt | number:'.2':'en-US'}}
+                              </label>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="row">
+                              <label class="col-md-6" translate>Diff Rate Amount</label>
+                              <label class="col-md-6 text-right">{{DiffRateAmt | number:'.2':'en-US'}}</label>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="row">
+                                      <label class="col-md-6" translate>Total Purchase Order </label>
+                                      <label class="col-md-6 text-right">{{TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+    
+              <!-- Subsidy List -->
+              <lib-ucSubsection [id]="'AgrmntSubsidyId'" [title]="'Subsidy Information'"
+                  [panel]="'AgrmntSubsidy'">
+              </lib-ucSubsection>
+              <div class="form-body" id="AgrmntSubsidy">
+                  <table class="table table-responsive-md text-center table-hover">
+                      <thead>
+                          <tr class="table-header">
+                              <th class = "text-left"><span translate class="thead-header">Subsidy Allocation</span></th>
+                              <th class = "text-left"><span translate class="thead-header">Subsidy Source</span></th>
+                              <th class = 'text-right'><span translate class="thead-header">Subsidy Amount</span></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let item of AssetObj?.AgrmntSubsidyListObj">
+                              <td class="text-left">{{item.MrSubdAllocCode}}</td>
+                              <td class="text-left">{{item.MrSubdSourceCode}}</td>
+                              <td class="text-right">{{item.SubsidyAmt | number:'.2':'en-US'}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+    
+              <!-- Other Information -->
+              <lib-ucSubsection [id]="'OtherInformationId'" [title]="'Other Information'"
+                  [panel]="'OtherInformation'">
+              </lib-ucSubsection>
+              <div class="form-body" id="OtherInformation">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="row">
+                              <label class="col-md-6" translate>Additional Notes </label>
+                              <div class="col-md-6">
+                                  <label>{{Notes}}</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="row">
+                              <label class="col-md-6" translate>Expired Date </label>
+                              <label class="col-md-6">{{PurchaseOrderExpiredDt | date: 'dd-MMM-yyyy' }}</label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          </div>
+        </div>
+  
+        
+  
+      </div>
+    </div>
+  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
+  </div>
+  
+  

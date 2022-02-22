@@ -227,7 +227,13 @@ export class CommonConstant {
   public static PoItemCodeInstAmt = "INST_AMT";
   public static PoItemCodeInsNotCptlz = "INS_NOT_CPTLZ";
   public static PoItemCodeLfiNotCptlz = "LFI_NOT_CPTLZ";
+  public static PoItemCodeDiffRateAmt = "DIFF_RATE_AMT";
 
+  public static PoItemCodeProvisionFee = "PRVSN_FEE_NOT_CPTLZ";
+  public static PoItemCodeFirstInstAmt = "FIRST_INST_AMT";
+  public static PoItemCodeAdminFee = "ADMIN_FEE_NOT_CPTLZ";
+  public static PoItemCodeFiduciaFee = "FDCIA_FEE_NOT_CPTLZ";
+  public static PoItemCodeNotaryFee = "NTRY_FEE_NOT_CPTLZ";
   //STATUS GRP
   public static StatusGrpVerfResultStat = "VERF_RESULT_STAT";
   public static VerfResultStatSuccess = "SCS";
