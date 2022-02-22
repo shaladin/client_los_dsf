@@ -151,7 +151,13 @@ export class PurchaseOrderDetailComponent implements OnInit {
           if (this.ListRefMaster[i].ReserveField2 == CommonConstant.PurchaseOrderItemTypeNonFee) {
             tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
             tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
-            tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[this.ListRefMaster[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][this.ListRefMaster[i].ReserveField3] : 0;
+            let purchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[this.ListRefMaster[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][this.ListRefMaster[i].ReserveField3] : 0;
+
+            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeInsNotCptlz) purchaseOrderAmt = this.AssetObj.TotalInsCustAmt;
+            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeLfiNotCptlz) purchaseOrderAmt = this.AssetObj.TotalLifeInsCustAmt;
+            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeDiffRateAmt) purchaseOrderAmt = this.AssetObj.DiffRateAmt;
+            
+            tempPurchaseOrderDObj.PurchaseOrderAmt = purchaseOrderAmt;
             this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
           }
           if (this.ListRefMaster[i].ReserveField2 == CommonConstant.PurchaseOrderItemTypeFee) {
