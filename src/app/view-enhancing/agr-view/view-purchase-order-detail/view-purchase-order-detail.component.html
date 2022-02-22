@@ -117,71 +117,22 @@
               <lib-ucSubsection [id]="'SummaryPOId'" [title]="'Summary'" [panel]="'SummaryPO'">
               </lib-ucSubsection>
               <div class="form-body" id="SummaryPO">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="row">
-                              <label class="col-md-6" translate>Total Asset Price </label>
-                              <label class="col-md-6 text-right">{{TotalAssetPriceAmt | number:'.2':'en-US'}}
-                              </label>
-                          </div>
-                          <div class="row">
-                              <label *ngIf="LobCode != 'FL4W'" class="col-md-6" translate>Down Payment Nett </label>
-                              <label *ngIf="LobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
-                              <label
-                                  class="col-md-6 text-right">{{DpNettAmt | number:'.2':'en-US'}}
-                              </label>
-                          </div>
-                          <div class="row">
-                              <label class="col-md-6" *ngIf="LobCode != lobCodeFl4w" translate>TDP At Coy </label>
-                              <label class="col-md-6" *ngIf="LobCode == lobCodeFl4w" translate>Total Security Deposit At Coy </label>
-                              <label class="col-md-6 text-right">{{TdpAtCoy | number:'.2':'en-US'}}
-                              </label>
-                          </div>
-                          <div class="row">
-                              <label class="col-md-6" translate>Admin Fee </label>
-                              <label class="col-md-6 text-right">{{AdminFeeAmt | number:'.2':'en-US'}}
-                              </label>
-                          </div>
-                          <div class="row">
-                              <label class="col-md-6" translate>Notary Fee </label>
-                              <label class="col-md-6 text-right">{{NotaryFeeAmt | number:'.2':'en-US'}}
-                              </label>
-                          </div>
-                          <div class="row">
-                              <label class="col-md-6" translate>Fiducia Fee </label>
-                              <label class="col-md-6 text-right">{{FiduciaFeeAmt | number:'.2':'en-US'}}
-                              </label>
-                          </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="row">
-                              <label class="col-md-6" translate>Insurance Premium </label>
-                              <label class="col-md-6 text-right">{{TotalInsCustAmt | number:'.2':'en-US'}}
-                              </label>
-                          </div>
-                          <div class="row">
-                              <label class="col-md-6" translate>Life Insurance Premium </label>
-                              <label class="col-md-6 text-right">{{TotalLifeInsCustAmt | number:'.2':'en-US'}}
-                              </label>
-                          </div>
-                          <div *ngIf="AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD'" class="row">
-                              <label class="col-md-6" translate>First Installment Amount </label>
-                              <label class="col-md-6 text-right">{{FirstInstallmentAmt | number:'.2':'en-US'}} </label>
-                          </div>
-                          <div class="row" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
+                  <div class="row" *ngIf="isReady">
+                      <div class="col-md-6" *ngFor="let item of ListPurchaseOrder">
+                          <div class="row" *ngIf="(item.MrPoItemCode != 'TDP_AT_COY' && item.MrPoItemCode != 'DP_NETT') ||
+                                                  (item.MrPoItemCode == 'FIRST_INST_AMT' && AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD')">
                               <label class="col-md-6" translate>{{item.FeeName}} </label>
-                              <label class="col-md-6 text-right">{{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                              <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
                           </div>
-                          <div class="row">
-                              <label class="col-md-6" translate>Provision Fee </label>
-                              <label class="col-md-6 text-right">{{ProvisionFeeAmt | number:'.2':'en-US'}}
-                              </label>
+                          <div class="row" *ngIf="item.MrPoItemCode == 'TDP_AT_COY'">
+                              <label class="col-md-6" *ngIf="lobCode != lobCodeFl4w" translate>{{item.FeeName}}</label>
+                              <label class="col-md-6" *ngIf="lobCode == lobCodeFl4w" translate>Total Security Deposit At Company </label>
+                              <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
                           </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="row">
-                              <label class="col-md-6" translate>Diff Rate Amount</label>
-                              <label class="col-md-6 text-right">{{DiffRateAmt | number:'.2':'en-US'}}</label>
+                          <div class="row" *ngIf="item.MrPoItemCode == 'DP_NETT'">
+                              <label *ngIf="lobCode != 'FL4W'" class="col-md-6" translate>{{item.FeeName}}</label>
+                              <label *ngIf="lobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
+                              <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
                           </div>
                       </div>
                       <div class="col-md-12">

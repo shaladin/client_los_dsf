@@ -3,7 +3,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { PurchaseOrderDObj } from 'app/shared/model/purchase-order-d-obj.model';
 import { PurchaseOrderHObj } from 'app/shared/model/purchase-order-h-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { ReqAssetDataObj } from 'app/shared/model/request/app-asset/req-app-asset-obj.model';
 import { ResGetAllAssetDataForPOViewByAsset, ResGetAllAssetDataForPOViewByAssetObj, ResPurchaseOrderDObj } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
 
@@ -22,24 +25,16 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
   readonly lobCodeFl4w: string = CommonConstant.FL4W;
   
   ProportionalValue: number;
-  TotalInsCustAmt: number;
-  TotalLifeInsCustAmt: number;
   TotalPurchaseOrderAmt: number;
   PurchaseOrderExpiredDt: Date;
-  DiffRateAmt : number;
-  TotalAssetPriceAmt: number;
-  DpNettAmt: number;
-  TdpAtCoy: number;
-  AdminFeeAmt: number;
-  NotaryFeeAmt: number;
-  FiduciaFeeAmt: number;
-  FirstInstallmentAmt: number;
-  ProvisionFeeAmt: number;
   Notes: string = "";
   Address: string = "";
   purchaseOrderHObj: PurchaseOrderHObj = new PurchaseOrderHObj();;
   AssetObj: ResGetAllAssetDataForPOViewByAsset = new ResGetAllAssetDataForPOViewByAsset();
   isReady: boolean = false;
+  ReqByCode: GenericObj = new GenericObj();
+  ListRefMaster: Array<RefMasterObj> = new Array<RefMasterObj>();
+  ListPurchaseOrder: Array<PurchaseOrderDObj> = new Array<PurchaseOrderDObj>();
   
   constructor(private http: HttpClient, public activeModal: NgbActiveModal) { }
 
@@ -58,8 +53,8 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
     await this.http.post<ResGetAllAssetDataForPOViewByAssetObj>(poUrl, appAssetObj).toPromise().then(
       (response) => {
         this.AssetObj = response.ReturnObject;
+        this.getDataFromRefMaster(this.AssetObj.PurchaseOrderDObj);
         if(this.AssetObj.PurchaseOrderHId != 0){
-          this.setPurchaseOrderD(this.AssetObj.PurchaseOrderDObj);
           this.isDataExist = true;
           this.Notes = this.AssetObj.Notes;
           this.purchaseOrderHObj.RowVersion = this.AssetObj.RowVersionPO;
@@ -88,22 +83,22 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
         }
        
       });
-
-    this.isReady = true;
   }
 
-  setPurchaseOrderD(purchaseOrderD: Array<ResPurchaseOrderDObj>){
-    this.TotalInsCustAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeInsNotCptlz).PurchaseOrderAmt;
-    this.TotalLifeInsCustAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeLfiNotCptlz).PurchaseOrderAmt;
-    this.TotalAssetPriceAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeTotalAssetPrice).PurchaseOrderAmt;
-    this.DpNettAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeDpNett).PurchaseOrderAmt;
-    this.TdpAtCoy = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeTdpAtCoy).PurchaseOrderAmt;
-    this.AdminFeeAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeAdminFee).PurchaseOrderAmt;
-    this.NotaryFeeAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeNotaryFee).PurchaseOrderAmt;
-    this.FiduciaFeeAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeFiduciaFee).PurchaseOrderAmt;
-    this.DiffRateAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeDiffRateAmt).PurchaseOrderAmt;
-    this.FirstInstallmentAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeFirstInstAmt).PurchaseOrderAmt;
-    this.ProvisionFeeAmt = purchaseOrderD.find(x=> x.MrPoItemCode == CommonConstant.PoItemCodeProvisionFee).PurchaseOrderAmt;
+  async getDataFromRefMaster(purchaseOrderD: Array<ResPurchaseOrderDObj>){
+    this.ReqByCode.Code = CommonConstant.RefMasterTypeCodePoItemCode;
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCodeOrderedBySeqNo, this.ReqByCode).toPromise().then(
+      (response : RefMasterObj) => {
+        this.ListRefMaster = response[CommonConstant.RefMasterObjs];
+        this.ListRefMaster = this.ListRefMaster.sort((a, b) => a.SeqNo - b.SeqNo);
+
+        for(var i=0;i < this.ListRefMaster.length; i++){
+          var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+            tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
+            tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.PurchaseOrderHId != 0 ? purchaseOrderD.find(x=> x.MrPoItemCode == this.ListRefMaster[i].MasterCode).PurchaseOrderAmt : 0;
+            this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
+        }
+      });
+      this.isReady = true;
   }
-  
 }
