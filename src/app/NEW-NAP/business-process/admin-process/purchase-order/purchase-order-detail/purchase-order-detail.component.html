@@ -129,26 +129,39 @@
                         <lib-ucSubsection [id]="'SummaryPOId'" [title]="'Summary'" [panel]="'SummaryPO'">
                         </lib-ucSubsection>
                         <div class="form-body" id="SummaryPO">
-                            <div class="row" *ngIf = "isReady">
+                            <div class="row" *ngIf="isReady">
                                 <div class="col-md-6" *ngFor="let item of ListPurchaseOrder">
                                     <div class="row" *ngIf="(item.MrPoItemCode != 'TDP_AT_COY' && item.MrPoItemCode != 'DP_NETT' 
                                                     && item.MrPoItemCode != 'FIRST_INST_AMT')">
                                         <label class="col-md-6" translate>{{item.FeeName}} </label>
-                                        <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
+                                        <label
+                                            class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}}
+                                        </label>
                                     </div>
                                     <div class="row" *ngIf="item.MrPoItemCode == 'TDP_AT_COY'">
-                                        <label class="col-md-6" *ngIf="lobCode != lobCodeFl4w" translate>{{item.FeeName}}</label>
-                                        <label class="col-md-6" *ngIf="lobCode == lobCodeFl4w" translate>Total Security Deposit At Company </label>
-                                        <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
+                                        <label class="col-md-6" *ngIf="lobCode != lobCodeFl4w"
+                                            translate>{{item.FeeName}}</label>
+                                        <label class="col-md-6" *ngIf="lobCode == lobCodeFl4w" translate>Total Security
+                                            Deposit At Company </label>
+                                        <label
+                                            class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}}
+                                        </label>
                                     </div>
                                     <div class="row" *ngIf="item.MrPoItemCode == 'DP_NETT'">
-                                        <label *ngIf="lobCode != 'FL4W'" class="col-md-6" translate>{{item.FeeName}}</label>
-                                        <label *ngIf="lobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
-                                        <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
+                                        <label *ngIf="lobCode != 'FL4W'" class="col-md-6"
+                                            translate>{{item.FeeName}}</label>
+                                        <label *ngIf="lobCode == 'FL4W'" class="col-md-6" translate>Security Deposit
+                                            Nett </label>
+                                        <label
+                                            class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}}
+                                        </label>
                                     </div>
-                                    <div *ngIf="item.MrPoItemCode == 'FIRST_INST_AMT' && AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD'" class="row">
+                                    <div *ngIf="item.MrPoItemCode == 'FIRST_INST_AMT' && AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD'"
+                                        class="row">
                                         <label class="col-md-6" translate>{{item.FeeName}}</label>
-                                        <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
+                                        <label
+                                            class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}}
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

@@ -42,11 +42,11 @@ export class PurchaseOrderDetailComponent implements OnInit {
   TaskListId: string;
   vendorBankAccList: Array<Object>;
   VendorBankAcc: VendorBankAccObj;
-  isHasVendorBankAcc : boolean = true;
+  isHasVendorBankAcc: boolean = true;
   ReqByCode: GenericObj = new GenericObj();
   ListRefMaster: Array<RefMasterObj> = new Array<RefMasterObj>();
   ListPurchaseOrder: Array<PurchaseOrderDObj> = new Array<PurchaseOrderDObj>();
-  isReady : boolean = false;
+  isReady: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService, private fb: FormBuilder) {
@@ -98,7 +98,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
       (response) => {
         this.AssetObj = response.ReturnObject;
         this.getDataFromRefMaster();
-        if(this.AssetObj.PurchaseOrderHId != 0){
+        if (this.AssetObj.PurchaseOrderHId != 0) {
           this.isDataExist = true;
           this.PODetailForm.patchValue({
             BankAccNo: this.AssetObj.PurchaseOrderBankAccNo,
@@ -140,23 +140,23 @@ export class PurchaseOrderDetailComponent implements OnInit {
       });
   }
 
-  async getDataFromRefMaster(){
+  async getDataFromRefMaster() {
     this.ReqByCode.Code = CommonConstant.RefMasterTypeCodePoItemCode;
     await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCodeOrderedBySeqNo, this.ReqByCode).toPromise().then(
-      (response : RefMasterObj) => {
+      (response: RefMasterObj) => {
         this.ListRefMaster = response[CommonConstant.RefMasterObjs];
 
-        for(var i=0;i < this.ListRefMaster.length; i++){
+        for (var i = 0; i < this.ListRefMaster.length; i++) {
           var tempPurchaseOrderDObj = new PurchaseOrderDObj();
           if (this.ListRefMaster[i].ReserveField2 == CommonConstant.PurchaseOrderItemTypeNonFee) {
             tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
             tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
             let purchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[this.ListRefMaster[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][this.ListRefMaster[i].ReserveField3] : 0;
 
-            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeInsNotCptlz) purchaseOrderAmt = this.AssetObj.TotalInsCustAmt;
-            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeLfiNotCptlz) purchaseOrderAmt = this.AssetObj.TotalLifeInsCustAmt;
-            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeDiffRateAmt) purchaseOrderAmt = this.AssetObj.DiffRateAmt;
-            
+            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeInsNotCptlz) purchaseOrderAmt = this.AssetObj.TotalInsCustAmt;
+            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeLfiNotCptlz) purchaseOrderAmt = this.AssetObj.TotalLifeInsCustAmt;
+            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeDiffRateAmt) purchaseOrderAmt = this.AssetObj.DiffRateAmt;
+
             tempPurchaseOrderDObj.PurchaseOrderAmt = purchaseOrderAmt;
             this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
           }
@@ -165,19 +165,19 @@ export class PurchaseOrderDetailComponent implements OnInit {
             tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
             tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
 
-            if(tempAgrmntFeeObj != undefined)
+            if (tempAgrmntFeeObj != undefined)
               tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
             else
               tempPurchaseOrderDObj.PurchaseOrderAmt = 0;
-    
+
             this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
           }
         }
       });
-      this.isReady = true;
+    this.isReady = true;
   }
 
-  async initBancAcc(){
+  async initBancAcc() {
     await this.http.post(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise().then(
       (response) => {
         if (response["ReturnObject"].length == 0) {
