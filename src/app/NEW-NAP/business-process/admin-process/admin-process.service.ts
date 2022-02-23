@@ -28,6 +28,14 @@ export class AdminProcessService {
     SubmitAgrmntActivationByHumanV2_1(Obj: any): Observable<Object> {
         return this.http.post(URLConstant.SubmitAgrmntActivationByHumanV2_1, Obj);
     }
+
+    SubmitAgrmntActivationByHumanV2_2(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.SubmitAgrmntActivationByHumanV2_2, Obj);
+    }
+
+    GetListAppAssetByListAppAssetId(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.GetListAppAssetByListAppAssetId, Obj);
+    }
 }
 
 export class ReqAppAssetAgreementActivationObj {
