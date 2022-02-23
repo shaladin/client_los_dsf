@@ -31,8 +31,8 @@
       <div class="col-md-6">
         <div class="row">
           <label class="col-md-6  adInsLabel" translate>NPWP</label>
-          <label class="col-md-6  adinslabel" translate *ngIf="SummaryObj?.AppCust?.TaxIdNo != ''">Yes</label>
-          <label class="col-md-6  adinslabel" translate *ngIf="!SummaryObj?.AppCust?.TaxIdNo">No</label>
+          <label class="col-md-6  adinslabel" translate *ngIf="SummaryObj?.AppCust?.TaxIdNo != '' && SummaryObj?.AppCust?.TaxIdNo">{{SummaryObj?.AppCust?.TaxIdNo}}</label>
+          <label class="col-md-6  adinslabel" translate *ngIf="!SummaryObj?.AppCust?.TaxIdNo">-</label>
         </div>
       </div>
       <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
@@ -106,7 +106,7 @@
   </div>
   <lib-ucSubsection [id]="'guarantorId'" [title]="'Guarantor'" [panel]="'guarantor'">
   </lib-ucSubsection>
-  <div id="guarantor">
+  <div id="guarantor" style="overflow-x: auto;">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">

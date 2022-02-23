@@ -1503,23 +1503,22 @@ export class AssetDataAddEditComponent implements OnInit {
       });
 
       let roundedAmt = 0;
-      if (this.RoundedAmt == 0) {
-        DownPayment = Math.ceil(this.AssetDataForm.controls.DownPayment.value);
-      } else {
+      if(this.RoundedAmt == 0){
+        DownPayment = Math.round(this.AssetDataForm.controls.DownPayment.value);
+      }else{
         roundedAmt = Math.pow(10, this.RoundedAmt);
-        DownPayment = Math.round(this.AssetDataForm.controls.DownPayment.value / roundedAmt) * roundedAmt;
+        DownPayment = Math.round(this.AssetDataForm.controls.DownPayment.value * roundedAmt) / roundedAmt;
       }
 
       DownPaymentPrctg = Math.round((DownPayment / this.AssetDataForm.controls.AssetPrice.value) * 100 * 1000000) / 1000000;
       this.AssetDataForm.patchValue({
-        DownPayment: DownPayment,
         DownPaymentPrctg: DownPaymentPrctg
       });
     }
   }
 
   updateValueDownPaymentPrctg() {
-    let DownPaymentPrctg = Math.ceil(this.AssetDataForm.controls.DownPayment.value) / this.AssetDataForm.controls.AssetPrice.value * 100;
+    let DownPaymentPrctg = Math.round(this.AssetDataForm.controls.DownPayment.value) / this.AssetDataForm.controls.AssetPrice.value * 100;
     if (DownPaymentPrctg > 100) {
       this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
       this.AssetDataForm.patchValue({
@@ -1533,17 +1532,8 @@ export class AssetDataAddEditComponent implements OnInit {
       });
 
       DownPaymentPrctg = Math.round(DownPaymentPrctg * 1000000) / 1000000;
-      let DownPayment = 0;
-      let roundedAmt = 0;
-      if (this.RoundedAmt == 0) {
-        DownPayment = Math.ceil((DownPaymentPrctg / 100) * this.AssetDataForm.controls.AssetPrice.value);
-      } else {
-        roundedAmt = Math.pow(10, this.RoundedAmt);
-        DownPayment = Math.round(((DownPaymentPrctg / 100) * this.AssetDataForm.controls.AssetPrice.value) * roundedAmt) / roundedAmt;
-      }
 
       this.AssetDataForm.patchValue({
-        DownPayment: DownPayment,
         DownPaymentPrctg: DownPaymentPrctg
       });
     }
@@ -2214,26 +2204,19 @@ export class AssetDataAddEditComponent implements OnInit {
 
     let DownPayment, DownPaymentPrctg, roundedAmt = 0;
     if (this.AssetDataForm.controls['AssetAccessoriesObjs']['controls'][i]['controls'].AccessoryDownPaymentType.value == CommonConstant.DownPaymentTypeAmt) {
-      let DownPaymentPrctg = Math.ceil(InputDPAmt) / InputAccessoryPrice * 100;
+      let DownPaymentPrctg = Math.round(InputDPAmt) / InputAccessoryPrice * 100;
       DownPaymentPrctg = Math.round(DownPaymentPrctg * 1000000) / 1000000;
-      if (this.RoundedAmt == 0) {
-        DownPayment = Math.ceil((DownPaymentPrctg / 100) * InputAccessoryPrice);
-      } else {
-        roundedAmt = Math.pow(10, this.RoundedAmt);
-        DownPayment = Math.round(((DownPaymentPrctg / 100) * InputAccessoryPrice) * roundedAmt) / roundedAmt;
-      }
 
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DownPaymentPrctg);
-      this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DownPayment);
-    } else {
+    } else{
       DownPaymentPrctg = Math.round(InputDPPrcnt * 1000000) / 1000000;
       DownPayment = InputAccessoryPrice * DownPaymentPrctg / 100;
-
-      if (this.RoundedAmt == 0) {
-        DownPayment = Math.ceil(DownPayment);
-      } else {
+      
+      if(this.RoundedAmt == 0){
+        DownPayment = Math.round(DownPayment);
+      }else{
         roundedAmt = Math.pow(10, this.RoundedAmt);
-        DownPayment = Math.round(DownPayment / roundedAmt) * roundedAmt;
+        DownPayment = Math.round(DownPayment * roundedAmt) / roundedAmt;
       }
 
       DownPaymentPrctg = Math.round((DownPayment / InputAccessoryPrice) * 100 * 1000000) / 1000000;
