@@ -3,6 +3,7 @@ export class PurchaseOrderDObj {
     PurchaseOrderHId: number;
     MrPoItemCode: string;
     PurchaseOrderAmt: number;
+    FeeName: string;
     RowVersion: string;
 
     constructor() {
@@ -10,7 +11,7 @@ export class PurchaseOrderDObj {
         this.PurchaseOrderHId = 0;
         this.MrPoItemCode = "";
         this.PurchaseOrderAmt = 0;
-        this.RowVersion = "";
+        this.FeeName = "";
         this.RowVersion = "";
     }
 }

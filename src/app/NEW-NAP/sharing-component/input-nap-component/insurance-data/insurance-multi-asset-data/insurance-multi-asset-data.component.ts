@@ -1348,22 +1348,42 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
       if (check) {
         if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
-          const control = this.fb.group({
+          let control = this.fb.group({
             MrAddCvgTypeCode: o.Key,
             AddCvgTypeName: o.Value,
             Value: true,
             SumInsuredPercentage: insMainCvg.SumInsuredPrcnt,
             SumInsuredAmt: check.SumInsuredAmt,
             PremiumType: check.PremiumType,
-            BaseCustAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt && AddCvgIndex != -1? AddCvg[AddCvgIndex].RateToCust : custAddPremiRate,
+            BaseCustAddPremiRate: custAddPremiRate,
             CustAddPremiRate: custAddPremiRate,
             CustAddPremiAmt: check.CustAddPremiAmt,
             BaseCalculation: check.BaseCalc,
-            BaseInscoAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt && AddCvgIndex != -1? AddCvg[AddCvgIndex].RateToInsco : inscoAddPremiRate,
+            BaseInscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiAmt: check.InscoAddPremiAmt,
             SeatCount: 0,
           });
+
+          let LoadingObj = this.GetLoadingFeeRate(AddCvg);
+          if(LoadingObj){
+            control = this.fb.group({
+              MrAddCvgTypeCode: o.Key,
+              AddCvgTypeName: o.Value,
+              Value: true,
+              SumInsuredPercentage: insMainCvg.SumInsuredPrcnt,
+              SumInsuredAmt: check.SumInsuredAmt,
+              PremiumType: check.PremiumType,
+              BaseCustAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? LoadingObj.RateToCust : custAddPremiRate,
+              CustAddPremiRate: custAddPremiRate,
+              CustAddPremiAmt: check.CustAddPremiAmt,
+              BaseCalculation: check.BaseCalc,
+              BaseInscoAddPremiRate: premiumType == CommonConstant.PremiumTypePrcnt ? LoadingObj.RateToInsco : inscoAddPremiRate,
+              InscoAddPremiRate: inscoAddPremiRate,
+              InscoAddPremiAmt: check.InscoAddPremiAmt,
+              SeatCount: 0,
+            });
+          }
           (group.controls.AppInsAddCvgs as FormArray).push(control);
         }
         else {

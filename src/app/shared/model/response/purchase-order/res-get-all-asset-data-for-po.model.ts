@@ -89,6 +89,7 @@ export class ResGetAllAssetDataForPOViewByAsset {
     DiffRateAmt : number;
     PurchaseOrderHId : number;
     Notes : string;
+    PurchaseOrderDObj: Array<ResPurchaseOrderDObj>;
     RowVersionPO : string;
     
     constructor(){
@@ -205,6 +206,20 @@ export class ResVendorAddrForPOObj {
     constructor(){
         this.Addr = "";
     }
+}
+
+export class ResPurchaseOrderDObj {
+
+    PurchaseOrderHId : number;
+    MrPoItemCode: string;
+    PurchaseOrderAmt: number;
+
+    constructor(){
+        this.PurchaseOrderHId = 0;
+        this.MrPoItemCode = "";
+        this.PurchaseOrderAmt = 0;
+    }
+
 }
 
 export class ResVendorBankAccForPOObj {

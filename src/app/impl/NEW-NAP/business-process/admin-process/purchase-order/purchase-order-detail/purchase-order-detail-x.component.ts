@@ -19,6 +19,9 @@ import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model'
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { PurchaseOrderDObj } from 'app/shared/model/purchase-order-d-obj.model';
 import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 
 @Component({
   selector: 'app-purchase-order-detail-x',
@@ -39,17 +42,21 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   TotalInsCustAmt: number;
   TotalLifeInsCustAmt: number;
   TotalPurchaseOrderAmt: number;
-  DiffRateAmt : number;
+  DiffRateAmt: number;
   PurchaseOrderExpiredDt: Date;
   purchaseOrderHObj: PurchaseOrderHObj;
   // purchaseOrderDObj: PurchaseOrderDObj;
   lobCode: string;
   TaskListId: string;
   BizTemplateCode: string;
-  bankVisible:boolean = false;
+  bankVisible: boolean = false;
   responseRefBank: any
   ucDdlVendorBankAccObj: UcDropdownListObj = new UcDropdownListObj();
   isDdlVendorBankAccReady: boolean = false;
+  ReqByCode: GenericObj = new GenericObj();
+  ListRefMaster: Array<RefMasterObj> = new Array<RefMasterObj>();
+  ListPurchaseOrder: Array<PurchaseOrderDObj> = new Array<PurchaseOrderDObj>();
+  isReady: boolean = false;
 
   POForm = this.fb.group({
     Notes: [''],
@@ -96,19 +103,20 @@ export class PurchaseOrderDetailXComponent implements OnInit {
       poUrl = URLConstantX.GetAllAssetDataForPOByAsset;
     }
 
-    let appAssetObj : ReqAssetDataObj = new ReqAssetDataObj();
+    let appAssetObj: ReqAssetDataObj = new ReqAssetDataObj();
     appAssetObj.AppId = this.AppId;
     appAssetObj.AgrmntId = this.AgrmntId;
     appAssetObj.SupplCode = this.SupplCode;
-    
-    if(this.lobCode == CommonConstantX.SLB){
+
+    if (this.lobCode == CommonConstantX.SLB) {
       this.POForm.get("VendorBankAccNo").clearValidators();
     }
 
     await this.http.post<ResGetAllAssetDataForPOByAssetObj>(poUrl, appAssetObj).toPromise().then(
       async (response) => {
         this.AssetObj = response.ReturnObject;
-        if(this.AssetObj.PurchaseOrderHId != 0){
+        this.getDataFromRefMaster();
+        if (this.AssetObj.PurchaseOrderHId != 0) {
           this.isDataExist = true;
           this.Notes = this.AssetObj.Notes;
           this.purchaseOrderHObj.RowVersion = this.AssetObj.RowVersionPO;
@@ -134,60 +142,98 @@ export class PurchaseOrderDetailXComponent implements OnInit {
         this.purchaseOrderHObj.SupplCode = this.SupplCode;
 
         this.purchaseOrderHObj.TotalPurchaseOrderAmt = this.TotalPurchaseOrderAmt;
-        if(this.lobCode==CommonConstantX.SLB){
+        if (this.lobCode == CommonConstantX.SLB) {
           await this.GetListAppCustBankAcc();
-          if(this.isDataExist){
+          if (this.isDataExist) {
             await this.GetPoDataForCustBank(appAssetObj);
           }
         }
-        else{
+        else {
           let defaultBankAcc;
-          if(this.AssetObj.PurchaseOrderHBankAccNo != null){
+          if (this.AssetObj.PurchaseOrderHBankAccNo != null) {
             defaultBankAcc = this.AssetObj.ListVendorBankAccObj.find(obj => obj.BankAccountNo == this.AssetObj.PurchaseOrderHBankAccNo);
           }
-          else{
+          else {
             defaultBankAcc = this.AssetObj.ListVendorBankAccObj.find(obj => obj.IsDefault == true);
           }
 
-          if(defaultBankAcc != undefined){
+          if (defaultBankAcc != undefined) {
             this.POForm.patchValue({
               CustBankAcc: 0,
               VendorBankAccNo: defaultBankAcc.BankAccountNo
             });
-            
+
             this.purchaseOrderHObj.BankCode = defaultBankAcc.BankCode;
             this.purchaseOrderHObj.BankBranch = defaultBankAcc.BankName;
             this.purchaseOrderHObj.BankAccNo = defaultBankAcc.BankAccountNo;
             this.purchaseOrderHObj.BankAccName = defaultBankAcc.BankAccountName;
           }
-          else{
+          else {
             this.POForm.patchValue({
               CustBankAcc: 0,
               VendorBankAccNo: ''
             });
           }
-          
+
           this.initDdlVendorBankAcc();
         }
       });
     this.checkValidExpDt();
   }
+
+  async getDataFromRefMaster() {
+    this.ReqByCode.Code = CommonConstant.RefMasterTypeCodePoItemCode;
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCodeOrderedBySeqNo, this.ReqByCode).toPromise().then(
+      (response: RefMasterObj) => {
+        this.ListRefMaster = response[CommonConstant.RefMasterObjs];
+
+        for (var i = 0; i < this.ListRefMaster.length; i++) {
+          var tempPurchaseOrderDObj = new PurchaseOrderDObj();
+          if (this.ListRefMaster[i].ReserveField2 == CommonConstant.PurchaseOrderItemTypeNonFee) {
+            tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
+            tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
+            let purchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[this.ListRefMaster[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][this.ListRefMaster[i].ReserveField3] : 0;
+
+            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeInsNotCptlz) purchaseOrderAmt = this.AssetObj.TotalInsCustAmt;
+            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeLfiNotCptlz) purchaseOrderAmt = this.AssetObj.TotalLifeInsCustAmt;
+            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeDiffRateAmt) purchaseOrderAmt = this.AssetObj.DiffRateAmt;
+
+            tempPurchaseOrderDObj.PurchaseOrderAmt = purchaseOrderAmt;
+            this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
+          }
+          if (this.ListRefMaster[i].ReserveField2 == CommonConstant.PurchaseOrderItemTypeFee) {
+            let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == this.ListRefMaster[i].ReserveField3);
+            tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
+            tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
+
+            if (tempAgrmntFeeObj != undefined)
+              tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
+            else
+              tempPurchaseOrderDObj.PurchaseOrderAmt = 0;
+
+            this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
+          }
+        }
+      });
+    this.isReady = true;
+  }
+
   listCustBankAcc: Array<AppCustBankAccObj>;
   async GetListAppCustBankAcc() {
     await this.http.post<GenericListObj>(URLConstantX.GetAppCustBankAccsByAppIdX, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.listCustBankAcc = response.ReturnObject["AppCustBankAccObjs"];
-          var x = this.listCustBankAcc.find(x=> x.IsDefault);
-          if(x != null){
-            this.POForm.patchValue({
-              CustBankAcc: x.AppCustBankAccId
-            });
-            this.purchaseOrderHObj.BankCode = x.BankCode;
-            this.purchaseOrderHObj.BankBranch = x.BankBranch;
-            this.purchaseOrderHObj.BankAccNo = x.BankAccNo;
-            this.purchaseOrderHObj.BankAccName = x.BankAccName; 
-          }
-        
+        var x = this.listCustBankAcc.find(x => x.IsDefault);
+        if (x != null) {
+          this.POForm.patchValue({
+            CustBankAcc: x.AppCustBankAccId
+          });
+          this.purchaseOrderHObj.BankCode = x.BankCode;
+          this.purchaseOrderHObj.BankBranch = x.BankBranch;
+          this.purchaseOrderHObj.BankAccNo = x.BankAccNo;
+          this.purchaseOrderHObj.BankAccName = x.BankAccName;
+        }
+
       }
     );
   }
@@ -195,32 +241,32 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   async GetPoDataForCustBank(appAssetObj) {
     await this.http.post(URLConstantX.GetPurchaseOrderHByAgrmntIdAndSupplCodeX, appAssetObj).toPromise().then(
       (response) => {
-          if(response["PurchaseOrderHId"] != 0){
-            var x = this.listCustBankAcc.find(x=> x.BankCode==response["BankCode"] && x.BankBranch==response["BankBranch"] && x.BankAccNo==response["BankAccNo"] && x.BankAccName==response["BankAccName"]);
-            if(x!= null){
-              this.POForm.patchValue({
-                CustBankAcc: x.AppCustBankAccId
-              });
-              this.purchaseOrderHObj.BankCode = x.BankCode;
-              this.purchaseOrderHObj.BankBranch = x.BankBranch;
-              this.purchaseOrderHObj.BankAccNo = x.BankAccNo;
-              this.purchaseOrderHObj.BankAccName = x.BankAccName; 
-            }
+        if (response["PurchaseOrderHId"] != 0) {
+          var x = this.listCustBankAcc.find(x => x.BankCode == response["BankCode"] && x.BankBranch == response["BankBranch"] && x.BankAccNo == response["BankAccNo"] && x.BankAccName == response["BankAccName"]);
+          if (x != null) {
+            this.POForm.patchValue({
+              CustBankAcc: x.AppCustBankAccId
+            });
+            this.purchaseOrderHObj.BankCode = x.BankCode;
+            this.purchaseOrderHObj.BankBranch = x.BankBranch;
+            this.purchaseOrderHObj.BankAccNo = x.BankAccNo;
+            this.purchaseOrderHObj.BankAccName = x.BankAccName;
           }
-        
+        }
+
       }
     );
   }
-  
+
   selectedBank() {
 
     let custBankAccId: number = this.POForm.get("CustBankAcc").value;
     let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
-    if(selectedBankAcc != null){
+    if (selectedBankAcc != null) {
       this.purchaseOrderHObj.BankCode = selectedBankAcc.BankCode;
       this.purchaseOrderHObj.BankBranch = selectedBankAcc.BankBranch;
       this.purchaseOrderHObj.BankAccNo = selectedBankAcc.BankAccNo;
-      this.purchaseOrderHObj.BankAccName = selectedBankAcc.BankAccName; 
+      this.purchaseOrderHObj.BankAccName = selectedBankAcc.BankAccName;
     }
   }
 
@@ -244,19 +290,18 @@ export class PurchaseOrderDetailXComponent implements OnInit {
         tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
 
         //START X DSF UATDSFCF-588: Fix perhitungan PO D Insurance yg PayPeriodToInsco == Annualy (dihitung tersendiri di luar AgrmntFinData)
-        if(ListPORefMasterObj[i].SourceAgrmntFinDataField == CommonConstantX.SRC_AGRMNT_FIN_DATA_FIELD_TOTAL_INS_CUST_AMT)
-        {
+        if (ListPORefMasterObj[i].SourceAgrmntFinDataField == CommonConstantX.SRC_AGRMNT_FIN_DATA_FIELD_TOTAL_INS_CUST_AMT) {
           tempPurchaseOrderDObj.PurchaseOrderAmt = this.TotalInsCustAmt;
         }
         //END X DSF UATDSFCF-588
-        
+
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
       if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeFee) {
         let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
-        if(tempAgrmntFeeObj != undefined)
+        if (tempAgrmntFeeObj != undefined)
           tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
         else
           tempPurchaseOrderDObj.PurchaseOrderAmt = 0;
@@ -266,7 +311,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
     }
     return TempListPurchaseOrderD;
   }
-  
+
   async SaveForm() {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.purchaseOrderHObj.MouNo = this.MouNo;
@@ -275,7 +320,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
     // this.listPurchaseOrderD = new Array();
     // this.purchaseOrderDObj = new PurchaseOrderDObj();
 
-    if(this.bankVisible == true){
+    if (this.bankVisible == true) {
       this.purchaseOrderHObj.BankCode = this.responseRefBank.BankCode;
       this.purchaseOrderHObj.BankBranch = this.responseRefBank.OfficeBankAccBranch;
       this.purchaseOrderHObj.BankAccNo = this.responseRefBank.OfficeBankAccNo;
@@ -284,19 +329,19 @@ export class PurchaseOrderDetailXComponent implements OnInit {
 
     var ListPORefMasterObj = await this.GetFromRule();
     var listPurchaseOrderD = this.GenerateRequestPurchaseOrderDObjs(ListPORefMasterObj);
-    
+
     var POObj = {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: listPurchaseOrderD
     }
 
-    if(this.purchaseOrderHObj.BankCode ||
+    if (this.purchaseOrderHObj.BankCode ||
       this.purchaseOrderHObj.BankBranch ||
       this.purchaseOrderHObj.BankAccNo ||
       this.purchaseOrderHObj.BankAccName) {
       this.AddEditPO(POObj);
     }
-    else{
+    else {
       this.toastr.warningMessage(ExceptionConstant.SUPPLIER_BANK_ACC_NOT_SET);
     }
   }
@@ -311,50 +356,48 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   }
   async AddEditPO(POObj: any) {
     this.checkValidExpDt();
-    if(!this.isDataExist){      
+    if (!this.isDataExist) {
       this.http.post(URLConstant.AddPurchaseOrder, POObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId, "BizTemplateCode": this.BizTemplateCode });
-          
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT], { "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId, "BizTemplateCode": this.BizTemplateCode });
+
         });
-    }else{      
+    } else {
       this.http.post(URLConstant.EditPurchaseOrder, POObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId, "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT], { "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId, "BizTemplateCode": this.BizTemplateCode });
         });
     }
   }
 
-  selectedOption(event)
-  {    
-    if(event == 'Yes'){
+  selectedOption(event) {
+    if (event == 'Yes') {
       this.bankVisible = true;
-    } 
-    else{
+    }
+    else {
       this.bankVisible = false;
-    }      
+    }
   }
 
-  getGeneralSetBankAcc(){
-    let reqByCodeObj ={
+  getGeneralSetBankAcc() {
+    let reqByCodeObj = {
       Code: CommonConstantX.GsCodePONoNeedToPayBank
     }
     this.http.post(URLConstant.GetGeneralSettingByCode, reqByCodeObj).subscribe(
-    (response) => {
-      console.log(response)
-      if(response != null)
-      {
-        this.getBankAcc(response['GsValue']);
-      }
-    
-    });
+      (response) => {
+        console.log(response)
+        if (response != null) {
+          this.getBankAcc(response['GsValue']);
+        }
+
+      });
     // this.responseGeneralSetting = {OfficeBankAccNo:"testNo", OfficeBankAccName:"testName"}
     // this.getBankName("002");
   }
 
-  getBankAcc(OfficeBankAccCode: string){
+  getBankAcc(OfficeBankAccCode: string) {
     var officeBankObj = {
       Code: OfficeBankAccCode
     };
@@ -368,7 +411,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
     );
   }
 
-  initDdlVendorBankAcc(){
+  initDdlVendorBankAcc() {
     this.ucDdlVendorBankAccObj = new UcDropdownListObj;
     this.ucDdlVendorBankAccObj.ddlType = "one";
     this.ucDdlVendorBankAccObj.isCustomList = true;
@@ -377,8 +420,8 @@ export class PurchaseOrderDetailXComponent implements OnInit {
     this.ucDdlVendorBankAccObj.customValue = "VendorBankAccInfoForDisplay"
     this.isDdlVendorBankAccReady = true
   }
-  
-  vendorBankAccChange(ev){
+
+  vendorBankAccChange(ev) {
     this.purchaseOrderHObj.BankCode = ev.selectedObj.BankCode;
     this.purchaseOrderHObj.BankBranch = ev.selectedObj.BankName;
     this.purchaseOrderHObj.BankAccNo = ev.selectedObj.BankAccountNo;
