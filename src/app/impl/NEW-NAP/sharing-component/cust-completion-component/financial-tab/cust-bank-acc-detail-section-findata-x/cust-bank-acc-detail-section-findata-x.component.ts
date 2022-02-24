@@ -171,7 +171,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
           AppCustBankStmntId: [item.AppCustBankStmntId, [Validators.required]],
           // AppCustBankId: [item.AppCustBankId, [Validators.required]],
           Month: [this.monthOfYear.indexOf(item.Month), [Validators.required]],
-          Year: [item.Year, [Validators.required, Validators.pattern("^[0-9]+$")]],
+          Year: [item.Year, [Validators.required, Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
           DebitTrxCount: [(item.DebitTrxCount == undefined ? 0 : item.DebitTrxCount), [Validators.required, Validators.min(0), Validators.max(9999)]],
           CreditTrxCount: [(item.CreditTrxCount == undefined ? 0 : item.CreditTrxCount), [Validators.required, Validators.min(0), Validators.max(9999)]],
           DebitAmt: [item.DebitAmt, [Validators.required]],
@@ -195,7 +195,7 @@ export class CustBankAccDetailSectionFindataXComponent implements OnInit {
     var formGroup = this.fb.group({
       AppCustBankStmntId: [this.custBankStmnt.AppCustBankStmntId, [Validators.required]],
       Month: ['', [Validators.required]],
-      Year: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+      Year: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]],
       DebitTrxCount: [0, [Validators.required, Validators.min(0), Validators.max(9999)]],
       CreditTrxCount: [0, [Validators.required, Validators.min(0), Validators.max(9999)]],
       DebitAmt: [0, [Validators.required]],
