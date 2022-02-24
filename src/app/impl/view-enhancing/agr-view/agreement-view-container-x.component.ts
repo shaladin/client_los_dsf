@@ -197,9 +197,9 @@ export class AgreementViewContainerXComponent implements OnInit {
         }
         else if (this.BizTemplateCode == CommonConstant.CF4W) {
           this.IsAsset = this.NumOfAsset < 2 ? true : false;
-          this.IsInsurance = this.NumOfAsset < 2 ? true : false;
+          this.IsInsurance = false; 
           this.IsMultiAsset = this.NumOfAsset > 1 ? true : false;
-          this.IsMultiInsurance = this.NumOfAsset > 1 ? true : false;
+          this.IsMultiInsurance = true; 
           this.IsCollateral = false;
           this.IsInsuranceFL4W = false;
           this.IsFinancial = false;

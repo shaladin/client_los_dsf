@@ -21,12 +21,12 @@ export class CustSyncComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   BizTemplateCode: string;
-  
+
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute
-  ) { 
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -48,7 +48,20 @@ export class CustSyncComponent implements OnInit {
   GetCallBack(e: any) {
     if (e.Key == "Sync") {
       if(confirm("Are You Sure To Sync This Data ?")){
-        this.http.post(URLConstantX.SyncAppCustWithCustFOU, { AppId: e.RowObj.AppId, CustNo: e.RowObj.CustNo }).pipe(
+        let reqObj;
+        if(e.RowObj.AgrmntId){
+          reqObj = {
+            AppId: e.RowObj.AppId,
+            AgrmntId: e.RowObj.AgrmntId,
+            CustNo: e.RowObj.CustNo
+          }
+        }else{
+          reqObj = {
+            AppId: e.RowObj.AppId,
+            CustNo: e.RowObj.CustNo
+          }
+        }
+        this.http.post(URLConstantX.SyncAppCustWithCustFOU, reqObj).pipe(
           map((response) => {
             return response;
           }),
@@ -70,7 +83,7 @@ export class CustSyncComponent implements OnInit {
       }
     }
     else if(e.Key == "ViewCust"){
-      this.CustNoObj.CustNo = e.RowObj.CustNo;      
+      this.CustNoObj.CustNo = e.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){

@@ -727,8 +727,7 @@ export class CommissionV2XComponent implements OnInit {
     this.http.post(AddEditUrl, obj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        if (this.ReturnHandlingHObj.ReturnHandlingHId != 0 || this.ReturnHandlingHObj.ReturnHandlingHId != undefined) {
-          // this.outputTab.emit(this.ReturnHandlingHObj.ReturnHandlingHId);
+        if (this.ReturnHandlingHObj.ReturnHandlingHId != 0) {
           this.outputTab.emit({ ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
                                 IsSave: true});
         } else {
