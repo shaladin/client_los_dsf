@@ -142,19 +142,25 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   async getListTemp(ev) {
     var HaveAgr = false;
-    await this.adminProcessSvc.GetListAppAssetByListAppAssetId({Ids : ev.TempListId}).subscribe((response) => {
+    var ShowError = false;
+    await this.adminProcessSvc.GetListAppAssetByListAppAssetId({ Ids: ev.TempListId }).subscribe((response) => {
       var AgrExistIdx = response["ListAppAssetObj"].findIndex(x => x.AgrmntId != null);
-      if(AgrExistIdx != -1) {
+      if (AgrExistIdx != -1) {
         HaveAgr = true;
       }
 
-      if(HaveAgr){
-        var AgrNotExistIdx = response["ListAppAssetObj"].findIndex(x => x.AgrmntId == null);
-        if(AgrNotExistIdx != -1){
-          this.toastr.typeErrorCustom("Need to be submit Existing Temp Asset first, before adding another.");
-          this.ucAddToTemp.deleteFromTemp(response["ListAppAssetObj"][AgrNotExistIdx].AppAssetId, false);
+      if (HaveAgr) {
+        var length = response["ListAppAssetObj"].length;
+        for (var i = 0; i < length; i++) {
+          if (response["ListAppAssetObj"][i].AgrmntId == null) {
+            ShowError = true;
+            this.ucAddToTemp.deleteFromTemp(response["ListAppAssetObj"][i].AppAssetId, false);
+          }
+        }
       }
-    }});
+
+      if(ShowError) this.toastr.typeErrorCustom("Need to be submit Existing Temp Asset first, before adding another.");
+    });
 
     this.listSelectedId = ev.TempListId;
     this.IsEnd = false;
