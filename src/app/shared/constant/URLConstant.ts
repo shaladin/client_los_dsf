@@ -96,6 +96,7 @@ export class URLConstant {
   public static GetAppAssetByAppAssetId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAppAssetId";
   public static CopyAppAsset = environment.losUrl + "/v1" + "/AppAsset/CopyAppAsset";
   public static CalculateTotalAssetPriceAndDownPayment = environment.losUrl + "/v1" + "/AppAsset/CalculateTotalAssetPriceAndDownPayment";
+  public static GetListAppAssetByListAppAssetId = environment.losUrl + "/v1" + "/AppAsset/GetListAppAssetByListAppAssetId";
 
   // App Asset Suppl Emp
   public static GetListAppAssetSupplEmpByListAppAssetId = environment.losUrl + "/v1" + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
@@ -1197,6 +1198,7 @@ export class URLConstant {
   public static SubmitAgrmntActivationByHuman = environment.losUrl + "/v1" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
   public static SubmitAgrmntActivationByHumanV2 = environment.losUrl + "/v2" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
   public static SubmitAgrmntActivationByHumanV2_1 = environment.losUrl + "/v2.1" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
+  public static SubmitAgrmntActivationByHumanV2_2 = environment.losUrl + "/v2.2" + "/AgrmntActivation/SubmitAgrmntActivationByHuman";
 
   //Asset Accessory
   // public static GetAssetAccessoryByCode = "http://localhost:5000/AssetAccessory/GetAssetAccessoryByCode";

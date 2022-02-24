@@ -26,7 +26,7 @@
     "@adins/uc-show-errors": "^1.0.8",
     "@adins/uc-subsection": "^1.0.5",
     "@adins/ucaddress": "^1.1.2",
-    "@adins/ucaddtotemp": "^1.0.26",
+    "@adins/ucaddtotemp": "^1.3.0",
     "@adins/ucapproval": "^1.0.12",
     "@adins/ucapproval-history": "^1.0.10",
     "@adins/ucapproval-r3": "^1.2.1",
