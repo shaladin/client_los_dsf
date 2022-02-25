@@ -983,6 +983,7 @@ export class ApplicationDataXComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.LobCode = this.resultResponse.LobCode;
     reqCalculatePlafondAgrmntXObj.AssetTypeCode = this.agrParent.AssetTypeCode;
     reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
+    reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
 
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
       this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(

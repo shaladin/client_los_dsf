@@ -7,6 +7,7 @@ export class ReqCalculatePlafondAgrmntXObj {
     LobCode: string;
     AssetTypeCode: string;
     EffectiveDt: Date;
+    GoLiveDt: Date;
     constructor()
     {
         this.AppId = 0;
@@ -17,5 +18,6 @@ export class ReqCalculatePlafondAgrmntXObj {
         this.LobCode = "";
         this.AssetTypeCode = "";
         this.EffectiveDt = new Date();
+        this.GoLiveDt = new Date();
     }
 }  
