@@ -187,6 +187,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.InsuranceDataForm)
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
     this.BindMultiInsGridData();
@@ -196,6 +197,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
     this.GetCollateralDDLForCopy();
     this.GetGeneralSettingDefaultLoadingFeeYear();
+    console.log(this.InsuranceDataForm)
   }
 
   CancelHandler() {
@@ -1661,7 +1663,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
   }
 
-  IsMainCvgChaged(event, i) {
+  IsMainCvgChaged(i) {
     this.isCalculate = false;
     if (i != undefined && this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["MrInsPaidByCode"].value == CommonConstant.InsPaidByAtCost) {
       this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
@@ -1669,6 +1671,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       });
     }
     this.checkPaidBy();
+
+    var obj = {
+      target : {
+        value : this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["MrMainCvgTypeCode"].value
+      }
+    };
+    this.MainCvgTypeDetailChanged(obj, i);
   }
 
   IsAllPaidByCust: boolean = true;

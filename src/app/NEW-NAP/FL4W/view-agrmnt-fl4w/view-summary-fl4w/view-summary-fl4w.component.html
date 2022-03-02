@@ -86,24 +86,26 @@
   <lib-ucSubsection [id]="'guarantorId'" [title]="'Guarantor'" [panel]="'guarantor'">
   </lib-ucSubsection>
   <div id="guarantor">
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th translate class="text-center">No</th>
-          <th translate class="text-left">Guarantor Type</th>
-          <th translate class="text-left">Guarantor Name</th>
-          <th translate class="text-left">Guarantor Relationship</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of SummaryObj?.AppGuarantors;let i=index">
-          <td class="text-center">{{i+1}}</td>
-          <td class="text-left">{{item.MrGuarantorTypeCode}}</td>
-          <td class="text-left">{{item.GuarantorName}}</td>
-          <td class="text-left">{{item.MrCustRelationshipCode}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th translate class="text-center">No</th>
+            <th translate class="text-left">Guarantor Type</th>
+            <th translate class="text-left">Guarantor Name</th>
+            <th translate class="text-left">Guarantor Relationship</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of SummaryObj?.AppGuarantors;let i=index">
+            <td class="text-center">{{i+1}}</td>
+            <td class="text-left">{{item.MrGuarantorTypeCode}}</td>
+            <td class="text-left">{{item.GuarantorName}}</td>
+            <td class="text-left">{{item.MrCustRelationshipCode}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <label class="col-md-2  adInsLabel" translate>Total Reserved Fund Amount</label>
     <label class="col-md-4  adinslabel" translate>{{this.totalRsvFund | number:'.2':'en-US'}}</label>
   </div>
@@ -292,27 +294,29 @@
       <label class="col-md-2  adinslabel" translate
         *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GrossYieldPrcnt | number:'.6':'en-US'}} %</label>
     </div>
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th translate class="text-center">Seq No</th>
-          <th translate class="text-right">Installment Amount</th>
-          <th translate class="text-right">Principal Amount</th>
-          <th translate class="text-right">Interest Amount</th>
-          <th translate class="text-right">OS Principal Amount</th>
-          <th translate class="text-right">OS Interest Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of SummaryObj?.InstallmentObjs;let i=index">
-          <td class="text-center">{{item.InstSeqNo}}</td>
-          <td class="text-right">{{item.InstAmt | number:'.2':'en-US'}}</td>
-          <td class="text-right">{{item.PrincipalAmt | number:'.2':'en-US'}}</td>
-          <td class="text-right">{{item.InterestAmt | number:'.2':'en-US'}}</td>
-          <td class="text-right">{{item.OsPrincipalAmt | number:'.2':'en-US'}}</td>
-          <td class="text-right">{{item.OsInterestAmt | number:'.2':'en-US'}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th translate class="text-center">Seq No</th>
+            <th translate class="text-right">Installment Amount</th>
+            <th translate class="text-right">Principal Amount</th>
+            <th translate class="text-right">Interest Amount</th>
+            <th translate class="text-right">OS Principal Amount</th>
+            <th translate class="text-right">OS Interest Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of SummaryObj?.InstallmentObjs;let i=index">
+            <td class="text-center">{{item.InstSeqNo}}</td>
+            <td class="text-right">{{item.InstAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.PrincipalAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.InterestAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.OsPrincipalAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.OsInterestAmt | number:'.2':'en-US'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

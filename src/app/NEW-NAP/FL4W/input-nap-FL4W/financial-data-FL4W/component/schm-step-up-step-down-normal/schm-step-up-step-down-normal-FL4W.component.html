@@ -367,7 +367,7 @@
         Entry Installment
       </button>
     </div>
-    <div formArrayName="ListEntryInst">
+    <div formArrayName="ListEntryInst" style="overflow-x: auto;">
       <table *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0"
         class="table table-responsive-md text-center table-hover">
         <thead>
@@ -430,7 +430,7 @@
         Calculate Amortization
       </button>
     </div>
-    <div *ngIf="listInstallment">
+    <div *ngIf="listInstallment" style="overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">

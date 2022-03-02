@@ -10,7 +10,7 @@
   </div>
   <div class="card-body px-3 pb-3" *ngIf="IsReady">
     <lib-ucSubsection [id]="'subSecMatchId'" [title]="'Match / Similiar Data'" [panel]="'subSecMatch'"></lib-ucSubsection>
-    <div id="subSecMatch">
+    <div id="subSecMatch" style="overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -45,7 +45,7 @@
     </div>
 
     <lib-ucSubsection [id]="'subSecAppProcessId'" [title]="'Application in Process'" [panel]="'subSecAppProcess'"></lib-ucSubsection>
-    <div id="subSecAppProcess">
+    <div id="subSecAppProcess" style="overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -80,7 +80,7 @@
     </div>
 
     <lib-ucSubsection [id]="'subSecNegListId'" [title]="'Negative List'" [panel]="'subSecNegList'"></lib-ucSubsection>
-    <div id="subSecNegList">
+    <div id="subSecNegList" style="overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">

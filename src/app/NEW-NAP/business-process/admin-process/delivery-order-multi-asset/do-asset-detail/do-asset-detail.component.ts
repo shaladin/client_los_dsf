@@ -184,7 +184,9 @@ export class DoAssetDetailComponent implements OnInit {
     await this.GetGS();
     await this.GetAppCustData();
     await this.GetListAddr();
-    await this.GetAllAssetData();
+    //Issue Non Jira: DO Multi asset tapi col regis masih ambil asset pertama saja
+    //await this.GetAllAssetData();
+    await this.GetCurrentAssetCollRegis();
     this.InputLookupCityIssuerObj.isReady = true;
     this.isOwnerReady = true;
   }
@@ -582,4 +584,12 @@ export class DoAssetDetailComponent implements OnInit {
     }
   }
 
+  //Issue Non Jira: DO Multi asset tapi col regis masih ambil asset pertama saja
+  async GetCurrentAssetCollRegis() {
+    await this.http.post(URLConstant.GetAppCollateralRegistrationByAppAssetId, { Id: this.AppAssetId }).toPromise().then(
+      response => {
+        this.AppCollateralRegistrationObj = response;
+      }
+    )
+  }
 }

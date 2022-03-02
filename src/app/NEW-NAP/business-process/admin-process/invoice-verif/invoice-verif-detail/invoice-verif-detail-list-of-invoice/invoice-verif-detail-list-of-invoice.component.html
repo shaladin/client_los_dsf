@@ -9,40 +9,40 @@
             <lib-ucSubsection [id]="'ListOfInvoiceId'" [title]="'List Of Invoice'" [panel]="'ListOfInvoice'">
             </lib-ucSubsection>
             <div class="form-body" id="ListOfInvoice" formArrayName="Invoices">
-              <div *ngIf ="MrMouTypeCode=='FACTORING'">
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th style="text-align: center;"><span translate class="thead-header text-left">No</span></th>
-                    <th style="text-align: center;"><span translate class="thead-header text-right">Invoice No</span>
-                    </th>
-                    <th style="text-align: left;"><span translate class="thead-header text-left">Customer
-                        Factoring</span></th>
-                    <th style="text-align: right;"><span translate class="thead-header text-right">Invoice Amount</span>
-                    </th>
-                    <th style="text-align: center;"><span translate class="thead-header">Invoice Date</span></th>
-                    <th><span translate class="thead-header">Notes</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr [formGroupName]="i" *ngFor="let item of InvoiceForm.controls['Invoices']['controls']; let i = index">
-                    <td class="text-center">{{i + 1}}</td>
-                    <td class="text-center">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceNo.value}}
-                    </td>
-                    <td class="text-left">{{InvoiceForm.controls["Invoices"].controls[i].controls.CustName.value}}</td>
-                    <td class="text-right">
-                      {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceAmt.value | number}}</td>
-                    <td class="text-center">
-                      {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceDt.value | date : 'dd-MMM-yyyy' }}
-                    </td>
-                    <td><textarea type="text" class="form-control adInsInput" formControlName="InvoiceNotes"></textarea>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div *ngIf ="MrMouTypeCode=='FACTORING'" style="overflow-x: auto;">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th style="text-align: center;"><span translate class="thead-header text-left">No</span></th>
+                      <th style="text-align: center;"><span translate class="thead-header text-right">Invoice No</span>
+                      </th>
+                      <th style="text-align: left;"><span translate class="thead-header text-left">Customer
+                          Factoring</span></th>
+                      <th style="text-align: right;"><span translate class="thead-header text-right">Invoice Amount</span>
+                      </th>
+                      <th style="text-align: center;"><span translate class="thead-header">Invoice Date</span></th>
+                      <th><span translate class="thead-header">Notes</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr [formGroupName]="i" *ngFor="let item of InvoiceForm.controls['Invoices']['controls']; let i = index">
+                      <td class="text-center">{{i + 1}}</td>
+                      <td class="text-center">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceNo.value}}
+                      </td>
+                      <td class="text-left">{{InvoiceForm.controls["Invoices"].controls[i].controls.CustName.value}}</td>
+                      <td class="text-right">
+                        {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceAmt.value | number}}</td>
+                      <td class="text-center">
+                        {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceDt.value | date : 'dd-MMM-yyyy' }}
+                      </td>
+                      <td><textarea type="text" class="form-control adInsInput" formControlName="InvoiceNotes"></textarea>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
-              <div *ngIf ="MrMouTypeCode!='FACTORING'">
+              <div *ngIf ="MrMouTypeCode!='FACTORING'" style="overflow-x: auto;">
                 <table class="table table-responsive-md text-center table-hover">
                   <thead>
                     <tr class="table-header">

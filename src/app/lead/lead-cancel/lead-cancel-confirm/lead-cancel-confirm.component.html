@@ -19,49 +19,51 @@
             <div class="px-3">
               <lib-ucSubsection [id]="'LeadCancel'" [title]="'List Lead Cancel'" [panel]="'LeadCancelPanel'">
               </lib-ucSubsection>
-              <table *ngIf="responseObj.length > 0" class="table table-responsive-md text-center table-hover"
-                id="LeadCancelPanel">
-                <thead>
-                  <tr class="table-header">
-                    <th class="text-left"><span class="thead-header" name='leadNo' translate>LEAD NO</span>
-                    </th>
-                    <th class="text-left"><span class="thead-header" name='officeName' translate>OFFICE NAME</span>
-                    </th>
-                    <th class="text-left"><span class="thead-header" name='orderNo' translate>ORDER NO</span>
-                    </th>
-                    <th class="text-left"><span class="thead-header" name='custName' translate>CUSTOMER NAME</span>
-                    </th>
-                    <th class="text-left"><span class="thead-header" name='leadSource' translate>LEAD SOURCE</span>
-                    </th>
-                    <th class="text-left"><span class="thead-header" name='fullAssetName' translate>FULL ASSET NAME</span>
-                    </th>
-                    <th class="text-left"><span class="thead-header" name='duplicateLeadNo' translate>LEAD STEP</span>
-                    </th>
-                    <th class="text-left"><span class="thead-header" name='duplicateLeadNo' translate>LEAD STATUS</span>
-                    </th>
-                    <th translate>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of responseObj">
-                    <ng-container *ngIf="deletedArr.includes(item.LeadId) == false">
-                      <td class="text-left"><a href="{{leadUrl + item.LeadId}}" target="_blank">{{item.LeadNo}}</a></td>
-                      <td class="text-left">{{item.OfficeName}}</td>
-                      <td class="text-left">{{item.OrderNo}}</td>
-                      <td class="text-left">{{item.CustName}}</td>
-                      <td class="text-left">{{item.LeadSource}}</td>
-                      <td class="text-left">{{item.FullAssetName}}</td>
-                      <td class="text-left">{{item.LeadStep}}</td>
-                      <td class="text-left">{{item.LeadStatus}}</td>
-                      <td>
-                        <a class="danger p-0" (click)="deleteFromTemp(item.LeadId)">
-                          <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                        </a>
-                      </td>
-                    </ng-container>
-                  </tr>
-                </tbody>
-              </table>
+              <div style="overflow-x: auto;">
+                <table *ngIf="responseObj.length > 0" class="table table-responsive-md text-center table-hover"
+                  id="LeadCancelPanel">
+                  <thead>
+                    <tr class="table-header">
+                      <th class="text-left"><span class="thead-header" name='leadNo' translate>LEAD NO</span>
+                      </th>
+                      <th class="text-left"><span class="thead-header" name='officeName' translate>OFFICE NAME</span>
+                      </th>
+                      <th class="text-left"><span class="thead-header" name='orderNo' translate>ORDER NO</span>
+                      </th>
+                      <th class="text-left"><span class="thead-header" name='custName' translate>CUSTOMER NAME</span>
+                      </th>
+                      <th class="text-left"><span class="thead-header" name='leadSource' translate>LEAD SOURCE</span>
+                      </th>
+                      <th class="text-left"><span class="thead-header" name='fullAssetName' translate>FULL ASSET NAME</span>
+                      </th>
+                      <th class="text-left"><span class="thead-header" name='duplicateLeadNo' translate>LEAD STEP</span>
+                      </th>
+                      <th class="text-left"><span class="thead-header" name='duplicateLeadNo' translate>LEAD STATUS</span>
+                      </th>
+                      <th translate>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of responseObj">
+                      <ng-container *ngIf="deletedArr.includes(item.LeadId) == false">
+                        <td class="text-left"><a href="{{leadUrl + item.LeadId}}" target="_blank">{{item.LeadNo}}</a></td>
+                        <td class="text-left">{{item.OfficeName}}</td>
+                        <td class="text-left">{{item.OrderNo}}</td>
+                        <td class="text-left">{{item.CustName}}</td>
+                        <td class="text-left">{{item.LeadSource}}</td>
+                        <td class="text-left">{{item.FullAssetName}}</td>
+                        <td class="text-left">{{item.LeadStep}}</td>
+                        <td class="text-left">{{item.LeadStatus}}</td>
+                        <td>
+                          <a class="danger p-0" (click)="deleteFromTemp(item.LeadId)">
+                            <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                          </a>
+                        </td>
+                      </ng-container>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <lib-ucSubsection [id]="'LeadCancelSubmit'" [title]="'Lead Cancel Notes'"
                 [panel]="'LeadCancelNotesPanel'">
               </lib-ucSubsection>

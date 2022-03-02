@@ -129,7 +129,7 @@
         <lib-ucSubsection *ngIf="AppAssetObj?.ResponseAppAssetAccessoryObjs?.length > 0" [id]="'assetAccId'"
           [title]="'Asset Accessory'" [panel]="'assetAcc'">
         </lib-ucSubsection>
-        <div id="assetAcc" *ngIf="AppAssetObj?.ResponseAppAssetAccessoryObjs?.length > 0">
+        <div id="assetAcc" *ngIf="AppAssetObj?.ResponseAppAssetAccessoryObjs?.length > 0" style="overflow-x: auto;">
           <table class="table table-responsive-md table-hover" matSort>
             <thead>
               <tr class="table-header">

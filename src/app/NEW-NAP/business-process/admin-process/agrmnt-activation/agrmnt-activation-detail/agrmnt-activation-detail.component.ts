@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdminProcessService, ReqAppAssetAgreementActivationObj } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,6 +19,7 @@ import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 import { DatePipe } from '@angular/common';
+import { UcaddtotempComponent } from '@adins/ucaddtotemp';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -26,6 +27,7 @@ import { DatePipe } from '@angular/common';
   providers: [AdminProcessService]
 })
 export class AgrmntActivationDetailComponent implements OnInit {
+  @ViewChild(UcaddtotempComponent) ucAddToTemp : UcaddtotempComponent;
   AssetObj: Array<AppAssetObj>;
   AppFees: Array<ResAppFeeObj> = new Array<ResAppFeeObj>();
   AppFinData: ResponseAppFinDataObj = new ResponseAppFinDataObj();
@@ -138,7 +140,28 @@ export class AgrmntActivationDetailComponent implements OnInit {
     }
   }
 
-  getListTemp(ev) {
+  async getListTemp(ev) {
+    var HaveAgr = false;
+    var ShowError = false;
+    await this.adminProcessSvc.GetListAppAssetByListAppAssetId({ Ids: ev.TempListId }).subscribe((response) => {
+      var AgrExistIdx = response["ListAppAssetObj"].findIndex(x => x.AgrmntId != null);
+      if (AgrExistIdx != -1) {
+        HaveAgr = true;
+      }
+
+      if (HaveAgr) {
+        var length = response["ListAppAssetObj"].length;
+        for (var i = 0; i < length; i++) {
+          if (response["ListAppAssetObj"][i].AgrmntId == null) {
+            ShowError = true;
+            this.ucAddToTemp.deleteFromTemp(response["ListAppAssetObj"][i].AppAssetId, false);
+          }
+        }
+      }
+
+      if(ShowError) this.toastr.typeErrorCustom("Need to be submit Existing Temp Asset first, before adding another.");
+    });
+
     this.listSelectedId = ev.TempListId;
     this.IsEnd = false;
     if(this.listSelectedId.length == 0){
@@ -187,7 +210,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
         AgreementNo: this.AgrmntNo,
         IsEnd: this.IsEnd
       }
-      this.adminProcessSvc.SubmitAgrmntActivationByHumanV2_1(Obj).subscribe((response) => {
+      this.adminProcessSvc.SubmitAgrmntActivationByHumanV2_2(Obj).subscribe((response) => {
         AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { BizTemplateCode: this.BizTemplateCode });
       });
     }
@@ -203,12 +226,12 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   claimTask(){
   if(environment.isCore){
-      if(this.WfTaskListId != "" && this.WfTaskListId!= undefined){
+      if(this.WfTaskListId != "" && this.WfTaskListId!= undefined){
           this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
         }
     }
-    else if (this.WfTaskListId > 0) {
-       this.claimTaskService.ClaimTask(this.WfTaskListId);
+    else if (this.WfTaskListId > 0) {
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
   }
 }

@@ -2,7 +2,7 @@
   <div *ngIf="BizTemplateCode !== 'DLFN'">
     <lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_Subsidy'">
     </lib-ucSubsection>
-    <div id="FinData_Subsidy">
+    <div id="FinData_Subsidy" style="overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -466,52 +466,53 @@
     </div>
   </div>
   <br>
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="No" translate>
-            No
+  <div style="overflow-x: auto;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;"><span class="thead-header" name="No" translate>
+              No
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="InstAmt" translate>
+            Installment Amount  
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="PrincipalAmt" translate>
+            Principal Amount
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="InterestAmt" translate>
+            Interest Amount
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="OsPrincipalAmt" translate>
+            Os Principal Amount
           </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="InstAmt" translate>
-          Installment Amount  
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="OsInterestAmt" translate>
+            Os Interest Amount  
           </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="PrincipalAmt" translate>
-          Principal Amount
-          </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="InterestAmt" translate>
-          Interest Amount
-          </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="OsPrincipalAmt" translate>
-          Os Principal Amount
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="OsInterestAmt" translate>
-          Os Interest Amount  
-        </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody *ngIf = "listInstallment.length == 0">
-      <tr>
-        <td colspan="100%">No Data Available</td>
-      </tr>
-    </tbody>
-    <tbody *ngIf = "listInstallment.length > 0">
-      <tr *ngFor="let item of listInstallment; let i = index">
-        <td style="text-align: center;">{{item.InstSeqNo}}</td>
-        <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
-        <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
-        <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>
-        <td style="text-align: right;">{{item.OsPrincipalAmt| number : '1.2-2'}}</td>
-        <td style="text-align: right;">{{item.OsInterestAmt| number : '1.2-2'}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "listInstallment.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "listInstallment.length > 0">
+        <tr *ngFor="let item of listInstallment; let i = index">
+          <td style="text-align: center;">{{item.InstSeqNo}}</td>
+          <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.OsPrincipalAmt| number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.OsInterestAmt| number : '1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 <div *ngIf="BizTemplateCode === 'OPL'">
   <div class="col-md-12">
@@ -521,7 +522,7 @@
 
           <lib-ucSubsection [id]="'assetDataId'" [title]="'List of Asset'" [panel]="'assetData'">
           </lib-ucSubsection>
-          <div id="assetData">
+          <div id="assetData" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">

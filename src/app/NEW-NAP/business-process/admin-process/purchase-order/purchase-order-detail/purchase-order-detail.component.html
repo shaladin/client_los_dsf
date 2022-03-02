@@ -1,5 +1,4 @@
-<form class="form form-horizontal" [formGroup]="PODetailForm" (ngSubmit)="PODetailForm.valid && SaveForm()"
-    #enjiForm="ngForm">
+<form class="form form-horizontal" [formGroup]="PODetailForm" (ngSubmit)="PODetailForm.valid && SaveForm()" #enjiForm="ngForm">
 
     <div class="row text-left">
         <div class="col-md-12">
@@ -26,24 +25,18 @@
                                         <label class="col-md-6">{{AssetObj?.VendorAddrObj?.Addr}} </label>
                                     </div>
                                     <div class="row">
-                                        <label class="col-md-6 adins-required-label" translate>Supplier Bank Account No
-                                        </label>
+                                        <label class="col-md-6 adins-required-label" translate>Supplier Bank Account No </label>
                                         <!-- <label class="col-md-6">{{AssetObj?.VendorBankAccObj?.BankAccountNo}} </label> -->
                                         <div class="col-md-6">
-                                            <select class="form-control adInsInput" formControlName="BankAccNo"
-                                                (change)="BankAccHandler()"
-                                                [ngClass]="{ 'is-invalid': enjiForm.submitted && PODetailForm.controls.BankAccNo.invalid }">
-                                                <option value="">-Select One-</option>
-                                                <option *ngFor="let bankAcc of vendorBankAccList"
-                                                    [value]="bankAcc.BankAccountNo">
-                                                    {{bankAcc.BankAccountNo}}
-                                                </option>
+                                            <select class="form-control adInsInput" formControlName="BankAccNo" (change)="BankAccHandler()"
+                                            [ngClass]="{ 'is-invalid': enjiForm.submitted && PODetailForm.controls.BankAccNo.invalid }">
+                                            <option value="">-Select One-</option>
+                                            <option *ngFor="let bankAcc of vendorBankAccList" [value]="bankAcc.BankAccountNo">
+                                                {{bankAcc.BankAccountNo}}
+                                            </option>
                                             </select>
-                                            <lib-uc-show-errors [control]="PODetailForm.controls.BankAccNo"
-                                                [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                                            <div *ngIf="!isHasVendorBankAcc" class="invalid-feedback d-block "
-                                                translate>Vendor Bank Account Empty, Please input Vendor Bank Account
-                                                Data!</div>
+                                            <lib-uc-show-errors [control]="PODetailForm.controls.BankAccNo" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                                            <div *ngIf="!isHasVendorBankAcc" class="invalid-feedback d-block " translate>Vendor Bank Account Empty, Please input Vendor Bank Account Data!</div>
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +60,7 @@
                         <div *ngIf="AssetObj?.AppAssetListObj">
                             <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
                             </lib-ucSubsection>
-                            <div class="form-body" id="AssetInfo">
+                            <div class="form-body" id="AssetInfo" style="overflow-x: auto;">
                                 <table class="table table-responsive-md text-center table-hover">
                                     <thead>
                                         <tr class="table-header">
@@ -97,17 +90,14 @@
 
                         <!-- Asset Accessory List -->
                         <div *ngIf="AssetObj?.AppAssetAccListObj">
-                            <lib-ucSubsection [id]="'AssetAccInfoId'" [title]="'Asset Accessory List'"
-                                [panel]="'AssetAccInfo'">
+                            <lib-ucSubsection [id]="'AssetAccInfoId'" [title]="'Asset Accessory List'" [panel]="'AssetAccInfo'">
                             </lib-ucSubsection>
-                            <div class="form-body" id="AssetAccInfo">
+                            <div class="form-body" id="AssetAccInfo" style="overflow-x: auto;">
                                 <table class="table table-responsive-md text-center table-hover">
                                     <thead>
                                         <tr class="table-header">
-                                            <th><span translate class="thead-header text-left">ASSET ACCESSORY
-                                                    NAME</span></th>
-                                            <th><span translate class="thead-header text-right">ASSET ACCESSORY
-                                                    PRICE</span></th>
+                                            <th><span translate class="thead-header text-left">ASSET ACCESSORY NAME</span></th>
+                                            <th><span translate class="thead-header text-right">ASSET ACCESSORY PRICE</span></th>
                                             <th><span translate class="thead-header text-right">DOWN PAYMENT</span></th>
                                             <th><span translate class="thead-header">ACCESSORY NOTES</span></th>
                                         </tr>
@@ -115,8 +105,7 @@
                                     <tbody>
                                         <tr *ngFor="let item of AssetObj?.AppAssetAccListObj">
                                             <td class="text-left">{{item.AssetAccessoryName}}</td>
-                                            <td class="text-center">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}
-                                            </td>
+                                            <td class="text-center">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
                                             <td class="text-center">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
                                             <td>{{item.AccessoryNotes}}</td>
                                         </tr>
@@ -129,39 +118,26 @@
                         <lib-ucSubsection [id]="'SummaryPOId'" [title]="'Summary'" [panel]="'SummaryPO'">
                         </lib-ucSubsection>
                         <div class="form-body" id="SummaryPO">
-                            <div class="row" *ngIf="isReady">
+                            <div class="row" *ngIf = "isReady">
                                 <div class="col-md-6" *ngFor="let item of ListPurchaseOrder">
-                                    <div class="row" *ngIf="(item.MrPoItemCode != 'TDP_AT_COY' && item.MrPoItemCode != 'DP_NETT' 
+                                    <div class="row" *ngIf="(item.MrPoItemCode != 'TDP_AT_COY' && item.MrPoItemCode != 'DP_NETT'
                                                     && item.MrPoItemCode != 'FIRST_INST_AMT')">
                                         <label class="col-md-6" translate>{{item.FeeName}} </label>
-                                        <label
-                                            class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}}
-                                        </label>
+                                        <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
                                     </div>
                                     <div class="row" *ngIf="item.MrPoItemCode == 'TDP_AT_COY'">
-                                        <label class="col-md-6" *ngIf="lobCode != lobCodeFl4w"
-                                            translate>{{item.FeeName}}</label>
-                                        <label class="col-md-6" *ngIf="lobCode == lobCodeFl4w" translate>Total Security
-                                            Deposit At Company </label>
-                                        <label
-                                            class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}}
-                                        </label>
+                                        <label class="col-md-6" *ngIf="lobCode != lobCodeFl4w" translate>{{item.FeeName}}</label>
+                                        <label class="col-md-6" *ngIf="lobCode == lobCodeFl4w" translate>Total Security Deposit At Company </label>
+                                        <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
                                     </div>
                                     <div class="row" *ngIf="item.MrPoItemCode == 'DP_NETT'">
-                                        <label *ngIf="lobCode != 'FL4W'" class="col-md-6"
-                                            translate>{{item.FeeName}}</label>
-                                        <label *ngIf="lobCode == 'FL4W'" class="col-md-6" translate>Security Deposit
-                                            Nett </label>
-                                        <label
-                                            class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}}
-                                        </label>
+                                        <label *ngIf="lobCode != 'FL4W'" class="col-md-6" translate>{{item.FeeName}}</label>
+                                        <label *ngIf="lobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
+                                        <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
                                     </div>
-                                    <div *ngIf="item.MrPoItemCode == 'FIRST_INST_AMT' && AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD'"
-                                        class="row">
+                                    <div *ngIf="item.MrPoItemCode == 'FIRST_INST_AMT' && AssetObj?.AgrmntObj?.MrFirstInstTypeCode == 'AD'" class="row">
                                         <label class="col-md-6" translate>{{item.FeeName}}</label>
-                                        <label
-                                            class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}}
-                                        </label>
+                                        <label class="col-md-6 text-right">{{item.PurchaseOrderAmt | number:'.2':'en-US'}} </label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -169,9 +145,7 @@
                                         <div class="col-md-6">
                                             <div class="row">
                                                 <label class="col-md-6" translate>Total Purchase Order </label>
-                                                <label
-                                                    class="col-md-6 text-right">{{TotalPurchaseOrderAmt | number:'.2':'en-US'}}
-                                                </label>
+                                                <label class="col-md-6 text-right">{{TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
                                             </div>
                                         </div>
                                     </div>
@@ -183,16 +157,13 @@
                         <lib-ucSubsection [id]="'AgrmntSubsidyId'" [title]="'Subsidy Information'"
                             [panel]="'AgrmntSubsidy'">
                         </lib-ucSubsection>
-                        <div class="form-body" id="AgrmntSubsidy">
+                        <div class="form-body" id="AgrmntSubsidy" style="overflow-x: auto;">
                             <table class="table table-responsive-md text-center table-hover">
                                 <thead>
                                     <tr class="table-header">
-                                        <th class="text-left"><span translate class="thead-header">Subsidy
-                                                Allocation</span></th>
-                                        <th class="text-left"><span translate class="thead-header">Subsidy Source</span>
-                                        </th>
-                                        <th class='text-right'><span translate class="thead-header">Subsidy
-                                                Amount</span></th>
+                                        <th class = "text-left"><span translate class="thead-header">Subsidy Allocation</span></th>
+                                        <th class = "text-left"><span translate class="thead-header">Subsidy Source</span></th>
+                                        <th class = 'text-right'><span translate class="thead-header">Subsidy Amount</span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -218,29 +189,27 @@
                                             <!-- <textarea class="form-control" [(ngModel)]="Notes" name="Notes"></textarea> -->
                                             <textarea class="form-control adInsInput" formControlName="Notes"
                                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && PODetailForm.controls.Notes.invalid }"></textarea>
-                                            <lib-uc-show-errors [control]="PODetailForm.controls.Notes"
-                                                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                            <lib-uc-show-errors  [control]="PODetailForm.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
                                         <label class="col-md-6" translate>Expired Date </label>
-                                        <label
-                                            class="col-md-6">{{PurchaseOrderExpiredDt | date: 'dd-MMM-yyyy' }}</label>
+                                        <label class="col-md-6">{{PurchaseOrderExpiredDt | date: 'dd-MMM-yyyy' }}</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-actions right">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
-                                [queryParams]="{AgrmntId:AgrmntId, LobCode: lobCode,AppId:AppId, TaskListId: TaskListId}">
-                                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
-                            </button>
-                            <button type="submit" class="btn btn-raised btn-primary">
-                                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
-                            </button>
-                        </div>
+                            <div class="form-actions right">
+                                <button type="button" class="btn btn-raised btn-warning mr-1"
+                                    [routerLink]="[CancelLink]" [queryParams]="{AgrmntId:AgrmntId, LobCode: lobCode,AppId:AppId, TaskListId: TaskListId}">
+                                    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+                                </button>
+                                <button type="submit" class="btn btn-raised btn-primary">
+                                    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+                                </button>
+                            </div>
                     </div>
                 </div>
             </div>

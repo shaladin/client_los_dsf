@@ -42,11 +42,11 @@ export class PurchaseOrderDetailComponent implements OnInit {
   TaskListId: string;
   vendorBankAccList: Array<Object>;
   VendorBankAcc: VendorBankAccObj;
-  isHasVendorBankAcc: boolean = true;
+  isHasVendorBankAcc : boolean = true;
   ReqByCode: GenericObj = new GenericObj();
   ListRefMaster: Array<RefMasterObj> = new Array<RefMasterObj>();
   ListPurchaseOrder: Array<PurchaseOrderDObj> = new Array<PurchaseOrderDObj>();
-  isReady: boolean = false;
+  isReady : boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService, private fb: FormBuilder) {
@@ -89,7 +89,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
       poUrl = URLConstant.GetAllAssetDataForPOByAssetV2;
     }
 
-    let appAssetObj: ReqAssetDataObj = new ReqAssetDataObj();
+    let appAssetObj : ReqAssetDataObj = new ReqAssetDataObj();
     appAssetObj.AppId = this.AppId;
     appAssetObj.AgrmntId = this.AgrmntId;
     appAssetObj.SupplCode = this.SupplCode;
@@ -98,7 +98,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
       (response) => {
         this.AssetObj = response.ReturnObject;
         this.getDataFromRefMaster();
-        if (this.AssetObj.PurchaseOrderHId != 0) {
+        if(this.AssetObj.PurchaseOrderHId != 0){
           this.isDataExist = true;
           this.PODetailForm.patchValue({
             BankAccNo: this.AssetObj.PurchaseOrderBankAccNo,
@@ -110,7 +110,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
           this.purchaseOrderHObj.BankAccName = this.AssetObj.PurchaseOrderBankAccName;
           this.purchaseOrderHObj.RowVersion = this.AssetObj.RowVersionPO;
         }
-        else {
+        else{
           this.PODetailForm.patchValue({
             BankAccNo: this.AssetObj.VendorBankAccObj.BankAccountNo
           });
@@ -140,22 +140,22 @@ export class PurchaseOrderDetailComponent implements OnInit {
       });
   }
 
-  async getDataFromRefMaster() {
+  async getDataFromRefMaster(){
     this.ReqByCode.Code = CommonConstant.RefMasterTypeCodePoItemCode;
     await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCodeOrderedBySeqNo, this.ReqByCode).toPromise().then(
-      (response: RefMasterObj) => {
+      (response : RefMasterObj) => {
         this.ListRefMaster = response[CommonConstant.RefMasterObjs];
 
-        for (var i = 0; i < this.ListRefMaster.length; i++) {
+        for(var i=0;i < this.ListRefMaster.length; i++){
           var tempPurchaseOrderDObj = new PurchaseOrderDObj();
           if (this.ListRefMaster[i].ReserveField2 == CommonConstant.PurchaseOrderItemTypeNonFee) {
             tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
             tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
             let purchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[this.ListRefMaster[i].ReserveField3] ? this.AssetObj["AgrmntFinDataObj"][this.ListRefMaster[i].ReserveField3] : 0;
 
-            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeInsNotCptlz) purchaseOrderAmt = this.AssetObj.TotalInsCustAmt;
-            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeLfiNotCptlz) purchaseOrderAmt = this.AssetObj.TotalLifeInsCustAmt;
-            if (this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeDiffRateAmt) purchaseOrderAmt = this.AssetObj.DiffRateAmt;
+            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeInsNotCptlz) purchaseOrderAmt = this.AssetObj.TotalInsCustAmt;
+            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeLfiNotCptlz) purchaseOrderAmt = this.AssetObj.TotalLifeInsCustAmt;
+            if(this.ListRefMaster[i].MasterCode == CommonConstant.PoItemCodeDiffRateAmt) purchaseOrderAmt = this.AssetObj.DiffRateAmt;
 
             tempPurchaseOrderDObj.PurchaseOrderAmt = purchaseOrderAmt;
             this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
@@ -165,7 +165,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
             tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
             tempPurchaseOrderDObj.MrPoItemCode = this.ListRefMaster[i].MasterCode;
 
-            if (tempAgrmntFeeObj != undefined)
+            if(tempAgrmntFeeObj != undefined)
               tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
             else
               tempPurchaseOrderDObj.PurchaseOrderAmt = 0;
@@ -174,34 +174,34 @@ export class PurchaseOrderDetailComponent implements OnInit {
           }
         }
       });
-    this.isReady = true;
+      this.isReady = true;
   }
 
-  async initBancAcc() {
+  async initBancAcc(){
     await this.http.post(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise().then(
-      (response) => {
-        if (response["ReturnObject"].length == 0) {
-          this.isHasVendorBankAcc = false;
-        }
-        else {
-          this.vendorBankAccList = response["ReturnObject"];
-          this.vendorBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
-          var isDefaultFound = false;
-          for (const item of this.vendorBankAccList) {
-            if (item["IsDefault"]) {
-              this.VendorBankAcc = item as VendorBankAccObj;
-              isDefaultFound = true;
-              break;
-            }
+    (response) => {
+      if(response["ReturnObject"].length == 0){
+        this.isHasVendorBankAcc = false;
+      }
+      else{
+        this.vendorBankAccList = response["ReturnObject"];
+        this.vendorBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
+        var isDefaultFound = false;
+        for (const item of this.vendorBankAccList) {
+          if (item["IsDefault"]) {
+            this.VendorBankAcc = item as VendorBankAccObj;
+            isDefaultFound = true;
+            break;
           }
-          if (isDefaultFound) {
-            this.VendorBankAcc = this.vendorBankAccList[0] as VendorBankAccObj;
-          }
-          this.PODetailForm.patchValue({
-            BankAccNo: this.VendorBankAcc.BankAccountNo,
-          });
         }
-      });
+        if (isDefaultFound) {
+          this.VendorBankAcc = this.vendorBankAccList[0] as VendorBankAccObj;
+        }
+        this.PODetailForm.patchValue({
+          BankAccNo: this.VendorBankAcc.BankAccountNo,
+        });
+      }
+    });
   }
 
   BankAccHandler() {
@@ -237,7 +237,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
         let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
-        if (tempAgrmntFeeObj != undefined)
+
+        if(tempAgrmntFeeObj != undefined)
           tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
         else
           tempPurchaseOrderDObj.PurchaseOrderAmt = 0;
@@ -252,10 +253,10 @@ export class PurchaseOrderDetailComponent implements OnInit {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.purchaseOrderHObj.MouNo = this.MouNo;
 
-    if (this.PODetailForm.controls.BankAccNo.value == "") {
+    if(this.PODetailForm.controls.BankAccNo.value == ""){
       throw this.toastr.warningMessage(ExceptionConstant.PLEASE_CHOOSE_VENDOR_BANK_ACCOUNT);
     }
-    else {
+    else{
       this.purchaseOrderHObj.BankCode = this.VendorBankAcc.BankCode;
       this.purchaseOrderHObj.BankBranch = this.VendorBankAcc.BankBranch;
       this.purchaseOrderHObj.BankAccNo = this.VendorBankAcc.BankAccountNo;
@@ -275,13 +276,13 @@ export class PurchaseOrderDetailComponent implements OnInit {
       requestPurchaseOrderDObjs: listPurchaseOrderD
     }
 
-    if (this.purchaseOrderHObj.BankCode ||
+    if(this.purchaseOrderHObj.BankCode ||
       this.purchaseOrderHObj.BankBranch ||
       this.purchaseOrderHObj.BankAccNo ||
       this.purchaseOrderHObj.BankAccName) {
       this.AddEditPO(POObj);
     }
-    else {
+    else{
       this.toastr.warningMessage(ExceptionConstant.SUPPLIER_BANK_ACC_NOT_SET);
     }
   }
@@ -299,18 +300,18 @@ export class PurchaseOrderDetailComponent implements OnInit {
     console.log("First Date : " + POObj.requestPurchaseOrderHObj.PurchaseOrderDt);
     this.checkValidExpDt();
     console.log("Second Date : " + POObj.requestPurchaseOrderHObj.PurchaseOrderDt);
-    if (!this.isDataExist) {
+    if(!this.isDataExist){
       this.http.post(URLConstant.AddPurchaseOrder, POObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT], { "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
 
         });
-    } else {
+    }else{
       this.http.post(URLConstant.EditPurchaseOrder, POObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT], { "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
         });
     }
   }

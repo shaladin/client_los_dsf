@@ -17,7 +17,7 @@
       <div class="px-3">
         <lib-ucSubsection *ngIf="responseObj.length > 0" [id]="'Hierarchy'" [title]="'List Document'" [panel]="'ListDocId'">
         </lib-ucSubsection>
-        <div id="ListDocId">
+        <div id="ListDocId" style="overflow-x: auto;">
           <table class="table table-responsive-md text-center table-hover" *ngIf="responseObj.length > 0">
             <thead>
               <tr class="table-header">

@@ -6,53 +6,55 @@
       <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Add</span>
     </button>
   </div>
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="BankCode" translate>Bank Name
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="BankBranch" translate>Bank Branch
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="BankAccNo" translate>Account No
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="BankAccName" translate>Account Name
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="IsBankStmnt" translate>Bank Statement
-        </span>
-        </th>
-        <th><span translate class="thead-header" name='action'>Action</span></th>
-      </tr>
-    </thead>
-    <tbody *ngIf = "listBankAcc?.length == 0">
-      <tr>
-        <td colspan="100%">No Data Available</td>
-      </tr>
-    </tbody>
-    <tbody *ngIf = "listBankAcc?.length > 0">
-      <tr *ngFor="let item of listBankAcc; let i = index">
-        <td style="text-align: center;">{{item.BankName}}</td>
-        <td style="text-align: center;">{{item.BankBranch}}</td>
-        <td style="text-align: center;">{{item.BankAccNo}}</td>
-        <td style="text-align: center;">{{item.BankAccName}}</td>
-        <td style="text-align: center;">
-          <span *ngIf="item.IsBankStmnt == true">Yes</span>
-          <span *ngIf="item.IsBankStmnt == false">No</span> 
-        </td>
-        <td>
-          <a [ngClass]="{'disabledLink': isLockMode}" class="success p-0" (click)="edit(i, content)">
-            <i class="ft-edit-2 font-medium-3 mr-2"></i>
-          </a>
-          <a [ngClass]="{'disabledLink': isLockMode}" class="warning p-0" (click)="delete(i)">
-            <i class="ft-trash-2 font-medium-3 mr-2"></i>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div style="overflow-x: auto;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;"><span class="thead-header" name="BankCode" translate>Bank Name
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="BankBranch" translate>Bank Branch
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="BankAccNo" translate>Account No
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="BankAccName" translate>Account Name
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="IsBankStmnt" translate>Bank Statement
+          </span>
+          </th>
+          <th><span translate class="thead-header" name='action'>Action</span></th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "listBankAcc?.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "listBankAcc?.length > 0">
+        <tr *ngFor="let item of listBankAcc; let i = index">
+          <td style="text-align: center;">{{item.BankName}}</td>
+          <td style="text-align: center;">{{item.BankBranch}}</td>
+          <td style="text-align: center;">{{item.BankAccNo}}</td>
+          <td style="text-align: center;">{{item.BankAccName}}</td>
+          <td style="text-align: center;">
+            <span *ngIf="item.IsBankStmnt == true">Yes</span>
+            <span *ngIf="item.IsBankStmnt == false">No</span> 
+          </td>
+          <td>
+            <a [ngClass]="{'disabledLink': isLockMode}" class="success p-0" (click)="edit(i, content)">
+              <i class="ft-edit-2 font-medium-3 mr-2"></i>
+            </a>
+            <a [ngClass]="{'disabledLink': isLockMode}" class="warning p-0" (click)="delete(i)">
+              <i class="ft-trash-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h4 class="modal-title" translate>Bank Account</h4>
@@ -108,7 +110,7 @@
                 Add
               </button>
             </div>
-            <div formArrayName="BankStmntObjs">
+            <div formArrayName="BankStmntObjs" style="overflow-x: auto;">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
