@@ -7,45 +7,45 @@
       </button>
     </span>
   </div>
-  <div class="col-md-12" style="padding: 0;">
+  <div class="col-md-12" style="padding: 0; overflow-x: auto;">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
-        <tr class="table-header">
-          <th style="text-align: left;">
-            <span class="thead-header" name='RefFeeId' translate>MOU FEE</span>
-          </th>
-          <th style="text-align: left;">
-            <span class="thead-header" name='FeeType' translate>FEE TYPE</span>
-          </th>
-          <th style="text-align: left;">
-            <span class="thead-header" name='Amount' translate>AMOUNT</span>
-          </th>
-          <th style="text-align: left;">
-            <span class="thead-header" name='PaymentType' translate>PAYMENT TYPE</span>
-          </th>
-          <th style="text-align: left;">
-            <span class="thead-header" name='AgreementOption' translate>AGREEMENT OPTION</span>
-          </th>
-          <th style="text-align: center;">
-            <span class="thead-header" name='action' translate>DELETE</span>
-          </th>
-        </tr>
+      <tr class="table-header">
+        <th style="text-align: left;">
+          <span class="thead-header" name='RefFeeId' translate>MOU FEE</span>
+        </th>
+        <th style="text-align: left;">
+          <span class="thead-header" name='FeeType' translate>FEE TYPE</span>
+        </th>
+        <th style="text-align: left;">
+          <span class="thead-header" name='Amount' translate>AMOUNT</span>
+        </th>
+        <th style="text-align: left;">
+          <span class="thead-header" name='PaymentType' translate>PAYMENT TYPE</span>
+        </th>
+        <th style="text-align: left;">
+          <span class="thead-header" name='AgreementOption' translate>AGREEMENT OPTION</span>
+        </th>
+        <th style="text-align: center;">
+          <span class="thead-header" name='action' translate>DELETE</span>
+        </th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of mouCustFeeList; let i = index">
-          <td style="text-align: left;">{{item.FeeName}}</td>
-          <td style="text-align: left;">{{item.FeeTypeView}}</td>
-          <td style="text-align: left;" *ngIf="item.FeeType == 'AMT'">{{item.FeeAmt | currency : "USD" : ""}}</td>
-          <td style="text-align: left;" *ngIf="item.FeeType == 'PRCNT'">{{item.FeeAmt | number:'.6':'en-US'}} %</td>
-          <td style="text-align: left;">{{item.MouCustFeePaymentTypeView}}</td>
-          <td style="text-align: left;" *ngIf="item.MouCustFeePaymentTypeView == 'Direct Payment'">-</td>
-          <td style="text-align: left;" *ngIf="item.MouCustFeePaymentTypeView != 'Direct Payment'">{{item.MrAgreementAffectedView}}</td>
-          <td style="text-align: center;">
-            <a (click)="deleteMouCustFee(item.MouCustFeeId, i)">
-              <i class="fas fa-trash"></i>
-            </a>
-          </td>
-        </tr>
+      <tr *ngFor="let item of mouCustFeeList; let i = index">
+        <td style="text-align: left;">{{item.FeeName}}</td>
+        <td style="text-align: left;">{{item.FeeTypeView}}</td>
+        <td style="text-align: left;" *ngIf="item.FeeType == 'AMT'">{{item.FeeAmt | currency : "USD" : ""}}</td>
+        <td style="text-align: left;" *ngIf="item.FeeType == 'PRCNT'">{{item.FeeAmt | number:'.6':'en-US'}} %</td>
+        <td style="text-align: left;">{{item.MouCustFeePaymentTypeView}}</td>
+        <td style="text-align: left;" *ngIf="item.MouCustFeePaymentTypeView == 'Direct Payment'">-</td>
+        <td style="text-align: left;" *ngIf="item.MouCustFeePaymentTypeView != 'Direct Payment'">{{item.MrAgreementAffectedView}}</td>
+        <td style="text-align: center;">
+          <a (click)="deleteMouCustFee(item.MouCustFeeId, i)">
+            <i class="fas fa-trash"></i>
+          </a>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>

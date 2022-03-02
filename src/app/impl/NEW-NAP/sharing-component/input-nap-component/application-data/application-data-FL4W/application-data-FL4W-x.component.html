@@ -6,7 +6,7 @@
         <div class="px-3">
 
           <form class="form form-horizontal" [formGroup]="NapAppModelForm"
-            (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
+                (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
             <!-- Sales Info -->
             <lib-ucSubsection [id]="'salesInfomationId'" [title]="'Sales Information'" [panel]="'salesInfomation'">
             </lib-ucSubsection>
@@ -18,11 +18,11 @@
                 </div>
                 <div class="col-md-4" *ngIf="isInputLookupObj">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm'
-                    [enjiForm]='enjiForm' [identifier]="'employeeIdentifier'"
-                    (lookup)="getLookupEmployeeResponse($event)">
+                                       [enjiForm]='enjiForm' [identifier]="'employeeIdentifier'"
+                                       (lookup)="getLookupEmployeeResponse($event)">
                   </lib-uclookupgeneric>
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.SalesOfficerName"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <!-- Sales Supervisor -->
                 <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
@@ -34,7 +34,7 @@
                 <label class="col-md-2 adInsLabel" translate>Sales Notes </label>
                 <div class="col-md-4">
                   <textarea class="form-control adInsInput width-75-per" id="basicTextarea" formControlName="SalesNotes"
-                    rows="3" translate></textarea>
+                            rows="3" translate></textarea>
                 </div>
               </div>
 
@@ -42,7 +42,7 @@
 
             <!-- Application Info -->
             <lib-ucSubsection [id]="'applicationInfomationId'" [title]="'Application Information'"
-              [panel]="'applicationInfomation'">
+                              [panel]="'applicationInfomation'">
             </lib-ucSubsection>
             <div class="form-body" id="applicationInfomation">
 
@@ -53,13 +53,13 @@
                 </div>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrAppSourceCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrAppSourceCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrAppSourceCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['APP_SOURCE']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.MrAppSourceCode"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <!-- Survey No -->
                 <label class="col-md-2 adInsLabel" translate>Survey No </label>
@@ -75,8 +75,8 @@
                 <label class="col-md-2 adins-required-label" translate>Tenor </label>
                 <div class="col-md-4">
                   <input type="text" class="form-control adInsInput width-100-per" formControlName="Tenor"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
-                    (change)="ChangeNumOfInstallmentTenor()">
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
+                         (change)="ChangeNumOfInstallmentTenor()">
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -84,7 +84,7 @@
                 <label class="col-md-2 adins-required-label" translate> First Installment Type </label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
                       {{it.Value}}
@@ -100,8 +100,8 @@
                 <label class="col-md-2 adins-required-label" translate> Payment Frequency</label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }"
-                    (change)="ChangeNumOfInstallmentPayFreq($event)">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }"
+                          (change)="ChangeNumOfInstallmentPayFreq($event)">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['Pay_Freq']" value="{{it.PayFreqCode}}">
                       {{it.Descr}} </option>
@@ -127,13 +127,13 @@
                 </div>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="MrInstSchemeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.MrInstSchemeCode"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
 
@@ -142,20 +142,20 @@
                 <label class="col-md-2 adInsLabel" translate> Customer Notification By </label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrCustNotifyOptCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrCustNotifyOptCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrCustNotifyOptCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['CUST_NOTIF_OPT']" value="{{it.Key}}">
                       {{it.Value}} </option>
                   </select>
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.MrCustNotifyOptCode"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
 
                 <!-- Way of Payment -->
                 <label class="col-md-2 adInsLabel" translate> Way of Payment </label>
                 <div class="col-md-4">
                   <lib-ucdropdownlist [dropdownListObj]="ddlMrWopObj" [parentForm]="NapAppModelForm"
-                    [enjiForm]="enjiForm" [identifier]="'MrWopCode'" (callback)="setBankAccDDL($event)"></lib-ucdropdownlist>
+                                      [enjiForm]="enjiForm" [identifier]="'MrWopCode'" (callback)="setBankAccDDL($event)"></lib-ucdropdownlist>
                 </div>
               </div>
 
@@ -177,8 +177,8 @@
                 </div>
                 <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="CustBankAcc"
-                    (change)="selectedBank()"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CustBankAcc.invalid }">
+                          (change)="selectedBank()"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CustBankAcc.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of listCustBankAcc" [value]="item.AppCustBankAccId">
                       {{item.BankName}} - {{item.BankAccNo}} - {{item.BankAccName}}
@@ -195,7 +195,7 @@
                 </div>
                 <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value != WopAutoDebit">
                   <select class="form-control adInsInput" style="width: auto" formControlName="InstSrcPaymentCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['CSP_USL_AML']" value="{{it.Key}}">
                       {{it.Value}} </option>
@@ -207,21 +207,21 @@
               </div>
 
               <div class="form-group row">
-              <!-- DP Source Payment -->
-              <div class="form-group col-md-2 adins-required">
-                <label class="adInsLabel" translate>DP Source Payment
-                  Type</label>
-              </div>
+                <!-- DP Source Payment -->
+                <div class="form-group col-md-2 adins-required">
+                  <label class="adInsLabel" translate>DP Source Payment
+                    Type</label>
+                </div>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="DpSrcPaymentCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.DpSrcPaymentCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.DpSrcPaymentCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['CSP_USL_AML']" value="{{it.Key}}">
-                        {{it.Value}} </option>
-                    </select>
+                      {{it.Value}} </option>
+                  </select>
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.DpSrcPaymentCode" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
-                  </div>
+                </div>
                 <!-- Installment Source Payment -->
                 <div class="form-group col-md-2 adins-required" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <label class="adInsLabel" translate>Installment Source Payment
@@ -229,7 +229,7 @@
                 </div>
                 <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <select class="form-control adInsInput" style="width: auto" formControlName="InstSrcPaymentCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InstSrcPaymentCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['CSP_USL_AML']" value="{{it.Key}}">
                       {{it.Value}} </option>
@@ -241,7 +241,7 @@
                 <label class="col-md-2 adInsLabel" translate *ngIf="NapAppModelForm.controls.MrWopCode.value != WopAutoDebit">Order Status</label>
                 <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value != WopAutoDebit">
                   <select class="form-control adInsInput" style="width: auto" formControlName="OrdStatCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.OrdStatCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.OrdStatCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['ORD_STATUS']" value="{{it.Key}}">
                       {{it.Value}} </option>
@@ -254,18 +254,18 @@
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Status BPKB</label>
                 <div class="col-md-4">
-                <select class="form-control adInsInput" style="width: 100%" formControlName="BpkbStatCode"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.BpkbStatCode.invalid }">
-                  <option *ngFor="let it of applicationDDLitems['STATUS_BPKB']" value="{{it.Key}}">
-                    {{it.Value}} </option>
-                </select>
-                <lib-uc-show-errors [control]="NapAppModelForm.controls.BpkbStatCode" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
+                  <select class="form-control adInsInput" style="width: 100%" formControlName="BpkbStatCode"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.BpkbStatCode.invalid }">
+                    <option *ngFor="let it of applicationDDLitems['STATUS_BPKB']" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                  <lib-uc-show-errors [control]="NapAppModelForm.controls.BpkbStatCode" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adInsLabel" translate *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">Order Status</label>
                 <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <select class="form-control adInsInput" style="width: auto" formControlName="OrdStatCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.OrdStatCode.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.OrdStatCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of applicationDDLitems['ORD_STATUS']" value="{{it.Key}}">
                       {{it.Value}} </option>
@@ -377,7 +377,7 @@
 
             <!-- Cross Info -->
             <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'"
-              [panel]="'crossInfomation'">
+                              [panel]="'crossInfomation'">
             </lib-ucSubsection>
             <div class="form-body" id="crossInfomation">
               <div class="form-actions right">
@@ -387,8 +387,9 @@
               </div>
 
               <!-- Table Cross Application -->
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
+              <div style="overflow-x: auto;">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
                   <tr class="table-header">
                     <th style="text-align: center;">
                       <span class="thead-header" translate>Application No</span>
@@ -401,13 +402,13 @@
                     </th>
                     <th><span translate class="thead-header" name='action'>Delete</span></th>
                   </tr>
-                </thead>
-                <tbody *ngIf="resultCrossApp?.length == 0">
+                  </thead>
+                  <tbody *ngIf="resultCrossApp?.length == 0">
                   <tr>
                     <td colspan="100%">No Data Available</td>
                   </tr>
-                </tbody>
-                <tbody>
+                  </tbody>
+                  <tbody>
                   <tr *ngFor="let item of resultCrossApp; let i = index">
                     <td style="text-align: center;">{{item.CrossAppNo}}</td>
                     <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
@@ -418,8 +419,9 @@
                       </a>
                     </td>
                   </tr>
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
 
               <!-- Model Card -->
               <ng-template #contentCrossApp let-c="close" let-d="dismiss">
@@ -455,7 +457,7 @@
                 </div>
               </div>
               <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
-                [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
+                             [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
             </div>
             <div>
               <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
@@ -469,15 +471,15 @@
                       </div>
                       <div class="col-md-8">
                         <select class="form-control adInsInput" style="width: 50%" formControlName="CharaCredit"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CharaCredit.invalid }"
-                          (change)="ChangeCharacteristicOfCredit()">
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CharaCredit.invalid }"
+                                (change)="ChangeCharacteristicOfCredit()">
                           <option value="">-Select One-</option>
                           <option *ngFor="let it of applicationDDLitems['CHARACTERISTIC_OF_CREDIT']" value="{{it.Key}}">
                             {{it.Value}}
                           </option>
                         </select>
                         <lib-uc-show-errors [control]="NapAppModelForm.controls.CharaCredit"
-                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
                     <div
@@ -486,9 +488,9 @@
                         <label class="col-md-4 adInsLabel" translate>Previous Agreement No </label>
                         <div class="col-md-8">
                           <input type="text" class="form-control adInsInput" formControlName="PrevAgrNo"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PrevAgrNo.invalid }">
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PrevAgrNo.invalid }">
                           <lib-uc-show-errors [control]="NapAppModelForm.controls.PrevAgrNo"
-                            [submit]="enjiForm.submitted">
+                                              [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                         </div>
                       </div>
@@ -496,14 +498,14 @@
                         <label class="col-md-4 adInsLabel adins-required-label" translate>Way of Restructure</label>
                         <div class="col-md-8">
                           <select class="form-control adInsInput" style="width: 50%" formControlName="WayRestructure"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.WayRestructure.invalid }">
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.WayRestructure.invalid }">
                             <option value="">-Select One-</option>
                             <option *ngFor="let it of applicationDDLitems['WAY_OF_RESTRUCTURE']" value="{{it.Key}}">
                               {{it.Value}}
                             </option>
                           </select>
                           <lib-uc-show-errors [control]="NapAppModelForm.controls.WayRestructure"
-                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                       </div>
                     </div>
@@ -511,11 +513,11 @@
                       <label class="col-md-4 adins-required-label" translate>Economic Sector (Slik)</label>
                       <div class="col-md-8">
                         <lib-uclookupgeneric *ngIf="isInputLookupObj" [lookupInput]="inputLookupEconomicSectorObj"
-                          [parentForm]='NapAppModelForm' [enjiForm]='enjiForm' [identifier]="'economicSectorIdentifier'"
-                          (lookup)="getLookupEconomicSector($event)">
+                                             [parentForm]='NapAppModelForm' [enjiForm]='enjiForm' [identifier]="'economicSectorIdentifier'"
+                                             (lookup)="getLookupEconomicSector($event)">
                         </lib-uclookupgeneric>
                         <lib-uc-show-errors [control]="NapAppModelForm.controls.MrSlikSecEcoDescr"
-                          [submit]="enjiForm.submitted">
+                                            [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                       </div>
                     </div>
@@ -523,8 +525,8 @@
                       <label class="col-md-4 adins-required-label" translate>Commodity</label>
                       <div class="col-md-8">
                         <lib-uclookupgeneric *ngIf="isInputLookupObj" [lookupInput]="inputLookupCommodityObj"
-                          [parentForm]='NapAppModelForm' [enjiForm]='enjiForm' [identifier]="'commodityIdentifier'"
-                          (lookup)="setLookupCommodityData($event)">
+                                             [parentForm]='NapAppModelForm' [enjiForm]='enjiForm' [identifier]="'commodityIdentifier'"
+                                             (lookup)="setLookupCommodityData($event)">
                         </lib-uclookupgeneric>
                       </div>
                     </div>
@@ -539,7 +541,7 @@
               <div [id]="appAttrContent">
                 <div class="form-actions right">
                   <button type="button" name="refreshAttr" id="add" (click)="GenerateAppAttrContent()"
-                    class="btn btn-raised btn-primary" translate>
+                          class="btn btn-raised btn-primary" translate>
                     Refresh Attribute
                   </button>
                 </div>
@@ -547,48 +549,48 @@
                   <div *ngFor="let item of NapAppModelForm.controls['AppAttrContentObjs'].controls;let i = index">
                     <div [formGroupName]="i" class="form-group row">
                       <label class="col-md-2  adInsLabel"
-                      [ngClass]="{'adins-required-label': item.controls.IsMandatory.value}"
-                      translate>{{item.controls.RefAttrName.value}}</label>
+                             [ngClass]="{'adins-required-label': item.controls.IsMandatory.value}"
+                             translate>{{item.controls.RefAttrName.value}}</label>
                       <div class="col-md-4">
                         <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeText">
                           <input type="text" class="form-control" formControlName="AttrValue"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
                           <lib-uc-show-errors
                             [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeTextArea">
                           <textarea class="form-control" formControlName="AttrValue"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }"></textarea>
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }"></textarea>
                           <lib-uc-show-errors
                             [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeNum">
                           <input type="" currencyMask class="form-control" formControlName="AttrValue"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
                           <lib-uc-show-errors
                             [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeNumPerc">
                           <input type="" currencyMask class="form-control" formControlName="AttrValue"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }"
-                            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }">
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }"
+                                 [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }">
                           <lib-uc-show-errors
                             [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeDate">
                           <input type="date" class="form-control adInsInput" formControlName="AttrValue"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
                           <lib-uc-show-errors
                             [control]="NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeList">
                           <select class="form-control" formControlName="AttrValue" style="width:100%"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls['AppAttrContentObjs']['controls'][i]['controls'].AttrValue.invalid }">
                             <option value="">-Select One-</option>
                             <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
                               {{x}}
@@ -601,8 +603,8 @@
                         </div>
                         <div *ngIf="item.controls.AttrInputType.value == AttrInputTypeRefMaster">
                           <lib-uclookupgeneric *ngIf="ListInputLookUpObj[0][item.controls.RefAttrCode.value]?.isReady" [lookupInput]="ListInputLookUpObj[0][item.controls.RefAttrCode.value]"
-                            [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'lookup'+ item.controls.RefAttrCode.value"
-                            (lookup)="SetAttrValueRm($event,i)">
+                                               [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'lookup'+ item.controls.RefAttrCode.value"
+                                               (lookup)="SetAttrValueRm($event,i)">
                           </lib-uclookupgeneric>
                         </div>
                       </div>
@@ -614,7 +616,7 @@
 
             <div class="form-actions right">
               <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
-                translate>
+                      translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary" translate>

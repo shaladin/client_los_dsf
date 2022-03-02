@@ -4,7 +4,7 @@
       <i class="ft-plus-circle"></i> Add
     </button>
   </div>
-  <div *ngIf="listFamily?.length == 0">
+  <div *ngIf="listFamily?.length == 0" style="overflow-x: auto;">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -58,7 +58,7 @@
   <lib-ucSubsection [id]="'AddEditFamilyId'" [title]="'Add / Edit Family'" [panel]="'AddEditFamily'">
   </lib-ucSubsection>
   <div id="AddEditFamily">
-    <app-cust-main-data-x [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId" 
+    <app-cust-main-data-x [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId"
       [isFamily]="true" [critCust]="critCust"
       [inputMode]="inputMode" [isMarried]="isMarried" (outputCancel)="close()" (outputAfterSave)="close()">
     </app-cust-main-data-x>

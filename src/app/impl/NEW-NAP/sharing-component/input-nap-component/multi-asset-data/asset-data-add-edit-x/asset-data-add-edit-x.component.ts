@@ -1301,12 +1301,12 @@ export class AssetDataAddEditXComponent implements OnInit {
 
   GenerataAppAssetAttr(isRefresh: boolean) {
     let GenObj =
-    {
-      AppAssetId: this.AppAssetId,
-      AssetTypeCode: this.assetTypeCompntValue,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-      IsRefresh: isRefresh
-    };
+      {
+        AppAssetId: this.AppAssetId,
+        AssetTypeCode: this.assetTypeCompntValue,
+        AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
+        IsRefresh: isRefresh
+      };
     this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
       (response) => {
         this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];

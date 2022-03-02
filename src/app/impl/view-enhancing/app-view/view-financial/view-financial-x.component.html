@@ -2,7 +2,7 @@
   <div *ngIf="BizTemplateCode !== 'DLFN'">
     <lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_Subsidy'">
     </lib-ucSubsection>
-    <div id="FinData_Subsidy">
+    <div id="FinData_Subsidy" style="overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -467,6 +467,7 @@
     </div>
   </div>
   <br>
+  <div style="overflow-x: auto;">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -512,6 +513,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </div>
 
 <div *ngIf="BizTemplateCode === 'OPL'">
@@ -522,7 +524,7 @@
 
           <lib-ucSubsection [id]="'assetDataId'" [title]="'List of Asset'" [panel]="'assetData'">
           </lib-ucSubsection>
-          <div id="assetData">
+          <div id="assetData" style="overflow-x: auto;">
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">

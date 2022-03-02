@@ -53,7 +53,7 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="date" class="form-control" formControlName="EstEffDt" (focusout)="EstEffDtFocusOut($event)"
-                required [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EstEffDt.invalid}">
+                     required [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EstEffDt.invalid}">
               <lib-uc-show-errors [control]="ParentForm.controls.EstEffDt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -131,8 +131,8 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="RoundingAmt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.RoundingAmt.invalid}"
-                (keyup)="SetNeedReCalculate(true)" currencyMask>
+                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.RoundingAmt.invalid}"
+                     (keyup)="SetNeedReCalculate(true)" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.RoundingAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -172,17 +172,17 @@
               <div class="row">
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt" [options]="CurrencyMaskPrct"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
-                    (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)" currencyMask>
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
+                         [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
+                         (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)" currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-6">
                   <input type="" class="form-control full-width" formControlName="FlatRatePrcnt" [options]="CurrencyMaskPrct"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
-                    [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
-                    currencyMask>
+                         [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
+                         [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
+                         currencyMask>
                   <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -218,14 +218,14 @@
             </div>
             <div class="col-md-1 form-inline form-inline-right">
               <input type="number" class="form-control full-width" formControlName="GracePeriod"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
-                (keyup)="SetNeedReCalculate(true)">
+                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
+                     (keyup)="SetNeedReCalculate(true)">
               <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
             <div class="col-md-2 form-inline">
               <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
-                (change)="SetNeedReCalculate(true)">
+                      (change)="SetNeedReCalculate(true)">
                 <option value="">--Select--</option>
                 <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
@@ -245,8 +245,8 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="InstAmt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.InstAmt.invalid}"
-                (keyup)="SetNeedReCalculate(true)" currencyMask>
+                     [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.InstAmt.invalid}"
+                     (keyup)="SetNeedReCalculate(true)" currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -258,7 +258,7 @@
 
     <div class="form-inline-right">
       <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
-        (click)="CalcBaseOnRate()">
+              (click)="CalcBaseOnRate()">
         Calculate based on Rate
       </button>
       <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalcBaseOnInst()">
@@ -266,50 +266,50 @@
       </button>
     </div>
 
-    <div *ngIf="listInstallment">
+    <div *ngIf="listInstallment" style="overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
-          <tr class="table-header">
-            <th style="text-align: center;"><span class="thead-header" name="No" translate>
+        <tr class="table-header">
+          <th style="text-align: center;"><span class="thead-header" name="No" translate>
                 No
               </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="InstAmt" translate>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="InstAmt" translate>
                 Installment Amount
               </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="PrincipalAmt" translate>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="PrincipalAmt" translate>
                 Principal Amount
               </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="InterestAmt" translate>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="InterestAmt" translate>
                 Interest Amount
               </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="OsPrincipalAmt" translate>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="OsPrincipalAmt" translate>
                 Os Principal Amount
               </span>
-            </th>
-            <th style="text-align: center;"><span class="thead-header" name="OsInterestAmt" translate>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="OsInterestAmt" translate>
                 Os Interest Amount
               </span>
-            </th>
-          </tr>
+          </th>
+        </tr>
         </thead>
         <tbody *ngIf="listInstallment.length == 0">
-          <tr>
-            <td colspan="100%">No Data Available</td>
-          </tr>
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
         </tbody>
         <tbody *ngIf="listInstallment.length > 0">
-          <tr *ngFor="let item of listInstallment; let i = index">
-            <td style="text-align: center;">{{item.InstSeqNo}}</td>
-            <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
-            <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
-            <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>
-            <td style="text-align: right;">{{item.OsPrincipalAmt| number : '1.2-2'}}</td>
-            <td style="text-align: right;">{{item.OsInterestAmt| number : '1.2-2'}}</td>
-          </tr>
+        <tr *ngFor="let item of listInstallment; let i = index">
+          <td style="text-align: center;">{{item.InstSeqNo}}</td>
+          <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.OsPrincipalAmt| number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.OsInterestAmt| number : '1.2-2'}}</td>
+        </tr>
         </tbody>
       </table>
     </div>
