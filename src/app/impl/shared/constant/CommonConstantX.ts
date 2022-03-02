@@ -21,6 +21,7 @@ export class CommonConstantX {
     public static GSCodePefindoBasicRole = "PEFINDO_BASIC_ROLE";
     public static GsCodePONoNeedToPayBank = "PO_NO_NEED_TO_PAY_BANK_ACC";
     public static GsCodeIsDoDtValidation = "ISDODTVALIDATION";
+    public static GsCodeIsAllowSkipSurvey = "IS_ALLOW_SKIP_SURVEY";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
