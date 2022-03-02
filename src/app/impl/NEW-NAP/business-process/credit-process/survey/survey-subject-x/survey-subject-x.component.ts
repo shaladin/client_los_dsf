@@ -79,6 +79,7 @@ export class SurveySubjectXComponent implements OnInit {
   arrValue = [];
   SurveyMethod: string;
   isSkipSurvey: boolean = false;
+  gsValueSurvey: string;
 
   dmsObj: DMSObj;
   NapObj: AppObj;
@@ -179,6 +180,7 @@ export class SurveySubjectXComponent implements OnInit {
     }
     await this.bindDDLReasonReturn();
     await this.bindTaskObj();
+    await this.checkSkipSurvey();
   }
 
   async bindDDLReasonReturn() {
@@ -216,6 +218,27 @@ export class SurveySubjectXComponent implements OnInit {
         this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
       }
     );
+  }
+
+  async checkSkipSurvey(){
+    let generalSettingCode = {
+      Code: CommonConstantX.GsCodeIsAllowSkipSurvey
+    }
+
+    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingCode).toPromise().then(
+      (response) => {
+        this.gsValueSurvey = response['GsValue'];
+      }
+    );
+
+    if(this.gsValueSurvey == 'NO')
+    {
+      this.ReturnHandlingForm.patchValue({
+        IsAnyUpdate: 'NO'
+      })
+      this.ReturnHandlingForm.controls.IsAnyUpdate.disable()
+      this.isSkipSurvey = false;
+    }
   }
 
   onChangeSkipSurvey() {
