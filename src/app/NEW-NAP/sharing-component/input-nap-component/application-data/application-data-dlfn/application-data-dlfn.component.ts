@@ -218,7 +218,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterTOPType).subscribe(
       (response) => {
         this.allTopBased = response[CommonConstant.ReturnObj];
-        if (this.mode == 'edit') {
+        if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
             TopBased: this.allTopBased[0].Key
           });
