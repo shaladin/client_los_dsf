@@ -915,7 +915,7 @@ export class CollateralDetailComponent implements OnInit {
             for (var i = 0; i < this.items.length; i++) {
               if (this.items.controls[i] != null) {
                 this.items.controls[i]['controls']['SerialNoValue'].value = this.appCollateralObj["SerialNo" + (i + 1)];
-                if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No") {
+                if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "CHASSIS NO") {
                   this.indexChassis = i;
                 }
               }
@@ -971,7 +971,7 @@ export class CollateralDetailComponent implements OnInit {
 
   findChassisIdx() {
     let tempItem = this.items.getRawValue();
-    this.indexChassis = tempItem.findIndex(x => x.SerialNoLabel == "Chassis No");
+    this.indexChassis = tempItem.findIndex(x => x.SerialNoLabel == "CHASSIS NO");
     if (this.indexChassis == -1) this.IsIntegrator = false;
   }
 
