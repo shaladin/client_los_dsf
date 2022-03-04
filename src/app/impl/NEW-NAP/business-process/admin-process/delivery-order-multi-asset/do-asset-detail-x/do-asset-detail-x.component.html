@@ -1,5 +1,5 @@
 <form class="form form-horizontal" [formGroup]="DOAssetDetail" #enjiForm="ngForm" novalidate
-  (ngSubmit)="enjiForm.form.valid && Save()">
+      (ngSubmit)="enjiForm.form.valid && Save()">
   <div class="modal-header">
     <h4 class="modal-title" translate>Asset Detail</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModalAsset.dismiss('0')">
@@ -18,7 +18,7 @@
                   <label class="col-md-4 adInsLabel adins-required-label" for="Color" translate>Color</label>
                   <div class="col-md-8">
                     <input type="text" class="form-control" formControlName="Color"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.Color.invalid}" />
+                           [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.Color.invalid}" />
                     <lib-uc-show-errors [control]="DOAssetDetail.controls.Color" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -33,8 +33,8 @@
                   <label class="col-md-4" translate  [ngClass]="{'adins-required-label': isUsed}" >BPKB City Issuer</label>
                   <div class="col-md-8">
                     <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
-                      [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='DOAssetDetail'
-                      (lookup)="SetBpkbCity($event)" *ngIf="InputLookupCityIssuerObj.isReady">
+                                         [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='DOAssetDetail'
+                                         (lookup)="SetBpkbCity($event)" *ngIf="InputLookupCityIssuerObj.isReady">
                     </lib-uclookupgeneric>
                   </div>
                 </div>
@@ -42,7 +42,7 @@
                   <label class="col-md-4 adInsLabel" translate>Notes</label>
                   <div class="col-md-8">
                     <textarea type="text" class="form-control adInsInput" formControlName="AssetNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.AssetNotes.invalid }"></textarea>
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.AssetNotes.invalid }"></textarea>
                   </div>
                 </div>
               </div>
@@ -51,7 +51,7 @@
                   <label class="col-md-4 adInsLabel adins-required-label" for="ManufacturingYear" translate>Manufacturing Year</label>
                   <div class="col-md-8">
                     <input type="number" class="form-control adInsInput" formControlName="ManufacturingYear"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.ManufacturingYear.invalid }" />
+                           [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.ManufacturingYear.invalid }" />
                     <lib-uc-show-errors [control]="DOAssetDetail.controls.ManufacturingYear" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -60,13 +60,13 @@
                   <div *ngFor="let item of listItem.controls; let i = index;">
                     <div class="form-group row" [formGroupName]="i">
                       <label class="col-md-4" [ngClass]="{'adins-required-label': item.controls.IsMandatory.value == true}"
-                        translate>
+                             translate>
                         {{item.controls.SerialNoLabel.value}} </label>
                       <div class="col-md-8">
                         <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.listItem['controls'][i]['controls'].SerialNoValue.invalid}">
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.listItem['controls'][i]['controls'].SerialNoValue.invalid}">
                         <lib-uc-show-errors [control]="DOAssetDetail.controls.listItem['controls'][i]['controls'].SerialNoValue"
-                          [submit]="enjiForm.submitted" [customPattern]="ListPattern"></lib-uc-show-errors>
+                                            [submit]="enjiForm.submitted" [customPattern]="ListPattern"></lib-uc-show-errors>
                       </div>
                     </div>
                   </div>
@@ -82,7 +82,7 @@
             <div class="col-md-12">
               <div class="form-actions right">
                 <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
-                  class="btn btn-raised btn-primary" translate>
+                        class="btn btn-raised btn-primary" translate>
                   <span translate>Refresh Attribute</span>
                 </button>
               </div>
@@ -93,28 +93,28 @@
                     <div class="col-md-4">
                       <div *ngIf="item.controls.AttrInputType.value == 'T'">
                         <input type="text" class="form-control" formControlName="AttrValue"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
                         <lib-uc-show-errors
                           [control]="DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                       <div *ngIf="item.controls.AttrInputType.value == 'N'">
                         <input type="" currencyMask class="form-control" formControlName="AttrValue"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
                         <lib-uc-show-errors
                           [control]="DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                       <div *ngIf="item.controls.AttrInputType.value == 'D'">
                         <input type="date" class="form-control" formControlName="AttrValue"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                               [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
                         <lib-uc-show-errors
                           [control]="DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                       <div *ngIf="item.controls.AttrInputType.value == 'L'">
                         <select class="form-control" formControlName="AttrValue" style="width:50%"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
                           <option value="">-Select One-</option>
                           <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
                             {{x}}
@@ -133,14 +133,14 @@
           </div>
         </div>
 
-        <app-delivery-order-asset-owner *ngIf="isOwnerReady" [CustType]="CustType" [AppId]="AppId" [AppCustObj]="AppCustObj" 
-          [AppCustAddrObj]="AppCustAddrObj" [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" 
-          [parentForm]="DOAssetDetail" [identifier]="'AssetOwner'" [enjiForm]="enjiForm">
+        <app-delivery-order-asset-owner *ngIf="isOwnerReady" [CustType]="CustType" [AppId]="AppId" [AppCustObj]="AppCustObj"
+                                        [AppCustAddrObj]="AppCustAddrObj" [AppCollateralRegistrationObj]="AppCollateralRegistrationObj"
+                                        [parentForm]="DOAssetDetail" [identifier]="'AssetOwner'" [enjiForm]="enjiForm">
         </app-delivery-order-asset-owner>
-        
-        <app-delivery-order-asset-location *ngIf="isOwnerReady" [AppCustAddrObj]="AppCustAddrObj" 
-          [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" [parentForm]="DOAssetDetail" 
-          [identifier]="'AssetLocation'" [enjiForm]="enjiForm">
+
+        <app-delivery-order-asset-location *ngIf="isOwnerReady" [AppCustAddrObj]="AppCustAddrObj"
+                                           [AppCollateralRegistrationObj]="AppCollateralRegistrationObj" [parentForm]="DOAssetDetail"
+                                           [identifier]="'AssetLocation'" [enjiForm]="enjiForm">
         </app-delivery-order-asset-location>
 
         <lib-ucSubsection [id]="'MainDocLetterId'" [title]="'MAIN DOCUMENT LETTER'" [panel]="'MainDocLetterSection'"></lib-ucSubsection>
@@ -150,78 +150,78 @@
               <label class="col-md-2 adInsLabel" for="TempRegisLettNo" translate>Temporary Registration Letter No</label>
               <div class="col-md-4">
                 <input type="text" class="form-control adInsInput" formControlName="TempRegisLettNo"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettNo.invalid }" />
+                       [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettNo.invalid }" />
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.TempRegisLettNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
               <label class="col-md-2 adInsLabel" for="TempRegisLettDt" translate>Temporary Registration Letter Date</label>
               <div class="col-md-4">
                 <input type="date" class="form-control adInsInput" formControlName="TempRegisLettDt" onkeypress="return false;"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettDt.invalid }" />
+                       [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.controls.TempRegisLettDt.invalid }" />
                 <lib-uc-show-errors [control]="DOAssetDetail.controls.TempRegisLettDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
             </div>
           </div>
         </div>
         <lib-ucSubsection [id]="'DOAssetDocId'" [title]="'ASSET DOCUMENT'" [panel]="'DOAssetDocSection'"></lib-ucSubsection>
-        <div id="DOAssetDocSection" class="form-body">
+        <div id="DOAssetDocSection" class="form-body" style="overflow-x: auto;">
           <table class="table table-responsive-md text-center table-hover">
             <thead>
-              <tr class="table-header">
-                <th style="text-align: left;">
-                  <span class="thead-header" name='docName' translate>DOCUMENT NAME</span>
-                </th>
-                <th style="text-align: center;">
-                  <span class="thead-header" name='valueNeeded' translate>VALUE NEEDED</span>
-                </th>
-                <th style="text-align: center;">
-                  <span class="thead-header" name='mandatory' translate>MANDATORY</span>
-                </th>
-                <th style="text-align: center;">
-                  <span class="thead-header" name='checked' translate>CHECKED</span>
-                </th>
-                <th style="text-align: left;">
-                  <span class="thead-header" name='docNo' translate>DOCUMENT NO.</span>
-                </th>
-                <th style="text-align: left;">
-                  <span class="thead-header" name='docNo' translate>EXPIRED DATE</span>
-                </th>
-                <th style="text-align: left;">
-                  <span class="thead-header" name='notes' translate>NOTES</span>
-                </th>
-              </tr>
+            <tr class="table-header">
+              <th style="text-align: left;">
+                <span class="thead-header" name='docName' translate>DOCUMENT NAME</span>
+              </th>
+              <th style="text-align: center;">
+                <span class="thead-header" name='valueNeeded' translate>VALUE NEEDED</span>
+              </th>
+              <th style="text-align: center;">
+                <span class="thead-header" name='mandatory' translate>MANDATORY</span>
+              </th>
+              <th style="text-align: center;">
+                <span class="thead-header" name='checked' translate>CHECKED</span>
+              </th>
+              <th style="text-align: left;">
+                <span class="thead-header" name='docNo' translate>DOCUMENT NO.</span>
+              </th>
+              <th style="text-align: left;">
+                <span class="thead-header" name='docNo' translate>EXPIRED DATE</span>
+              </th>
+              <th style="text-align: left;">
+                <span class="thead-header" name='notes' translate>NOTES</span>
+              </th>
+            </tr>
             </thead>
             <tbody formArrayName="DOAssetDocList">
-              <tr *ngFor="let item of DOAssetDetail.get('DOAssetDocList')['controls']; index as i" [formGroupName]="i">
-                <td class="text-left">
-                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.DocName.value }}
-                </td>
-                <td class="text-center">
-                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.IsValueNeeded.value ? "YES" : "NO"}}
-                </td>
-                <td class="text-center">
-                  {{DOAssetDetail.get('DOAssetDocList').at(i).controls.MrCollateralConditionCode.value == 'NEW' ? (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryNew.value ? "YES" : "NO") : (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryUsed.value ? "YES" : "NO")}}
-                </td>
-                <td class="text-center">
-                  <input type="checkbox" formControlName="IsReceived" (change)="ReceiveDocument(i)"/>
-                  <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </td>
-                <td style="text-align: left;">
-                  <input type="text" class="form-control adInsInput" formControlName="DocNo"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" />
-                  <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </td>
-                <td style="text-align: left;">
-                  <input type="date" class="form-control adInsInput" formControlName="ExpiredDt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.ExpiredDt.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" />
-                  <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.ExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </td>
-                <td style="text-align: left;">
+            <tr *ngFor="let item of DOAssetDetail.get('DOAssetDocList')['controls']; index as i" [formGroupName]="i">
+              <td class="text-left">
+                {{DOAssetDetail.get('DOAssetDocList').at(i).controls.DocName.value }}
+              </td>
+              <td class="text-center">
+                {{DOAssetDetail.get('DOAssetDocList').at(i).controls.IsValueNeeded.value ? "YES" : "NO"}}
+              </td>
+              <td class="text-center">
+                {{DOAssetDetail.get('DOAssetDocList').at(i).controls.MrCollateralConditionCode.value == 'NEW' ? (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryNew.value ? "YES" : "NO") : (DOAssetDetail.get('DOAssetDocList').at(i).controls.IsMandatoryUsed.value ? "YES" : "NO")}}
+              </td>
+              <td class="text-center">
+                <input type="checkbox" formControlName="IsReceived" (change)="ReceiveDocument(i)"/>
+                <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </td>
+              <td style="text-align: left;">
+                <input type="text" class="form-control adInsInput" formControlName="DocNo"
+                       [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" />
+                <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </td>
+              <td style="text-align: left;">
+                <input type="date" class="form-control adInsInput" formControlName="ExpiredDt"
+                       [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.ExpiredDt.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" />
+                <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.ExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </td>
+              <td style="text-align: left;">
                   <textarea class="form-control adInsInput" formControlName="DocNotes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" ></textarea>
-                  <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </td>
-              </tr>
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes.invalid }" [readonly]="!DOAssetDetail.get('DOAssetDocList').at(i).controls.IsReceived.value" ></textarea>
+                <lib-uc-show-errors [control]="DOAssetDetail.get('DOAssetDocList').at(i).controls.DocNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>

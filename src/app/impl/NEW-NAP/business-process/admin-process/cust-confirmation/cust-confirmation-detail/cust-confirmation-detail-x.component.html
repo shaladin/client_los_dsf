@@ -7,106 +7,106 @@
 
     <div class="px-3">
       <form class="form form-horizontal" [formGroup]="CustConfirmForm"
-      #enjiForm="ngForm">
-      <div *ngIf="BizTemplateCode=='CFNA'">
-        <lib-ucSubsection [id]="'DoInfo'" [title]="'Agreement Information'" [panel]="'DoInfoForm'">
-        </lib-ucSubsection>
-        <div class="form-body" id="DoInfoForm">
-          <div class="form-group row">
-            <label class="col-md-2 adins-required-label" for="AgrmntCreatedDt" translate>Agreement Date</label>
-            <!-- <div *ngIf = "checkPOReady" class="col-md-4">
-              <input *ngIf = "!isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
-              <input *ngIf = "isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
-              <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntCreatedDt" [submit]="CustConfirmForm.submitted">
-              </lib-uc-show-errors>
-            </div> -->
-            <div class="col-md-4">
-              <input type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt">
-              <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntDt">
-              </lib-uc-show-errors>
+            #enjiForm="ngForm">
+        <div *ngIf="BizTemplateCode=='CFNA'">
+          <lib-ucSubsection [id]="'DoInfo'" [title]="'Agreement Information'" [panel]="'DoInfoForm'">
+          </lib-ucSubsection>
+          <div class="form-body" id="DoInfoForm">
+            <div class="form-group row">
+              <label class="col-md-2 adins-required-label" for="AgrmntCreatedDt" translate>Agreement Date</label>
+              <!-- <div *ngIf = "checkPOReady" class="col-md-4">
+                <input *ngIf = "!isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                <input *ngIf = "isHasPO" type="date" id="AgrmntCreatedDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
+                <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntCreatedDt" [submit]="CustConfirmForm.submitted">
+                </lib-uc-show-errors>
+              </div> -->
+              <div class="col-md-4">
+                <input type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt">
+                <lib-uc-show-errors [control]="CustConfirmForm.controls.AgrmntDt">
+                </lib-uc-show-errors>
+              </div>
+              <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
+              <div class="col-md-4">
+                <input type="date" id="EffectiveDt" class="form-control adInsInput name" (change)="checkAddInterestPaidBy()"
+                       formControlName="EffectiveDt">
+                <lib-uc-show-errors [control]="CustConfirmForm.controls.EffectiveDt"
+                                    [submit]="CustConfirmForm.submitted">
+                </lib-uc-show-errors>
+              </div>
             </div>
-            <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
-            <div class="col-md-4">
-              <input type="date" id="EffectiveDt" class="form-control adInsInput name" (change)="checkAddInterestPaidBy()"
-                formControlName="EffectiveDt">
-              <lib-uc-show-errors [control]="CustConfirmForm.controls.EffectiveDt"
-                [submit]="CustConfirmForm.submitted">
-              </lib-uc-show-errors>
+            <div class="form-group row">
+              <label *ngIf="IsGSAddInerestExists && BizTemplateCode != 'DLFN'"
+                     class="col-md-2 adins-required-label" translate>Additional Interest
+                Paid By</label>
+              <div *ngIf="IsGSAddInerestExists" class="col-md-4">
+                <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy" (change)="changeAddInterestPaidBy()"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirmForm.controls.AdditionalInterestPaidBy.invalid }">
+                  <option value="">--Select One--</option>
+                  <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
+                </select>
+                <lib-uc-show-errors [control]="CustConfirmForm.controls.AdditionalInterestPaidBy"
+                                    [submit]="CustConfirmForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+              <label class="col-md-2 adins-required-label" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
+              <div class="col-md-4">
+                <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
+                       formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                <lib-uc-show-errors [control]="CustConfirmForm.controls.GoLiveEstimated"
+                                    [submit]="CustConfirmForm.submitted">
+                </lib-uc-show-errors>
+              </div>
             </div>
-          </div>
-          <div class="form-group row">
-            <label *ngIf="IsGSAddInerestExists && BizTemplateCode != 'DLFN'"
-              class="col-md-2 adins-required-label" translate>Additional Interest
-              Paid By</label>
-            <div *ngIf="IsGSAddInerestExists" class="col-md-4">
-              <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy" (change)="changeAddInterestPaidBy()"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirmForm.controls.AdditionalInterestPaidBy.invalid }">
-                <option value="">--Select One--</option>
-                <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
-              </select>
-              <lib-uc-show-errors [control]="CustConfirmForm.controls.AdditionalInterestPaidBy"
-                [submit]="CustConfirmForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-            <label class="col-md-2 adins-required-label" for="GoLiveExpectedDt" translate>Golive Date Estimation</label>
-            <div class="col-md-4">
-              <input type="date" id="GoLiveEstimated" class="form-control adInsInput name"
-                formControlName="GoLiveEstimated" min="{{businessDt | date:'yyyy-MM-dd'}}">
-              <lib-uc-show-errors [control]="CustConfirmForm.controls.GoLiveEstimated"
-                [submit]="CustConfirmForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-          </div>
 
-          <div class="form-group row">
-            <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
-            <label class="col-md-4 adinsLabel" translate>{{CustConfirmForm.controls.AddIntrstAmt.value | number:'.0':'en-US'}}</label>
-          </div>
+            <div class="form-group row">
+              <label class="col-md-2 adinsLabel" for="AddIntr" translate>Additional Interest</label>
+              <label class="col-md-4 adinsLabel" translate>{{CustConfirmForm.controls.AddIntrstAmt.value | number:'.0':'en-US'}}</label>
+            </div>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-primary mr-2"
-              (click)="calculateAddInterest()" translate>
-              Calculate
-            </button>
+                      (click)="calculateAddInterest()" translate>
+                Calculate
+              </button>
             </div>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
 
       <lib-ucSubsection [id]="'SubjectListId'" [title]="'Subject List'" [panel]="'SubjectList'">
       </lib-ucSubsection>
-      <div class="form-body" id="SubjectList">
+      <div class="form-body" id="SubjectList" style="overflow-x: auto;">
         <table class="table table-responsive-md text-center table-hover">
           <thead>
-            <tr class="table-header">
-              <th><span translate class="thead-header">No</span></th>
-              <th><span translate class="thead-header text-left">Subject</span></th>
-              <th><span translate class="thead-header">Phone</span></th>
-              <th><span translate class="thead-header">Date</span></th>
-              <th><span translate class="thead-header">Time</span></th>
-              <th><span translate class="thead-header">Result</span></th>
-              <th><span translate class="thead-header">Notes</span></th>
-              <th translate>View</th>
-              <th translate>Action</th>
-            </tr>
+          <tr class="table-header">
+            <th><span translate class="thead-header">No</span></th>
+            <th><span translate class="thead-header text-left">Subject</span></th>
+            <th><span translate class="thead-header">Phone</span></th>
+            <th><span translate class="thead-header">Date</span></th>
+            <th><span translate class="thead-header">Time</span></th>
+            <th><span translate class="thead-header">Result</span></th>
+            <th><span translate class="thead-header">Notes</span></th>
+            <th translate>View</th>
+            <th translate>Action</th>
+          </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of VerfResultList; let i = index">
-              <td>{{i + 1}}</td>
-              <td>{{item.MrVerfSubjectRelationName}}</td>
-              <td>{{item.Phn}}</td>
-              <td>{{item.VerfDt | date}}</td>
-              <td>{{item.VerfDt | date:'mediumTime'}}</td>
-              <td>{{item.MrVerfResultHStatName}}</td>
-              <td>{{item.Notes}}</td>
-              <td>
-                <a class="success p-0" (click)="clickView(item.VerfResultHId)">View</a>
-              </td>
-              <td>
-                <a class="success p-0" (click)="clickEdit(item.VerfResultHId, item.MrVerfSubjectRelationCode)">
-                  <i class="ft-edit-2 font-medium-3 mr-2"></i>
-                </a>
-              </td>
-            </tr>
+          <tr *ngFor="let item of VerfResultList; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{item.MrVerfSubjectRelationName}}</td>
+            <td>{{item.Phn}}</td>
+            <td>{{item.VerfDt | date}}</td>
+            <td>{{item.VerfDt | date:'mediumTime'}}</td>
+            <td>{{item.MrVerfResultHStatName}}</td>
+            <td>{{item.Notes}}</td>
+            <td>
+              <a class="success p-0" (click)="clickView(item.VerfResultHId)">View</a>
+            </td>
+            <td>
+              <a class="success p-0" (click)="clickEdit(item.VerfResultHId, item.MrVerfSubjectRelationCode)">
+                <i class="ft-edit-2 font-medium-3 mr-2"></i>
+              </a>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>

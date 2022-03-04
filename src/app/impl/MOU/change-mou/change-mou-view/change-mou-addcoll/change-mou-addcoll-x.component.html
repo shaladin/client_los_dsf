@@ -2,8 +2,9 @@
   <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Collateral'" [panel]="'AddCollData'">
   </lib-ucSubsection>
   <div class="form-body" id="AddCollData">
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>
+    <div style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
         <tr class="table-header">
           <th><span class="thead-header" name='CollNo' translate>COLLATERAL NO.</span>
           </th>
@@ -21,8 +22,8 @@
           <th><span style="float: center;" class="thead-header" name='ViewDetail' translate>VIEW DETAIL</span>
           </th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <tr *ngFor="let item of listCollateralData; let i = index">
           <td>{{item.CollateralNo}}</td>
           <td align="left">{{item.FullAssetName}}</td>
@@ -37,8 +38,9 @@
             </a>
           </td>
         </tr>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
     <div class="form-body" id="AddCollDetailData" *ngIf="isView">
       <div class="ucSearch-Button-Right">
         <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>

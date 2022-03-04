@@ -260,47 +260,49 @@
               </div>
 
               <!-- Table Cross Application -->
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th style="text-align: center;">
-                      <span class="thead-header" translate>
-                        Application No
-                      </span>
-                    </th>
-                    <th style="text-align: center;">
-                      <span class="thead-header" translate>
-                        Agreement No
-                      </span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" translate>
-                        Customer Name
-                      </span>
-                    </th>
-                    <th><span translate class="thead-header"
-                        name='action'>Delete</span></th>
-                  </tr>
-                </thead>
-                <tbody *ngIf="resultCrossApp?.length == 0">
-                  <tr>
-                    <td colspan="100%">No Data Available</td>
-                  </tr>
-                </tbody>
+              <div style="overflow-x: auto;">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th style="text-align: center;">
+                        <span class="thead-header" translate>
+                          Application No
+                        </span>
+                      </th>
+                      <th style="text-align: center;">
+                        <span class="thead-header" translate>
+                          Agreement No
+                        </span>
+                      </th>
+                      <th style="text-align: left;">
+                        <span class="thead-header" translate>
+                          Customer Name
+                        </span>
+                      </th>
+                      <th><span translate class="thead-header"
+                          name='action'>Delete</span></th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="resultCrossApp?.length == 0">
+                    <tr>
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                  </tbody>
 
-                <tbody>
-                  <tr *ngFor="let item of resultCrossApp; let i = index">
-                    <td style="text-align: center;">{{item.CrossAppNo}}</td>
-                    <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
-                    <td style="text-align: left;">{{item.CustName}}</td>
-                    <td *ngIf="agrmntParentNo != item.CrossAgrmntNo">
-                      <a class="warning p-0" (click)="DeleteCrossApp(i)">
-                        <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                  <tbody>
+                    <tr *ngFor="let item of resultCrossApp; let i = index">
+                      <td style="text-align: center;">{{item.CrossAppNo}}</td>
+                      <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
+                      <td style="text-align: left;">{{item.CustName}}</td>
+                      <td *ngIf="agrmntParentNo != item.CrossAgrmntNo">
+                        <a class="warning p-0" (click)="DeleteCrossApp(i)">
+                          <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
               <!-- Model Card -->
               <ng-template #contentCrossApp let-c="close" let-d="dismiss">

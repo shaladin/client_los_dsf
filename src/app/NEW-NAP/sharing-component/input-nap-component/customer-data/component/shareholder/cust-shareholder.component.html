@@ -6,50 +6,52 @@
       <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Add</span>
     </button>
   </div>
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="ShareholderName" translate>Shareholder Name
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="JobPosition" translate>Job Position
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="Type" translate>Type
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="NPWP" translate>NPWP
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="Share" translate>Share (%)
-        </span>
-        </th>
-        <th><span translate class="thead-header" name='action'>Action</span></th>
-      </tr>
-    </thead>
-    <tbody *ngIf = "listShareholder?.length == 0">
-      <tr>
-        <td colspan="100%">No Data Available</td>
-      </tr>
-    </tbody>
-    <tbody *ngIf = "listShareholder?.length > 0">
-      <tr *ngFor="let item of listShareholder; let i = index">
-        <td style="text-align: center;">{{item.MgmntShrholderName}}</td>
-        <td style="text-align: center;">{{item.JobPositionName}}</td>
-        <td style="text-align: center;">{{item.CustTypeName}}</td>
-        <td style="text-align: center;">{{item.TaxIdNo}}</td>
-        <td style="text-align: center;">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
-        <td>
-          <a [ngClass]="{'disabledLink': isLockMode}" class="success p-0" (click)="edit(i, content)">
-            <i class="ft-edit-2 font-medium-3 mr-2"></i>
-          </a>
-          <a [ngClass]="{'disabledLink': isLockMode}" class="warning p-0" (click)="delete(i)">
-            <i class="ft-trash-2 font-medium-3 mr-2"></i>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div style="overflow-x: auto;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;"><span class="thead-header" name="ShareholderName" translate>Shareholder Name
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="JobPosition" translate>Job Position
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="Type" translate>Type
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="NPWP" translate>NPWP
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="Share" translate>Share (%)
+          </span>
+          </th>
+          <th><span translate class="thead-header" name='action'>Action</span></th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "listShareholder?.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "listShareholder?.length > 0">
+        <tr *ngFor="let item of listShareholder; let i = index">
+          <td style="text-align: center;">{{item.MgmntShrholderName}}</td>
+          <td style="text-align: center;">{{item.JobPositionName}}</td>
+          <td style="text-align: center;">{{item.CustTypeName}}</td>
+          <td style="text-align: center;">{{item.TaxIdNo}}</td>
+          <td style="text-align: center;">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
+          <td>
+            <a [ngClass]="{'disabledLink': isLockMode}" class="success p-0" (click)="edit(i, content)">
+              <i class="ft-edit-2 font-medium-3 mr-2"></i>
+            </a>
+            <a [ngClass]="{'disabledLink': isLockMode}" class="warning p-0" (click)="delete(i)">
+              <i class="ft-trash-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h4 class="modal-title" translate>{{title}}</h4>

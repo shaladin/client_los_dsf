@@ -45,7 +45,7 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
       poUrl = URLConstant.GetAllAssetDataForPOViewByAsset;
     }
 
-    let appAssetObj: ReqAssetDataObj = new ReqAssetDataObj();
+    let appAssetObj : ReqAssetDataObj = new ReqAssetDataObj();
     appAssetObj.AppId = this.AppId;
     appAssetObj.AgrmntId = this.AgrmntId;
     appAssetObj.SupplCode = this.SupplCode;
@@ -54,7 +54,7 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
       (response) => {
         this.AssetObj = response.ReturnObject;
         this.getDataFromRefMaster(this.AssetObj.PurchaseOrderDObj);
-        if (this.AssetObj.PurchaseOrderHId != 0) {
+        if(this.AssetObj.PurchaseOrderHId != 0){
           this.isDataExist = true;
           this.Notes = this.AssetObj.Notes;
           this.purchaseOrderHObj.RowVersion = this.AssetObj.RowVersionPO;
@@ -85,20 +85,20 @@ export class ViewPurchaseOrderDetailComponent implements OnInit {
       });
   }
 
-  async getDataFromRefMaster(purchaseOrderD: Array<ResPurchaseOrderDObj>) {
+  async getDataFromRefMaster(purchaseOrderD: Array<ResPurchaseOrderDObj>){
     this.ReqByCode.Code = CommonConstant.RefMasterTypeCodePoItemCode;
     await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCodeOrderedBySeqNo, this.ReqByCode).toPromise().then(
-      (response: RefMasterObj) => {
+      (response : RefMasterObj) => {
         this.ListRefMaster = response[CommonConstant.RefMasterObjs];
         this.ListRefMaster = this.ListRefMaster.sort((a, b) => a.SeqNo - b.SeqNo);
 
-        for (var i = 0; i < this.ListRefMaster.length; i++) {
+        for(var i=0;i < this.ListRefMaster.length; i++){
           var tempPurchaseOrderDObj = new PurchaseOrderDObj();
-          tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
-          tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.PurchaseOrderHId != 0 ? purchaseOrderD.find(x => x.MrPoItemCode == this.ListRefMaster[i].MasterCode).PurchaseOrderAmt : 0;
-          this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
+            tempPurchaseOrderDObj.FeeName = this.ListRefMaster[i].Descr;
+            tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.PurchaseOrderHId != 0 ? purchaseOrderD.find(x=> x.MrPoItemCode == this.ListRefMaster[i].MasterCode).PurchaseOrderAmt : 0;
+            this.ListPurchaseOrder.push(tempPurchaseOrderDObj);
         }
       });
-    this.isReady = true;
+      this.isReady = true;
   }
 }

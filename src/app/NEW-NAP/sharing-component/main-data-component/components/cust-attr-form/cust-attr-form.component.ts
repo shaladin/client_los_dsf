@@ -194,6 +194,7 @@ export class CustAttrFormComponent implements OnInit {
   }
 
   SetSearchListInputType(attrCode: string, ProfessionCode: string) {
+    if (this.dictRuleSetName[attrCode] == undefined || this.dictRuleSetName[attrCode] == null) return;
     this.http.post(URLConstant.GetRuleForAttrContent, { RuleSetName: this.dictRuleSetName[attrCode], Code: ProfessionCode }).subscribe(
       (response: GenericListObj) => {
         console.log(response);

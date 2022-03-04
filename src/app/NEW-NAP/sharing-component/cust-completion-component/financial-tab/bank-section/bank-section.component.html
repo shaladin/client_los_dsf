@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="col-md-12" style="padding: 0;">
-            <div class="col-md-12">
+            <div class="col-md-12" style="overflow-x: auto;">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
@@ -154,110 +154,112 @@
           </button>
         </div>
         <div>
-          <table class="table table-responsive-md text-center table-hover">
-            <thead>
-              <tr class="table-header">
-                <th><span translate class="thead-header">Month</span></th>
-                <th><span translate class="thead-header">Year</span></th>
-                <th><span translate class="thead-header">DEBIT TRANSACTION COUNT</span></th>
-                <th><span translate class="thead-header">Debit (-)</span></th>
-                <th><span translate class="thead-header">CREDIT TRANSACTION COUNT</span></th>
-                <th><span translate class="thead-header">Credit (+)</span></th>
-                <th><span translate class="thead-header">Ending Balance</span></th>
-                <th><span translate class="thead-header">Action</span></th>
-              </tr>
-            </thead>
-            <!-- <tbody *ngIf="BankAccStmntForm.controls['BankStmntObjs'].controls.length == 0">
-              <tr>
-                <td colspan="100%">No Data Available</td>
-              </tr>
-            </tbody> -->
-            <tbody>
-              <tr>
-                <td style="text-align: left;">Beginning Balance</td>
-                <td style="text-align: left;"></td>
-                <td style="text-align: center;"></td>
-                <td style="text-align: left;"></td>
-                <td style="text-align: left;"></td>
-                <td style="text-align: left;">
+          <div style="overflow-x: auto;">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">Month</span></th>
+                  <th><span translate class="thead-header">Year</span></th>
+                  <th><span translate class="thead-header">DEBIT TRANSACTION COUNT</span></th>
+                  <th><span translate class="thead-header">Debit (-)</span></th>
+                  <th><span translate class="thead-header">CREDIT TRANSACTION COUNT</span></th>
+                  <th><span translate class="thead-header">Credit (+)</span></th>
+                  <th><span translate class="thead-header">Ending Balance</span></th>
+                  <th><span translate class="thead-header">Action</span></th>
+                </tr>
+              </thead>
+              <!-- <tbody *ngIf="BankAccStmntForm.controls['BankStmntObjs'].controls.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody> -->
+              <tbody>
+                <tr>
+                  <td style="text-align: left;">Beginning Balance</td>
+                  <td style="text-align: left;"></td>
+                  <td style="text-align: center;"></td>
+                  <td style="text-align: left;"></td>
+                  <td style="text-align: left;"></td>
+                  <td style="text-align: left;">
 
-                  <input type="" currencyMask class="form-control adInsInput" formControlName="BegBalanceAmt" (keyup)="onBegBalanceAmtChange($event)"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BegBalanceAmt.invalid }" />
-                  <lib-uc-show-errors [control]="BankAccStmntForm.controls.BegBalanceAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                
-                </td>
-                <td style="text-align: right;">
-                  {{begBalance | number:'.2':'en-US'}}
-                </td>
-                <td style="text-align: left;"></td>
-                
-              </tr>
-            </tbody>
-            <tbody formArrayName="BankStmntObjs">
-              <tr *ngFor="let item of BankAccStmntForm.controls['BankStmntObjs'].controls;let i = index">
-                <td [formGroupName]="i">
-                  <select class="form-control" formControlName="Month"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month.invalid }">
-                    <option *ngFor="let item of MonthObj" value="{{item.Value}}">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors
-                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </td>
-                <td [formGroupName]="i">
-                  <input type="text" class="form-control" formControlName="Year"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Year.invalid }">
-                  <lib-uc-show-errors
-                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Year"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </td>
-                <td [formGroupName]="i">
-                  <input type="" class="form-control" formControlName="DebitTrxCount"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitTrxCount.invalid }">
-                  <lib-uc-show-errors
-                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitTrxCount"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </td>
-                <td [formGroupName]="i">
-                  <input type="" currencyMask class="form-control" formControlName="DebitAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitAmt.invalid }">
-                  <lib-uc-show-errors
-                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitAmt"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </td>
-                <td [formGroupName]="i">
-                  <input type="" class="form-control" formControlName="CreditTrxCount"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditTrxCount.invalid }">
-                  <lib-uc-show-errors
-                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditTrxCount"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </td>
-                <td [formGroupName]="i">
-                  <input type="" currencyMask class="form-control" formControlName="CreditAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditAmt.invalid }">
-                  <lib-uc-show-errors
-                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditAmt"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </td>
-                <td [formGroupName]="i">
-                  {{BankAccStmntForm.controls['BankStmntObjs']['controls'][i].value.BalanceAmt | number:'.2':'en-US'}}
-                  <!-- <input type="" currencyMask class="form-control" formControlName="BalanceAmt"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].BalanceAmt.invalid }">
-                  <lib-uc-show-errors
-                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].BalanceAmt"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors> -->
-                </td>
-                <td [formGroupName]="i">
-                  <a class="danger p-0" (click)="DeleteBankStmnt(i)">
-                    <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                    <input type="" currencyMask class="form-control adInsInput" formControlName="BegBalanceAmt" (keyup)="onBegBalanceAmtChange($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BegBalanceAmt.invalid }" />
+                    <lib-uc-show-errors [control]="BankAccStmntForm.controls.BegBalanceAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  
+                  </td>
+                  <td style="text-align: right;">
+                    {{begBalance | number:'.2':'en-US'}}
+                  </td>
+                  <td style="text-align: left;"></td>
+                  
+                </tr>
+              </tbody>
+              <tbody formArrayName="BankStmntObjs">
+                <tr *ngFor="let item of BankAccStmntForm.controls['BankStmntObjs'].controls;let i = index">
+                  <td [formGroupName]="i">
+                    <select class="form-control" formControlName="Month"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month.invalid }">
+                      <option *ngFor="let item of MonthObj" value="{{item.Value}}">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors
+                      [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </td>
+                  <td [formGroupName]="i">
+                    <input type="text" class="form-control" formControlName="Year"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Year.invalid }">
+                    <lib-uc-show-errors
+                      [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Year"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </td>
+                  <td [formGroupName]="i">
+                    <input type="" class="form-control" formControlName="DebitTrxCount"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitTrxCount.invalid }">
+                    <lib-uc-show-errors
+                      [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitTrxCount"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </td>
+                  <td [formGroupName]="i">
+                    <input type="" currencyMask class="form-control" formControlName="DebitAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitAmt.invalid }">
+                    <lib-uc-show-errors
+                      [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].DebitAmt"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </td>
+                  <td [formGroupName]="i">
+                    <input type="" class="form-control" formControlName="CreditTrxCount"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditTrxCount.invalid }">
+                    <lib-uc-show-errors
+                      [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditTrxCount"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </td>
+                  <td [formGroupName]="i">
+                    <input type="" currencyMask class="form-control" formControlName="CreditAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditAmt.invalid }">
+                    <lib-uc-show-errors
+                      [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].CreditAmt"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </td>
+                  <td [formGroupName]="i">
+                    {{BankAccStmntForm.controls['BankStmntObjs']['controls'][i].value.BalanceAmt | number:'.2':'en-US'}}
+                    <!-- <input type="" currencyMask class="form-control" formControlName="BalanceAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].BalanceAmt.invalid }">
+                    <lib-uc-show-errors
+                      [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].BalanceAmt"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors> -->
+                  </td>
+                  <td [formGroupName]="i">
+                    <a class="danger p-0" (click)="DeleteBankStmnt(i)">
+                      <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div class="form-actions right">
             <button type="reset" (click)="CustBankHandler('Cancel'); enjiForm.resetForm()" class="btn btn-raised btn-warning mr-1">
               <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>

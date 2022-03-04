@@ -1,5 +1,5 @@
 <form class="form form-horizontal" [formGroup]="MouDetailFactoringForm" #enjiForm="ngForm" novalidate
-  (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+      (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
   <lib-ucSubsection [id]="'MouDetailFactoringId'" [title]="'MOU Detail'" [panel]="'MouDetailFactoringSection'">
   </lib-ucSubsection>
   <div id="MouDetailFactoringSection">
@@ -8,7 +8,7 @@
         <label class="col-md-3 adInsLabel" for="MrRecourseTypeCode" translate>Recourse Type</label>
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="MrRecourseTypeCode"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrRecourseTypeCode.invalid }">
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrRecourseTypeCode.invalid }">
             <option *ngFor="let item of recourseTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
@@ -17,7 +17,7 @@
         <label class="col-md-3 adInsLabel adins-required-label" for="WopCode" translate>WoP</label>
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="WopCode"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.WopCode.invalid }">
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.WopCode.invalid }">
             <option *ngFor="let item of wopList" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
@@ -41,8 +41,8 @@
           <div class="row">
             <div class="col-md-5">
               <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode"
-                (change)="instTypeHandler()"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
+                      (change)="instTypeHandler()"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
                 <option *ngFor="let item of instTypeList" [value]="item.Key">{{item.Value}}</option>
               </select>
             </div>
@@ -51,8 +51,8 @@
             </div>
             <div class="col-md-5">
               <select *ngIf="IsSingleIns" type="text" class="form-control adInsInput"
-                formControlName="SingleInstCalcMthd"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.SingleInstCalcMthd.invalid }">
+                      formControlName="SingleInstCalcMthd"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.SingleInstCalcMthd.invalid }">
                 <option *ngFor="let item of singleInstCalcMthdList" [value]="item.Key">{{item.Value}}</option>
               </select>
             </div>
@@ -63,7 +63,7 @@
         <label class="col-md-3 adInsLabel" for="TopDays" translate>Term of Payment (in Days)</label>
         <div class="col-md-3">
           <input type="number" class="form-control adInsInput" formControlName="TopDays" min="0"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TopDays.invalid }" />
+                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TopDays.invalid }" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.TopDays" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>
@@ -72,7 +72,7 @@
         <label class="col-md-3 adInsLabel" for="TenorFromTo" translate>Tenor From - Tenor To</label>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="TenorFrom"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TenorFrom.invalid }" />
+                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TenorFrom.invalid }" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.TenorFrom" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>
@@ -81,7 +81,7 @@
         </div>
         <div class="col-md-2">
           <input type="number" class="form-control adInsInput" formControlName="TenorTo"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TenorTo.invalid }" />
+                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TenorTo.invalid }" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.TenorTo" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>
@@ -93,7 +93,7 @@
         <label class="col-md-3 adInsLabel" for="PayFreqCode" translate>Payment Frequency</label>
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="PayFreqCode"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.PayFreqCode.invalid }">
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.PayFreqCode.invalid }">
             <option *ngFor="let item of payFreqList" [value]="item.PayFreqCode">{{item.Descr}}</option>
           </select>
         </div>
@@ -102,7 +102,7 @@
         <label class="col-md-3 adInsLabel" for="MrInstSchmCode" translate>Installment Scheme</label>
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="MrInstSchmCode"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstSchmCode.invalid }">
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstSchmCode.invalid }">
             <option *ngFor="let item of instSchmList" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
@@ -111,18 +111,18 @@
         <label class="col-md-3 adInsLabel" for="InterestRatePrcnt" translate>Interest Rate (%)</label>
         <div class="col-md-2">
           <input type="" currencyMask class="form-control adInsInput" formControlName="InterestRatePrcnt"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.InterestRatePrcnt.invalid }"
-            [options]="CurrencyMaskPrct" />
+                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.InterestRatePrcnt.invalid }"
+                 [options]="CurrencyMaskPrct" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.InterestRatePrcnt"
-            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" for="RetentionPrcnt" translate>Retention (%)</label>
         <div class="col-md-2">
           <input type="" currencyMask class="form-control adInsInput" formControlName="RetentionPrcnt"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.RetentionPrcnt.invalid }"
-            [options]="CurrencyMaskPrct" />
+                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.RetentionPrcnt.invalid }"
+                 [options]="CurrencyMaskPrct" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.RetentionPrcnt" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>
@@ -131,8 +131,8 @@
         <label class="col-md-3 adinsLabel adins-required-label" for="LinkSupplier" translate>Link Supplier </label>
         <div class="col-md-3">
           <lib-uclookupgeneric *ngIf="inputLookupObj?.isReady" [lookupInput]="inputLookupObj"
-            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupSupp'" #LookupSupplier
-            (lookup)="SetSupplier($event)">
+                               [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupSupp'" #LookupSupplier
+                               (lookup)="SetSupplier($event)">
           </lib-uclookupgeneric>
         </div>
       </div>
@@ -140,7 +140,7 @@
         <label class="col-md-3 adInsLabel" for="Notes" translate>Notes</label>
         <div class="col-md-3">
           <textarea class="form-control adInsInput" formControlName="Notes"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.Notes.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.Notes.invalid }">
           </textarea>
         </div>
       </div>
@@ -151,37 +151,37 @@
     </div>
   </div>
   <lib-ucSubsection *ngIf="listedCusts?.length > 1" [id]="'MouListedCustFactoringId'"
-    [title]="'MOU Listed Customer Factoring'" [panel]="'MouListedCustFactoringSection'">
+                    [title]="'MOU Listed Customer Factoring'" [panel]="'MouListedCustFactoringSection'">
   </lib-ucSubsection>
-  <div id="MouListedCustFactoringSection" *ngIf="listedCusts?.length > 1">
+  <div id="MouListedCustFactoringSection" *ngIf="listedCusts?.length > 1" style="overflow-x: auto;">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
-        <tr class="table-header">
-          <th style="text-align: center;"><span class="thead-header" name="No" translate>
+      <tr class="table-header">
+        <th style="text-align: center;"><span class="thead-header" name="No" translate>
               No
             </span>
-          </th>
-          <th style="text-align: center;"><span class="thead-header" name="Custno" translate>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" name="Custno" translate>
               Customer No
             </span>
-          </th>
-          <th style="text-align: center;"><span class="thead-header" name="CustName" translate>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" name="CustName" translate>
               Customer Name
             </span>
-          </th>
-          <th style="text-align: center;"><span class="thead-header" name="CustTypeDesc" translate>
+        </th>
+        <th style="text-align: center;"><span class="thead-header" name="CustTypeDesc" translate>
               Customer Type
             </span>
-          </th>
-        </tr>
+        </th>
+      </tr>
       </thead>
       <tbody *ngIf="listedCusts?.length > 1">
-        <tr *ngFor="let item of listedCusts; let i = index">
-          <td style="text-align: center;">{{i+1}}</td>
-          <td style="text-align: center;">{{item.CustNo}}</td>
-          <td style="text-align: left;">{{item.CustName}}</td>
-          <td style="text-align: center;">{{item.MrCustTypeDescr}}</td>
-        </tr>
+      <tr *ngFor="let item of listedCusts; let i = index">
+        <td style="text-align: center;">{{i+1}}</td>
+        <td style="text-align: center;">{{item.CustNo}}</td>
+        <td style="text-align: left;">{{item.CustName}}</td>
+        <td style="text-align: center;">{{item.MrCustTypeDescr}}</td>
+      </tr>
       </tbody>
     </table>
   </div>

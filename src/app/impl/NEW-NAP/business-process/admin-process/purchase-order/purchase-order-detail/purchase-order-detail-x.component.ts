@@ -6,13 +6,14 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ResAgrmntFeeForPOObj, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CookieService } from 'ngx-cookie';
 import { formatDate } from '@angular/common';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { Validators, FormBuilder } from '@angular/forms';
-import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
+import { ResGetAllAssetDataForPOByAsset } from 'app/shared/model/response/purchase-order/res-get-all-asset-data-for-po.model';
 import { PurchaseOrderHObj } from 'app/shared/model/purchase-order-h-obj.model';
 import { ReqAssetDataObj } from 'app/shared/model/request/app-asset/req-app-asset-obj.model';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
@@ -40,9 +41,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   Address: string = "";
   ProportionalValue: number;
   TotalInsCustAmt: number;
-  TotalLifeInsCustAmt: number;
   TotalPurchaseOrderAmt: number;
-  DiffRateAmt: number;
   PurchaseOrderExpiredDt: Date;
   purchaseOrderHObj: PurchaseOrderHObj;
   // purchaseOrderDObj: PurchaseOrderDObj;
@@ -65,7 +64,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
   });
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT;
   constructor(private fb: FormBuilder,
-    private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
+              private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
@@ -123,9 +122,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
         }
         this.ProportionalValue = this.AssetObj.ProportionalValue;
         this.TotalInsCustAmt = this.AssetObj.TotalInsCustAmt;
-        this.TotalLifeInsCustAmt = this.AssetObj.TotalLifeInsCustAmt;
         this.TotalPurchaseOrderAmt = this.AssetObj.TotalPurchaseOrderAmt;
-        this.DiffRateAmt = this.AssetObj.DiffRateAmt;
         var tempAddr = this.AssetObj.AppCustAddrObj.Addr == null ? '-' : this.AssetObj.AppCustAddrObj.Addr;
         var areaCode4 = this.AssetObj.AppCustAddrObj.AreaCode4 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode4;
         var areaCode3 = this.AssetObj.AppCustAddrObj.AreaCode3 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode3;

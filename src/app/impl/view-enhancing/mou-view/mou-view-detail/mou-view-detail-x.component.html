@@ -107,7 +107,7 @@
         <label class="col-md-2 adInsLabel" translate>Listed Customer Factoring</label>
         <label *ngIf="IsListedCust == true" class="col-md-4 adInsLabel" translate>Yes </label>
         <label *ngIf="IsListedCust == false" class="col-md-4 adInsLabel" translate>No </label>
-        
+
         <label class="col-md-2 adInsLabel" translate>Installment Type / Calculate Method</label>
         <label class="col-md-4 adInsLabel" translate>{{MrInstTypeCode + ' / ' + SingleInstCalcMthd}}</label>
       </div>
@@ -193,7 +193,7 @@
         <label class="col-md-2 adInsLabel" translate>Revolving Type</label>
         <label class="col-md-4 adInsLabel" translate>{{ MrRevolvingTypeCode == null ? '-' : dictRevolvingTypeCode[MrRevolvingTypeCode]}} </label>
       </div>
-      
+
       <div class="form-group row">
         <label class="col-md-2 adInsLabel" translate>Spare Day To Pay</label>
         <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.SpareDayToPay}}</label>
@@ -241,7 +241,8 @@
   <div *ngIf="MouType == 'GENERAL'">
     <lib-ucSubsection [id]="'AssetDataId'" [title]="'Asset Data'" [panel]="'AssetData'">
     </lib-ucSubsection>
-    <table class="table table-responsive-md text-center table-hover">
+    <div style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
           <th><span class="thead-header" name='No' translate>NO.</span>
@@ -265,6 +266,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <div class="form-group row" *ngIf="MouType != 'GENERAL'">

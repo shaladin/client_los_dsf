@@ -218,29 +218,31 @@
   <div *ngIf="MouType == 'GENERAL'">
     <lib-ucSubsection [id]="'AssetDataId'" [title]="'Asset Data'" [panel]="'AssetData'">
     </lib-ucSubsection>
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th><span class="thead-header" name='No' translate>NO.</span>
-          </th>
-          <th><span class="thead-header" name='AssetType' translate>ASSET TYPE</span>
-          </th>
-          <th><span class="thead-header" name='Brand' translate>BRAND</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody *ngIf="listAssetData.length == 0">
-        <tr>
-          <td colspan="100%">No Data Available</td>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr *ngFor="let item of listAssetData; let i = index">
-          <td>{{i+1}}</td>
-          <td>{{item.FullAssetCode}}</td>
-          <td>{{item.FullAssetName}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th><span class="thead-header" name='No' translate>NO.</span>
+            </th>
+            <th><span class="thead-header" name='AssetType' translate>ASSET TYPE</span>
+            </th>
+            <th><span class="thead-header" name='Brand' translate>BRAND</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="listAssetData.length == 0">
+          <tr>
+            <td colspan="100%">No Data Available</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let item of listAssetData; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{item.FullAssetCode}}</td>
+            <td>{{item.FullAssetName}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </form>

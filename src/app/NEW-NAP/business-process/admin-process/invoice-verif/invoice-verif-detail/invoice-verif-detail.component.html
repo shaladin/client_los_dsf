@@ -14,7 +14,7 @@
           <form class="form form-horizontal" [formGroup]="InvoiceForm"(ngSubmit)="InvoiceForm.valid && SaveData()" #enjiForm="ngForm">
             <lib-ucSubsection [id]="'ListOfInvoiceId'" [title]="'List Of Invoice'" [panel]="'ListOfInvoice'">
             </lib-ucSubsection>
-            <div class="form-body" id="ListOfInvoice" formArrayName="Invoices">
+            <div class="form-body" id="ListOfInvoice" formArrayName="Invoices" style="overflow-x: auto;">
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">

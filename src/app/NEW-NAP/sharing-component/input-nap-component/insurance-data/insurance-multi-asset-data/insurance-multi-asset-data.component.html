@@ -44,7 +44,7 @@
                 [panel]="'collateralAccessories'">
               </lib-ucSubsection>
               <div id="collateralAccessories">
-                <div class="form-group row">
+                <div class="form-group row" style="overflow-x: auto;">
                   <table class="table table-responsive-md text-center table-hover">
                     <thead>
                       <tr class="table-header">
@@ -332,7 +332,7 @@
                       <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Calculate Insurance</span>
                     </button>
                   </div>
-                  <div formArrayName="AppInsMainCvgs">
+                  <div formArrayName="AppInsMainCvgs" style="overflow-x: auto;">
                     <table class="table table-responsive text-center table-hover">
                       <thead>
                         <tr>
@@ -358,14 +358,14 @@
                           <td class="text-center" *ngIf="isYearlyCapitalized">
                             <div class="form-group-row">
                               <input type="checkbox" class="checkboxLabel" formControlName="IsCapitalized"
-                                (change)="IsMainCvgChaged($event, i)"
+                                (change)="IsMainCvgChaged(i)"
                                 [attr.disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrInsPaidByCode.value == 'CO' ? 'true' : null">
                             </div>
                           </td>
                           <td class="text-center">
                             <div class="form-group-row">
                               <select class="form-control" formControlName="MrInsPaidByCode"
-                                (change)="IsMainCvgChaged($event, i)"
+                                (change)="IsMainCvgChaged(i)"
                                 [attr.disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.isPaidByLock.value ? 'true' : null"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrInsPaidByCode.invalid }">
                                 <option *ngFor="let item of paidByObj; let idx = index" [value]="item.Key">
@@ -386,7 +386,7 @@
                           <td class="text-center">
                             <div class="form-group-row">
                               <input type="" currencyMask class="form-control text-right"
-                                formControlName="SumInsuredPrcnt" (ngModelChange)="IsMainCvgChaged($event, i)"
+                                formControlName="SumInsuredPrcnt" (focusout)="IsMainCvgChaged(i)"
                                 [options]="CurrencyMaskPrct"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt.invalid }">
                             </div>
