@@ -67,15 +67,13 @@ export class MouDetailFinancingComponent implements OnInit {
   MouDlrFinData: MouCustDlrFinObj;
   returnVendorObj: VendorObj;
   IsaAssetNew: boolean = true;
-
   mrMouCustTypeCode: string = "PERSONAL";
-
   MouCustDlrFindData: MouCustDlrFinObj;
-
   InputLookupLinkManufacturerObj: InputLookupObj = new InputLookupObj();
   InputLookupManufacturerObj: InputLookupObj = new InputLookupObj();
   InputLookupLinkSupplGradingObj: InputLookupObj = new InputLookupObj();
   InputLookupCustomerObj: InputLookupObj = new InputLookupObj();
+  MouCustObj: MouCustObj = new MouCustObj();
 
   MouDetailFinancingForm = this.fb.group({
     VirtualAccNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -113,7 +111,8 @@ export class MouDetailFinancingComponent implements OnInit {
     this.initLookup();
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
-        this.mrMouCustTypeCode = response.MrCustTypeCode;
+        this.MouCustObj = response;
+        this.mrMouCustTypeCode = this.MouCustObj.MrCustTypeCode;
         var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         var suppCrit = new Array();
         // var critSuppObj = new CriteriaObj();
@@ -220,7 +219,8 @@ export class MouDetailFinancingComponent implements OnInit {
             MaximumExtendTimes: this.MouDlrFinData["MaximumExtendTimes"],
             MrInstTypeCode: this.MouDlrFinData["MrInstTypeCode"],
             VirtualAccNo: this.MouDlrFinData["VirtualAccNo"],
-            InterestCalcBased: this.MouDlrFinData["InterestCalcBased"]
+            InterestCalcBased: this.MouDlrFinData["InterestCalcBased"],
+            CurrCode: this.MouCustObj.CurrCode
           });
 
           if(this.MouDlrFinData['MrInstTypeCode'] == CommonConstant.InstTypeMultiple){
