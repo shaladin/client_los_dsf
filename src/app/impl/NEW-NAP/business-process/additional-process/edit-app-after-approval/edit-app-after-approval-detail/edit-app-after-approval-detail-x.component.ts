@@ -401,7 +401,8 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
 
   CommBankAccHandler(e, AgrCommH, type) {
     if(!e.target.value) return
-
+    
+    this.IsCommissionChanged = true;
     let selectedCommH;
     if (type == 'SUPPL')
       selectedCommH = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs.find(x => x.AgrmntCommissionHId == AgrCommH.controls.AgrmntCommissionHId.value);
