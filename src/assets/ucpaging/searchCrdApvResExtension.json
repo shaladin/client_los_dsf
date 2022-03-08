@@ -19,7 +19,7 @@
     },
     {
       "type": "datepicker",
-      "name": "A.CRD_APV_RESULT_EXP_DT",
+      "name": "AG.CRD_APV_RESULT_EXP_DT",
       "id": "appDtgte",
       "value": "",
       "label": "Expired Date >=",
@@ -28,7 +28,7 @@
     },
     {
       "type": "datepicker",
-      "name": "A.CRD_APV_RESULT_EXP_DT",
+      "name": "AG.CRD_APV_RESULT_EXP_DT",
       "id": "appDtlte",
       "value": "",
       "label": "Expired Date <=",
@@ -100,7 +100,7 @@
       "type": "sort",
       "position": "center",
       "label": "EXPIRED DATE",
-      "name": "A.CRD_APV_RESULT_EXP_DT"
+      "name": "AG.CRD_APV_RESULT_EXP_DT"
     },
     {
       "type": "sort",
