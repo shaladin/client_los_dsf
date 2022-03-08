@@ -21,6 +21,7 @@ import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj
 import { WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
 import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/request/nap/agr-act/req-app-fin-data-and-fee.model';
 import { UcaddtotempComponent } from '@adins/ucaddtotemp';
+import {GeneralSettingObj} from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-agrmnt-activation-detail-x',
@@ -67,9 +68,17 @@ export class AgrmntActivationDetailXComponent implements OnInit {
     this.AgrmntActForm.controls['AgrmntNo'].disable();
   }
 
-  onChange() {
+  async onChange() {
     if (this.isOverwrite == true) {
-      this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required]);
+      var AgrLength = 0;
+      await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.MinOverwriteAgrNo }).toPromise().then(
+        async (response) => {
+          if(response.GsValue){
+            AgrLength = parseInt(response.GsValue);
+          }
+        });
+
+      this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required, Validators.minLength(AgrLength)]);
       this.AgrmntActForm.controls['AgrmntNo'].updateValueAndValidity();
       this.AgrmntActForm.controls['AgrmntNo'].enable();
     }

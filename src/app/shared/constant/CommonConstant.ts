@@ -126,7 +126,7 @@ export class CommonConstant {
   //ASSET CONDITION
   public static AssetConditionUsed = "USED";
   public static AssetConditionNew = "NEW";
-  
+
   public static ModeAddColl = "addColl";
   public static ModeEditColl = "editColl";
 
@@ -473,8 +473,8 @@ export class CommonConstant {
   public static INST_SCHM_REGULAR_FIXED = "RF";
 
   // INTEREST CALC BASED
-  public static TOP_INTEREST_CALC_BASED = "TOP"; 
-  public static INTEREST_INTEREST_CALC_BASED = "INTEREST"; 
+  public static TOP_INTEREST_CALC_BASED = "TOP";
+  public static INTEREST_INTEREST_CALC_BASED = "INTEREST";
 
   // MR ID TYPE CODE
   public static MrIdTypeCodeEKTP = "EKTP";
@@ -646,8 +646,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeCspUslAml = "CSP_USL_AML";
   public static RefMasterTypeCodePublicType = "PUBLIC_TYPE";
   public static RefMasterTypeCodePositionSlik = "POSITION_SLIK";
-  public static RefMasterTypeCodeInterestCalcBased = "INTEREST_CALC_BASED"; 
-  public static RefMasterTypeCodeTaxCalcMethod = "TAX_CALC_METHOD"; 
+  public static RefMasterTypeCodeInterestCalcBased = "INTEREST_CALC_BASED";
+  public static RefMasterTypeCodeTaxCalcMethod = "TAX_CALC_METHOD";
   public static RefMasterTypeCodeReferantorCategory = "REFERANTOR_CATEGORY";
 
   // REF MASTER MASTER CODE
@@ -765,6 +765,7 @@ export class CommonConstant {
   public static GsCodeMaximumReferantor = "MAX_REFERANTOR";
   public static GsCodeIsShowMultiReferantor = "IS_SHOW_MULTI_REFERANTOR";
   public static GsCodeManufacturingYearMandatoryByCollType = "MANUFACTURING_YEAR_MANDATORY_BY_COLLATERAL_TYPE";
+  public static MinOverwriteAgrNo = "MIN_OVERWRITE_AGR_NO";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -983,7 +984,7 @@ export class CommonConstant {
 
   // GENERAL SETTING CODE
   public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
-  
+
 
   // JOIN TYPE
   public static JOIN_TYPE_INNER = "Inner";
