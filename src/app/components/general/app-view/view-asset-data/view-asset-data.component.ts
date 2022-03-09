@@ -13,6 +13,7 @@ export class ViewAssetDataComponent implements OnInit {
   getAppUrl: string;
   getAllAssetDataUrl: string;
   @Input() appId: number = 0;
+  @Input() agrmntId: number = 0;
   appAssetId: number = 0;
   appObj = {
     Id: 0
@@ -68,7 +69,14 @@ export class ViewAssetDataComponent implements OnInit {
     if(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode != null || this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode != undefined) {
       await this.GetProfessionName(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode);
     }
-    await this.GetListAppCollateral(this.appId);
+
+    if(this.agrmntId != 0){
+      this.GetListAppCollateralByAgrmntId(this.agrmntId);
+    }
+    else{
+      this.GetListAppCollateralByAppId(this.appId);
+    }   
+    
   }
 
   async GetAllAssetData(obj: any) {
@@ -100,7 +108,15 @@ export class ViewAssetDataComponent implements OnInit {
     );
   }
 
-  async GetListAppCollateral(AppId: number) {
+  async GetListAppCollateralByAgrmntId(AgrmntId: number) {
+    this.http.post(URLConstant.GetViewAppCollateralObjByAgrmntId, {Id: AgrmntId}).subscribe(
+      response => {
+        this.appCollateralList = response["AppCollateralObjs"];
+      }
+    );
+  }
+
+  async GetListAppCollateralByAppId(AppId: number) {
     this.http.post(URLConstant.GetViewAppCollateralObjByAppId, {Id: AppId}).subscribe(
       response => {
         this.appCollateralList = response["AppCollateralObjs"];
