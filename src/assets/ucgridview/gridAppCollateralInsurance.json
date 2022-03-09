@@ -5,11 +5,6 @@
             "property" : "isActive"
         },
         {
-            "type" : "label",
-            "position" : "center",
-            "label" : "Delete"
-        },
-        {
             "type": "label",
             "position": "left",
             "label": "Asset Name",
@@ -67,25 +62,6 @@
         {
             "type" : "checkBox",
             "property" : "isActive"
-        },
-        {
-            "type" : "switch",
-            "case" : [
-                {
-                    "conditions" : [
-                        {
-                            "property" : "AppInsObjId",
-                            "value" : "0",
-                            "restriction" : "NEQ"
-                        }
-                    ],
-                    "result" : {
-                        "type" : "checkBox",
-                        "property" : "isActive"
-                    },
-                    "isHide" : false
-                }
-            ]
         },
         {
             "type": "text",

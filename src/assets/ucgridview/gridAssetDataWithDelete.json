@@ -1,9 +1,8 @@
 {
     "headerList": [
         {
-            "type" : "label",
-            "position" : "center",
-            "label" : "Delete"
+            "type" : "checkAll",
+            "property" : "isActive"
         },
         {
             "type": "label",
