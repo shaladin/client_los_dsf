@@ -70,14 +70,12 @@ export class ViewAssetDataComponent implements OnInit {
       await this.GetProfessionName(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode);
     }
 
-    if(this.agrmntId == null)
-    {
-      await this.GetListAppCollateralByAppId(this.appId);
+    if(this.agrmntId != 0){
+      this.GetListAppCollateralByAgrmntId(this.agrmntId);
     }
-    else
-    {
-      await this.GetListAppCollateralByAgrmntId(this.agrmntId);
-    }
+    else{
+      this.GetListAppCollateralByAppId(this.appId);
+    }   
     
   }
 
