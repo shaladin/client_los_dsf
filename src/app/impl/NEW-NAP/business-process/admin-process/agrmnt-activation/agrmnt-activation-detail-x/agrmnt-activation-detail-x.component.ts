@@ -70,15 +70,18 @@ export class AgrmntActivationDetailXComponent implements OnInit {
 
   async onChange() {
     if (this.isOverwrite == true) {
-      var AgrLength = 0;
-      await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.MinOverwriteAgrNo }).toPromise().then(
+      var AgrLength:number;
+      await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.LenOverwriteAgrNo }).toPromise().then(
         async (response) => {
           if(response.GsValue){
             AgrLength = parseInt(response.GsValue);
           }
         });
-
-      this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required, Validators.minLength(AgrLength)]);
+      if (AgrLength){
+        this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required, Validators.minLength(AgrLength), Validators.maxLength(AgrLength)]);
+      }else{
+        this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required]);
+      }
       this.AgrmntActForm.controls['AgrmntNo'].updateValueAndValidity();
       this.AgrmntActForm.controls['AgrmntNo'].enable();
     }
