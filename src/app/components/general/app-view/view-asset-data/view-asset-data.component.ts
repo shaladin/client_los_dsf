@@ -70,7 +70,6 @@ export class ViewAssetDataComponent implements OnInit {
       await this.GetProfessionName(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode);
     }
     await this.GetListAppCollateral(this.agrmntId);
-    console.log(this.agrmntId);
   }
 
   async GetAllAssetData(obj: any) {
