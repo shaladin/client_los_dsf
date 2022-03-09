@@ -1,0 +1,132 @@
+{
+    "headerList": [
+        {
+            "type" : "label",
+            "position" : "center",
+            "label" : "Delete"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Asset Name",
+            "name": "FullAssetName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Supplier Branch",
+            "name": "SupplName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Serial No 1",
+            "name": "SerialNo1"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Serial No 2",
+            "name": "SerialNo2"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Serial No 3",
+            "name": "SerialNo3"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Serial No 4",
+            "name": "SerialNo4"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Serial No 5",
+            "name": "SerialNo5"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Edit"
+        }
+    ],
+    "bodyList": [
+        {
+            "type" : "checkBox",
+            "property" : "isActive"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SupplName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SerialNo1"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SerialNo2"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SerialNo3"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SerialNo4"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SerialNo5"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback",
+                    "key": "edit",
+                    "property": [
+                        {
+                            "type": "AppAssetId",
+                            "property": "AppAssetId"
+                        },
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "editAsset",
+                            "property": "editAsset"
+                        }
+                    ]
+                },
+                {
+                    "type": "callback",
+                    "key": "delete",
+                    "property": [
+                        {
+                            "type": "AppAssetId",
+                            "property": "AppAssetId"
+                        }
+                    ],
+                    "icon": "danger p-0 ft-trash-2"
+                }
+            ]
+        }
+    ]
+}

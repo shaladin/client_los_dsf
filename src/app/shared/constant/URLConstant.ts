@@ -1029,6 +1029,7 @@ export class URLConstant {
   public static AddEditAllAssetData = environment.losUrl + "/v1" + "/AppAsset/AddEditAllAssetData";
   public static CheckAssetValidationRule = environment.losUrl + "/v1" + "/AppAsset/CheckAssetValidationRule";
   public static DeleteAppAsset = environment.losUrl + "/v1" + "/AppAsset/DeleteAppAsset";
+  public static DeleteListAppAsset = environment.losUrl + "/v1" + "/AppAsset/DeleteListAppAsset";
   public static GenerateAppAssetAttr = environment.losUrl + "/v1" + "/AppAsset/GenerateAppAssetAttr";
   public static GenerateAppAssetAttrForEditAppAftApv = environment.losUrl + "/v1" + "/AppAsset/GenerateAppAssetAttrForEditAppAftApv";
   public static GetListAppAssetAccessoryByAppId = environment.losUrl + "/v1" + "/AppAsset/GetListAppAssetAccessoryByAppId";
@@ -1143,6 +1144,7 @@ export class URLConstant {
   public static GetListAppCollateralForCopyInsuranceByAppId = environment.losUrl + "/v1" + "/AppIns/GetListAppCollateralForCopyInsuranceByAppId";
   public static GetListInsuranceDataForCopyInsuranceByAppId = environment.losUrl + "/v1" + "/AppIns/GetListInsuranceDataForCopyInsuranceByAppId";
   public static CopyInsuranceData = environment.losUrl + "/v1" + "/AppIns/CopyInsuranceData";
+  public static DeleteListInsuranceData = environment.losUrl + "/v1" + "/AppIns/DeleteListInsuranceData";
 
   //APP INSURANCE
   public static ExecuteInsRateRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateRule";
