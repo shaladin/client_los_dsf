@@ -25,13 +25,13 @@
 
             <mat-tab *ngIf="IsAsset" label="Asset">
               <ng-template matTabContent>
-                <view-asset-data [appId]="ResponseAppDetailData?.AppId"></view-asset-data>
+                <view-asset-data [appId]="ResponseAppDetailData?.AppId" [agrmntId]="AgrmntId"></view-asset-data>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsCollateral" label="Collateral">
               <ng-template matTabContent>
-                <agrmnt-view-collateral [agrmntId]="AgrmntId"></agrmnt-view-collateral>
+                <agrmnt-view-collateral [agrmntId]="AgrmntId" [agrmntId]="AgrmntId"></agrmnt-view-collateral>
               </ng-template>
             </mat-tab>
 
