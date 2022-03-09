@@ -231,10 +231,6 @@ export class AssetDataComponent implements OnInit {
     VendorEmpNo: "",
   };
 
-  assetMasterObj = {
-    FullAssetCode: "",
-  };
-
   districtObj = {
     ProvDistrictCode: "",
   };
@@ -750,7 +746,7 @@ export class AssetDataComponent implements OnInit {
     }
 
     this.allAssetDataObj = new AllAssetDataObj();
-    this.setAllAssetObj();
+    await this.setAllAssetObj();
     this.allAssetDataObj.BizTemplateCode = this.BizTemplateCode;
     if (this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
       if (this.originalAppAssetAccessory && this.originalAppAssetAccessory.length > 0) {
@@ -1004,7 +1000,7 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  setAllAssetObj() {
+  async setAllAssetObj() {
     let assetForm = this.AssetDataForm.getRawValue();
     this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetId;
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
@@ -1035,6 +1031,8 @@ export class AssetDataComponent implements OnInit {
     }
 
     this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.AssetDataForm.controls.AssetSeqNo.value;
+    
+    await this.GetAssetMaster(this.AssetDataForm.controls.FullAssetCode.value, true);
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls.FullAssetCode.value;
     if (this.appAssetId == 0) {
       this.allAssetDataObj.AppAssetObj.AssetStat = "NEW";
@@ -1233,14 +1231,13 @@ export class AssetDataComponent implements OnInit {
   }
 
   async SetAsset(event) {
-    this.assetMasterObj.FullAssetCode = event.FullAssetCode;
-    await this.GetAssetMaster(this.assetMasterObj);
-    this.GetRefAssetDocList(false);
     this.AssetDataForm.patchValue({
       FullAssetCode: event.FullAssetCode,
       FullAssetName: event.FullAssetName,
       AssetCategoryCode: event.AssetCategoryCode
     });
+    await this.GetAssetMaster(event.FullAssetCode);
+    this.GetRefAssetDocList(false);
     if (this.BizTemplateCode != CommonConstant.OPL) {
       if (this.AssetDataForm.controls.SupplCode.value != undefined && this.AssetDataForm.controls.SupplCode.value != '') {
         this.SetMinManuYear()
@@ -1633,8 +1630,7 @@ export class AssetDataComponent implements OnInit {
           }
 
           this.DpTypeBefore = "AMT";
-          this.assetMasterObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-          await this.GetAssetMaster(this.assetMasterObj);
+          await this.GetAssetMaster(this.appAssetObj.ResponseAppAssetObj.FullAssetCode);
           this.GetRefAssetDocList(true);
           this.vendorObj.VendorCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
           this.GetVendorForView();
@@ -2194,8 +2190,8 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  async GetAssetMaster(assetMasterObj) {
-    await this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: assetMasterObj.FullAssetCode }).toPromise().then(
+  async GetAssetMaster(FullAssetCode: string, isFromSave: boolean = false) {
+    await this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: FullAssetCode }).toPromise().then(
       (response: any) => {
         this.AssetMasterObj = response;
         this.AssetDataForm.patchValue({
@@ -2204,8 +2200,11 @@ export class AssetDataComponent implements OnInit {
           AssetTypeCode: this.AssetMasterObj.AssetTypeCode,
           AssetCategoryCode: this.AssetMasterObj.AssetCategoryCode
         });
-        this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
-        this.InputLookupAssetObj.nameSelect = this.AssetMasterObj.FullAssetName;
+
+        if(!isFromSave){
+          this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
+          this.InputLookupAssetObj.nameSelect = this.AssetMasterObj.FullAssetName;
+        }
       }
     );
   }
@@ -2561,9 +2560,9 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  CheckValue() {
+  async CheckValue() {
     this.allAssetDataObj = new AllAssetDataObj();
-    this.setAllAssetObj();
+    await this.setAllAssetObj();
   }
 
   SetLocationAddrType(event) {
