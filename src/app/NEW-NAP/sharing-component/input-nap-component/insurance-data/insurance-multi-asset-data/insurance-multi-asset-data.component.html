@@ -16,7 +16,14 @@
             <lib-ucSubsection [id]="'collateralId'" [title]="'Collateral'" [panel]="'collateral'">
             </lib-ucSubsection>
             <div id="collateral">
-              <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"></lib-ucgridview>
+              <div class="text-right">
+                <button type="button" class="backButton mr-1" (click)="deleteListCollateral()"
+                *ngIf="listAppCollateralIdtoDelete.length > 0">
+                <i class="ft-x"></i>&nbsp;<span translate>Delete Selected</span>
+              </button>
+              </div>
+              <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"
+                (callbackCheckBox)="getIds($event)"></lib-ucgridview>
             </div>
           </div>
 
@@ -396,14 +403,16 @@
                           </td>
                           <td class="text-left">
                             <span style="float:left">
-                              <select class="form-control" formControlName="MrMainCvgTypeCode" (change)="MainCvgTypeDetailChanged($event, i)"
+                              <select class="form-control" formControlName="MrMainCvgTypeCode"
+                                (change)="MainCvgTypeDetailChanged($event, i)"
                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrMainCvgTypeCode.invalid }">
                                 <option value="">-Select One-</option>
                                 <option *ngFor="let item of insMainCvgTypeObj" [value]="item.Key">
                                   {{item.Value}}
                                 </option>
                               </select>
-                              <lib-uc-show-errors [control]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrMainCvgTypeCode"
+                              <lib-uc-show-errors
+                                [control]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrMainCvgTypeCode"
                                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
                             </span>
                             <span>
@@ -558,8 +567,7 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" translate>Total Premium to Customer</label>
-                    <label class="col-md-4 text-right" style="font-size: 90%"
-                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value +
+                    <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value +
                       InsuranceDataForm.controls.TotalCustAddPremiAmt.value +
                       InsuranceDataForm.controls.TotalCustFeeAmt.value | number:'.2':'en-US'}}</label>
                   </div>
@@ -581,8 +589,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" translate>Total Premium to Customer after
                       Discount</label>
-                    <label class="col-md-4 text-right" style="font-size: 90%"
-                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value +
+                    <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value +
                       InsuranceDataForm.controls.TotalCustAddPremiAmt.value +
                       InsuranceDataForm.controls.TotalCustFeeAmt.value -
                       InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
