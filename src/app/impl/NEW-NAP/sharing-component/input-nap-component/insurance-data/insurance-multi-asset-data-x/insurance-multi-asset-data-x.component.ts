@@ -1390,7 +1390,8 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
             SeatCount: 0,
           });
 
-          let LoadingObj = this.GetLoadingFeeRate(AddCvg);
+          let AddCvgFee = AddCvg.filter(x => x.AdditionalCoverageType == CommonConstant.MrAddCvgTypeCodeLoading);
+          let LoadingObj = this.GetLoadingFeeRate(AddCvgFee);
           if(LoadingObj){
             control = this.fb.group({
               MrAddCvgTypeCode: o.Key,

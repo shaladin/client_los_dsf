@@ -265,6 +265,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     }
 
     this.purchaseOrderHObj.PurchaseOrderDt = new Date(formatDate(context[CommonConstant.BUSINESS_DT], 'yyyy-MM-dd', 'en-US'));
+    this.purchaseOrderHObj.PurchaseOrderExpiredDt = this.PurchaseOrderExpiredDt;
 
     console.log(this.purchaseOrderHObj.PurchaseOrderDt);
 

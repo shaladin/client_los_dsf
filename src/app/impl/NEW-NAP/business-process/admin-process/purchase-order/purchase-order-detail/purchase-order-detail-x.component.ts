@@ -314,8 +314,7 @@ export class PurchaseOrderDetailXComponent implements OnInit {
     this.purchaseOrderHObj.MouNo = this.MouNo;
     this.purchaseOrderHObj.Notes = this.Notes;
     this.purchaseOrderHObj.PurchaseOrderDt = new Date(formatDate(context[CommonConstant.BUSINESS_DT], 'yyyy-MM-dd', 'en-US'));
-    // this.listPurchaseOrderD = new Array();
-    // this.purchaseOrderDObj = new PurchaseOrderDObj();
+    this.purchaseOrderHObj.PurchaseOrderExpiredDt = this.PurchaseOrderExpiredDt;
 
     if (this.bankVisible == true) {
       this.purchaseOrderHObj.BankCode = this.responseRefBank.BankCode;
