@@ -27,6 +27,7 @@ import { MonthlyPaymentScheduleSummaryComponent } from './report/factoring/month
 import { MonthlyDisbDsfComponent } from './report/factoring/monthly-disb-dsf/monthly-disb-dsf.component';
 import { ListOutstandingComponent } from './report/factoring/list-outstanding/list-outstanding.component';
 import { VirtualaccountPaymentAllocationunitComponent } from './report/factoring/virtualaccount-payment-allocationunit/virtualaccount-payment-allocationunit.component';
+import { RawDataFactoringComponent } from './report/factoring/raw-data-factoring/raw-data-factoring.component';
 
 const routes: Routes = [
   {
@@ -337,6 +338,18 @@ const routes: Routes = [
         component: VirtualaccountPaymentAllocationunitComponent,
         data: {
           title: "Report Fact Virtual Account Payment Allocation Unit"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_FACT_RAW_DATA_FACTORING,
+        component: RawDataFactoringComponent,
+        data: {
+          title: "Report Fact Raw Data Factoring"
         }
       }
     ]
