@@ -34,7 +34,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
   CollateralNameLookupObj: InputLookupObj = new InputLookupObj();
   InputLookupBankObj: InputLookupObj = new InputLookupObj();
   negativeAssetCheckObj: NegativeAssetCheckObj = new NegativeAssetCheckObj();
-  ResultDuplicateDoubleFinancing: ResDuplicateDoubleFinancingObj = new ResDuplicateDoubleFinancingObj();
+  //ResultDuplicateDoubleFinancing: ResDuplicateDoubleFinancingObj = new ResDuplicateDoubleFinancingObj();
   //IsDisableCustFctr: boolean = true;
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   arrAddCrit;
@@ -647,21 +647,20 @@ export class InvoiceDataDlfnComponent implements OnInit {
     this.negativeAssetCheckObj.SerialNo4 = this.InvoiceForm.controls.SerialNo4.value;
     this.negativeAssetCheckObj.SerialNo5 = this.InvoiceForm.controls.SerialNo5.value;
 
-    this.httpClient.post(URLConstant.GetDoubleFinancingCheckAppAssetV2, this.negativeAssetCheckObj).subscribe(
-      (response: {IsDoubleFinancing: boolean}) => {
-        let IsDoubleFinancing: boolean = response.IsDoubleFinancing;
+    this.httpClient.post(URLConstant.GetDoubleFinancingCheckAppAssetV2_1, this.negativeAssetCheckObj).subscribe(
+      (response: {FinancingMessage: string}) => {
+        let FinancingMessage: string = response.FinancingMessage;
 
-        if (IsDoubleFinancing) {
-          this.toastr.errorMessage(ExceptionConstant.DOUBLE_FINANCING);
+        if (FinancingMessage != "") {
+          this.toastr.warningMessage(ExceptionConstant.DOUBLE_FINANCING + " " + FinancingMessage);
         }
         else {
-          this.ResultDuplicateDoubleFinancing = new ResDuplicateDoubleFinancingObj();
-          this.httpClient.post(URLConstant.GetDoubleFinancingCheckInvoiceDlrFncngD, this.negativeAssetCheckObj).subscribe(
+          this.httpClient.post(URLConstant.GetDoubleFinancingCheckInvoiceDlrFncngDV2, this.negativeAssetCheckObj).subscribe(
             (response2) => {
-              this.ResultDuplicateDoubleFinancing = response2[CommonConstant.ReturnObj];
-
-              if (this.ResultDuplicateDoubleFinancing["length"] > 0) {
-                this.toastr.errorMessage(ExceptionConstant.DOUBLE_FINANCING);
+              FinancingMessage = response2["FinancingMessage"];
+      
+              if (FinancingMessage != "") {
+                this.toastr.warningMessage(ExceptionConstant.DOUBLE_FINANCING + " " + FinancingMessage);
               }
               else {
                 var obj = {

@@ -69,13 +69,25 @@ export class ViewAssetDataDetailXComponent implements OnInit {
   }
 
   GetRefProfession() {
-    this.httpClient.post(URLConstant.GetRefProfessionByCode, {Code: this.appCollateralRegistration.OwnerProfessionCode}).subscribe(
-      (response: RefProfessionObj) => {
-        if(response.ProfessionName != null) {
-          this.OwnerProfessionName = response.ProfessionName;
-        }
+    if(this.appCollateralRegistration.MrOwnerTypeCode == CommonConstant.CustTypeCompany){
+      const ReqObj = {
+        RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
+        MasterCode: this.appCollateralRegistration.OwnerProfessionCode
       }
-    )
+      this.httpClient.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, ReqObj).subscribe(
+        (response) => {
+          this.OwnerProfessionName = response["Descr"];
+        });
+    }else{
+      this.httpClient.post(URLConstant.GetRefProfessionByCode, {Code: this.appCollateralRegistration.OwnerProfessionCode}).subscribe(
+        (response: RefProfessionObj) => {
+          if(response.ProfessionName != null) {
+            this.OwnerProfessionName = response.ProfessionName;
+          }
+        }
+      )
+    }
+
   }
 
 }

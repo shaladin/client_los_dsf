@@ -1096,6 +1096,7 @@ export class URLConstant {
   public static GetListLeadForLeadVerfObj = environment.losUrl + "/v1" + "/LeadVerf/GetListLeadForLeadVerfObj";
   public static GetDoubleFinancingCheckAppAsset = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
   public static GetDoubleFinancingCheckAppAssetV2 = environment.losUrl + "/v2" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
+  public static GetDoubleFinancingCheckAppAssetV2_1 = environment.losUrl + "/v2.1" + "/FraudDetection/GetDoubleFinancingCheckAppAsset";
 
   //LEAD VERF
   public static AddRangeLeadVerf = environment.losUrl + "/v1" + "/LeadVerf/AddRangeLeadVerf";
@@ -1318,6 +1319,7 @@ export class URLConstant {
   public static GetListAppNegativeCheckCustByAppId = environment.losUrl + "/v1" + "/AppDupCheck/GetListAppNegativeCheckCustByAppId";
   public static GetAppFraudVerificationByAppId = environment.losUrl + "/v1" + "/FraudDetection/GetAppFraudVerificationByAppId";
   public static GetDoubleFinancingCheckInvoiceDlrFncngD = environment.losUrl + "/v1" + "/FraudDetection/GetDoubleFinancingCheckInvoiceDlrFncngD";
+  public static GetDoubleFinancingCheckInvoiceDlrFncngDV2 = environment.losUrl + "/v2" + "/FraudDetection/GetDoubleFinancingCheckInvoiceDlrFncngD";
 
   //Fraud Verif
   public static SurveyFraudAppCheckingValidationForFraudVerif = environment.losUrl + "/v1" + "/Application/SurveyFraudAppCheckingValidationForFraudVerif";

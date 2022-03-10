@@ -1062,7 +1062,8 @@ export class InsuranceDataComponent implements OnInit {
             SeatCount: 0,
           });
 
-          let LoadingObj = this.GetLoadingFeeRate(AddCvg);
+          let AddCvgFee = AddCvg.filter(x => x.AdditionalCoverageType == CommonConstant.MrAddCvgTypeCodeLoading);
+          let LoadingObj = this.GetLoadingFeeRate(AddCvgFee);
           control = this.fb.group({
             MrAddCvgTypeCode: o.Key,
             AddCvgTypeName: o.Value,
