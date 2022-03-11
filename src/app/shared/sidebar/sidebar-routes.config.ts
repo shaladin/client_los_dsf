@@ -402,6 +402,7 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstantDsf.REPORT_FACT_MONTHLY_DISB, Title: 'Factoring Monthly Disbursement', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_LIST_OUTSTANDING, Title: 'List Outstanding', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_VIRTUAL_ACCOUNT_PAYMENT_ALLOCATION_UNIT, Title: 'Virtual Account Payment Allocation Unit', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_FACT_RAW_DATA_FACTORING, Title: 'Raw Data Factoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
         ], Params: [] 
       }
     ], Params: []

@@ -37,6 +37,7 @@ import { MonthlyPaymentScheduleSummaryComponent } from './report/factoring/month
 import { MonthlyDisbDsfComponent } from './report/factoring/monthly-disb-dsf/monthly-disb-dsf.component';
 import { ListOutstandingComponent } from './report/factoring/list-outstanding/list-outstanding.component';
 import { VirtualaccountPaymentAllocationunitComponent } from './report/factoring/virtualaccount-payment-allocationunit/virtualaccount-payment-allocationunit.component';
+import { RawDataFactoringComponent } from './report/factoring/raw-data-factoring/raw-data-factoring.component';
 export const customCurrencyMaskConfig = {     
 
   align: "right",     
@@ -62,7 +63,7 @@ export const customCurrencyMaskConfig = {
 };
 
 @NgModule({
-  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent, CustomerGroupPlafondPagingComponent, CustomerGroupPlafondDetailComponent, CustomerGroupPlafondApvPagingDsfComponent, CustomerGroupPlafondApvDetailDsfComponent, CustomerGroupPlafondApvInquiryDsfComponent, AppStatusDsfComponent, InsCompSummaryDsfComponent, InsCompDetailDsfComponent, PlafondDfDsfComponent, PlafondFactoringDsfComponent, SuratkonfirmasipersetujuanComponent, LtkmReportDsfComponent, DisbursementPagingDsfComponent, DisbursementDetailDsfComponent,MonthlyPaymentScheduleSummaryComponent, MonthlyDisbDsfComponent, ListOutstandingComponent, VirtualaccountPaymentAllocationunitComponent],
+  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent, InvoicekwitansitandaterimaPagingComponent, InvoicekwitansitandaterimaDetailComponent, CollateraldataComponent, CustomerGroupPlafondPagingComponent, CustomerGroupPlafondDetailComponent, CustomerGroupPlafondApvPagingDsfComponent, CustomerGroupPlafondApvDetailDsfComponent, CustomerGroupPlafondApvInquiryDsfComponent, AppStatusDsfComponent, InsCompSummaryDsfComponent, InsCompDetailDsfComponent, PlafondDfDsfComponent, PlafondFactoringDsfComponent, SuratkonfirmasipersetujuanComponent, LtkmReportDsfComponent, DisbursementPagingDsfComponent, DisbursementDetailDsfComponent,MonthlyPaymentScheduleSummaryComponent, MonthlyDisbDsfComponent, ListOutstandingComponent, VirtualaccountPaymentAllocationunitComponent,RawDataFactoringComponent],
   imports: [
     CommonModule,
     FormsModule,

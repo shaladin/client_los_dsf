@@ -1,0 +1,73 @@
+{ 
+    "title" : "REPORT RAW DATA FACTORING",
+    "reportName": "Report Raw Data Factoring",
+    "reportTemplateCode": "FACT_RAW_DATA_FACTORING",
+    "component": [ 
+        {
+            "type" : "dropdown",
+            "label" : "Product Type",
+            "name" : "CrtProductType",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+                {
+                "key": "UN",
+                "value": "Unit"
+            },
+            {
+                "key": "SP",
+                "value": "Sparepart"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Cessie Date >=",
+            "name" : "CessieDtGte",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Cessie Date =<",
+            "name" : "CessieDtLte",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Due Date >=",
+            "name" : "DueDtGte",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Due Date =<",
+            "name" : "DueDtLte",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }   
+    ],
+    "exportTypeList": [
+        {
+            "key": 2,
+            "value": "Excel 2007"
+        }
+    ]
+}
