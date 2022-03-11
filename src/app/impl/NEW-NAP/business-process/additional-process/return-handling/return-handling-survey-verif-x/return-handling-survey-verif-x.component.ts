@@ -52,7 +52,10 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
       //Request Obj
       this.RequestTaskModel.ProcessKey = CommonConstantX.RETURN_HANDLING_ADD_SURVEY + this.BizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstantX.APP_STEP_RETURN_SURVEY_VERIF + this.BizTemplateCode;
-      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE], UserAccess[CommonConstant.OFFICE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [ UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE] ,
+                                                UserAccess[CommonConstant.ROLE_CODE],
+                                                UserAccess[CommonConstant.OFFICE_CODE]];
+
 
       //Integration Obj
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;

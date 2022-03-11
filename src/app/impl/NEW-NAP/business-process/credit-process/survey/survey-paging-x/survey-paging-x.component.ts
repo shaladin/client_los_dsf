@@ -53,7 +53,9 @@ export class SurveyPagingXComponent implements OnInit {
       //Request Obj
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstantX.ACT_CODE_SURVEY_VERIF + this.BizTemplateCode;
-      this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE], UserAccess[CommonConstant.OFFICE_CODE]];
+      this.RequestTaskModel.OfficeRoleCodes = [ UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE] ,
+                                                UserAccess[CommonConstant.ROLE_CODE],
+                                                UserAccess[CommonConstant.OFFICE_CODE]];
 
       //Integration Obj
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
