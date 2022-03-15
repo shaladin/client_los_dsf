@@ -147,6 +147,7 @@
   "Tenor": "TENOR (IN MONTHS)",
   "Insurance Length" : "Insurance Length (In Months)",
   "Monthly Installment Amount": "Total Monthly Installment (DSF + Other)",
+  "Monthly Installment": "Total Monthly Installment (DSF + Other)",
   "Gross Monthly Income Amount" : "Monthly Sales / Revenue",
   "Monthly Income" : "Monthly Sales / Revenue",
   "Other Monthly Installment Amount": "Total Monthly Installment (DSF + Other)",
