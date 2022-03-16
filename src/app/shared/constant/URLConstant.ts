@@ -982,6 +982,7 @@ export class URLConstant {
   public static DeleteAppCustBankStmnt = environment.losUrl + "/v1" + "/AppCustBankStmnt/DeleteAppCustBankStmnt";
   public static GetAppCustBankAccByBankAccNoAndAppCustId = environment.losUrl + "/v1" + "/AppCustBankAcc/GetAppCustBankAccByBankAccNoAndAppCustId";
   public static GetCustBankAccByCustIdAndBankAccNo = environment.FoundationR3Url + "/v1" + "/CustBankAcc/GetCustBankAccByCustIdAndBankAccNo";
+  public static AddEditNapCust = environment.losUrl + "/v1" + "/Application/AddEditNapCust";
 
   // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"

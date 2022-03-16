@@ -27,9 +27,6 @@ export class EditNapCustDetailComponent implements OnInit {
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
-  copyAppId: number = null;
-  wfTaskListId: any;
-  mode: string;
   viewReturnInfoObj: string = "";
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
@@ -37,8 +34,7 @@ export class EditNapCustDetailComponent implements OnInit {
   bizTemplateCode: string;
   appCustId: number = 0;
   IsViewReady: boolean = false;
-  from: string;
-  isEditNap1: boolean = false;
+  isEditNap1: boolean = true;
 
   AppStep = {
     "NEW": 1,
@@ -57,44 +53,20 @@ export class EditNapCustDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
-        this.mode = params["Mode"];
-      }
-      if (params["CopyAppId"] != null) {
-        this.copyAppId = params["CopyAppId"];
-      }
-      if (params["WfTaskListId"] != null) {
-        this.wfTaskListId = params["WfTaskListId"];
-      }else{
-        this.wfTaskListId = environment.isCore ? "" : 0;
-      }
-      if(params["from"]!= null)
-      {
-        this.from = params["from"];
-      }
-      if(params["isEditNap1"]!= null)
-      {
-        this.isEditNap1 = params["from"];
       }
     });
   }
 
   async ngOnInit() {
-    this.AppStepIndex = 0;
+    //save edit nap 1 log should be here
+    await this.SaveEditNapCust();
     this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
-        if (response) {
-          this.NapObj = response;
-          this.bizTemplateCode = this.NapObj.BizTemplateCode;
-          this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-          this.stepper.to(this.AppStepIndex);
-          this.IsViewReady = true;
-        }
-        else {
-          this.AppStepIndex = 0;
-          this.IsViewReady = true;
-        }
+        this.NapObj = response;
+        this.bizTemplateCode = this.NapObj.BizTemplateCode;
+        this.IsViewReady = true;
       }
     );
 
@@ -110,10 +82,7 @@ export class EditNapCustDetailComponent implements OnInit {
   async GetCustMainData() {
     let reqObj: GenericObj = new GenericObj();
     reqObj.Id = this.appId;
-    if(this.copyAppId != null) {
-      reqObj.Id = this.copyAppId;
-    }
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).toPromise().then(
       (response) => {
         if (response.AppCustObj) {
           this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
@@ -125,7 +94,7 @@ export class EditNapCustDetailComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_NAP_CUST_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
   ChangeTab(AppStep) {
     switch (AppStep) {
@@ -151,7 +120,7 @@ export class EditNapCustDetailComponent implements OnInit {
     this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED' ? true : false;
     this.MrCustTypeCode = event.MrCustTypeCode != undefined ? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepShr);
-
+    
     //Fix untuk data kosong saat kembali ke step cust jika save new cust
     if (!this.appCustId) {
       await this.GetCustMainData();
@@ -160,28 +129,20 @@ export class EditNapCustDetailComponent implements OnInit {
 
   async NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
-      async (response) => {
-        await this.ChangeTab(Step);
-        this.stepper.to(this.AppStepIndex);
-      }
-    )
+    await this.ChangeTab(Step);
+    this.stepper.to(this.AppStepIndex);
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   LastStep() {
-    let reqObj: SubmitNapObj = new SubmitNapObj();
-    reqObj.AppId = this.NapObj.AppId;
-    reqObj.WfTaskListId = this.wfTaskListId;
-    reqObj.AppNo = this.NapObj.AppNo;
-    reqObj.BizTemplateCode = this.NapObj.BizTemplateCode;
-    reqObj.OriOfficeCode = this.NapObj.OriOfficeCode;
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_NAP_CUST_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+  }
 
-    let SubmitNapCustMainDataUrl = environment.isCore ? URLConstant.SubmitNapCustMainDataV2 : URLConstant.SubmitNapCustMainData;
-    this.http.post(SubmitNapCustMainDataUrl, reqObj).subscribe(
+  async SaveEditNapCust() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.appId;
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.AddEditNapCust, reqObj).toPromise().then(
       (response) => {
-        this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }

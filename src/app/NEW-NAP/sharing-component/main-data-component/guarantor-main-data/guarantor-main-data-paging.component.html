@@ -1,5 +1,5 @@
 <div *ngIf="!isDetail">
-  <div class="button-right margin-15">
+  <div class="button-right margin-15" *ngIf="!isEditNap1">
     <button type="button" class="btn btn-raised btn-primary" (click)="add()">
       <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
     </button>
@@ -53,7 +53,7 @@
   <lib-ucSubsection [id]="'AddEditGuarantorId'" [title]="'Add / Edit Guarantor'" [panel]="'AddEditGuarantor'">
   </lib-ucSubsection>
   <div id="AddEditGuarantor">
-    <app-cust-main-data [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId"
+    <app-cust-main-data [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId" [isEditNap1]="isEditNap1"
       [inputMode]="inputMode" [critCust]="listCustNoPers" [critCustCompany]="listCustNoCoy" (outputCancel)="close()" (outputAfterSave)="close()">
     </app-cust-main-data>
   </div>
