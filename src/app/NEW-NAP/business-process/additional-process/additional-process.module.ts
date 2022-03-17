@@ -66,6 +66,9 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
+import { EditNapCustPagingComponent } from "./edit-nap-cust/edit-nap-cust-paging/edit-nap-cust-paging.component";
+import { EditNapCustDetailComponent } from "./edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component";
+import { MainDataComponentModule } from "app/NEW-NAP/sharing-component/main-data-component/main-data-component.module";
 
 
 
@@ -101,7 +104,8 @@ export const customCurrencyMaskConfig = {
     MatTabsModule,
     InputNapComponentModule,
     ProcessComponentModule,
-    MatRadioModule
+    MatRadioModule,
+    MainDataComponentModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,
@@ -153,7 +157,9 @@ export const customCurrencyMaskConfig = {
     EditAppAfterApprovalApprovalPagingComponent,
     EditAppAfterApprovalApprovalDetailComponent,
     EditAppAfterApprovalInquiryComponent,
-    EditAppAfterApprovalViewComponent
+    EditAppAfterApprovalViewComponent,
+    EditNapCustPagingComponent,
+    EditNapCustDetailComponent
     
   ],
   providers: [

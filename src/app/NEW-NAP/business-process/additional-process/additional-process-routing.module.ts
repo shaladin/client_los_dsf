@@ -48,6 +48,8 @@ import { EditAppAfterApprovalPagingComponent } from './edit-app-after-approval/e
 import { CreditApprovalResultExtensionApprovalDetailComponent } from './credit-apv-result-ext/approval/detail/detail.component';
 import { CreditApprovalResultExtensionApprovalPagingComponent } from './credit-apv-result-ext/approval/paging/paging.component';
 import { CollateralAddEditComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component';
+import { EditNapCustPagingComponent } from './edit-nap-cust/edit-nap-cust-paging/edit-nap-cust-paging.component';
+import { EditNapCustDetailComponent } from './edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component';
 
 
 const routes: Routes = [
@@ -362,6 +364,19 @@ const routes: Routes = [
         component: CopyCanAppMultiBlDetailComponent,
         data: {
           title: 'Copy From Cancelled Application Detail'
+        }
+      },
+      {
+        path: PathConstant.EDIT_NAP_CUST_PAGING,
+        component: EditNapCustPagingComponent,
+        data: {
+          title: 'Edit Nap Cust'
+        }
+      },{
+        path: PathConstant.EDIT_NAP_CUST_DETAIL,
+        component: EditNapCustDetailComponent,
+        data: {
+          title: 'Edit Nap Cust'
         }
       },
     ]
