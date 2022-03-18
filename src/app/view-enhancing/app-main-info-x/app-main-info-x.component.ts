@@ -96,10 +96,11 @@ export class AppMainInfoXComponent implements OnInit {
         };
         this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
           (response) => {
-            if(response['MrCustTypeCode'] == CommonConstant.CustTypePersonal) {
-              AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
-            } else if(response['MrCustTypeCode'] == CommonConstant.CustTypeCompany) {
-              AdInsHelper.OpenCustomerCoyViewByCustId(response['CustId']);
+            if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+              this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+            }
+            else if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+              this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
             }
           }
         )
