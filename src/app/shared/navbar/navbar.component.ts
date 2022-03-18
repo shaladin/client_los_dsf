@@ -13,11 +13,12 @@ import { CommonConstant } from '../constant/CommonConstant';
 import { NavigationConstant } from '../constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsConstant } from '../AdInstConstant';
+import { RolePickNewService } from '../rolepick/rolepick-new.service';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    providers: [RolePickService, NGXToastrService]
+    providers: [NGXToastrService]
 })
 
 export class NavbarComponent implements AfterViewChecked, OnInit {
@@ -40,7 +41,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     readonly ChangeLink: string = NavigationConstant.PAGES_CHANGE_PASSWORD;
     constructor(public translate: TranslateService,
         private router: Router, private cookieService: CookieService,
-        private http: HttpClient, public rolePickService: RolePickService) {
+        private http: HttpClient, public rolePickService: RolePickService, private rolePickNewService: RolePickNewService) {
         const browserLang: string = translate.getBrowserLang();
         translate.use(browserLang.match(/en|id|pt|de/) ? browserLang : 'en');
     }
@@ -96,7 +97,14 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
     ShowRole() {
         var data = { status: "200", reason: "OK" };
-        this.rolePickService.openDialog(data, "modal");
+
+        let isUseNewRolepick: string = AdInsHelper.GetLocalStorage(CommonConstant.IS_USE_NEW_ROLEPICK);
+        if(isUseNewRolepick == '0'){
+            this.rolePickService.openDialog(data, "modal");
+        }
+        else {
+            this.rolePickNewService.openDialog(data, "modal");
+        }
     }
 
 

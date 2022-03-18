@@ -1132,4 +1132,7 @@ export class CommonConstant {
   }
 
   public static CompanyTypePT = "PT";
+
+  // UI ROLEPICK
+  public static IS_USE_NEW_ROLEPICK = "IS_USE_NEW_ROLEPICK";
 }
