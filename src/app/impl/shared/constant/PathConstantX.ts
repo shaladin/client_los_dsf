@@ -110,6 +110,7 @@ export class PathConstantX {
   public static MOU_EXECUTION_DETAIL_X = PathConstant.MOU_EXECUTION + '/' + PathConstantX.DETAIL_X;
   public static MOU_EXECUTION_PAGING_X = PathConstant.MOU_EXECUTION + "/" + PathConstantX.PAGING;
   public static MOU_CUST_LEGAL_RVW_DETAIL_X = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstantX.DETAIL_X;
+  public static MOU_CUST_APPRV_X = PathConstant.MOU_CUST + "/ApprovalX";
   //#endregion
 
   //#region Change mou
@@ -128,6 +129,7 @@ export class PathConstantX {
   public static CHANGE_MOU_RVW_PAGING_X = PathConstant.CHANGE_MOU + '/ReviewPagingX';
   public static CHANGE_MOU_DETAIL_DLFN_X = PathConstant.CHANGE_MOU_DETAIL + "/DealerfinancingX";
   public static CHANGE_MOU_DETAIL_FCTR_X = PathConstant.CHANGE_MOU_DETAIL + "/FactoringX";
+  public static CHANGE_MOU_APV_PAGING_X = PathConstant.CHANGE_MOU + "/ApvPagingX";
   //#endregion
 
   //region New Approval
