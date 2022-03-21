@@ -46,6 +46,7 @@ export class SchmRegulerFixXComponent implements OnInit {
   reportParameters: any;
   showGenerateReportBtn: boolean;
 
+  IsRoundingZero: boolean = false;
   IsFirstCalc: boolean = true;
   EffRateAfterCalc: number = -1;
   FlatRateAfterCalc: number = -1;
@@ -326,10 +327,23 @@ export class SchmRegulerFixXComponent implements OnInit {
       return;
     }
 
+    if (this.ParentForm.getRawValue().RoundingAmt == 0){
+      this.IsRoundingZero = true;
+      this.ParentForm.patchValue({
+        RoundingAmt: 1
+      });
+    }    
+
     if (!this.IsTrialCalc) {
       this.calcRegFixObj = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentRegularFixX, this.calcRegFixObj).subscribe(
         (response) => {
+          if (this.IsRoundingZero){
+            this.ParentForm.patchValue({
+              RoundingAmt: 0
+            });
+          }
+
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
           response.CommissionAmtFromDiffRate = 0;
           //End SITDSFCFRTHREE-169
@@ -408,6 +422,7 @@ export class SchmRegulerFixXComponent implements OnInit {
           this.SetNeedReCalculate(false);
         }
       );
+      
     } else {
       this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentRegularFixForTrialCalc, this.calcRegFixObjForTrialCalc).subscribe(
