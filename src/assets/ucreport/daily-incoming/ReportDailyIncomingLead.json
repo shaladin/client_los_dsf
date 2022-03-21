@@ -38,6 +38,7 @@
           {
         "type": "datepicker",
         "label": "Period From >=",
+        "id": "periodDtGte",
         "name": "PeriodFrom",
         "datatype": "date",
         "value": "BD-7",
@@ -56,6 +57,7 @@
       {
         "type": "datepicker",
         "label": "Period To <=",
+        "id": "periodDtLte",
         "name": "PeriodTo",
         "datatype": "date",
         "value": "BD",

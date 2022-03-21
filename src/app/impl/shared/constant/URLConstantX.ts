@@ -135,6 +135,7 @@ export class URLConstantX {
   public static EditAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/EditAppCustBankAccAndStmntX";
   public static DeleteAppCustBankAccAndStmnt = environment.losUrl +  '/v1' +"/AppCustBankAccX/DeleteAppCustBankAccAndStmntX";
   public static GetAppCustBankAccAndStatementForView = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccAndStatementForViewX";
+  public static AddEditNapCust = environment.losUrl + "/v1" + "/Application/AddEditNapCust";
 
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
