@@ -1,5 +1,8 @@
 <div class="ucSearch-Button-Right">
   <span class="mr-1">
+  	<button type="button" class="backButton mr-1" (click)="deleteListAsset()" *ngIf="listAssetIdtoDelete.length > 0">
+      <i class="ft-x"></i>&nbsp;<span translate>Delete Selected</span>
+    </button>
     <button type="button" class="addButton" (click)="addAsset()" translate>
       <i class="ft-plus-circle"></i> Add Asset
     </button>
@@ -8,7 +11,7 @@
 <lib-ucSubsection [id]="'assetListId'" [title]="'Asset List'" [panel]="'assetList'">
 </lib-ucSubsection>
 <div id="assetList">
-  <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
+  <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)" (callbackCheckBox)="getIds($event)"></lib-ucgridview>
 </div>
 <div *ngIf="listDataAsset.length > 0" class="form-group row">
   <label class="col-md-2 adInsLabel px-3" style="padding: 0.75em" translate>Copy Asset</label>

@@ -22,6 +22,7 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
 
   @Input() appId: number;
   @Input() isNonMandatory: boolean;
+  @Input() isEditNap1: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 

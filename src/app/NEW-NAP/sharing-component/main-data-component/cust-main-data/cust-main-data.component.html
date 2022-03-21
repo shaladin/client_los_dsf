@@ -30,7 +30,7 @@
             <div class="col-md-6">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>{{subjectTitle}} Legal Name</label>
-                <div class="col-md-8">
+                <div class="col-md-8" *ngIf="!isEditNap1">
                   <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustObj"
                     *ngIf="this.InputLookupCustObj.isReady" [parentForm]="CustMainDataForm"
                     [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
@@ -39,6 +39,13 @@
                     *ngIf="this.InputLookupCustCoyObj.isReady" [parentForm]="CustMainDataForm"
                     [identifier]="'lookupCustomerCoy'" (lookup)="copyCustomerEvent($event)" #LookupExistingCustCoy>
                   </lib-uclookupgeneric>
+                </div>
+                <div class="col-md-8" *ngIf="isEditNap1">
+                  <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                    formControlName="CustName"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.CustName.invalid}">
+                  <lib-uc-show-errors [control]="CustMainDataForm.controls.CustName" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
             </div>

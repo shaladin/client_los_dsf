@@ -1,5 +1,5 @@
 <div *ngIf="!isDetail">
-  <div class="button-right margin-15">
+  <div class="button-right margin-15" *ngIf="!isEditNap1">
     <button type="button" class="btn btn-raised btn-primary" (click)="add()" translate>
       <i class="ft-plus-circle"></i> Add
     </button>
@@ -58,7 +58,7 @@
   <lib-ucSubsection [id]="'AddEditFamilyId'" [title]="'Add / Edit Family'" [panel]="'AddEditFamily'">
   </lib-ucSubsection>
   <div id="AddEditFamily">
-    <app-cust-main-data-x [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId"
+    <app-cust-main-data-x [custMainDataMode]="custMainDataMode" [appId]="appId" [appCustId]="appCustId" [isEditNap1]="isEditNap1"
       [isFamily]="true" [critCust]="critCust"
       [inputMode]="inputMode" [isMarried]="isMarried" (outputCancel)="close()" (outputAfterSave)="close()">
     </app-cust-main-data-x>

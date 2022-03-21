@@ -17,6 +17,7 @@ import { ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-
 export class GuarantorMainDataPagingXComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() isEditNap1: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
