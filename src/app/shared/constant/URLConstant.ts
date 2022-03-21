@@ -5,7 +5,7 @@ import { environment } from "environments/environment";
 
 export class URLConstant {
   // NOTIFICATION HUB
-  public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
+  public static WebSocketUrl = environment.FoundationR3Url + "/Notificationhub";
   public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/v1" + "/NotificationH/GetListNotificationHByRefUserId";
 
   //WORKFLOW (LEWAT FOUNDATION)
@@ -431,6 +431,7 @@ export class URLConstant {
   public static UpdateFormFeatureAuthForm = "/MenuManagement/UpdateFormFeatureAuthForm";
   public static GetAllActiveRefFormAndPathExist = "/MenuManagement/GetAllActiveRefFormAndPathExist";
   public static GetAllActiveRefForm = "/MenuManagement/GetAllActiveRefForm";
+  public static LogoutAuth = "/v1" + "/Authenticate/Logout";
 
   //FORM FEATURE
   public static GetListRefFeature = "/RefFeature/GetListRefFeature";
@@ -1922,6 +1923,7 @@ export class URLConstant {
 
   //Config Result
   public static GetSysConfigResultByCode = environment.FoundationR3Url + "/v1" + "/SysConfigResult/GetSysConfigResultByCode";
+  public static GetSysCtrlCoyBySysKey = environment.FoundationR3Url + "/v1" + "/SysCtrlCoy/GetSysCtrlCoyByKey"
 
   //App Attr Content
   public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
