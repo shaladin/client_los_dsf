@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
+import {ResAppCommIncomeObjX} from 'app/impl/shared/model/AppFinData/ResAppCommIncomeObjX.Model';
 
 @Component({
   selector: 'app-tab-commission-x',
@@ -22,15 +24,27 @@ export class TabCommissionXComponent implements OnInit {
   ListSupplData;
   ListSupplEmpData;
   ListReferantorData;
+
   SupplData: object = {};
   SupplEmpData: object = {};
   ReferantorData: object = {};
-  SummaryData;
-  initData() {
+
+  // START UATDSFCF-911
+  TotalSupplier;
+  TotalSupplierEmp;
+  TotalReferantor;
+
+  ListResultRefundIncomeInfo: Array<ResAppCommIncomeObjX>;
+  MaxAllocatedAmount = 0;
+  // END UATDSFCF-911
+
+  async initData() {
     this.ListSupplData = new Array();
     this.ListSupplEmpData = new Array();
     this.ListReferantorData = new Array();
-    this.SummaryData = {
+    // START UATDSFCF-911
+    // - Total Commission dipisah per supplier, supplier emp, dan referantor
+    this.TotalSupplier = {
       totalCommAmt: 0,
       totalCommAfterTaxAmt: 0,
       totalTaxAmt: 0,
@@ -38,6 +52,31 @@ export class TabCommissionXComponent implements OnInit {
       totalDisburmentAmt: 0,
       totalExpenseAmt: 0
     };
+    this.TotalSupplierEmp = {
+      totalCommAmt: 0,
+      totalCommAfterTaxAmt: 0,
+      totalTaxAmt: 0,
+      totalVatAmt: 0,
+      totalDisburmentAmt: 0,
+      totalExpenseAmt: 0
+    };
+    this.TotalReferantor = {
+      totalCommAmt: 0,
+      totalCommAfterTaxAmt: 0,
+      totalTaxAmt: 0,
+      totalVatAmt: 0,
+      totalDisburmentAmt: 0,
+      totalExpenseAmt: 0
+    };
+
+    // - Penambahan informasi Income Information
+    await this.http.post(URLConstantX.GetAppIncomeInfoByAppIdX, { Id: this.appId }).toPromise().then(
+      (response) => {
+        this.ListResultRefundIncomeInfo = response[CommonConstant.ReturnObj]
+        this.MaxAllocatedAmount = this.ListResultRefundIncomeInfo.reduce((total, x) => total + x.CommissionCompntAmt, 0 )
+      })
+    // END UATDSFCF-911
+
   }
 
   async ngOnInit() {
@@ -61,37 +100,48 @@ export class TabCommissionXComponent implements OnInit {
     );
   }
 
+  // START UATDSFCF-911 - Total Commission dipisah per supplier, supplier emp, dan referantor
+  addSummary(tempObj, summaryObj){
+    tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
+    if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplier)
+      this.ListSupplData.push(tempObj);
+    if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplierEmp)
+      this.ListSupplEmpData.push(tempObj);
+    if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeReferantor)
+      this.ListReferantorData.push(tempObj);
+
+
+    if(tempObj.MrTaxCalcMethodCode == "NETT"){
+      summaryObj.totalCommAmt += tempObj.TotalCommissionAmt;
+    }
+    else{
+      summaryObj.totalCommAmt += tempObj.TotalCommissionAfterTaxAmt;
+    }
+
+    summaryObj.totalCommAfterTaxAmt += tempObj.TotalCommissionAfterTaxAmt;
+    summaryObj.totalTaxAmt += (tempObj.TaxAmt + tempObj.PenaltyAmt);
+    summaryObj.totalVatAmt += tempObj.VatAmt;
+    summaryObj.totalDisburmentAmt += tempObj.TotalDisburseAmt;
+    summaryObj.totalExpenseAmt += tempObj.TotalExpenseAmt;
+  }
+
   async GetCommissionData() {
-    var obj: object = { Id: this.appId };
-    var url: string = URLConstant.GetAppCommissionDataDetailByAppId;
-
-    await this.http.post(url, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
-        var tempResponse = response[CommonConstant.ReturnObj];
+        let tempResponse = response[CommonConstant.ReturnObj];
         for (var i = 0; i < tempResponse.length; i++) {
-          var tempObj = tempResponse[i];
-          tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
-
-          if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplier)
-            this.ListSupplData.push(tempObj);
-          if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplierEmp)
-            this.ListSupplEmpData.push(tempObj);
-          if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeReferantor)
-            this.ListReferantorData.push(tempObj);
-
-
-          if(tempObj.MrTaxCalcMethodCode == "NETT"){
-            this.SummaryData.totalCommAmt += tempObj.TotalCommissionAmt;
+          let tempObj = tempResponse[i];
+          switch (tempObj['MrCommissionRecipientTypeCode']) {
+            case  CommonConstant.CommissionReceipientTypeCodeSupplier:
+              this.addSummary(tempObj, this.TotalSupplier)
+              break;
+            case  CommonConstant.CommissionReceipientTypeCodeSupplierEmp:
+              this.addSummary(tempObj, this.TotalSupplierEmp)
+              break;
+            case  CommonConstant.CommissionReceipientTypeCodeReferantor:
+              this.addSummary(tempObj, this.TotalReferantor)
+              break;
           }
-          else{
-            this.SummaryData.totalCommAmt += tempObj.TotalCommissionAfterTaxAmt;
-          }
-          
-          this.SummaryData.totalCommAfterTaxAmt += tempObj.TotalCommissionAfterTaxAmt;
-          this.SummaryData.totalTaxAmt += (tempObj.TaxAmt + tempObj.PenaltyAmt);
-          this.SummaryData.totalVatAmt += tempObj.VatAmt;
-          this.SummaryData.totalDisburmentAmt += tempObj.TotalDisburseAmt;
-          this.SummaryData.totalExpenseAmt += tempObj.TotalExpenseAmt;
         }
 
         this.SupplData["title"] = CommonConstant.TitleSupplier;
@@ -105,4 +155,5 @@ export class TabCommissionXComponent implements OnInit {
         this.ReferantorData["listData"] = this.ListReferantorData;
       })
   }
+  // END UATDSFCF-911 - Total Commission dipisah per supplier, supplier emp, dan referantor
 }

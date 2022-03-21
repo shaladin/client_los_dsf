@@ -1,5 +1,34 @@
 <div class="col-md-12 text-left">
   <div class="card">
+
+    <!--START UATDSFCF-911 - Penambahan informasi Income Information-->
+    <lib-ucSubsection [id]="'viewIncomeInfoId'" [title]="'Income Information'" [panel]="'viewIncomeInfo'">
+    </lib-ucSubsection>
+    <div class="form-body" id="viewIncomeInfo" *ngIf="ListResultRefundIncomeInfo.length>0">
+      <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
+        <div class="row">
+          <div class="col-md-3">
+            <label class="label-control" translate> {{ item.MrCommissionCompntDesc }} </label>
+          </div>
+          <div class="col-md-3 form-inline-right">
+            <label class="label-control" *ngIf="item.CommissionCompntAmt >= 0"> {{item.CommissionCompntAmt | number : '1.2-2'}} </label>
+            <label class="label-control" *ngIf="item.CommissionCompntAmt < 0"> {{0 | number : '1.2-2'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="label-control" translate> Max Allocated Amount </label>
+        </div>
+        <div class="col-md-3 form-inline-right">
+          <label class="label-control">
+            {{MaxAllocatedAmount | number : '1.2-2'}} </label>
+          <label class="label-control" *ngIf="MaxAllocatedAmount < 0"> {{0 | number : '1.2-2'}} </label>
+        </div>
+      </div>
+    </div>
+    <!--END UATDSFCF-911 - Penambahan informasi Income Information-->
+
     <app-list-data-commission *ngIf="ListSupplData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplData"></app-list-data-commission>
     <app-list-data-commission *ngIf="ListSupplEmpData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplEmpData"></app-list-data-commission>
     <app-list-data-commission *ngIf="ListReferantorData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="ReferantorData">
@@ -7,14 +36,17 @@
     <lib-ucSubsection [id]="'formSummaryId'" [title]="'Summary'" [panel]="'formSummary'">
     </lib-ucSubsection>
     <div class="form-body" [id]="'formSummary'">
-      <div class="form-body row">
+      <!--START UATDSFCF-911 - Total Commiission Dipiisah per supplier, supplier emp, dan referantor-->
+      <lib-ucSubsection [id]="'TotalSupplierId'" [title]="'Total Supplier Commission Amount'" [panel]="'TotalSupplier'">
+      </lib-ucSubsection>
+      <div class="form-body row" [id]="'TotalSupplier'">
         <div class="col-md-6">
           <div class="form-group row">
             <div class="col-md-6">
               <label class="adInsLabel" translate>Total Commission Amount</label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="adInsLabel"> {{SummaryData.totalCommAmt | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel"> {{TotalSupplier.totalCommAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="form-group row">
@@ -22,7 +54,7 @@
               <label class="adInsLabel" translate>Total Tax Base Amount</label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="adInsLabel"> {{SummaryData.totalCommAfterTaxAmt | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel"> {{TotalSupplier.totalCommAfterTaxAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="form-group row">
@@ -30,7 +62,7 @@
               <label class="adInsLabel" translate>Total Disburse Amount</label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="adInsLabel"> {{SummaryData.totalDisburmentAmt | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel"> {{TotalSupplier.totalDisburmentAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="form-group row">
@@ -38,7 +70,7 @@
               <label class="adInsLabel" translate>Total Expense Amount</label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="adInsLabel"> {{SummaryData.totalExpenseAmt | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel"> {{TotalSupplier.totalExpenseAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="form-group row">
@@ -46,7 +78,7 @@
               <label class="adInsLabel" translate>Total Tax Amount</label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="adInsLabel"> {{SummaryData.totalTaxAmt | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel"> {{TotalSupplier.totalTaxAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
           <div class="form-group row">
@@ -54,11 +86,120 @@
               <label class="adInsLabel" translate>Total Vat Amount</label>
             </div>
             <div class="col-md-6" style="text-align: right;">
-              <label class="adInsLabel"> {{SummaryData.totalVatAmt | number:'.2':'en-US'}} </label>
+              <label class="adInsLabel"> {{TotalSupplier.totalVatAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
         </div>
       </div>
+      <lib-ucSubsection [id]="'TotalSupplierEmpId'" [title]="'Total Supplier Employee Commission Amount'" [panel]="'TotalSupplierEmp'">
+      </lib-ucSubsection>
+      <div class="form-body row" [id]="'TotalSupplierEmp'">
+        <div class="col-md-6">
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Commission Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalSupplierEmp.totalCommAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Tax Base Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalSupplierEmp.totalCommAfterTaxAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Disburse Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalSupplierEmp.totalDisburmentAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Expense Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalSupplierEmp.totalExpenseAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Tax Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalSupplierEmp.totalTaxAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Vat Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalSupplierEmp.totalVatAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <lib-ucSubsection [id]="'TotalReferantorId'" [title]="'Total Referantor Commission Amount'" [panel]="'TotalReferantor'">
+      </lib-ucSubsection>
+      <div class="form-body row" [id]="'TotalReferantor'">
+        <div class="col-md-6">
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Commission Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalReferantor.totalCommAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Tax Base Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalReferantor.totalCommAfterTaxAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Disburse Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalReferantor.totalDisburmentAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Expense Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalReferantor.totalExpenseAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Tax Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalReferantor.totalTaxAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="adInsLabel" translate>Total Vat Amount</label>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adInsLabel"> {{TotalReferantor.totalVatAmt | number:'.2':'en-US'}} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--END UATDSFCF-911 - Total Commiission Dipiisah per supplier, supplier emp, dan referantor-->
     </div>
   </div>
 </div>
