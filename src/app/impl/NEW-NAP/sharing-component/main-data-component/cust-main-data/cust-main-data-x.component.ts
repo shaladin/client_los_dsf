@@ -892,12 +892,9 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      if (this.custMainDataMode != CommonConstant.CustMainDataModeMgmntShrholder) {
-        this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern(CommonConstant.regexEmail)]);
-      }
-      else{
-        this.CustMainDataForm.controls.Email1.setValidators([Validators.pattern(CommonConstant.regexEmail)]);
-      }
+      // region IMPORTANT ! email di DSF X tidak mandatory 
+      this.CustMainDataForm.controls.Email1.setValidators([Validators.pattern(CommonConstant.regexEmail)]);
+      // endregion 
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
