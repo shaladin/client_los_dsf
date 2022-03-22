@@ -427,8 +427,9 @@ export class CustMainDataComponent implements OnInit {
 
   jobPositionLookupObj: InputLookupObj = new InputLookupObj();
   BindLookupJobPosition() {
+    console.log("nyan cat");
     this.jobPositionLookupObj = new InputLookupObj();
-    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder? true : false ;
+    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal? true : false ;
     this.jobPositionLookupObj.urlJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.pagingJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.genericJson = "./assets/uclookup/customer/lookupJobPosition.json";
@@ -468,12 +469,18 @@ export class CustMainDataComponent implements OnInit {
     if(this.isEditNap1){
       return;
     }
+    this.jobPositionLookupObj.isReady = false;
     if (custType == CommonConstant.CustTypePersonal) {
       this.InputLookupCustObj.isDisable = false;
       this.InputLookupCustCoyObj.isDisable = true;
+      this.jobPositionLookupObj.isDisable = false;
+      this.jobPositionLookupObj.isReady = true;
+
     } else {
       this.InputLookupCustObj.isDisable = true;
       this.InputLookupCustCoyObj.isDisable = false;
+      this.jobPositionLookupObj.isDisable = true;
+
     }
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -874,6 +881,9 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
     this.CustMainDataForm.controls.Email1.updateValueAndValidity();
     this.setLookup(custType, true);
+    if(this.custAttrForm != undefined){
+      this.custAttrForm.resetForm();
+    }
   }
 
   async copyAgrmntParentEvent(event) {

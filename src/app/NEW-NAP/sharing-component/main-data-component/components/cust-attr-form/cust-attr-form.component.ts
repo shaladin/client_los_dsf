@@ -53,6 +53,7 @@ export class CustAttrFormComponent implements OnInit {
   }
 
   async GetQuestion(AppCustId: number = this.AppCustId) {
+    console.log("question");
     let tempReq: ReqGetListAppCustAttrContentObj = {
       AttrCodes: this.AttrCodes,
       AttrGroup: this.AttrGroup,
@@ -261,5 +262,29 @@ export class CustAttrFormComponent implements OnInit {
         this.ExpenseAmt.emit({ Index: index, Amount: parseFloat(amount.replace(/,/g, '')) });
         break;
     };
+  }
+
+  resetForm(){
+    console.log(this.dictAttrCodeIdxAt);
+    for (let i in this.dictAttrCodeIdxAt) {
+      let tempArray = this.parentForm.get(this.identifier) as FormArray;
+      let tempFb = tempArray.get(this.dictAttrCodeIdxAt[i].toString()) as FormGroup;
+      tempFb.clearValidators();
+      if (tempFb.get("AttrInputType").value == this.AttrInputTypeRefMaster) {
+        this.dictRefMasterLookup[i].isRequired = false;
+        this.dictRefMasterLookup[i].isReady = false;
+      }
+      if (tempFb.get("AttrInputType").value == this.AttrInputTypeSearchList) {
+        this.selectedMultiDDLItems[i] = new Array();
+      }
+      tempFb.updateValueAndValidity();
+    }
+    for (let i in this.dictRefMasterLookup) {
+      this.dictRefMasterLookup[i] = new InputLookupObj();
+      this.dictRefMasterLookup[i].isRequired = false;
+      this.dictRefMasterLookup[i].isReady = false;
+      this.parentForm.controls["lookup"+i].clearValidators();
+      this.parentForm.controls["lookup"+i].updateValueAndValidity();
+    }
   }
 }

@@ -356,7 +356,7 @@
         </div>
       </div>
       <div class="form-actions right">
-        <button *ngIf="custMainDataMode != 'CUST'" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()">
+        <button *ngIf="custMainDataMode != 'CUST'" type="button" class="btn btn-raised btn-warning mr-1" (click)="findInvalidControls()">
           <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
         </button>
         <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm) class="btn btn-raised btn-primary">
