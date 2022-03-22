@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -24,7 +25,7 @@ export class CustCompletionPagingComponent implements OnInit {
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-  constructor(private route: ActivatedRoute, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private router: Router, private cookieService: CookieService, private http: HttpClient ) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.bizTemplateCode = params['BizTemplateCode'];
@@ -78,7 +79,13 @@ export class CustCompletionPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId, "BizTemplateCode": ev.RowObj.BizTemplateCode });
+
+      this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByAppId, { Id: ev.RowObj.AppId }).subscribe(
+        (res) => {
+          if(res) 
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId, "BizTemplateCode": ev.RowObj.BizTemplateCode });
+        }
+      );
     }
   }
 }
