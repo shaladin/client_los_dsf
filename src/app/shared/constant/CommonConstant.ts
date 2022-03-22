@@ -1132,4 +1132,7 @@ export class CommonConstant {
   }
 
   public static CompanyTypePT = "PT";
+
+  // SysCtrlCoy
+  public static IsEODRun = "IsEODRun"
 }
