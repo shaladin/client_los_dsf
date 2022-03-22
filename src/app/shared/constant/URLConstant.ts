@@ -49,6 +49,7 @@ export class URLConstant {
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/v1" + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/v1" + "/Application/SubmitNAP";
   public static SubmitNAPV2 = environment.losUrl + "/v2" + "/Application/SubmitNAP";
+  public static SubmitNAPV21 = environment.losUrl + "/v2.1" + "/Application/SubmitNAP";
   public static SubmitNapCustMainData = environment.losUrl + "/v1" + "/Application/SubmitNAPCustMainData";
   public static SubmitNapCustMainDataV2 = environment.losUrl + "/v2.1" + "/Application/SubmitNAPCustMainData";
   public static CreateWorkflowDuplicateCheck = environment.losUrl + "/v1" + "/Application/CreateWorkflowDuplicateCheck";
@@ -985,6 +986,10 @@ export class URLConstant {
   public static GetCustBankAccByCustIdAndBankAccNo = environment.FoundationR3Url + "/v1" + "/CustBankAcc/GetCustBankAccByCustIdAndBankAccNo";
   public static AddEditNapCust = environment.losUrl + "/v1" + "/Application/AddEditNapCust";
 
+  // APP NEGATIVE CUST
+  public static GetNegCustIndicatorByAppId = environment.losUrl + "/v1" + "/AppNegativeCust/GetNegCustIndicatorByAppId";
+  public static CheckIsNegCustAllowedCreateAppByAppId = environment.losUrl + "/v1" + "/AppNegativeCust/CheckIsNegCustAllowedCreateAppByAppId";
+
   // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
   public static GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes"
@@ -1467,6 +1472,7 @@ export class URLConstant {
   public static UpdateAppCustCompletionCompany = environment.losUrl + "/v1" + "/AppCust/UpdateAppCustCompletionCompany";
   public static SubmitAppCustCompletion = environment.losUrl + "/v1" + "/AppCust/SubmitAppCustCompletion";
   public static SubmitAppCustCompletionV2 = environment.losUrl + "/v2" + "/AppCust/SubmitAppCustCompletion";
+  public static SubmitAppCustCompletionV21 = environment.losUrl + "/v2.1" + "/AppCust/SubmitAppCustCompletion";
   public static SaveAppCustCompletion = environment.losUrl + "/v1" + "/AppCust/SaveAppCustCompletion";
 
   // App Cust Personal Job Data
