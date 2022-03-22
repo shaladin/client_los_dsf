@@ -382,7 +382,8 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.type = pageType;
     this.ChgMouCustCollateralId = 0;
     this.GenerateCollateralAttr(false, 0);
-    if (pageType == "AddExisting") {
+    if (pageType == 'AddExisting') {
+      this.bindUcLookupExisting();
       await this.http.post(URLConstant.GetListMouCustCollateralActiveByCustNo, { TrxNo: this.custNo }).toPromise().then(
         (response) => {
           if(response["ReturnObject"].length < 1){
@@ -404,7 +405,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
         listDocExisting.removeAt(0);
       }
 
-      this.bindUcLookupExisting();
+      
       this.AddCollForm.controls.CopyFromLegal.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
       this.AddCollForm.controls.CollateralPrcnt.enable();

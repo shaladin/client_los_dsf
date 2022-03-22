@@ -1,5 +1,5 @@
 <div *ngIf="!isDetail">
-  <div class="button-right margin-15">
+  <div class="button-right margin-15" *ngIf="!isEditNap1">
     <button type="button" class="btn btn-raised btn-primary" (click)="add()" translate>
       <i class="ft-plus-circle"></i> Add
     </button>
@@ -65,7 +65,7 @@
   <div id="AddEditMgmntShrholder">
     <app-cust-main-data-x [custMainDataMode]="custMainDataMode" [appId]="appId" [MrCustTypeCode]="MrCustTypeCode" [AppCustCompanyMgmntShrholderId]="AppCustCompanyMgmntShrholderId" [ParentAppCustCompanyId]="ParentAppCustCompanyId" [appCustId]="appCustId" [tempTotalSharePrct]="tempTotalSharePrct" 
     [isNonMandatory]="isNonMandatory"
-      [inputMode]="inputMode" [critCust]="critCust" [critCustCompany]="critCustCompany" (outputCancel)="close()" (outputAfterSave)="close()">
+      [inputMode]="inputMode" [critCust]="critCust" [critCustCompany]="critCustCompany" [isEditNap1]="isEditNap1" (outputCancel)="close()" (outputAfterSave)="close()">
     </app-cust-main-data-x>
   </div>
 </div>
