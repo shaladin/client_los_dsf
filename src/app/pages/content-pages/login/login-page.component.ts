@@ -36,6 +36,7 @@ export class LoginPageComponent implements OnInit {
     user: "",
     pwd: ""
   };
+  isEod: boolean = false;
 
   constructor(private router: Router, private http: HttpClient, public rolePickService: RolePickService,
     private route: ActivatedRoute, private cookieService: CookieService,private toastr: NGXToastrService) {
@@ -75,6 +76,16 @@ export class LoginPageComponent implements OnInit {
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
             });
         });
+    }
+    else{
+      this.http.post(URLConstant.GetSysCtrlCoyBySysKey, {Code: CommonConstant.IsEODRun}).subscribe(
+        (response) => {
+          if(response["SysValue"] == '1')
+          {
+            this.isEod = true;
+          }
+        }
+      );
     }
   }
 
