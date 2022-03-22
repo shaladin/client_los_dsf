@@ -264,27 +264,32 @@ export class CustAttrFormComponent implements OnInit {
     };
   }
 
-  resetForm(){
-    console.log(this.dictAttrCodeIdxAt);
-    for (let i in this.dictAttrCodeIdxAt) {
-      let tempArray = this.parentForm.get(this.identifier) as FormArray;
-      let tempFb = tempArray.get(this.dictAttrCodeIdxAt[i].toString()) as FormGroup;
-      tempFb.clearValidators();
-      if (tempFb.get("AttrInputType").value == this.AttrInputTypeRefMaster) {
-        this.dictRefMasterLookup[i].isRequired = false;
-        this.dictRefMasterLookup[i].isReady = false;
-      }
-      if (tempFb.get("AttrInputType").value == this.AttrInputTypeSearchList) {
-        this.selectedMultiDDLItems[i] = new Array();
-      }
-      tempFb.updateValueAndValidity();
-    }
+  resetForm() {
+    console.log("reset");
+    this.parentForm.removeControl(this.identifier);
+    this.parentForm.addControl(this.identifier, this.fb.array([]));
     for (let i in this.dictRefMasterLookup) {
       this.dictRefMasterLookup[i] = new InputLookupObj();
+      this.dictRefMasterLookup[i].urlJson = "./assets/uclookup/RefMaster/lookupRefMaster.json";
+      this.dictRefMasterLookup[i].pagingJson = "./assets/uclookup/RefMaster/lookupRefMaster.json";
+      this.dictRefMasterLookup[i].genericJson = "./assets/uclookup/RefMaster/lookupRefMaster.json";
       this.dictRefMasterLookup[i].isRequired = false;
-      this.dictRefMasterLookup[i].isReady = false;
-      this.parentForm.controls["lookup"+i].clearValidators();
-      this.parentForm.controls["lookup"+i].updateValueAndValidity();
+
+      this.parentForm.removeControl("lookup"+i);
     }
+    this.dictRefMasterLookup = {};
+    // console.log(this.dictAttrCodeIdxAt);
+    // for (let i in this.dictAttrCodeIdxAt) {
+    //   let tempArray = this.parentForm.get(this.identifier) as FormArray;
+    //   let tempFb = tempArray.get(this.dictAttrCodeIdxAt[i].toString()) as FormGroup;
+    //   tempFb.clearValidators();
+    //   if (tempFb.get("AttrInputType").value == this.AttrInputTypeSearchList) {
+    //     this.selectedMultiDDLItems[i] = new Array();
+    //   }
+    //   tempFb.updateValueAndValidity();
+    // }
+    // for (let i in this.dictRefMasterLookup) {
+    //   this.dictRefMasterLookup[i].isRequired = false;
+    // }
   }
 }
