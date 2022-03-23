@@ -264,6 +264,7 @@ export class AssetDataPagingXComponent implements OnInit {
         }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
+        this.listAssetIdtoDelete = new Array<number>();
         this.getListDataForDDLCopy();
       }
     );
