@@ -70,7 +70,7 @@ export class TabCommissionXComponent implements OnInit {
     };
 
     // - Penambahan informasi Income Information
-    await this.http.post(URLConstantX.GetAppIncomeInfoByAppIdX, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstantX.GetCommIncomeInfoByAppIdX, { Id: this.appId }).toPromise().then(
       (response) => {
         this.ListResultRefundIncomeInfo = response[CommonConstant.ReturnObj]
         this.MaxAllocatedAmount = this.ListResultRefundIncomeInfo.reduce((total, x) => total + x.CommissionCompntAmt, 0 )
