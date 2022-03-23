@@ -1,0 +1,81 @@
+{
+  "title": "Report LTKM",
+  "reportName": "Report LTKM",
+  "reportTemplateCode": "REPORT_LTKM",
+  "component": [
+  {
+      "type": "dropdown",
+      "label": "Office Name",
+      "name": "OfficeCode",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "environment": "FOU",
+      "url": "",
+      "path": "/RefOffice/GetListKvpActiveRefOffice",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "paramAssignment": 1
+  },
+      {
+          "type": "dropdown",
+          "name": "LTKMStatus",
+          "id": "LTKMStatus",
+          "label": "LTKM Status",
+          "value": "",
+          "placeholder": "Placeholder",
+          "isFromURL": false,
+          "ddlType": "all",
+          "items": [
+              {
+                  "key": "REQ",
+                  "value": "REQUEST"
+              },
+              {
+                  "key": "VERIFY",
+                  "value": "VERIFY"
+              },
+              {
+                  "key": "REPORT",
+                  "value": "REPORT"
+              },
+              {
+                  "key": "NOREPORT",
+                  "value": "NOREPORT"
+              },
+              {
+                  "key": "EDD",
+                  "value": "EDD"
+              }
+          ],
+          "itemsUrl": [],
+          "paramAssignment": 1
+      },
+    {
+      "type": "datepicker",
+      "label": "LTKM Date From >=",
+      "name": "LeadDtGte",
+      "datatype": "date",
+      "value": "BD",
+      "restriction": "gte",
+      "paramAssignment": 1
+    },
+    {
+      "type": "datepicker",
+      "label": "LTKM Date To <=",
+      "name": "LeadDtLte",
+      "datatype": "date",
+      "value": "BD",
+      "restriction": "lte",
+      "paramAssignment": 1
+    }
+  ],
+  "exportTypeList": [
+      {
+          "key": 2,
+          "value": "Excel"
+      }
+  ]
+}
