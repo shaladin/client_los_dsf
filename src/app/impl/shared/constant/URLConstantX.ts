@@ -61,6 +61,8 @@ export class URLConstantX {
   public static GetAppCommissionTaxAndCalcGrossYieldX = environment.losUrl + "/v1" + "/AppCommissionX/GetAppCommissionTaxAndCalcGrossYield";
   public static GetCommIncomeInfoByAppIdX = environment.losUrl + "/v1" + "/AppCommissionX/GetCommIncomeInfoByAppId";
   public static GetCommIncomeInfoByAgrIdX = environment.losUrl + "/v1" + "/AppCommissionX/GetCommIncomeInfoByAgrId";
+  public static SubmitEditCommAfterApvDataReqV2 = environment.losUrl + "/v2" + "/AppCommissionX/SubmitEditCommAfterApvDataReq";
+
 
   //App Asset
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/v1" + "/AppAssetX/GetAllAssetDataForPOByAsset";

@@ -1,0 +1,150 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <!--     Income Information -->
+    <div class="card-body">
+      <!-- <div class="px-3"> -->
+      <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+        <div class="form-body">
+          <div class="form-group row">
+            <label class="col-md-4 adInsLabel" translate>Allocation Type</label>
+            <div class="col-md-8">
+              <select style="width:50%" class="form-control" formControlName="AllocType" (change)="inputTypeChange()">
+                <option value="{{AllocTypeAmt}}">Amount</option>
+                <option value="{{AllocTypePerc}}">Percentage</option>
+              </select>
+            </div>
+          </div>
+          <app-form-edit-comm-generate-x #Form1 *ngIf="OnForm1 && !HideForm1" [hidden]="HideForm1"
+                                         [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm"
+                                         (update)="GetData()"
+                                         [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod"
+                                         [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier"
+                                         [maxAllocatedAmount]="maxAllocAmt"
+                                         [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos"
+                                         (outputChangeEmp)="ChangeEmpPos($event)">
+          </app-form-edit-comm-generate-x>
+          <app-form-edit-comm-generate-x #Form2 *ngIf="OnForm2 && !HideForm2" [hidden]="HideForm2"
+                                         [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm"
+                                         (update)="GetData()"
+                                         [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod"
+                                         [identifier]="identifierSupplierEmp" [FormInputObj]="FormInputObjSupplierEmp"
+                                         [maxAllocatedAmount]="maxAllocAmt"
+                                         [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos"
+                                         (outputChangeEmp)="ChangeEmpPos($event)">
+          </app-form-edit-comm-generate-x>
+          <app-form-edit-comm-generate-x #Form3 *ngIf="OnForm3 && !HideForm3" [hidden]="HideForm3"
+                                         [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm"
+                                         (update)="GetData()"
+                                         [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod"
+                                         [identifier]="identifierReferantor" [FormInputObj]="FormInputObjReferantor"
+                                         [maxAllocatedAmount]="maxAllocAmt"
+                                         [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos"
+                                         (outputChangeEmp)="ChangeEmpPos($event)">
+          </app-form-edit-comm-generate-x>
+        </div>
+        <lib-ucSubsection [id]="'viewSummaryId'" [title]="'Summary'" [panel]="'viewSummary'">
+        </lib-ucSubsection>
+        <div class="row" id="viewSummary">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label translate>Total Commision Amount</label>
+              </div>
+              <div class="col-md-3" style="text-align: right;">
+                <label>
+                  {{TotalInput | number : '1.2-2'}} </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label translate>Total Commission After Tax Amount</label>
+              </div>
+              <div class="col-md-3" style="text-align: right;">
+                <label>{{Summary.TotalCommissionAfterTaxAmt | number:'1.2-2':'en-US'}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label translate>Total Disburse Amount</label>
+              </div>
+              <div class="col-md-3" style="text-align: right;">
+                <label>{{Summary.TotalDisburseAmount | number:'1.2-2':'en-US'}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label translate>Total TAX</label>
+              </div>
+              <div class="col-md-3" style="text-align: right;">
+                <label>{{Summary.TotalTaxAmmount | number : '1.2-2'}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label translate>Total VAT</label>
+              </div>
+              <div class="col-md-3" style="text-align: right;">
+                <label>{{Summary.TotalVATAmount | number : '1.2-2'}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label translate>Total Expense</label>
+              </div>
+              <div class="col-md-3" style="text-align: right;">
+                <label class="adInsLabel" *ngIf="totalExpenseAmt <= maxAllocAmt">
+                  {{totalExpenseAmt | number : '1.2-2'}} </label>
+                <label *ngIf="totalExpenseAmt > maxAllocAmt"
+                       style="color: red;">
+                  {{totalExpenseAmt | number : '1.2-2'}} </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 form-inline">
+                <label translate>Gross Yield</label>
+              </div>
+              <div class="col-md-3" style="text-align:right;">
+                <label *ngIf="Summary.GrossYield >= 0"> {{Summary.GrossYield | number:'.6':'en-US'}}%</label>
+                <label *ngIf="Summary.GrossYield < 0" style="color: red;">
+                  ( {{-Summary.GrossYield | number:'.6':'en-US'}} ) %</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions right">
+          <button type="button" (click)="NewCalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>
+            <i class="far fa-check-square"></i> Calculate
+          </button>
+        </div>
+        <!-- Summary -->
+
+        <lib-ucSubsection [id]= "" [title]="'Notes'" [panel]="'divNotes'">
+        </lib-ucSubsection>
+        <div class="form-body" id="divNotes">
+          <div class="form-group row">
+            <label class="col-md-2 adins-required-label" translate>Edit Notes</label>
+            <div class="col-md-4">
+                    <textarea type="text" class="form-control adInsInput" formControlName="Notes"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CommissionForm.controls.Notes.invalid }"></textarea>
+              <lib-uc-show-errors [control]="CommissionForm.controls.Notes" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <br>
+        <lib-ucapprovalcreate [parentForm]="CommissionForm" [InputObj]="InputObj" [enjiForm]="enjiForm" (result)="SaveForm($event)"  *ngIf="isReady"></lib-ucapprovalcreate>
+        <div class="form-actions right">
+          <button type="button" class="btn btn-raised btn-warning mr-1"
+                  (click)="Cancel()" translate>
+            <i class="ft-x"></i> Cancel
+          </button>
+
+          <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
+            <i class="far fa-check-square"></i> Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -99,6 +99,8 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_EDIT_NAP_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_PAGING; //"/Nap/AddProcess/EditNapCust/Paging"
   public static NAP_ADD_PRCS_EDIT_NAP_CUST_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_DETAIL; //"/Nap/AddProcess/EditNapCust/Detail"
 
+  public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_PAGING;//"/Nap/AddProcess/EditCommAftApv/Paging"
+  public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_DETAIL_X;//"/Nap/AddProcess/EditCommAftApv/DetailX"
   //#endregion
 
   //#region AdminProcess
@@ -499,7 +501,7 @@ export class NavigationConstant {
   public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER; //'/Report/RptMonthlyPreGoLiveBySupplier'
   public static REPORT_MONTHLY_TOP_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_TOP_SUPPLIER; //'/Report/RptMonthlyTopSupplier'
   //#endregion
-  
+
   //EndCessie
 
   //Approval X

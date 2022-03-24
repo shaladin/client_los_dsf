@@ -74,6 +74,18 @@ import { EditAppAfterApprovalPurchaseOrderDataXComponent } from "app/impl/NEW-NA
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
 import { CustSyncComponent } from './cust-sync/cust-sync.component';
+import {
+  EditCommAfterApprovalPagingXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-paging/edit-comm-after-approval-paging-x.component';
+import {
+  EditCommAfterApprovalDetailXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-detail/edit-comm-after-approval-detail-x.component';
+import {
+  EditCommV2XComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-v2-x/edit-comm-v2-x.component';
+import {
+  FormEditCommGenerateXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-v2-x/form-edit-comm-generate-x/form-edit-comm-generate-x.component';
 import { EditNapCustPagingComponent } from "./edit-nap-cust/edit-nap-cust-paging/edit-nap-cust-paging.component";
 import { EditNapCustDetailComponent } from "./edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component";
 import { MainDataComponentModule } from "app/NEW-NAP/sharing-component/main-data-component/main-data-component.module";
@@ -155,6 +167,7 @@ export const customCurrencyMaskConfig = {
     DocPickupRequestPagingComponent,
     DocPickupRequestDetailComponent,
     EditAppAfterApprovalPagingComponent,
+    EditCommAfterApprovalPagingXComponent,
     EditAppAfterApprovalDetailComponent,
     EditAppAfterApprovalAssetDataComponent,
     EditAppAfterApprovalPurchaseOrderDataComponent,
@@ -172,11 +185,14 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingPagingXComponent,
     ReturnHandlingDetailXComponent,
     EditAppAfterApprovalDetailXComponent,
+    EditCommAfterApprovalDetailXComponent,
     EditAppAfterApprovalPurchaseOrderDataXComponent,
     CustSyncComponent,
+    EditCommV2XComponent,
+    FormEditCommGenerateXComponent,
     EditNapCustPagingComponent,
     EditNapCustDetailComponent
-    
+
   ],
   providers: [
     NGXToastrService
