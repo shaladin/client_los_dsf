@@ -432,7 +432,7 @@ export class URLConstant {
   public static UpdateFormFeatureAuthForm = "/MenuManagement/UpdateFormFeatureAuthForm";
   public static GetAllActiveRefFormAndPathExist = "/MenuManagement/GetAllActiveRefFormAndPathExist";
   public static GetAllActiveRefForm = "/MenuManagement/GetAllActiveRefForm";
-  public static LogoutAuth = "/v1" + "/Authenticate/Logout";
+  public static LogoutAuth = environment.FoundationR3Url + "/v1" + "/Authenticate/Logout";
 
   //FORM FEATURE
   public static GetListRefFeature = "/RefFeature/GetListRefFeature";
