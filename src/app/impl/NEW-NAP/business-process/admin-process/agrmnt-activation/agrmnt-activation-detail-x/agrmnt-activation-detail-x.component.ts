@@ -46,6 +46,7 @@ export class AgrmntActivationDetailXComponent implements OnInit {
   IsEnd: boolean = false;
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   IsViewReady: boolean = false;
+  AgrLength:number;
 
   AppObj: AppObj = new AppObj();
   businessDt: Date;
@@ -70,15 +71,14 @@ export class AgrmntActivationDetailXComponent implements OnInit {
 
   async onChange() {
     if (this.isOverwrite == true) {
-      var AgrLength:number;
       await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.LenOverwriteAgrNo }).toPromise().then(
         async (response) => {
           if(response.GsValue){
-            AgrLength = parseInt(response.GsValue);
+            this.AgrLength = parseInt(response.GsValue);
           }
         });
-      if (AgrLength){
-        this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required, Validators.minLength(AgrLength), Validators.maxLength(AgrLength)]);
+      if (this.AgrLength){
+        this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required, Validators.minLength(this.AgrLength), Validators.maxLength(this.AgrLength)]);
       }else{
         this.AgrmntActForm.controls['AgrmntNo'].setValidators([Validators.required]);
       }
@@ -221,11 +221,23 @@ export class AgrmntActivationDetailXComponent implements OnInit {
         if (checkAgrmntNo.length < 3) {
           this.toastr.warningMessage("Format for Agreement No at Least has 2 Separators ' / '");
           return;
-        }
+        }       
         else {
           let checkEmptySeparators = checkAgrmntNo.find(x => x == "");
           if (checkEmptySeparators != null) {
             this.toastr.warningMessage("Format for Agreement No can't have An Empty String Between Separators");
+            return;
+          }
+        }
+
+        if (this.AgrLength){
+          let checkAgrmntNoLength = this.AgrmntActForm.controls['AgrmntNo'].value;
+          if (checkAgrmntNoLength.length < this.AgrLength){
+            this.toastr.warningMessage("Format for Agreement No can't have less than " + this.AgrLength + " characters");
+            return;
+          }
+          else if (checkAgrmntNoLength.length > this.AgrLength){
+            this.toastr.warningMessage("Format for Agreement No can't have more than " + this.AgrLength + " characters");
             return;
           }
         }

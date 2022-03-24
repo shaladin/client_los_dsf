@@ -295,18 +295,20 @@ export class AssetDataAddEditXComponent implements OnInit {
     }
   }
 
-  SetAsset(event) {
+  async SetAsset(event) {
     this.AssetDataForm.patchValue({
       FullAssetCode: event.FullAssetCode,
       FullAssetName: event.FullAssetName,
       AssetCategoryCode: event.AssetCategoryCode,
       AssetTypeCode: event.AssetTypeCode
     });
+    await this.GetAssetMaster(event.FullAssetCode);
     this.GetRefAssetDocList(false);
     if (this.checkAssetValidationRequirement()) {
       this.CheckDP();
     }
   }
+
 
   async GetGS() {
     this.generalSettingObj = new GenericListByCodeObj();
@@ -1099,18 +1101,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       this.InputLookupCityIssuerObj.nameSelect = this.returnAppAssetObj.TaxCityIssuer;
       this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.returnAppAssetObj.TaxCityIssuer };
 
-      let reqByCode = new GenericObj();
-      reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
-      this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).toPromise().then(
-        (response) => {
-          this.resAssetMasterObj = response;
-          this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
-          this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
-          this.AssetDataForm.patchValue({
-            FullAssetCode: this.resAssetMasterObj.FullAssetCode,
-            FullAssetName: this.resAssetMasterObj.FullAssetName,
-          });
-        });
+      await this.GetAssetMaster(this.returnAppAssetObj.FullAssetCode);
 
       let ReqGetVendorLookup: GenericObj = new GenericObj();
       ReqGetVendorLookup.Code = this.returnAppAssetObj.SupplCode;
@@ -1523,6 +1514,7 @@ export class AssetDataAddEditXComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.AssetDataForm.controls["ManufacturingYear"].value;
 
     this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.mode == "editAsset" ? this.returnAppAssetObj.AssetSeqNo : 1;
+    await this.GetAssetMaster(this.AssetDataForm.controls.FullAssetCode.value, true);
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
 
     if (this.AppAssetId == 0) {
@@ -2571,5 +2563,23 @@ export class AssetDataAddEditXComponent implements OnInit {
             this.RoundedAmt = response.RoundedAmt;
           });
       });
+  }
+
+  async GetAssetMaster(FullAssetCode: string, isFromSave: boolean = false) {
+    await this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, { Code: FullAssetCode }).toPromise().then(
+      (response: any) => {
+        this.reqAssetMasterObj = response;
+        this.AssetDataForm.patchValue({
+          FullAssetCode: this.reqAssetMasterObj.FullAssetCode,
+          FullAssetName: this.reqAssetMasterObj.FullAssetName,
+          AssetTypeCode: this.reqAssetMasterObj.AssetTypeCode,
+          AssetCategoryCode: this.reqAssetMasterObj.AssetCategoryCode
+        });
+        if(!isFromSave){
+          this.InputLookupAssetObj.jsonSelect = this.reqAssetMasterObj;
+          this.InputLookupAssetObj.nameSelect = this.reqAssetMasterObj.FullAssetName;
+        }
+      }
+    );
   }
 }

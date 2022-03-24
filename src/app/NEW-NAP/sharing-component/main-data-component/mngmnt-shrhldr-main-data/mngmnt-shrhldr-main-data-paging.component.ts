@@ -22,6 +22,7 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-m
 export class MngmntShrhldrMainDataPagingComponent implements OnInit {
 
   @Input() appId: number;
+  @Input() isEditNap1: boolean = false;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 

@@ -170,6 +170,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
   RoundedAmt: number;
   ListYear: Array<number> = new Array();
   isApplyToAll: boolean;
+  listAppCollateralIdtoDelete: Array<number> = new Array<number>();
 
   AppInsForm = this.fb.group({
     // PaidAmtByCust: [0]
@@ -313,6 +314,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
         }
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
 
+		this.listAppCollateralIdtoDelete = new Array<number>();
         this.PaidAmtByCust = 0;
         this.InsCpltzAmt = 0;
         this.TotalPremiumToCust = 0;
@@ -2523,6 +2525,39 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
         this.DefaultLoadingFeeYear = parseInt(response.GsValue);
       }
     );
+  }
+    
+  getIds(ev) {
+    console.log(ev);
+    for (let i = 0; i < ev.length; i++) {
+      if (ev[i].isActive != true) {
+        let index = this.listAppCollateralIdtoDelete.findIndex(f=>f == ev[i].AppCollateralId)
+        if(index != -1){
+          this.listAppCollateralIdtoDelete.splice(index,1);
+        }
+      }
+      else{
+        let index = this.listAppCollateralIdtoDelete.findIndex(f=>f == ev[i].AppCollateralId)
+        if(index == -1){
+          this.listAppCollateralIdtoDelete.push(ev[i].AppCollateralId);
+        }
+      }
+    }
+    console.log(this.listAppCollateralIdtoDelete);
+  }
+
+  deleteListCollateral(){
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+      let appAssetObj = new AppCollateralObj();
+      appAssetObj.AppCollateralIds = this.listAppCollateralIdtoDelete;
+      appAssetObj.AppId = this.appId;
+      this.http.post(URLConstant.DeleteListInsuranceData, appAssetObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.BindMultiInsGridData();
+        }
+      );
+    }
   }
   // End Insurance Method
 }

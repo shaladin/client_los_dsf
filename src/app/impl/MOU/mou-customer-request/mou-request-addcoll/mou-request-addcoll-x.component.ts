@@ -1788,7 +1788,7 @@ export class MouRequestAddcollXComponent implements OnInit {
           for (let i = 0; i < MouCustCollateralDocs.length; i++) {
             const tempMouCustCollateralDoc = MouCustCollateralDocs[i];
             const findIdx: number = tempListDoc.findIndex(x => x.DocCode == tempMouCustCollateralDoc.DocCode);
-            if (findIdx > 0) {
+            if (findIdx > -1) {
               tempDocForm["controls"][findIdx].patchValue({
                 DocNo: tempMouCustCollateralDoc.DocNo,
                 DocNotes: tempMouCustCollateralDoc.DocNotes,
