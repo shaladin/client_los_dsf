@@ -79,17 +79,11 @@ export class AppMainInfoComponent implements OnInit {
   }
 
   getNegativeCustIndicator(){
-    this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeNegCustAllowNap }).subscribe(
-      (resGs) => {
-        if(resGs.GsValue == null || resGs.GsValue == undefined ) return;
-
+    this.http.post<NegCustIndicatorObj>(URLConstant.GetNegCustIndicatorByAppId, { Id: this.AppId }).subscribe(
+      (res) => {
         this.isNegCustIndicatorVisible = true;
-        this.http.post<NegCustIndicatorObj>(URLConstant.GetNegCustIndicatorByAppId, { Id: this.AppId }).subscribe(
-          (res) => {
-            this.negCustIndicator = res;
-            this.isCustTypeCoy = this.negCustIndicator.Customer && this.negCustIndicator.Customer.MrCustTypeCode == CommonConstant.CustTypeCompany;
-          }
-        );
+        this.negCustIndicator = res;
+        this.isCustTypeCoy = this.negCustIndicator.Customer && this.negCustIndicator.Customer.MrCustTypeCode == CommonConstant.CustTypeCompany;
       }
     );
   }

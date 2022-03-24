@@ -86,5 +86,6 @@ export class DmsIframeComponent implements OnInit {
 
   SaveDraft(){
     this.toastr.successMessage("Draft saved");
+    this.outputCancel.emit();
   }
 }
