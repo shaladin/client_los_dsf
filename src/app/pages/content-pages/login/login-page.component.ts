@@ -46,6 +46,7 @@ export class LoginPageComponent implements OnInit {
   };
   isInvalidOtp: boolean = false;
   isUseNewRolepick: boolean = false;
+  isEod: boolean = false;
 
   constructor(private router: Router, private http: HttpClient, public rolePickService: RolePickService,  public rolePickNewService: RolePickNewService,
     private route: ActivatedRoute, private cookieService: CookieService,private toastr: NGXToastrService) {
@@ -98,6 +99,14 @@ export class LoginPageComponent implements OnInit {
       this.http.post(URLConstant.GetOtpProperties, {}).subscribe(
         (response) => {
           this.otpProperties = response;
+        }
+      );
+      this.http.post(URLConstant.GetSysCtrlCoyBySysKey, {Code: CommonConstant.IsEODRun}).subscribe(
+        (response) => {
+          if(response["SysValue"] == '1')
+          {
+            this.isEod = true;
+          }
         }
       );
     }
