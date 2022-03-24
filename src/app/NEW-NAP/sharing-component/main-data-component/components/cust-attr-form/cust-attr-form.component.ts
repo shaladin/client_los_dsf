@@ -53,7 +53,6 @@ export class CustAttrFormComponent implements OnInit {
   }
 
   async GetQuestion(AppCustId: number = this.AppCustId) {
-    console.log("question");
     let tempReq: ReqGetListAppCustAttrContentObj = {
       AttrCodes: this.AttrCodes,
       AttrGroup: this.AttrGroup,
@@ -265,7 +264,6 @@ export class CustAttrFormComponent implements OnInit {
   }
 
   resetForm() {
-    console.log("reset");
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     for (let i in this.dictRefMasterLookup) {
@@ -278,18 +276,5 @@ export class CustAttrFormComponent implements OnInit {
       this.parentForm.removeControl("lookup"+i);
     }
     this.dictRefMasterLookup = {};
-    // console.log(this.dictAttrCodeIdxAt);
-    // for (let i in this.dictAttrCodeIdxAt) {
-    //   let tempArray = this.parentForm.get(this.identifier) as FormArray;
-    //   let tempFb = tempArray.get(this.dictAttrCodeIdxAt[i].toString()) as FormGroup;
-    //   tempFb.clearValidators();
-    //   if (tempFb.get("AttrInputType").value == this.AttrInputTypeSearchList) {
-    //     this.selectedMultiDDLItems[i] = new Array();
-    //   }
-    //   tempFb.updateValueAndValidity();
-    // }
-    // for (let i in this.dictRefMasterLookup) {
-    //   this.dictRefMasterLookup[i].isRequired = false;
-    // }
   }
 }

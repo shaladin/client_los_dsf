@@ -429,7 +429,6 @@ export class CustMainDataComponent implements OnInit {
 
   jobPositionLookupObj: InputLookupObj = new InputLookupObj();
   BindLookupJobPosition() {
-    console.log("nyan cat");
     this.jobPositionLookupObj = new InputLookupObj();
     this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal? true : false ;
     this.jobPositionLookupObj.urlJson = "./assets/uclookup/customer/lookupJobPosition.json";
@@ -569,7 +568,6 @@ export class CustMainDataComponent implements OnInit {
   }
 
   getLookUpJobPosition(ev) {
-    console.log("job")
     this.CustMainDataForm.patchValue({
       MrJobPositionCode: ev.JobCode,
     });
