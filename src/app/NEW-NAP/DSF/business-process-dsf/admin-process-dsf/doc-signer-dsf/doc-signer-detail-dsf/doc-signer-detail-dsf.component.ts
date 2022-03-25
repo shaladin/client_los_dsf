@@ -23,6 +23,7 @@ import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/res-app-cust-personal-and-spouse-data-obj.model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/response-app-cust-main-data-obj.model';
 import { ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
+import { AgrmntSignerDsfObj } from 'app/shared/model/agrmnt-signer-dsf-obj.model';
 
 @Component({
   selector: 'app-doc-signer-detail-dsf',
@@ -34,6 +35,7 @@ export class DocSignerDetailDsfComponent implements OnInit {
   AppId: number;
   AgrmntId: number;
   ResponseAgrmntSignerObj: AgrmntSignerObj;
+  ResponseAgrmntSignerDsfObj: AgrmntSignerDsfObj;
   SupplCode: string;
   OfficeCode: string;
   CustNo: string;
@@ -43,7 +45,12 @@ export class DocSignerDetailDsfComponent implements OnInit {
   inputLookupAppCustCompanyShareHolder1Obj: InputLookupObj = new InputLookupObj();
   inputLookupAppCustCompanyShareHolder2Obj: InputLookupObj = new InputLookupObj();
   inputLookupAppCustCompanyShareHolder3Obj: InputLookupObj = new InputLookupObj();
+  inputLookupAppCustCompanyShareHolder4Obj: InputLookupObj = new InputLookupObj();
+  inputLookupAppCustCompanyShareHolder5Obj: InputLookupObj = new InputLookupObj();
+  inputLookupAppCustCompanyShareHolder6Obj: InputLookupObj = new InputLookupObj();
+  inputLookupAppCustCompanyShareHolder7Obj: InputLookupObj = new InputLookupObj();
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
+  agrmntSignerDsfObj: AgrmntSignerDsfObj = new AgrmntSignerDsfObj();
   mode: string;
   ResponseAppCustDataObj: ResAppCustPersonalAndSpouseDataObj;
   MrCustTypeCode: string = CommonConstant.CustTypeCompany;
@@ -80,6 +87,14 @@ export class DocSignerDetailDsfComponent implements OnInit {
     MrJobPositionMgmntShrholder2Name: [''],
     MrJobPositionMgmntShrholder3Code: [''],
     MrJobPositionMgmntShrholder3Name: [''],
+    MrJobPositionMgmntShrholder4Code: [''],
+    MrJobPositionMgmntShrholder4Name: [''],
+    MrJobPositionMgmntShrholder5Code: [''],
+    MrJobPositionMgmntShrholder5Name: [''],
+    MrJobPositionMgmntShrholder6Code: [''],
+    MrJobPositionMgmntShrholder6Name: [''],
+    MrJobPositionMgmntShrholder7Code: [''],
+    MrJobPositionMgmntShrholder7Name: [''],
   });
 
   async ngOnInit() : Promise<void> {
@@ -180,6 +195,38 @@ export class DocSignerDetailDsfComponent implements OnInit {
           })
         }
       });
+
+      await this.http.post(URLConstantDsf.GetAgrmntSignerDsfByAgrmntId, agrmntObj).subscribe(
+        (response: AgrmntSignerDsfObj) => {
+          this.ResponseAgrmntSignerDsfObj = response;
+          if (this.ResponseAgrmntSignerDsfObj.AgrmntSignerDsfId == 0) {
+            this.mode = "add";
+          } else {
+            this.mode = "edit";
+  
+            this.agrmntSignerDsfObj.AgrmntSignerDsfId = this.ResponseAgrmntSignerDsfObj.AgrmntSignerDsfId;
+            this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder4Id = this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder4Id;
+            this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder5Id = this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder5Id;
+            this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder6Id = this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder6Id;
+            this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder7Id = this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder7Id;
+            this.agrmntSignerDsfObj.RowVersion = this.ResponseAgrmntSignerDsfObj.RowVersion;
+            this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder4Code = this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder4Code;
+            this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder5Code = this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder5Code;
+            this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder6Code = this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder6Code;
+            this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder7Code = this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder7Code;
+            this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder4Name = this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder4Name;
+            this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder5Name = this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder5Name;
+            this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder6Name = this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder6Name;
+            this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder7Name = this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder7Name;
+  
+            this.DocSignerForm.patchValue({
+              MrJobPositionMgmntShrholder4Name: this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder4Name,
+              MrJobPositionMgmntShrholder5Name: this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder5Name,
+              MrJobPositionMgmntShrholder6Name: this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder6Name,
+              MrJobPositionMgmntShrholder7Name: this.ResponseAgrmntSignerDsfObj.MrJobPositionMgmntShrholder7Name,
+            })
+          }
+        });
   }
 
   async GetCustMainData() {
@@ -237,6 +284,18 @@ export class DocSignerDetailDsfComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
       this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
       this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder4Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder4Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder4Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder5Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder5Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder5Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder6Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder6Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder6Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder7Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder7Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder7Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
     }
     else{
       this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
@@ -248,6 +307,18 @@ export class DocSignerDetailDsfComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
       this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
       this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder4Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder4Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder4Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder5Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder5Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder5Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder6Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder6Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder6Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder7Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder7Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder7Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     }
 
     var crit1Obj = new CriteriaObj();
@@ -420,6 +491,30 @@ export class DocSignerDetailDsfComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
     this.inputLookupAppCustCompanyShareHolder3Obj.isRequired = false;
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder4Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder4Obj.urlEnviPaging = environment.losUrl + "/v1";
+    this.inputLookupAppCustCompanyShareHolder4Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder4Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder4Obj.isRequired = false;
+    this.inputLookupAppCustCompanyShareHolder4Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder5Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder5Obj.urlEnviPaging = environment.losUrl + "/v1";
+    this.inputLookupAppCustCompanyShareHolder5Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder5Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder5Obj.isRequired = false;
+    this.inputLookupAppCustCompanyShareHolder5Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder6Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder6Obj.urlEnviPaging = environment.losUrl + "/v1";
+    this.inputLookupAppCustCompanyShareHolder6Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder6Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder6Obj.isRequired = false;
+    this.inputLookupAppCustCompanyShareHolder6Obj.addCritInput = new Array();
+    this.inputLookupAppCustCompanyShareHolder7Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder7Obj.urlEnviPaging = environment.losUrl + "/v1";
+    this.inputLookupAppCustCompanyShareHolder7Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder7Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    this.inputLookupAppCustCompanyShareHolder7Obj.isRequired = false;
+    this.inputLookupAppCustCompanyShareHolder7Obj.addCritInput = new Array();
 
     var crit4Obj = new CriteriaObj();
     crit4Obj.propName = 'AC.APP_ID';
@@ -438,6 +533,14 @@ export class DocSignerDetailDsfComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput.push(custCompanyCrit2);
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput.push(crit4Obj);
     this.inputLookupAppCustCompanyShareHolder3Obj.addCritInput.push(custCompanyCrit2);
+    this.inputLookupAppCustCompanyShareHolder4Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder4Obj.addCritInput.push(custCompanyCrit2);
+    this.inputLookupAppCustCompanyShareHolder5Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder5Obj.addCritInput.push(custCompanyCrit2);
+    this.inputLookupAppCustCompanyShareHolder6Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder6Obj.addCritInput.push(custCompanyCrit2);
+    this.inputLookupAppCustCompanyShareHolder7Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder7Obj.addCritInput.push(custCompanyCrit2);
 
     if (this.ResponseAgrmntSignerObj != null) {
       this.inputLookupBranchEmpObj.jsonSelect = { VendorEmpName: this.ResponseAgrmntSignerObj.SupplBranchEmpName };
@@ -451,6 +554,21 @@ export class DocSignerDetailDsfComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder3Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder3Name };
     }
 
+    var agrmntObj = {
+      Id: this.AgrmntId
+    }
+    this.http.post(URLConstantDsf.GetAgrmntSignerDsfByAgrmntId, agrmntObj).subscribe(
+      (response: AgrmntSignerDsfObj) => {
+        this.ResponseAgrmntSignerDsfObj = response;
+        if (this.ResponseAgrmntSignerDsfObj != null) {
+          this.inputLookupAppCustCompanyShareHolder4Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder4Name };
+          this.inputLookupAppCustCompanyShareHolder5Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder5Name };
+          this.inputLookupAppCustCompanyShareHolder6Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder6Name };
+          this.inputLookupAppCustCompanyShareHolder7Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder7Name };
+        }
+      }
+    );
+
     if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.DF) {
       this.inputLookupBranchEmpObj.isRequired = false;
       this.isHidden = true;
@@ -462,6 +580,10 @@ export class DocSignerDetailDsfComponent implements OnInit {
     this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
     this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
     this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder4Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder5Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder6Obj.isReady = true;
+    this.inputLookupAppCustCompanyShareHolder7Obj.isReady = true;
   }
 
   getLookupBranchEmp(event) {
@@ -536,9 +658,66 @@ export class DocSignerDetailDsfComponent implements OnInit {
     })
   }
 
+  getLookupAppCustCompanyShareHolder4(event) {
+    this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder4Id = event.AppCustCompanyMgmntShrholderId;
+    this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder4Code = event.MrJobPositionCode;
+    let tempJobName: string = "-";
+    if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
+    this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder4Name = tempJobName;
+    let tempJobCode: string = "-";
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
+    this.DocSignerForm.patchValue({
+      MrJobPositionMgmntShrholder4Code: tempJobCode,
+      MrJobPositionMgmntShrholder4Name: event.MrJobPositionCodeDesc,
+    })
+  }
+
+  getLookupAppCustCompanyShareHolder5(event) {
+    this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder5Id = event.AppCustCompanyMgmntShrholderId;
+    this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder5Code = event.MrJobPositionCode;
+    let tempJobName: string = "-";
+    if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
+    this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder5Name = tempJobName;
+    let tempJobCode: string = "-";
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
+    this.DocSignerForm.patchValue({
+      MrJobPositionMgmntShrholder5Code: tempJobCode,
+      MrJobPositionMgmntShrholder5Name: event.MrJobPositionCodeDesc,
+    })
+  }
+
+  getLookupAppCustCompanyShareHolder6(event) {
+    this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder6Id = event.AppCustCompanyMgmntShrholderId;
+    this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder6Code = event.MrJobPositionCode;
+    let tempJobName: string = "-";
+    if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
+    this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder6Name = tempJobName;
+    let tempJobCode: string = "-";
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
+    this.DocSignerForm.patchValue({
+      MrJobPositionMgmntShrholder6Code: tempJobCode,
+      MrJobPositionMgmntShrholder6Name: event.MrJobPositionCodeDesc,
+    })
+  }
+
+  getLookupAppCustCompanyShareHolder7(event) {
+    this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder7Id = event.AppCustCompanyMgmntShrholderId;
+    this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder7Code = event.MrJobPositionCode;
+    let tempJobName: string = "-";
+    if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
+    this.agrmntSignerDsfObj.MrJobPositionMgmntShrholder7Name = tempJobName;
+    let tempJobCode: string = "-";
+    if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
+    this.DocSignerForm.patchValue({
+      MrJobPositionMgmntShrholder7Code: tempJobCode,
+      MrJobPositionMgmntShrholder7Name: event.MrJobPositionCodeDesc,
+    })
+  }
+
 
   SaveForm() {
     this.agrmntSignerObj.AgrmntId = this.AgrmntId;
+    this.agrmntSignerDsfObj.AgrmntId = this.AgrmntId;
     this.agrmntSignerObj.WfTaskListId = this.WfTaskListId;
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -547,12 +726,20 @@ export class DocSignerDetailDsfComponent implements OnInit {
     }
 
     let urlPost = environment.isCore ? URLConstant.SubmitAgrmntSignerDataV2 : URLConstant.SubmitAgrmntSignerData;
+    let urlPostDsf = URLConstantDsf.SubmitAgrmntSignerDsfData
 
     if (this.mode == "edit") {
       urlPost = environment.isCore ? URLConstant.EditAgrmntSignerDataV2 : URLConstant.EditAgrmntSignerData;
+      urlPostDsf = URLConstantDsf.EditAgrmntSignerDsfData
     }
 
     this.http.post(urlPost, this.agrmntSignerObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
+      });
+
+    this.http.post(urlPostDsf, this.agrmntSignerDsfObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });

@@ -23,4 +23,8 @@ export class URLConstantDsf {
 
     public static GetSpvDPCDSF = environment.losUrl + "/v1" + "/CrdRvwX/GetSpvDPCDSF";
     public static AddXDAACPDSF = environment.losUrl + "/v2" + "/XDAACPDsf/AddXDAACPDSF";
+
+    public static GetAgrmntSignerDsfByAgrmntId = environment.losUrl + "/DocumentDsf/GetAgrmntSignerDsfByAgrmntId";
+    public static SubmitAgrmntSignerDsfData = environment.losUrl + "/DocumentDsf/SubmitAgrmntSignerDsfData";
+    public static EditAgrmntSignerDsfData = environment.losUrl + "/DocumentDsf/EditAgrmntSignerDsfData";
 }
