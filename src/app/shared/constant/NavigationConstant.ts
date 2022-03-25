@@ -101,6 +101,8 @@ export class NavigationConstant {
 
   public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_PAGING;//"/Nap/AddProcess/EditCommAftApv/Paging"
   public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_DETAIL_X;//"/Nap/AddProcess/EditCommAftApv/DetailX"
+  public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_APPRV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_APPRV_PAGING;//"/Nap/AddProcess/EditCommAftApv/Approval/Paging"
+  public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_APPRV_DETAIL;//"/Nap/AddProcess/EditCommAftApv/Approval/Detail"
   //#endregion
 
   //#region AdminProcess

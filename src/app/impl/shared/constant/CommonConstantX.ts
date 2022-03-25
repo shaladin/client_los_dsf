@@ -49,7 +49,8 @@ export class CommonConstantX {
     public static CAT_CODE_EDIT_COMM_AFT_APV_APV = "EDIT_COMM_AFT_APV_APV";
 
 
-    //Add Interest Paid By
+
+  //Add Interest Paid By
     public static AdditionalInterestPaidByCustomer = "CU";
 
     //Cessie

@@ -64,6 +64,12 @@ import {
 import {
   EditCommAfterApprovalDetailXComponent
 } from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-detail/edit-comm-after-approval-detail-x.component';
+import {
+  EditCommAfterApprovalApprovalPagingXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-approval-paging/edit-comm-after-approval-approval-paging-x.component';
+import {
+  EditCommAfterApprovalApprovalDetailXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-approval-detail/edit-comm-after-approval-approval-detail-x.component';
 
 
 const routes: Routes = [
@@ -375,9 +381,19 @@ const routes: Routes = [
         data: {title: 'Edit Application After Approval - Approval Paging'}
       },
       {
+        path: PathConstantX.EDIT_COMM_AFT_APV_APPRV_PAGING,
+        component: EditCommAfterApprovalApprovalPagingXComponent,
+        data: {title: 'Edit Commission After Approval - Approval Paging'}
+      },
+      {
         path: PathConstant.EDIT_APP_AFT_APV_APPRV_DETAIL,
         component: EditAppAfterApprovalApprovalDetailComponent,
         data: {title: 'Edit Application After Approval - Approval Detail'}
+      },
+      {
+        path: PathConstantX.EDIT_COMM_AFT_APV_APPRV_DETAIL,
+        component: EditCommAfterApprovalApprovalDetailXComponent,
+        data: {title: 'Edit Commission After Approval - Approval Detail'}
       },
       {
         path: PathConstant.COPY_CANCEL_APP_CROSS_BL,
