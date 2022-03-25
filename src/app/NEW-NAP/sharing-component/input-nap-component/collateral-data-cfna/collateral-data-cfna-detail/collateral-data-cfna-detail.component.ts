@@ -109,7 +109,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     ListAttr: this.fb.array([]),
     OwnerRelationship: [''],
     MrIdType: [''],
-    CopyFromLegal: ['LEGAL'],
+    CopyFromLegal: [''],
     AppAttrName: [''],
     SelfUsage: [false],
     SelfOwner: [false],
@@ -327,7 +327,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             this.AddCollForm.patchValue({
               MrOwnerRelationshipCode: this.OwnerRelationList[0].Key,
               MrUserRelationshipCode: this.OwnerRelationList[0].Key,
-              CopyFromLegal: CommonConstant.AddrTypeLegal
             });
           }
         }

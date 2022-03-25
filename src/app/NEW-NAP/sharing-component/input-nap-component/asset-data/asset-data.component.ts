@@ -1437,7 +1437,7 @@ export class AssetDataComponent implements OnInit {
         OwnerCity: this.AddrLegalObj[0].City,
         OwnerZipcode: this.AddrLegalObj[0].Zipcode,
         OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
-        OwnerAddrType: CommonConstant.AddrTypeLegal,
+        OwnerAddrType: !isEdit ? CommonConstant.AddrTypeLegal : "",
         MrOwnerTypeCode: OwnerType
       });
 
