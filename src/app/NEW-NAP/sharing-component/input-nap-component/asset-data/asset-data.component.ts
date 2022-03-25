@@ -1421,25 +1421,29 @@ export class AssetDataComponent implements OnInit {
     };
   }
 
-  async SelfOwnerChange(isEdit: boolean = false, OwnerType: string = this.CustType) {
+  async SelfOwnerChange(isEdit: boolean = false, OwnerType: string = this.CustType, isFromOnInit:boolean=false) {
     let isChecked: boolean = this.AssetDataForm.get("SelfOwner").value;
     if (isChecked == true) {
-      this.AssetDataForm.patchValue({
-        OwnerName: this.AppCustObj.CustName,
-        MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
-        OwnerIdNo: this.AppCustObj.IdNo,
-        MrOwnerRelationshipCode: CommonConstant.SelfCustomer,
-        OwnerAddr: this.AddrLegalObj[0].Addr,
-        OwnerAreaCode1: this.AddrLegalObj[0].AreaCode1,
-        OwnerAreaCode2: this.AddrLegalObj[0].AreaCode2,
-        OwnerAreaCode3: this.AddrLegalObj[0].AreaCode3,
-        OwnerAreaCode4: this.AddrLegalObj[0].AreaCode4,
-        OwnerCity: this.AddrLegalObj[0].City,
-        OwnerZipcode: this.AddrLegalObj[0].Zipcode,
-        OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
-        OwnerAddrType: !isEdit ? CommonConstant.AddrTypeLegal : "",
-        MrOwnerTypeCode: OwnerType
-      });
+
+      if(!isFromOnInit)
+      {
+        this.AssetDataForm.patchValue({
+          OwnerName: this.AppCustObj.CustName,
+          MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
+          OwnerIdNo: this.AppCustObj.IdNo,
+          MrOwnerRelationshipCode: CommonConstant.SelfCustomer,
+          OwnerAddr: this.AddrLegalObj[0].Addr,
+          OwnerAreaCode1: this.AddrLegalObj[0].AreaCode1,
+          OwnerAreaCode2: this.AddrLegalObj[0].AreaCode2,
+          OwnerAreaCode3: this.AddrLegalObj[0].AreaCode3,
+          OwnerAreaCode4: this.AddrLegalObj[0].AreaCode4,
+          OwnerCity: this.AddrLegalObj[0].City,
+          OwnerZipcode: this.AddrLegalObj[0].Zipcode,
+          OwnerMobilePhnNo: typeof (this.AppCustObj.MobilePhnNo1) != 'undefined' ? this.AppCustObj.MobilePhnNo1 : '',
+          OwnerAddrType: !isEdit ? CommonConstant.AddrTypeLegal : "",
+          MrOwnerTypeCode: OwnerType
+        });
+      }
 
       if (!isEdit) {
         this.AssetDataForm.patchValue({
@@ -1614,7 +1618,7 @@ export class AssetDataComponent implements OnInit {
             });
 
             await this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
-            await this.SelfOwnerChange(true, MrOwnerTypeCode);
+            await this.SelfOwnerChange(true, MrOwnerTypeCode, true);
             await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
           }
 
