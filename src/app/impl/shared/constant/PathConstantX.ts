@@ -159,6 +159,10 @@ export class PathConstantX {
   public static EDIT_NAP_CUST = "EditNapCust";
   public static EDIT_NAP_CUST_PAGING = PathConstant.EDIT_NAP_CUST + "/" + PathConstant.PAGING;
   public static EDIT_NAP_CUST_DETAIL= PathConstant.EDIT_NAP_CUST + "/" + PathConstant.DETAIL;
+
+  public static EDIT_COMM_AFT_APV_APPRV= PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.APPRV;
+  public static EDIT_COMM_AFT_APV_APPRV_PAGING = PathConstantX.EDIT_COMM_AFT_APV_APPRV + "/" + PathConstant.PAGING;
+  public static EDIT_COMM_AFT_APV_APPRV_DETAIL= PathConstantX.EDIT_COMM_AFT_APV_APPRV + "/" + PathConstant.DETAIL;
   //#endregion
 
   public static PO_EXT_X = "POX";
