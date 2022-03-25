@@ -36,7 +36,7 @@
       }
     ],
     "querystring": {
-      "name": "searchEditAppAfterApprovalApprovalV2"
+      "name": "searchEditCommAfterApprovalApprovalV2"
     },
     "headerList": [
       {
