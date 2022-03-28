@@ -90,24 +90,6 @@
         "criteriaPropValue": "AGR_STEP"
         },
         {
-        "type": "dropdown",
-        "datatype": "text",
-        "name": "AgrmntStatus",
-        "id": "agrmntStatId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "ddlType": "all",
-        "url": "",
-        "environment": "FOU",
-        "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-        "label": "Agreement Status",
-        "items": [],
-        "itemsUrl": [],
-        "criteriaPropName": "Code",
-        "criteriaPropValue": "APP_STAT"
-        },
-        {
             "type" : "datepicker",
             "label" : "Application Date >=",
             "name" : "LeadDtGte",
@@ -160,7 +142,25 @@
             "restriction" : "lte",
             "datatype" : "date",
             "paramAssignment": 1 
-        }     
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "AgrmntStatus",
+            "id": "agrmntStatId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Agreement Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "APP_STAT"
+        }    
     ],
     "exportTypeList": [
         {
