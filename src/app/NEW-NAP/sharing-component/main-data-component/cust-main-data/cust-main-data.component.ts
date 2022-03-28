@@ -93,6 +93,7 @@ export class CustMainDataComponent implements OnInit {
   @Input() tempTotalSharePrct: number = 0;
   @Input() critCust: Array<string> = new Array<string>();
   @Input() critCustCompany: Array<string> = new Array<string>();
+  @Input() isEditNap1: boolean = false;
 
   LeadId: number;
   LeadNo: string;
@@ -161,6 +162,7 @@ export class CustMainDataComponent implements OnInit {
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
   MaxDaysThirdPartyChecking: number;
   listAddrRequiredOwnership: Array<string> = new Array();
+  isDisableCustType: boolean = false;
 
   constructor(
     private regexService: RegexService,
@@ -202,12 +204,14 @@ export class CustMainDataComponent implements OnInit {
     SharePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     IsSigner: [false],
     IsActive: [true],
-    IsOwner: [false]
+    IsOwner: [false],
+    CustName: [""]
   });
 
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
   DictUcDDLObj: { [id: string]: UcDropdownListObj } = {};
   async ngOnInit() {
+    this.checkIsDisableCustType();
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
@@ -426,10 +430,11 @@ export class CustMainDataComponent implements OnInit {
   jobPositionLookupObj: InputLookupObj = new InputLookupObj();
   BindLookupJobPosition() {
     this.jobPositionLookupObj = new InputLookupObj();
-    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder? true : false ;
+    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal? true : false ;
     this.jobPositionLookupObj.urlJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.pagingJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.genericJson = "./assets/uclookup/customer/lookupJobPosition.json";
+    this.jobPositionLookupObj.isReady = true;
   }
 
   professionLookUpObj: InputLookupObj = new InputLookupObj();
@@ -463,12 +468,18 @@ export class CustMainDataComponent implements OnInit {
   }
 
   async setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
+    if(this.isEditNap1){
+      return;
+    }
+    this.BindLookupJobPosition();
     if (custType == CommonConstant.CustTypePersonal) {
       this.InputLookupCustObj.isDisable = false;
       this.InputLookupCustCoyObj.isDisable = true;
+
     } else {
       this.InputLookupCustObj.isDisable = true;
       this.InputLookupCustCoyObj.isDisable = false;
+
     }
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -719,6 +730,9 @@ export class CustMainDataComponent implements OnInit {
     await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, reqObj).toPromise().then(
       async (response) => {
         if (response.AppCustObj) {
+          this.CustMainDataForm.patchValue({
+            CustName: response.AppCustObj.CustName,
+          });
           if (!this.appCustId) this.appCustId = response.AppCustObj.AppCustId
           this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
           await this.custTypeChange(this.MrCustTypeCode, true);
@@ -866,6 +880,12 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
     this.CustMainDataForm.controls.Email1.updateValueAndValidity();
     this.setLookup(custType, true);
+    if(this.MrCustTypeCode == CommonConstant.CustTypePersonal && (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder || this.custMainDataMode == CommonConstant.CustMainDataModeFamily)){
+      this.custAttrForm.GetQuestion();
+    }
+    else{
+      this.custAttrForm.resetForm();
+    }
   }
 
   async copyAgrmntParentEvent(event) {
@@ -934,6 +954,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   resetInput(custType: string = CommonConstant.CustTypePersonal) {
+    this.BindLookupJobPosition();
     this.CustMainDataForm.reset();
     this.AppCustCompanyMgmntShrholderId = 0;
     this.MrCustTypeCode = custType;
@@ -970,9 +991,18 @@ export class CustMainDataComponent implements OnInit {
 
     this.SetCustModel();
     this.custTypeChange(custType);
+    this.checkIsDisableCustType();
   }
 
   disableInput() {
+    if(this.isEditNap1){
+      this.CustMainDataForm.controls.CustName.setValidators([Validators.required]);
+
+
+      this.CustMainDataForm.controls.CustName.updateValueAndValidity();
+      return;
+    }
+    console.log("nyan nyan cat");
     this.isExisting = true;
     this.isCopyBtnLock = true;
     // this.CustMainDataForm.controls.MrGenderCode.disable();
@@ -1165,7 +1195,14 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj = new CustMainDataPersonalObj();
     this.custDataPersonalObj.AppCustObj.MrCustModelCode = this.CustMainDataForm.controls.MrCustModelCode.value;
     this.custDataPersonalObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
-    this.custDataPersonalObj.AppCustObj.CustName = this.CustMainDataForm.value.lookupCustomer.value;
+    if(this.isEditNap1){
+      this.custDataPersonalObj.AppCustObj.CustName = this.CustMainDataForm.controls.CustName.value;
+      this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustMainDataForm.controls.CustName.value;
+    }
+    else{
+      this.custDataPersonalObj.AppCustObj.CustName = this.CustMainDataForm.value.lookupCustomer.value;
+      this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustMainDataForm.value.lookupCustomer.value;
+    }
     this.custDataPersonalObj.AppCustObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
     this.custDataPersonalObj.AppCustObj.MrIdTypeCode = this.CustMainDataForm.controls.MrIdTypeCode.value;
     this.custDataPersonalObj.AppCustObj.IdNo = this.CustMainDataForm.controls.IdNo.value;
@@ -1183,7 +1220,6 @@ export class CustMainDataComponent implements OnInit {
     if (this.isIncludeCustRelation)
       this.custDataPersonalObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
 
-    this.custDataPersonalObj.AppCustPersonalObj.CustFullName = this.CustMainDataForm.value.lookupCustomer.value;
     this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode = this.CustMainDataForm.controls.MrMaritalStatCode.value;
     this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode = this.CustMainDataForm.controls.MrGenderCode.value;
     this.custDataPersonalObj.AppCustPersonalObj.BirthPlace = this.CustMainDataForm.controls.BirthPlace.value;
@@ -1217,7 +1253,12 @@ export class CustMainDataComponent implements OnInit {
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.MrPositionSlikCode = this.CustMainDataForm.controls.MrPositionSlikCode.value;
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.EstablishmentDt = this.CustMainDataForm.controls.EstablishmentDt.value;
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.rowVersionMgmntShrholder;
-      this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.value.lookupCustomer.value;
+      if(this.isEditNap1){
+        this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.controls.CustName.value;
+      }
+      else{
+        this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.value.lookupCustomer.value;
+      }
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
     }
@@ -1236,7 +1277,14 @@ export class CustMainDataComponent implements OnInit {
     if (this.MrCustTypeCode != CommonConstant.CustTypeCompany) return;
     this.custDataCompanyObj = new CustMainDataCompanyObj();
     this.custDataCompanyObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
-    this.custDataCompanyObj.AppCustObj.CustName = this.CustMainDataForm.value.lookupCustomerCoy.value;
+    if(this.isEditNap1){
+      this.custDataCompanyObj.AppCustObj.CustName = this.CustMainDataForm.controls.CustName.value;
+      this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName = this.CustMainDataForm.controls.CustName.value;
+    }
+    else{
+      this.custDataCompanyObj.AppCustObj.CustName = this.CustMainDataForm.value.lookupCustomerCoy.value;
+      this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName = this.CustMainDataForm.value.lookupCustomerCoy.value;
+    }
     this.custDataCompanyObj.AppCustObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
     this.custDataCompanyObj.AppCustObj.MrIdTypeCode = "NPWP";
     this.custDataCompanyObj.AppCustObj.IdNo = this.CustMainDataForm.controls.TaxIdNo.value;
@@ -1253,7 +1301,6 @@ export class CustMainDataComponent implements OnInit {
     if (this.isIncludeCustRelation)
       this.custDataCompanyObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
 
-    this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName = this.CustMainDataForm.value.lookupCustomerCoy.value;
     this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode = this.CustMainDataForm.controls.MrCompanyTypeCode.value;
 
     this.custDataCompanyObj.AppCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
@@ -1273,7 +1320,13 @@ export class CustMainDataComponent implements OnInit {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsOwner = this.CustMainDataForm.controls.IsOwner.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MrPositionSlikCode = this.CustMainDataForm.controls.MrPositionSlikCode.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.EstablishmentDt = this.CustMainDataForm.controls.EstablishmentDt.value;
-      this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.value.lookupCustomerCoy.value;
+      if(this.isEditNap1){
+        this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.controls.CustName.value;
+      }
+      else{
+        this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.value.lookupCustomerCoy.value;
+      }
+      
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.rowVersionMgmntShrholder;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
@@ -1331,10 +1384,15 @@ export class CustMainDataComponent implements OnInit {
 
       // Sementara
       var TempCust1 = "";
-      if (this.MrCustTypeCode == CommonConstant.CustTypePersonal)
+      if(this.isEditNap1){
+        TempCust1 = this.CustMainDataForm.controls.CustName.value.toLowerCase();
+      }
+      else{
+        if (this.MrCustTypeCode == CommonConstant.CustTypePersonal)
         TempCust1 = this.CustMainDataForm.value.lookupCustomer.value.toLowerCase();
       else {
         TempCust1 = this.CustMainDataForm.value.lookupCustomerCoy.value.toLowerCase();
+      }
       }
       const TempCust2 = this.AppCustData.CustName.toLowerCase();
       if (TempCust1 == TempCust2) {
@@ -1873,5 +1931,14 @@ export class CustMainDataComponent implements OnInit {
       }
     }
     console.log(invalid);
+  }
+
+  checkIsDisableCustType(){
+    if(this.isEditNap1 || this.AppCustCompanyMgmntShrholderId){
+      this.isDisableCustType = true;
+    }
+    else{
+      this.isDisableCustType = false;
+    }
   }
 }

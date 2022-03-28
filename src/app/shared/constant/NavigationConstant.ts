@@ -92,6 +92,8 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4;//"/Nap/AddProcess/ReturnHandling/NAP4"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2_PAGING; //"NAP/AddProcess/ReturnHandling/NAP2" 
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4_PAGING; //"/Nap/AddProcess/ReturnHandling/NAP4"
+  public static NAP_ADD_PRCS_EDIT_NAP_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_PAGING; //"/Nap/AddProcess/EditNapCust/Paging"
+  public static NAP_ADD_PRCS_EDIT_NAP_CUST_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_DETAIL; //"/Nap/AddProcess/EditNapCust/Detail"
 
   //#endregion
 
@@ -467,6 +469,7 @@ export class NavigationConstant {
   public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV; //'/Report/RptMonthlyPendingLead'
   public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER; //'/Report/RptMonthlyPreGoLiveBySupplier'
   public static REPORT_MONTHLY_TOP_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_TOP_SUPPLIER; //'/Report/RptMonthlyTopSupplier'
+  public static REPORT_LTKM = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_LTKM; //'/Report/RptLtkm'
   //#endregion
   
 }

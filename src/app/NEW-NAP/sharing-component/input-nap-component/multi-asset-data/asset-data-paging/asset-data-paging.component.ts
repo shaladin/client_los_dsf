@@ -56,6 +56,7 @@ export class AssetDataPagingComponent implements OnInit {
   IsCalledIntegrator: boolean = false;
   thirdPartyRsltHId: any;
   mouCustId: number = 0;
+  listAssetIdtoDelete: Array<number> = new Array<number>();
 
   constructor(
     private route: ActivatedRoute,
@@ -155,7 +156,7 @@ export class AssetDataPagingComponent implements OnInit {
       this.outputValue.emit({ mode: 'editAsset', AppAssetId: this.AppAssetId });
     }
 
-    if (ev.Key == "delete") {
+    else if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
         var appAssetObj = new AppAssetObj();
         appAssetObj.AppAssetId = ev.RowObj.AppAssetId;
@@ -265,6 +266,7 @@ export class AssetDataPagingComponent implements OnInit {
         }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
+        this.listAssetIdtoDelete = new Array<number>();
         this.getListDataForDDLCopy();
       }
     );
@@ -272,7 +274,7 @@ export class AssetDataPagingComponent implements OnInit {
 
   ngOnInit() {
     this.gridAssetDataObj = new InputGridObj();
-    this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
+    this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataWithDelete.json";
     this.gridAssetDataObj.deleteUrl = URLConstant.DeleteAppAsset;
 
     this.appAssetObj = new AppAssetObj();
@@ -448,6 +450,48 @@ export class AssetDataPagingComponent implements OnInit {
         this.IsSvcExist = true;
       }
       this.GetThirdPartyResultH();
+    }
+  }
+
+  getIds(ev) {
+    console.log(ev);
+    for (let i = 0; i < ev.length; i++) {
+      if (ev[i].isActive != true) {
+        let index = this.listAssetIdtoDelete.findIndex(f=>f == ev[i].AppAssetId)
+        if(index != -1){
+          this.listAssetIdtoDelete.splice(index,1);
+        }
+      }
+      else{
+        let index = this.listAssetIdtoDelete.findIndex(f=>f == ev[i].AppAssetId)
+        if(index == -1){
+          this.listAssetIdtoDelete.push(ev[i].AppAssetId);
+        }
+      }
+    }
+    console.log(this.listAssetIdtoDelete);
+  }
+
+  deleteListAsset(){
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+      let appAssetObj = new AppAssetObj();
+      appAssetObj.AppAssetIds = this.listAssetIdtoDelete;
+      appAssetObj.AppId = this.AppId;
+      this.http.post(URLConstant.DeleteListAppAsset, appAssetObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.listAppAssetObj = response["ReturnAsset"];
+
+          var DetailForGridAsset = {
+            Data: response["ReturnAsset"],
+            Count: "0"
+          }
+          this.gridAssetDataObj.resultData = DetailForGridAsset;
+          this.IsCalledIntegrator = false;
+          this.getGridCollateral();
+          this.getListDataAsset();
+        }
+      );
     }
   }
 }

@@ -21,11 +21,11 @@
         "items": [
           {
             "key": "PERSONAL",
-            "value": "Agency Personal"
+            "value": "Customer Personal"
           },
           {
             "key": "COMPANY",
-            "value": "Agency Company"
+            "value": "Customer Company"
           }
         ]
       },

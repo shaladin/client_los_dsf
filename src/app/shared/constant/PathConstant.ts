@@ -200,6 +200,9 @@ export class PathConstant {
     public static EDIT_APP_AFT_APV_APPRV_DETAIL= PathConstant.EDIT_APP_AFT_APV_APPRV + "/" + PathConstant.DETAIL;
     public static COPY_CANCEL_APP_CROSS_BL = "CopyCancelledApplicationCrossBl";
     public static COPY_CANCEL_APP_CROSS_BL_DETAIL = PathConstant.COPY_CANCEL_APP_CROSS_BL + "/" + PathConstant.DETAIL;
+    public static EDIT_NAP_CUST = "EditNapCust";
+    public static EDIT_NAP_CUST_PAGING = PathConstant.EDIT_NAP_CUST + "/" + PathConstant.PAGING;
+    public static EDIT_NAP_CUST_DETAIL= PathConstant.EDIT_NAP_CUST + "/" + PathConstant.DETAIL;
 
     public static RETURN_HANDLING_NAP2_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP2;
     public static RETURN_HANDLING_NAP4_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP4;
@@ -497,6 +500,7 @@ export class PathConstant {
     public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "RptMonthlyPendingPreGoLiveAftApv";
     public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "RptMonthlyPreGoLiveBySupplier";
     public static REPORT_MONTHLY_TOP_SUPPLIER = "RptMonthlyTopSupplier";
+    public static REPORT_LTKM = "RptLtkm";
     //#endregion
 
     //#region Inquiry-Module

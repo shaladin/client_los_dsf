@@ -38,6 +38,7 @@ export class CustCompletionDetailComponent implements OnInit {
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsDataReady: boolean = false;
+  IsCustAllowedContinue: boolean = true;
   
   constructor(
     private route: ActivatedRoute,
@@ -64,7 +65,7 @@ export class CustCompletionDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionData.json";
 
@@ -76,12 +77,14 @@ export class CustCompletionDetailComponent implements OnInit {
     }
     else {
       this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+      await this.checkIsCustAllowedContinue();
     }
     this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.addObj["BizTemplateCode"] = this.BizTemplateCode;
 
     this.loadCustCompletionListData();
     this.claimTask();
+
     this.IsDataReady = true;
   }
 
@@ -126,8 +129,8 @@ export class CustCompletionDetailComponent implements OnInit {
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-
-    let SubmitAppCustCompletionUrl = environment.isCore ? URLConstant.SubmitAppCustCompletionV2 : URLConstant.SubmitAppCustCompletion;
+    
+    let SubmitAppCustCompletionUrl = environment.isCore ? URLConstant.SubmitAppCustCompletionV21 : URLConstant.SubmitAppCustCompletion;
     this.http.post(SubmitAppCustCompletionUrl, reqObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
@@ -171,5 +174,14 @@ export class CustCompletionDetailComponent implements OnInit {
     else if (this.wfTaskListId> 0) {
         this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
+  }
+
+  async checkIsCustAllowedContinue()
+  {
+    await this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByAppId, { Id: this.AppId }).toPromise().then(
+      (res) => {
+        if(res == undefined) this.IsCustAllowedContinue = false;
+      }
+    );
   }
 }

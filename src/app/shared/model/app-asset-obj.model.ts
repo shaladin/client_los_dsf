@@ -57,7 +57,7 @@ export class AppAssetObj {
   SerialNo3Label: string;
   SerialNo4Label: string;
   SerialNo5Label: string;
-
+  AppAssetIds: Array<number>;
     constructor() {
     this.Id = 0;
     this.AppAssetId = 0;
@@ -101,5 +101,6 @@ export class AppAssetObj {
     this.BizTemplateCode = "";
     this.count = 0;
     this.RowVersion = "";
+    this.AppAssetIds = new Array<number>();
   }
 }

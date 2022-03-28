@@ -765,6 +765,7 @@ export class CommonConstant {
   public static GsCodeMaximumReferantor = "MAX_REFERANTOR";
   public static GsCodeIsShowMultiReferantor = "IS_SHOW_MULTI_REFERANTOR";
   public static GsCodeManufacturingYearMandatoryByCollType = "MANUFACTURING_YEAR_MANDATORY_BY_COLLATERAL_TYPE";
+  public static GsCodeNegCustAllowNap = "NEGCUSTALLOWNAP";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -1132,4 +1133,9 @@ export class CommonConstant {
   }
 
   public static CompanyTypePT = "PT";
+
+  // UI ROLEPICK
+  public static IS_USE_NEW_ROLEPICK = "IS_USE_NEW_ROLEPICK";
+  // SysCtrlCoy
+  public static IsEODRun = "IsEODRun"
 }
