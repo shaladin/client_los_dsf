@@ -53,6 +53,7 @@ export class CommonConstant {
   public static USER_NAME = "UserName";
   public static USER_NAME_LOCAL_STORAGE = "Username";
   public static OFFICE_CODE = "OfficeCode";
+  public static AREA_CODE = "AreaCode";
   public static ROLE_CODE = "RoleCode";
   public static CURRENT_USER_CONTEXT = "currentUserContext"
   public static PAGE_ACCESS = "PageAccess";
