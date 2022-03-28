@@ -38,6 +38,42 @@
             "criteriaPropValue": "APP_STAT"
         },
         {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "AppCurrStep",
+        "id": "appStepId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+        "label": "Current Application Step",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "Code",
+        "criteriaPropValue": "APP_STEP"
+        },
+        {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "AgrmntCurrStep",
+        "id": "agrmntStepId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+        "label": "Current Agreement Step",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "Code",
+        "criteriaPropValue": "AGR_STEP"
+        },
+        {
             "type" : "datepicker",
             "label" : "Application Date >=",
             "name" : "LeadDtGte",
@@ -72,6 +108,24 @@
             "restriction" : "lte",
             "datatype" : "date",
             "paramAssignment": 1 
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "AgrmntStatus",
+            "id": "agrmntStatId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Agreement Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "APP_STAT"
         }      
     ],
     "exportTypeList": [
