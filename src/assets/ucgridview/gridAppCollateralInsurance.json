@@ -1,6 +1,10 @@
 {
     "headerList": [
         {
+            "type" : "checkAll",
+            "property" : "isActive"
+        },
+        {
             "type": "label",
             "position": "left",
             "label": "Asset Name",
@@ -55,6 +59,10 @@
         }
     ],
     "bodyList": [
+        {
+            "type" : "checkBox",
+            "property" : "isActive"
+        },
         {
             "type": "text",
             "position": "left",

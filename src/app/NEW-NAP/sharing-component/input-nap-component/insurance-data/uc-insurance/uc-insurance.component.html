@@ -1,0 +1,100 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div *ngIf="isMultiAsset">
+          <div [hidden]="PageState != 'Paging' || BizTemplateCode == 'FCTR' || BizTemplateCode == 'CFNA'">
+            <lib-ucSubsection [id]="'assetDataId'" [title]="'Loan Object'" [panel]="'assetData'">
+            </lib-ucSubsection>
+            <div id="assetData">
+              <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event2($event)"></lib-ucgridview>
+            </div>
+          </div>
+
+          <div>
+            <app-uc-insurance-paging *ngIf="!isDetail && isUcInsReady" [appId]="appId" [DetailForGridCollateral]="gridAppCollateralObj.resultData" (select)="OpenDetail($event)" (bindMultiInsGridData)="BindMultiInsGridData()" (outputCancel)="CancelHandler()">
+            </app-uc-insurance-paging>
+          </div>
+          <app-uc-insurance-detail *ngIf="isDetail" [appObj]="appObj" [appAssetId]="AppAssetId" [appCollateralId]="AppCollateralId" [blCode]="BLCode" [isMultiAsset]="true" [insSeqNo]="InsSeqNo" (outputCancel)="Cancel()" (outputTab)="SaveForm($event)"> </app-uc-insurance-detail>
+
+          <br>
+          <lib-ucSubsection [hidden]="PageState != 'Paging'" [id]="'CopyInsuranceId'" [title]="'Copy Insurance Data'"
+            [panel]="'copyInsurance'">
+          </lib-ucSubsection>
+          <div id="copyInsurance" [hidden]="PageState != 'Paging'">
+            <div class="row">
+              <label class="col-md-3 adInsLabel px-3" style="padding: 0.75em" translate>Choose Collateral Data</label>
+              <div class="col-md-9">
+                <select class="form-control" style="width: inherit" [(ngModel)]="selectedCollateral"
+                  name="selectCollateral" (change)="GetInsuranceDDLForCopy()">
+                  <option value="">Select One</option>
+                  <option *ngFor="let item of listDataCollateral" [value]="item.Code">
+                    {{item.Descr}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-md-3 adInsLabel px-3" style="padding: 0.75em" translate>Choose Insurance Data</label>
+              <div class="col-md-9">
+                <select class="form-control" style="width: inherit" [(ngModel)]="selectedInsuranceForCopy"
+                  name="selectInsurance">
+                  <option value="">Select One</option>
+                  <option *ngFor="let item of listDataInsuranceForCopy" [value]="item.Code">
+                    {{item.Descr}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9"></div>
+              <div class="col-md-3 text-right">
+                <button type="button" class="btn btn-raised btn-primary" (click)="CopyInsuranceHandler()" translate>
+                  Copy Insurance Data
+                </button>
+              </div>
+            </div>
+          </div>
+          <form [hidden]="PageState != 'Paging'" class="form form-horizontal" [formGroup]="AppInsForm"
+            (ngSubmit)="AppInsForm.valid && SubmitForm()">
+            <lib-ucSubsection [id]="'SummaryInsuranceId'" [title]="'Summary Insurance Data'"
+              [panel]="'summaryInsurance'">
+            </lib-ucSubsection>
+            <div id="summaryInsurance">
+              <div class="form-body">
+                <div class="row">
+                  <label class="col-md-2 adins-label" translate>Total Premium to Customer</label>
+                  <label class="col-md-2 adins-label" translate>{{TotalPremiumToCust | number}}</label>
+                  <div class="col-md-2"></div>
+                  <label class="col-md-2 adins-label" translate>Paid Amount By Customer</label>
+                  <label class="col-md-2 adins-label" translate>{{PaidAmtByCust | number}}</label>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="row">
+                  <label class="col-md-2 adins-label" translate>Total Capitalized Amount</label>
+                  <label class="col-md-2 adins-label" translate>{{InsCpltzAmt | number}}</label>
+                  <div class="col-md-2"></div>
+                  <label class="col-md-2 adins-label" translate>Total Discount Amount</label>
+                  <label class="col-md-2 adins-label" translate>{{InsDiscAmt | number}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
+                (click)="CancelHandler()">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="!isMultiAsset">
+          <app-uc-insurance-detail [appObj]="appObj" [appAssetId]="AppAssetId" [appCollateralId]="AppCollateralId" [blCode]="BLCode" [isMultiAsset]="false" [insSeqNo]="1" (outputCancel)="CancelHandler()" (outputTab)="SaveForm($event)"> </app-uc-insurance-detail>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
