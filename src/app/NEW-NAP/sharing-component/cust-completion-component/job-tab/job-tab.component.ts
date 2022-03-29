@@ -90,7 +90,7 @@ export class JobTabComponent implements OnInit {
   JobDataForm = this.fb.group({
     MrProfessionCode: ['', Validators.required],
     IndustryTypeCode: [Validators.required],
-    CoyName: ['', Validators.required],
+    CoyName: ['', [Validators.required, Validators.minLength(2)]],
     MrJobPositionCode: [''],
     MrJobStatCode: [''],
     MrCoyScaleCode: [''],
@@ -547,7 +547,7 @@ export class JobTabComponent implements OnInit {
     }
     else {
       this.InputLookupIndustryTypeObj.isRequired = true;
-      this.JobDataForm.controls.CoyName.setValidators(Validators.required);
+      this.JobDataForm.controls.CoyName.setValidators([Validators.required, Validators.minLength(2)]);
     }
     this.JobDataForm.updateValueAndValidity();
   }
