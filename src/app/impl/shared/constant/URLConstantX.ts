@@ -63,6 +63,7 @@ export class URLConstantX {
   //App Asset
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/v1" + "/AppAssetX/GetAllAssetDataForPOByAsset";
   public static AddEditAllAssetDataX = environment.losUrl + "/v1" + "/AppAssetX/AddEditAllAssetData";
+  public static GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2 = environment.losUrl + "/v2" + "/AppAssetX/GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId";
 
   // Cessie
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
