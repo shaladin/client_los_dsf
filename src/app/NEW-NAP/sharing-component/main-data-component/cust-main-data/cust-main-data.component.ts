@@ -193,7 +193,7 @@ export class CustMainDataComponent implements OnInit {
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
-    MotherMaidenName: ['', Validators.required],
+    MotherMaidenName: ['', [Validators.required, Validators.pattern("^[a-zA-Z `]*$")]],
     MrCompanyTypeCode: [''],
     MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     Email1: ['', [Validators.required, Validators.pattern(CommonConstant.regexEmail)]],
@@ -802,7 +802,7 @@ export class CustMainDataComponent implements OnInit {
     }
 
     if (custType == CommonConstant.CustTypePersonal) {
-      this.CustMainDataForm.controls.MotherMaidenName.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MotherMaidenName.setValidators([Validators.required, Validators.pattern("^[a-zA-Z `]*$")]);
       this.CustMainDataForm.controls.BirthDt.setValidators(Validators.required);
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
