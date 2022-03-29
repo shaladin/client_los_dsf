@@ -1,0 +1,299 @@
+{
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CMT.CHANGE_MOU_TRX_NO",
+            "id": "TrxNoId",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.MOU_CUST_NO",
+            "id": "TrxNoId",
+            "value": "",
+            "label": "MoU No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "RequestNo",
+            "id": "ApvNoId",
+            "value": "",
+            "label": "Approval No",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+        },
+        {
+            "type": "textbox",
+            "name": "RequestBy",
+            "id": "ReqById",
+            "value": "",
+            "label": "Request By",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+        },
+        {
+            "type": "textbox",
+            "name": "MainUser",
+            "id": "TaskOwnerId",
+            "value": "",
+            "label": "Task Owner",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+        },
+        {
+            "type": "textbox",
+            "name": "CurrentUser",
+            "id": "CurrentUserId",
+            "value": "",
+            "label": "Current User",
+            "placeholder": "Placeholder",
+            "isCriteriaDataTable" : true
+        },
+        {
+            "type": "datepicker",
+            "name": "RequestDate",
+            "id": "ReqDtFromId",
+            "value": "",
+            "label": "Request Date From",
+            "restriction": "gte",
+            "datatype": "date",
+            "isCriteriaDataTable" : true
+        },
+        {
+            "type": "datepicker",
+            "name": "RequestDate",
+            "id": "ReqDtFromId",
+            "value": "",
+            "label": "Request Date To",
+            "restriction": "lte",
+            "datatype": "date",
+            "isCriteriaDataTable" : true
+        }
+    ],
+    "querystring": {
+        "name": "searchChangeMouCustApprovalV2"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TRANSACTION NO",
+            "name": "CMT.CHANGE_MOU_TRX_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPROVAL NO",
+            "name": "RequestNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "A.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "A.MOU_CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "REQUEST BY",
+            "name": "RequestBy"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "TASK OWNER",
+            "name": "MainUser"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CURRENT USER",
+            "name": "CurrentUser"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REQUEST DATE",
+            "name": "RequestDate"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "ACTION"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Hold"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Take Back"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Unclaim"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TrxNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RequestNo"
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "RequestBy"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MainUser"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CurrentUser"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "RequestDate"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+              {
+                "type": "callback",
+                "key": "Process"
+              }
+            ]
+        },
+        {
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [
+                      {
+                        "property" : "CurrentUser",
+                        "value" : "-",
+                        "restriction" : "NEQ"
+                      }
+                    ],
+                    "result" : {
+                      "type": "callback",
+                      "key": "HoldTask",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
+            ]
+        },
+        {
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [
+                      {
+                          "isUser": false,
+                          "property" : "IsRoleAssignment",
+                          "value" : false,
+                          "restriction" : "EQ"
+                      }
+                    ],
+                    "result" : {
+                      "type": "callback",
+                      "key": "TakeBack",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
+            ]
+        },
+        {
+            "type" : "action",
+            "position" : "center",
+            "action" : [
+              {
+                "type": "switch",
+                "case": [
+                  {
+                    "conditions" : [
+                      {
+                          "isUser": false,
+                          "property" : "IsRoleAssignment",
+                          "value" : true,
+                          "restriction" : "EQ"
+                      }
+                    ],
+                    "result" : {
+                      "type": "callback",
+                      "key": "UnClaim",
+                      "icon" : "ft-edit-2"
+                    },
+                    "isHide" : false
+                  }
+                ]
+              }
+            ]
+        }
+    ]
+}
