@@ -67,6 +67,7 @@ export class URLConstantX {
   //App Asset
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/v1" + "/AppAssetX/GetAllAssetDataForPOByAsset";
   public static AddEditAllAssetDataX = environment.losUrl + "/v1" + "/AppAssetX/AddEditAllAssetData";
+  public static GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2 = environment.losUrl + "/v2" + "/AppAssetX/GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId";
 
   // Cessie
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
@@ -82,6 +83,7 @@ export class URLConstantX {
   public static SubmitCancel = environment.losUrl + "/v1" + "/Cessie/SubmitCancel";
   public static SubmitCancelV2 = environment.losUrl + "/v2" + "/Cessie/SubmitCancelV2";
   public static GetInitForDmsDataByCessieHXId = environment.losUrl + "/v1" + "/Cessie/GetInitForDmsDataByCessieHXId";
+  public static GetCessieHXById = environment.losUrl + "/v1" + "/Cessie/GetCessieHXById"; 
 
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
