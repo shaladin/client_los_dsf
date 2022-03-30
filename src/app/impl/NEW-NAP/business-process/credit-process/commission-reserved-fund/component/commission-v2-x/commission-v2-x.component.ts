@@ -307,7 +307,7 @@ export class CommissionV2XComponent implements OnInit {
         console.log(response);
       });
 
-    await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2, obj).toPromise().then(
+    await this.http.post<AppAssetDetailObj>(URLConstantX.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2, obj).toPromise().then(
       (response) => {
         if (response.ListAppAssetObj.length != 0) {
           response.ListAppAssetSupplEmpObj.sort((a, b) => (
