@@ -211,7 +211,6 @@ export class CustMainDataComponent implements OnInit {
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
   DictUcDDLObj: { [id: string]: UcDropdownListObj } = {};
   async ngOnInit() {
-    this.checkIsDisableCustType();
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
@@ -277,6 +276,8 @@ export class CustMainDataComponent implements OnInit {
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
+
+    this.checkIsDisableCustType();
   }
 
   async getAddrTypeOwnershipRequired(){
