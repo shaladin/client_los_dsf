@@ -1467,6 +1467,8 @@ export class URLConstant {
   public static SubmitAppCustCompletion = environment.losUrl + "/v1" + "/AppCust/SubmitAppCustCompletion";
   public static SubmitAppCustCompletionV2 = environment.losUrl + "/v2" + "/AppCust/SubmitAppCustCompletion";
   public static SaveAppCustCompletion = environment.losUrl + "/v1" + "/AppCust/SaveAppCustCompletion";
+  public static ValidateSlikByAppId = environment.losUrl + "/v1" + "/AppCustX/ValidateSlikByAppId";
+
 
   // App Cust Personal Job Data
   public static AddAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobData/AddAppCustPersonalJobData";

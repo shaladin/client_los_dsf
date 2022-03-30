@@ -21,6 +21,7 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product
 import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
 import { environment } from 'environments/environment';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
+import { ResSlikValidationAppObjX } from 'app/impl/shared/model/Response/SlikValidation/res-slik-validation-app-obj-x.model';
 
 @Component({
   selector: 'app-cust-completion-detail-x',
@@ -45,6 +46,7 @@ export class CustCompletionDetailXComponent implements OnInit {
   ListAppCustCompletion: Array<AppCustCompletionObj> = new Array();
   AppObj: AppObj = new AppObj();
   IsDisburseToCust: boolean = false;
+  ResSlikValidation: ResSlikValidationAppObjX = new ResSlikValidationAppObjX();
 
   constructor(
     private route: ActivatedRoute,
@@ -178,7 +180,11 @@ export class CustCompletionDetailXComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [url], { BizTemplateCode: this.BizTemplateCode });
   }
 
-  buttonSubmitOnClick() {
+  async buttonSubmitOnClick() {
+    
+    await this.checkSlikValidation();
+    if(!this.ResSlikValidation.IsValid) return;
+
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
@@ -203,8 +209,11 @@ export class CustCompletionDetailXComponent implements OnInit {
     AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
   }
 
-  Submit() {
+  async Submit() {
     if (this.ReturnHandlingHId > 0) {
+
+      await this.checkSlikValidation();
+      if(!this.ResSlikValidation.IsValid) return;
 
       // for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
       //   if (this.ListAppCustCompletion[i].IsCompletion === false) {
@@ -242,5 +251,13 @@ export class CustCompletionDetailXComponent implements OnInit {
     else if (this.wfTaskListId> 0) {
         this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
+  }
+
+  async checkSlikValidation(){
+    await this.http.post(URLConstant.ValidateSlikByAppId, {"id": this.AppId}).toPromise().then(
+      (response:ResSlikValidationAppObjX) => {
+        this.ResSlikValidation = response;
+      }
+    );
   }
 }
