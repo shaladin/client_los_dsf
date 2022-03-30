@@ -14,6 +14,7 @@
     "stresstest": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=test_env --base-href /LOS_FE/",
     "OPL": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=OPL --aot --base-href /ROS_FE/",
     "1_4_16": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=1_4_16_env --base-href /1.4.16/LOS/",
+    "CR_BATCH_1": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=crbatch1 --base-href /LOS_DSF_IMPL_CR_BATCH_1",
     "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
     "test": "ng test",
     "lint": "ng lint",
