@@ -1,0 +1,62 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+    <br>
+    <div class="card-body">
+      <div class="px-3">
+        <div class="row">
+          <div class="col-md-6 ">
+            <lib-ucSubsection [id]="'viewIncomeInfoId'" [title]="'Income Information'" [panel]="'viewIncomeInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewIncomeInfo">
+              <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="label-control" translate> {{ item.RefundAllocationFromDesc }} </label>
+                  </div>
+                  <div class="col-md-6 form-inline-right">
+                    <label class="label-control" *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number : '1.2-2'}} </label>
+                    <label class="label-control" *ngIf="item.RefundAmount < 0"> {{0 | number : '1.2-2'}} </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="label-control" translate> Max Allocated Amount </label>
+                </div>
+                <div class="col-md-6 form-inline-right">
+                  <label class="label-control" *ngIf="viewIncomeInfoObj.MaxAllocatedAmount >= 0">
+                    {{viewIncomeInfoObj.MaxAllocatedAmount | number : '1.2-2'}} </label>
+                  <label class="label-control" *ngIf="viewIncomeInfoObj.MaxAllocatedAmount < 0"> {{0 | number : '1.2-2'}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 ">
+            <lib-ucSubsection [id]="'viewRemainIncomeInfoId'" [title]="'Remaining Information'" [panel]="'viewRemainIncomeInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="viewRemainIncomeInfo" *ngIf="isShow">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="label-control" translate> Remaining Allocated Amount </label>
+                </div>
+                <div class="col-md-6 form-inline-right">
+                  <label class="label-control" *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount >= 0">
+                    {{viewIncomeInfoObj.RemainingAllocatedAmount | number : '1.2-2'}} </label>
+                  <label class="label-control" *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount < 0" style="color: red;"> (
+                    {{-viewIncomeInfoObj.RemainingAllocatedAmount | number : '1.2-2'}} )</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isReady">
+      <edit-comm-v2-x [LobCode]="NapObj.LobCode" [AppId]="AppId" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode" [maxAllocRefundAmt]="viewIncomeInfoObj.MaxAllocatedRefundAmt" [NapObj]="NapObj"
+                      (outputTab)="LastStepHandler($event)" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)">
+      </edit-comm-v2-x>
+    </div>
+  </div>
+</div>
+<br>

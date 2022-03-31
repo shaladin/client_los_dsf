@@ -26,6 +26,7 @@ import { CessieSummaryComponent } from "./cessie-summary/cessie-summary.componen
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { MatRadioModule, MatTabsModule } from "@angular/material";
+import { CessieApprovalHistoryComponent } from "./cessie-approval-history/cessie-approval-history.component";
 @NgModule({
     imports: [
         CessieViewRoutingModule,
@@ -56,11 +57,13 @@ import { MatRadioModule, MatTabsModule } from "@angular/material";
     declarations: [
         CessieViewComponent,
         SalesOrderComponent,
-        CessieSummaryComponent
+        CessieSummaryComponent,
+        CessieApprovalHistoryComponent,
     ],
     exports: [
         SalesOrderComponent,
-        CessieSummaryComponent
+        CessieSummaryComponent,
+        CessieApprovalHistoryComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

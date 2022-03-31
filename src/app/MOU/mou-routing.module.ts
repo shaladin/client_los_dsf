@@ -87,9 +87,14 @@ import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-rev
 import { ChangeMouDetailDealerFinancingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing-x.component';
 import { ChangeMouDetailFactoringXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring-x.component';
 import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
+<<<<<<< HEAD
 import { MouCustomerRequestXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-request-x.component';
 import { MouCustomerInquiryXComponent } from 'app/impl/MOU/mou-customer/mou-customer-inquiry/mou-customer-inquiry-x.component';
 import { ChangeMouRequestPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-paging/change-mou-request-paging-x.component';
+=======
+import {ChangeMouApprovalPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-paging/change-mou-approval-paging-x.component';
+import {MouCustomerApprovalXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-customer-approval-x.component';
+>>>>>>> 6e82aef76ad1e231a86ea7d79d6dca50b45c03d3
 
 const routes: Routes = [
   {
@@ -245,6 +250,13 @@ const routes: Routes = [
       {
         path: PathConstant.MOU_CUST_APPRV,
         component: MouCustomerApprovalComponent,
+        data: {
+          title: 'MOU Customer Approval'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_APPRV_X,
+        component: MouCustomerApprovalXComponent,
         data: {
           title: 'MOU Customer Approval'
         }
@@ -596,6 +608,13 @@ const routes: Routes = [
       {
         path: PathConstant.CHANGE_MOU_APV_PAGING,
         component: ChangeMouApprovalPagingComponent,
+        data: {
+          title: "Change MOU Approval"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_APV_PAGING_X,
+        component: ChangeMouApprovalPagingXComponent,
         data: {
           title: "Change MOU Approval"
         }

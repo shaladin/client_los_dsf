@@ -58,6 +58,18 @@ import { CollateralAddEditComponent } from 'app/NEW-NAP/sharing-component/input-
 import { CustSyncComponent } from './cust-sync/cust-sync.component';
 import { EditNapCustPagingComponent } from './edit-nap-cust/edit-nap-cust-paging/edit-nap-cust-paging.component';
 import { EditNapCustDetailComponent } from './edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component';
+import {
+  EditCommAfterApprovalPagingXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-paging/edit-comm-after-approval-paging-x.component';
+import {
+  EditCommAfterApprovalDetailXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-detail/edit-comm-after-approval-detail-x.component';
+import {
+  EditCommAfterApprovalApprovalPagingXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-approval-paging/edit-comm-after-approval-approval-paging-x.component';
+import {
+  EditCommAfterApprovalApprovalDetailXComponent
+} from 'app/impl/NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-approval-detail/edit-comm-after-approval-approval-detail-x.component';
 
 
 const routes: Routes = [
@@ -344,6 +356,11 @@ const routes: Routes = [
         data: {title: 'Edit Application After Approval Request Paging'}
       },
       {
+        path: PathConstantX.EDIT_COMM_AFT_APV_PAGING,
+        component: EditCommAfterApprovalPagingXComponent,
+        data: {title: 'Edit Application Commission Reserved Fund After Approval Request Paging'}
+      },
+      {
         path: PathConstant.EDIT_APP_AFT_APV_INQUIRY,
         component: EditAppAfterApprovalInquiryComponent,
         data: {title: 'Edit Application After Approval Request Inquiry'}
@@ -364,9 +381,19 @@ const routes: Routes = [
         data: {title: 'Edit Application After Approval - Approval Paging'}
       },
       {
+        path: PathConstantX.EDIT_COMM_AFT_APV_APPRV_PAGING,
+        component: EditCommAfterApprovalApprovalPagingXComponent,
+        data: {title: 'Edit Commission After Approval - Approval Paging'}
+      },
+      {
         path: PathConstant.EDIT_APP_AFT_APV_APPRV_DETAIL,
         component: EditAppAfterApprovalApprovalDetailComponent,
         data: {title: 'Edit Application After Approval - Approval Detail'}
+      },
+      {
+        path: PathConstantX.EDIT_COMM_AFT_APV_APPRV_DETAIL,
+        component: EditCommAfterApprovalApprovalDetailXComponent,
+        data: {title: 'Edit Commission After Approval - Approval Detail'}
       },
       {
         path: PathConstant.COPY_CANCEL_APP_CROSS_BL,
@@ -413,6 +440,11 @@ const routes: Routes = [
         path: PathConstantX.EDIT_APP_AFT_APV_DETAIL_X,
         component: EditAppAfterApprovalDetailXComponent,
         data: {title: 'Edit Application After Approval Request Detail'}
+      },
+      {
+        path: PathConstantX.EDIT_COMM_AFT_APV_DETAIL_X,
+        component: EditCommAfterApprovalDetailXComponent,
+        data: {title: 'Edit Commission Reserved Fund After Approval Request Detail'}
       },
       {
         path: PathConstantX.CUST_SYNC_PAGING,
