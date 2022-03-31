@@ -110,12 +110,11 @@ export class PathConstantX {
   public static MOU_EXECUTION_DETAIL_X = PathConstant.MOU_EXECUTION + '/' + PathConstantX.DETAIL_X;
   public static MOU_EXECUTION_PAGING_X = PathConstant.MOU_EXECUTION + "/" + PathConstantX.PAGING;
   public static MOU_CUST_LEGAL_RVW_DETAIL_X = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstantX.DETAIL_X;
-<<<<<<< HEAD
   public static MOU_REQ_PAGING_X = PathConstant.MOU_REQ + "/" + PathConstantX.PAGING;
-  public static MOU_CUST_INQUIRY_X = PathConstant.MOU_CUST + "/InquiryX"; 
-=======
+  public static MOU_CUST_INQUIRY_X = PathConstant.MOU_CUST + "/InquiryX";
+
   public static MOU_CUST_APPRV_X = PathConstant.MOU_CUST + "/ApprovalX";
->>>>>>> 6e82aef76ad1e231a86ea7d79d6dca50b45c03d3
+  
   //#endregion
 
   //#region Change mou
@@ -134,11 +133,8 @@ export class PathConstantX {
   public static CHANGE_MOU_RVW_PAGING_X = PathConstant.CHANGE_MOU + '/ReviewPagingX';
   public static CHANGE_MOU_DETAIL_DLFN_X = PathConstant.CHANGE_MOU_DETAIL + "/DealerfinancingX";
   public static CHANGE_MOU_DETAIL_FCTR_X = PathConstant.CHANGE_MOU_DETAIL + "/FactoringX";
-<<<<<<< HEAD
-  public static CHANGE_MOU_REQ_PAGING_X = PathConstant.CHANGE_MOU_REQ + "/" + PathConstantX.PAGING; 
-=======
+  public static CHANGE_MOU_REQ_PAGING_X = PathConstant.CHANGE_MOU_REQ + "/" + PathConstantX.PAGING;
   public static CHANGE_MOU_APV_PAGING_X = PathConstant.CHANGE_MOU + "/ApvPagingX";
->>>>>>> 6e82aef76ad1e231a86ea7d79d6dca50b45c03d3
   //#endregion
 
   //region New Approval
@@ -161,7 +157,7 @@ export class PathConstantX {
   public static RETURN_HANDLING_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
   public static RETURN_HANDLING_SURVEY_VERIF_PAGING_X = PathConstant.RETURN_HANDLING + "/" + PathConstantX.SURVEY_VERIF_PAGING;
   public static EDIT_APP_AFT_APV_DETAIL_X = PathConstant.EDIT_APP_AFT_APV + "/" + PathConstantX.DETAIL_X;
-
+  
   public static EDIT_COMM_AFT_APV = "EditCommAftApv";
   public static EDIT_COMM_AFT_APV_PAGING = PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.PAGING;
   public static EDIT_COMM_AFT_APV_DETAIL_X = PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstantX.DETAIL_X;
@@ -172,7 +168,7 @@ export class PathConstantX {
   public static EDIT_COMM_AFT_APV_APPRV= PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.APPRV;
   public static EDIT_COMM_AFT_APV_APPRV_PAGING = PathConstantX.EDIT_COMM_AFT_APV_APPRV + "/" + PathConstant.PAGING;
   public static EDIT_COMM_AFT_APV_APPRV_DETAIL= PathConstantX.EDIT_COMM_AFT_APV_APPRV + "/" + PathConstant.DETAIL;
-  //#endregion
+ //#endregion
 
   public static PO_EXT_X = "POX";
   public static PO_PAGING_X = PathConstant.PO + "/" + PathConstantX.PAGING;
