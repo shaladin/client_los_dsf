@@ -47,6 +47,7 @@ import { ListAppCollateralDocObj } from 'app/shared/model/list-app-collateral-do
 import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-asset-data',
@@ -282,7 +283,6 @@ export class AssetDataComponent implements OnInit {
   AssetConditionName: string = "";
   OfficeCode: string;
   DpTypeBefore: string = "";
-  AppAssetAttrObj: Array<AppAssetAttrObj>;
   copyFromAppCustAddrForOwner: any;
   copyFromAppCustAddrForDelivery: any;
   copyFromAppCustAddrForLocation: any;
@@ -322,6 +322,8 @@ export class AssetDataComponent implements OnInit {
   OwnerTypeObj: Array<KeyValueObj> = new Array();
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
   RoundedAmt: number = 2;
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  readonly identifierAssetAttr: string = "AppAssetAttrObjs";
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
@@ -396,7 +398,7 @@ export class AssetDataComponent implements OnInit {
       await this.getAllAssetData();
     }
 
-    this.GenerataAppAssetAttr(false);
+    this.SetRefAttrSettingObj();
     let appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
       appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetCond,
@@ -1176,21 +1178,20 @@ export class AssetDataComponent implements OnInit {
       this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
       this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
     }
-    if (this.AppAssetAttrObj != null) {
-      for (let i = 0; i < this.AssetDataForm.controls["AppAssetAttrObjs"].value.length; i++) {
-        let appAssetAttrObj = new AppAssetAttrObj();
-        let appCollAttrcObj = new AppCollateralAttrObj();
-        appAssetAttrObj.AssetAttrName = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrName;
-        appAssetAttrObj.AssetAttrCode = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrCode;
-        appAssetAttrObj.AttrValue = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
 
-        appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
-        appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
-        appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
+    for (let i = 0; i < this.AssetDataForm.controls["AppAssetAttrObjs"].value.length; i++) {
+      let appAssetAttrObj = new AppAssetAttrObj();
+      let appCollAttrcObj = new AppCollateralAttrObj();
+      appAssetAttrObj.AssetAttrCode = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrCode;
+      appAssetAttrObj.AssetAttrName = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrName;
+      appAssetAttrObj.AttrValue = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
 
-        this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
-        this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
-      }
+      appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
+      appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
+      appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
+
+      this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
+      this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
     }
 
     this.listAppCollateralDocObj.AppCollateralDocObj = new Array();
@@ -2722,97 +2723,6 @@ export class AssetDataComponent implements OnInit {
     }
   }
 
-  GenerataAppAssetAttr(isRefresh: boolean) {
-    let GenObj =
-    {
-      AppAssetId: this.appAssetId,
-      AssetTypeCode: this.RefProdCmptAssetType.CompntValue,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-      IsRefresh: isRefresh
-    };
-    this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
-      (response) => {
-        this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
-        if (response['IsDiffWithRefAttr']) {
-          this.isDiffWithRefAttr = true;
-          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
-        }
-
-        this.GenerateAppAssetAttrForm();
-      });
-  }
-
-  refreshAttr() {
-    this.isAssetAttrReady = false;
-    this.GenerataAppAssetAttr(true);
-  }
-
-  GenerateAppAssetAttrForm() {
-    if (this.AppAssetAttrObj != null) {
-      this.appAssetAttrObjs = new Array<AppAssetAttrCustomObj>();
-      for (let i = 0; i < this.AppAssetAttrObj.length; i++) {
-        this.ListAttrAnswer.push([]);
-        let appAssetAttrObj = new AppAssetAttrCustomObj();
-        appAssetAttrObj.AssetAttrCode = this.AppAssetAttrObj[i].AttrCode;
-        appAssetAttrObj.AssetAttrName = this.AppAssetAttrObj[i].AttrName;
-        appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrValue;
-        appAssetAttrObj.AttrInputType = this.AppAssetAttrObj[i].AttrInputType;
-        appAssetAttrObj.AttrLength = this.AppAssetAttrObj[i].AttrLength;
-        if (this.AppAssetAttrObj[i].AttrQuestionValue != null) {
-          this.ListAttrAnswer[i].push(this.AppAssetAttrObj[i].AttrQuestionValue);
-          if (appAssetAttrObj.AttrValue == null) {
-            appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrQuestionValue[0]
-          }
-        }
-        else {
-          this.ListAttrAnswer[i].push("");
-        }
-        this.appAssetAttrObjs.push(appAssetAttrObj);
-
-      }
-      let listAppAssetAttrs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
-      while (listAppAssetAttrs.length !== 0) {
-        listAppAssetAttrs.removeAt(0);
-      }
-      for (let j = 0; j < this.appAssetAttrObjs.length; j++) {
-        listAppAssetAttrs.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
-      }
-      this.isAssetAttrReady = true;
-    }
-
-  }
-
-  private setValidators(appAssetAttrObjs: AppAssetAttrCustomObj) {
-    let ListValidator: Array<ValidatorFn> = new Array<ValidatorFn>();
-
-    if (appAssetAttrObjs.AttrLength != null && appAssetAttrObjs.AttrLength != 0) {
-      ListValidator.push(Validators.maxLength(appAssetAttrObjs.AttrLength));
-    }
-
-    return ListValidator;
-  }
-
-  private setFbGroupAssetAttribute(appAssetAttrObj: AppAssetAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>) {
-    let tempFB = this.fb.group({
-      No: [i],
-      AssetAttrCode: [appAssetAttrObj.AssetAttrCode],
-      AssetAttrName: [appAssetAttrObj.AssetAttrName],
-      AttrInputType: [appAssetAttrObj.AttrInputType],
-      AttrValue: [appAssetAttrObj.AttrValue]
-    });
-    if (ListValidator.length > 0) {
-      tempFB.get("AttrValue").setValidators(ListValidator);
-    }
-
-    return tempFB;
-  }
-
-  addGroupAppAssetAttr(appAssetAttrObj: AppAssetAttrCustomObj, i: number) {
-    let ListValidator: Array<ValidatorFn> = this.setValidators(appAssetAttrObj);
-
-    return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
-  }
-
   ChangeAccessoryDPType(i: number, ev){
     if(ev == CommonConstant.DownPaymentTypeAmt){
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.disable();
@@ -2984,5 +2894,19 @@ export class AssetDataComponent implements OnInit {
             this.RoundedAmt = response.RoundedAmt;
           });
       });
+  }
+
+  SetRefAttrSettingObj() {
+    let GenObj =
+    {
+      AppId: this.AppId,
+      AttrGroup: CommonConstant.AttrGroupAsset,
+      IsRefresh: false,
+      AttrTypeCode: CommonConstant.AttrTypeCodeTrx
+    };
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
+    this.attrSettingObj.Title = "Asset Attribute";
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAttrContentV2;
+    this.isAssetAttrReady = true;
   }
 }
