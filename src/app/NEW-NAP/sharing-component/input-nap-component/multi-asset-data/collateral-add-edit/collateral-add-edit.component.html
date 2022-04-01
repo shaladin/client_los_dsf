@@ -267,6 +267,7 @@
                 <label class="col-md-2" translate>Copy Address From</label>
                 <div class="col-md-2">
                   <select class="form-control adInsInput" formControlName="LocationAddrType">
+                    <option value="" translate>-Select One-</option>
                     <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                       {{ram.MrCustAddrTypeCode}}
                     </option>
@@ -564,6 +565,7 @@
                   <label class="col-md-2" translate>Copy Address From</label>
                   <div class="col-md-2">
                     <select class="form-control adInsInput" formControlName="CollateralOwnerAddr">
+                      <option value="" translate>-Select One-</option>
                       <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                         {{ram.MrCustAddrTypeCode}}
                       </option>

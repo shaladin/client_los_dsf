@@ -534,6 +534,32 @@ export class PathConstant {
     public static DASHBOARD = "Dash-Board";
     public static DASHEMPTY = "Dash-Empty";
     public static DASHBOARD_SUPERSET = "DashBoardSuperset";
+    public static DASHBOARD_ARS = "DashBoardARS"
+    public static DASHBOARD_SAO01 = "DashboardSAO01"
+    public static DASHBOARD_SAO02 = "DashboardSAO02"
+    public static DASHBOARD_SAO03 = "DashboardSAO03"
+    public static DASHBOARD_SAC01 = "DashboardSAC01"
+    public static DASHBOARD_DEA01 = "DashboardDEA01"
+    public static DASHBOARD_DEB01 = "DashboardDEB01"
+    public static DASHBOARD_DAR01 = "DashboardDAR01"
+    public static DASHBOARD_VIN01 = "DashboardVIN01"
+    public static DASHBOARD_VIN02 = "DashboardVIN02"
+    public static DASHBOARD_VIN03 = "DashboardVIN03"
+    public static DASHBOARD_VIN04 = "DashboardVIN04"
+    public static DASHBOARD_VIN05 = "DashboardVIN05"
+    public static DASHBOARD_VIN06 = "DashboardVIN06"
+    public static DASHBOARD_VIN07 = "DashboardVIN07"
+    public static DASHBOARD_VIN08 = "DashboardVIN08"
+    public static DASHBOARD_VIN09 = "DashboardVIN09"
+    public static DASHBOARD_VIN10 = "DashboardVIN10"
+    public static DASHBOARD_VIN11 = "DashboardVIN11"
+    public static DASHBOARD_VIN12 = "DashboardVIN12"
+    public static DASHBOARD_VIN13 = "DashboardVIN13"
+    public static DASHBOARD_VIN14 = "DashboardVIN14"
+    public static DASHBOARD_VIN15 = "DashboardVIN15"
+    public static DASHBOARD_AGM01 = "DashboardAGM01"
+    public static DASHBOARD_AGM02 = "DashboardAGM02"
+    public static DASHBOARD_AGM03 = "DashboardAGM03"
     //#endregion
 
     //#region Content-Route

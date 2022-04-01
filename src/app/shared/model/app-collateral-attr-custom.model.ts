@@ -9,6 +9,7 @@ export class AppCollateralAttrCustomObj {
   AttrInputType: string;
   AttrQuestionValue: Array<string>;
   AttrGroup: string;
+  IsMandatory: false;
   RsvField1: string;
   RsvField2: string;
   RsvField3: string;
@@ -25,6 +26,7 @@ export class AppCollateralAttrCustomObj {
     this.AttrTypeCode = "";
     this.AttrInputType = "";
     this.AttrGroup = "";
+    this.IsMandatory = false;
     this.RsvField1 = "";
     this.RsvField2 = "";
     this.RsvField3 = "";
