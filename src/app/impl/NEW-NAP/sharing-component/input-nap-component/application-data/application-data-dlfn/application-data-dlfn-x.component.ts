@@ -199,7 +199,10 @@ export class ApplicationDataDlfnXComponent implements OnInit {
         TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt,
         MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode,
       });
+      this.changePaymentFreq();
     }
+
+
 
     this.getAppXData();
     if (this.SalesAppInfoForm.controls.MrWopCode.value == CommonConstant.WopAutoDebit) {

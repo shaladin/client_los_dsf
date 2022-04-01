@@ -318,7 +318,7 @@
                 <div class="col-md-8">
                   <input type="" currencyMask class="form-control" formControlName="SharePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.SharePrcnt.invalid}"
-                    [options]="CurrencyMaskPrct" (focusout)="ChangeValidityShareOwner()">
+                    [options]="CurrencyMaskPrct">
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.SharePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -349,7 +349,7 @@
               <div class="form-group row">
                 <label class="col-md-4 {{ isShareOwnerMandatory ? 'adins-required-label' : 'adInsLabel'}}" translate>Is Owner</label>
                 <div class="col-md-8">
-                  <input type="checkbox" formControlName="IsOwner" (change)="ChangeValidityShareOwner()" />
+                  <input type="checkbox" formControlName="IsOwner" />
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.IsOwner" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>

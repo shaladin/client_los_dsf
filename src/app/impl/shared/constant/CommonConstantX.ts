@@ -94,5 +94,8 @@ export class CommonConstantX {
 
     //PO
     public static SRC_AGRMNT_FIN_DATA_FIELD_TOTAL_INS_CUST_AMT = "TotalInsCustAmt";
+
+    //GS
+    public static GSCodeShareholderJobPostIsOnwer = "SHAREHOLDER_JOB_POST_IS_OWNER";
     
 }
