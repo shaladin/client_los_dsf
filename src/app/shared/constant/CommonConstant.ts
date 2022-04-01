@@ -304,6 +304,7 @@ export class CommonConstant {
   public static AttrGroupCustCompanyFinDataExpense = "CUST_COMPANY_FINDATA_EXPENSE"
   public static AttrGroupCustCompanyFinDataOther = "CUST_COMPANY_FINDATA_OTHER"
   public static AttrGroupApplicationData = "APPLICATION_DATA";
+  public static AttrGroupAsset = "ASSET";
 
   //ATTR INTPUT TYPE
   public static AttrInputTypeDate = "D";
@@ -318,7 +319,12 @@ export class CommonConstant {
   //ATTR CODE
   public static AttrCodeDeptAml = "AML_CUST_DEPARTMENT";
   public static AttrCodeAuthAml = "AUTH_AML";
+  public static AttrCodeRoadWorthinessDoc = "ROAD_WORTHINESS_DOC";
   
+  //ATTR VALUE
+  public static AttrValueOnTheRoad = "ON_THE_ROAD";
+  public static AttrValueOffTheRoad = "OFF_THE_ROAD";
+
   //Interest Type
   public static InterestTypeFixed = "FIXED";
 

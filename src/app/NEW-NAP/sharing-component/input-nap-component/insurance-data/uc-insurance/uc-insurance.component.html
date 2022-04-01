@@ -92,7 +92,7 @@
           </form>
         </div>
         <div *ngIf="!isMultiAsset">
-          <app-uc-insurance-detail [appObj]="appObj" [appAssetId]="AppAssetId" [appCollateralId]="AppCollateralId" [blCode]="BLCode" [isMultiAsset]="false" [insSeqNo]="1" (outputCancel)="CancelHandler()" (outputTab)="SaveForm($event)"> </app-uc-insurance-detail>
+          <app-uc-insurance-detail [appObj]="appObj" [appAssetId]="AppAssetId" [appCollateralId]="AppCollateralId" [blCode]="BLCode" [isMultiAsset]="false" [insSeqNo]="1" [showCancel]="showCancel" (outputCancel)="CancelHandler()" (outputTab)="SaveForm($event)"> </app-uc-insurance-detail>
         </div>
       </div>
     </div>
