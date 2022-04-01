@@ -52,6 +52,7 @@ export class DocSignerDetailDsfComponent implements OnInit {
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   agrmntSignerDsfObj: AgrmntSignerDsfObj = new AgrmntSignerDsfObj();
   mode: string;
+  modeDsf: string;
   ResponseAppCustDataObj: ResAppCustPersonalAndSpouseDataObj;
   MrCustTypeCode: string = CommonConstant.CustTypeCompany;
   CustFullName: string;
@@ -102,7 +103,7 @@ export class DocSignerDetailDsfComponent implements OnInit {
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     await this.getAllData();
-    this.setLookupObj();
+    await this.setLookupObj();
     await this.setDefaultShareholder();
   }
 
@@ -200,9 +201,9 @@ export class DocSignerDetailDsfComponent implements OnInit {
         (response: AgrmntSignerDsfObj) => {
           this.ResponseAgrmntSignerDsfObj = response;
           if (this.ResponseAgrmntSignerDsfObj.AgrmntSignerDsfId == 0) {
-            this.mode = "add";
+            this.modeDsf = "add";
           } else {
-            this.mode = "edit";
+            this.modeDsf = "edit";
   
             this.agrmntSignerDsfObj.AgrmntSignerDsfId = this.ResponseAgrmntSignerDsfObj.AgrmntSignerDsfId;
             this.agrmntSignerDsfObj.AppCustCompanyMgmntShrholder4Id = this.ResponseAgrmntSignerDsfObj.AppCustCompanyMgmntShrholder4Id;
@@ -267,7 +268,7 @@ export class DocSignerDetailDsfComponent implements OnInit {
       });
   }
 
-  setLookupObj() {
+  async setLookupObj() {
     this.inputLookupBranchEmpObj.urlJson = "./assets/uclookup/lookupBranchEmp.json";
     this.inputLookupBranchEmpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupBranchEmpObj.pagingJson = "./assets/uclookup/lookupBranchEmp.json";
@@ -557,7 +558,7 @@ export class DocSignerDetailDsfComponent implements OnInit {
     var agrmntObj = {
       Id: this.AgrmntId
     }
-    this.http.post(URLConstantDsf.GetAgrmntSignerDsfByAgrmntId, agrmntObj).subscribe(
+    await this.http.post(URLConstantDsf.GetAgrmntSignerDsfByAgrmntId, agrmntObj).toPromise().then(
       (response: AgrmntSignerDsfObj) => {
         this.ResponseAgrmntSignerDsfObj = response;
         if (this.ResponseAgrmntSignerDsfObj != null) {
@@ -730,7 +731,10 @@ export class DocSignerDetailDsfComponent implements OnInit {
 
     if (this.mode == "edit") {
       urlPost = environment.isCore ? URLConstant.EditAgrmntSignerDataV2 : URLConstant.EditAgrmntSignerData;
-      urlPostDsf = URLConstantDsf.EditAgrmntSignerDsfData
+    }
+
+    if (this.modeDsf == "edit") {
+      urlPostDsf = URLConstantDsf.EditAgrmntSignerDsfData;
     }
 
     this.http.post(urlPost, this.agrmntSignerObj).subscribe(
