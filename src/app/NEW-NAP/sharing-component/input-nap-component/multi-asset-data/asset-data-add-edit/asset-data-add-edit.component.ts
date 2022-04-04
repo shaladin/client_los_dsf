@@ -842,8 +842,6 @@ export class AssetDataAddEditComponent implements OnInit {
           this.InputLookupCityIssuerObj.isRequired = true;
         }
 
-        this.SetRefAttrSettingObj();
-
         await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           Code: assetType["CompntValue"]
         }).toPromise().then(
@@ -887,6 +885,7 @@ export class AssetDataAddEditComponent implements OnInit {
             }
 
             await this.GetEditData();
+            this.SetRefAttrSettingObj();
             this.isSerialReady = true;
           });
 
@@ -1218,17 +1217,17 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
   
+  
+  
   SetRefAttrSettingObj() {
     let GenObj =
     {
-      AppId: this.AppId,
-      AttrGroup: CommonConstant.AttrGroupAsset,
-      IsRefresh: false,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx
+      AppAssetId: this.AppAssetId,
+      AssetTypeCode: this.AssetDataForm.controls["AssetTypeCode"].value,
     };
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Asset Attribute";
-    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAttrContentV2;
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAssetAttrV2;
     this.isAssetAttrReady = true;
   }
 

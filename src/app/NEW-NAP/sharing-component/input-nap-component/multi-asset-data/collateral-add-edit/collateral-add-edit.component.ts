@@ -246,14 +246,12 @@ export class CollateralAddEditComponent implements OnInit {
   SetRefAttrSettingObj() {
     let GenObj =
     {
-      AppId: this.AppId,
-      AttrGroup: CommonConstant.AttrGroupAsset,
-      IsRefresh: false,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx
+      AppCollateralId: this.AppCollateralId,
+      AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
     };
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Collateral Attribute";
-    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAttrContentV2;
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppCollateralAttrV2;
     this.isReadyAttrSetting = true;
   }
 
@@ -973,71 +971,6 @@ export class CollateralAddEditComponent implements OnInit {
           this.inputAddressObjForLoc.default = this.locationAddrObj;
           this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
         });
-
-      await this.http.post(URLConstant.GetAppCollateralAttrByAppCollateralId, { Id: this.AppCollateralId }).toPromise().then(
-        (response) => {
-          var colObj = {
-            AssetRegion: "",
-            Color: "",
-            Category: "",
-            Transmition: "",
-            TaxCityIssuer: "",
-            BpkpIssueDate: "",
-          };
-          for (const item of response["AppCollateralAttrObjs"]) {
-            switch (item["CollateralAttrCode"]) {
-              case CommonConstant.AppCollateralAttrAssetRegion:
-                colObj.AssetRegion = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrColor:
-                colObj.Color = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrCategory:
-                colObj.Category = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrTransmition:
-                colObj.Transmition = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrTaxCityIssuer:
-                colObj.TaxCityIssuer = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrBpkbIssueDate:
-                colObj.BpkpIssueDate = item["AttrValue"];
-                break;
-
-              default:
-                break;
-            }
-          }
-          this.AddCollForm.patchValue({
-            AssetRegion: colObj.AssetRegion,
-            Color: colObj.Color,
-            Category: colObj.Category,
-            Transmition: colObj.Transmition,
-            TaxCityIssuer: colObj.TaxCityIssuer,
-            BpkpIssueDate: colObj.BpkpIssueDate
-          });
-          this.InputLookupCityIssuerObj = new InputLookupObj();
-          this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
-          this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-          this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
-          this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
-          var disCrit = new Array();
-          var critDisObj = new CriteriaObj();
-          critDisObj.DataType = 'text';
-          critDisObj.restriction = AdInsConstant.RestrictionEq;
-          critDisObj.propName = 'TYPE';
-          critDisObj.value = 'DIS';
-          disCrit.push(critDisObj);
-          this.InputLookupCityIssuerObj.addCritInput = disCrit;
-          this.InputLookupCityIssuerObj.nameSelect = colObj.TaxCityIssuer;
-          this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer };
-        });
     }
     
     this.GetListAddr();
@@ -1130,7 +1063,6 @@ export class CollateralAddEditComponent implements OnInit {
 
     await this.SetRefAttrSettingObj();
 
-
     this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex }).subscribe(
       (response) => {
         this.SerialNoRegex = response["GsValue"];
@@ -1141,7 +1073,72 @@ export class CollateralAddEditComponent implements OnInit {
         }
         this.ListPattern.push(obj);
       }
-    );
+    );    
+
+    await this.http.post(URLConstant.GetAppCollateralAttrByAppCollateralId, { Id: this.AppCollateralId }).toPromise().then(
+      (response) => {
+        var colObj = {
+          AssetRegion: "",
+          Color: "",
+          Category: "",
+          Transmition: "",
+          TaxCityIssuer: "",
+          BpkpIssueDate: "",
+        };
+        for (const item of response["AppCollateralAttrObjs"]) {
+          switch (item["CollateralAttrCode"]) {
+            case CommonConstant.AppCollateralAttrAssetRegion:
+              colObj.AssetRegion = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrColor:
+              colObj.Color = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrCategory:
+              colObj.Category = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrTransmition:
+              colObj.Transmition = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrTaxCityIssuer:
+              colObj.TaxCityIssuer = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrBpkbIssueDate:
+              colObj.BpkpIssueDate = item["AttrValue"];
+              break;
+
+            default:
+              break;
+          }
+        }
+        this.AddCollForm.patchValue({
+          AssetRegion: colObj.AssetRegion,
+          Color: colObj.Color,
+          Category: colObj.Category,
+          Transmition: colObj.Transmition,
+          TaxCityIssuer: colObj.TaxCityIssuer,
+          BpkpIssueDate: colObj.BpkpIssueDate
+        });
+        this.InputLookupCityIssuerObj = new InputLookupObj();
+        this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
+        this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+        this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+        this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
+        var disCrit = new Array();
+        var critDisObj = new CriteriaObj();
+        critDisObj.DataType = 'text';
+        critDisObj.restriction = AdInsConstant.RestrictionEq;
+        critDisObj.propName = 'TYPE';
+        critDisObj.value = 'DIS';
+        disCrit.push(critDisObj);
+        this.InputLookupCityIssuerObj.addCritInput = disCrit;
+        this.InputLookupCityIssuerObj.nameSelect = colObj.TaxCityIssuer;
+        this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer };
+      });
 
     if(this.collateral == 'Exist'){
       this.disabledForm(true);

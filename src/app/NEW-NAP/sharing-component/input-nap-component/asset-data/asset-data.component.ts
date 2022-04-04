@@ -398,7 +398,7 @@ export class AssetDataComponent implements OnInit {
       await this.getAllAssetData();
     }
 
-    this.SetRefAttrSettingObj();
+    await this.SetRefAttrSettingObj();
     let appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
       appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetCond,
@@ -2903,14 +2903,12 @@ export class AssetDataComponent implements OnInit {
   SetRefAttrSettingObj() {
     let GenObj =
     {
-      AppId: this.AppId,
-      AttrGroup: CommonConstant.AttrGroupAsset,
-      IsRefresh: false,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx
+      AppAssetId: this.appAssetId,
+      AssetTypeCode: this.AssetDataForm.controls["AssetTypeCode"].value,
     };
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Asset Attribute";
-    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAttrContentV2;
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAssetAttrV2;
     this.isAssetAttrReady = true;
   }
 }
