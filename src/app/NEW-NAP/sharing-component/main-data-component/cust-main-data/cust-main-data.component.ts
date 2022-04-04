@@ -278,6 +278,8 @@ export class CustMainDataComponent implements OnInit {
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
+
+    this.checkIsDisableCustType();
     await this.getMinMaxAgeCustPersonalFromGenSet();
   }
 
