@@ -2203,6 +2203,7 @@ export class CustMainDataXComponent implements OnInit {
         IsOwner: false,
       });
     }
+  }
 
   async getMinMaxAgeCustPersonalFromGenSet()
   {
