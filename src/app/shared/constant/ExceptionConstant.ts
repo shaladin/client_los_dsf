@@ -122,7 +122,6 @@ export class ExceptionConstant {
     public static MUST_COMPLETE_SHAREHOLDER_DATA = "Please complete all shareholder data";
     public static DUPLICATE_LEGAL_DOC = "Document with Legal Document Type {0} and Document No {1} already exists";
 
-
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
     public static NO_EXISTING_COLL = "This MoU don't Have Existing Collateral";
@@ -204,5 +203,10 @@ export class ExceptionConstant {
 
     public static MAX_REFERANTOR_EXCEPTION = "Number of Referantor Cannot Be More than {0}";
     public static DUPLICATE_SUPPL_EMP = "Supplier Employee {0} Receiving More Than 1 Commission";
+
+    public static MANDATORY_LEGAL_DOC = "Legal Documents with following type are mandatory: {0}";
+    public static CUST_AGE_BETWEEN = "Customer age must be between {0} and {1} year old";
+    public static CUST_AGE_MIN = "Customer age must be at least {0} year old";
+
 }
 
