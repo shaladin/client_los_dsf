@@ -17,8 +17,8 @@ export const environment = {
     LMSUrl: "http://r3app-server.ad-ins.com/LMS_DEMO", //OPL dah ada
     ApprovalR3Url: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_R3_BE_DSF_IMPL_CAMUNDA',
     ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
-    FoundationR3Web: 'http://r3impl-websvr.ad-ins.com/FOU_DSF_IMPL',
-    losR3Web: 'http://localhost:4200',
+    FoundationR3Web: 'http://r3impl-websvr.ad-ins.com/FOUNDATION_DSF_IMPL_CR_BATCH_1',
+    losR3Web: 'http://r3impl-websvr.ad-ins.com/LOS_DSF_IMPL_CR_BATCH_1',
     lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
     cmsR3Web: 'http://r3web-server.ad-ins.com/CMS',
     WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3',
