@@ -1168,14 +1168,16 @@ export class CollateralAddEditComponent implements OnInit {
   GenerateAppCollateralAttrForm() {
     if (this.AppCollateralAttrObj != null) {
       this.AppCollateralAttrObjs = new Array<AppCollateralAttrCustomObj>();
+      this.ListAttrAnswer = [];
       for (let i = 0; i < this.AppCollateralAttrObj.length; i++) {
-        this.ListAttrAnswer.push([]);
+        this.ListAttrAnswer[i] = [];
         var AppCollateralAttrObj = new AppCollateralAttrCustomObj();
         AppCollateralAttrObj.CollateralAttrCode = this.AppCollateralAttrObj[i].AttrCode;
         AppCollateralAttrObj.CollateralAttrName = this.AppCollateralAttrObj[i].AttrName;
         AppCollateralAttrObj.AttrValue = this.AppCollateralAttrObj[i].AttrValue;
         AppCollateralAttrObj.AttrInputType = this.AppCollateralAttrObj[i].AttrInputType;
         AppCollateralAttrObj.AttrLength = this.AppCollateralAttrObj[i].AttrLength;
+        AppCollateralAttrObj.IsMandatory = this.AppCollateralAttrObj[i].IsMandatory;
         if (this.AppCollateralAttrObj[i].AttrQuestionValue != null) {
           this.ListAttrAnswer[i].push(this.AppCollateralAttrObj[i].AttrQuestionValue);
           if (AppCollateralAttrObj.AttrValue == null) {
@@ -1207,6 +1209,10 @@ export class CollateralAddEditComponent implements OnInit {
       ListValidator.push(Validators.maxLength(appCollateralAttrObj.AttrLength));
     }
 
+    if (appCollateralAttrObj.IsMandatory) {
+      ListValidator.push(Validators.required);
+    }
+
     return ListValidator;
   }
 
@@ -1216,7 +1222,8 @@ export class CollateralAddEditComponent implements OnInit {
       AssetAttrCode: [appCollateralAttrObj.CollateralAttrCode],
       AssetAttrName: [appCollateralAttrObj.CollateralAttrName],
       AttrInputType: [appCollateralAttrObj.AttrInputType],
-      AttrValue: [appCollateralAttrObj.AttrValue]
+      IsMandatory: [appCollateralAttrObj.IsMandatory],
+      AttrValue: [appCollateralAttrObj.AttrValue],
     });
     if (ListValidator.length > 0) {
       tempFB.get("AttrValue").setValidators(ListValidator);

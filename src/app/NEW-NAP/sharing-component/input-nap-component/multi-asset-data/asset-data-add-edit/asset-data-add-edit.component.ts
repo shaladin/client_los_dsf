@@ -354,7 +354,6 @@ export class AssetDataAddEditComponent implements OnInit {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddrLegalObj = this.AppCustAddrObj.find(
           emp => emp.MrCustAddrTypeCode === CommonConstant.AddrTypeLegal);
-        this.AssetDataForm.patchValue({ LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'] });
       }
     );
   }
@@ -1143,7 +1142,7 @@ export class AssetDataAddEditComponent implements OnInit {
               });
 
               await this.SelfUsageChange({ checked: (this.returnAppCollateralRegistObj.MrUserRelationshipCode == CommonConstant.SelfCustomer) });
-              await this.SelfOwnerChange(true, MrOwnerTypeCode);
+              await this.SelfOwnerChange(true, MrOwnerTypeCode, true);
               await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
 
               this.inputFieldOwnerAddrObj = new InputFieldObj();
@@ -2225,25 +2224,28 @@ export class AssetDataAddEditComponent implements OnInit {
     this.inputAddressObjForOwner.showAllPhn = false;
   }
 
-  async SelfOwnerChange(isEdit: boolean = false, OwnerType: string = this.custType) {
+  async SelfOwnerChange(isEdit: boolean = false, OwnerType: string = this.custType, isFromOnInit:boolean=false) {
     let isChecked: boolean = this.AssetDataForm.get("SelfOwner").value;
     if (isChecked) {
-      this.AssetDataForm.patchValue({
-        OwnerName: this.appCustObj.CustName,
-        MrIdTypeCode: this.appCustObj.MrIdTypeCode,
-        OwnerIdNo: this.appCustObj.IdNo,
-        MrOwnerRelationshipCode: CommonConstant.SelfCustomer,
-        OwnerAddr: this.AddrLegalObj.Addr,
-        OwnerAreaCode1: this.AddrLegalObj.AreaCode1,
-        OwnerAreaCode2: this.AddrLegalObj.AreaCode2,
-        OwnerAreaCode3: this.AddrLegalObj.AreaCode3,
-        OwnerAreaCode4: this.AddrLegalObj.AreaCode4,
-        OwnerCity: this.AddrLegalObj.City,
-        OwnerZipcode: this.AddrLegalObj.Zipcode,
-        OwnerMobilePhnNo: typeof (this.appCustObj.MobilePhnNo1) != 'undefined' ? this.appCustObj.MobilePhnNo1 : '',
-        OwnerAddrType: CommonConstant.AddrTypeLegal,
-        MrOwnerTypeCode : OwnerType
-      });
+      if (!isFromOnInit) 
+      {
+        this.AssetDataForm.patchValue({
+          OwnerName: this.appCustObj.CustName,
+          MrIdTypeCode: this.appCustObj.MrIdTypeCode,
+          OwnerIdNo: this.appCustObj.IdNo,
+          MrOwnerRelationshipCode: CommonConstant.SelfCustomer,
+          OwnerAddr: this.AddrLegalObj.Addr,
+          OwnerAreaCode1: this.AddrLegalObj.AreaCode1,
+          OwnerAreaCode2: this.AddrLegalObj.AreaCode2,
+          OwnerAreaCode3: this.AddrLegalObj.AreaCode3,
+          OwnerAreaCode4: this.AddrLegalObj.AreaCode4,
+          OwnerCity: this.AddrLegalObj.City,
+          OwnerZipcode: this.AddrLegalObj.Zipcode,
+          OwnerMobilePhnNo: typeof (this.appCustObj.MobilePhnNo1) != 'undefined' ? this.appCustObj.MobilePhnNo1 : '',
+          OwnerAddrType: !isEdit ? CommonConstant.AddrTypeLegal : "",
+          MrOwnerTypeCode : OwnerType
+        });
+      }
 
       if (!isEdit) {
         this.AssetDataForm.patchValue({
