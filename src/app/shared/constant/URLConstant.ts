@@ -5,7 +5,7 @@ import { environment } from "environments/environment";
 
 export class URLConstant {
   // NOTIFICATION HUB
-  public static WebSocketUrl = environment.WebSocketURL + "/Notificationhub";
+  public static WebSocketUrl = environment.FoundationR3Url + "/Notificationhub";
   public static GetListNotificationHByRefUserId = environment.FoundationR3Url + "/v1" + "/NotificationH/GetListNotificationHByRefUserId";
 
   //WORKFLOW (LEWAT FOUNDATION)
@@ -49,6 +49,7 @@ export class URLConstant {
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/v1" + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/v1" + "/Application/SubmitNAP";
   public static SubmitNAPV2 = environment.losUrl + "/v2" + "/Application/SubmitNAP";
+  public static SubmitNAPV21 = environment.losUrl + "/v2.1" + "/Application/SubmitNAP";
   public static SubmitNapCustMainData = environment.losUrl + "/v1" + "/Application/SubmitNAPCustMainData";
   public static SubmitNapCustMainDataV2 = environment.losUrl + "/v2.1" + "/Application/SubmitNAPCustMainData";
   public static CreateWorkflowDuplicateCheck = environment.losUrl + "/v1" + "/Application/CreateWorkflowDuplicateCheck";
@@ -431,6 +432,7 @@ export class URLConstant {
   public static UpdateFormFeatureAuthForm = "/MenuManagement/UpdateFormFeatureAuthForm";
   public static GetAllActiveRefFormAndPathExist = "/MenuManagement/GetAllActiveRefFormAndPathExist";
   public static GetAllActiveRefForm = "/MenuManagement/GetAllActiveRefForm";
+  public static LogoutAuth = environment.FoundationR3Url + "/v1" + "/Authenticate/Logout";
 
   //FORM FEATURE
   public static GetListRefFeature = "/RefFeature/GetListRefFeature";
@@ -984,6 +986,10 @@ export class URLConstant {
   public static GetCustBankAccByCustIdAndBankAccNo = environment.FoundationR3Url + "/v1" + "/CustBankAcc/GetCustBankAccByCustIdAndBankAccNo";
   public static AddEditNapCust = environment.losUrl + "/v1" + "/Application/AddEditNapCust";
 
+  // APP NEGATIVE CUST
+  public static GetNegCustIndicatorByAppId = environment.losUrl + "/v1" + "/AppNegativeCust/GetNegCustIndicatorByAppId";
+  public static CheckIsNegCustAllowedCreateAppByAppId = environment.losUrl + "/v1" + "/AppNegativeCust/CheckIsNegCustAllowedCreateAppByAppId";
+
   // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
   public static GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentsByAppCustIdAndAttrGroupAndListAttrCodes"
@@ -1466,6 +1472,7 @@ export class URLConstant {
   public static UpdateAppCustCompletionCompany = environment.losUrl + "/v1" + "/AppCust/UpdateAppCustCompletionCompany";
   public static SubmitAppCustCompletion = environment.losUrl + "/v1" + "/AppCust/SubmitAppCustCompletion";
   public static SubmitAppCustCompletionV2 = environment.losUrl + "/v2" + "/AppCust/SubmitAppCustCompletion";
+  public static SubmitAppCustCompletionV21 = environment.losUrl + "/v2.1" + "/AppCust/SubmitAppCustCompletion";
   public static SaveAppCustCompletion = environment.losUrl + "/v1" + "/AppCust/SaveAppCustCompletion";
   public static ValidateSlikByAppId = environment.losUrl + "/v1" + "/AppCustX/ValidateSlikByAppId";
 
@@ -1924,6 +1931,7 @@ export class URLConstant {
 
   //Config Result
   public static GetSysConfigResultByCode = environment.FoundationR3Url + "/v1" + "/SysConfigResult/GetSysConfigResultByCode";
+  public static GetSysCtrlCoyBySysKey = environment.FoundationR3Url + "/v1" + "/SysCtrlCoy/GetSysCtrlCoyByKey"
 
   //App Attr Content
   public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";

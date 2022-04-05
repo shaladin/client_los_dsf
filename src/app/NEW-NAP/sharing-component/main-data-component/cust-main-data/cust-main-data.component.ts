@@ -165,6 +165,7 @@ export class CustMainDataComponent implements OnInit {
   readonly listAttrCodes: Array<string> = [CommonConstant.AttrCodeDeptAml, CommonConstant.AttrCodeAuthAml];
   MaxDaysThirdPartyChecking: number;
   listAddrRequiredOwnership: Array<string> = new Array();
+  isDisableCustType: boolean = false;
 
   constructor(
     private regexService: RegexService,
@@ -213,6 +214,7 @@ export class CustMainDataComponent implements OnInit {
   readonly RefMasterTypeCodeNationality: string = CommonConstant.RefMasterTypeCodeNationality;
   DictUcDDLObj: { [id: string]: UcDropdownListObj } = {};
   async ngOnInit() {
+    this.checkIsDisableCustType();
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
@@ -430,10 +432,11 @@ export class CustMainDataComponent implements OnInit {
   jobPositionLookupObj: InputLookupObj = new InputLookupObj();
   BindLookupJobPosition() {
     this.jobPositionLookupObj = new InputLookupObj();
-    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder? true : false ;
+    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal? true : false ;
     this.jobPositionLookupObj.urlJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.pagingJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.genericJson = "./assets/uclookup/customer/lookupJobPosition.json";
+    this.jobPositionLookupObj.isReady = true;
   }
 
   professionLookUpObj: InputLookupObj = new InputLookupObj();
@@ -470,12 +473,15 @@ export class CustMainDataComponent implements OnInit {
     if(this.isEditNap1){
       return;
     }
+    this.BindLookupJobPosition();
     if (custType == CommonConstant.CustTypePersonal) {
       this.InputLookupCustObj.isDisable = false;
       this.InputLookupCustCoyObj.isDisable = true;
+
     } else {
       this.InputLookupCustObj.isDisable = true;
       this.InputLookupCustCoyObj.isDisable = false;
+
     }
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -877,6 +883,12 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
     this.CustMainDataForm.controls.Email1.updateValueAndValidity();
     this.setLookup(custType, true);
+    if(this.MrCustTypeCode == CommonConstant.CustTypePersonal && (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder || this.custMainDataMode == CommonConstant.CustMainDataModeFamily)){
+      this.custAttrForm.GetQuestion();
+    }
+    else{
+      this.custAttrForm.resetForm();
+    }
   }
 
   async copyAgrmntParentEvent(event) {
@@ -945,6 +957,7 @@ export class CustMainDataComponent implements OnInit {
   }
 
   resetInput(custType: string = CommonConstant.CustTypePersonal) {
+    this.BindLookupJobPosition();
     this.CustMainDataForm.reset();
     this.AppCustCompanyMgmntShrholderId = 0;
     this.MrCustTypeCode = custType;
@@ -981,6 +994,7 @@ export class CustMainDataComponent implements OnInit {
 
     this.SetCustModel();
     this.custTypeChange(custType);
+    this.checkIsDisableCustType();
   }
 
   disableInput() {
@@ -1967,5 +1981,14 @@ export class CustMainDataComponent implements OnInit {
     }
 
     return true;
+  }
+  
+  checkIsDisableCustType(){
+    if(this.isEditNap1 || this.AppCustCompanyMgmntShrholderId){
+      this.isDisableCustType = true;
+    }
+    else{
+      this.isDisableCustType = false;
+    }
   }
 }

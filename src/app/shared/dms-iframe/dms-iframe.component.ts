@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, Input,EventEmitter, OnInit, Output } from '@angular/core';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from '../AdInsHelper';
 import { CommonConstant } from '../constant/CommonConstant';
@@ -7,7 +8,8 @@ import { DMSObj } from '../model/dms/dms-obj.model';
 
 @Component({
   selector: 'app-dms-iframe',
-  templateUrl: './dms-iframe.component.html'
+  templateUrl: './dms-iframe.component.html',
+  providers: [NGXToastrService]
 })
 export class DmsIframeComponent implements OnInit {
   urlLink: string;
@@ -24,7 +26,7 @@ export class DmsIframeComponent implements OnInit {
   prm : any = "";
   noParamGiven: boolean = true;
 
-  constructor() { }
+  constructor(private toastr: NGXToastrService) { }
   
   ngOnInit() {
     console.log("TEST");
@@ -80,5 +82,10 @@ export class DmsIframeComponent implements OnInit {
   }
   Save(){
     this.outputTab.emit();
+  }
+
+  SaveDraft(){
+    this.toastr.successMessage("Draft saved");
+    this.outputCancel.emit();
   }
 }

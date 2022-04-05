@@ -175,7 +175,7 @@ export class CustMainDataXComponent implements OnInit {
   listAddrRequiredOwnership: Array<string> = new Array();
   LobCode: string;
   checkIsAddressKnown: boolean = false;
-
+  isDisableCustType: boolean = false;
 
   constructor(
     private regexService: RegexService,
@@ -251,6 +251,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
 
+    this.checkIsDisableCustType();
     this.customPattern = new Array<CustomPatternObj>();
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
@@ -486,10 +487,11 @@ export class CustMainDataXComponent implements OnInit {
   jobPositionLookupObj: InputLookupObj = new InputLookupObj();
   BindLookupJobPosition() {
     this.jobPositionLookupObj = new InputLookupObj();
-    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder? true : false ;
+    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal? true : false ;
     this.jobPositionLookupObj.urlJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.pagingJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.genericJson = "./assets/uclookup/customer/lookupJobPosition.json";
+    this.jobPositionLookupObj.isReady = true;
   }
 
   professionLookUpObj: InputLookupObj = new InputLookupObj();
@@ -965,6 +967,13 @@ export class CustMainDataXComponent implements OnInit {
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
     this.CustMainDataForm.controls.Email1.updateValueAndValidity();
     this.setLookup(custType, true);
+
+    if(this.MrCustTypeCode == CommonConstant.CustTypePersonal && (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder || this.custMainDataMode == CommonConstant.CustMainDataModeFamily)){
+      this.custAttrForm.GetQuestion();
+    }
+    else{
+      this.custAttrForm.resetForm();
+    }
   }
 
   async copyAgrmntParentEvent(event) {
@@ -1049,6 +1058,7 @@ export class CustMainDataXComponent implements OnInit {
   }
 
   resetInput(custType: string = CommonConstant.CustTypePersonal) {
+    this.BindLookupJobPosition();
     this.CustMainDataForm.reset();
     this.AppCustCompanyMgmntShrholderId = 0;
     this.MrCustTypeCode = custType;
@@ -1088,6 +1098,7 @@ export class CustMainDataXComponent implements OnInit {
 
     this.SetCustModel();
     this.custTypeChange(custType);
+    this.checkIsDisableCustType();
   }
 
   disableInput() {
@@ -2257,5 +2268,14 @@ export class CustMainDataXComponent implements OnInit {
     }
 
     return true;
+  }
+
+  checkIsDisableCustType(){
+    if(this.isEditNap1 || this.AppCustCompanyMgmntShrholderId){
+      this.isDisableCustType = true;
+    }
+    else{
+      this.isDisableCustType = false;
+    }
   }
 }

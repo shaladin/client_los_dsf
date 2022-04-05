@@ -37,6 +37,7 @@ import { ReportMonthlyPendingPreGoLiveAftApvComponent } from "./report-monthly/r
 import { ReportMonthlyPreGoLiveBySupplierComponent } from "./report-monthly/report-monthly-pre-go-live-by-supplier/report-monthly-pre-go-live-by-supplier.component";
 import { ReportMonthlyTopSupplierComponent } from "./report-monthly/report-monthly-top-supplier/report-monthly-top-supplier.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ReportLtkmComponent } from './report-ltkm/report-ltkm.component';
 
 @NgModule({
     declarations: [
@@ -68,7 +69,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     ReportMonthlyPreGoLiveByProductComponent,
     ReportMonthlyPendingPreGoLiveAftApvComponent,
     ReportMonthlyPreGoLiveBySupplierComponent,
-    ReportMonthlyTopSupplierComponent
+    ReportMonthlyTopSupplierComponent,
+    ReportLtkmComponent
     ],
     imports: [
         ReportRoutingModule,

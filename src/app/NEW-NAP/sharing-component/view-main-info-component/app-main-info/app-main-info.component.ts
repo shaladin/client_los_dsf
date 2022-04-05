@@ -6,6 +6,8 @@ import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { NegCustIndicatorObj } from 'app/shared/model/app-cust/neg-cust/neg-cust-indicator-obj.model';
 
 @Component({
   selector: 'app-app-main-info',
@@ -22,6 +24,11 @@ export class AppMainInfoComponent implements OnInit {
     }
   }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  isNegCustIndicatorVisible: boolean = false;
+  isCustTypeCoy: boolean = false;
+  negCustIndicator: NegCustIndicatorObj = new NegCustIndicatorObj();
+
+  
   @Input() AppId: number;
   @Input() BizTemplateCode: string;
 
@@ -45,10 +52,12 @@ export class AppMainInfoComponent implements OnInit {
     }
     this.whereValue.push(this.AppId);
     this.viewGenericObj.whereValue = this.whereValue;
+    this.getNegativeCustIndicator();
   }
 
   ReloadUcViewGeneric() {
     this.viewGeneric.initiateForm();
+    this.getNegativeCustIndicator();
   }
 
   GetCallBack(ev: any) {
@@ -67,5 +76,15 @@ export class AppMainInfoComponent implements OnInit {
         }
       );
     }
+  }
+
+  getNegativeCustIndicator(){
+    this.http.post<NegCustIndicatorObj>(URLConstant.GetNegCustIndicatorByAppId, { Id: this.AppId }).subscribe(
+      (res) => {
+        this.isNegCustIndicatorVisible = true;
+        this.negCustIndicator = res;
+        this.isCustTypeCoy = this.negCustIndicator.Customer && this.negCustIndicator.Customer.MrCustTypeCode == CommonConstant.CustTypeCompany;
+      }
+    );
   }
 }
