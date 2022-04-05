@@ -163,6 +163,10 @@ export class PathConstantX {
   public static EDIT_COMM_AFT_APV_APPRV= PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.APPRV;
   public static EDIT_COMM_AFT_APV_APPRV_PAGING = PathConstantX.EDIT_COMM_AFT_APV_APPRV + "/" + PathConstant.PAGING;
   public static EDIT_COMM_AFT_APV_APPRV_DETAIL= PathConstantX.EDIT_COMM_AFT_APV_APPRV + "/" + PathConstant.DETAIL;
+  
+  public static EDIT_COMM_AFT_APV_INQUIRY= PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.INQUIRY;
+  public static EDIT_COMM_AFT_APV_INQUIRY_PAGING = PathConstantX.EDIT_COMM_AFT_APV_INQUIRY + "/" + PathConstant.PAGING;
+  public static EDIT_COMM_AFT_APV_INQUIRY_DETAIL= PathConstantX.EDIT_COMM_AFT_APV_INQUIRY + "/" + PathConstant.DETAIL;
   //#endregion
 
   public static PO_EXT_X = "POX";

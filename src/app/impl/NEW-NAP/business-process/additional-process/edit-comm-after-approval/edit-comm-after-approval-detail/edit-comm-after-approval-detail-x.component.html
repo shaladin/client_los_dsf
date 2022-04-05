@@ -53,7 +53,7 @@
       </div>
     </div>
     <div *ngIf="isReady">
-      <edit-comm-v2-x [LobCode]="NapObj.LobCode" [AppId]="AppId" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode" [maxAllocRefundAmt]="viewIncomeInfoObj.MaxAllocatedRefundAmt" [NapObj]="NapObj"
+      <edit-comm-v2-x [LobCode]="NapObj.LobCode" [AppId]="AppId" [AgrmntId]="AgrmntId" [ListResultRefundIncomeInfo]="ListResultRefundIncomeInfo" [totalRsvFundAmt]="viewIncomeInfoObj.ReservedFundAllocatedAmount" [totalExpenseAmt]="viewIncomeInfoObj.ExpenseAmount" [maxAllocAmt]="viewIncomeInfoObj.MaxAllocatedAmount" [DictMaxIncomeForm]="DictMaxIncomeForm" [BizTemplateCode]="BizTemplateCode" [maxAllocRefundAmt]="viewIncomeInfoObj.MaxAllocatedRefundAmt" [NapObj]="NapObj"
                       (outputTab)="LastStepHandler($event)" (outputCancel)="Back()" (outputDictRemaining)="GetDictRemaining($event)" (outputUpdateRemainingAlloc)="updateRemainingAllocFromCommission($event)">
       </edit-comm-v2-x>
     </div>

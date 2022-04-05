@@ -3,9 +3,10 @@
         <div class="card-header">
             <h4 class="card-title" translate> Edit Agreement After Credit Approval - Approval  </h4>
         </div>
-        <div *ngIf="isViewReady">
-            <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
-        </div>
+        <!-- <div *ngIf="isViewReady"> -->
+            <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
+            <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode"></app-app-main-info>
+        <!-- </div> -->
         <div class="card-body">
             <div class="px-3">
                 <lib-ucSubsection *ngIf="IsReadySummary" [id]="'DataChangeSummaryId'" [title]="'Data Change Summary'"
@@ -13,15 +14,23 @@
                 </lib-ucSubsection>
                 <div *ngIf="IsReadySummary" class="form-body" id="dataChangeSummaryId">
                     <div class="form-group row">
-                        <div class="col-md-6">
-                            <label class="adInsLabel"> <b>Old Value</b> </label>
+                        <div class="col-md-12">
+                            <app-edit-comm-after-approval-component-view-detail
+                            [TrxId]="EditAppAftApvTrxHId"
+                            [ConditionOld]="true">
+                            </app-edit-comm-after-approval-component-view-detail>
                         </div>
-                        <div class="col-md-6">
-                            <label class="adInsLabel"> <b>New Value</b> </label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <app-edit-comm-after-approval-component-view-detail
+                            [TrxId]="EditAppAftApvTrxHId"
+                            [ConditionOld]="false">
+                            </app-edit-comm-after-approval-component-view-detail>
                         </div>
                     </div>
                     <br>
-                    <div *ngIf="ChangeSummaryObj?.AssetDataObjs?.length != 0">
+                    <!-- <div *ngIf="ChangeSummaryObj?.AssetDataObjs?.length != 0">
                         <div *ngFor="let item of ChangeSummaryObj?.AssetDataObjs">
                             <div class="form-group row">
                                 <div class="col-md-6">
@@ -88,14 +97,10 @@
                             <div *ngIf="item.CommissionRecipientTypeDesc == 'Supplier' || item.CommissionRecipientTypeDesc == 'Referantor'"
                                 class="form-group row">
                                 <div class="col-md-6">
-                                    <label class="adInsLabel"> <b>{{item.CommissionRecipientTypeDesc + '
-                                            Commission
-                                            - ' + item.CommissionRecipientName}}</b> </label>
+                                    <label class="adInsLabel"> <b>{{item.CommissionRecipientTypeDesc + 'Commission - ' + item.CommissionRecipientName}}</b> </label>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="adInsLabel"> <b>{{item.CommissionRecipientTypeDesc + '
-                                            Commission
-                                            - ' + item.CommissionRecipientName}}</b> </label>
+                                    <label class="adInsLabel"> <b>{{item.CommissionRecipientTypeDesc + 'Commission - ' + item.CommissionRecipientName}}</b> </label>
                                 </div>
                             </div>
                             <div *ngIf="item.CommissionRecipientTypeDesc == 'Supplier Employee'" class="form-group row">
@@ -134,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
             </lib-ucapprovalgeneralinfo>
             <p>

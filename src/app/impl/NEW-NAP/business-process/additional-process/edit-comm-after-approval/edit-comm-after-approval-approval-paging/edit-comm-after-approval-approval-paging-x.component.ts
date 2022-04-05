@@ -82,7 +82,7 @@ export class EditCommAfterApprovalApprovalPagingXComponent implements OnInit {
 
   async CallBackHandler(ev) {
     var isRoleAssignment = ev.RowObj.IsRoleAssignment.toString();
-    switch (ev.key) {
+    switch (ev.Key) {
       case 'Process': {
         if (isRoleAssignment != CommonConstant.TRUE) {
           if (String.Format('{0:L}', ev.RowObj.CurrentUser) != String.Format('{0:L}', this.UserAccess.UserName)) {
@@ -93,12 +93,14 @@ export class EditCommAfterApprovalApprovalPagingXComponent implements OnInit {
           await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
         }
 
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_COMM_AFT_APV_APPRV_DETAIL],
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.EDIT_COMM_AFT_APV_APPRV_DETAIL],
           {
-            'EditCommAftApvTrxId': ev.RowObj.EditCommAftApvTrxId,
+            'EditCommAftApvTrxId': ev.RowObj.EditComAftAprvTrxId,
             'TaskId': ev.RowObj.TaskId,
             'InstanceId': ev.RowObj.InstanceId,
-            'ApvReqId': environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId
+            'ApvReqId': environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId,
+            'AppId': ev.RowObj.AppId,
+            'EditAppAftAprvTrxNo':ev.RowObj.EditAppAftApvTrxNo
           });
       }
         break;

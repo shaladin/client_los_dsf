@@ -62,6 +62,12 @@ export class URLConstantX {
   public static GetCommIncomeInfoByAppIdX = environment.losUrl + "/v1" + "/AppCommissionX/GetCommIncomeInfoByAppId";
   public static GetCommIncomeInfoByAgrIdX = environment.losUrl + "/v1" + "/AppCommissionX/GetCommIncomeInfoByAgrId";
   public static SubmitEditCommAfterApvDataReqV2 = environment.losUrl + "/v2" + "/AppCommissionX/SubmitEditCommAfterApvDataReq";
+  public static GetListEditCommOldByTrxId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditCommOldByTrxId";
+  public static GetListEditCommNewByTrxId = environment.losUrl   + "/v1" + "/AppCommissionX/GetEditCommNewByTrxId";
+  public static GetEditCommOldDataDetailByTrxId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditCommOldDataDetailByTrxId";
+  public static GetEditCommNewDataDetailByTrxId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditCommNewDataDetailByTrxId";
+  public static SubmitEditCommAftApvApproval = environment.losUrl  + "/v1" + "/AppCommissionX/SubmitEditCommAftApvApproval";
+  public static GetAgrmntCommissionDataForEditByAgrmntId = environment.losUrl + "/v1"+ "/AppCommissionX/GetAgrmntCommissionDataForEditByAgrmntId";
 
 
   //App Asset

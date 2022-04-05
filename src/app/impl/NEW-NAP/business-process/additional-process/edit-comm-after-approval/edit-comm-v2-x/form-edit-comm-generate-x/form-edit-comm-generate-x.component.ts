@@ -9,6 +9,7 @@ import { VendorBankAccObj } from 'app/shared/model/vendor-bank-acc.model';
 import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/request/vendor/req-vendor-emp.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { AppCommissionHObj } from 'app/shared/model/app-commission-h-obj.model';
+import { AgreementCommissionHXObj } from 'app/impl/shared/model/AgreementCommission/AgreementCommissionHObjX';
 
 @Component({
   selector: 'app-form-edit-comm-generate-x',
@@ -485,7 +486,7 @@ export class FormEditCommGenerateXComponent implements OnInit {
     }
   }
 
-  PatchDataExisting(appCommObj: AppCommissionHObj) {
+  PatchDataExisting(appCommObj: AgreementCommissionHXObj) {
     this.AddNewDataForm();
     let idxDDLContent = this.DDLContentAdd.findIndex(x => x.Key == appCommObj.CommissionRecipientRefNo);
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
@@ -519,7 +520,7 @@ export class FormEditCommGenerateXComponent implements OnInit {
     }
 
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
-      AppCommissionHId: appCommObj.AppCommissionHId,
+      AppCommissionHId: appCommObj.AgrmntCommissionHId,
       ContentName: this.DDLContentAdd[idxDDLContent].Key,
       ContentNameValue: this.DDLContentAdd[idxDDLContent].Value,
       BankAccountNo: appCommObj.BankAccNo,
@@ -549,13 +550,13 @@ export class FormEditCommGenerateXComponent implements OnInit {
     this.SetRule(code, indexFormObj, this.DDLContentAdd[idxDDLContent].MrSupplEmpPositionCode);
     let allocAmt = 0;
     let TotalPenaltyAmt = 0
-    for (let i = 0; i < appCommObj.AppCommissionDs.length; i++) {
-      allocAmt += appCommObj.AppCommissionDs[i].CommissionAmt;
-      TotalPenaltyAmt += appCommObj.AppCommissionDs[i].PenaltyAmt;
+    for (let i = 0; i < appCommObj.AgrmntCommissionDs.length; i++) {
+      allocAmt += appCommObj.AgrmntCommissionDs[i].CommissionAmt;
+      TotalPenaltyAmt += appCommObj.AgrmntCommissionDs[i].PenaltyAmt;
 
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][0].patchValue({
         AllocationAmount: allocAmt,
-        CommissionAmtAfterTax: appCommObj.AppCommissionDs[i].CommissionAmtAfterTax,
+        CommissionAmtAfterTax: appCommObj.AgrmntCommissionDs[i].CommissionAmtAfterTax,
       });
     }
 

@@ -1,0 +1,135 @@
+{
+    "title": "Edit Commission After Approval Inquiry",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "ECTX.EDIT_COM_TRX_NO",
+        "id": "EditCommAftApvTrxNo",
+        "value": "",
+        "label": "Transaction No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "ECTX.AGRMNT_NO",
+        "id": "AgrmntNoId",
+        "value": "",
+        "label": "Agreement No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "VC.CUST_NO",
+        "id": "CustNoId",
+        "value": "",
+        "label": "Customer No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "VC.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "dropdown",
+        "name": "ECTX.EDIT_COM_TRX_STAT",
+        "id": "StatusId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "isQueryIn": true,
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+        "label": "Status",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "Code",
+        "criteriaPropValue": "EDIT_APP_AFT_APV_TRX_STAT"
+      }
+    ],
+    "querystring": {
+      "name": "searchEditCommAfterApprovalInquiry"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Transaction No",
+        "name": "EditAppAftApvTrxNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Agreement No",
+        "name": "AgreementNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer No",
+        "name": "CustomerNo"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Customer Name",
+        "name": "CustomerName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Status",
+        "name": "Status"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "link",
+        "position": "center",
+        "property": "EditAppAftApvTrxNo",
+        "path": "EDIT_COMM_AFT_APV_INQUIRY_DETAIL",
+        "param":[
+            {
+                "type":"EditCommAftApvTrxNoId",
+                "property":"EditCommTrxNoId"
+            },
+            {
+              "type":"BizTemplateCode",
+              "property":"BizTemplateCode"
+            },
+            {
+              "type":"AppId",
+              "property":"AppId"
+            }
+        ]
+      },
+      {
+        "type": "callback",
+        "position": "center",
+        "property": "AgreementNo",
+        "key": "agreement"
+      },
+      {
+        "type": "callback",
+        "position": "center",
+        "property": "CustomerNo",
+        "key": "customer"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustomerName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "Status"
+      }
+    ]
+  }

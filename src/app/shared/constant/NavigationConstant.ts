@@ -98,11 +98,6 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_CUST_SYNC = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.CUST_SYNC_PAGING; //"/Nap/AddProcess/CustSync/PagingX"
   public static NAP_ADD_PRCS_EDIT_NAP_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_PAGING; //"/Nap/AddProcess/EditNapCust/Paging"
   public static NAP_ADD_PRCS_EDIT_NAP_CUST_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_DETAIL; //"/Nap/AddProcess/EditNapCust/Detail"
-
-  public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_PAGING;//"/Nap/AddProcess/EditCommAftApv/Paging"
-  public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_DETAIL_X;//"/Nap/AddProcess/EditCommAftApv/DetailX"
-  public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_APPRV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_APPRV_PAGING;//"/Nap/AddProcess/EditCommAftApv/Approval/Paging"
-  public static NAP_ADD_PRCS_EDIT_COMM_AFT_APV_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_COMM_AFT_APV_APPRV_DETAIL;//"/Nap/AddProcess/EditCommAftApv/Approval/Detail"
   //#endregion
 
   //#region AdminProcess
@@ -512,4 +507,13 @@ export class NavigationConstant {
   public static GO_LIVE_APV_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.GO_LIVE_APV_PAGING_X; //'/AdminProcess/GoLiveX/PagingX'
   public static GO_LIVE_APV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.GO_LIVE_APV_DETAIL_X; //'/AdminProcess/GoLiveX/DetailX'
   //EndCessie
+
+  //Edit Commission After Approval
+  public static EDIT_COMM_AFT_APV_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_PAGING;//"/Impl/EditCommAftApv/Paging"
+  public static EDIT_COMM_AFT_APV_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_DETAIL_X;//"/Impl/EditCommAftApv/DetailX"
+  public static EDIT_COMM_AFT_APV_APPRV_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_APPRV_PAGING;//"/Impl/EditCommAftApv/Approval/Paging"
+  public static EDIT_COMM_AFT_APV_APPRV_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_APPRV_DETAIL;//"/Impl/EditCommAftApv/Approval/Detail"
+  
+  public static EDIT_COMM_AFT_APV_INQUIRY_PAGING = "/" + PathConstantX.LR_IMPL + "/"+ PathConstantX.EDIT_COMM_AFT_APV_INQUIRY_PAGING;//"/Impl/EditCommAftApv/Inquiry/Paging"
+  public static EDIT_COMM_AFT_APV_INQUIRY_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_INQUIRY_DETAIL;//"/Impl/EditCommAftApv/Inquiry/Detail"
 }

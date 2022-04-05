@@ -131,7 +131,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "NAP_ADD_PRCS_EDIT_COMM_AFT_APV_DETAIL",
+          "path": "EDIT_COMM_AFT_APV_DETAIL",
           "param": [
             {
               "type": "AppId",
@@ -140,6 +140,10 @@
             {
               "type": "BizTemplateCode",
               "property": "BizTemplateCode"
+            },
+            {
+              "type": "AgrmntId",
+              "property": "AgrmntId"
             }
           ]
         }

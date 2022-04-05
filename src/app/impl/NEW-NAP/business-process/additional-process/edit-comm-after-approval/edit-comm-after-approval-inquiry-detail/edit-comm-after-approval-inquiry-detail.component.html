@@ -1,0 +1,15 @@
+
+<div class="card">
+    <div class="card-header header-title">
+        <h4 class="card-title">Edit Commission After Approval View</h4>
+    </div>
+    <div class="card-body px-3 pb-3">
+        <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+        <br>
+        <app-edit-comm-after-approval-component-view-detail [TrxId]="TrxId" [ConditionOld]="true">
+        </app-edit-comm-after-approval-component-view-detail>
+        <app-edit-comm-after-approval-component-view-detail [TrxId]="TrxId" [ConditionOld]="false">
+        </app-edit-comm-after-approval-component-view-detail>
+    </div>
+</div>
+

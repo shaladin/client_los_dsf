@@ -9,7 +9,6 @@ import {ExceptionConstant} from 'app/shared/constant/ExceptionConstant';
 import {AppCommissionDObjX} from 'app/impl/shared/model/AppCommissionDObjX.Model';
 import {NavigationConstant} from 'app/shared/constant/NavigationConstant';
 import {AdInsHelper} from 'app/shared/AdInsHelper';
-import {environment} from 'environments/environment';
 import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
 import {AppCommissionHObjX} from 'app/impl/shared/model/AppCommissionHObjX.Model';
@@ -37,12 +36,11 @@ import {GenericObj} from 'app/shared/model/generic/generic-obj.model';
 import {AppObj} from 'app/shared/model/app/app.model';
 import {ResGetRefTaxOfficeDetailObj} from 'app/shared/model/Response/commission/res-get-ref-tax-office-detail-obj.model';
 import {ReqTaxObjX} from 'app/impl/shared/model/app-commission-rsv-fund/req-tax-obj-x.model';
-import {
-  FormCommissionGenerateXComponent
-} from 'app/impl/NEW-NAP/business-process/credit-process/commission-reserved-fund/component/commission-v2-x/form-commission-generate-x/form-commission-generate-x.component';
 import {UcInputRFAObj} from 'app/shared/model/uc-input-rfa-obj.model';
 import {CookieService} from 'ngx-cookie';
 import {UcapprovalcreateComponent} from '@adins/ucapprovalcreate';
+import { AgreementCommissionHXObj } from 'app/impl/shared/model/AgreementCommission/AgreementCommissionHObjX';
+import { FormEditCommGenerateXComponent } from './form-edit-comm-generate-x/form-edit-comm-generate-x.component';
 
 @Component({
   selector: 'edit-comm-v2-x',
@@ -50,10 +48,11 @@ import {UcapprovalcreateComponent} from '@adins/ucapprovalcreate';
 })
 export class EditCommV2XComponent implements OnInit {
 
-  @ViewChild('Form1') FormAdd1: FormCommissionGenerateXComponent;
-  @ViewChild('Form2') FormAdd2: FormCommissionGenerateXComponent;
-  @ViewChild('Form3') FormAdd3: FormCommissionGenerateXComponent;
+  @ViewChild('Form1') FormAdd1: FormEditCommGenerateXComponent;
+  @ViewChild('Form2') FormAdd2: FormEditCommGenerateXComponent;
+  @ViewChild('Form3') FormAdd3: FormEditCommGenerateXComponent;
   @Input() AppId: number = 0;
+  @Input() AgrmntId: number = 0;
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
@@ -156,6 +155,9 @@ export class EditCommV2XComponent implements OnInit {
     this.InputObj.Reason = this.DDLReason;
     this.InputObj.OfficeCode = this.NapObj.OriOfficeCode;
     this.InputObj.TrxNo = '-';
+
+    
+    
   }
 
   GetFormAddDynamicObj(content) {
@@ -321,7 +323,6 @@ export class EditCommV2XComponent implements OnInit {
           this.GetDDLContent(response.ListAppAssetObj, CommonConstant.ContentSupplier);
           this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstant.ContentSupplierEmp);
         }
-        console.log(response);
       });
 
     await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2, obj).toPromise().then(
@@ -332,7 +333,6 @@ export class EditCommV2XComponent implements OnInit {
           ));
           this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstantX.COM_DDL_SUPPL_EMP);
         }
-        console.log(response);
       });
 
     obj = {
@@ -494,10 +494,10 @@ export class EditCommV2XComponent implements OnInit {
   isAutoGenerate: boolean = true;
 
   async GetExistingAppCommData() {
-    let objApi = {Id: this.AppId};
-    await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
+    let objApi = {Id: this.AgrmntId};
+    await this.http.post(URLConstantX.GetAgrmntCommissionDataForEditByAgrmntId, objApi).toPromise().then( 
       (response) => {
-        let tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
+        let tempObj: Array<AgreementCommissionHXObj> = response[CommonConstant.ReturnObj];
         if (tempObj.length > 0) {
           this.isAutoGenerate = false;
           this.GetFormAddDynamicObj(CommonConstant.ContentSupplier);
@@ -769,7 +769,7 @@ export class EditCommV2XComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response['message']);
         const lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING], {'BizTemplateCode': lobCode});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.EDIT_COMM_AFT_APV_PAGING], {'BizTemplateCode': lobCode});
         // this.outputTab.emit();
       });
 
@@ -999,6 +999,7 @@ export class EditCommV2XComponent implements OnInit {
   GetTaxOffice() {
     let ReqByCodeObj: GenericObj = new GenericObj();
     ReqByCodeObj.Code = this.NapObj.OriOfficeCode;
+    console.log(ReqByCodeObj)
     this.http.post(URLConstant.GetRefTaxOfficeDetailByRefOfficeCode, ReqByCodeObj).subscribe(
       (response: ResGetRefTaxOfficeDetailObj) => {
         this.taxOfficeCode = response['TaxOfficeCode'];

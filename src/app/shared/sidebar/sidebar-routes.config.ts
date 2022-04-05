@@ -116,6 +116,14 @@ export const ROUTES: RouteInfo[] = [
         ], Params: []
       },
       {
+        Path: '', Title: 'Edit Comm After Approval Inquiry', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+        Submenu: [
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_PAGING, Title: 'Edit Comm After Approval Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_APPRV_PAGING, Title: 'Edit Comm After Approval - Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_INQUIRY_PAGING, Title: 'Edit Comm After Approval Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+        ], Params: []
+      },
+      {
         Path: '', Title: 'Return Handling', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING, Title: 'Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
@@ -202,6 +210,14 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] }
         ], Params: []
       },
+      {
+        Path: '', Title: 'Edit Comm After Approval Inquiry', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+        Submenu: [
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_PAGING, Title: 'Edit Comm After Approval Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_APPRV_PAGING, Title: 'Edit Comm After Approval - Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_INQUIRY_PAGING, Title: 'Edit Comm After Approval Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
+        ], Params: []
+      },
       { Path: NavigationConstant.APP_INQUIRY, Title: 'App Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFNA" }] },
     ], Params: []
   },
@@ -270,7 +286,15 @@ export const ROUTES: RouteInfo[] = [
           
           { Path: NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_PAGING, Title: 'Survey Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] }
         ], Params: []
-      }
+      },
+      {
+        Path: '', Title: 'Edit Comm After Approval Inquiry', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+        Submenu: [
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_PAGING, Title: 'Edit Comm After Approval Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_APPRV_PAGING, Title: 'Edit Comm After Approval - Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+          { Path: NavigationConstant.EDIT_COMM_AFT_APV_INQUIRY_PAGING, Title: 'Edit Comm After Approval Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FL4W" }] },
+        ], Params: []
+      },
     ], Params: []
   },
   {
@@ -329,6 +353,7 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING, Title: 'Return Handling - Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CFRFN4W" }] }
         ], Params: []
       },
+      
     ], Params: []
   },
   // {

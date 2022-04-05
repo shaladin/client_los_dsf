@@ -133,7 +133,7 @@
           </div>
         </div>
         <br>
-        <lib-ucapprovalcreate [parentForm]="CommissionForm" [InputObj]="InputObj" [enjiForm]="enjiForm" (result)="SaveForm($event)"  *ngIf="isReady"></lib-ucapprovalcreate>
+        <lib-ucapprovalcreate [parentForm]="CommissionForm" [InputObj]="InputObj" [enjiForm]="enjiForm" (result)="SaveForm($event)" *ngIf="isReady" #ApprovalComponent></lib-ucapprovalcreate>
         <div class="form-actions right">
           <button type="button" class="btn btn-raised btn-warning mr-1"
                   (click)="Cancel()" translate>

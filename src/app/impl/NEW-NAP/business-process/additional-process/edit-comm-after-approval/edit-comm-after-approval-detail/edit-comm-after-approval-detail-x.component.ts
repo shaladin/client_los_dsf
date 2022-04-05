@@ -30,6 +30,7 @@ import {ResAppCommIncomeObjX} from 'app/impl/shared/model/AppFinData/ResAppCommI
 })
 export class EditCommAfterApprovalDetailXComponent implements OnInit {
   AppId: number;
+  AgrmntId:number;
   BizTemplateCode: string;
   IsViewReady = false;
   isReady = false;
@@ -67,6 +68,9 @@ export class EditCommAfterApprovalDetailXComponent implements OnInit {
       }
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
+      }
+      if (params['AgrmntId'] != null) {
+        this.AgrmntId = params['AgrmntId'];
       }
       this.IsViewReady = true;
     });
@@ -149,7 +153,7 @@ export class EditCommAfterApprovalDetailXComponent implements OnInit {
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_COMM_AFT_APV_DETAIL], {'BizTemplateCode': this.BizTemplateCode});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.EDIT_COMM_AFT_APV_PAGING], {'BizTemplateCode': this.BizTemplateCode});
   }
 
   updateRemainingAllocFromCommission(ev) {
