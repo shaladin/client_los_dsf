@@ -121,6 +121,7 @@ export class ExceptionConstant {
     public static COMPLETE_SHAREHOLDER_COMPANY_MODEL = "Please complete all shareholder company model";
     public static MUST_COMPLETE_SHAREHOLDER_DATA = "Please complete all shareholder data";
     public static DUPLICATE_LEGAL_DOC = "Document with Legal Document Type {0} and Document No {1} already exists";
+    public static DUPLICATE_SHRHLDR_ID_NO = "Shareholder's Id No cannot duplicate";
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
