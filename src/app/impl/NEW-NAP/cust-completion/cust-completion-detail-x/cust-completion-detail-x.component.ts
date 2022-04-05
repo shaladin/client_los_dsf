@@ -47,6 +47,7 @@ export class CustCompletionDetailXComponent implements OnInit {
   AppObj: AppObj = new AppObj();
   IsDisburseToCust: boolean = false;
   ResSlikValidation: ResSlikValidationAppObjX = new ResSlikValidationAppObjX();
+  IsCustAllowedContinue: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -73,7 +74,7 @@ export class CustCompletionDetailXComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionData.json";
 
@@ -85,6 +86,7 @@ export class CustCompletionDetailXComponent implements OnInit {
     }
     else {
       this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+      await this.checkIsCustAllowedContinue();
     }
     this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.addObj["BizTemplateCode"] = this.BizTemplateCode;
@@ -196,7 +198,7 @@ export class CustCompletionDetailXComponent implements OnInit {
     //   }
     // }
 
-    let SubmitAppCustCompletionUrl = environment.isCore ? URLConstant.SubmitAppCustCompletionV2 : URLConstant.SubmitAppCustCompletion;
+    let SubmitAppCustCompletionUrl = environment.isCore ? URLConstant.SubmitAppCustCompletionV21 : URLConstant.SubmitAppCustCompletion;
     this.http.post(SubmitAppCustCompletionUrl, reqObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
@@ -253,6 +255,15 @@ export class CustCompletionDetailXComponent implements OnInit {
     }
   }
 
+  async checkIsCustAllowedContinue()
+  {
+    await this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByAppId, { Id: this.AppId }).toPromise().then(
+      (res) => {
+        if(res == undefined) this.IsCustAllowedContinue = false;
+      }
+    );
+  }
+  
   async checkSlikValidation(){
     await this.http.post(URLConstant.ValidateSlikByAppId, {"id": this.AppId}).toPromise().then(
       (response:ResSlikValidationAppObjX) => {

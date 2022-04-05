@@ -541,7 +541,7 @@ export class JobTabComponent implements OnInit {
     this.InputLookupCompanyObj.isRequired = true;
     this.InputLookupCompanyObj.isReady = true;
 
-    if (CustModelCode == CommonConstant.CustModelNonProfessional || CustModelCode == CommonConstant.CustModelProfessional) {
+    if (CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.InputLookupIndustryTypeObj.isRequired = false;
       this.JobDataForm.controls.CoyName.clearValidators();
     }

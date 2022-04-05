@@ -562,7 +562,8 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.LTKM_VERIFY_PAGING, Title: 'LTKM Verify', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LTKM_VERIFY_APV_PAGING, Title: 'LTKM Verify Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LTKM_RTN_HANDLING_PAGING, Title: 'LTKM Return Handling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: NavigationConstant.LTKM_INQUIRY, Title: 'LTKM Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
+      { Path: NavigationConstant.LTKM_INQUIRY, Title: 'LTKM Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      { Path: NavigationConstant.REPORT_LTKM, Title: 'LTKM Report', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] }
     ], Params: []
   },
   //{

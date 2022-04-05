@@ -44,7 +44,11 @@
             </form>
           </div>
         </div>
-        <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj"></lib-ucgridview>
+        <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj" *ngIf="IsCustAllowedContinue"></lib-ucgridview>
+        
+        <div class="alert alert-danger text-center mt-3" *ngIf="!IsCustAllowedContinue" translate>
+          <h5 class="card-title mt-2">Unable to continue, because customer is registered as Negative Customer.</h5>
+        </div>
 
         <!-- START SLIK VALIDATION -->
         <div *ngIf="!ResSlikValidation.IsValid">
@@ -80,8 +84,7 @@
         <!-- END SLIK VALIDATION -->
 
         <div class="text-right py-2">
-          <button *ngIf="ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-primary"
-            (click)="buttonSubmitOnClick()" translate>
+          <button *ngIf="ReturnHandlingHId == 0 && IsCustAllowedContinue" type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()" translate>
             Submit
           </button>
           <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()"
