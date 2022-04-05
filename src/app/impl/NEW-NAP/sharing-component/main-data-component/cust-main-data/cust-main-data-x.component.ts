@@ -324,7 +324,6 @@ export class CustMainDataXComponent implements OnInit {
     if(this.MrCustTypeCode == CommonConstant.CustTypePersonal && this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder){
       await this.getGsJobPostIsOwner();
       this.CheckJobPostionIsOwner();
-      this.CustMainDataForm.get("IsOwner").disable();
     }
   }
 
@@ -2190,18 +2189,21 @@ export class CustMainDataXComponent implements OnInit {
   }
 
   CheckJobPostionIsOwner(){
-    
-    let x = this.ListJobPostIsOwner.find(f=>f == this.CustMainDataForm.controls.MrJobPositionCode.value);
-    console.log(x);
-    if(x!= null){
-      this.CustMainDataForm.patchValue({
-        IsOwner: true,
-      });
-    }
-    else{
-      this.CustMainDataForm.patchValue({
-        IsOwner: false,
-      });
+    if(this.custMainDataMode == this.CustMainDataMgmntShrholder){
+      let x = this.ListJobPostIsOwner.find(f=>f == this.CustMainDataForm.controls.MrJobPositionCode.value);
+      console.log(x);
+      if(x!= null){
+        this.CustMainDataForm.patchValue({
+          IsOwner: true,
+        });
+        this.CustMainDataForm.get("IsOwner").enable();
+      }
+      else{
+        this.CustMainDataForm.patchValue({
+          IsOwner: false,
+        });
+        this.CustMainDataForm.get("IsOwner").disable();
+      }
     }
   }
 
