@@ -22,6 +22,7 @@ import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
 import { environment } from 'environments/environment';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 import { ResSlikValidationAppObjX } from 'app/impl/shared/model/Response/SlikValidation/res-slik-validation-app-obj-x.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-cust-completion-detail-x',
@@ -79,12 +80,12 @@ export class CustCompletionDetailXComponent implements OnInit {
 
     this.inputGridObj = new InputGridObj();
     if (this.ReturnHandlingHId != 0) {
-      this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionDataRtn.json";
+      this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridCustCompletionDataRtnX.json";
       this.MakeViewReturnInfoObj();
       this.addObj["ReturnHandlingHId"] = this.ReturnHandlingHId;
     }
     else {
-      this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+      this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridCustCompletionDataX.json";
     }
     this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.addObj["BizTemplateCode"] = this.BizTemplateCode;
@@ -182,8 +183,8 @@ export class CustCompletionDetailXComponent implements OnInit {
 
   async buttonSubmitOnClick() {
     
-    await this.checkSlikValidation();
-    if(!this.ResSlikValidation.IsValid) return;
+    if (!await this.checkSlikValidation()) return;
+    if (!await this.checkNap4Validation()) return;
 
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.AppId;
@@ -212,9 +213,8 @@ export class CustCompletionDetailXComponent implements OnInit {
   async Submit() {
     if (this.ReturnHandlingHId > 0) {
 
-      await this.checkSlikValidation();
-      if(!this.ResSlikValidation.IsValid) return;
-
+      if (!await this.checkSlikValidation()) return;
+      if (!await this.checkNap4Validation()) return;
       // for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
       //   if (this.ListAppCustCompletion[i].IsCompletion === false) {
       //     this.toastr.warningMessage(ExceptionConstantX.PLEASE_COMPLETE_DATA_CUSTOMER + " {" + this.ListAppCustCompletion[i].CustName + "}");
@@ -259,5 +259,31 @@ export class CustCompletionDetailXComponent implements OnInit {
         this.ResSlikValidation = response;
       }
     );
+    return this.ResSlikValidation.IsValid;
+  }
+
+  async checkNap4Validation()
+  {
+    var isNap4Valid = true;
+    var inCompletedCust = "";
+    var inCompletedStep = "";
+    for (let i = 0; i < this.ListAppCustCompletion.length; i++) 
+    {
+      await this.http.post(URLConstantX.SaveAppCustCompletion, { Id: this.ListAppCustCompletion[i].AppCustId }).toPromise().then(
+        (response) => {
+          isNap4Valid = response["IsCompleted"];
+          this.ListAppCustCompletion[i].IsCompletion = response["IsCompleted"];
+          if (!isNap4Valid) {
+            inCompletedCust = this.ListAppCustCompletion[i].CustName;
+            inCompletedStep = response["InCompletedStep"];
+          }
+        }         
+      )
+      if (!isNap4Valid) {
+        this.toastr.warningMessage("Data Customer \""+inCompletedCust+"\" on step \""+inCompletedStep+"\" is Incomplete");
+        break;
+      }
+    };
+    return isNap4Valid;
   }
 }
