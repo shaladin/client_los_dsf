@@ -109,8 +109,9 @@
               <div class="form-group row">
                 <label class="col-md-3 " translate>Rapindo</label>
                 <div class="col-md-4">
-                  <button type="button" class="btn btn-raised btn-success mr-1"
-                    [disabled]="LeadDataForm.value.items.length > 0 && LeadDataForm.value.items[0]['SerialNoValue'] == ''"
+                  <button type="button" class="btn btn-raised mr-1"
+                    [disabled]="!isUsed"
+                    [ngClass]="!isUsed ? 'btn-secondary' : 'btn-success'"
                     (click)="checkRapindo()">
                     <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Check Rapindo</span>
                   </button>
