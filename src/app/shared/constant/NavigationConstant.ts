@@ -156,6 +156,9 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_ASSET_ALLOC_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.ASSET_ALLOC_DETAIL; //'/Nap/AdminProcess/AssetAllocation/Detail'
   public static NAP_ADM_PRCS_INSURANCE_ORDER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.INSURANCE_ORDER_PAGING_X; //'/Nap/AdminProcess/InsuranceOrder/PagingX'
   public static NAP_ADM_PRCS_INSURANCE_ORDER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.INSURANCE_ORDER_DETAIL_X; //'/Nap/AdminProcess/InsuranceOrder/DetailX'
+  public static NAP_ADM_PRCS_INVOICE_DATA_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.INVOICE_PAGING_X; //'/Nap/AdminProcess/Invoice/PagingX'
+  public static NAP_ADM_PRCS_INVOICE_DATA_DETAIL  = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.INVOICE_DETAIL_X; //'/Nap/AdminProcess/Invoice/DetailX'
+  public static NAP_ADM_PRCS_INVOICE_DATA = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.INVOICE_X; //'/Nap/AdminProcess/InvoiceX'
   //#endregion
 
   //#region CreditProcess
