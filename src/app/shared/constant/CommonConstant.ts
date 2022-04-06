@@ -53,6 +53,7 @@ export class CommonConstant {
   public static USER_NAME = "UserName";
   public static USER_NAME_LOCAL_STORAGE = "Username";
   public static OFFICE_CODE = "OfficeCode";
+  public static AREA_CODE = "AreaCode";
   public static ROLE_CODE = "RoleCode";
   public static CURRENT_USER_CONTEXT = "currentUserContext"
   public static PAGE_ACCESS = "PageAccess";
@@ -768,6 +769,7 @@ export class CommonConstant {
   public static LenOverwriteAgrNo = "OVERWRITE_AGR_NO_LENGTH";
   public static GSCodeCoyMandatoryLegalDocs = "COY_MANDATORY_LEGAL_DOCS";
   public static GSCodeCustAgeLimit = "CUST_AGE_LIMIT";
+  public static GsCodeNegCustAllowNap = "NEGCUSTALLOWNAP";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -1135,4 +1137,9 @@ export class CommonConstant {
   }
 
   public static CompanyTypePT = "PT";
+
+  // UI ROLEPICK
+  public static IS_USE_NEW_ROLEPICK = "IS_USE_NEW_ROLEPICK";
+  // SysCtrlCoy
+  public static IsEODRun = "IsEODRun"
 }

@@ -26,9 +26,15 @@
 
                   <div class="form-group">
                     <div class="col-md-12">
-                      <button type="submit" class="btn btn-primary btn-block btn-raised">LOGIN</button>
+                        <button type="submit" [disabled]="isEod"
+                            class="btn btn-primary btn-block btn-raised">LOGIN</button>
                     </div>
-                  </div>
+                    <div *ngIf="isEod">
+                        <p style="font-size:15px;color: red;">
+                            Currently System Under Maintenance!
+                        </p>
+                    </div>
+                </div>
                 </form>
                 <div class="card-footer">
                   <div class="float-right"><a (click)="onForgotPassword()" class="black">Forgot Password?</a></div>

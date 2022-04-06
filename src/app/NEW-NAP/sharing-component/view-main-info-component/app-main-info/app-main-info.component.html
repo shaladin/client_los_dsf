@@ -1,3 +1,49 @@
 <div *ngIf="viewGenericObj.viewInput != ''">
     <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)" #viewGeneric></lib-ucviewgeneric>
+    
+    <!--START LOSRTHREE-1475-->
+    <div class="card" style="margin-top:-12px !important" *ngIf="isNegCustIndicatorVisible">
+    <div class="card-body"><div class="px-3"><div class="row"><div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <label class="label-control" translate>Negative Customer</label>
+            </div>
+            <div class="col-md-6">
+                <i class="fa-circle font-medium-3 tooltips mr-2" 
+                    [ngClass]="negCustIndicator.Customer ? 'fa' : 'far'" 
+                    [ngStyle]="{'color': negCustIndicator.Customer ? negCustIndicator.Customer.NegCustIndicator : ''}"
+                ><span class="tooltipstext">
+                    <span translate>Customer</span> : <span translate>{{negCustIndicator.Customer ? negCustIndicator.Customer.MrNegCustTypeCodeDesc : "No Data"}}</span>
+                </span></i>
+
+                <i class="far fa-circle font-medium-3 tooltips mr-2" *ngIf="!negCustIndicator.Customer" ><span class="tooltipstext">
+                    <span translate>Spouse</span> / <span translate>Shareholder</span> : <span translate>No Data</span>
+                </span></i>
+
+                <i class="fa-circle font-medium-3 tooltips mr-2" 
+                    *ngIf="negCustIndicator.Customer && !isCustTypeCoy"
+                    [ngClass]="negCustIndicator.Spouse ? 'fa' : 'far'" 
+                    [ngStyle]="{'color': negCustIndicator.Spouse ? negCustIndicator.Spouse.NegCustIndicator : ''}"
+                ><span class="tooltipstext">
+                    <span translate>Spouse</span> : <span translate>{{negCustIndicator.Spouse ? negCustIndicator.Spouse.MrNegCustTypeCodeDesc : "No Data"}}</span>
+                </span></i>
+
+                <i class="fa-circle font-medium-3 tooltips mr-2" 
+                    *ngIf="negCustIndicator.Customer && isCustTypeCoy"
+                    [ngClass]="negCustIndicator.Shareholder ? 'fa' : 'far'" 
+                    [ngStyle]="{'color': negCustIndicator.Shareholder ? negCustIndicator.Shareholder.NegCustIndicator : ''}"
+                ><span class="tooltipstext">
+                    <span translate>Shareholder</span> : <span translate>{{negCustIndicator.Shareholder ? negCustIndicator.Shareholder.MrNegCustTypeCodeDesc : "No Data"}}</span>
+                </span></i>
+
+                <i class="fa-circle font-medium-3 tooltips" 
+                    [ngClass]="negCustIndicator.Guarantor ? 'fa' : 'far'" 
+                    [ngStyle]="{'color': negCustIndicator.Guarantor ? negCustIndicator.Guarantor.NegCustIndicator : ''}"
+                ><span class="tooltipstext">
+                    <span translate>Guarantor</span> : <span translate>{{negCustIndicator.Guarantor ? negCustIndicator.Guarantor.MrNegCustTypeCodeDesc : "No Data"}}</span>
+                </span></i>
+            </div>
+        </div>
+    </div></div></div></div></div>
+    <!--END LOSRTHREE-1475-->
 </div>

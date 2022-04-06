@@ -165,7 +165,9 @@
               <div formArrayName="AppCollateralAttrObjs">
                 <div *ngFor="let item of AddCollForm.controls['AppCollateralAttrObjs'].controls;let i = index">
                   <div [formGroupName]="i" class="form-group row">
-                    <label class="col-md-2  adInsLabel" translate>{{item.controls.AssetAttrName.value}}</label>
+                    <label class="col-md-2 adInsLabel" 
+                      [ngClass]="{ 'adins-required-label': item.get('IsMandatory').value }"
+                      translate>{{item.controls.AssetAttrName.value}}</label>
                     <div class="col-md-4">
                       <div *ngIf="item.controls.AttrInputType.value == 'T'">
                         <input type="text" class="form-control" formControlName="AttrValue" 
@@ -364,6 +366,7 @@
                 <label class="col-md-2" translate>Copy Address From</label>
                 <div class="col-md-2">
                   <select class="form-control adInsInput" formControlName="LocationAddrType">
+                    <option value="" translate>-Select One-</option>
                     <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                       {{ram.MrCustAddrTypeCode}}
                     </option>
@@ -716,6 +719,7 @@
                   <label class="col-md-2" translate>Copy Address From</label>
                   <div class="col-md-2">
                     <select class="form-control adInsInput" formControlName="CollateralOwnerAddr">
+                      <option value="" translate>-Select One-</option>
                       <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                         {{ram.MrCustAddrTypeCode}}
                       </option>
