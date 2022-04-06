@@ -58,6 +58,7 @@ import {
 import {
   ViewPurchaseOrderDetailXComponent
 } from 'app/impl/view-enhancing/agr-view/view-purchase-order-detail/view-purchase-order-detail-x.component';
+import { ViewInvoiceDataXComponent } from "app/impl/view-enhancing/agr-view/view-invoice-data/view-invoice-data-x.component";
 
 @NgModule({
     imports: [
@@ -119,6 +120,7 @@ import {
         ViewPurchaseOrderNewListXComponent,
         ViewPurchaseOrderListXComponent,
         ViewPurchaseOrderDetailXComponent,
+        ViewInvoiceDataXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

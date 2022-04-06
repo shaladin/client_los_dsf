@@ -440,7 +440,7 @@ export class EditCommV2XComponent implements OnInit {
       for (let i = 0; i < tempObj.AllocationFrom.length; i++) {
         let temp = {
           AllocationAmount: tempObj.AllocationAmount[i],
-          AllocationBehaviour: tempObj.AllocationBehaviour[i],
+          AllocationBehaviour: 'DEF', //Ivan Adryanto, 30/3/2022, Hardcode agar ketika edit, input amount tetap terbuka
           AllocationFrom: tempObj.AllocationFrom[i],
           MaxAllocationAmount: tempObj.MaxAllocationAmount[i]
         };
@@ -461,7 +461,7 @@ export class EditCommV2XComponent implements OnInit {
         }
         let temp = {
           AllocationAmount: tempObj.AllocationAmount[i],
-          AllocationBehaviour: tempObj.AllocationBehaviour[i],
+          AllocationBehaviour: 'DEF', //Ivan Adryanto, 30/3/2022, Hardcode agar ketika edit, input amount tetap terbuka
           AllocationFrom: tempObj.AllocationFrom[i],
           MaxAllocationAmount: tempObj.MaxAllocationAmount[i]
         };
@@ -480,7 +480,7 @@ export class EditCommV2XComponent implements OnInit {
       for (let i = 0; i < tempObj.AllocationFrom.length; i++) {
         let temp = {
           AllocationAmount: tempObj.AllocationAmount[i],
-          AllocationBehaviour: tempObj.AllocationBehaviour[i],
+          AllocationBehaviour: 'DEF', //Ivan Adryanto, 30/3/2022, Hardcode agar ketika edit, input amount tetap terbuka
           AllocationFrom: tempObj.AllocationFrom[i],
           MaxAllocationAmount: tempObj.MaxAllocationAmount[i]
         };

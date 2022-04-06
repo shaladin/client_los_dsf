@@ -87,6 +87,9 @@ import { LegalReviewDetailXComponent } from 'app/impl/MOU/legal-review/legal-rev
 import { ChangeMouDetailDealerFinancingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing-x.component';
 import { ChangeMouDetailFactoringXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring-x.component';
 import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
+import { MouCustomerRequestXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-request-x.component';
+import { MouCustomerInquiryXComponent } from 'app/impl/MOU/mou-customer/mou-customer-inquiry/mou-customer-inquiry-x.component';
+import { ChangeMouRequestPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-paging/change-mou-request-paging-x.component';
 import {ChangeMouApprovalPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-paging/change-mou-approval-paging-x.component';
 import {MouCustomerApprovalXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-customer-approval-x.component';
 
@@ -731,7 +734,28 @@ const routes: Routes = [
         data: {
           title: "Mou Execution Paging"
         }
-      }
+      },
+      {
+        path: PathConstantX.MOU_REQ_PAGING_X,
+        component: MouCustomerRequestXComponent,
+        data: {
+          title: 'MOU Customer Request Paging'
+        }
+      },
+      {
+        path: PathConstantX.MOU_CUST_INQUIRY_X,
+        component: MouCustomerInquiryXComponent,
+        data: {
+          title: "MOU Inquiry"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_REQ_PAGING_X,
+        component: ChangeMouRequestPagingXComponent,
+        data: {
+          title: "Change MOU Request Paging"
+        }
+      },
     ]
   }
 ];
