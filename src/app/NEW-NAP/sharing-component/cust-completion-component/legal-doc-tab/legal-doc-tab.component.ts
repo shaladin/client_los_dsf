@@ -8,6 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/app-cust-company-legal-doc-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { String } from 'typescript-string-operations';
 
@@ -87,7 +88,7 @@ export class LegalDocTabComponent implements OnInit {
     }
   }
 
-  Continue(){
+  async Continue(){
     if(this.ListLegalDoc.length == 0){
       this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA)
       return;
@@ -110,6 +111,8 @@ export class LegalDocTabComponent implements OnInit {
         }
       }
 
+    if(!await this.validateMandatoryLegalDoc()) return;
+
     this.OutputTab.emit({IsComplete: true});
   }
 
@@ -128,5 +131,53 @@ export class LegalDocTabComponent implements OnInit {
     return Object.keys(groups).map(function (group) {
       return groups[group];
     })
+  }
+
+  async validateMandatoryLegalDoc()
+  {
+    var listMissingDocs: Array<string> = [];
+    var isLegalDocsValid = false;
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeCoyMandatoryLegalDocs}).toPromise().then(
+      (response) => {
+        if (response["GsValue"] == undefined || response["GsValue"] == "") {
+          isLegalDocsValid = true;
+          return;
+        }
+        var listMandatoryDocs: Array<string> = response["GsValue"].split(';');
+        if(!listMandatoryDocs || listMandatoryDocs.length <= 0)
+        {
+          isLegalDocsValid = true;
+          return;
+        }
+
+        var listExistingDocs: Array<string> = this.ListLegalDoc
+          .filter(x => x.DocNo.trim() != '' && x.DocDt)
+          .map(x => x.MrLegalDocTypeCode);
+        listMandatoryDocs.forEach(x => {
+          if (!listExistingDocs.find(z => z == x)) listMissingDocs.push(x);
+        })
+
+        if(listMissingDocs.length <= 0)
+        {
+          isLegalDocsValid = true;
+          return;
+        }
+      }
+    );
+
+    if(!isLegalDocsValid) 
+    {
+      await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType }).toPromise().then(
+        (response) => {
+          var listLegalDocTypeObj:Array<KeyValueObj> = response[CommonConstant.ReturnObj];
+          var listMissingDocsName: Array<string> = [];
+          listMissingDocs.forEach((missingDocCode) => {
+            var foundIndex = listLegalDocTypeObj.findIndex(x => x.Key == missingDocCode);
+            listMissingDocsName.push(foundIndex >= 0 ? listLegalDocTypeObj[foundIndex].Value : missingDocCode)
+          })
+          this.toastr.warningMessage(String.Format(ExceptionConstant.MANDATORY_LEGAL_DOC, listMissingDocsName.join(', ')));
+        });
+    }
+    return isLegalDocsValid;
   }
 }
