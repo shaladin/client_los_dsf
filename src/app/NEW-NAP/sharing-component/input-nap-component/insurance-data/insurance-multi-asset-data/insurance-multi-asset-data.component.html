@@ -1,1 +1,1 @@
-<app-uc-insurance [isMultiAsset]=true [appId]="appId" [showCancel]="showCancel" [BLCode]="BLCode" (outputCancel)="CancelHandler()" (outputTab)="SaveForm()"></app-uc-insurance>
+<app-uc-insurance *ngIf="inputInsuranceObj.IsReady" [inputInsuranceObj]="inputInsuranceObj" (outputCancel)="CancelHandler()" (outputTab)="SaveForm($event)"></app-uc-insurance>

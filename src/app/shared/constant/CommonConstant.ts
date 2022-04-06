@@ -773,6 +773,7 @@ export class CommonConstant {
   public static GsCodeIsShowMultiReferantor = "IS_SHOW_MULTI_REFERANTOR";
   public static GsCodeManufacturingYearMandatoryByCollType = "MANUFACTURING_YEAR_MANDATORY_BY_COLLATERAL_TYPE";
   public static GsCodeNegCustAllowNap = "NEGCUSTALLOWNAP";
+  public static GsCodeAssetTypeForHeavyEquipment = "ASSET_TYPE_CODE_FOR_HEAVY_EQUIPMENT";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";

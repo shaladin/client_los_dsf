@@ -2,20 +2,20 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
-        <div *ngIf="isMultiAsset">
+        <div *ngIf="inputInsuranceObj.IsMultiAsset">
           <div [hidden]="PageState != 'Paging' || BizTemplateCode == 'FCTR' || BizTemplateCode == 'CFNA'">
             <lib-ucSubsection [id]="'assetDataId'" [title]="'Loan Object'" [panel]="'assetData'">
             </lib-ucSubsection>
             <div id="assetData">
-              <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event2($event)"></lib-ucgridview>
+              <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
             </div>
           </div>
 
           <div>
-            <app-uc-insurance-paging *ngIf="!isDetail && isUcInsReady" [appId]="appId" [DetailForGridCollateral]="gridAppCollateralObj.resultData" (select)="OpenDetail($event)" (bindMultiInsGridData)="BindMultiInsGridData()" (outputCancel)="CancelHandler()">
+            <app-uc-insurance-paging *ngIf="!isDetail && isUcInsReady" [appId]="inputInsuranceObj.AppId" [DetailForGridCollateral]="gridAppCollateralObj.resultData" (select)="OpenDetail($event)" (bindMultiInsGridData)="BindMultiInsGridData()" (outputCancel)="CancelHandler()">
             </app-uc-insurance-paging>
           </div>
-          <app-uc-insurance-detail *ngIf="isDetail" [appObj]="appObj" [appAssetId]="AppAssetId" [appCollateralId]="AppCollateralId" [blCode]="BLCode" [isMultiAsset]="true" [insSeqNo]="InsSeqNo" (outputCancel)="Cancel()" (outputTab)="SaveForm($event)"> </app-uc-insurance-detail>
+          <app-uc-insurance-detail *ngIf="isDetail" [appObj]="appObj" [appAssetId]="AppAssetId" [appCollateralId]="AppCollateralId" [bizTemplateCode]="BizTemplateCode" [isMultiAsset]="true" [insSeqNo]="InsSeqNo" [showCancel]="inputInsuranceObj.ShowCancel" (outputCancel)="Cancel()" (outputTab)="SaveForm($event)"> </app-uc-insurance-detail>
 
           <br>
           <lib-ucSubsection [hidden]="PageState != 'Paging'" [id]="'CopyInsuranceId'" [title]="'Copy Insurance Data'"
@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
+              <button *ngIf="inputInsuranceObj.ShowCancel" type="button" class="btn btn-raised btn-warning mr-1"
                 (click)="CancelHandler()">
                 <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
@@ -91,8 +91,8 @@
             </div>
           </form>
         </div>
-        <div *ngIf="!isMultiAsset">
-          <app-uc-insurance-detail [appObj]="appObj" [appAssetId]="AppAssetId" [appCollateralId]="AppCollateralId" [blCode]="BLCode" [isMultiAsset]="false" [insSeqNo]="1" [showCancel]="showCancel" (outputCancel)="CancelHandler()" (outputTab)="SaveForm($event)"> </app-uc-insurance-detail>
+        <div *ngIf="!inputInsuranceObj.IsMultiAsset">
+          <app-uc-insurance-detail [appObj]="appObj" [appAssetId]="AppAssetId" [appCollateralId]="AppCollateralId" [bizTemplateCode]="BizTemplateCode" [isMultiAsset]="false" [insSeqNo]="1" [showCancel]="inputInsuranceObj.ShowCancel" (outputCancel)="CancelHandler()" (outputTab)="SaveForm($event)"> </app-uc-insurance-detail>
         </div>
       </div>
     </div>

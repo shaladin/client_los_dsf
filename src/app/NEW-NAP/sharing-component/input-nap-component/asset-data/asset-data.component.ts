@@ -401,21 +401,21 @@ export class AssetDataComponent implements OnInit {
     await this.SetRefAttrSettingObj();
     let appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
     appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
-      appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetCond,
-      appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
+    appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetCond,
+    appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
 
-      await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
-        (response: any) => {
-          this.RefProdCmptAssetCond = response;
-          if(this.mode != "Edit"){
-            if (this.RefProdCmptAssetCond.CompntValue == "USED") {
-              this.isUsed = true;
-            } else {
-              this.isUsed = false;
-            }
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+      (response: any) => {
+        this.RefProdCmptAssetCond = response;
+        if(this.mode != "Edit"){
+          if (this.RefProdCmptAssetCond.CompntValue == "USED") {
+            this.isUsed = true;
+          } else {
+            this.isUsed = false;
           }
         }
-      );
+      }
+    );
 
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex }).toPromise().then(
       (response: GeneralSettingObj) => {
@@ -2904,7 +2904,8 @@ export class AssetDataComponent implements OnInit {
     let GenObj =
     {
       AppAssetId: this.appAssetId,
-      AssetTypeCode: this.AssetDataForm.controls["AssetTypeCode"].value,
+      AssetTypeCode: this.RefProdCmptAssetType.CompntValue,
+      IsRefresh: false
     };
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Asset Attribute";

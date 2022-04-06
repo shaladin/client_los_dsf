@@ -247,8 +247,9 @@ export class CollateralAddEditComponent implements OnInit {
     let GenObj =
     {
       AppCollateralId: this.AppCollateralId,
-      AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
-    };
+      AssetTypeCode: this.AddCollForm.get("AssetTypeCode").value,
+      IsRefresh: true
+    }
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Collateral Attribute";
     this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppCollateralAttrV2;
@@ -685,15 +686,6 @@ export class CollateralAddEditComponent implements OnInit {
       });
 
     await this.SetRefAttrSettingObj();
-    // let GenObj =
-    // {
-    //   AppCollateralId: this.AppCollateralId,
-    //   AssetTypeCode: this.AddCollForm.get("AssetTypeCode").value,
-    //   AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-    //   IsRefresh: false
-    // };
-    // this.attrSettingObj.GetQuestionReqObj = GenObj;
-    // this.ucAttrComp.GetListAttribute();
     await this.CheckManufacturingYearMandatory();
   }
 

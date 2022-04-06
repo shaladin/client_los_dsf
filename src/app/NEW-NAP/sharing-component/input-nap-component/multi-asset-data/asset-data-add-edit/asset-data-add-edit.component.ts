@@ -292,7 +292,8 @@ export class AssetDataAddEditComponent implements OnInit {
       AssetCategoryCode: event.AssetCategoryCode,
       AssetTypeCode: event.AssetTypeCode
     });
-    await this.GetAssetMaster(event.FullAssetCode);
+    await this.GetAssetMaster(event.FullAssetCode);    
+    this.SetRefAttrSettingObj();
     this.GetRefAssetDocList(false);
     if (this.checkAssetValidationRequirement()) {
       this.CheckDP();
@@ -885,7 +886,6 @@ export class AssetDataAddEditComponent implements OnInit {
             }
 
             await this.GetEditData();
-            this.SetRefAttrSettingObj();
             this.isSerialReady = true;
           });
 
@@ -1029,6 +1029,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.returnAppAssetObj.TaxCityIssuer };
 
       await this.GetAssetMaster(this.returnAppAssetObj.FullAssetCode);
+      this.SetRefAttrSettingObj();
 
       let ReqGetVendorLookup: GenericObj = new GenericObj();
       ReqGetVendorLookup.Code = this.returnAppAssetObj.SupplCode;
@@ -1223,7 +1224,8 @@ export class AssetDataAddEditComponent implements OnInit {
     let GenObj =
     {
       AppAssetId: this.AppAssetId,
-      AssetTypeCode: this.AssetDataForm.controls["AssetTypeCode"].value,
+      AssetTypeCode: this.AssetDataForm.get("AssetTypeCode").value,
+      IsRefresh: false
     };
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Asset Attribute";

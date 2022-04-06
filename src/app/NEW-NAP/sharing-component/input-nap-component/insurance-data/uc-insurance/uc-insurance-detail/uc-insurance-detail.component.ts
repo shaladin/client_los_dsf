@@ -44,7 +44,7 @@ export class UcInsuranceDetailComponent implements OnInit {
   @Input() appObj: NapAppModel;
   @Input() appAssetId: number;
   @Input() appCollateralId: number;
-  @Input() blCode: string;
+  @Input() bizTemplateCode: string;
   @Input() isMultiAsset: boolean = false;
   @Input() insSeqNo: number = 1;
   @Input() showCancel: boolean = true;
@@ -155,28 +155,19 @@ export class UcInsuranceDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.getGeneralSettingDefaultLoadingFeeYear();
+    await this.loadGeneralSetting();
     await this.loadDDL();
-    await this.bindCapitalizeGeneralSetting();
     await this.getInsuranceData();
-  }
-
-  getGeneralSettingDefaultLoadingFeeYear() {
-    this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefaultLoadingFeeYear }).subscribe(
-      (response) => {
-        this.defaultLoadingFeeYear = parseInt(response.GsValue);
-      }
-    );
   }
 
   async loadDDL() {
     this.insuredByObj = await this.bindDDL(CommonConstant.RefMasterTypeCodeInsuredBy);
     this.paidByObj = await this.bindDDL(CommonConstant.RefMasterTypeCodeInsPaidBy);
-    if(this.blCode == CommonConstant.FCTR){
+    if(this.bizTemplateCode == CommonConstant.FCTR){
       let PaidByCustIdx = this.paidByObj.findIndex(x => x.Key == CommonConstant.InsPaidByCustomer)
       this.paidByObj = this.paidByObj.slice(PaidByCustIdx, 1);
     }
-    this.bindInscoBranchObj();
+    await this.bindInscoBranchObj();
     this.payPeriodToInscoObj = await this.bindDDL(CommonConstant.RefMasterTypeCodePayPeriodToInsco);
     if (this.payPeriodToInscoObj.length > 0) {
       this.InsuranceDataForm.patchValue({
@@ -210,7 +201,7 @@ export class UcInsuranceDetailComponent implements OnInit {
     ReqInscoBranchObj.MrVendorCategory = CommonConstant.VendorCategoryAssetInscoBranch;
     ReqInscoBranchObj.OfficeCode = this.appObj.OriOfficeCode;
     await this.http.post(URLConstant.GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode, ReqInscoBranchObj).toPromise().then(
-      (response) => {
+      async (response) => {
         this.inscoBranchObj = response[CommonConstant.ReturnObj];
         if (this.inscoBranchObj.length > 0) {
           this.InsuranceDataForm.patchValue({
@@ -218,16 +209,16 @@ export class UcInsuranceDetailComponent implements OnInit {
             InscoBranchName: this.inscoBranchObj[0].Value
           });
         }
-        this.getVendorParent(this.InsuranceDataForm.controls.InscoBranchCode.value);
+        await this.getVendorParent(this.InsuranceDataForm.controls.InscoBranchCode.value);
       }
     );
   }
 
-  setInsLengthDefaultValue(coverPeriod: string) {
+  async setInsLengthDefaultValue(coverPeriod: string) {
     let InsAssetCoveredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
 
     if (InsAssetCoveredBy == CommonConstant.InsuredByCustomerCompany) {
-      this.getCuCoInsLength();
+      await this.getCuCoInsLength();
       return;
     }
 
@@ -255,45 +246,6 @@ export class UcInsuranceDetailComponent implements OnInit {
     })
 
     this.setInsLengthValidator(coverPeriod);
-  }
-
-  getCuCoInsLength() {
-    let tempForm = this.InsuranceDataForm as FormGroup;
-    let tempReq: InsuranceLenObj = new InsuranceLenObj();
-    tempReq.CustEndDt = tempForm.get("EndDt").value;
-    tempReq.Tenor = this.appObj.Tenor;
-    tempReq.VendorCode = tempForm.get("InscoBranchCode").value;
-    tempReq.MrCoverPeriod = tempForm.get("InsAssetCoverPeriod").value;
-
-    if (this.checkInsuranceLenObj(tempReq)) return;
-    this.http.post(URLConstant.GetCuCoInsLength, tempReq).subscribe(
-      (response: ResInsuranceLenObj) => {
-        let InsuranceLen = response.InsuranceLen;
-
-        let tempInsLength = tempForm.get("InsLength");
-        let tempPartialMinus = 0;
-        if (tempReq.MrCoverPeriod != CommonConstant.CoverPeriodOverTenor) {
-          this.minInsLength = 1;
-          this.maxInsLength = 9999;
-          tempInsLength.enable();
-          if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodFullTenor || tempReq.MrCoverPeriod == CommonConstant.CoverPeriodAnnually) {
-            tempInsLength.disable();
-            tempInsLength.patchValue(InsuranceLen);
-          }
-          if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodPartialTenor) {
-            this.maxInsLength = InsuranceLen;
-            tempPartialMinus = 1;
-          }
-        } else {
-          this.minInsLength = InsuranceLen + 1;
-          this.maxInsLength = 9999;
-          tempInsLength.enable();
-        }
-        this.insLenCust = this.appObj.Tenor - InsuranceLen - tempPartialMinus;
-        tempInsLength.setValidators([Validators.required, Validators.min(this.minInsLength), Validators.max(this.maxInsLength)]);
-        tempInsLength.updateValueAndValidity();
-      }
-    );
   }
 
   checkInsuranceLenObj(tempReq: InsuranceLenObj): boolean {
@@ -337,11 +289,13 @@ export class UcInsuranceDetailComponent implements OnInit {
         this.minInsLength = 1;
         this.maxInsLength = 9999;
         this.InsuranceDataForm.controls.InsLength.disable();
+        this.InsuranceDataForm.controls.InsLength.updateValueAndValidity();
         break;
       case CommonConstant.CoverPeriodFullTenor:
         this.minInsLength = 1;
         this.maxInsLength = 9999;
         this.InsuranceDataForm.controls.InsLength.disable();
+        this.InsuranceDataForm.controls.InsLength.updateValueAndValidity();
         break;
       case CommonConstant.CoverPeriodPartialTenor:
         var tenor = this.appObj.Tenor;
@@ -354,7 +308,7 @@ export class UcInsuranceDetailComponent implements OnInit {
         this.InsuranceDataForm.controls.InsLength.setValidators([Validators.required, Validators.min(this.minInsLength), Validators.max(this.maxInsLength)]);
         this.InsuranceDataForm.controls.InsLength.updateValueAndValidity();
         break;
-      case CommonConstant.CoverPeriodFullTenor:
+      case CommonConstant.CoverPeriodOverTenor:
         var tenor = this.appObj.Tenor;
         if (this.InsuranceDataForm.controls.InsAssetCoveredBy.value == CommonConstant.InsuredByCustomerCompany) {
           tenor = this.setTenorCustCompany(tenor);
@@ -534,12 +488,14 @@ export class UcInsuranceDetailComponent implements OnInit {
     }
   }
 
-  async bindCapitalizeGeneralSetting() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsCptlzInsSetting }).toPromise().then(
-      (response) => {
-        this.isYearlyCapitalized = response && response.GsValue && response.GsValue == CommonConstant.InsGSCapitalizeYearly;
-      }
-    );
+  async loadGeneralSetting() {
+    let generalSetting : GeneralSettingObj = new GeneralSettingObj();
+    generalSetting = await this.getGeneralSetting(CommonConstant.GSCodeDefaultLoadingFeeYear);
+    this.defaultLoadingFeeYear = parseInt(generalSetting.GsValue);
+
+    generalSetting = new GeneralSettingObj();
+    generalSetting = await this.getGeneralSetting(CommonConstant.GsCptlzInsSetting);
+    this.isYearlyCapitalized = generalSetting && generalSetting.GsValue && generalSetting.GsValue == CommonConstant.InsGSCapitalizeYearly;
   }
 
   async getInsuranceData() {
@@ -586,16 +542,21 @@ export class UcInsuranceDetailComponent implements OnInit {
         genericObj.Id = this.appCollateralObj.AppCollateralId;
         genericObj.Code = CommonConstant.AttrCodeRoadWorthinessDoc;
         await this.http.post(URLConstant.GetAppCollAttrContentByIdAndCode, genericObj).toPromise().then(
-          (response : ResponseAppCollateralAttrObj) => {
-            if(response != undefined){
-              if(response.AttrValue == CommonConstant.AttrValueOffTheRoad || this.assetType == 'HEAVY_EQUIPMENT') this.isOffTheRoadOrHE = true;
+          async (appCollAttr : ResponseAppCollateralAttrObj) => {
+            if(appCollAttr.AttrValue != null){
+              if(appCollAttr.AttrValue == CommonConstant.AttrValueOffTheRoad) this.isOffTheRoadOrHE = true;
+            }else{
+              let generalSetting : GeneralSettingObj = await this.getGeneralSetting(CommonConstant.GsCodeAssetTypeForHeavyEquipment);
+              let listHECode = generalSetting.GsValue.split(";");
+              let foundHECode = listHECode.find(x => x == this.assetType);
+              if(foundHECode != undefined || foundHECode != null) this.isOffTheRoadOrHE = true;
             }
           }
         )
 
         if (this.appInsObjObj != undefined && this.appInsObjObj != null) {
           if (this.appInsObjObj.InsAssetCoveredBy == CommonConstant.InsuredByCompany || this.appInsObjObj.InsAssetCoveredBy == CommonConstant.InsuredByCustomerCompany) {
-            this.getVendorParent(this.appInsObjObj.InscoBranchCode);
+            await this.getVendorParent(this.appInsObjObj.InscoBranchCode);
           }
           await this.bindAppInsAndAppInsObj(this.appInsObjObj.InsAssetCoveredBy);
         }else {
@@ -703,7 +664,7 @@ export class UcInsuranceDetailComponent implements OnInit {
 
   endDt_FocusOut() {
     if (this.InsuranceDataForm.controls.InsAssetCoveredBy.value == CommonConstant.InsuredByCustomerCompany) {
-      this.GetGetCuCoInsLength();
+      this.getCuCoInsLength();
       if (this.InsuranceDataForm.controls.InsAssetCoverPeriod.value == CommonConstant.CoverPeriodFullTenor) {
         let tenor = this.appObj.Tenor;
         tenor = this.setInsLengthTenorCustCompany(tenor);
@@ -718,7 +679,7 @@ export class UcInsuranceDetailComponent implements OnInit {
     this.setInsLength();
   }
 
-  GetGetCuCoInsLength() {
+  async getCuCoInsLength() {
     let tempForm = this.InsuranceDataForm as FormGroup;
     let tempReq: InsuranceLenObj = new InsuranceLenObj();
     tempReq.CustEndDt = tempForm.get("EndDt").value;
@@ -726,9 +687,9 @@ export class UcInsuranceDetailComponent implements OnInit {
     tempReq.VendorCode = tempForm.get("InscoBranchCode").value;
     tempReq.MrCoverPeriod = tempForm.get("InsAssetCoverPeriod").value;
 
-    if (this.CheckInsuranceLenObj(tempReq)) return;
-    this.http.post(URLConstant.GetCuCoInsLength, tempReq).subscribe(
-      (response: ResInsuranceLenObj) => {
+    if (this.checkInsuranceLenObj(tempReq)) return;
+    await this.http.post(URLConstant.GetCuCoInsLength, tempReq).toPromise().then(
+      async (response: ResInsuranceLenObj) => {
         let InsuranceLen = response.InsuranceLen;
 
         let tempInsLength = tempForm.get("InsLength");
@@ -934,7 +895,12 @@ export class UcInsuranceDetailComponent implements OnInit {
       if (loadingFeeCountType == CommonConstant.LoadingFeeCountType_CountingYear) this.manufYearDiff++;
     }
     
-    await this.calcDefaultDiscount();
+    await this.calcDiscount();
+  }
+  
+  async getLoadingFeeCountType(){
+    let generalSetting : GeneralSettingObj = await this.getGeneralSetting(CommonConstant.GSCodeLoadingFeeCountType);
+    return generalSetting.GsValue ? generalSetting.GsValue : CommonConstant.LoadingFeeCountType_CountingYear;
   }
 
   bindInsFeeBehaviorRuleObj() {
@@ -1008,16 +974,6 @@ export class UcInsuranceDetailComponent implements OnInit {
     this.isCalculate = false;
   }
 
-  async getLoadingFeeCountType(): Promise<string> {
-    let loadingFeeCountType: string = "";
-    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeLoadingFeeCountType }).toPromise().then(
-      (response: GeneralSettingObj) => {
-        loadingFeeCountType = response.GsValue ? response.GsValue : CommonConstant.LoadingFeeCountType_CountingYear;
-      }
-    );
-    return loadingFeeCountType;
-  }
-
   addGroup(i, obj) {
     let currYear = i + 1
     let currPaidByBhv = this.paidByBhv.find(i => i.PaidByYearNo == currYear);
@@ -1087,7 +1043,7 @@ export class UcInsuranceDetailComponent implements OnInit {
     let BaseCustMainPremiRate = response.ReturnObject[0].MainRateToCust;
     let BaseInscoMainPremiRate = response.ReturnObject[0].MainRateToInsco;
     
-    if(this.isOffTheRoadOrHE || MainCvgIndex != 0){
+    if(this.isOffTheRoadOrHE && MainCvgIndex != 0){
       BaseCustMainPremiRate = insMainCvg.CustMainPremiRate;
       BaseInscoMainPremiRate = insMainCvg.InscoMainPremiRate;
     }
@@ -1359,12 +1315,12 @@ export class UcInsuranceDetailComponent implements OnInit {
     this.isGenerate = false;
   }
   
-  inscoBranchCodeChanged(event) {
+  async inscoBranchCodeChanged(event) {
     if (event.target.value != "") {
       this.InsuranceDataForm.patchValue({
         InscoBranchName: this.inscoBranchObj.find(x => x.Key == event.target.value).Value
       });
-      this.getVendorParent(event.target.value);
+      await this.getVendorParent(event.target.value);
     } else {
       this.InsuranceDataForm.patchValue({
         InscoBranchName: ""
@@ -1373,8 +1329,9 @@ export class UcInsuranceDetailComponent implements OnInit {
     this.isGenerate = false;
   }
   
-  getVendorParent(ChildVendorCode: string) {
-    this.http.post(URLConstant.GetVendorParentByVendorCode, { Code: ChildVendorCode }).subscribe(
+  async getVendorParent(ChildVendorCode: string) {
+    if(ChildVendorCode == "") return;
+    await this.http.post(URLConstant.GetVendorParentByVendorCode, { Code: ChildVendorCode }).toPromise().then(
       (response) => {
         this.inscoHoCode = response["VendorCode"];
       }
@@ -1520,7 +1477,7 @@ export class UcInsuranceDetailComponent implements OnInit {
     });
     this.InsuranceDataForm.updateValueAndValidity();
 
-    await this.calcDefaultDiscount();
+    await this.calcDiscount();
 
     for (var j = 0; j < AppInsAddCvgs.length; j++) {
       if (!AddCvg.find(x => x.AdditionalCoverageType == AppInsAddCvgs[j].controls.MrAddCvgTypeCode.value)) {
@@ -2188,10 +2145,17 @@ export class UcInsuranceDetailComponent implements OnInit {
     this.outputTab.emit();
   }
 
-  calcDefaultDiscount(){
-    let CustMainPremiRate = 4//this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][0].controls.CustMainPremiRate.value;
-    let InscoMainPremiRate = 3//this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][0].controls.InscoMainPremiRate.value;
+  calcDiscount(){
+    if(!this.isOffTheRoadOrHE) return;
+    
+    let CustMainPremiRate = this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][0].controls.CustMainPremiRate.value;
+    let InscoMainPremiRate = this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][0].controls.InscoMainPremiRate.value;
     let DiscountToInsco = (1 - (InscoMainPremiRate / CustMainPremiRate)) * 100;
+
+    if(DiscountToInsco < 0){
+      this.toastr.warningMessage(String.Format(ExceptionConstant.X_CANT_BE_GREATER_THAN_Y , "Main Coverage Rate to Insurance Company", "Main Coverage Rate to Customer"));
+      DiscountToInsco = 0;
+    }
 
     this.InsuranceDataForm.patchValue({
       DiscountToInsco : DiscountToInsco
@@ -2217,5 +2181,18 @@ export class UcInsuranceDetailComponent implements OnInit {
         });
         break;
     }
+  }
+
+  async getGeneralSetting(GsCode: string){
+    let generalSetting: GeneralSettingObj = new GeneralSettingObj();
+    let genericObj = new GenericObj();
+    genericObj.Code = GsCode;
+    
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, genericObj).toPromise().then(
+      (response) => {
+        generalSetting = response;
+      }
+    );
+    return generalSetting;
   }
 }

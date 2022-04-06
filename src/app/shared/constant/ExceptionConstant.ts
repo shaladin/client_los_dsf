@@ -204,5 +204,6 @@ export class ExceptionConstant {
 
     public static MAX_REFERANTOR_EXCEPTION = "Number of Referantor Cannot Be More than {0}";
     public static DUPLICATE_SUPPL_EMP = "Supplier Employee {0} Receiving More Than 1 Commission";
+    public static X_CANT_BE_GREATER_THAN_Y = "{0} cannot be greater than {1}";
 }
 

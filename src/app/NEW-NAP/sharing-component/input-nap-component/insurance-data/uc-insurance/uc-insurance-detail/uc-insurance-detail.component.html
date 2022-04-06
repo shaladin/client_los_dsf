@@ -303,6 +303,7 @@
               <div class="col-md-3">
                 <input type="" currencyMask id="DiscountToInsco" class="form-control" formControlName="DiscountToInsco"
                   [options]="CurrencyMaskPrct"
+                  [attr.disabled]="isOffTheRoadOrHE ? null : true"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.DiscountToInsco.invalid }" (focusout)="discountChanged()">
                 <lib-uc-show-errors [control]="InsuranceDataForm.controls.DiscountToInsco"
                   [submit]="enjiForm.submitted"></lib-uc-show-errors>
