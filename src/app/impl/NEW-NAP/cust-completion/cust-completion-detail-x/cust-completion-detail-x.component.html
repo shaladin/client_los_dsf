@@ -68,15 +68,17 @@
                   <th translate>Invalid Data</th>                
               </thead>
               <tbody>
-                <tr *ngFor="let item of ResSlikValidation.ListAppCustValidationObj">
-                  <td>{{item.CustName}}</td>
-                  <td class="text-center">{{item.CustNo}}</td>
-                  <td>
-                    <ul class="pl-3">
-                      <li *ngFor="let errMsg of item.ValidationErrorObj">{{errMsg.Value}}</li>
-                    </ul>
-                  </td>
-                </tr>
+                <ng-container *ngFor="let item of ResSlikValidation.ListAppCustValidationObj">
+                  <tr *ngIf="item.ValidationErrorObj && item.ValidationErrorObj.length > 0">
+                    <td>{{item.CustName}}</td>
+                    <td class="text-center">{{item.CustNo}}</td>
+                    <td>
+                      <ul class="pl-3">
+                        <li *ngFor="let errMsg of item.ValidationErrorObj">{{errMsg.Value}}</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>
