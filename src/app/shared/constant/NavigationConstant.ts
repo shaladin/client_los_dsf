@@ -298,7 +298,7 @@ export class NavigationConstant {
   //#region MOU
   public static MOU_CUST_CANCEL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_CANCEL; //'/Mou/Cust/Cancel'
   public static MOU_CUST_CANCEL_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_CANCEL_DETAIL; //'/Mou/Cust/Cancel/Detail'
-  public static MOU_CUST_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_INQUIRY; //'/Mou/Cust/Inquiry'
+  public static MOU_CUST_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_INQUIRY_X; //'/Mou/Cust/InquiryX'
   public static MOU_CUST_DOC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_DOC_PAGING; //'/Mou/CustomerDoc/Paging'
   public static MOU_CUST_DOC_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_DOC_DETAIL; //'/Mou/CustomerDoc/Detail'
   public static MOU_DOC_SIGNER_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_DOC_SIGNER_PAGING; //'/Mou/DocSigner/Paging'
@@ -311,7 +311,7 @@ export class NavigationConstant {
   public static MOU_CUST_APPRV_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_APPRV_FCTR_X; //'/Mou/Cust/ApprovalFactoringX'
   public static MOU_CUST_RVW_DFLN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_RVW_DFLN_X; //'/Mou/Cust/ReviewDLFNX'
   public static MOU_CUST_APPRV_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_CUST_APPRV_GENERAL_X; //'/Mou/Cust/ApprovalGeneralX'
-  public static MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_REQ_PAGING; //"/Mou/Request/Paging"
+  public static MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_REQ_PAGING_X; //"/Mou/Request/PagingX"
   public static MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.MOU_REQ_DETAIL_X; //'/Mou/Request/DetailX'
   public static MOU_CUST_APPRV = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV; //"/Mou/Cust/Approval"
   public static MOU_EDIT_CUST_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_EDIT_CUST_PAGING; //"/Mou/EditMouCustomer/Paging"
@@ -337,7 +337,7 @@ export class NavigationConstant {
   //#endregion
 
   //#region CHANGE MOU
-  public static CHANGE_MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_PAGING; //"/Mou/ChangeMouRequest/Paging"
+  public static CHANGE_MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_PAGING_X; //"/Mou/ChangeMouRequest/PagingX"
   public static CHANGE_MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_X; //"/Mou/ChangeMouRequest/DetailX"
   public static CHANGE_MOU_REQ_DETAIL_CUSTOMER = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_X; //"/Mou/ChangeMouRequest/Detail/CustomerX"
   public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_PAGING_X; //"/Mou/ChangeMou/ReviewPagingX"

@@ -16,13 +16,21 @@
             "value": "",
             "label": "Mou No",
             "placeholder": "Placeholder"
-        }, 
+        },
         {
             "type": "textbox",
             "name": "CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MCLCF.CUST_NAME",
+            "id": "VendorName",
+            "value": "",
+            "label": "Vendor Name",
             "placeholder": "Placeholder"
         },
         {
@@ -45,7 +53,7 @@
         }
     ],
     "querystring": {
-        "name": "searchChangeMouInquiry"
+        "name": "searchChangeMouInquiryFactoring"
     },
     "headerList": [
         {
@@ -65,6 +73,12 @@
             "position": "left",
             "label": "CUSTOMER NAME",
             "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "VENDOR NAME",
+            "name": "VendorName"
         },
         {
             "type": "sort",
@@ -111,6 +125,12 @@
             "key": "customer",
             "position": "left",
             "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "vendor",
+            "position": "left",
+            "property": "VendorName"
         },
         {
             "type": "text",
