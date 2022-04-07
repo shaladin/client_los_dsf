@@ -53,7 +53,7 @@
           },
           {
             "type": "text",
-            "label": "Bussiness Source AML",
+            "label": "Business Source AML",
             "property": "AmlBussource"
           },
           {
@@ -63,7 +63,7 @@
           },
           {
             "type": "text",
-            "label": "Bussiness Period AML",
+            "label": "Business Period AML",
             "property": "AmlBusPeriod"
           },
           {
