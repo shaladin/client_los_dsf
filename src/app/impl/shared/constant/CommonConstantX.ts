@@ -22,6 +22,7 @@ export class CommonConstantX {
     public static GsCodePONoNeedToPayBank = "PO_NO_NEED_TO_PAY_BANK_ACC";
     public static GsCodeIsDoDtValidation = "ISDODTVALIDATION";
     public static GsCodeIsAllowSkipSurvey = "IS_ALLOW_SKIP_SURVEY";
+    public static GsCodeCustCompletionByPass = "CUST_COMPLETION_BY_PASS";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
@@ -97,5 +98,15 @@ export class CommonConstantX {
 
     //GS
     public static GSCodeShareholderJobPostIsOnwer = "SHAREHOLDER_JOB_POST_IS_OWNER";
+
+    //NAP 4
+    public static SubjRelationLessee = "LESSEE";
+    public static SubjRelationCustomer = "CUSTOMER";
+    public static SubjRelationFamily = "FAMILY";
+    public static SubjRelationShrholder = "SHAREHOLDER";
+    public static SubjRelationGuarantor = "GUARANTOR";
+    public static CustSubjFamily = "FAM";
+    public static CustSubjShareholder = "SHR";
+    public static CustSubjGuarantor = "GUAR";
     
 }

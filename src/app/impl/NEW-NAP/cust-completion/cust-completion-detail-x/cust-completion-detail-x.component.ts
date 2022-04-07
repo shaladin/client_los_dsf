@@ -23,6 +23,7 @@ import { environment } from 'environments/environment';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 import { ResSlikValidationAppObjX } from 'app/impl/shared/model/Response/SlikValidation/res-slik-validation-app-obj-x.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-cust-completion-detail-x',
@@ -278,14 +279,35 @@ export class CustCompletionDetailXComponent implements OnInit {
     var isNap4Valid = true;
     var inCompletedCust = "";
     var inCompletedStep = "";
+    var listExcludeCust: Array<string> = [];
+
+    //get GenSet exculde checking
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstantX.GsCodeCustCompletionByPass}).toPromise().then(
+      (response) => {
+        listExcludeCust = response && response["GsValue"] ? response["GsValue"].toUpperCase().split(';') : [17];
+      }
+    );
+
+    //Check per Cust
     for (let i = 0; i < this.ListAppCustCompletion.length; i++) 
     {
-      await this.http.post(URLConstantX.SaveAppCustCompletion, { Id: this.ListAppCustCompletion[i].AppCustId }).toPromise().then(
+      var cust = this.ListAppCustCompletion[i];
+
+      if(cust.SubjectDescr.toUpperCase() == CommonConstantX.SubjRelationFamily && listExcludeCust.findIndex(x => x == CommonConstantX.CustSubjFamily) >= 0) 
+        continue;
+
+      if(cust.SubjectDescr.toUpperCase() == CommonConstantX.SubjRelationShrholder && listExcludeCust.findIndex(x => x == CommonConstantX.CustSubjShareholder) >= 0) 
+        continue;
+
+      if(cust.SubjectDescr.toUpperCase() == CommonConstantX.SubjRelationGuarantor && listExcludeCust.findIndex(x => x == CommonConstantX.CustSubjGuarantor) >= 0) 
+        continue;
+
+      await this.http.post(URLConstantX.SaveAppCustCompletion, { Id: cust.AppCustId }).toPromise().then(
         (response) => {
           isNap4Valid = response["IsCompleted"];
-          this.ListAppCustCompletion[i].IsCompletion = response["IsCompleted"];
+          cust.IsCompletion = response["IsCompleted"];
           if (!isNap4Valid) {
-            inCompletedCust = this.ListAppCustCompletion[i].CustName;
+            inCompletedCust = cust.CustName;
             inCompletedStep = response["InCompletedStep"];
           }
         }         
