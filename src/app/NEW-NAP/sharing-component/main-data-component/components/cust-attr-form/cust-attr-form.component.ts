@@ -262,4 +262,19 @@ export class CustAttrFormComponent implements OnInit {
         break;
     };
   }
+
+  resetForm() {
+    this.parentForm.removeControl(this.identifier);
+    this.parentForm.addControl(this.identifier, this.fb.array([]));
+    for (let i in this.dictRefMasterLookup) {
+      this.dictRefMasterLookup[i] = new InputLookupObj();
+      this.dictRefMasterLookup[i].urlJson = "./assets/uclookup/RefMaster/lookupRefMaster.json";
+      this.dictRefMasterLookup[i].pagingJson = "./assets/uclookup/RefMaster/lookupRefMaster.json";
+      this.dictRefMasterLookup[i].genericJson = "./assets/uclookup/RefMaster/lookupRefMaster.json";
+      this.dictRefMasterLookup[i].isRequired = false;
+
+      this.parentForm.removeControl("lookup"+i);
+    }
+    this.dictRefMasterLookup = {};
+  }
 }

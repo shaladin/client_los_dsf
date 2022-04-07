@@ -599,6 +599,7 @@
                   <label class="col-md-2  adInsLabel" translate>Copy Address </label>
                   <div class="col-md-2">
                     <select class="form-control adInsInput" formControlName="LocationAddrType">
+                      <option value="" translate>-Select One-</option>
                       <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                         {{ram.MrCustAddrTypeCode}}
                       </option>
