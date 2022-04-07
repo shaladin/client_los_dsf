@@ -102,6 +102,7 @@ export class InvoiceDataDetailXComponent implements OnInit {
       RcvBy: context.UserName,
       PurchaseOrderHId: this.purchaseOrderHObj.PurchaseOrderHId,
       InvoiceAmt: this.purchaseOrderHObj.TotalPurchaseOrderAmt,
+      TotalInvoiceAmt: this.purchaseOrderHObj.TotalPurchaseOrderAmt,
     });
 
     var RequestInvoiceX = {
@@ -130,7 +131,6 @@ export class InvoiceDataDetailXComponent implements OnInit {
               "en-US"
             ),
             // TotalInvoiceAmt: response["ResponseInvoiceHXObj"].TotalInvoiceAmt,
-            TotalInvoiceAmt: this.purchaseOrderHObj.TotalPurchaseOrderAmt,
             InvoiceAmt: response["ResponseInvoiceDXObj"].InvoiceAmt,
           });
         }
