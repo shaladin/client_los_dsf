@@ -8,7 +8,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
@@ -21,19 +21,52 @@ export class MouCustomerInquiryComponent implements OnInit {
   CustNoObj: GenericObj = new GenericObj();
   user: CurrentUserContext;
   MrMouTypeCode: string;
+  isReady: boolean = false;
+  navigationSubscription;
+  
+  constructor(private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute, private router: Router) {    
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {    
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
-    if (params["MrMouTypeCode"] != null) {
-      this.MrMouTypeCode = params["MrMouTypeCode"];
-    }});
+      if (params["MrMouTypeCode"] != null) {
+        this.MrMouTypeCode = params["MrMouTypeCode"];
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCustomerInquiry.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCustomerInquiry.json";
+    this.inputPagingObj.addCritInput = new Array();
     
     const addCritMouType = new CriteriaObj();
     addCritMouType.DataType = "text";

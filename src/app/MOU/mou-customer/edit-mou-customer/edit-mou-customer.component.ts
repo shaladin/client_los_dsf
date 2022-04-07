@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -22,7 +22,7 @@ import { String } from 'typescript-string-operations';
   templateUrl: './edit-mou-customer.component.html',
   providers: [NGXToastrService]
 })
-export class EditMouCustomerComponent implements OnInit {
+export class EditMouCustomerComponent implements OnInit, OnDestroy {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
@@ -30,15 +30,47 @@ export class EditMouCustomerComponent implements OnInit {
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   MrMouTypeCode: string;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {   
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
-    if (params["MrMouTypeCode"] != null) {
-      this.MrMouTypeCode = params["MrMouTypeCode"];
-    }});
+      if (params["MrMouTypeCode"] != null) {
+        this.MrMouTypeCode = params["MrMouTypeCode"];
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/searchEditMouCustomer.json";

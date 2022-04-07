@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -24,7 +24,7 @@ import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
   templateUrl: './edit-app-after-approval-approval-paging.component.html',
   styleUrls: ['./edit-app-after-approval-approval-paging.component.css']
 })
-export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
+export class EditAppAfterApprovalApprovalPagingComponent implements OnInit, OnDestroy {
 
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
@@ -33,6 +33,8 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
   CustNoObj: GenericObj = new GenericObj();
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   integrationObj: IntegrationObj = new IntegrationObj();
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private toastr: NGXToastrService,
               private httpClient: HttpClient,
@@ -41,15 +43,44 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
               private route: ActivatedRoute,
               private apvTaskService: ApprovalTaskService,
               private adInsHelperService: AdInsHelperService) {
-                
+                this.SubscribeParam();
+                this.navigationSubscription = this.router.events.subscribe((e: any) => {
+                  // If it is a NavigationEnd event re-initalise the component
+                  if (e instanceof NavigationEnd) {
+                    this.RefetchData();
+                  }
+                });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
-      }});
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.UserAccess  = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();

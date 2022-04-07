@@ -1,8 +1,8 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
@@ -14,23 +14,53 @@ import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
   selector: 'app-credit-apv-result-ext-paging',
   templateUrl: './credit-apv-result-ext-paging.component.html'
 })
-export class CreditApvResultExtPagingComponent implements OnInit {
+export class CreditApvResultExtPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
   ExtendBasedOn = "APP";
-  @ViewChild("PagingModal", { read: ViewContainerRef }) pagingModal: ViewContainerRef;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) { 
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
       }
-  });
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
   
   ngOnInit() {
-    this.ChangeExtendBasedOn("APP");
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
+    this.ChangeExtendBasedOn(this.ExtendBasedOn);
   }
 
   getEvent(ev){
@@ -52,16 +82,17 @@ export class CreditApvResultExtPagingComponent implements OnInit {
   }
 
   ExtendBasedOnChanged(event){
+    this.isReady = false;
     this.ChangeExtendBasedOn(event.target.value);
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
   }
 
   ChangeExtendBasedOn(extendBasedOn){
+    this.ExtendBasedOn = extendBasedOn;
     if (extendBasedOn == "APP")
     {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcpagingComponent);
-      this.pagingModal.clear();
-      const component = this.pagingModal.createComponent(componentFactory);
-
       this.inputPagingObj._url = "./assets/ucpaging/searchCrdApvResExtensionForApp.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCrdApvResExtensionForApp.json";
       this.inputPagingObj.addCritInput = new Array();
@@ -79,16 +110,9 @@ export class CreditApvResultExtPagingComponent implements OnInit {
       addCrit.restriction = AdInsConstant.RestrictionIn;
       addCrit.listValue = ['AGR'];
       this.inputPagingObj.addCritInput.push(addCrit);
-
-      component.instance.searchObj = this.inputPagingObj;
-      component.instance.callback.subscribe((e) => this.getEvent(e));
     }
     else if (extendBasedOn == "AGR")
     {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcpagingComponent);
-      this.pagingModal.clear();
-      const component = this.pagingModal.createComponent(componentFactory);
-
       this.inputPagingObj._url = "./assets/ucpaging/searchCrdApvResExtension.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCrdApvResExtension.json";
       this.inputPagingObj.addCritInput = new Array();
@@ -106,9 +130,6 @@ export class CreditApvResultExtPagingComponent implements OnInit {
       addCrit.restriction = AdInsConstant.RestrictionIn;
       addCrit.listValue = ['OFVA', 'PO'];
       this.inputPagingObj.addCritInput.push(addCrit);
-      
-      component.instance.searchObj = this.inputPagingObj;
-      component.instance.callback.subscribe((e) => this.getEvent(e));
     }
   }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -17,15 +17,28 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './return-handling-edit-nap4.component.html',
   styleUrls: ['./return-handling-edit-nap4.component.scss']
 })
-export class ReturnHandlingEditNap4Component implements OnInit {
+export class ReturnHandlingEditNap4Component implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  isReady: boolean = false;
+  navigationSubscription;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private cookieService: CookieService) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -34,11 +47,31 @@ export class ReturnHandlingEditNap4Component implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingEditNAP4.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingEditNAP4.json";
+    this.inputPagingObj.addCritInput = new Array();
 
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchReturnHandlingEditNAP4V2.json";
