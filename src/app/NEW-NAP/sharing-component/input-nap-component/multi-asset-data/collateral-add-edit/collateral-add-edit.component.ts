@@ -248,7 +248,7 @@ export class CollateralAddEditComponent implements OnInit {
     {
       AppCollateralId: this.AppCollateralId,
       AssetTypeCode: this.AddCollForm.get("AssetTypeCode").value,
-      IsRefresh: true
+      IsRefresh: false
     }
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Collateral Attribute";
