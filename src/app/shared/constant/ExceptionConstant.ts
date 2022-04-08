@@ -176,7 +176,7 @@ export class ExceptionConstant {
     public static COLL_VALUE_MUST_EQUALS_INVOICE_AMT = "Collateral Value must equals Invoice Amount.";
     public static DOUBLE_FINANCING = "Double Financing";
     public static START_DATE_CANNOT_MORE_THAN = "Start Date can not be more than ";
-    public static START_DATE_CANNOT_LESS_THAN = "Start Date can not be lses than ";
+    public static START_DATE_CANNOT_LESS_THAN = "Start Date can not be less than ";
     public static END_DATE_CANNOT_LESS_THAN = "End Date can not be less than ";
     public static MOU_DATE_CANNOT_LESS_THAN = "MOU Date can not be less than ";
     public static PRODUCT_HAS = "This Product has ";
