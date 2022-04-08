@@ -2153,7 +2153,7 @@ export class LtkmRequestXComponent implements OnInit {
             this.inputAddressObjForLegalCoy.inputField = this.inputFieldLegalCompanyObj;
         }
 
-        if (event["CustAddrMailingObj"] != undefined) {
+        if (event["CustAddrMailingObj"] != undefined && event["CustAddrMailingObj"].CustAddrId > 0) {
             this.mailingAddrCompanyObj.Addr = event["CustAddrMailingObj"].Addr;
             this.mailingAddrCompanyObj.AreaCode1 = event["CustAddrMailingObj"].AreaCode1;
             this.mailingAddrCompanyObj.AreaCode2 = event["CustAddrMailingObj"].AreaCode2;

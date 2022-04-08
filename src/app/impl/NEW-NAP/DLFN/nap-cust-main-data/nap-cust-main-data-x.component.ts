@@ -45,7 +45,7 @@ export class NapCustMainDataXComponent implements OnInit {
   appCustId: number = 0;
   from: string;
   lobCode: string;
-  isNonMandatory: boolean = false;
+  isNonMandatory: boolean = true;
 
   AppStep = {
     "NEW": 1,

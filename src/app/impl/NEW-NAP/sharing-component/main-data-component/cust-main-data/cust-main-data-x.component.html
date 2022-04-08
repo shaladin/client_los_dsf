@@ -3,7 +3,7 @@
     <div class="form-group row" *ngIf="custMainDataMode != CustMainDataFamily">
       <label class="col-md-2" translate>{{subjectTitle}} Type</label>
       <div class="col-md-10">
-        <mat-radio-group [(ngModel)]="MrCustTypeCode" (change)="resetInput($event.value)" [disabled]="AppCustCompanyMgmntShrholderId!=0">
+        <mat-radio-group [(ngModel)]="MrCustTypeCode" (change)="resetInput($event.value)" [disabled]="isDisableCustType">
           <mat-radio-button class="custom-control custom-radio display-inline-block"
             *ngFor="let item of DictRefMaster[MasterCustType]" [value]="item.Key">
             {{item.Value}}
@@ -139,7 +139,7 @@
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Birth Date</label>
                 <div class="col-md-8">
-                  <input [attr.readonly]="isExisting ? 'true' : null" type="date" max="{{max17Yodt | date:'yyyy-MM-dd'}}"
+                  <input [attr.readonly]="isExisting ? 'true' : null" type="date" max="{{minCustPerAgeDt | date:'yyyy-MM-dd'}}" min="{{maxCustPerAgeDt | date:'yyyy-MM-dd'}}"
                     class="form-control" formControlName="BirthDt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.BirthDt.invalid}">
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.BirthDt" [submit]="enjiForm.submitted">
@@ -318,7 +318,7 @@
                 <div class="col-md-8">
                   <input type="" currencyMask class="form-control" formControlName="SharePrcnt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.SharePrcnt.invalid}"
-                    [options]="CurrencyMaskPrct" (focusout)="ChangeValidityShareOwner()">
+                    [options]="CurrencyMaskPrct">
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.SharePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -349,7 +349,7 @@
               <div class="form-group row">
                 <label class="col-md-4 {{ isShareOwnerMandatory ? 'adins-required-label' : 'adInsLabel'}}" translate>Is Owner</label>
                 <div class="col-md-8">
-                  <input type="checkbox" formControlName="IsOwner" (change)="ChangeValidityShareOwner()" />
+                  <input type="checkbox" formControlName="IsOwner" />
                   <lib-uc-show-errors [control]="CustMainDataForm.controls.IsOwner" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -365,7 +365,7 @@
             </div>
           </div>
         </div>
-        <app-cust-attr-form *ngIf="(custMainDataMode == CustMainDataMgmntShrholder || custMainDataMode == CustMainDataFamily) && MrCustTypeCode == CustTypePersonal" [AppCustId]="appCustId" [AttrGroup]="AttrGroupCustPersonalOther" [AttrCodes]="listAttrCodes"  [parentForm]="CustMainDataForm" [enjiForm]="enjiForm" [identifier]="identifierCustAttr" #CustAttrForm></app-cust-attr-form>
+        <app-cust-attr-form [hidden]="(custMainDataMode != CustMainDataMgmntShrholder || custMainDataMode != CustMainDataFamily) && MrCustTypeCode != CustTypePersonal" [AppCustId]="appCustId" [AttrGroup]="AttrGroupCustPersonalOther" [AttrCodes]="listAttrCodes"  [parentForm]="CustMainDataForm" [enjiForm]="enjiForm" [identifier]="identifierCustAttr" #CustAttrForm></app-cust-attr-form>
         <lib-ucSubsection [id]="'AddressId'" [title]="'Legal Address'" [panel]="'Address'">
         </lib-ucSubsection>
         <div id="Address">

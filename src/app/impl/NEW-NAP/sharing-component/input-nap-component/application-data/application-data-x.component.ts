@@ -1544,6 +1544,7 @@ export class ApplicationDataXComponent implements OnInit {
             CustBankAcc: selectedBankAcc.AppCustBankAccId
           });
 
+          this.GetBankInfo.AppOtherInfoId = response.AppOtherInfoId;
           this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
           this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
           this.GetBankInfo.AppId = this.appId;

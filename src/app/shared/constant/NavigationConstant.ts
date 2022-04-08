@@ -516,6 +516,7 @@ export class NavigationConstant {
   public static REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PENDING_PRE_GO_LIVE_AFT_APV; //'/Report/RptMonthlyPendingLead'
   public static REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_PRE_GO_LIVE_BY_SUPPLIER; //'/Report/RptMonthlyPreGoLiveBySupplier'
   public static REPORT_MONTHLY_TOP_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_TOP_SUPPLIER; //'/Report/RptMonthlyTopSupplier'
+  public static REPORT_LTKM = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_LTKM; //'/Report/RptLtkm'
   //#endregion
   
   //EndCessie

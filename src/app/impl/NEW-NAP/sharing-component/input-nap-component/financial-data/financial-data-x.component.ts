@@ -333,6 +333,11 @@ export class FinancialDataXComponent implements OnInit {
         DiffRateAmt: this.FinDataForm.getRawValue().SubsidyAmtFromDiffRate * -1
       });
     }
+    else if (this.FinDataForm.getRawValue().SubsidyAmtFromDiffRate == 0) {
+      this.FinDataForm.patchValue({
+        DiffRateAmt: 0
+      });
+    }
     if (this.FinDataForm.getRawValue().CommissionAmtFromDiffRate > 0) {
       this.FinDataForm.patchValue({
         DiffRateAmt: this.FinDataForm.getRawValue().CommissionAmtFromDiffRate

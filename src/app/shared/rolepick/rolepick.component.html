@@ -1,24 +1,67 @@
-<div class="white-background">
-  <h1>Role </h1>
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th><span class="thead-header" >Office</span></th>
-        <th class="text-left"><span class="thead-header">Position</span></th>
-        <th><span class="thead-header">Role</span></th>
-        <th><span class="thead-header">Action</span></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of listRole">
-        <td>{{item.OfficeName}}</td>
-        <td class="text-left">{{item.JobTitleName}}</td>
-        <td>{{item.RoleName}}</td>
-        <td><a class="success p-0" (click)="chooseRole(item)">
-  <!--<button mat-button mat-dialog-close (click)="chooseRole(item)" class="ft-edit-2 font-medium-3 mr-2"></button>-->
-  <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
-</a></td>
-      </tr>
-    </tbody>
-  </table>
+<div *ngIf="isReady">
+  <div class="white-background" *ngIf="isUseNewRolepick == '0'">
+    <h1>Role </h1>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th><span class="thead-header" >Office</span></th>
+          <th class="text-left"><span class="thead-header">Position</span></th>
+          <th><span class="thead-header">Role</span></th>
+          <th><span class="thead-header">Action</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listRole">
+          <td>{{item.OfficeName}}</td>
+          <td class="text-left">{{item.JobTitleName}}</td>
+          <td>{{item.RoleName}}</td>
+          <td>
+            <a class="success p-0" (click)="chooseRole(item)">
+              <!--<button mat-button mat-dialog-close (click)="chooseRole(item)" class="ft-edit-2 font-medium-3 mr-2"></button>-->
+              <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="white-background text-center" *ngIf="isUseNewRolepick == '1'">
+    <div class="card-img">
+        <img alt="element 06" class="mb-1" src="assets/img/rolepick-red.png" width="70" style="margin-top: 10px;">
+    </div>
+    <h2 class="text-title">Choose Your Role </h2>
+    <form class="form form-group form-horizontal" name="enjiForm" [formGroup]="RolepickForm" #enjiForm="ngForm" novalidate
+      (ngSubmit)="enjiForm.form.valid">
+  
+      <div class="ml-5 mr-5">
+        <div class="text-left">
+          <p class="text-user">Office</p>
+        </div>
+        <div class="text-left">
+          <lib-ucdropdownsearch [dropdownSearchObj]="officeDropdownSearchObj" [parentForm]="RolepickForm"
+              [enjiForm]="enjiForm" [identifier]="'Office'" [genericList]="listRole" (callback)="setOffice($event)"></lib-ucdropdownsearch>
+        </div>
+      
+  
+        <div class="text-left mt-3">
+          <p class="text-user">Job Title - Role</p>
+        </div>
+        <div class="text-left">
+          <lib-ucdropdownsearch [dropdownSearchObj]="rolesDropdownSearchObj" [parentForm]="RolepickForm" #ddsValue
+              [enjiForm]="enjiForm" [identifier]="'Role'" [genericList]="selectedOffice == -1 ? tempList : listRole[selectedOffice]?.Roles" (callback)="setRole($event)"></lib-ucdropdownsearch>
+        </div>
+      </div>  
+  
+      <div *ngIf="listRole.length > 1 || listRole[0].Roles.length > 1" class="form-group row mt-5">
+        <div class="col-md-12">
+          <button type="button" class="custom-button-adins" (click)="chooseRoleNew()">Choose Role</button>
+        </div>
+      </div>
+    </form>
+    <div class="form-group" class="mt-3">
+  </div>
+  
+  
+  
 </div>
