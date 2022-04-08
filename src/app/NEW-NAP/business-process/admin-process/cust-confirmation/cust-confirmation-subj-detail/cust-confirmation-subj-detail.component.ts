@@ -124,7 +124,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       (response) => {
         this.verfQuestionAnswerObj = response[CommonConstant.ReturnObj];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
-          this.GenerateFormVerfQuestion(CommonConstant.VerfResultStatSuccess);
+          this.GenerateFormVerfQuestion(this.CustConfirm.get("MrVerfResultHStatCode").value);
         }
       }
     );
@@ -329,7 +329,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
           this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
           formDirective.resetForm();
-          this.clearform(CommonConstant.VerfResultStatSuccess, false);
+          this.clearform(this.newVerfResultHObj.MrVerfResultHStatCode, false);
       }
     );
   }
@@ -355,7 +355,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.CustConfirm = this.fb.group({
       Notes: ["", Validators.required],
       Phn: ["", Validators.required],
-      MrVerfResultHStatCode: ["", Validators.required],
+      MrVerfResultHStatCode: [resultStat, Validators.required],
       VerfResultDForm: this.fb.array([])
     });
     this.CustConfirm.controls.Notes.markAsPristine();

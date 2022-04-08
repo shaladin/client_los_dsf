@@ -36,6 +36,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   custMainDataMode: string;
   critCustCompany: Array<string> = new Array<string>();
   critCust: Array<string> = new Array<string>();
+  listUniqueIdNo: Array<string> = [];
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -94,6 +95,15 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
     if (this.tempTotalSharePrct != 100) {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_MUST_100);
       return;
+    }
+    if(this.listMgmntShrholder.length)
+    {
+      var uniqueSet = Array.from(new Set(this.listUniqueIdNo));
+      if(uniqueSet.length != this.listMgmntShrholder.length)
+      {
+        this.toastr.warningMessage(ExceptionConstant.DUPLICATE_SHRHLDR_ID_NO);
+        return;
+      }
     }
 
     this.outputTab.emit();
@@ -157,6 +167,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
               if (element.CustNo) {
                 this.listCustNoToExclude.push(element.CustNo);
               }
+              this.listUniqueIdNo.push(element["MrIdTypeCode"]+element["IdNo"]);
             }
             this.tempTotalSharePrct = tempTotalSharePrct;
             this.tempIsOwner = tempIsOwner;
