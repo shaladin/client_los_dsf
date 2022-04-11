@@ -29,7 +29,7 @@
     "@adins/ucaddtotemp": "^1.3.0",
     "@adins/ucapproval": "^1.0.12",
     "@adins/ucapproval-history": "^1.0.10",
-    "@adins/ucapproval-r3": "^1.2.1",
+    "@adins/ucapproval-r3": "^1.2.2",
     "@adins/ucapprovalcreate": "^1.2.3",
     "@adins/ucapprovalgeneralinfo": "^1.0.8",
     "@adins/ucapprovalhist": "^1.0.16",
