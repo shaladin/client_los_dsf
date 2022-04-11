@@ -695,8 +695,8 @@ export class CollateralAddEditComponent implements OnInit {
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
-          LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'],
-          CollateralOwnerAddr: response[CommonConstant.ReturnObj][0]['AppCustAddrId']
+          LocationAddrType: "",//response[CommonConstant.ReturnObj][0]['AppCustAddrId'],
+          CollateralOwnerAddr: "",//response[CommonConstant.ReturnObj][0]['AppCustAddrId']
         });
       }
     );
@@ -785,6 +785,9 @@ export class CollateralAddEditComponent implements OnInit {
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
         this.inputAddressObjForLoc.default = this.locationAddrObj;
         this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
+        this.AddCollForm.patchValue({
+          LocationAddrType: ""
+        });
       });
   }
 
@@ -808,6 +811,10 @@ export class CollateralAddEditComponent implements OnInit {
         this.inputFieldCollOwnerObj.inputLookupObj.jsonSelect = { Zipcode: this.returnCollOwnerObj.Zipcode };
         this.inputAddressObjForColl.default = this.collOwnerAddrObj;
         this.inputAddressObjForColl.inputField = this.inputFieldCollOwnerObj;
+
+        this.AddCollForm.patchValue({
+          CollateralOwnerAddr: ""
+        });
       });
   }
 

@@ -2487,7 +2487,8 @@ export class AssetDataComponent implements OnInit {
         OwnerAreaCode3: this.AddrObj[0].AreaCode3,
         OwnerAreaCode4: this.AddrObj[0].AreaCode4,
         OwnerCity: this.AddrObj[0].City,
-        OwnerZipcode: this.AddrObj[0].Zipcode
+        OwnerZipcode: this.AddrObj[0].Zipcode,
+        OwnerAddrType: ''
       });
       this.ownerAddrObj = new AddrObj();
       this.ownerAddrObj.Addr = this.AddrObj[0].Addr;
@@ -2547,7 +2548,8 @@ export class AssetDataComponent implements OnInit {
         LocationAreaCode3: this.AddrObj[0].AreaCode3,
         LocationAreaCode4: this.AddrObj[0].AreaCode4,
         LocationCity: this.AddrObj[0].City,
-        LocationZipcode: this.AddrObj[0].Zipcode
+        LocationZipcode: this.AddrObj[0].Zipcode,
+        LocationAddrType: ""
       });
       this.locationAddrObj = new AddrObj();
       this.locationAddrObj.Addr = this.AddrObj[0].Addr;
