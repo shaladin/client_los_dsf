@@ -122,9 +122,14 @@ export class EditCommAfterApprovalApprovalDetailXComponent implements OnInit {
     let ReqApvCustomObj = {
       Tasks: event.Tasks
     }
+    // this.http.post(URLConstantX.NewApproval, ReqApvCustomObj).subscribe(
+    //   () => {
+    //     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_PGL_APPRVL_PAGING], {});
+    //   }
+    // );
     this.http.post(URLConstantX.NewApproval, ReqApvCustomObj).subscribe(
       () => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_PGL_APPRVL_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.EDIT_COMM_AFT_APV_APPRV_PAGING],{BizTemplateCode: this.BizTemplateCode});
       }
     );
   }
