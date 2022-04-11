@@ -1211,6 +1211,15 @@ export class UcInsuranceDetailComponent implements OnInit {
           (group.controls.AppInsAddCvgs as FormArray).push(control);
         }
       } else {
+        if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
+          let AddCvgFee = AddCvg.filter(x => x.AdditionalCoverageType == CommonConstant.MrAddCvgTypeCodeLoading);
+          let LoadingObj = this.getLoadingFeeRate(AddCvgFee);
+          
+          if(LoadingObj == null){
+            custAddPremiRate = null;
+          }
+        }
+
         const control = this.fb.group({
           MrAddCvgTypeCode: o.Key,
           AddCvgTypeName: o.Value,
