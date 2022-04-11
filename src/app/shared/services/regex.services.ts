@@ -26,6 +26,9 @@ export class RegexService {
       case "^[a-zA-Z `]*$":
         errMessage = 'must be alphabet';
         break;
+      case "^[a-zA-Z0-9]{1,9}$":
+        errMessage = 'must be alpanumeric and max 9 characters';
+        break;  
       default:
         errMessage = 'Not yet setting';
         break;
