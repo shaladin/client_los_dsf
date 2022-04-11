@@ -357,7 +357,7 @@ export class NapDetailFormXComponent implements OnInit {
           if (this.ReturnHandlingHId > 0) {
             this.IsSavedTC = true;
           } else {
-            let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV21 : URLConstant.SubmitNAP;
+            let SubmitNAPUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
             this.http.post(SubmitNAPUrl, this.NapObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);

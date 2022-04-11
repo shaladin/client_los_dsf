@@ -347,7 +347,7 @@ export class NapDetailFormXComponent implements OnInit {
       let reqObj: SubmitNapObj = new SubmitNapObj();
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
-      let SubmitNapUrl = environment.isCore? URLConstant.SubmitNAPV21 : URLConstant.SubmitNAP;
+      let SubmitNapUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
       this.http.post(SubmitNapUrl, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
