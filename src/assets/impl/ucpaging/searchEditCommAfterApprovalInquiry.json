@@ -90,24 +90,10 @@
     ],
     "bodyList": [
       {
-        "type": "link",
+        "type": "callback",
         "position": "center",
-        "property": "EditAppAftApvTrxNo",
-        "path": "EDIT_COMM_AFT_APV_INQUIRY_DETAIL",
-        "param":[
-            {
-                "type":"EditCommAftApvTrxNoId",
-                "property":"EditCommTrxNoId"
-            },
-            {
-              "type":"BizTemplateCode",
-              "property":"BizTemplateCode"
-            },
-            {
-              "type":"AppId",
-              "property":"AppId"
-            }
-        ]
+        "property": "EditCommAftApvTrxNo",
+        "key": "editCommAftApvTrx"
       },
       {
         "type": "callback",
