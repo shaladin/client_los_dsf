@@ -203,7 +203,7 @@ export class AssetDataAddEditComponent implements OnInit {
     OwnerAreaCode4: [''],
     OwnerZipcode: [''],
     OwnerMobilePhn: [''],
-    OwnerMobilePhnNo: [''],
+    OwnerMobilePhnNo: ['', [Validators.pattern("^[0-9]+$")]],
     OwnerAddrType: [''],
     MrOwnerTypeCode: [''],
 
