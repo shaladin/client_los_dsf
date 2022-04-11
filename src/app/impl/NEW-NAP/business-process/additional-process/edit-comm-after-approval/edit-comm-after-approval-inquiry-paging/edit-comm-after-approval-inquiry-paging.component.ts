@@ -4,10 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-edit-comm-after-approval-inquiry-paging',
@@ -22,7 +25,8 @@ export class EditCommAfterApprovalInquiryPagingComponent implements OnInit {
   constructor(
     private http: HttpClient, 
     private route: ActivatedRoute,
-    private adInsHelperService: AdInsHelperService
+    private adInsHelperService: AdInsHelperService,
+    private cookieService: CookieService
     ) {
       this.route.queryParams.subscribe(params => {
         if (params["BizTemplateCode"] != null) {
@@ -49,7 +53,7 @@ export class EditCommAfterApprovalInquiryPagingComponent implements OnInit {
   getEvent(event) {
     console.log(event)
     if(event.Key == "customer"){
-      let CustNoObj = { CustNo: event.RowObj.CustNo };
+      let CustNoObj = { CustNo: event.RowObj.CustomerNo };
       this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
         (response) => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
@@ -60,8 +64,9 @@ export class EditCommAfterApprovalInquiryPagingComponent implements OnInit {
           }
         });
     }
-    else if(event.Key == "editAppAftApvTrx"){
-      AdInsHelper.OpenEditAppAfterApv(event.RowObj.EditAppAftApvTrxHId, event.RowObj.AgrmntId); 
+    else if(event.Key == "editCommAftApvTrx"){
+      let token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+      window.open(environment.losR3Web + NavigationConstant.EDIT_COMM_AFT_APV_INQUIRY_DETAIL + "?EditCommAftApvTrxNoId=" + event.RowObj.EditCommTrxNoId + "&BizTemplateCode=" + event.RowObj.BizTemplateCode + "&AppId=" + event.RowObj.AppId + "&Token=" + token, "_blank");
     }
     else if(event.Key == "agreement"){
       AdInsHelper.OpenAgrmntViewByAgrmntId(event.RowObj.AgrmntId);
