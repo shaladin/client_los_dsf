@@ -44,10 +44,49 @@
             </form>
           </div>
         </div>
-        <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj"></lib-ucgridview>
+        <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj" *ngIf="IsCustAllowedContinue"></lib-ucgridview>
+        
+        <div class="alert alert-danger text-center mt-3" *ngIf="!IsCustAllowedContinue" translate>
+          <h5 class="card-title mt-2">Unable to continue, because customer is registered as Negative Customer.</h5>
+        </div>
+
+        <!-- START SLIK VALIDATION -->
+        <div *ngIf="!ResSlikValidation.IsValid">
+          <lib-ucSubsection [id]="'slikValidationId'" [title]="'SLIK Validation'" [panel]="'slikValidation'">
+          </lib-ucSubsection>
+          <div id="slikValidation">
+            <div class="alert alert-danger text-center" style="color: white!important; background-color: #fe0000!important;">
+              <b>
+                <i class="ft-alert-triangle mr-2"></i> <span translate>Unable to continue, because following SLIK validation.</span> <i class="ft-alert-triangle ml-2"></i>
+              </b>
+            </div>
+            <table class="table table-hover" >
+              <thead>
+                <tr class="table-header">
+                  <th translate>Customer Name</th>                
+                  <th translate class="text-center">Customer No</th>
+                  <th translate>Invalid Data</th>                
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of ResSlikValidation.ListAppCustValidationObj">
+                  <tr *ngIf="item.ValidationErrorObj && item.ValidationErrorObj.length > 0">
+                    <td>{{item.CustName}}</td>
+                    <td class="text-center">{{item.CustNo}}</td>
+                    <td>
+                      <ul class="pl-3">
+                        <li *ngFor="let errMsg of item.ValidationErrorObj">{{errMsg.Value}}</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- END SLIK VALIDATION -->
+
         <div class="text-right py-2">
-          <button *ngIf="ReturnHandlingHId == 0" type="button" class="btn btn-raised btn-primary"
-            (click)="buttonSubmitOnClick()" translate>
+          <button *ngIf="ReturnHandlingHId == 0 && IsCustAllowedContinue" type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()" translate>
             Submit
           </button>
           <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()"

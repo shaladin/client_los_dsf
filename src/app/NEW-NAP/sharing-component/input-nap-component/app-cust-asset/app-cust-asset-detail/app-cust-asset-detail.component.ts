@@ -81,6 +81,12 @@ export class AppCustAssetDetailComponent implements OnInit {
   SaveForm(){
     var formValue = this.CustAssetForm.value;
     formValue.AssetTotalValue = formValue.AssetValue * formValue.AssetQty;
+
+    if(formValue.AssetQty > 1000000){
+      this.toastr.warningMessage("Asset Quantity cannot more than 1 Million")
+      return;
+    }
+
     var url = "";
     if(this.AppCustAssetId && this.AppCustAssetId > 0){
       url = URLConstant.EditAppCustAsset;

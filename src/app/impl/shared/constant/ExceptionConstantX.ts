@@ -5,4 +5,5 @@ export class ExceptionConstantX {
   public static EFF_DATE_MUST_LOWER_THAN_DEL_DT = "Effective Date must not be lower than Delivery Date";
   public static FINANCING_AMT_CANNOT_LESS_THAN_ZERO = "Financing Amount can not be less than 0"; 
   public static PLEASE_CLICK_SAVE_FIRST = "Please click Save first"; 
+  public static IS_OWNER_NEED_SHARE_PRCNT = "Owner Need to Input Share Prcnt";
 }

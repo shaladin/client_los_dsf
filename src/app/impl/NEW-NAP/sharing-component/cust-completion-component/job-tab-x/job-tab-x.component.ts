@@ -90,7 +90,7 @@ export class JobTabXComponent implements OnInit {
   JobDataForm = this.fb.group({
     MrProfessionCode: ['', Validators.required],
     IndustryTypeCode: [Validators.required],
-    CoyName: ['', Validators.required],
+    CoyName: ['', [Validators.required, Validators.minLength(2)]],
     MrJobPositionCode: [''],
     MrJobStatCode: [''],
     MrCoyScaleCode: [''],
@@ -567,11 +567,11 @@ export class JobTabXComponent implements OnInit {
     this.InputLookupCompanyObj.isReady = true;
     this.InputLookupEconomicSectorSlikObj.isRequired = true;
 
-    if (CustModelCode == CommonConstant.CustModelNonProfessional || CustModelCode == CommonConstant.CustModelProfessional) {
+    if (CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.JobDataForm.controls.CoyName.clearValidators();
     }
     else {
-      this.JobDataForm.controls.CoyName.setValidators(Validators.required);
+      this.JobDataForm.controls.CoyName.setValidators([Validators.required, Validators.minLength(2)]);
     }
     this.JobDataForm.updateValueAndValidity();
   }

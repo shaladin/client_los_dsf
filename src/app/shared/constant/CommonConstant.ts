@@ -767,6 +767,8 @@ export class CommonConstant {
   public static GsCodeIsShowMultiReferantor = "IS_SHOW_MULTI_REFERANTOR";
   public static GsCodeManufacturingYearMandatoryByCollType = "MANUFACTURING_YEAR_MANDATORY_BY_COLLATERAL_TYPE";
   public static LenOverwriteAgrNo = "OVERWRITE_AGR_NO_LENGTH";
+  public static GSCodeCoyMandatoryLegalDocs = "COY_MANDATORY_LEGAL_DOCS";
+  public static GSCodeCustAgeLimit = "CUST_AGE_LIMIT";
   public static GsCodeNegCustAllowNap = "NEGCUSTALLOWNAP";
 
   //MOU CUST FEE PAYMENT TYPE
