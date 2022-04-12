@@ -61,13 +61,13 @@ export class UcInsuranceDetailComponent implements OnInit {
 
   isFromDB: boolean = false;
   isGenerate: boolean = false;
-  isOffTheRoadOrHE: boolean = false;
   isCalculate: boolean = false;
   isApplyToAll: boolean = false;
   showGenerate: boolean = false;
   adminFeeLock: boolean = false;
   isAllPaidByCust: boolean = true;
   stampdutyFeeLock: boolean = false;
+  isOffTheRoadOrHE: boolean = false;
   isUsingSeatCount: boolean = false;
   isYearlyCapitalized: boolean = false;
 
@@ -2162,18 +2162,30 @@ export class UcInsuranceDetailComponent implements OnInit {
     let InscoMainPremiRate = this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][0].controls.InscoMainPremiRate.value;
     let DiscountToInsco = (1 - (InscoMainPremiRate / CustMainPremiRate)) * 100;
 
-    if(DiscountToInsco < 0){
-      this.toastr.warningMessage(String.Format(ExceptionConstant.X_CANT_BE_GREATER_THAN_Y , "Main Coverage Rate to Insurance Company", "Main Coverage Rate to Customer"));
-      DiscountToInsco = 0;
-    }
-
     this.InsuranceDataForm.patchValue({
-      DiscountToInsco : DiscountToInsco
-    })
+      DiscountToInsco : this.discountCheck(DiscountToInsco)
+    });
   }
 
   discountChanged(){
     this.isCalculate = false;
+    this.InsuranceDataForm.patchValue({
+      DiscountToInsco : this.discountCheck(this.InsuranceDataForm.controls.DiscountToInsco.value, "INPUT")
+    });
+  }
+
+  discountCheck(DiscountToInsco: number, From: string = "SYSTEM"){
+    let a = "Main Coverage Rate to Insurance Company";
+    let b = "Main Coverage Rate to Customer";
+    if(DiscountToInsco < 0 || DiscountToInsco > 100){
+      if(DiscountToInsco > 100 && From == "INPUT"){
+        a = "Discount to Insco";
+        b = "100%";
+      }
+      this.toastr.warningMessage(String.Format(ExceptionConstant.X_CANT_BE_GREATER_THAN_Y, a, b));
+      return 0;
+    }
+    return DiscountToInsco;
   }
 
   premiRateChanged(at: string, MainCvgIdx: number, AddCvgIdx : number = 0){

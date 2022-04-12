@@ -312,7 +312,9 @@ export class UcInsuranceComponent implements OnInit {
             isValid = false;
         }
         if (isValid)
-          this.outputTab.emit();
+          this.outputTab.emit({
+            Action : "SaveContinue"
+          });
         else
           this.toastr.warningMessage("Please Complete Insurance Data on All Collateral.");
       });
@@ -320,11 +322,12 @@ export class UcInsuranceComponent implements OnInit {
 
   SaveForm(saveObj: InsuranceDataObj) {
     let obj = {
-      Action : "Save",
+      Action : "SaveDetail",
       InsuranceData : saveObj
     }
     this.outputTab.emit(obj);
   }
+
   Cancel() {
     this.BindMultiInsGridData();
     this.PageState = 'Paging';

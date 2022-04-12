@@ -35,7 +35,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   SaveForm(event: any) {
-    if(event.Action == "Save"){
+    if(event.Action == "SaveDetail"){
       this.http.post(URLConstant.AddEditInsuranceData, event.InsuranceData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
