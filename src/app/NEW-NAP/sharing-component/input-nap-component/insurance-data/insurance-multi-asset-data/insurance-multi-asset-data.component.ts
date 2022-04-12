@@ -42,7 +42,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   SaveForm(event) {
-    if(event.Action == "Save"){
+    if(event.Action == "SaveDetail"){
       let url = URLConstant.EditInsuranceDataMultiAsset;
       if (event.InsuranceData.AppInsObjObj.AppInsObjId == 0) url = URLConstant.AddInsuranceDataMultiAsset;
       this.http.post(url, event.InsuranceData).subscribe(
