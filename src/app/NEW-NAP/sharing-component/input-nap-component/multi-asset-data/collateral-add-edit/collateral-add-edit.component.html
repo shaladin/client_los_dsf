@@ -241,19 +241,22 @@
               </div>
               <div class="form-group row">
                 <label class="col-md-2" translate>Copy Address From</label>
-                <div class="col-md-2">
-                  <select class="form-control adInsInput" formControlName="CollateralOwnerAddr">
-                    <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
-                      {{ram.MrCustAddrTypeCode}}
-                    </option>
-                  </select>
-                </div>
-                <div class="input-group-append">
-                  <span class="input-group-btn">
-                    <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()">
-                      <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
-                    </button>
-                  </span>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <select class="form-control adInsInput" formControlName="CollateralOwnerAddr">
+                      <option value="" translate>-Select One-</option>
+                      <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
+                        {{ram.MrCustAddrTypeCode}}
+                      </option>
+                    </select>
+                    <div class="input-group-append">
+                      <span class="input-group-btn">
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()">
+                          <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForColl"
@@ -265,20 +268,22 @@
             <div id="collLoc">
               <div class="form-group row">
                 <label class="col-md-2" translate>Copy Address From</label>
-                <div class="col-md-2">
-                  <select class="form-control adInsInput" formControlName="LocationAddrType">
-                    <option value="" translate>-Select One-</option>
-                    <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
-                      {{ram.MrCustAddrTypeCode}}
-                    </option>
-                  </select>
-                </div>
-                <div class="input-group-append">
-                  <span class="input-group-btn">
-                    <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
-                      <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
-                    </button>
-                  </span>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <select class="form-control adInsInput" formControlName="LocationAddrType">
+                      <option value="" translate>-Select One-</option>
+                      <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
+                        {{ram.MrCustAddrTypeCode}}
+                      </option>
+                    </select>
+                    <div class="input-group-append">
+                      <span class="input-group-btn">
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                          <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLoc" [enjiForm]="enjiForm"
@@ -563,20 +568,22 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2" translate>Copy Address From</label>
-                  <div class="col-md-2">
-                    <select class="form-control adInsInput" formControlName="CollateralOwnerAddr">
-                      <option value="" translate>-Select One-</option>
-                      <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
-                        {{ram.MrCustAddrTypeCode}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="input-group-append">
-                    <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()">
-                        <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
-                      </button>
-                    </span>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <select class="form-control adInsInput" formControlName="CollateralOwnerAddr">
+                        <option value="" translate>-Select One-</option>
+                        <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
+                          {{ram.MrCustAddrTypeCode}}
+                        </option>
+                      </select>
+                      <div class="input-group-append">
+                        <span class="input-group-btn">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()">
+                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForColl"
@@ -588,19 +595,22 @@
               <div id="collLoc">
                 <div class="form-group row">
                   <label class="col-md-2" translate>Copy Address From</label>
-                  <div class="col-md-2">
-                    <select class="form-control adInsInput" formControlName="LocationAddrType">
-                      <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
-                        {{ram.MrCustAddrTypeCode}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="input-group-append">
-                    <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
-                        <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
-                      </button>
-                    </span>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <select class="form-control adInsInput" formControlName="LocationAddrType">
+                        <option value="" translate>-Select One-</option>
+                        <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
+                          {{ram.MrCustAddrTypeCode}}
+                        </option>
+                      </select>
+                      <div class="input-group-append">
+                        <span class="input-group-btn">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLoc" [enjiForm]="enjiForm"

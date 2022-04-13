@@ -436,6 +436,9 @@ export class AssetDataAddEditComponent implements OnInit {
         this.inputAddressObjForLoc.default = this.locationAddrObj;
         this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
       });
+      this.AssetDataForm.patchValue({
+        LocationAddrType: ""
+      });
   }
 
   SetSupplier(event) {
@@ -2263,7 +2266,8 @@ export class AssetDataAddEditComponent implements OnInit {
         OwnerAreaCode3: addrObj.AreaCode3,
         OwnerAreaCode4: addrObj.AreaCode4,
         OwnerCity: addrObj.City,
-        OwnerZipcode: addrObj.Zipcode
+        OwnerZipcode: addrObj.Zipcode,
+        OwnerAddrType: ""
       });
       let ownerAddrObj = new AddrObj();
       ownerAddrObj.Addr = addrObj.Addr;
