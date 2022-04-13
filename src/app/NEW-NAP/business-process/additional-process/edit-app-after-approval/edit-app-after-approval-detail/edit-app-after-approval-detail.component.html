@@ -95,7 +95,7 @@
                             <div class="col-md-6">
                                 <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPL')" [value]="CommData.controls.CurrentVendorBankAccId.value">
                                   <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" 
-                                   [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                                   [value]="item.VendorBankAccId">{{item.isCurrent == undefined? item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo : '(CURRENT)' + ' - ' + item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
                                 </select>
                             </div>
                           </div>
@@ -139,7 +139,7 @@
                             <label class="col-md-6 adins-required-label"> Supplier Employee Bank Account</label>
                             <div class="col-md-6">
                               <select [ngClass]="{ 'is-invalid': enjiForm.submitted && CommData.controls.CurrentVendorBankAccId.invalid }" class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPLEMP')" [value]="CommData.controls.CurrentVendorBankAccId.value">
-                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.VendorBankAccId == '' ? '-Select One-' : item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.VendorBankAccId == '' ? '-Select One-' : item.isCurrent == undefined? item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo : '(CURRENT)' + ' - ' + item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
                               </select>
                             </div>
                           </div>
@@ -168,7 +168,7 @@
                           <label class="col-md-6 adInsLabel"> Referantor Bank Account</label>
                           <div class="col-md-6">
                             <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'REF')" [value]="CommData.controls.CurrentVendorBankAccId.value">
-                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.isCurrent == undefined? item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo : '(CURRENT)' + ' - ' + item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
                             </select>
                           </div>
                         </div>

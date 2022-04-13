@@ -1115,6 +1115,10 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
     this.inputAddressObjForLoc.default = this.LocationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
+
+    this.AddCollForm.patchValue({
+      CopyFromLegal: ""
+    });
     }
   }
 

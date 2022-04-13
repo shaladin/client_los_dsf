@@ -15,6 +15,7 @@ export class ShareholderListingObj{
     IsExistingCust: boolean;
     MrIdTypeCode: string;
     IdNo: string;
+    PublicIdentityNo: string;
     constructor(){
         
     }

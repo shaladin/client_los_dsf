@@ -1038,6 +1038,7 @@ export class URLConstant {
   public static DeleteAppAsset = environment.losUrl + "/v1" + "/AppAsset/DeleteAppAsset";
   public static DeleteListAppAsset = environment.losUrl + "/v1" + "/AppAsset/DeleteListAppAsset";
   public static GenerateAppAssetAttr = environment.losUrl + "/v1" + "/AppAsset/GenerateAppAssetAttr";
+  public static GenerateAppAssetAttrV2 = environment.losUrl + "/v2" + "/AppAsset/GenerateAppAssetAttr";
   public static GenerateAppAssetAttrForEditAppAftApv = environment.losUrl + "/v1" + "/AppAsset/GenerateAppAssetAttrForEditAppAftApv";
   public static GetListAppAssetAccessoryByAppId = environment.losUrl + "/v1" + "/AppAsset/GetListAppAssetAccessoryByAppId";
 
@@ -1158,6 +1159,7 @@ export class URLConstant {
   public static ExecuteInsRateRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateRule";
   public static ExecuteInsRateRuleV2 = environment.losUrl + "/v2" + "/AppIns/ExecuteInsRateRule";
   public static CalculateInsurance = environment.losUrl + "/v1" + "/AppIns/CalculateInsurance";
+  public static CalculateInsuranceV2 = environment.losUrl + "/v2" + "/AppIns/CalculateInsurance";
   public static GetCuCoInsLength = environment.losUrl + "/v1" + "/AppIns/GetCuCoInsLength";
   public static ExecuteInsRateCvgRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateCvgRule";
   public static ExecuteInsRateCvgRuleV2_1 = environment.losUrl + "/v2.1" + "/AppIns/ExecuteInsRateCvgRule";
@@ -1317,6 +1319,7 @@ export class URLConstant {
   public static AddAppSubsidyV2 = environment.losUrl + "/v2" + "/AppSubsidy/AddSubsidy";
   public static EditAppSubsidy = environment.losUrl + "/v1" + "/AppSubsidy/EditAppSubsidy";
   public static EditAppSubsidyV2 = environment.losUrl + "/v2" + "/AppSubsidy/EditAppSubsidy";
+  public static GetApvAmountForCrdRvwByAppId = environment.losUrl + "/v1" + "/AppFinData/GetApvAmountForCrdRvwByAppId";
 
   public static GetInitAppFinDataDFByAppId = environment.losUrl + "/v1" + "/AppFinData/GetInitAppFinDataDFByAppId";
   public static GetInitAppFinDataDFByAppIdV2 = environment.losUrl + "/v2" + "/AppFinData/GetInitAppFinDataDFByAppId";
@@ -1936,6 +1939,7 @@ export class URLConstant {
   public static GenerateAppAttrContent = environment.losUrl + "/v1" + "/AppAttrContent/GenerateAppAttrContent";
   public static GenerateAppAttrContentV2 = environment.losUrl + "/v2" + "/AppAttrContent/GenerateAppAttrContent";
   public static GetListAppAttrContentForView = environment.losUrl + "/v1" + "/AppAttrContent/GetListAppAttrContentForView";
+  public static GetAppCollAttrContentByIdAndCode = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollAttrContentByIdAndCode";
 
   //Dashboard
   public static GetAppCountAndMappingStep = environment.losUrl + "/v1" + "/Dashboard/GetAppCountAndMappingStep";
