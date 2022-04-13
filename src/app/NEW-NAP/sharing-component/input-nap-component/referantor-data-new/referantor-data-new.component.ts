@@ -53,6 +53,7 @@ export class ReferantorDataNewComponent implements OnInit {
   ListAppReferantors: Array<NapAppReferantorModel> = new Array<NapAppReferantorModel>();
   itemCalcMethodType: any;
 
+  incrementFormNo: number = 0;
   InputLookupReferantorObj: InputLookupObj;
   appReferantorListObj: ListAppReferantorObj = new ListAppReferantorObj();
 
@@ -60,6 +61,10 @@ export class ReferantorDataNewComponent implements OnInit {
     CheckBoxAppReferantor: [false],
     AppReferantorObjs: this.fb.array([])
   });
+
+  getFormAppReferantorObjs(){
+    return this.NapAppReferantorForm.get('AppReferantorObjs') as FormArray;
+  }
 
   async ngOnInit() {
     this.appReferantorListObj = new ListAppReferantorObj();
@@ -83,7 +88,6 @@ export class ReferantorDataNewComponent implements OnInit {
     await this.http.post(URLConstant.GetListAppReferantorWithDetailByAppId, obj).toPromise().then(
       (response) => {
         this.ListAppReferantors = response[CommonConstant.ReturnObj];
-        console.log(this.ListAppReferantors);
         if (this.ListAppReferantors.length != 0) {
           this.ReferantorOn = true;
           this.ExistedData = true;
@@ -96,29 +100,27 @@ export class ReferantorDataNewComponent implements OnInit {
   }
 
   addReferantor(){
-    let appReferantorObjs = this.NapAppReferantorForm.controls["AppReferantorObjs"] as FormArray;
-    let length = this.NapAppReferantorForm.value["AppReferantorObjs"].length;
+    let length = this.getFormAppReferantorObjs().length;
 
     if((length + 1) > this.maxReferantor){
       this.toastr.warningMessage(String.Format(ExceptionConstant.MAX_REFERANTOR_EXCEPTION, this.maxReferantor));
       return;
     }
 
-    let max = 0;
-    if (length > 0) {
-      max = this.NapAppReferantorForm.value["AppReferantorObjs"][length - 1].No;
-    }
-
-    appReferantorObjs.push(this.addGroup(undefined, max + 1));
-    let InputLookupReferantorObj = this.initLookupRefTypeAgency();
-    this.dictRefTypeLookup[max + 1] = InputLookupReferantorObj;
-    this.dictBank[max + 1] = this.initBankAcc();
+    this.getFormAppReferantorObjs().push(this.addGroup(undefined));
+    length = this.getFormAppReferantorObjs().length;
+    let refNo = this.getFormAppReferantorObjs().at(length - 1).get("No").value;
+    this.dictRefTypeLookup[refNo] = this.initLookupRefTypeAgency();
+    this.dictBank[refNo] = this.initBankAcc();
   }
 
   removeReferantor(i: number){
-    let appReferantorObjs = this.NapAppReferantorForm.controls["AppReferantorObjs"] as FormArray;
+    let refNo = this.getFormAppReferantorObjs().at(i).get("No").value;
+    this.getFormAppReferantorObjs().removeAt(i);
 
-    appReferantorObjs.removeAt(i);
+    delete this.dictRefTypeLookup[refNo];
+    delete this.dictBank[refNo];
+    this.NapAppReferantorForm.removeControl("lookupReferantor"+refNo);
   }
 
   setEditForm(){
@@ -126,16 +128,16 @@ export class ReferantorDataNewComponent implements OnInit {
     this.NapAppReferantorForm.addControl("AppReferantorObjs", this.fb.array([]));
 
     for (let i = 0; i < this.ListAppReferantors.length; i++) {
-      let appReferantorObjs = this.NapAppReferantorForm.controls["AppReferantorObjs"] as FormArray;
-      appReferantorObjs.push(this.addGroup(this.ListAppReferantors[i], i + 1));
+      this.getFormAppReferantorObjs().push(this.addGroup(this.ListAppReferantors[i]));
     }
   }
 
   //Set Group Data
-  addGroup(AppReferantorObjs, i) {
+  addGroup(AppReferantorObjs) {
+    let refNo = this.incrementFormNo++;
     if (AppReferantorObjs == undefined) {
       return this.fb.group({
-        No: [i],
+        No: [refNo],
         AppReferantorId: [0],
         ReferantorCategory: ['', [Validators.required]],
         ReferantorType: [''],
@@ -164,10 +166,10 @@ export class ReferantorDataNewComponent implements OnInit {
       });
     }
     else {
-      this.SetEditLookup(AppReferantorObjs, i);
+      this.SetEditLookup(AppReferantorObjs, refNo);
 
       return this.fb.group({
-        No: [i],
+        No: [refNo],
         AppReferantorId: [AppReferantorObjs.AppReferantorId],
         ReferantorCategory: [AppReferantorObjs.ReferantorCategory, [Validators.required]],
         ReferantorType: [AppReferantorObjs.MrReferantorType],
@@ -213,7 +215,6 @@ export class ReferantorDataNewComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeTaxCalcMethod }).toPromise().then(
       (response) => {
         this.itemCalcMethodType = response[CommonConstant.ReturnObj];
-        console.log(this.itemCalcMethodType);
       }
     );
   }
@@ -251,7 +252,6 @@ export class ReferantorDataNewComponent implements OnInit {
   ClickSave() {
     var url;
     this.SetAppReferantorObj();
-    console.log(this.appReferantorListObj);
     let length = this.NapAppReferantorForm.value["AppReferantorObjs"].length;
     if (this.ExistedData) {
       if (this.ReferantorOn) {
@@ -262,6 +262,7 @@ export class ReferantorDataNewComponent implements OnInit {
         // save
         url = URLConstant.EditListAppReferantor;
         this.SaveData(url);
+
         this.toastr.successMessage('Save Edit Data');
         this.outputTab.emit();
       } else {
@@ -289,44 +290,43 @@ export class ReferantorDataNewComponent implements OnInit {
   }
 
   ChangeReferantorCategory(i: number, ev){
-    console.log(i);
-    console.log(ev);
+    let refNo = this.getFormAppReferantorObjs().at(i).get("No").value;
+
     if(ev == CommonConstant.ReferantorCategoryAgency){
       this.ResetAppReferantorForm(ev, i);
 
       let InputLookupReferantorObj = this.initLookupRefTypeAgency();
 
-      this.dictRefTypeLookup[i + 1] = InputLookupReferantorObj;
-      this.dictBank[i + 1] = this.initBankAcc();
+      this.dictRefTypeLookup[refNo] = InputLookupReferantorObj;
+      this.dictBank[refNo] = this.initBankAcc();
     }
     else if(ev == CommonConstant.ReferantorCategoryCustomer){
       this.ResetAppReferantorForm(ev, i);
 
       let InputLookupReferantorObj = this.initLookupRefTypeCustomer();
 
-      this.dictRefTypeLookup[i + 1] = InputLookupReferantorObj;
-      this.dictBank[i + 1] = this.initBankAcc();
+      this.dictRefTypeLookup[refNo] = InputLookupReferantorObj;
+      this.dictBank[refNo] = this.initBankAcc();
     }
     else{
       this.ResetAppReferantorForm(ev, i);
 
       let InputLookupReferantorObj = this.initLookupRefTypeSupplEmp();
 
-      this.dictRefTypeLookup[i + 1] = InputLookupReferantorObj;
-      this.dictBank[i + 1] = this.initBankAcc();
+      this.dictRefTypeLookup[refNo] = InputLookupReferantorObj;
+      this.dictBank[refNo] = this.initBankAcc();
     }
   }
 
-  async SetEditLookup(AppReferantorObj : NapAppReferantorModel, i : number){
-
+  async SetEditLookup(AppReferantorObj : NapAppReferantorModel, refNo : number){
     if(AppReferantorObj.ReferantorCategory == CommonConstant.ReferantorCategoryAgency){
 
       let InputLookupReferantorObj = this.initLookupRefTypeAgency();
       InputLookupReferantorObj.nameSelect = AppReferantorObj.ReferantorName;
       InputLookupReferantorObj.jsonSelect = { ReferantorName: AppReferantorObj.ReferantorName };
       
-      this.dictRefTypeLookup[i] = InputLookupReferantorObj;
-      await this.SetEditBankDict(AppReferantorObj, i);
+      this.dictRefTypeLookup[refNo] = InputLookupReferantorObj;
+      await this.SetEditBankDict(AppReferantorObj, refNo);
     }
     else if(AppReferantorObj.ReferantorCategory == CommonConstant.ReferantorCategoryCustomer){
 
@@ -334,8 +334,8 @@ export class ReferantorDataNewComponent implements OnInit {
       InputLookupReferantorObj.nameSelect = AppReferantorObj.ReferantorName;
       InputLookupReferantorObj.jsonSelect = { ReferantorName: AppReferantorObj.ReferantorName };
      
-      this.dictRefTypeLookup[i] = InputLookupReferantorObj;
-      await this.SetEditBankDict(AppReferantorObj, i);
+      this.dictRefTypeLookup[refNo] = InputLookupReferantorObj;
+      await this.SetEditBankDict(AppReferantorObj, refNo);
     }
     else{
 
@@ -343,8 +343,8 @@ export class ReferantorDataNewComponent implements OnInit {
       InputLookupReferantorObj.nameSelect = AppReferantorObj.ReferantorName;
       InputLookupReferantorObj.jsonSelect = { ReferantorName: AppReferantorObj.ReferantorName };
       
-      this.dictRefTypeLookup[i] = InputLookupReferantorObj;
-      await this.SetEditBankDict(AppReferantorObj, i);
+      this.dictRefTypeLookup[refNo] = InputLookupReferantorObj;
+      await this.SetEditBankDict(AppReferantorObj, refNo);
     }
   }
 
@@ -442,6 +442,7 @@ export class ReferantorDataNewComponent implements OnInit {
 
   //Untuk Lookup
   async SetReferantorLookupChanges(i, event) {
+    let refNo = this.getFormAppReferantorObjs().at(i).get("No").value;
     this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i].patchValue({
       ReferantorCode : event.ReferantorCode,
       ReferantorName : event.ReferantorName,
@@ -509,7 +510,7 @@ export class ReferantorDataNewComponent implements OnInit {
         }
       }
 
-      this.dictBank[i + 1] = arrCustBankAccCustom;
+      this.dictBank[refNo] = arrCustBankAccCustom;
     }
     else if(this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i]["controls"].ReferantorCategory.value == CommonConstant.ReferantorCategoryCustomer){
       let custBankAccList : Array<CustBankAccObj> = new Array<CustBankAccObj>();
@@ -556,7 +557,7 @@ export class ReferantorDataNewComponent implements OnInit {
         }
       }
       
-      this.dictBank[i + 1] = arrCustBankAccCustom;
+      this.dictBank[refNo] = arrCustBankAccCustom;
     }
     else{
       let vendorEmpBankAccList : Array<VendorBankAccObj> = new Array<VendorBankAccObj>();
@@ -603,7 +604,7 @@ export class ReferantorDataNewComponent implements OnInit {
         }
       }
       
-      this.dictBank[i + 1] = arrCustBankAccCustom;
+      this.dictBank[refNo] = arrCustBankAccCustom;
     }
   }
 
@@ -620,22 +621,19 @@ export class ReferantorDataNewComponent implements OnInit {
 
   //Change Bank Acc
   ChangeBankAccount(i, event){
-    console.log(i);
-    console.log(event);
-    // console.log(this.dictBank[i+1]);
+    let refNo = this.getFormAppReferantorObjs().at(i).get("No").value;
     if(event == ""){
       this.ResetBankData(i);
     }
     else{
-      for(let j = 0; j < this.dictBank[i+1].length ; j++){
-        console.log(this.dictBank[i+1][j]['BankAccountNo'] == event);
-        if(this.dictBank[i+1][j]['BankAccountNo'] == event){
+      for(let j = 0; j < this.dictBank[refNo].length ; j++){
+        if(this.dictBank[refNo][j]['BankAccountNo'] == event){
           this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i].patchValue({
-            RefBankCode:  this.dictBank[i+1][j]['BankCode'],
-            BankAccNo: this.dictBank[i+1][j]['BankAccountNo'],
-            BankAccName: this.dictBank[i+1][j]['BankAccountName'],
-            BankBranch: this.dictBank[i+1][j]['BankBranch'],
-            BankName: this.dictBank[i+1][j]['BankName']
+            RefBankCode:  this.dictBank[refNo][j]['BankCode'],
+            BankAccNo: this.dictBank[refNo][j]['BankAccountNo'],
+            BankAccName: this.dictBank[refNo][j]['BankAccountName'],
+            BankBranch: this.dictBank[refNo][j]['BankBranch'],
+            BankName: this.dictBank[refNo][j]['BankName']
           });
         }
       }
@@ -643,7 +641,6 @@ export class ReferantorDataNewComponent implements OnInit {
   }
 
   ChangeMrTaxCalcMethod(i, event){
-    // console.log(event);
     this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i].patchValue({
       MrTaxCalcMethod: event
     });
@@ -680,7 +677,7 @@ export class ReferantorDataNewComponent implements OnInit {
     }
   }
 
-  async SetEditBankDict(AppReferantorObj : NapAppReferantorModel, i : number){
+  async SetEditBankDict(AppReferantorObj : NapAppReferantorModel, refNo : number){
     if(AppReferantorObj.ReferantorCategory == CommonConstant.ReferantorCategoryAgency){
       let vendorBankAccList : Array<VendorBankAccObj> = new Array<VendorBankAccObj>();
       await this.http.post<VendorBankAccObj>(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: AppReferantorObj.ReferantorCode }).toPromise().then(
@@ -703,7 +700,7 @@ export class ReferantorDataNewComponent implements OnInit {
         }
       }
 
-      this.dictBank[i] = arrCustBankAccCustom;
+      this.dictBank[refNo] = arrCustBankAccCustom;
     }
     else if(AppReferantorObj.ReferantorCategory == CommonConstant.ReferantorCategoryCustomer){
       let custBankAccList : Array<CustBankAccObj> = new Array<CustBankAccObj>();
@@ -727,7 +724,7 @@ export class ReferantorDataNewComponent implements OnInit {
         }
       }
       
-      this.dictBank[i] = arrCustBankAccCustom;
+      this.dictBank[refNo] = arrCustBankAccCustom;
     }
     else{
       let vendorEmpBankAccList : Array<VendorBankAccObj> = new Array<VendorBankAccObj>();
@@ -751,7 +748,7 @@ export class ReferantorDataNewComponent implements OnInit {
         }
       }
       
-      this.dictBank[i] = arrCustBankAccCustom;
+      this.dictBank[refNo] = arrCustBankAccCustom;
     }
   }
 
