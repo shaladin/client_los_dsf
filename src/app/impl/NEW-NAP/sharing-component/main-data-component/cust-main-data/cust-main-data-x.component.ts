@@ -649,13 +649,13 @@ export class CustMainDataXComponent implements OnInit {
   getLookUpSlik(ev: { Code: string, Jabatan: string }) {
     let tempMrPositionSlikCode = this.CustMainDataForm.get("MrPositionSlikCode");
     tempMrPositionSlikCode.patchValue(ev.Code);
+    this.CheckJobPostionIsOwner();
   }
 
   getLookUpJobPosition(ev) {
     this.CustMainDataForm.patchValue({
       MrJobPositionCode: ev.JobCode,
     });
-    this.CheckJobPostionIsOwner();
   }
 
   getLookUpProfession(event: RefProfessionObj) {
@@ -2201,7 +2201,7 @@ export class CustMainDataXComponent implements OnInit {
 
   CheckJobPostionIsOwner(){
     if(this.custMainDataMode == this.CustMainDataMgmntShrholder){
-      let x = this.ListJobPostIsOwner.find(f=>f == this.CustMainDataForm.controls.MrJobPositionCode.value);
+      let x = this.ListJobPostIsOwner.find(f=>f == this.CustMainDataForm.controls.MrPositionSlikCode.value);
       console.log(x);
       if(x!= null){
         this.CustMainDataForm.patchValue({
