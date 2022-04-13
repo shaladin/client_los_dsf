@@ -1436,6 +1436,7 @@ export class URLConstant {
   public static GetTaskHistoryByTransactionNo = environment.FoundationR3Url + "/v2" + "/Workflow/GetTaskHistoryByTransactionNo";
   public static GetListTaskHistoryByAgrmntNo = environment.FoundationR3Url + "/v2" + "/Workflow/GetListTaskHistoryByAgrmntNo";
   public static CompleteTask = environment.FoundationR3Url + "/v2" + "/Workflow/CompleteTask";
+  public static GetTaskHistoryByListTransactionNoAndWfCode = environment.FoundationR3Url + "/v2" + "/Workflow/GetTaskHistoryByListTransactionNoAndWfCode";
 
   //Application Data
   public static SaveApplicationDataFctr = environment.losUrl + "/v1" + "/ApplicationData/SaveApplicationDataFctr"
