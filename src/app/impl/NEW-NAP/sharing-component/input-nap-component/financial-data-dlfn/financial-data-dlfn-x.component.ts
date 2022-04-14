@@ -250,6 +250,12 @@ export class FinancialDataDlfnXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.NTF_MUST_BE_GREAD_THAN_TOTFEE);
       return;
     }
+    
+    if(this.FinDataForm.get("InterestType").value != "PRCNT"){
+      this.FinDataForm.patchValue({
+        EffectiveRatePrcnt : 0
+      });
+    }    
 
     if (isValidGracePeriod) {
 
