@@ -209,5 +209,7 @@ export class ExceptionConstant {
     public static MANDATORY_LEGAL_DOC = "Legal Documents with following type are mandatory: {0}";
     public static CUST_AGE_BETWEEN = "Customer age must be between {0} and {1} year old";
     public static CUST_AGE_MIN = "Customer age must be at least {0} year old";
+
+    public static LEAD_INPUT_AGENCY_CMO_TELE = "Please input either Agency, CMO or Tele Sales";
 }
 
