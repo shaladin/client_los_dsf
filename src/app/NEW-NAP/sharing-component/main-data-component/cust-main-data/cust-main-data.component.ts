@@ -818,11 +818,11 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
-      this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       if (this.custMainDataMode != CommonConstant.CustMainDataModeMgmntShrholder) {
         this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern(CommonConstant.regexEmail)]);
+        this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       }
       else{
         this.CustMainDataForm.controls.Email1.setValidators([Validators.pattern(CommonConstant.regexEmail)]);
