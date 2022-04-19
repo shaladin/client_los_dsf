@@ -154,7 +154,6 @@ export class UcInsuranceComponent implements OnInit {
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetDataView.json";
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
     await this.BindMultiInsGridData();
-    await this.GetCollateralDDLForCopy;
   }
 
   CancelHandler() {
@@ -260,6 +259,12 @@ export class UcInsuranceComponent implements OnInit {
           if (this.listAppCollateralObj[0].TotalCustPremiAmt != null)
             this.TotalPremiumToCust = this.listAppCollateralObj[0].TotalCustPremiAmt;
         });
+    
+        await this.http.post(URLConstant.GetListAppCollateralForCopyInsuranceByAppId, this.appAssetObj).toPromise().then(
+          (response) => {
+            this.listDataCollateral = response[CommonConstant.ReturnObj];
+          }
+        );
     }
   }
 
@@ -355,14 +360,5 @@ export class UcInsuranceComponent implements OnInit {
     this.InsSeqNo = event.InsSeqNo;
     this.isDetail = true;
     this.PageState = this.EditInsurance;
-  }
-  
-  GetCollateralDDLForCopy() {
-    let appAssetObj = { Id: this.inputInsuranceObj.AppId };
-    this.http.post(URLConstant.GetListAppCollateralForCopyInsuranceByAppId, appAssetObj).subscribe(
-      (response) => {
-        this.listDataCollateral = response[CommonConstant.ReturnObj];
-      }
-    );
   }
 }
