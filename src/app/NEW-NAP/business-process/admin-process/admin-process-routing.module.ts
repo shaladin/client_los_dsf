@@ -71,9 +71,6 @@ import { CustConfirmationPagingXComponent } from 'app/impl/NEW-NAP/business-proc
 import { OfferingValidityCheckingRequestPagingComponent } from './offering-validity-checking-request/offering-validity-checking-request-paging/offering-validity-checking-request-paging.component';
 import { OfferingValidityCheckingRequestDetailComponent } from './offering-validity-checking-request/offering-validity-checking-request-detail/offering-validity-checking-request-detail.component';
 import { ApplicationAgreementCancellationDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail-x.component';
-import { InvoiceDataPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-paging/invoice-data-paging-x.component';
-import { InvoiceDataDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-detail/invoice-data-detail-x.component';
-import { InvoiceDataXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data/invoice-data-x.component';
 
 const routes: Routes = [
   {
@@ -554,28 +551,7 @@ const routes: Routes = [
         data: {
           title: 'Agreement Cancellation Detail'
         }
-      },
-      {
-        path: PathConstantX.INVOICE_PAGING_X,
-        component: InvoiceDataPagingXComponent,
-        data: {
-          title: 'Invoice Data Paging'
-        }
-      },
-      {
-        path: PathConstantX.INVOICE_DETAIL_X,
-        component: InvoiceDataDetailXComponent,
-        data: {
-          title: 'Invoice Data Detail'
-        }
-      },
-      {
-        path: PathConstantX.INVOICE_X,
-        component: InvoiceDataXComponent,
-        data: {
-          title: 'Invoice Data'
-        }
-      },
+      }
     ]
   }
 ];

@@ -76,9 +76,6 @@ export class PathConstantX {
   public static NAP_DOC_PRINT_VIEW_X = PathConstant.NAP_DOC_PRINT + "/" + PathConstantX.VIEW;
   public static NAP_DOC_SIGNER_PAGING_X = PathConstant.NAP_DOC_SIGNER + "/" + PathConstantX.PAGING;
   public static NAP_DOC_SIGNER_DETAIL_X = PathConstant.NAP_DOC_SIGNER + "/" + PathConstantX.DETAIL_X;
-  public static INVOICE_PAGING_X = PathConstant.INVOICE + '/' + PathConstantX.PAGING;
-  public static INVOICE_DETAIL_X = PathConstant.INVOICE + '/' + PathConstantX.DETAIL_X;
-  public static INVOICE_X = 'InvoiceX';
   //#endregion
 
   //#region Nap-Cust-Compl
