@@ -613,6 +613,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         MrOwnerTypeCode: response["MrOwnerTypeCode"]
         // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
+      await this.onItemChange(response["AssetTypeCode"], true);
 
       this.CopyUserForSelfOwner();
       
@@ -678,7 +679,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.AddCollForm.controls.MrOwnerTypeCode.disable(); 
       this.inputAddressObjForOwner.isReadonly = true;
       this.inputAddressObjForLoc.isReadonly = true; 
-      this.getRefAssetDocList(true);
       this.AddCollForm.patchValue({
         CollateralStat: CommonConstant.AssetStatExisting
         });
