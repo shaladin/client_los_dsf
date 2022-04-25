@@ -1,0 +1,176 @@
+{
+    "title": "MOU Customer Request",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "officeRoleCodes",
+            "datatype": "text",
+            "name": "M.ORI_OFFICE_CODE",
+            "id": "OfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn" : true,
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "M.MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "M.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MCLCF.CUST_NAME",
+            "id": "VendorName",
+            "value": "",
+            "label": "Vendor Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "M.IS_REVOLVING",
+            "id": "IsRevolvingId",
+            "label": "Revolving",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": true,
+                    "value": "Yes"
+                },
+                {
+                    "key": false,
+                    "value": "No"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "M.REF_NO",
+            "id": "RefNoId",
+            "value": "",
+            "label": "Reference No.",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "searchMouCustomerRequestFactoring"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "M.MOU_CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "M.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "VENDOR NAME",
+            "name": "MCLCF.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REFERENCE NO.",
+            "name": "M.REF_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU TYPE",
+            "name": "M.MR_MOU_TYPE_CODE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "ACTION"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "mouCustNo",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "position": "left",
+            "key": "vendor",
+            "property": "VendorName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RefNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MouTypeName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "MOU_REQ_DETAIL",
+                    "param": [
+                        {
+                            "type": "MouCustId",
+                            "property": "MouCustId"
+                        },
+                        {
+                            "type": "mode",
+                            "property": "edit"
+                        },
+                        {
+                            "type": "MrMouTypeCode",
+                            "property": "MrMouTypeCode"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

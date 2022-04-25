@@ -1,0 +1,152 @@
+<div class="col-md-12 text-left">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title" translate> Edit Agreement After Credit Approval - Approval  </h4>
+        </div>
+        <!-- <div *ngIf="isViewReady"> -->
+            <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
+            <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode"></app-app-main-info>
+        <!-- </div> -->
+        <div class="card-body">
+            <div class="px-3">
+                <lib-ucSubsection *ngIf="IsReadySummary" [id]="'DataChangeSummaryId'" [title]="'Data Change Summary'"
+                    [panel]="'dataChangeSummaryId'">
+                </lib-ucSubsection>
+                <div *ngIf="IsReadySummary" class="form-body" id="dataChangeSummaryId">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <app-edit-comm-after-approval-component-view-detail
+                            [TrxId]="EditAppAftApvTrxHId"
+                            [ConditionOld]="true">
+                            </app-edit-comm-after-approval-component-view-detail>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <app-edit-comm-after-approval-component-view-detail
+                            [TrxId]="EditAppAftApvTrxHId"
+                            [ConditionOld]="false">
+                            </app-edit-comm-after-approval-component-view-detail>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- <div *ngIf="ChangeSummaryObj?.AssetDataObjs?.length != 0">
+                        <div *ngFor="let item of ChangeSummaryObj?.AssetDataObjs">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="adInsLabel"> <b>{{item.FullAssetName}}</b> </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="adInsLabel"> <b>{{item.FullAssetName}}</b> </label>
+                                </div>
+                            </div>
+                            <div *ngFor="let detail of item.EditAppAftApvTrxDObjs">
+                                <div class="form-group row">
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.OldValue}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.NewValue}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <div *ngIf="ChangeSummaryObj?.PoDataObjs?.length != 0">
+                        <div *ngFor="let item of ChangeSummaryObj?.PoDataObjs">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="adInsLabel"> <b>Purchase Order - {{item.SupplName}}</b>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="adInsLabel"> <b>Purchase Order - {{item.SupplName}}</b>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div *ngFor="let detail of item.EditAppAftApvTrxDObjs">
+                                <div class="form-group row">
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.OldValue}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.NewValue}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div *ngIf="ChangeSummaryObj?.AgrmntCommissionDataObjs?.length != 0">
+                        <div *ngFor="let item of ChangeSummaryObj?.AgrmntCommissionDataObjs">
+                            <div *ngIf="item.CommissionRecipientTypeDesc == 'Supplier' || item.CommissionRecipientTypeDesc == 'Referantor'"
+                                class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="adInsLabel"> <b>{{item.CommissionRecipientTypeDesc + 'Commission - ' + item.CommissionRecipientName}}</b> </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="adInsLabel"> <b>{{item.CommissionRecipientTypeDesc + 'Commission - ' + item.CommissionRecipientName}}</b> </label>
+                                </div>
+                            </div>
+                            <div *ngIf="item.CommissionRecipientTypeDesc == 'Supplier Employee'" class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="adInsLabel"> <b>{{item.CommissionRecipientTypeDesc + '
+                                            Commission
+                                            - ' + item.SupplierName + ' - ' + item.CommissionRecipientName + ' -
+                                            ' +
+                                            item.CommissionRecipientPositionDesc}}</b> </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="adInsLabel"> <b>{{item.CommissionRecipientTypeDesc + '
+                                            Commission
+                                            - ' + item.SupplierName + ' - ' + item.CommissionRecipientName + ' -
+                                            ' +
+                                            item.CommissionRecipientPositionDesc}}</b> </label>
+                                </div>
+                            </div>
+                            <div *ngFor="let detail of item.EditAppAftApvTrxDObjs">
+                                <div class="form-group row">
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.OldValue}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="adInsLabel"> {{detail.NewValue}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
+            </lib-ucapprovalgeneralinfo>
+            <p>
+                &nbsp; <span style="display: block"> <br /> </span> &nbsp;
+            </p>
+            <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
+                (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+        </div>
+    </div>
+</div>
