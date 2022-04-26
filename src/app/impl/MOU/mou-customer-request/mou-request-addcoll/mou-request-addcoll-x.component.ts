@@ -1486,6 +1486,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       MaxCollPrcnt: [100, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
       FullAssetCode: [''],
       AssetCategoryCode: [''],
+      MrOwnerTypeCode: [''],
       OwnerName: ['', [Validators.required]],
       OwnerRelationship: ['', [Validators.required]],
       OwnerIdNo: ['', [Validators.required]],
