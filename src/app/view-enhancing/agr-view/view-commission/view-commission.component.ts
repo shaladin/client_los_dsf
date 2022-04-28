@@ -34,7 +34,7 @@ export class ViewCommissionComponent implements OnInit {
   TotalSupplierEmp;
   TotalReferantor;
 
-  ListResultRefundIncomeInfo: Array<ResAppCommIncomeObjX>;
+  ListResultRefundIncomeInfo: Array<ResAppCommIncomeObjX> = new Array<ResAppCommIncomeObjX>();
   MaxAllocatedAmount = 0;
   // END UATDSFCF-911
 
