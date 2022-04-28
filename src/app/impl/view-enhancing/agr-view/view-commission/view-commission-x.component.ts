@@ -5,26 +5,26 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {ResAppCommIncomeObjX} from 'app/impl/shared/model/AppFinData/ResAppCommIncomeObjX.Model';
+import { ResAppCommIncomeObjX } from 'app/impl/shared/model/AppFinData/ResAppCommIncomeObjX.Model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
-  selector: 'app-tab-commission-x',
-  templateUrl: './tab-commission-x.component.html'
+  selector: 'app-view-commission-agrmnt-x',
+  templateUrl: './view-commission-x.component.html'
 })
-export class TabCommissionXComponent implements OnInit {
+export class ViewCommissionXComponent implements OnInit {
 
-  @Input() appId: number = 0;
+  @Input() agrmntId: number = 0;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder
+  ) { }
 
   ListSupplData;
   ListSupplEmpData;
   ListReferantorData;
-
   SupplData: object = {};
   SupplEmpData: object = {};
   ReferantorData: object = {};
@@ -70,13 +70,12 @@ export class TabCommissionXComponent implements OnInit {
     };
 
     // - Penambahan informasi Income Information
-    await this.http.post(URLConstantX.GetCommIncomeInfoByAppIdX, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstantX.GetCommIncomeInfoByAgrIdX, { Id: this.agrmntId }).toPromise().then(
       (response) => {
         this.ListResultRefundIncomeInfo = response[CommonConstant.ReturnObj]
         this.MaxAllocatedAmount = this.ListResultRefundIncomeInfo.reduce((total, x) => total + x.CommissionCompntAmt, 0 )
       })
     // END UATDSFCF-911
-
   }
 
   async ngOnInit() {
@@ -102,7 +101,7 @@ export class TabCommissionXComponent implements OnInit {
 
   // START UATDSFCF-911 - Total Commission dipisah per supplier, supplier emp, dan referantor
   addSummary(tempObj, summaryObj){
-    tempObj.ListappCommissionDObj.sort((a, b) => a.SeqNo - b.SeqNo);
+    tempObj.AgrmntCommDObjs.sort((a, b) => a.SeqNo - b.SeqNo);
     if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplier)
       this.ListSupplData.push(tempObj);
     if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplierEmp)
@@ -110,14 +109,7 @@ export class TabCommissionXComponent implements OnInit {
     if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeReferantor)
       this.ListReferantorData.push(tempObj);
 
-
-    if(tempObj.MrTaxCalcMethodCode == "NETT"){
-      summaryObj.totalCommAmt += tempObj.TotalCommissionAmt;
-    }
-    else{
-      summaryObj.totalCommAmt += tempObj.TotalCommissionAfterTaxAmt;
-    }
-
+    summaryObj.totalCommAmt += tempObj.TotalCommissionAmt;
     summaryObj.totalCommAfterTaxAmt += tempObj.TotalCommissionAfterTaxAmt;
     summaryObj.totalTaxAmt += (tempObj.TaxAmt + tempObj.PenaltyAmt);
     summaryObj.totalVatAmt += tempObj.VatAmt;
@@ -126,7 +118,7 @@ export class TabCommissionXComponent implements OnInit {
   }
 
   async GetCommissionData() {
-    await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAgrmntCommissionWithDetailByAgrmntId, { Id: this.agrmntId }).toPromise().then(
       (response) => {
         let tempResponse = response[CommonConstant.ReturnObj];
         for (var i = 0; i < tempResponse.length; i++) {
