@@ -732,7 +732,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       let x = ArraySerial.filter(f=>f == ArraySerial[i])
 
       if(x.length > 1){
-        this.toastr.errorMessage("Serial number can't duplicate");
+        this.toastr.warningMessage("Serial number can't duplicate");
         return;
       }
     }
