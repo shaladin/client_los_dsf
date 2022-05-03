@@ -311,7 +311,7 @@ export class ReferantorDataNewComponent implements OnInit {
     else{
       this.ResetAppReferantorForm(ev, i);
 
-      let InputLookupReferantorObj = this.initLookupRefTypeSupplEmp();
+      let InputLookupReferantorObj = this.initLookupRefTypeMfEmp();
 
       this.dictRefTypeLookup[refNo] = InputLookupReferantorObj;
       this.dictBank[refNo] = this.initBankAcc();
@@ -339,7 +339,7 @@ export class ReferantorDataNewComponent implements OnInit {
     }
     else{
 
-      let InputLookupReferantorObj = this.initLookupRefTypeSupplEmp();
+      let InputLookupReferantorObj = this.initLookupRefTypeMfEmp();
       InputLookupReferantorObj.nameSelect = AppReferantorObj.ReferantorName;
       InputLookupReferantorObj.jsonSelect = { ReferantorName: AppReferantorObj.ReferantorName };
       
@@ -560,26 +560,17 @@ export class ReferantorDataNewComponent implements OnInit {
       this.dictBank[refNo] = arrCustBankAccCustom;
     }
     else{
-      let vendorEmpBankAccList : Array<VendorBankAccObj> = new Array<VendorBankAccObj>();
-      await this.http.post<VendorBankAccObj>(URLConstant.GetListActiveVendorBankAccByVendorEmpId, { Id: event.VendorId }).toPromise().then(
+      await this.http.post(URLConstant.GetListEmpBankAccByRefEmpNo, { EmpNo: event.ReferantorCode }).toPromise().then(
       (response) => {
-        vendorEmpBankAccList = response[CommonConstant.ReturnObj];
+        let vendorEmpBankAccList = response[CommonConstant.ReturnObj];
         vendorEmpBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
-        var isDefaultFound = false;
-        let VendorEmpBankAcc : VendorBankAccObj = new VendorBankAccObj;
-        for (const item of vendorEmpBankAccList) {
-          if (item["IsDefault"]) {
-            VendorEmpBankAcc = item as VendorBankAccObj;
-            isDefaultFound = true;
-            break;
-          }
-        }
+        let VendorEmpBankAcc  = vendorEmpBankAccList.find(f=>f.IsDefault);
 
-        if (isDefaultFound) {
+        if (VendorEmpBankAcc != null) {
           this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i].patchValue({
             RefBankCode:  VendorEmpBankAcc.BankCode,
-            BankAccNo: VendorEmpBankAcc.BankAccountNo,
-            BankAccName: VendorEmpBankAcc.BankAccountName,
+            BankAccNo: VendorEmpBankAcc.BankAccNo,
+            BankAccName: VendorEmpBankAcc.BankAccName,
             BankBranch: VendorEmpBankAcc.BankBranch,
             BankName: VendorEmpBankAcc.BankName,
           });
@@ -587,24 +578,24 @@ export class ReferantorDataNewComponent implements OnInit {
         else{
           this.ResetBankData(i);
         }
-      });
 
-      let arrCustBankAccCustom : Array<CustomBankAccObj> = new Array<CustomBankAccObj>();
-      if(vendorEmpBankAccList.length > 0){
-        for(let i = 0; i < vendorEmpBankAccList.length; i++){
-          let customBankObj : CustomBankAccObj = new CustomBankAccObj();
-          customBankObj.BankCode = vendorEmpBankAccList[i].BankCode;
-          customBankObj.BankName = vendorEmpBankAccList[i].BankName;
-          customBankObj.BankAccountNo = vendorEmpBankAccList[i].BankAccountNo;
-          customBankObj.BankAccountName = vendorEmpBankAccList[i].BankAccountName;
-          customBankObj.IsDefault = vendorEmpBankAccList[i].IsDefault;
-          customBankObj.BankBranch = vendorEmpBankAccList[i].BankBranch;
-
-          arrCustBankAccCustom.push(customBankObj);
+        let arrCustBankAccCustom : Array<CustomBankAccObj> = new Array<CustomBankAccObj>();
+        if(vendorEmpBankAccList.length > 0){
+          for(let i = 0; i < vendorEmpBankAccList.length; i++){
+            let customBankObj : CustomBankAccObj = new CustomBankAccObj();
+            customBankObj.BankCode = vendorEmpBankAccList[i].BankCode;
+            customBankObj.BankName = vendorEmpBankAccList[i].BankName;
+            customBankObj.BankAccountNo = vendorEmpBankAccList[i].BankAccNo;
+            customBankObj.BankAccountName = vendorEmpBankAccList[i].BankAccName;
+            customBankObj.IsDefault = vendorEmpBankAccList[i].IsDefault;
+            customBankObj.BankBranch = vendorEmpBankAccList[i].BankBranch;
+  
+            arrCustBankAccCustom.push(customBankObj);
+          }
         }
-      }
-      
-      this.dictBank[refNo] = arrCustBankAccCustom;
+        
+        this.dictBank[refNo] = arrCustBankAccCustom;
+      });
     }
   }
 
@@ -727,28 +718,27 @@ export class ReferantorDataNewComponent implements OnInit {
       this.dictBank[refNo] = arrCustBankAccCustom;
     }
     else{
-      let vendorEmpBankAccList : Array<VendorBankAccObj> = new Array<VendorBankAccObj>();
-      await this.http.post<VendorBankAccObj>(URLConstant.GetListActiveVendorBankAccByVendorEmpNo, { Code: AppReferantorObj.ReferantorCode }).toPromise().then(
+
+      await this.http.post(URLConstant.GetListEmpBankAccByRefEmpNo, { EmpNo: AppReferantorObj.ReferantorCode }).toPromise().then(
       (response) => {
-        vendorEmpBankAccList = response[CommonConstant.ReturnObj];
-      });
-
-      let arrCustBankAccCustom : Array<CustomBankAccObj> = new Array<CustomBankAccObj>();
-      if(vendorEmpBankAccList.length > 0){
-        for(let i = 0; i < vendorEmpBankAccList.length; i++){
-          let customBankObj : CustomBankAccObj = new CustomBankAccObj();
-          customBankObj.BankCode = vendorEmpBankAccList[i].BankCode;
-          customBankObj.BankName = vendorEmpBankAccList[i].BankName;
-          customBankObj.BankAccountNo = vendorEmpBankAccList[i].BankAccountNo;
-          customBankObj.BankAccountName = vendorEmpBankAccList[i].BankAccountName;
-          customBankObj.IsDefault = vendorEmpBankAccList[i].IsDefault;
-          customBankObj.BankBranch = vendorEmpBankAccList[i].BankBranch;
-
-          arrCustBankAccCustom.push(customBankObj);
+        let vendorEmpBankAccList = response[CommonConstant.ReturnObj];
+        let arrCustBankAccCustom : Array<CustomBankAccObj> = new Array<CustomBankAccObj>();
+        if(vendorEmpBankAccList.length > 0){
+          for(let i = 0; i < vendorEmpBankAccList.length; i++){
+            let customBankObj : CustomBankAccObj = new CustomBankAccObj();
+            customBankObj.BankCode = vendorEmpBankAccList[i].BankCode;
+            customBankObj.BankName = vendorEmpBankAccList[i].BankName;
+            customBankObj.BankAccountNo = vendorEmpBankAccList[i].BankAccNo;
+            customBankObj.BankAccountName = vendorEmpBankAccList[i].BankAccName;
+            customBankObj.IsDefault = vendorEmpBankAccList[i].IsDefault;
+            customBankObj.BankBranch = vendorEmpBankAccList[i].BankBranch;
+  
+            arrCustBankAccCustom.push(customBankObj);
+          }
         }
-      }
-      
-      this.dictBank[refNo] = arrCustBankAccCustom;
+        
+        this.dictBank[refNo] = arrCustBankAccCustom;
+      });
     }
   }
 
@@ -773,5 +763,17 @@ export class ReferantorDataNewComponent implements OnInit {
 
   Cancel() {
     this.outputCancel.emit();
+  }
+
+  initLookupRefTypeMfEmp() {
+    this.InputLookupReferantorObj = new InputLookupObj();
+    this.InputLookupReferantorObj.urlJson = "./assets/uclookup/NAP/lookupReferantorMfEmp.json";
+    this.InputLookupReferantorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+    this.InputLookupReferantorObj.pagingJson = "./assets/uclookup/NAP/lookupReferantorMfEmp.json";
+    this.InputLookupReferantorObj.genericJson = "./assets/uclookup/NAP/lookupReferantorMfEmp.json";
+    this.InputLookupReferantorObj.addCritInput = null;
+    this.InputLookupReferantorObj.IsUpdate = true;
+
+    return this.InputLookupReferantorObj;
   }
 }
