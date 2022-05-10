@@ -42,7 +42,7 @@ export class CommonConstantX {
     //Approval Type
     public static CESSIE_PRE_GLV_APV_TYPE = "CESSIE_PRE_GLV_APV_TYPE";
     public static GO_LIVE_APV_TYPE_APV_TYPE = "GO_LIVE_APV_TYPE";
-    public static EDIT_COMM_AFT_APV_APV_TYPE = "EDIT_COMM_AFT_APV_APV_TYPE"
+    public static EDIT_COMM_AFT_APV_APV_TYPE = "EDIT_COMM_AFT_APV_APV_TYPE";
 
     //Approval Category
     public static CESSIE_PRE_GPV_APV_CATEGORY = "CESSIE_PGLV_APV";
