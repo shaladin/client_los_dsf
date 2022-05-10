@@ -28,9 +28,9 @@
         </div>
       </div>
       <!--END UATDSFCF-911 - Penambahan informasi Income Information-->
-      <app-list-data-commission-agrmnt *ngIf="ListSupplData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplData"></app-list-data-commission-agrmnt>
-      <app-list-data-commission-agrmnt *ngIf="ListSupplEmpData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplEmpData"></app-list-data-commission-agrmnt>
-      <app-list-data-commission-agrmnt *ngIf="ListReferantorData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="ReferantorData"></app-list-data-commission-agrmnt>
+      <app-list-data-commission-agrmnt-x *ngIf="ListSupplData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplData"></app-list-data-commission-agrmnt-x>
+      <app-list-data-commission-agrmnt-x *ngIf="ListSupplEmpData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplEmpData"></app-list-data-commission-agrmnt-x>
+      <app-list-data-commission-agrmnt-x *ngIf="ListReferantorData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="ReferantorData"></app-list-data-commission-agrmnt-x>
       <lib-ucSubsection [id]="'formSummaryId'" [title]="'Summary'" [panel]="'formSummary'">
       </lib-ucSubsection>
       <div class="form-body" [id]="'formSummary'">
