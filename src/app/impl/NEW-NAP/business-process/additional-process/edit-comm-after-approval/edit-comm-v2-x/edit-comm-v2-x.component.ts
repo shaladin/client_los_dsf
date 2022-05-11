@@ -145,7 +145,7 @@ export class EditCommV2XComponent implements OnInit {
   }
 
   async initInputApprovalObj() {
-    this.GetAgrmnt();
+    await this.GetAgrmnt();
     let obj = {
       ProdOfferingCode: this.Agrmnt.ProdOfferingCode,
       RefProdCompntCode: CommonConstantX.EDIT_COMM_AFT_APV_APV_SCHM,
