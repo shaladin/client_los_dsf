@@ -68,6 +68,7 @@ export class URLConstantX {
   public static GetEditCommNewDataDetailByTrxId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditCommNewDataDetailByTrxId";
   public static SubmitEditCommAftApvApproval = environment.losUrl  + "/v1" + "/AppCommissionX/SubmitEditCommAftApvApproval";
   public static GetAgrmntCommissionDataForEditByAgrmntId = environment.losUrl + "/v1"+ "/AppCommissionX/GetAgrmntCommissionDataForEditByAgrmntId";
+  public static GetEditComReqAndApvByAgrmntId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditComReqAndApvByAgrmntId";
 
 
   //App Asset
