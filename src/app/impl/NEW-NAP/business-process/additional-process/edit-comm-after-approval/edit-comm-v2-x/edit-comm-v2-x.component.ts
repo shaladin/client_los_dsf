@@ -174,7 +174,7 @@ export class EditCommV2XComponent implements OnInit {
 
   async GetAgrmnt()
   {
-    await this.http.post(URLConstant.GetAgrmntByAgrmntId, {Id: this.AgrmntId}).subscribe(
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, {Id: this.AgrmntId}).toPromise().then(
       (response: AgrmntObj) => {
         this.Agrmnt = response;
       }
