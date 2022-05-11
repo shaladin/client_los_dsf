@@ -36,6 +36,7 @@ export class CommonConstantX {
     public static SCHM_CODE_CHG_MOU_EXP_DLFN_APV = "CHG_MOU_EXP_DLFN_APV";
     public static SCHM_CODE_CHG_MOU_EXP_FCTR_APV = "CHG_MOU_EXP_FCTR_APV";
     public static SCHM_CODE_EDIT_COMM_AFT_APV_APV_SCHM_NORMAL = "EDIT_COMM_AFT_APV_APV_SCHM_NORMAL";
+    public static EDIT_COMM_AFT_APV_APV_SCHM = 'EDIT_COMM_AFT_APV_APV_SCHM';
 
 
     //Approval Type
