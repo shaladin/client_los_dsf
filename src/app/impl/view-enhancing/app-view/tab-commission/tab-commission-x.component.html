@@ -29,10 +29,10 @@
     </div>
     <!--END UATDSFCF-911 - Penambahan informasi Income Information-->
 
-    <app-list-data-commission *ngIf="ListSupplData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplData"></app-list-data-commission>
-    <app-list-data-commission *ngIf="ListSupplEmpData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplEmpData"></app-list-data-commission>
-    <app-list-data-commission *ngIf="ListReferantorData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="ReferantorData">
-    </app-list-data-commission>
+    <app-list-data-commission-x *ngIf="ListSupplData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplData"></app-list-data-commission-x>
+    <app-list-data-commission-x *ngIf="ListSupplEmpData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="SupplEmpData"></app-list-data-commission-x>
+    <app-list-data-commission-x *ngIf="ListReferantorData.length" [DictCalcMethod]="DictCalcMethod" [FormInputObj]="ReferantorData">
+    </app-list-data-commission-x>
     <lib-ucSubsection [id]="'formSummaryId'" [title]="'Summary'" [panel]="'formSummary'">
     </lib-ucSubsection>
     <div class="form-body" [id]="'formSummary'">

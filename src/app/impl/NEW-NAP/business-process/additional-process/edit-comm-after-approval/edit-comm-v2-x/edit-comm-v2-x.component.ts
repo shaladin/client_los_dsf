@@ -41,6 +41,7 @@ import {CookieService} from 'ngx-cookie';
 import {UcapprovalcreateComponent} from '@adins/ucapprovalcreate';
 import { AgreementCommissionHXObj } from 'app/impl/shared/model/AgreementCommission/AgreementCommissionHObjX';
 import { FormEditCommGenerateXComponent } from './form-edit-comm-generate-x/form-edit-comm-generate-x.component';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 
 @Component({
   selector: 'edit-comm-v2-x',
@@ -69,6 +70,7 @@ export class EditCommV2XComponent implements OnInit {
   @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
   @Output() outputCommCondition: EventEmitter<boolean> = new EventEmitter();
 
+  Agrmnt: AgrmntObj;
 
   constructor(
     private route: ActivatedRoute,
@@ -143,6 +145,19 @@ export class EditCommV2XComponent implements OnInit {
   }
 
   async initInputApprovalObj() {
+    await this.GetAgrmnt();
+    let obj = {
+      ProdOfferingCode: this.Agrmnt.ProdOfferingCode,
+      RefProdCompntCode: CommonConstantX.EDIT_COMM_AFT_APV_APV_SCHM,
+      ProdOfferingVersion: this.Agrmnt.ProdOfferingVersion
+    }
+
+    let schmCode = '';
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      (response) => {
+          schmCode = response['CompntValue'];
+      }
+    );
     this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [{}]
     var TypeCode = {
@@ -151,13 +166,19 @@ export class EditCommV2XComponent implements OnInit {
     }
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstantX.CAT_CODE_EDIT_COMM_AFT_APV_APV;
-    this.InputObj.SchemeCode = CommonConstantX.SCHM_CODE_EDIT_COMM_AFT_APV_APV_SCHM_NORMAL;
+    this.InputObj.SchemeCode = schmCode;
     this.InputObj.Reason = this.DDLReason;
     this.InputObj.OfficeCode = this.NapObj.OriOfficeCode;
     this.InputObj.TrxNo = '-';
+  }
 
-    
-    
+  async GetAgrmnt()
+  {
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, {Id: this.AgrmntId}).toPromise().then(
+      (response: AgrmntObj) => {
+        this.Agrmnt = response;
+      }
+    );
   }
 
   GetFormAddDynamicObj(content) {
