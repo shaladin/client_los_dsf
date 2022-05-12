@@ -584,7 +584,7 @@ const routes: Routes = [
         data: {
           title: 'Agreement Cancellation Detail'
         }
-      },
+      }
     ]
   }
 ];

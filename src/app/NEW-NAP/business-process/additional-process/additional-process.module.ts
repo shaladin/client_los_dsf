@@ -176,7 +176,7 @@ export const customCurrencyMaskConfig = {
     CustSyncComponent,
     EditNapCustPagingComponent,
     EditNapCustDetailComponent
-    
+
   ],
   providers: [
     NGXToastrService

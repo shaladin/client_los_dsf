@@ -218,7 +218,7 @@ export const customCurrencyMaskConfig = {
     DeliveryOrderAssetLocationComponent,
     DeliveryOrderMultiAssetXComponent,
     CustConfirmationPagingXComponent,
-    ApplicationAgreementCancellationDetailXComponent
+    ApplicationAgreementCancellationDetailXComponent,
   ],
   providers: [
     NGXToastrService,

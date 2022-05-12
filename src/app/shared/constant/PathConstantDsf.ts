@@ -141,4 +141,7 @@ export class PathConstantDsf {
     public static NAP_DOC_PRINT = "DocPrintDsf";
     public static NAP_DOC_PRINT_PAGING = PathConstantDsf.NAP_DOC_PRINT + "/" + PathConstant.PAGING;
     public static NAP_DOC_PRINT_VIEW_X = PathConstantDsf.NAP_DOC_PRINT + "/" + PathConstantX.VIEW;
+
+    public static REPORT_APP_APPROVAL = "ReportAppApproval";
+    public static PRINT_REPORT_APP_APPROVAL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_APP_APPROVAL;
 }

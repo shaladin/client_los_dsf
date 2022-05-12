@@ -343,6 +343,7 @@ const routes: Routes = [
         component: EditAppAfterApprovalPagingComponent,
         data: {title: 'Edit Application After Approval Request Paging'}
       },
+    
       {
         path: PathConstant.EDIT_APP_AFT_APV_INQUIRY,
         component: EditAppAfterApprovalInquiryComponent,
@@ -425,8 +426,7 @@ const routes: Routes = [
         data: {
           title: 'Edit Nap Cust'
         }
-      },
-      {
+      },{
         path: PathConstant.EDIT_NAP_CUST_DETAIL,
         component: EditNapCustDetailComponent,
         data: {
