@@ -244,6 +244,7 @@ export class CollateralAddEditComponent implements OnInit {
   identifierAppCollAttr: string = "AppCollateralAttrObjs";
 
   SetRefAttrSettingObj() {
+    this.isReadyAttrSetting = false;
     let GenObj =
     {
       AppCollateralId: this.AppCollateralId,
@@ -253,7 +254,9 @@ export class CollateralAddEditComponent implements OnInit {
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Collateral Attribute";
     this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppCollateralAttrV2;
-    this.isReadyAttrSetting = true;
+    setTimeout(() => {
+      this.isReadyAttrSetting = true;
+    }, 100);
   }
 
   back() {
