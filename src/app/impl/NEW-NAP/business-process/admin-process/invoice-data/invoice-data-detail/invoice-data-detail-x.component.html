@@ -24,6 +24,8 @@
                 <div class="col-md-9">
                   <input type="text" class="form-control" formControlName="InvoiceNo"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceDataForm.controls.InvoiceNo.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceDataForm.controls.InvoiceNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
@@ -31,6 +33,8 @@
                 <div class="col-md-9">
                   <input type="date" class="form-control" formControlName="InvoiceDt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceDataForm.controls.InvoiceDt.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceDataForm.controls.InvoiceDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
@@ -38,6 +42,8 @@
                 <div class="col-md-9">
                   <input type="text" currencyMask class="form-control" formControlName="TotalInvoiceAmt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceDataForm.controls.TotalInvoiceAmt.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceDataForm.controls.TotalInvoiceAmt"
+                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
 
@@ -59,6 +65,7 @@
                       <td style="text-align: left;">{{purchaseOrderHObj.TotalPurchaseOrderAmt | number:'.2':'en-US'}}
                       </td>
                       <td style="text-align: left;">{{purchaseOrderHObj.TotalPurchaseOrderAmt | number:'.2':'en-US'}}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
