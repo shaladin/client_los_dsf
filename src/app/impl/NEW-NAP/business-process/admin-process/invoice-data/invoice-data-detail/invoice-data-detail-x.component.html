@@ -1,0 +1,83 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="">
+            <div class="col-md-12" style="border-bottom: 1px solid black; margin-left: -5px; padding: 0;">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> Invoice Data </h4>
+            </div>
+          </div>
+        </div>
+        <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
+        <form class="form form-horizontal" [formGroup]="InvoiceDataForm"
+          (ngSubmit)="InvoiceDataForm.valid && SaveForm()" #enjiForm="ngForm">
+          <div class="px-3">
+            <div class="form-body" id="InvoiceData">
+
+              <!-- Invoice Summary -->
+              <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Invoice Summary'" [panel]="'InvoiceData'">
+              </lib-ucSubsection>
+
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Invoice No</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="InvoiceNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceDataForm.controls.InvoiceNo.invalid }">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Invoice Date</label>
+                <div class="col-md-9">
+                  <input type="date" class="form-control" formControlName="InvoiceDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceDataForm.controls.InvoiceDt.invalid }">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Total Invoice Amount</label>
+                <div class="col-md-9">
+                  <input type="text" currencyMask class="form-control" formControlName="TotalInvoiceAmt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceDataForm.controls.TotalInvoiceAmt.invalid }">
+                </div>
+              </div>
+
+              <!-- Purchase Order -->
+              <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Purchase Order'" [panel]="'InvoiceData'">
+              </lib-ucSubsection>
+              <div class="form-body" id="SupplierList" style="overflow-x: auto;">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th class="text-left"><span translate class="thead-header">Purchase Order No</span></th>
+                      <th class="text-left"><span translate class="thead-header">Total Purchase Amount</span></th>
+                      <th class="text-left"><span translate class="thead-header">Invoice Amount</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align: left;">{{purchaseOrderHObj.PurchaseOrderNo}}</td>
+                      <td style="text-align: left;">{{purchaseOrderHObj.TotalPurchaseOrderAmt | number:'.2':'en-US'}}
+                      </td>
+                      <td style="text-align: left;">{{purchaseOrderHObj.TotalPurchaseOrderAmt | number:'.2':'en-US'}}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" translate [routerLink]="[CancelLink]"
+                [queryParams]="{AgrmntId:AgrmntId, LobCode: lobCode,AppId:AppId, BizTemplateCode: BizTemplateCode}">
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
