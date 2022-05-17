@@ -284,4 +284,9 @@ export class URLConstantX {
   //App Agrmnt Cancellation
   public static AddAppAgrmntCancelV2_1X = environment.losUrl + "/v2.1" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
  
+  // Invoice
+  public static AddInvoiceX = environment.losUrl + "/v1" + "/InvoiceX/AddInvoiceX";
+  public static EditInvoiceX= environment.losUrl + "/v1" + "/InvoiceX/EditInvoiceX";
+  public static GetInvoiceXByVendorCodeAndPurchaseOrderHId = environment.losUrl + "/v1" + "/InvoiceX/GetInvoiceXByVendorCodeAndPurchaseOrderHId";
+  public static GetAppAssetListAndInvoiceXForView = environment.losUrl + '/v1' + "/InvoiceX/GetAppAssetListAndInvoiceXForView";
 }
