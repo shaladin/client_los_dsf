@@ -134,14 +134,14 @@
     {
       "type": "sort",
       "position": "left",
-      "label": "DEALER NAME",
-      "name": "DealerName"
+      "label": "CURRENT USER",
+      "name": "CurrentUser"
     },
     {
       "type": "sort",
       "position": "left",
-      "label": "CURRENT USER",
-      "name": "CurrentUser"
+      "label": "DEALER NAME",
+      "name": "DealerName"
     },
     {
       "type": "sort",
