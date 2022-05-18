@@ -1,0 +1,51 @@
+{ 
+    "title" : "REPORT AGREEMENT IN PROCESS",
+    "reportName": "Report Agreement In Process",
+    "reportTemplateCode": "AGR_PROCESS_REPORT",
+    "component": [ 
+        {
+            "type": "dropdown",
+            "label": "Branch Name",
+            "name": "BranchCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "environment": "FOU",
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOffice",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "paramAssignment": 1
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Agreement Date >=",
+            "name" : "LeadDtGte",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Agreement Date =<",
+            "name" : "LeadDtLte",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        },
+        {
+            "key": 2,
+            "value": "Excel 2007"
+        }
+    ]
+}
