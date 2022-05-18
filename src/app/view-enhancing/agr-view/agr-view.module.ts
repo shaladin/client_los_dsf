@@ -60,6 +60,7 @@ import {
 } from 'app/impl/view-enhancing/agr-view/view-purchase-order-detail/view-purchase-order-detail-x.component';
 import { ViewCommissionXComponent } from "app/impl/view-enhancing/agr-view/view-commission/view-commission-x.component";
 import { ListDataCommissionAgrmntXComponent } from "app/impl/view-enhancing/agr-view/view-commission/list-data-commission/list-data-commission-x.component";
+import { ViewInvoiceDataXComponent } from "app/impl/view-enhancing/agr-view/view-invoice-data/view-invoice-data-x.component";
 
 @NgModule({
     imports: [
@@ -123,6 +124,7 @@ import { ListDataCommissionAgrmntXComponent } from "app/impl/view-enhancing/agr-
         ViewPurchaseOrderDetailXComponent,
         ViewCommissionXComponent,
         ListDataCommissionAgrmntXComponent,
+        ViewInvoiceDataXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

@@ -144,4 +144,7 @@ export class PathConstantDsf {
 
     public static REPORT_APP_APPROVAL = "ReportAppApproval";
     public static PRINT_REPORT_APP_APPROVAL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_APP_APPROVAL;
+
+    public static REPORT_AGR_PROCESS = "ReportAgrProcess";
+    public static PRINT_REPORT_AGR_PROCESS = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_AGR_PROCESS;
 }

@@ -102,6 +102,9 @@ import { OfferingValidityCheckingRequestDetailComponent } from "./offering-valid
 import { DocumentPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/document-printing-dsf/document-paging-dsf/document-paging-dsf.component";
 import { DocumentViewXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/document-printing-dsf/document-view-x-dsf/document-view-x-dsf.component";
 import { ApplicationAgreementCancellationDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/application-agreement-cancellation/application-agreement-cancellation-detail/application-agreement-cancellation-detail-x.component";
+import { InvoiceDataPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-paging/invoice-data-paging-x.component";
+import { InvoiceDataXComponent } from "app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data/invoice-data-x.component";
+import { InvoiceDataDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-detail/invoice-data-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -219,6 +222,9 @@ export const customCurrencyMaskConfig = {
     DeliveryOrderMultiAssetXComponent,
     CustConfirmationPagingXComponent,
     ApplicationAgreementCancellationDetailXComponent,
+    InvoiceDataPagingXComponent,
+    InvoiceDataXComponent,
+    InvoiceDataDetailXComponent,
   ],
   providers: [
     NGXToastrService,

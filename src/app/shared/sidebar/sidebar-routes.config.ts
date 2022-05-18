@@ -660,7 +660,8 @@ export const ROUTES: RouteInfo[] = [
     { Path: NavigationConstantDsf.REPORT_INS_COMPANY_SUMMARY, Title: 'Insurance Company Summary', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
     { Path: NavigationConstantDsf.REPORT_INS_COMPANY_DETAIL, Title: 'Insurance Company Detail', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
     { Path: NavigationConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN, Title: 'Surat Konfirmasi Persetujuan', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
-    { Path: NavigationConstantDsf.REPORT_APP_APPROVAL, Title: 'Surat Konfirmasi Persetujuan', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []}
+    { Path: NavigationConstantDsf.REPORT_APP_APPROVAL, Title: 'Report Application in Approval Process', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+    { Path: NavigationConstantDsf.REPORT_AGR_PROCESS, Title: 'Report Agreement in Process', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []}
   ], Params: [] },
 
   { Path: NavigationConstant.DASHBOARD_SUPERSET, Title: 'Dashboard Superset', Icon: 'ft-home', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
