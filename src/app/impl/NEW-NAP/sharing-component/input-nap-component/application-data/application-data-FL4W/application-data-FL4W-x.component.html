@@ -444,12 +444,13 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="CopyFromMailing">
+                      <option value="">-Select One-</option>
                       <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">{{item.Value}}</option>
                     </select>
                     <div class="input-group-append">
                       <span class="input-group-btn">
-                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()" translate>
-                          <i class="fa fa-check-square-o"></i>Copy
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()">
+                          <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                         </button>
                       </span>
                     </div>

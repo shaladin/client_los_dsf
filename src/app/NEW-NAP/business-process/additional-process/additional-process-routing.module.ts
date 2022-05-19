@@ -425,8 +425,7 @@ const routes: Routes = [
         data: {
           title: 'Edit Nap Cust'
         }
-      },
-      {
+      },{
         path: PathConstant.EDIT_NAP_CUST_DETAIL,
         component: EditNapCustDetailComponent,
         data: {

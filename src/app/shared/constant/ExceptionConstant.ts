@@ -176,7 +176,7 @@ export class ExceptionConstant {
     public static COLL_VALUE_MUST_EQUALS_INVOICE_AMT = "Collateral Value must equals Invoice Amount.";
     public static DOUBLE_FINANCING = "Double Financing";
     public static START_DATE_CANNOT_MORE_THAN = "Start Date can not be more than ";
-    public static START_DATE_CANNOT_LESS_THAN = "Start Date can not be lses than ";
+    public static START_DATE_CANNOT_LESS_THAN = "Start Date can not be less than ";
     public static END_DATE_CANNOT_LESS_THAN = "End Date can not be less than ";
     public static MOU_DATE_CANNOT_LESS_THAN = "MOU Date can not be less than ";
     public static PRODUCT_HAS = "This Product has ";
@@ -205,9 +205,12 @@ export class ExceptionConstant {
     public static MAX_REFERANTOR_EXCEPTION = "Number of Referantor Cannot Be More than {0}";
     public static DUPLICATE_SUPPL_EMP = "Supplier Employee {0} Receiving More Than 1 Commission";
 
+    public static X_CANT_BE_GREATER_THAN_Y = "{0} cannot be greater than {1}";
+    
     public static MANDATORY_LEGAL_DOC = "Legal Documents with following type are mandatory: {0}";
     public static CUST_AGE_BETWEEN = "Customer age must be between {0} and {1} year old";
     public static CUST_AGE_MIN = "Customer age must be at least {0} year old";
 
+    public static LEAD_INPUT_AGENCY_CMO_TELE = "Please input either Agency, CMO or Tele Sales";
 }
 
