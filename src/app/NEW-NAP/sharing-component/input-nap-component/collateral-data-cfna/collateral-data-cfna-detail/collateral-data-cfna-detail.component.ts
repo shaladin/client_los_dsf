@@ -1388,7 +1388,10 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Collateral Attribute";
     this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppCollateralAttrV2;
-    this.isReadyAttrSetting = true;
+    setTimeout(() => {
+      this.isReadyAttrSetting = true;
+    }, 100);
+    
   }
 
 }
