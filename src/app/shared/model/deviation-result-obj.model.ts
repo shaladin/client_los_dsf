@@ -4,6 +4,7 @@ export class DeviationResultObj {
     SeqNo: number;
     DeviationCategory: string;
     MrDeviationType: string;
+    MrDeviationName: string;
     RefNo: string;
     TrxTypeCode: string;
     ApvAt: string;
