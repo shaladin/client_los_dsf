@@ -34,6 +34,7 @@ import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model'
 import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/asset-type-serial-no-label-custom-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
@@ -172,6 +173,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     if (this.mode == "edit") {
       await this.getAppCollData(0, this.AppCollateralId, false, false, new Object());
     }
+    this.SetRefAttrSettingObj();
 
     // if (this.isSingleAsset) {
     //   this.getAppCollData(this.AppId, 0);
@@ -231,17 +233,18 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   setCollateralAttribute() {
-    if (this.AppCollateralAttrObj != null) {
+    console.log("adwadawfawf")
+    //if (this.AppCollateralAttrObj != null) {
       this.appCollateralDataObj.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
       for (let i = 0; i < this.AddCollForm.controls["AppCollateralAttrObjs"].value.length; i++) {
         var appCollAttrcObj = new AppCollateralAttrObj();
-        appCollAttrcObj.CollateralAttrName = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AssetAttrName;
-        appCollAttrcObj.CollateralAttrCode = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AssetAttrCode;
+        appCollAttrcObj.CollateralAttrName = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AttrName;
+        appCollAttrcObj.CollateralAttrCode = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AttrCode;
         appCollAttrcObj.AttrValue = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AttrValue;
 
         this.appCollateralDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
       }
-    }
+    //}
   }
 
   initUcLookup() {
@@ -361,7 +364,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
           this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
         }
 
-        this.GenerateAppCollateralAttrForm();
+        //this.GenerateAppCollateralAttrForm();
       });
   }
   GenerateAppCollateralAttrForm() {
@@ -613,6 +616,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         MrOwnerTypeCode: response["MrOwnerTypeCode"]
         // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
+      await this.onItemChange(response["AssetTypeCode"], true);
 
       this.CopyUserForSelfOwner();
       
@@ -678,7 +682,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.AddCollForm.controls.MrOwnerTypeCode.disable(); 
       this.inputAddressObjForOwner.isReadonly = true;
       this.inputAddressObjForLoc.isReadonly = true; 
-      this.getRefAssetDocList(true);
       this.AddCollForm.patchValue({
         CollateralStat: CommonConstant.AssetStatExisting
         });
@@ -725,7 +728,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode,
               MrOwnerTypeCode: this.collateralRegistrationObj.MrOwnerTypeCode
             });
-            this.GenerateAppCollateralAttr(false);
+            //this.GenerateAppCollateralAttr(false);
             for (var i = 0; i < this.items.controls.length; i++) {
               var formGroupItem = this.items.controls[i] as FormGroup;
               formGroupItem.patchValue({
@@ -821,6 +824,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       }
     }
     this.CheckManufacturingYearMandatory();
+    this.SetRefAttrSettingObj();
   }
 
   async getExistingColl(event) {
@@ -905,9 +909,10 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         this.getRefAssetDocList(isInit);
         this.collateralPortionHandler();
       });
-      this.GenerateAppCollateralAttr(false);
+      //this.GenerateAppCollateralAttr(false);
 
       this.CheckManufacturingYearMandatory();
+      this.SetRefAttrSettingObj();
   }
 
   changeSerialNoValidators(MrCollateralConditionCode: string) {
@@ -1367,6 +1372,26 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.AddCollForm.controls.ManufacturingYear.clearValidators();
       this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
     }
+  }
+
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  identifierAppCollAttr: string = "AppCollateralAttrObjs";
+  isReadyAttrSetting : boolean = false;
+  SetRefAttrSettingObj() {
+    this.isReadyAttrSetting = false;
+    let GenObj =
+    {
+      AppCollateralId: this.AppCollateralId,
+      AssetTypeCode: this.AddCollForm.get("AssetTypeCode").value,
+      IsRefresh: false
+    }
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
+    this.attrSettingObj.Title = "Collateral Attribute";
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppCollateralAttrV2;
+    setTimeout(() => {
+      this.isReadyAttrSetting = true;
+    }, 100);
+    
   }
 
 }

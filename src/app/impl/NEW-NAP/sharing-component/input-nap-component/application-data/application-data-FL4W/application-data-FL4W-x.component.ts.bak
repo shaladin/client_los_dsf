@@ -1087,15 +1087,20 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.copyToMailing(CommonConstant.AddrTypeMailing);
+        this.copyToMailingTypeObj = this.copyToMailingTypeObj.filter((x, i) => {
+          let isExists = this.AppCustAddrObj.findIndex(y => y.MrCustAddrTypeCode == x.Key);
+          return isExists > -1;
+        })
       }
     );
   }
 
   copyToMailing(addrType: string = '') {
-    if (!addrType) { addrType = this.NapAppModelForm.controls.CopyFromMailing.value; }
-    if (!addrType) { return; }
 
-    const address = this.AppCustAddrObj.find(emp => emp.MrCustAddrTypeCode === addrType);
+    if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
+    if (!addrType) return;
+
+    let address = this.AppCustAddrObj.find(emp => emp.MrCustAddrTypeCode === addrType);
     if (address != null && address != undefined) {
       this.mailingAddrObj.Addr = address.Addr;
       this.mailingAddrObj.AreaCode1 = address.AreaCode1;
@@ -1118,6 +1123,10 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = address.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: address.Zipcode };
       this.inputAddressObj.default = this.mailingAddrObj;
+
+      this.NapAppModelForm.patchValue({
+        CopyFromMailing: ""
+      });
     }
   }
 

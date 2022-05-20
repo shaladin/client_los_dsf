@@ -61,6 +61,7 @@
             "datatype": "text",
             "isFromURL": true,
             "ddlType": "all",
+            "environment": "FOU",
             "url": "",
             "path": "/RefMaster/GetListKeyValueActiveByCode",
             "label": "Type",

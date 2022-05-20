@@ -233,9 +233,12 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.applicationDDLitems[refProdCompntCode] = listDDL;
         if (refProdCompntCode == CommonConstant.RefProdCompFirstInstType) {
           this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
-          this.NapAppModelForm.patchValue({
-            MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
-          });
+          if(!this.NapAppModelForm.get("MrFirstInstTypeCode").value)
+          {
+            this.NapAppModelForm.patchValue({
+              MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
+            });
+          }
         }
       });
   }

@@ -28,6 +28,12 @@
                     <th class="text-right">
                       <span class="thead-header" translate>Installment Amount</span>
                     </th>
+                    <th class="text-right">
+                      <span class="thead-header" translate>NTF Amount</span>
+                    </th>
+                    <th class="text-right">
+                      <span class="thead-header" translate>Total Interest Amount</span>
+                    </th>
                     <th>
                       <span class="thead-header" translate>Agreement Step</span>
                     </th>
@@ -45,6 +51,8 @@
                     <td >{{item.AgrmntDate | date:'dd-MM-yyyy'}}</td>
                     <td>{{item.CurrName}}</td>
                     <td class="text-right">{{item.InstAmt == null ? '-' : item.InstAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="text-right">{{item.OsPrincipalAmt == null ? '-' : item.OsPrincipalAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="text-right">{{item.OsInterestAmt == null ? '-' : item.OsInterestAmt | number:'1.2-2':'en-US'}}</td>
                     <td>{{item.AgrmntCurrStep}}</td>
                   </tr>
                 </tbody>

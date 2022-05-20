@@ -297,6 +297,7 @@ export class URLConstant {
   public static GetListRefEmpByGsValueandOfficeId = environment.FoundationR3Url + "/v1" + "/RefEmp/GetListRefEmpByGsValueandOfficeId";
   public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/v1" + "/RefEmp/GetRefEmpForLookupEmployee";
   public static GetRefEmpForLookupByUsername = environment.FoundationR3Url + "/v1" + "/RefEmp/GetRefEmpForLookupByUsername";
+  public static GetListEmpBankAccByRefEmpNo = environment.FoundationR3Url + "/v1" + "/EmpBankAcc/GetListEmpBankAccByRefEmpNo";
 
   //EMP_POSITION
   public static GetEmpPositionPaging = "/EmpPosition/GetEmpPositionPaging";
