@@ -1539,6 +1539,7 @@ export class AssetDataComponent implements OnInit {
             IsEditableDp: this.appAssetObj.ResponseAppAssetObj.IsEditableDp,
             selectedDpType: 'AMT'
           });
+          this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value);
           this.setValidatorBpkb();
 
           
@@ -2780,6 +2781,17 @@ export class AssetDataComponent implements OnInit {
 
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentAmt.setValue(DownPayment);
       this.AssetDataForm.controls["AssetAccessoriesObjs"]["controls"][i]["controls"].AccessoryDownPaymentPrcnt.setValue(DownPaymentPrctg);
+    }
+  }
+
+  ChangeMrIdTypeCode(MrIdTypeCode: string){
+    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+      this.AssetDataForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+    else {
+      this.AssetDataForm.controls.OwnerIdNo.setValidators(Validators.required);
+      this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
     }
   }
 
