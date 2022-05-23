@@ -1618,7 +1618,7 @@ export class AssetDataComponent implements OnInit {
               OwnerProfessionCode: this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode,
               MrOwnerTypeCode: MrOwnerTypeCode
             });
-
+            this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value);
             await this.SelfUsageChange({checked : (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF")});
             await this.SelfOwnerChange(true, MrOwnerTypeCode, true);
             await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
