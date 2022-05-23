@@ -129,6 +129,7 @@ export class AssetDataAddEditComponent implements OnInit {
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   RoundedAmt: number = 2;
   prevAssetCategoryCode : string = "";
+  DownPaymentName : string = "Down Payment";
 
   InputLookupAccObj: any;
   InputLookupAccSupObj: any;
@@ -807,6 +808,11 @@ export class AssetDataAddEditComponent implements OnInit {
         let getAssetSchm = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETSCHM", ProdOfferingVersion: response.ProdOfferingVersion });
         let RegexSerialNo = this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex });
 
+        if(response.BizTemplateCode == CommonConstant.FL4W)
+        {
+          this.DownPaymentName = "Security Deposit";
+        }
+
         return forkJoin([getVendorSchmCode, getAssetCond, getAssetType, getAssetSchm, RegexSerialNo]);
       })
     ).toPromise().then(
@@ -1412,7 +1418,7 @@ export class AssetDataAddEditComponent implements OnInit {
     let DownPaymentPrctg = Math.round(this.AssetDataForm.controls.DownPaymentPrctg.value * 1000000) / 1000000;
     let DownPayment = this.AssetDataForm.controls.AssetPrice.value * DownPaymentPrctg / 100;
     if (DownPayment > this.AssetDataForm.controls.AssetPrice.value) {
-      this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
+      this.toastr.warningMessage(this.DownPaymentName + " Amount exceeded Asset Price Amount !");
       this.AssetDataForm.patchValue({
         DownPayment: 0,
         DownPaymentPrctg: 0
@@ -1441,7 +1447,7 @@ export class AssetDataAddEditComponent implements OnInit {
   updateValueDownPaymentPrctg() {
     let DownPaymentPrctg = Math.round(this.AssetDataForm.controls.DownPayment.value) / this.AssetDataForm.controls.AssetPrice.value * 100;
     if (DownPaymentPrctg > 100) {
-      this.toastr.warningMessage("Down Payment Amount exceeded Asset Price Amount !");
+      this.toastr.warningMessage(this.DownPaymentName + " Amount exceeded Asset Price Amount !");
       this.AssetDataForm.patchValue({
         DownPayment: 0,
         DownPaymentPrctg: 0
@@ -1536,11 +1542,11 @@ export class AssetDataAddEditComponent implements OnInit {
       if (this.AssetDataForm.controls.MrDownPaymentTypeCode.value == 'PRCNT') {
         if (assetForm.DownPaymentPrctg < this.AssetValidationResult.DPMin) {
           isValidOk = false;
-          confirmMsg = "Down Payment Percentage is Lower than Minimum Percentage";
+          confirmMsg = this.DownPaymentName + " Percentage is Lower than Minimum Percentage";
         }
         else if (assetForm.DownPaymentPrctg > this.AssetValidationResult.DPMax) {
           isValidOk = false;
-          confirmMsg = "Down Payment Percentage is Higher than Maximum Percentage";
+          confirmMsg = this.DownPaymentName + " Percentage is Higher than Maximum Percentage";
         }
       }
       else {
@@ -1548,11 +1554,11 @@ export class AssetDataAddEditComponent implements OnInit {
         let assetDPMax = this.AssetValidationResult.DPMax * assetForm.AssetPrice / 100;
         if (assetForm.DownPayment < assetDPMin) {
           isValidOk = false;
-          confirmMsg = "Down Payment Amount is Lower than Minimum Amount";
+          confirmMsg = this.DownPaymentName + " Amount is Lower than Minimum Amount";
         }
         else if (assetForm.DownPayment > assetDPMax) {
           isValidOk = false;
-          confirmMsg = "Down Payment Amount is Higher than Maximum Amount";
+          confirmMsg = this.DownPaymentName + " Amount is Higher than Maximum Amount";
         }
       }
 
