@@ -764,7 +764,6 @@ export class AssetDataAddEditComponent implements OnInit {
     this.InputLookupProfessionObj.isReady = true;
 
     this.AssetDataForm.updateValueAndValidity();
-
     this.SetOwnerAddress();
     this.SetLookupAsset();
     this.SetLookupSupplier();
@@ -1147,7 +1146,7 @@ export class AssetDataAddEditComponent implements OnInit {
                 OwnerProfessionCode: this.returnAppCollateralRegistObj.OwnerProfessionCode,
                 MrOwnerTypeCode: MrOwnerTypeCode
               });
-
+              this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value);
               await this.SelfUsageChange({ checked: (this.returnAppCollateralRegistObj.MrUserRelationshipCode == CommonConstant.SelfCustomer) });
               await this.SelfOwnerChange(true, MrOwnerTypeCode, true);
               await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
@@ -2082,6 +2081,17 @@ export class AssetDataAddEditComponent implements OnInit {
       this.InputLookupCityIssuerObj.isRequired = false;
     }
     this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
+  }
+
+  ChangeMrIdTypeCode(MrIdTypeCode: string){
+    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+      this.AssetDataForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+    else {
+      this.AssetDataForm.controls.OwnerIdNo.setValidators(Validators.required);
+      this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
   }
 
   async bindDownPaymentTypeObj() {
