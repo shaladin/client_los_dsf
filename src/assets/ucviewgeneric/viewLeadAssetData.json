@@ -22,7 +22,8 @@
           "property": "ManufacturingYear"
         },
         {
-          "type": "text",
+          "type": "currency",
+          "position": "right",
           "label": "Asset Price",
           "property": "AssetPriceAmt"
         },
@@ -33,6 +34,7 @@
         },
         {
           "type": "currency",
+          "position": "right",
           "label": "Down Payment Amount",
           "property": "DownPaymentAmt"
         },
