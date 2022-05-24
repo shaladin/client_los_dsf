@@ -22,7 +22,7 @@ import { formatDate } from "@angular/common";
   templateUrl: "./invoice-data-detail-x.component.html",
 })
 export class InvoiceDataDetailXComponent implements OnInit {
-  arrValue: Array<number> = [];
+  arrValue: Array<any> = [];
   AgrmntId: number;
   AppId: number;
   SupplCode: string;
@@ -77,6 +77,8 @@ export class InvoiceDataDetailXComponent implements OnInit {
       AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS)
     );
     this.arrValue.push(this.AgrmntId);
+    this.arrValue.push(this.SupplCode);
+    
     this.purchaseOrderHObj = new PurchaseOrderHObj();
 
     let appAssetObj: ReqAssetDataObj = new ReqAssetDataObj();

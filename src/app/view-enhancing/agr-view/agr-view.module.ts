@@ -61,6 +61,7 @@ import {
 import { ViewCommissionXComponent } from "app/impl/view-enhancing/agr-view/view-commission/view-commission-x.component";
 import { ListDataCommissionAgrmntXComponent } from "app/impl/view-enhancing/agr-view/view-commission/list-data-commission/list-data-commission-x.component";
 import { ViewInvoiceDataXComponent } from "app/impl/view-enhancing/agr-view/view-invoice-data/view-invoice-data-x.component";
+import { InvoiceMainInfoXComponent } from "app/impl/view-enhancing/invoice-main-info/invoice-main-info-x.component";
 
 @NgModule({
     imports: [
@@ -107,6 +108,7 @@ import { ViewInvoiceDataXComponent } from "app/impl/view-enhancing/agr-view/view
         ViewAgrmntDocumentComponent,
         AgrMainInfoComponent,
         AgrMainInfoXComponent,
+        InvoiceMainInfoXComponent,
         ViewAssetCollateralDetailComponent,
         ViewInsuranceDetailComponent,
         ViewInsuranceDataXComponent,
@@ -139,7 +141,8 @@ import { ViewInvoiceDataXComponent } from "app/impl/view-enhancing/agr-view/view
         ViewPurchaseOrderDetailXComponent,
     ],
     exports: [
-        AgrMainInfoXComponent
+        AgrMainInfoXComponent,
+        InvoiceMainInfoXComponent
     ]
 
 })

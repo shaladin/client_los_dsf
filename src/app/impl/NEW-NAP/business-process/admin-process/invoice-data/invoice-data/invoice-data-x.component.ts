@@ -72,85 +72,19 @@ export class InvoiceDataXComponent implements OnInit {
     var appAssetObj = {
       Id: this.AgrmntId
     }
-    // this.claimTask();
 
     this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
         this.AppAssetList = response[CommonConstant.ReturnObj];
       });
-    // await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
-    //   (response) => {
-    //     this.SysConfigResultObj = response
-    //   });
-    // await this.InitDms();
   }
 
-  // ngOnDestroy() {
-  //   if (this.toastRef != undefined && this.toastRef != null) {
-  //     this.toastrSvc.clear(this.toastRef.toastId);
-  //   }
-  // }
-
-  // checkValidExpDt(ExpirationDate: Date, PoNo: string, flag: boolean): boolean {
-  //   let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-  //   let bzDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
-  //   let tempExpDt = new Date(ExpirationDate);
-  //   if (bzDt.getTime() > tempExpDt.getTime()) {
-  //     flag = false;
-  //     throw this.toastr.typeErrorCustom(PoNo + " Need Extension.");
-  //   }
-  //   return flag;
-  // }
-
   async SaveForm() {
-    // var IsSave = false;
-    // if (this.AppAssetList.length != 0) {
-    //   for (let i = 0; i < this.AppAssetList.length; i++) {
-    //     if (this.AppAssetList[i].PurchaseOrderNo == undefined) {
-    //       IsSave = false;
-    //       this.toastr.typeErrorCustom("Please submit purchase order first!");
-    //       break;
-    //     } else {
-    //       IsSave = true;
-    //     }
-
-    //     if (this.AppAssetList[i].PurchaseOrderExpiredDt) {
-    //       IsSave = this.checkValidExpDt(this.AppAssetList[i].PurchaseOrderExpiredDt, this.AppAssetList[i].PurchaseOrderNo, IsSave);
-    //     }
-    //   }
-    // } else {
-    //   this.toastr.typeErrorCustom("Please submit purchase order first!");
-    // }
-
-    // // let listAgrmntTcObj: Array<AgrmntTcObj> = this.SetTcForm();
-    // if (IsSave) {
-    //   var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
-    //   reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
-    //   // reqSubmitAgrmntTcObj.ListAgrmntTcObj = listAgrmntTcObj;
-    //   await this.http.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).toPromise().then(
-    //     (response) => {
-    //       // this.toastr.successMessage(response["Message"]);
-    //       if (response["StatusCode"] != 200) {
-    //         throw this.toastr.errorMessage(response["Message"]);
-    //       }
-    //     });
-    //   var workflowModel: WorkflowApiObj = new WorkflowApiObj();
-    //   workflowModel.TaskListId = this.TaskListId;
-    //   workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
-
-    //   let resumeWorkflowPurcharOrderUrl = environment.isCore ? URLConstant.ResumeWorkflowPurchaseOrderV2 : URLConstant.ResumeWorkflowPurchaseOrder;
-    //   this.http.post(resumeWorkflowPurcharOrderUrl, workflowModel).subscribe(
-    //     (response) => {
-    //       this.AppAssetList = response[CommonConstant.ReturnObj];
-    //       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_DATA_PAGING], {});
-    //       this.toastr.successMessage(response["message"]);
-    //     });
-    // }
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_DATA_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
   Cancel() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_DATA_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
-
-
 }
