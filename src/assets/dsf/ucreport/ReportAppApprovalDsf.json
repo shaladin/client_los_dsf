@@ -20,6 +20,118 @@
             "paramAssignment": 1
         },
         {
+            "type" : "dropdown",
+            "label" : "Status",
+            "name" : "Status",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+                {
+                "key": "1",
+                "value": "In Progress"
+            },
+            {
+                "key": "0",
+                "value": "Approved"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "dropdown",
+            "label" : "Next Credit Approval",
+            "name" : "CurrLevel",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+            {
+                "key": "1",
+                "value": "MO"
+            },
+            {
+                "key": "2",
+                "value": "HOB"
+            },
+            {
+                "key": "3",
+                "value": "ADMREG"
+            },
+            {
+                "key": "4",
+                "value": "RBM"
+            },
+            {
+                "key": "5",
+                "value": "CAD"
+            },
+            {
+                "key": "6",
+                "value": "DIR"
+            },
+            {
+                "key": "7",
+                "value": "DIR2"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "dropdown",
+            "label" : "Highest Credit Approval",
+            "name" : "MaxLevel",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+            {
+                "key": "1",
+                "value": "MO"
+            },
+            {
+                "key": "2",
+                "value": "HOB"
+            },
+            {
+                "key": "3",
+                "value": "ADMREG"
+            },
+            {
+                "key": "4",
+                "value": "RBM"
+            },
+            {
+                "key": "5",
+                "value": "CAD"
+            },
+            {
+                "key": "6",
+                "value": "DIR"
+            },
+            {
+                "key": "7",
+                "value": "DIR2"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
             "type" : "datepicker",
             "label" : "Application Date >=",
             "name" : "LeadDtGte",
