@@ -28,71 +28,63 @@
           <div id="asset">
             <div>
               <label class="col-md-2  adInsLabel" translate>Asset Name</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.FullAssetName">{{AppAssetObj.ResponseAppAssetObj.FullAssetName}}</label>
-              <label class="col-md-2  adInsLabel" translate>Down Payment (% / Amount)</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt">{{AppAssetObj.ResponseAppAssetObj.DownPaymentPrcnt | number:'.6':'en-US'}} % | {{AppAssetObj.ResponseAppAssetObj.DownPaymentAmt | number:'.2':'en-US'}}</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.FullAssetName}}</label>
+              <label class="col-md-2  adInsLabel" translate>Asset Category</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.AssetCategoryName}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Asset Price</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.AssetPriceAmt">{{AppAssetObj.ResponseAppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</label>
-              <label class="col-md-2  adInsLabel" translate>Asset Usage</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.MrAssetUsageCode">{{AppAssetObj.ResponseAppAssetObj.MrAssetUsageCode}}</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.AssetPriceAmt | number:'.2':'en-US'}}</label>
+              <label class="col-md-2  adInsLabel" translate>Down Payment (% / Amount)</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.DownPaymentPrcnt | number:'.6':'en-US'}} % | {{AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt | number:'.2':'en-US'}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Asset Condition</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.MrAssetConditionCode">{{AppAssetObj.ResponseAppAssetObj.MrAssetConditionCode}}</label>
-              <label class="col-md-2  adInsLabel" translate>Manufacturing Year</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.ManufacturingYear">{{AppAssetObj.ResponseAppAssetObj.ManufacturingYear}}</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.MrAssetConditionCode}}</label>
+              <label class="col-md-2  adInsLabel" translate>Asset Usage</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.MrAssetUsageCodeDesc}}</label>
             </div>
             <div>
+              <label class="col-md-2  adInsLabel" translate>Manufacturing Year</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.ManufacturingYear}}</label>
               <label class="col-md-2  adInsLabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo1Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo1Label}}</label>
               <label class="col-md-4  adinslabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo1Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo1}}</label>
+            </div>
+            <div>
               <label class="col-md-2  adInsLabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo2Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo2Label}}</label>
               <label class="col-md-4  adinslabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo2Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo2}}</label>
-            </div>
-            <div>
               <label class="col-md-2  adInsLabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo3Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo3Label}}</label>
               <label class="col-md-4  adinslabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo3Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo3}}</label>
+            </div>
+            <div>
               <label class="col-md-2  adInsLabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo4Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo4Label}}</label>
               <label class="col-md-4  adinslabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo4Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo4}}</label>
-            </div>
-            <div>
               <label class="col-md-2  adInsLabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo5Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo5Label}}</label>
               <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo5Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo5}}</label>
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo5Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo5}}</label> 
+            </div>
+            <div>
               <label class="col-md-2  adInsLabel" translate>Color</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.Color">{{AppAssetObj.ResponseAppAssetObj.Color}}</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.Color}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>BPKB Issue Date</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxIssueDt">{{AppAssetObj.ResponseAppAssetObj.TaxIssueDt}}</label>
-                <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxIssueDt == null"> </label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.TaxIssueDt | date: 'yyyy-MM-dd'}}</label>
               <label class="col-md-2  adInsLabel" translate>BPKB City Issuer</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxCityIssuer">{{AppAssetObj.ResponseAppAssetObj.TaxCityIssuer}}</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.TaxCityIssuer}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Notes</label>
-              <label class="col-md-4  adinslabel" translate
-                *ngIf="AppAssetObj?.ResponseAppAssetObj?.AssetNotes">{{AppAssetObj.ResponseAppAssetObj.AssetNotes}}</label>
+              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.AssetNotes}}</label>
             </div>
           </div>
   
