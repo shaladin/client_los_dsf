@@ -181,7 +181,7 @@
                 <label class="col-md-1"></label>
                 <label class="col-md-2 adins-required-label" translate>Owner ID Type</label>
                 <div class="col-md-3">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode" required
+                  <select (change)="ChangeMrIdTypeCode($event.target.value)" class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode" required
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdTypeCode.invalid }">
                     <option *ngFor="let it of tempIdType " [value]="it.Key">
                       {{it.Value}}

@@ -728,6 +728,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               OwnerProfessionCode: this.collateralRegistrationObj.OwnerProfessionCode,
               MrOwnerTypeCode: this.collateralRegistrationObj.MrOwnerTypeCode
             });
+            this.ChangeMrIdTypeCode(this.AddCollForm.controls.MrIdTypeCode.value);
             //this.GenerateAppCollateralAttr(false);
             for (var i = 0; i < this.items.controls.length; i++) {
               var formGroupItem = this.items.controls[i] as FormGroup;
@@ -920,6 +921,17 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.isUsed = true;
     } else {
       this.isUsed = false;
+    }
+  }
+
+  ChangeMrIdTypeCode(MrIdTypeCode: string){
+    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+      this.AddCollForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.AddCollForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+    else {
+      this.AddCollForm.controls.OwnerIdNo.setValidators(Validators.required);
+      this.AddCollForm.controls.OwnerIdNo.updateValueAndValidity();
     }
   }
 
