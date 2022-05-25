@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -16,15 +16,28 @@ import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
   templateUrl: './edit-app-after-approval-paging.component.html',
   styleUrls: ['./edit-app-after-approval-paging.component.css']
 })
-export class EditAppAfterApprovalPagingComponent implements OnInit {
+export class EditAppAfterApprovalPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
   CustNoObj: GenericObj = new GenericObj();
+  isReady: boolean = false;
+  navigationSubscription;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
     private adInsHelperService: AdInsHelperService) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -33,7 +46,26 @@ export class EditAppAfterApprovalPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchEditAppAfterApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditAppAfterApproval.json";

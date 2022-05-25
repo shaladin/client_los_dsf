@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -13,12 +13,24 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
   selector: 'app-doc-signer-paging',
   templateUrl: './doc-signer-paging.component.html'
 })
-export class DocSignerPagingComponent implements OnInit {
+export class DocSignerPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
+  isReady: boolean = false;
+  navigationSubscription;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -27,7 +39,26 @@ export class DocSignerPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     var pagingJsonPath = "./assets/ucpaging/searchDocSigner.json";
 
     if (this.BizTemplateCode == CommonConstant.OPL) {
@@ -36,6 +67,8 @@ export class DocSignerPagingComponent implements OnInit {
 
     this.inputPagingObj._url = pagingJsonPath;
     this.inputPagingObj.pagingJson = pagingJsonPath;
+    this.inputPagingObj.addCritInput = new Array();
+    this.inputPagingObj.whereValue = new Array();
 
     if (this.BizTemplateCode == CommonConstant.OPL) {
 

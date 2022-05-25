@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -13,12 +13,23 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   selector: 'app-outstanding-tc-paging',
   templateUrl: './outstanding-tc-paging.component.html'
 })
-export class OutstandingTcPagingComponent implements OnInit {
+export class OutstandingTcPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   isReady: boolean = false;
+  navigationSubscription;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -26,7 +37,26 @@ export class OutstandingTcPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging()
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     if(this.BizTemplateCode === CommonConstant.OPL) {
       this.inputPagingObj._url = "./assets/ucpaging/searchOutstandingTCopl.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOutstandingTCopl.json"; 
@@ -43,8 +73,6 @@ export class OutstandingTcPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
-
-    this.isReady = true;
   }
 
   getEvent(ev) {

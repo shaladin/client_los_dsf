@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -22,14 +22,26 @@ import { CookieService } from 'ngx-cookie';
   selector: 'app-commission-reserved-fund-paging',
   templateUrl: './commission-reserved-fund-paging.component.html'
 })
-export class CommissionReservedFundPagingComponent implements OnInit {
+export class CommissionReservedFundPagingComponent implements OnInit, OnDestroy {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -38,11 +50,31 @@ export class CommissionReservedFundPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/searchCommission.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
+    this.inputPagingObj.addCritInput = new Array();
 
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchCommissionV2.json";

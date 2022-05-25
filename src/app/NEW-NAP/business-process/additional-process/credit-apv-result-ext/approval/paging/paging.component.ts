@@ -1,5 +1,5 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -25,7 +25,7 @@ import { UcpagingComponent } from '@adins/ucpaging';
   templateUrl: './paging.component.html',
   styleUrls: ['./paging.component.css']
 })
-export class CreditApprovalResultExtensionApprovalPagingComponent implements OnInit {
+export class CreditApprovalResultExtensionApprovalPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
   UserAccess: CurrentUserContext;
@@ -33,7 +33,8 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   integrationObj: IntegrationObj = new IntegrationObj();
   ExtendBasedOn = "APP";
-  @ViewChild("PagingModal", { read: ViewContainerRef }) pagingModal: ViewContainerRef;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(
     private toastr: NGXToastrService, 
@@ -44,13 +45,42 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
     private apvTaskService: ApprovalTaskService,
     private componentFactoryResolver: ComponentFactoryResolver
   ) { 
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null)  this.BizTemplateCode = params["BizTemplateCode"];
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
-    this.ChangeExtendBasedOn("APP");
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
+    this.ChangeExtendBasedOn(this.ExtendBasedOn);
   }
 
   async CallBackHandler(ev) {
@@ -101,16 +131,16 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
   }
 
   ExtendBasedOnChanged(event){
+    this.isReady = false;
     this.ChangeExtendBasedOn(event.target.value);
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
   }
 
   ChangeExtendBasedOn(extendBasedOn){
     if (extendBasedOn == "APP")
     {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcpagingComponent);
-      this.pagingModal.clear();
-      const component = this.pagingModal.createComponent(componentFactory);
-
       this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     
       this.inputPagingObj = new UcPagingObj();
@@ -143,16 +173,9 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
         this.arrCrit.push(critObjBizTmpl);  
         this.inputPagingObj.addCritInput = this.arrCrit; 
       }
-
-      component.instance.searchObj = this.inputPagingObj;
-      component.instance.callback.subscribe((e) => this.CallBackHandler(e));
     }
     else if (extendBasedOn == "AGR")
     {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcpagingComponent);
-      this.pagingModal.clear();
-      const component = this.pagingModal.createComponent(componentFactory);
-
       this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     
       this.inputPagingObj = new UcPagingObj();
@@ -185,9 +208,6 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
         this.arrCrit.push(critObjBizTmpl);  
         this.inputPagingObj.addCritInput = this.arrCrit; 
       }
-      
-      component.instance.searchObj = this.inputPagingObj;
-      component.instance.callback.subscribe((e) => this.CallBackHandler(e));
     }
   }
 }
