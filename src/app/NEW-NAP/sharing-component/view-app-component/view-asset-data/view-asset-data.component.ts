@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "view-asset-data",
@@ -15,6 +17,7 @@ export class ViewAssetDataComponent implements OnInit {
   AppAssetObj: any;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
+  DownPaymentName : string = "Down Payment";
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -31,7 +34,10 @@ export class ViewAssetDataComponent implements OnInit {
     if (this.appAssetId != 0) {
       await this.GetAllAssetData({ Id: this.appAssetId });
     }
-    await this.GetAllAssetData({ Id: this.appId });    
+    else
+    {
+      await this.GetAllAssetData({ Id: this.appId });
+    }
   }
 
   getAssetUrl(): string {
@@ -48,6 +54,15 @@ export class ViewAssetDataComponent implements OnInit {
         if(this.AppAssetObj.ResponseAppAssetAttrObjs != null) {
           this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.ResponseAppAssetAttrObjs.length/2);
         }
+        
+        this.http.post(URLConstant.GetAppById, { Id: this.AppAssetObj.ResponseAppAssetObj.AppId}).subscribe(
+          (response : AppObj) => {
+            if(response.BizTemplateCode == CommonConstant.FL4W)
+            {
+              this.DownPaymentName = "Security Deposit";
+            }
+          }
+        );
       }
     );
   }
