@@ -46,7 +46,7 @@ export class TabReferantorMultiComponent implements OnInit {
 
   setReferantorCategory(AppReferantorObj : NapAppReferantorModel, i : number){
     if(AppReferantorObj.ReferantorCategory != CommonConstant.ReferantorCategoryAgency && AppReferantorObj.ReferantorCategory != CommonConstant.ReferantorCategoryCustomer){
-      AppReferantorObj.ReferantorCategory = CommonConstant.ReferantorCategorySupplierEmployee;
+      AppReferantorObj.ReferantorCategory = CommonConstant.ReferantorCategoryMultifinanceEmployee;
     }
   }
 
