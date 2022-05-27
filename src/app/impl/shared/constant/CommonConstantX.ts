@@ -26,6 +26,7 @@ export class CommonConstantX {
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
+    public static RefReasonTypeCodeEditCommAfterApproval = "EDIT_COMM_AFT_APV";
 
     //Approval Scheme
     public static SCHM_CODE_CESSIE_PGLV_APV = "CESSIE_PGLV_APV_SCHEME";
@@ -34,18 +35,24 @@ export class CommonConstantX {
     public static SCHM_CODE_CHG_MOU_EXP_APV = "CHG_MOU_EXP_APV";
     public static SCHM_CODE_CHG_MOU_EXP_DLFN_APV = "CHG_MOU_EXP_DLFN_APV";
     public static SCHM_CODE_CHG_MOU_EXP_FCTR_APV = "CHG_MOU_EXP_FCTR_APV";
+    public static SCHM_CODE_EDIT_COMM_AFT_APV_APV_SCHM_NORMAL = "EDIT_COMM_AFT_APV_APV_SCHM_NORMAL";
+    public static EDIT_COMM_AFT_APV_APV_SCHM = 'EDIT_COMM_AFT_APV_APV_SCHM';
+
 
     //Approval Type
     public static CESSIE_PRE_GLV_APV_TYPE = "CESSIE_PRE_GLV_APV_TYPE";
     public static GO_LIVE_APV_TYPE_APV_TYPE = "GO_LIVE_APV_TYPE";
+    public static EDIT_COMM_AFT_APV_APV_TYPE = "EDIT_COMM_AFT_APV_APV_TYPE";
 
     //Approval Category
     public static CESSIE_PRE_GPV_APV_CATEGORY = "CESSIE_PGLV_APV";
     public static CAT_CODE_GO_LIVE_APV = "GO_LIVE_APV";
     public static CAT_CODE_END_DT_GO_LIVE_APV = "END_DATE_GO_LIVE_APV";
+    public static CAT_CODE_EDIT_COMM_AFT_APV_APV = "EDIT_COMM_AFT_APV_APV";
 
 
-    //Add Interest Paid By
+
+  //Add Interest Paid By
     public static AdditionalInterestPaidByCustomer = "CU";
 
     //Cessie

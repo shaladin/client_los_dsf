@@ -63,6 +63,7 @@ import { AppMainInfoXComponent } from "../app-main-info-x/app-main-info-x.compon
 import { TabCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/tab-commission-x.component";
 import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referantor-multi.component";
 import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail/tab-referantor-multi-detail.component";
+import { ListDataCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/list-data-commission/list-data-commission-x.component";
 
 
 @NgModule({
@@ -132,7 +133,8 @@ import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail
         ViewDeviationComponent,
         TabCommissionXComponent,
         TabReferantorMultiComponent,
-        TabReferantorMultiDetailComponent
+        TabReferantorMultiDetailComponent,
+        ListDataCommissionXComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

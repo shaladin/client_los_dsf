@@ -245,6 +245,31 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false
+            },
+            "crbatch1": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.crbatch1.ts"
+                },
+                {
+                  "replace": "src/assets/i18n/en.json",
+                  "with": "src/assets/impl/i18n/en-x.json"
+                },
+                {
+                  "replace": "src/assets/i18n/id.json",
+                  "with": "src/assets/impl/i18n/id-x.json"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false
             }
           }
         },

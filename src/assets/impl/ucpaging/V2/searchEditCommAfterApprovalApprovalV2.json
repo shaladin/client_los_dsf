@@ -1,0 +1,256 @@
+{
+    "title": "Edit Commission After Credit Approval - Approval",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "ECTX.EDIT_COM_TRX_NO",
+        "id": "EditAppAftApvTrxNoId",
+        "value": "",
+        "label": "Edit Commission After Approval Transaction No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "AGR.AGRMNT_NO",
+        "id": "AgrmntNoId",
+        "value": "",
+        "label": "Agreement No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "AGR.CUST_NO",
+        "id": "CustNoId",
+        "value": "",
+        "label": "Customer No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "AGR.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "querystring": {
+      "name": "searchEditCommAfterApprovalApprovalV2"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Transaction No",
+        "name": "EditAppAftApvTrxNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Agreement No",
+        "name": "AgrmntNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer No",
+        "name": "CustNo"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Customer Name",
+        "name": "CustName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Approval No",
+        "name": "RequestNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request By",
+        "name": "RequestBy"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request Date",
+        "name": "RequestDate"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Main User Id",
+        "name": "MainUser"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current User Id",
+        "name": "CurrentUser"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Process"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Hold"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Take Back"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Unclaim"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "EditAppAftApvTrxNo"
+      },
+      {
+        "type": "callback",
+        "position": "center",
+        "property": "AgrmntNo",
+        "key": "agreement"
+      },
+      {
+        "type": "callback",
+        "position": "center",
+        "property": "CustNo",
+        "key": "customer"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RequestNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RequestBy"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "RequestDate"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MainUser"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CurrentUser"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "Process"
+          }
+        ]
+      },
+      {
+        "type" : "action",
+        "position" : "center",
+        "action" : [
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [
+                  {
+                    "property" : "CurrentUser",
+                    "value" : "-",
+                    "restriction" : "NEQ"
+                  }
+                ],
+                "result" : {
+                  "type": "callback",
+                  "key": "HoldTask",
+                  "icon" : "ft-edit-2"
+                },
+                "isHide" : false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type" : "action",
+        "position" : "center",
+        "action" : [
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [
+                  {
+                      "isUser": false,
+                      "property" : "IsRoleAssignment",
+                      "value" : false,
+                      "restriction" : "EQ"
+                  }
+                ],
+                "result" : {
+                  "type": "callback",
+                  "key": "TakeBack",
+                  "icon" : "ft-edit-2"
+                },
+                "isHide" : false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type" : "action",
+        "position" : "center",
+        "action" : [
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [
+                  {
+                      "isUser": false,
+                      "property" : "IsRoleAssignment",
+                      "value" : true,
+                      "restriction" : "EQ"
+                  }
+                ],
+                "result" : {
+                  "type": "callback",
+                  "key": "UnClaim",
+                  "icon" : "ft-edit-2"
+                },
+                "isHide" : false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

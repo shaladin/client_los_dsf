@@ -27,6 +27,7 @@ import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-edit-app-after-approval-detail-x',
@@ -82,6 +83,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     Notes: ['', [Validators.maxLength(4000), Validators.required]]
   });
   IsCommissionChanged: boolean = false;
+  IsCommissionExist: boolean = false;
 
   constructor(private fb: FormBuilder,
               private http: HttpClient,
@@ -103,6 +105,17 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     await this.getData();
     await this.initInputApprovalObj();
     await this.setdata();
+  }
+
+  async checkIsEditCommExist() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.agrmntId;
+    await this.http.post(URLConstantX.GetEditComReqAndApvByAgrmntId, reqObj).toPromise().then(
+      (response) => {  
+        if(response["ReturnObject"] != null){
+          this.IsCommissionExist = true;
+        }
+      });
   }
 
   async BindDDLReason() {
@@ -557,7 +570,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
   }
 
   RFAInfo: Object = new Object();
-  SaveForm() {
+  async SaveForm() {
     this.RFAInfo = { RFAInfo: this.EditAppForm.controls.RFAInfo.value };
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
@@ -566,6 +579,14 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.NO_DATA_EDITED);
       return;
     }
+
+    await this.checkIsEditCommExist();
+
+    if (this.IsCommissionExist){
+      this.toastr.errorMessage("Edit Commission in progress");
+      return;
+    }
+
     this.SetSupplEmpComm();
 
     this.ApprovalCreateOutput = this.createComponent.output();
@@ -582,7 +603,8 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       };
 
     let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqV2 : URLConstant.SubmitEditAppAftApvReq;
-    this.http.post(urlPost, EditAppAftApvObj).subscribe(
+
+    await this.http.post(urlPost, EditAppAftApvObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING], { BizTemplateCode: this.BizTemplateCode });
