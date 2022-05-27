@@ -968,7 +968,7 @@ export class AssetDataAddEditXComponent implements OnInit {
 
     this.userRelationshipObj = new RefMasterObj();
     this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    if (this.appCustObj.CustType == CommonConstant.CustTypePersonal) {
+    if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     } else {
       this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
