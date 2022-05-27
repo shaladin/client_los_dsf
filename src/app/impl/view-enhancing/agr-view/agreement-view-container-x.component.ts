@@ -208,7 +208,7 @@ export class AgreementViewContainerXComponent implements OnInit {
           this.IsAppCollateral = false;
           this.IsLoanData = false;
           this.IsDeviation = false;
-          this.IsInvoiceData = true;
+          this.IsInvoiceData = false;
         }
         else if (this.BizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -219,7 +219,7 @@ export class AgreementViewContainerXComponent implements OnInit {
           this.IsComplainHandling = false;
           this.IsAdditionalService = false;
           this.IsAppCollateral = false;
-          this.IsInvoiceData = true;
+          this.IsInvoiceData = false;
         }
         else if (this.BizTemplateCode == CommonConstant.CFNA) {
           this.IsAsset = false;
@@ -231,7 +231,7 @@ export class AgreementViewContainerXComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsCollateral = false;
           this.IsDeviation = false;
-          this.IsInvoiceData = true;
+          this.IsInvoiceData = false;
           if(this.IsNeedPO){
             this.IsPurchaseOrder = true;
           }
