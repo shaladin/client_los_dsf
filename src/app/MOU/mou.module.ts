@@ -144,6 +144,12 @@ import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-can
 import { MouCustMgmntShrholderPublicComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
 import { MouCustTabXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-tab-x.component';
 import { MouCustAttrContentComponentComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-attr-content-component/mou-cust-attr-content-component.component";
+import { MouCustomerRequestXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-request-x.component';
+import { MouCustomerInquiryXComponent } from 'app/impl/MOU/mou-customer/mou-customer-inquiry/mou-customer-inquiry-x.component';
+import { ChangeMouRequestPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-paging/change-mou-request-paging-x.component';
+import {MouCustomerApprovalXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-customer-approval-x.component';
+import {ChangeMouApprovalPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-paging/change-mou-approval-paging-x.component';
+import { UcpagingComponent } from '@adins/ucpaging';
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -210,6 +216,7 @@ export const customCurrencyMaskConfig = {
     LegalReviewPagingComponent,
     LegalReviewDetailComponent,
     MouCustomerApprovalComponent,
+    MouCustomerApprovalXComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouReviewGeneralComponent,
@@ -253,6 +260,7 @@ export const customCurrencyMaskConfig = {
     ChangeMouApprovalFinancingComponent,
     ChangeMouApprovalGeneralComponent,
     ChangeMouApprovalPagingComponent,
+    ChangeMouApprovalPagingXComponent,
     ChangeMouCancelComponent,
     ChangeMouExecutionDetailComponent,
     ChangeMouExecutionPagingComponent,
@@ -317,7 +325,10 @@ export const customCurrencyMaskConfig = {
     ChangeMouDetailFactoringXComponent,
     MouCustTabXComponent,
     MouCancelDetailComponent,
-    MouCustAttrContentComponentComponent
+    MouCustAttrContentComponentComponent,
+    MouCustomerRequestXComponent,
+    MouCustomerInquiryXComponent,
+    ChangeMouRequestPagingXComponent,
   ],
   exports: [],
   providers: [NGXToastrService],
@@ -326,10 +337,12 @@ export const customCurrencyMaskConfig = {
     MouCustFeeDetailComponent,
     MouCustAssetDetailComponent,
     MouCustomerApprovalComponent,
+    MouCustomerApprovalXComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
-    MouCustListedCustFctrDetailComponent
+    MouCustListedCustFctrDetailComponent,
+    UcpagingComponent
   ]
 })
 

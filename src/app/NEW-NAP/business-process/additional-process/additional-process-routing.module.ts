@@ -343,6 +343,7 @@ const routes: Routes = [
         component: EditAppAfterApprovalPagingComponent,
         data: {title: 'Edit Application After Approval Request Paging'}
       },
+    
       {
         path: PathConstant.EDIT_APP_AFT_APV_INQUIRY,
         component: EditAppAfterApprovalInquiryComponent,

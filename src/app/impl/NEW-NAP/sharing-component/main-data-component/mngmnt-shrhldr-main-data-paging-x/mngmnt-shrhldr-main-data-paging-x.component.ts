@@ -96,15 +96,6 @@ export class MngmntShrhldrMainDataPagingXComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_MUST_100);
       return;
     }
-    if(this.listMgmntShrholder.length)
-    {
-      var uniqueSet = Array.from(new Set(this.listUniqueIdNo));
-      if(uniqueSet.length != this.listMgmntShrholder.length)
-      {
-        this.toastr.warningMessage(ExceptionConstant.DUPLICATE_SHRHLDR_ID_NO);
-        return;
-      }
-    }
 
     this.outputTab.emit();
   }
