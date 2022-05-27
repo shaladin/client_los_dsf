@@ -35,7 +35,7 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
 
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { Id: this.AppAssetId });
     let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { Id: this.AppAssetId });
-    let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppId, { Id: this.AppId });
+    let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppAssetId, { Id: this.AppAssetId });
     forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
       (response: any) => {
         this.appAsset = response[0];
