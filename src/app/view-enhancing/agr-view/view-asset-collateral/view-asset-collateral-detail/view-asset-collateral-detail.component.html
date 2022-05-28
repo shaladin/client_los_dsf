@@ -162,6 +162,77 @@
       </div>
     </div>
   </div>
+  <lib-ucSubsection [id]="'AssetUserId'" [title]="'ASSET OWNER'" [panel]="'AssetOwnerSection'"></lib-ucSubsection>
+  <div id="AssetOwnerSection">
+    <div class="col-md-12">
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Owner Name</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerName}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Owner Relationship</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.MrOwnerRelationshipCodeDesc}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Owner Profession</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerProfessionName}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Owner Type</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.MrOwnerTypeCode}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Owner Id Type</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.MrIdTypeCode}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Owner Id No</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerIdNo}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Owner Mobile Phone No</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerMobilePhnNo}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Address</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerAddr}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Zip Code</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerZipcode}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>RT / RW</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerAreaCode4}} / {{appCollateralRegistration?.OwnerAreaCode3}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Kelurahan</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerAreaCode2}}</label>
+        </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Kecamatan</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerAreaCode1}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>City</label>
+          <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.OwnerCity}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
   <lib-ucSubsection [id]="'AssetLocationId'" [title]="'ASSET LOCATION'" [panel]="'AssetLocationSection'"></lib-ucSubsection>
   <div id="AssetLocationSection">
     <div class="col-md-12">

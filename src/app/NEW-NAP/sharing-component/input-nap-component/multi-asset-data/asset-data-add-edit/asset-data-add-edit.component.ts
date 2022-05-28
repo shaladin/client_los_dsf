@@ -944,7 +944,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     this.userRelationshipObj = new RefMasterObj();
     this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    if (this.appCustObj.CustType == CommonConstant.CustTypePersonal) {
+    if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
     } else {
       this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
@@ -2370,7 +2370,28 @@ export class AssetDataAddEditComponent implements OnInit {
     );
   }
 
+  GetOwnerRelationship(userRelationshipObj : any)
+  {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.userRelationshipObj).subscribe(
+      (response) => {
+        this.OwnerRelationObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
+      }
+    );
+  }
+
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
+    if(this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal && OwnerType == CommonConstant.CustTypePersonal)
+    {
+      this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+      this.GetOwnerRelationship(this.userRelationshipObj);
+    }
+    else
+    {
+      this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+      this.GetOwnerRelationship(this.userRelationshipObj);
+    }
+    
     let ownerCode: string = "";
     if (this.returnAppCollateralRegistrationObj) ownerCode = this.returnAppCollateralRegistrationObj.OwnerProfessionCode;
     if(OwnerType == CommonConstant.CustTypePersonal){
