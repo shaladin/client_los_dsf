@@ -769,6 +769,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.SetLookupAsset();
     this.SetLookupSupplier();
     await this.GetAppCust();
+    await this.GetAppCustPhone();
     await this.bindIdTypeObj();
     await this.bindAssetConditionObj();
     if(this.custType == CommonConstant.CustTypePersonal){
@@ -1000,7 +1001,7 @@ export class AssetDataAddEditComponent implements OnInit {
             TaxCityIssuer: {value: this.returnAppAssetObj.TaxCityIssuer},
             TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
-
+          
           if (this.returnAppAssetObj != null) {
             this.prevAssetCategoryCode =  this.returnAppAssetObj.AssetCategoryCode;
 
@@ -2171,7 +2172,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   async SelfOwnerChange(isEdit: boolean = false, OwnerType: string = this.custType, isFromOnInit:boolean=false) {
     let isChecked: boolean = this.AssetDataForm.get("SelfOwner").value;
-    if (isChecked) {
+    if (isChecked == true) {
       if (!isFromOnInit) 
       {
         this.AssetDataForm.patchValue({
@@ -2299,6 +2300,19 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.inputAddressObjForOwner.default = ownerAddrObj;
       this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
+    }
+  }
+
+  async GetAppCustPhone() {
+    if (typeof (this.appCustObj) != 'undefined') {
+      let appObj = {
+        Id: this.AppId,
+      };
+      await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
+        (response) => {
+          if (typeof (response['AppCustPersonalObj']) != 'undefined') this.appCustObj.MobilePhnNo1 = response['AppCustPersonalObj']['MobilePhnNo1'];
+        }
+      );
     }
   }
 
