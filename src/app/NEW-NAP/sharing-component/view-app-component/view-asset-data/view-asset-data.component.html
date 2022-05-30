@@ -168,7 +168,7 @@
             <label class="col-md-2  adInsLabel" translate>User Name</label>
             <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppCollateralRegistrationObj?.UserName? AppAssetObj.ResponseAppCollateralRegistrationObj.UserName : "-"}}</label>
             <label class="col-md-2  adInsLabel" translate>User Relationship</label>
-            <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrUserRelationshipCode? AppAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode : "-"}}</label>
+            <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrUserRelationshipCodeDesc? AppAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCodeDesc : "-"}}</label>
           </div>
         </div>
         <lib-ucSubsection [id]="'ownerId'" [title]="'Asset Owner'" [panel]="'owner'">
@@ -182,7 +182,7 @@
           </div>
           <div class="row">
             <label class="col-md-2  adInsLabel" translate>Owner Relationship</label>
-            <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrOwnerRelationshipCode? AppAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode : "-"}}</label>
+            <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrOwnerRelationshipCodeDesc? AppAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCodeDesc : "-"}}</label>
             <label class="col-md-2  adInsLabel" translate>RT / RW</label>
             <label class="col-md-4  adinslabel" translate
               *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode3; else noOwnerAreaCode3">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode4}}
