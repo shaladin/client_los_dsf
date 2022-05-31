@@ -242,62 +242,7 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="AppAssetAttrObj != null && isAssetAttrReady == true">
-                <lib-ucSubsection [id]="'AppAssetAttrId'" [title]="'Asset Attribute'" [panel]="'assetAttr'">
-                </lib-ucSubsection>
-                <div [id]="assetAttr">
-                  <div class="form-actions right">
-                    <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
-                      class="btn btn-raised btn-primary" translate>
-                      Refresh Attribute
-                    </button>
-                  </div>
-                  <div formArrayName="AppAssetAttrObjs">
-                    <div *ngFor="let item of AssetDataForm.controls['AppAssetAttrObjs'].controls;let i = index">
-                      <div [formGroupName]="i" class="form-group row">
-                        <label class="col-md-2  adInsLabel" translate>{{item.controls.AssetAttrName.value}}</label>
-                        <div class="col-md-4">
-                          <div *ngIf="item.controls.AttrInputType.value == 'T'">
-                            <input type="text" class="form-control" formControlName="AttrValue"
-                              [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
-                            <lib-uc-show-errors
-                              [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
-                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                          </div>
-                          <div *ngIf="item.controls.AttrInputType.value == 'N'">
-                            <input type="" currencyMask class="form-control" formControlName="AttrValue"
-                              [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
-                            <lib-uc-show-errors
-                              [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
-                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                          </div>
-                          <div *ngIf="item.controls.AttrInputType.value == 'D'">
-                            <input type="date" class="form-control" formControlName="AttrValue"
-                              [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
-                            <lib-uc-show-errors
-                              [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
-                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                          </div>
-                          <div *ngIf="item.controls.AttrInputType.value == 'L'">
-                            <select class="form-control" formControlName="AttrValue" style="width:50%"
-                              [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue.invalid }">
-                              <option value="">-Select One-</option>
-                              <option *ngFor="let x of ListAttrAnswer[i][0]" value="{{x}}">
-                                {{x}}
-                              </option>
-                            </select>
-                            <lib-uc-show-errors
-                              [control]="AssetDataForm.controls['AppAssetAttrObjs']['controls'][i]['controls'].AttrValue"
-                              [submit]="enjiForm.submitted">
-                            </lib-uc-show-errors>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+              <uc-attribute-form *ngIf="isAssetAttrReady" [parentForm]="AssetDataForm" [identifier]="identifierAssetAttr" [enjiForm]="enjiForm" [AttrSetting]="attrSettingObj"></uc-attribute-form>
               <lib-ucSubsection [id]="'AddAssetDocumentId'" [title]="'Asset Document'" [panel]="'AddAssetDocument'">
               </lib-ucSubsection>
               <div id="AddAssetDocument">
@@ -596,21 +541,23 @@
               </lib-ucSubsection>
               <div id="assetLoc">
                 <div class="form-group row">
-                  <label class="col-md-2  adInsLabel" translate>Copy Address </label>
-                  <div class="col-md-2">
-                    <select class="form-control adInsInput" formControlName="LocationAddrType">
-                      <option value="" translate>-Select One-</option>
-                      <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
-                        {{ram.MrCustAddrTypeCode}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="input-group-append">
-                    <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
-                        <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
-                      </button>
-                    </span>
+                  <label class="col-md-2 adInsLabel" translate>Copy Address </label>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <select class="form-control adInsInput" formControlName="LocationAddrType">
+                        <option value="" translate>-Select One-</option>
+                        <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
+                          {{ram.MrCustAddrTypeCode}}
+                        </option>
+                      </select>
+                      <div class="input-group-append">
+                        <span class="input-group-btn">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div id="AssetLocation" *ngIf="isAddressReady">

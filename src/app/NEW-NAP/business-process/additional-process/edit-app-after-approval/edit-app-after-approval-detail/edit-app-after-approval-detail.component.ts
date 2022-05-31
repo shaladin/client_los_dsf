@@ -167,8 +167,22 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         let currentBankAccountNo = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].BankAccNo;
         let currentBankAccountName = this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].BankAccName;
 
-        let currentVba = vendorBankAccObj.find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo &&
-                                                    x.BankAccountName == currentBankAccountName);
+        let currentVba = vendorBankAccObj.find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo && x.BankAccountName == currentBankAccountName);
+
+        if(currentVba == undefined || currentVba == null){
+          this.listTempVba[currentAgrmntCommissionHId].push({
+            VendorBankAccId: 0,
+            BankBranch: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].BankBranch,
+            BankName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].BankName,
+            BankCode: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].BankCode,
+            BankAccountNo: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].BankAccNo,
+            BankAccountName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplObjs[i].BankAccName,
+            isCurrent: true
+          });
+
+          currentVba = this.listTempVba[currentAgrmntCommissionHId].find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo && 
+                                                                         x.BankAccountName == currentBankAccountName);
+        }
 
         formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
 
@@ -219,6 +233,21 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         let currentVba = vendorBankAccObj.find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo &&
                                                     x.BankAccountName == currentBankAccountName);
 
+        if(currentVba == undefined || currentVba == null){
+          this.listTempVba[currentAgrmntCommissionHId].push({
+            VendorBankAccId: 0,
+            BankBranch: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].BankBranch,
+            BankName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].BankName,
+            BankCode: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].BankCode,
+            BankAccountNo: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].BankAccNo,
+            BankAccountName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHSupplEmpObjs[i].BankAccName,
+            isCurrent: true
+          });
+
+          currentVba = this.listTempVba[currentAgrmntCommissionHId].find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo && 
+                                                                          x.BankAccountName == currentBankAccountName);
+        }
+                                            
         formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
 
         (this.EditAppForm.get("SupplierEmpCommissionList") as FormArray).push(formGroupComm);
@@ -248,6 +277,21 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
 
         let currentVba = vendorBankAccObj.find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo &&
                                                     x.BankAccountName == currentBankAccountName);
+        
+        if(currentVba == undefined || currentVba == null){
+          this.listTempVba[currentAgrmntCommissionHId].push({
+            VendorBankAccId: 0,
+            BankBranch: this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].BankBranch,
+            BankName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].BankName,
+            BankCode: this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].BankCode,
+            BankAccountNo: this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].BankAccNo,
+            BankAccountName: this.agrmntDataForEditAppAftApv.AgrmntCommissionHReferantorObjs[i].BankAccName,
+            isCurrent: true
+          });
+
+          currentVba = this.listTempVba[currentAgrmntCommissionHId].find(x => x.BankCode == currentBankCode && x.BankAccountNo == currentBankAccountNo && 
+                                                                          x.BankAccountName == currentBankAccountName);
+        }
 
         formGroupComm.controls.CurrentVendorBankAccId.patchValue(currentVba.VendorBankAccId);
 

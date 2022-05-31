@@ -618,21 +618,23 @@
               </lib-ucSubsection>
               <div id="assetLoc">
                 <div class="form-group row">
-                  <label class="col-md-2  adInsLabel" translate>Copy Address </label>
-                  <div class="col-md-2">
+                  <label class="col-md-2 adInsLabel" translate>Copy Address </label>
+                  <div class="col-md-4">
+                    <div class="input-group">
                     <select class="form-control adInsInput" formControlName="LocationAddrType">
                       <option value="" translate>-Select One-</option>
                       <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                         {{ram.MrCustAddrTypeCode}}
                       </option>
                     </select>
-                  </div>
                   <div class="input-group-append">
                     <span class="input-group-btn">
                       <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
                         <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                       </button>
                     </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div id="AssetLocation" *ngIf="inputAddressObjForLoc && isAddressReady">
