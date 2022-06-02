@@ -21,6 +21,9 @@ export class AppAssetDataComponent implements OnInit {
   AppCollateralId: number;
   MostSerialNoAssetType: AssetTypeObj = new AssetTypeObj();
   MostSerialNoCollateralType: AssetTypeObj = new AssetTypeObj();
+  SerialNoLabelAssetList: Array<string> = [];
+  SerialNoLabelCollateralList: Array<string> = [];
+  tempSerialNoLabelCollateralList: Array<string> = [];
 
   constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 
@@ -44,18 +47,59 @@ export class AppAssetDataComponent implements OnInit {
     this.httpClient.post(URLConstant.GetMostSerialNoAssetTypeByListAssetTypeCode, reqByListCodes).subscribe(
       (response: AssetTypeObj) => {
         this.MostSerialNoAssetType = response;
+        this.MostSerialNoAssetType.SerialNo1Label != null? this.SerialNoLabelAssetList.push(this.MostSerialNoAssetType.SerialNo1Label) : null;
+        this.MostSerialNoAssetType.SerialNo2Label != null? this.SerialNoLabelAssetList.push(this.MostSerialNoAssetType.SerialNo2Label) : null;
+        this.MostSerialNoAssetType.SerialNo3Label != null? this.SerialNoLabelAssetList.push(this.MostSerialNoAssetType.SerialNo3Label) : null;
+        this.MostSerialNoAssetType.SerialNo4Label != null? this.SerialNoLabelAssetList.push(this.MostSerialNoAssetType.SerialNo4Label) : null;
+        this.MostSerialNoAssetType.SerialNo5Label != null? this.SerialNoLabelAssetList.push(this.MostSerialNoAssetType.SerialNo5Label) : null;
       }
     );
   }
 
-  checkListCollType(){
+  async checkListCollType(){
     let reqByListCodes: GenericListByCodeObj = new GenericListByCodeObj();
     reqByListCodes.Codes = Array.from(new Set(this.appCollateralList.map(x => x.AssetTypeCode)));
-    this.httpClient.post(URLConstant.GetMostSerialNoAssetTypeByListAssetTypeCode, reqByListCodes).subscribe(
-      (response: AssetTypeObj) => {
-        this.MostSerialNoCollateralType = response;
+
+    let x = [];
+    let temp = 0;
+    for(let i = 0; i < reqByListCodes.Codes.length; i++)
+    {
+      await this.httpClient.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+        Code: reqByListCodes.Codes[i]
+      }).toPromise().then(
+        (response) => {
+          if(i == 0)
+          {
+            response[CommonConstant.ReturnObj].length <= 3? temp = response[CommonConstant.ReturnObj].length : temp = 3;
+          }
+          else
+          {
+            response[CommonConstant.ReturnObj].length >= temp? (response[CommonConstant.ReturnObj].length >= 3? temp = 3 : temp = response[CommonConstant.ReturnObj].length) : temp = temp;
+          }
+        });
+
+      x = reqByListCodes.Codes.filter(f => f == reqByListCodes.Codes[i]);
+    }
+
+    if(x.length == reqByListCodes.Codes.length)
+    {
+      await this.httpClient.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+        Code: reqByListCodes.Codes[0]
+      }).toPromise().then(
+        (response) => {
+          for(let i = 0; i < temp; i++)
+          {
+            this.SerialNoLabelCollateralList.push(response[CommonConstant.ReturnObj][i].SerialNoLabel)
+          }
+        });
+    }
+    else
+    {
+      for(let i = 0; i < temp; i++)
+      {
+        this.SerialNoLabelCollateralList.push("Serial No " + (i+1))
       }
-    );
+    }
   }
 
   viewDetailHandler(appAssetId){

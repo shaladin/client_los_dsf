@@ -21,6 +21,8 @@ export class ViewCollateralDataComponent implements OnInit {
   AppId: number;  @Input() appId: number = 0;
   @Input() AppCollateralId: number = 0;
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
+  AppCollateral: any;
+  SerialNoLabelCollateralList: Array<string> = [];
   AppCollateralDocs: Array<AppCollateralDocObj> = new Array<AppCollateralDocObj>();
   IsHidden: boolean = true;
   arrValue = [];
@@ -55,10 +57,6 @@ export class ViewCollateralDataComponent implements OnInit {
       await this.http.post<AppCollateralObj>(URLConstant.GetAppCollateralByAppId, {Id: this.AppId}).toPromise().then(
         (response) => {
           this.AppCollateralObj = response;        
-          this.arrValue.push(this.AppCollateralObj.AppCollateralId);
-          this.viewGenericObj.whereValue = this.arrValue;
-          this.viewUOLObj.whereValue = this.arrValue;
-          this.IsReady = true;
           this.AppCollateralId = this.AppCollateralObj.AppCollateralId;
           this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralObj.AppCollateralId }).subscribe(
             (response) => {
@@ -77,6 +75,14 @@ export class ViewCollateralDataComponent implements OnInit {
 
   GetCollateralData(){
 
+    this.http.post<Array<AppCollateralAttrObj>>(URLConstant.GetAppCollateralByAppCollateralIdForView, {Id: this.AppCollateralId }).subscribe(
+      (response) => {
+        this.AppCollateral = response;
+
+        this.GetSerialNoList();
+      }
+    );
+
     this.http.post<Array<AppCollateralAttrObj>>(URLConstant.GetAppCollateralAttrByAppCollateralId, {Id: this.AppCollateralId }).subscribe(
       (response) => {
         this.AppCollateralAttrObjs = response["AppCollateralAttrObjs"];
@@ -94,5 +100,20 @@ export class ViewCollateralDataComponent implements OnInit {
         this.inputGridObj.resultData.Data = this.AppCollateralAccessoryObjs;
       }
     );
+  }
+
+  async GetSerialNoList()
+  {
+    let temp = 0;
+    await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+      Code: this.AppCollateral.AssetTypeCode
+    }).toPromise().then(
+      (response) => {
+        response[CommonConstant.ReturnObj].length <= 3 ? temp = response[CommonConstant.ReturnObj].length : temp = 3; 
+        for(let i = 0; i < temp; i++)
+        {
+          this.SerialNoLabelCollateralList.push(response[CommonConstant.ReturnObj][i].SerialNoLabel)
+        }
+      });
   }
 }
