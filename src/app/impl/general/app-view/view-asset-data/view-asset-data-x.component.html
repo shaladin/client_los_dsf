@@ -1,5 +1,5 @@
 <div *ngIf="IsHidden">
-  <div class="col-md-12" *ngIf="BizTemplateCode !== 'OPL'">
+  <div class="col-md-12">
     <div class="card">
       <div class="card-body">
         <div class="px-3">
@@ -8,15 +8,19 @@
           <div id="supplier">
             <div>
               <label class="col-md-2  adInsLabel" translate>Supplier Name</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppAssetObj?.SupplName}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.SupplName">{{this.AppAssetObj.ResponseAppAssetObj.SupplName}}</label>
               <label class="col-md-2  adInsLabel" translate>Sales Person</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseSalesPersonSupp?.SupplEmpName ? this.AppAssetObj.ResponseSalesPersonSupp.SupplEmpName : this.SalesName}}</label>
+              <label class="col-md-4  adinslabel" translate
+                >{{AppAssetObj?.ResponseSalesPersonSupp?.SupplEmpName ? this.AppAssetObj.ResponseSalesPersonSupp.SupplEmpName : this.SalesName}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Admin Head</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAdminHeadSupp?.SupplEmpName ? this.AppAssetObj.ResponseAdminHeadSupp.SupplEmpName  : this.AdminName}}</label>
+              <label class="col-md-4  adinslabel" translate
+                >{{AppAssetObj?.ResponseAdminHeadSupp?.SupplEmpName ? this.AppAssetObj.ResponseAdminHeadSupp.SupplEmpName : this.AdminName}}</label>
               <label class="col-md-2  adInsLabel" translate>Branch Manager</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseBranchManagerSupp?.SupplEmpName ?  this.AppAssetObj.ResponseBranchManagerSupp.SupplEmpName : this.ManagerName}}</label>
+              <label class="col-md-4  adinslabel" translate
+                >{{AppAssetObj?.ResponseBranchManagerSupp?.SupplEmpName ? this.AppAssetObj.ResponseBranchManagerSupp.SupplEmpName : this.ManagerName}}</label>
             </div>
           </div>
           <lib-ucSubsection [id]="'assetId'" [title]="'Asset Information'" [panel]="'asset'">
@@ -24,21 +28,27 @@
           <div id="asset">
             <div>
               <label class="col-md-2  adInsLabel" translate>Asset Name</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.FullAssetName}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.FullAssetName">{{AppAssetObj.ResponseAppAssetObj.FullAssetName}}</label>
               <label class="col-md-2  adInsLabel" translate>Down Payment (% / Amount)</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.DownPaymentPrcnt | number:'.6':'en-US'}} % | {{AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt | number:'.2':'en-US'}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.DownPaymentAmt">{{AppAssetObj.ResponseAppAssetObj.DownPaymentPrcnt | number:'.6':'en-US'}} % | {{AppAssetObj.ResponseAppAssetObj.DownPaymentAmt | number:'.2':'en-US'}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Asset Price</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.AssetPriceAmt | number:'.2':'en-US'}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.AssetPriceAmt">{{AppAssetObj.ResponseAppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</label>
               <label class="col-md-2  adInsLabel" translate>Asset Usage</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.MrAssetUsageCodeDesc}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.MrAssetUsageCode">{{AppAssetObj.ResponseAppAssetObj.MrAssetUsageCode}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Asset Condition</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.MrAssetConditionCode}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.MrAssetConditionCode">{{AppAssetObj.ResponseAppAssetObj.MrAssetConditionCode}}</label>
               <label class="col-md-2  adInsLabel" translate>Manufacturing Year</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.ManufacturingYear}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.ManufacturingYear">{{AppAssetObj.ResponseAppAssetObj.ManufacturingYear}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate
@@ -66,21 +76,27 @@
               <label class="col-md-4  adinslabel" translate
                 *ngIf="AppAssetObj?.ResponseAppAssetObj?.SerialNo5Label">{{AppAssetObj.ResponseAppAssetObj.SerialNo5}}</label>
               <label class="col-md-2  adInsLabel" translate>Color</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.Color}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.Color">{{AppAssetObj.ResponseAppAssetObj.Color}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>BPKB Issue Date</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.TaxIssueDt | date: 'yyyy-MM-dd'}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxIssueDt">{{AppAssetObj.ResponseAppAssetObj.TaxIssueDt}}</label>
+                <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxIssueDt == null"> </label>
               <label class="col-md-2  adInsLabel" translate>BPKB City Issuer</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.TaxCityIssuer}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxCityIssuer">{{AppAssetObj.ResponseAppAssetObj.TaxCityIssuer}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Notes</label>
-              <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.AssetNotes}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppAssetObj?.AssetNotes">{{AppAssetObj.ResponseAppAssetObj.AssetNotes}}</label>
             </div>
           </div>
   
-          <lib-ucSubsection  [id]="'assetAttrId'"
+          <lib-ucSubsection [id]="'assetAttrId'"
             [title]="'Asset Attribute'" [panel]="'assetAttr'">
           </lib-ucSubsection>
           <div id="assetAttr" class="row" >
@@ -101,10 +117,10 @@
             <div class="col-md-6">
               <div *ngFor="let item of AppAssetObj?.ResponseAppAssetAttrObjs; let i = index">
                 <div class="form-group row" *ngIf="totalHalfResponseAppAssetAttrObjs <= i">
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <label class="adInsLabel"> {{item.AssetAttrName}} </label>
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-6">
                     <label class="adInsLabel"> {{item.AttrValue}} </label>
                   </div>
                 </div>
@@ -125,9 +141,11 @@
           <div id="user">
             <div>
               <label class="col-md-2  adInsLabel" translate>User Name</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.UserName}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.UserName">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.UserName}}</label>
               <label class="col-md-2  adInsLabel" translate>User Relationship</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrUserRelationshipCodeDesc}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrUserRelationshipCode">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode}}</label>
             </div>
           </div>
           <lib-ucSubsection [id]="'ownerId'" [title]="'Asset Owner'" [panel]="'owner'">
@@ -135,40 +153,51 @@
           <div id="owner">
             <div>
               <label class="col-md-2  adInsLabel" translate>Owner Name</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerName}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerName">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerName}}</label>
               <label class="col-md-2  adInsLabel" translate>Address</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAddr}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAddr">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerAddr}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Owner Relationship</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrUserRelationshipCodeDesc}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrOwnerRelationshipCode">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.MrOwnerRelationshipCode}}</label>
               <label class="col-md-2  adInsLabel" translate>RT / RW</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode4}}
-                / {{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode3}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode3">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode4}}
+                / {{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode3}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Owner Id Type</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrIdTypeCode}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.MrIdTypeCode">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.MrIdTypeCode}}</label>
               <label class="col-md-2  adInsLabel" translate>Kelurahan</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode2}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode2">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode2}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Owner Id No</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerIdNo}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerIdNo">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerIdNo}}</label>
               <label class="col-md-2  adInsLabel" translate>Kecamatan</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode1}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerAreaCode1">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerAreaCode1}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Owner Mobile Phone No</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerMobilePhnNo}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerMobilePhnNo">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerMobilePhnNo}}</label>
               <label class="col-md-2  adInsLabel" translate>City</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerCity}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerCity">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerCity}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Owner Profession</label>
-              <label class="col-md-4  adinslabel" translate>{{ this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerProfessionName}}</label>
+                <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionName}}</label>
               <label class="col-md-2  adInsLabel" translate>Zipcode</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerZipcode}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.OwnerZipcode">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerZipcode}}</label>
             </div>
           </div>
           <lib-ucSubsection [id]="'locationId'" [title]="'Asset Location'" [panel]="'location'">
@@ -176,28 +205,34 @@
           <div id="location">
             <div>
               <label class="col-md-2  adInsLabel" translate>Address</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAddr}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAddr">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.LocationAddr}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>RT / RW</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAreaCode4}}
-                / {{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAreaCode3}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAreaCode3">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4}}
+                / {{this.AppAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode3}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Kelurahan</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAreaCode2}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAreaCode2">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode2}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Kecamatan</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAreaCode1}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationAreaCode1">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode1}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>City</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationCity}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationCity">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.LocationCity}}</label>
             </div>
             <div>
               <label class="col-md-2  adInsLabel" translate>Zipcode</label>
-              <label class="col-md-4  adinslabel" translate>{{this.AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationZipcode}}</label>
+              <label class="col-md-4  adinslabel" translate
+                *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationZipcode">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode}}</label>
             </div>
           </div>
           <lib-ucSubsection [id]="'AdditionalCollateralId'" [title]="'COLLATERAL'"
@@ -267,66 +302,6 @@
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="IsHidden">
-  <div class="col-md-12" *ngIf="BizTemplateCode === 'OPL'">
-    <div class="card">
-      <div class="card-body">
-        <div class="px-3">
-          <lib-ucSubsection [id]="'assetDataId'" [title]="'List of Asset'" [panel]="'assetData'">
-          </lib-ucSubsection>
-          <div id="assetData" style="overflow-x: auto;">
-            <table class="table table-responsive-md text-center table-hover">
-              <thead>
-                <tr class="table-header">
-                  <th>
-                    <span class="thead-header" translate>Asset Seq No</span>
-                  </th>
-                  <th>
-                    <span class="thead-header" translate>App Asset No</span>
-                  </th>
-                  <th class="text-left">
-                    <span class="thead-header" translate>Asset Name</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Asset Price</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Discount</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Asset Price After Discount</span>
-                  </th>
-                </tr>
-              </thead>
-  
-              <tbody>
-                <tr *ngIf="listAsset.length === 0">
-                  <td colspan="100%">No Data Available</td>
-                </tr>
-                <tr *ngFor="let item of listAsset; let i = index">
-                  <td>{{item.AppAssetObj.AssetSeqNo}}</td>
-                  <td>
-                    <a [routerLink]="['/View/AppAsset']" target="_blank"
-                      [queryParams]="{ AppId: appId, AppAssetId: item.AppAssetObj.AppAssetId }">
-                      {{item.AppAssetObj.AppAssetNo}}
-                    </a>
-                  </td>
-                  <td class="text-left">
-                    {{item.AppAssetObj.FullAssetName}} - {{item.AppAssetObj.Color}} - {{item.AppAssetObj.MrAssetConditionCode}}
-                  </td>
-                  <td class="text-right">{{item.AppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.AppAssetObj.Discount | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.AppAssetObj.AssetPriceAmt - item.AppAssetObj.Discount | number:'.2':'en-US'}}</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>

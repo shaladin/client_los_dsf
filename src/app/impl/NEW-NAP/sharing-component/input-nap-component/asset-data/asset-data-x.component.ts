@@ -97,6 +97,7 @@ export class AssetDataXComponent implements OnInit {
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
+  IsSales: boolean = true;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -290,6 +291,7 @@ export class AssetDataXComponent implements OnInit {
   SetManuYearObj: ResAssetValidationRuleObj;
   SetDpObj: ResAssetValidationRuleObj;
   isValidOk: boolean = true;
+  AdminHeadName: string;
 
   AssetConditionName: string = "";
   OfficeCode: string;
@@ -1226,6 +1228,20 @@ export class AssetDataXComponent implements OnInit {
         SalesPersonNo: temp[0].VendorEmpNo,
         SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
       });
+      if(temp[0].MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE){
+        this.IsSales = true;
+        this.AdminHeadChanged(event);
+      }
+      else{
+        this.IsSales = false;
+        this.AdminHeadName = temp[0].VendorEmpName;
+        this.AssetDataForm.patchValue({
+          AdminHeadId: "",
+          AdminHeadName: "",
+          AdminHeadNo: "",
+          AdminHeadPositionCode: "",
+        });
+      }
     }
     else {
       this.AssetDataForm.patchValue({

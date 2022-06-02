@@ -6,6 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { forkJoin } from 'rxjs';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { RefProfessionObj } from 'app/shared/model/ref-profession-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'view-asset-data-detail-x',
@@ -25,6 +26,7 @@ export class ViewAssetDataDetailXComponent implements OnInit {
   adminHeadName: string;
   inputGridObj: InputGridObj = new InputGridObj();
   OwnerProfessionName: string = '-';
+  IsAdmin: boolean = true;
 
   constructor(private httpClient: HttpClient, public activeModal: NgbActiveModal) { }
 
@@ -41,16 +43,27 @@ export class ViewAssetDataDetailXComponent implements OnInit {
         this.appCollateralRegistration = response[2];
         this.GetRefProfession();
 
+        let name = "";
         for (const item of this.appAssetSupplEmp.ReturnObject) {
           if(item.MrSupplEmpPositionCode == CommonConstant.SALES_JOB_CODE){
             this.salesName = item.SupplEmpName;
+            this.IsAdmin = false;
           }
           else if(item.MrSupplEmpPositionCode == CommonConstant.BRANCH_MANAGER_JOB_CODE){
             this.branchManagerName = item.SupplEmpName;
+            name = item.SupplEmpName;
           }
           else if(item.MrSupplEmpPositionCode == CommonConstant.ADMIN_HEAD_JOB_CODE){
             this.adminHeadName = item.SupplEmpName;
+            name = item.SupplEmpName;
           }
+        }
+
+        if(this.IsAdmin)
+        {
+          this.salesName = name;
+          this.branchManagerName = name;
+          this.adminHeadName = name;
         }
 
         this.inputGridObj.resultData = {
@@ -60,6 +73,8 @@ export class ViewAssetDataDetailXComponent implements OnInit {
         this.inputGridObj.resultData.Data = this.appAsset.ResponseAppAssetAccessoryObjs;
       }
     );
+
+    
 
     this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
       (response: any) => {

@@ -2,19 +2,19 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AllAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "view-asset-data-x",
   templateUrl: "./view-asset-data-x.component.html"
 })
 export class ViewAssetDataXComponent implements OnInit {
-  getAppUrl: any;
-  getAllAssetDataUrl: any;
+  getAppUrl: string;
+  getAllAssetDataUrl: string;
   @Input() appId: number = 0;
-  @Input() BizTemplateCode: string = "";
+  @Input() agrmntId: number = 0;
   appAssetId: number = 0;
   appObj = {
     Id: 0
@@ -22,18 +22,15 @@ export class ViewAssetDataXComponent implements OnInit {
   appAssetObj = {
     Id: 0
   };
-  
+
   AppObj: any;
   AppAssetObj: any;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
-  listAsset: Array<any> = new Array<any>();
-  allAssetDataObj: AllAssetDataObj;
   inputGridObj: InputGridObj = new InputGridObj();
   appCollateralList: Array<any>;
   IsHidden: boolean = true;
   AppCollateralId: number;
-  IsReady: boolean = false;
   SalesName: string;
   AdminName: string;
   ManagerName: string;
@@ -62,35 +59,33 @@ export class ViewAssetDataXComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryCF4W.json";
 
-    this.appObj.Id = this.appId;
-    if(this.BizTemplateCode === CommonConstant.OPL) {
-      await this.GetListAllAssetData();
+    if (this.appAssetId != 0) {
+      this.initSingleAssetUrl();
+      this.appAssetObj.Id = this.appAssetId;
+      await this.GetAllAssetData(this.appAssetObj);
     }
     else {
-      if (this.appAssetId != 0) {
-        this.initSingleAssetUrl();
-        this.appAssetObj.Id = this.appAssetId;
-        await this.GetAllAssetData(this.appAssetObj);
-      }
-      else {
-        this.initUrl();
-        await this.GetAllAssetData(this.appObj);
-      }
-
-      this.http.post(URLConstant.GetViewAppCollateralObjByAppId, {Id: this.appId}).subscribe(
-        response => {
-          this.appCollateralList = response["AppCollateralObjs"];
-        }
-      );
-
-      this.IsReady = true;
+      this.initUrl();
+      this.appObj.Id = this.appId;
+      await this.GetAllAssetData(this.appObj);
     }
 
+    if(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode != null || this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode != undefined) {
+      await this.GetProfessionName(this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode);
+    }
+
+    if(this.agrmntId != 0){
+      this.GetListAppCollateralByAgrmntId(this.agrmntId);
+    }
+    else{
+      this.GetListAppCollateralByAppId(this.appId);
+    }   
+    
     if(!this.AppAssetObj.ResponseSalesPersonSupp)
     {
       let name;
       
-      this.AppAssetObj.ResponseAdminHeadSupp == null ? '' : this.AppAssetObj.ResponseAdminHeadSupp.SupplEmpName;
+      name = this.AppAssetObj.ResponseAdminHeadSupp == null ? '' : this.AppAssetObj.ResponseAdminHeadSupp.SupplEmpName;
       if(!name)
       {
         name = this.AppAssetObj.ResponseBranchManagerSupp.SupplEmpName
@@ -103,7 +98,7 @@ export class ViewAssetDataXComponent implements OnInit {
 
   async GetAllAssetData(obj: any) {
     await this.http.post(this.getAllAssetDataUrl, obj).toPromise().then(
-      (response) => {
+      (response: AllAssetDataObj) => {
         this.AppAssetObj = response;
         if(this.AppAssetObj.ResponseAppAssetAttrObjs != null) {
           this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.ResponseAppAssetAttrObjs.length/2);
@@ -118,28 +113,30 @@ export class ViewAssetDataXComponent implements OnInit {
     );
   }
 
-  async GetListAllAssetData() {
-    await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appObj).toPromise().then(
+  async GetProfessionName(professionCode: string) {
+    await this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).toPromise().then(
       (response) => {
-        this.AppAssetObj = response[CommonConstant.ReturnObj];
+        this.AppAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionName = response["ProfessionName"]
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
-        if (this.AppAssetObj.length > 0) {
-          for(let i = 0; i < this.AppAssetObj.length; i++) {
-            this.allAssetDataObj = new AllAssetDataObj();
+  async GetListAppCollateralByAgrmntId(AgrmntId: number) {
+    this.http.post(URLConstant.GetViewAppCollateralObjByAgrmntId, {Id: AgrmntId}).subscribe(
+      response => {
+        this.appCollateralList = response["AppCollateralObjs"];
+      }
+    );
+  }
 
-            this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetObj[i].ResponseAppAssetObj.AppAssetId;
-            this.allAssetDataObj.AppAssetObj.AppId = this.AppAssetObj[i].ResponseAppAssetObj.AppId;
-            this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.AppAssetObj[i].ResponseAppAssetObj.AssetSeqNo;
-            this.allAssetDataObj.AppAssetObj.AppAssetNo = this.AppAssetObj[i].ResponseAssetDataOplObj.AppAssetNo;
-            this.allAssetDataObj.AppAssetObj.FullAssetName = this.AppAssetObj[i].ResponseAppAssetObj.FullAssetName;
-            this.allAssetDataObj.AppAssetObj.Color = this.AppAssetObj[i].ResponseAppAssetObj.Color;
-            this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AppAssetObj[i].ResponseAppAssetObj.MrAssetConditionCode;
-            this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AppAssetObj[i].ResponseAssetDataOplObj.AssetPriceBefDiscAmt;
-            this.allAssetDataObj.AppAssetObj.Discount = this.AppAssetObj[i].ResponseAssetDataOplObj.DiscountAmt;
-
-            this.listAsset.push(this.allAssetDataObj);
-          }
-        }
+  async GetListAppCollateralByAppId(AppId: number) {
+    this.http.post(URLConstant.GetViewAppCollateralObjByAppId, {Id: AppId}).subscribe(
+      response => {
+        this.appCollateralList = response["AppCollateralObjs"];
       }
     );
   }

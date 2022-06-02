@@ -22,8 +22,11 @@
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonId.invalid }"
                           style="width:50%">
                     <option value="">-Select One-</option>
-                    <option *ngFor="let item of SalesPersonObj" [value]="item.VendorEmpId">
-                      {{item.VendorEmpName}}
+                    <option *ngFor="let item of EmpObj" [value]="item.VendorEmpId">
+                      <span *ngIf="item.MrVendorEmpPositionCode === 'SALES_PERSON'">{{item.VendorEmpName}} - SALES PERSON</span>
+                      <span *ngIf="item.MrVendorEmpPositionCode === 'ADMIN_HEAD'">{{item.VendorEmpName}} - ADMIN HEAD</span>
+                      <span *ngIf="item.MrVendorEmpPositionCode === 'BRANCH_MANAGER'">{{item.VendorEmpName}} - BRANCH MANAGER</span>
+                      
                     </option>
                   </select>
                   <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonId" [submit]="enjiForm.submitted">
@@ -33,7 +36,7 @@
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel" translate>Admin Head</label>
                 <div class="col-md-4">
-                  <select *ngIf="AdminHeadObj" class="form-control" id="adminHead" formControlName="AdminHeadId"
+                  <select *ngIf="AdminHeadObj && IsSales" class="form-control" id="adminHead" formControlName="AdminHeadId"
                           (change)="AdminHeadChanged($event)"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadId.invalid }"
                           style="width:50%">
@@ -44,6 +47,8 @@
                   </select>
                   <lib-uc-show-errors [control]="AssetDataForm.controls.AdminHeadId" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
+
+                  <label *ngIf="!IsSales">{{AdminHeadName}}</label>
                 </div>
               </div>
             </div>
