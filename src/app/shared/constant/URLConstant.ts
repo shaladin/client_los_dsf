@@ -1066,6 +1066,7 @@ export class URLConstant {
   public static GetAppCollateralAndRegistrationByAppCollateralId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralAndRegistrationByAppCollateralId";
   public static AddEditAllCollateralDataFactoring = environment.losUrl + "/v1" + "/AppCollateral/AddEditAllCollateralDataFactoring"
   public static GetAppCollateralAttrByAppCollateralId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralAttrByAppCollateralId";
+  public static GetAppCollateralByAppCollateralIdForView = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralByAppCollateralIdForView";
   public static GetAppCollateralListForInsuranceByAppId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralListForInsuranceByAppId";
   public static GetAppCollateralAttrByAppAssetId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralAttrByAppAssetId";
   public static GetListAppCollateralByAgrmntId = environment.losUrl + "/v1" + "/AppCollateral/GetListAppCollateralByAgrmntId";
