@@ -63,6 +63,7 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { AddressService } from 'app/shared/services/custAddr.service';
+import { LtkmFinancialCompanyXComponent } from './additional-component/company/financial-company-x/financial-company-x.component';
 @Component({
     selector: 'app-ltkm-request-x',
     templateUrl: './ltkm-request-x.component.html',
@@ -76,7 +77,7 @@ export class LtkmRequestXComponent implements OnInit {
     @ViewChild(LtkmCustGrpMemberComponent) custGrpMemberComponent;
     @ViewChild(LtkmOtherInfoComponent) custOtherInfoComponent;
     @ViewChild(LtkmCcContactInformationTabComponent) custCompanyContactInfo;
-    @ViewChild(LtkmFinancialCompanyComponent) custCompanyFinDataComponent;
+    @ViewChild(LtkmFinancialCompanyXComponent) custCompanyFinDataComponent;
     @ViewChild(LtkmLegalDocComponent) custCompanyLegalDocComponent;
     @ViewChild(LtkmMgmntShrholderComponent) custCompanyManagementShareholderComponent;
     @ViewChild(LtkmBankSectionComponent) custLtkmBankSectionComponent;
@@ -142,7 +143,14 @@ export class LtkmRequestXComponent implements OnInit {
     isCustomerCompanySelected: boolean = false;
     listAddrRequiredOwnership: Array<string> = new Array();
     @ViewChild('applicationData') ucLookupApplicationData: UclookupgenericComponent;
-    @ViewChild('applicationCompanyData') ucLookupApplicationCompanyData: UclookupgenericComponent;
+    //@ViewChild('applicationCompanyData') ucLookupApplicationCompanyData: UclookupgenericComponent;
+
+    private ucLookupApplicationCompanyData: UclookupgenericComponent;
+    @ViewChild('applicationCompanyData') set content(content: UclookupgenericComponent) {
+        if (content) { // initially setter gets called with undefined
+          this.ucLookupApplicationCompanyData = content;
+        }
+      }
 
     CustTypeObj: Array<KeyValueObj>;
     copyToResidenceTypeObj: Array<KeyValueObj> = [
@@ -1964,7 +1972,8 @@ export class LtkmRequestXComponent implements OnInit {
             critLookupApplicationObj.value = this.selectedCustNo;
             this.inputLookupApplicationObj.addCritInput = [];
             this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
-            this.ucLookupApplicationData.setAddCritInput();               
+            if (this.ucLookupApplicationData != undefined)
+                this.ucLookupApplicationData.setAddCritInput();              
             this.inputLookupApplicationObj.isDisable = false;      
             this.inputLookupApplicationCompanyObj.isDisable = true;                  
         }        
@@ -2039,7 +2048,8 @@ export class LtkmRequestXComponent implements OnInit {
             critLookupApplicationObj.value = this.selectedCustNo;
             this.inputLookupApplicationCompanyObj.addCritInput = [];
             this.inputLookupApplicationCompanyObj.addCritInput.push(critLookupApplicationObj);
-            this.ucLookupApplicationCompanyData.setAddCritInput();                                                 
+            if (this.ucLookupApplicationCompanyData != undefined)
+                this.ucLookupApplicationCompanyData.setAddCritInput();                                                    
             this.inputLookupApplicationCompanyObj.isDisable = false;     
             this.inputLookupApplicationObj.isDisable = true;
         }    
