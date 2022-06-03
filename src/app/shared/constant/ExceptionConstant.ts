@@ -207,6 +207,7 @@ export class ExceptionConstant {
     public static X_CANT_BE_GREATER_THAN_Y = "{0} cannot be greater than {1}";
     
     public static MANDATORY_LEGAL_DOC = "Legal Documents with following type are mandatory: {0}";
+    public static DOC_NOT_YET_CONFIGURED_IN_RULE_MANDATORY_DOC_EXP = "Document {0} not yet configured in Rule Set 'RS.Document Expired Date Mandatory'";
     public static CUST_AGE_BETWEEN = "Customer age must be between {0} and {1} year old";
     public static CUST_AGE_MIN = "Customer age must be at least {0} year old";
 
