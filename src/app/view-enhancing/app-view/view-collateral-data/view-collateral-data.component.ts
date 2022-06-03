@@ -15,7 +15,6 @@ import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
   templateUrl: './view-collateral-data.component.html'
 })
 export class ViewCollateralDataComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewUOLObj: UcViewGenericObj = new UcViewGenericObj();
   
   AppId: number;  @Input() appId: number = 0;
@@ -39,13 +38,11 @@ export class ViewCollateralDataComponent implements OnInit {
     });}
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
     this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
     this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppCollateralAccessory.json";
   
     if(this.AppCollateralId!=0){
       this.arrValue.push(this.AppCollateralId);
-      this.viewGenericObj.whereValue = this.arrValue;
       this.viewUOLObj.whereValue = this.arrValue;
       this.IsReady = true;
       await this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, {Id: this.AppCollateralId}).toPromise().then(
@@ -56,7 +53,10 @@ export class ViewCollateralDataComponent implements OnInit {
     }else{
       await this.http.post<AppCollateralObj>(URLConstant.GetAppCollateralByAppId, {Id: this.AppId}).toPromise().then(
         (response) => {
-          this.AppCollateralObj = response;        
+          this.AppCollateralObj = response;
+          this.arrValue.push(this.AppCollateralObj.AppCollateralId);
+          this.viewUOLObj.whereValue = this.arrValue;
+          this.IsReady = true;        
           this.AppCollateralId = this.AppCollateralObj.AppCollateralId;
           this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralObj.AppCollateralId }).subscribe(
             (response) => {
