@@ -132,7 +132,7 @@ export class MouApprovalFactoringComponent implements OnInit {
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo = this.resultData.MouCustNo;
     this.InputApvObj.RequestId = this.ApvReqId;
-
+    this.InputApvObj.OfficeCodes.push(this.resultData.OriOfficeCode);
     this.IsReady = true;
   }
 }
