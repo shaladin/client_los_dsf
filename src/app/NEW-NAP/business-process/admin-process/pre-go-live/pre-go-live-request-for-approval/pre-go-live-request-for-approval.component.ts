@@ -152,7 +152,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     };
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
     this.InputObj.SchemeCode = this.apvSchmCode;

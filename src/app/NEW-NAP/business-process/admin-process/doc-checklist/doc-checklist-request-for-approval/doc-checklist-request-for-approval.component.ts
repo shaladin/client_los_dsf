@@ -136,7 +136,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
     this.InputObj.SchemeCode = schemeCode;
     this.InputObj.Reason = this.itemReason;
     this.InputObj.TrxNo = this.AppNo;
-    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes = this.OriOfficeCode;
     this.IsReady = true;
   }
 
