@@ -24,6 +24,7 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
   @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForCustHistDataX: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForListAsset: EventEmitter<any> = new EventEmitter();
 
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
@@ -162,6 +163,10 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
 
   ClickLinkCustomerHistoryData() {
     this.ngModelForCustHistDataX.emit();
+  }
+
+  ClickLinkListAssetInOperation() {
+    this.ngModelForListAsset.emit();
   }
   //#endregion
 }

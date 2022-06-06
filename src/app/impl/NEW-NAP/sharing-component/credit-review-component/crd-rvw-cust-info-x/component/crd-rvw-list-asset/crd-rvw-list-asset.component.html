@@ -1,0 +1,42 @@
+<div class="modal-body">
+  <div class="pl-3 mb-2 mt-2">
+    <h4 class="card-title ucSearch-title" translate> List Asset In Operation </h4>
+  </div>
+  <lib-ucSubsection [id]="'CustomerAssetId'" [title]="'Customer Asset'" [panel]="'CustomerAssetSection'">
+  </lib-ucSubsection>
+  <div id="CustomerAssetSection">
+    <div style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: center;">
+              <span class="thead-header" translate>Asset Description</span>
+            </th>
+            <th style="text-align: center;">
+              <span class="thead-header" translate>Asset Value</span>
+            </th>
+            <th style="text-align: center;">
+              <span class="thead-header" translate>Asset Quantity</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="appCustAssets?.length == 0">
+          <tr>
+            <td colspan="100%">No Data Available</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let item of appCustAssets; let i = index">
+            <td style="text-align: left;">{{item.AssetDescr}}</td>
+            <td style="text-align: center;">{{ item.AssetValue | currency : "USD" : "" }}</td>
+            <td style="text-align: center;">{{item.AssetQty}}</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: right;">Total Price : </td>
+            <td>{{ total | currency : "USD" : ""}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

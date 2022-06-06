@@ -38,6 +38,7 @@ import { SharedModule } from "app/shared/shared.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { CrdRvwIncomeExpenseXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-income-expense/crd-rvw-income-expense-x.component";
 import { AssetAccessoryInfoComponent } from "app/impl/NEW-NAP/business-process/credit-process/shared-component/asset-accessory-info/asset-accessory-info.component";
+import { CrdRvwListAssetComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-list-asset/crd-rvw-list-asset.component";
 
 @NgModule({
     exports: [
@@ -62,7 +63,8 @@ import { AssetAccessoryInfoComponent } from "app/impl/NEW-NAP/business-process/c
         CrdRvwCustHistDataXComponent,
         CrdRvwSurveyDataXComponent,
         CrdRvwThirdPartyCheckingXComponent,
-        AssetAccessoryInfoComponent
+        AssetAccessoryInfoComponent,
+        CrdRvwListAssetComponent
     ],
     imports: [
         CommonModule,
@@ -104,7 +106,8 @@ import { AssetAccessoryInfoComponent } from "app/impl/NEW-NAP/business-process/c
         CrdRvwCustHistDataXComponent,
         CrdRvwSurveyDataXComponent,
         CrdRvwThirdPartyCheckingXComponent,
-        AssetAccessoryInfoComponent
+        AssetAccessoryInfoComponent,
+        CrdRvwListAssetComponent
     ],
     providers: [
         NGXToastrService
