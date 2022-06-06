@@ -24,7 +24,6 @@ export class AssetAccessoryInfoComponent implements OnInit {
   
   async getAssetAndAccInfoByAppId()
   {
-    this.AppId = 6606;
     await this.http.post<Array<AssetAccObj>>(URLConstantX.GetAssetAndAccByAppId, {id : this.AppId}).toPromise().then(
       (response) => {
         this.ListAssetAndListAccInfo = response['ReturnObject'];
