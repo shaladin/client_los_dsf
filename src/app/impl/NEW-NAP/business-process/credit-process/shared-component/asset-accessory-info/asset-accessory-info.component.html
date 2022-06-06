@@ -1,0 +1,70 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <div class="px-3"> -->
+
+          <lib-ucSubsection [id]="'assetAccessoryInfo'" [title]="'Asset & Accessory Information'" [panel]="'accessoryAssetView'">
+          </lib-ucSubsection>
+          <div class="form-body" id="accessoryAssetView" style="overflow-x: auto;">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">No. </span>
+                  </th>
+                  <th><span translate class="thead-header">Asset Name</span>
+                  </th>
+                  <th style="text-align: left;"><span translate class="thead-header">Asset Price</span>
+                  </th>
+                  <th><span translate class="thead-header">Asset Price Incl. Acc</span>
+                  </th>
+                  <th><span translate class="thead-header">DP Incl. Acc</span>
+                  </th>
+                  <th><span translate class="thead-header">Insurance</span>
+                  </th>
+                  <th><span translate class="thead-header">Is Double Financing</span>
+                  </th>
+                  <th><span translate class="thead-header">Year</span>
+                  </th>
+                  <th><span translate class="thead-header">Asset Condition</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf = "ListAssetAndListAccInfo?.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+              <tbody *ngFor="let item of ListAssetAndListAccInfo; let i = index">
+                <tr>
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.FullAssetName }}</td>
+                  <td>{{ item.AssetPriceAmt | number: '.2':'en-US' }}</td>
+                  <td>{{ item.TotalAssetInclAcc | number:'.2':'en-US' }}</td>
+                  <td>{{ item.TotalDPInclAcc | number:'.2':'en-US' }}<br>/{{item.DownPaymentPrcnt}}%</td>
+                  {{InsuranceNaming(item.InsuranceType)}}
+                  <td>{{ InsuranceName }}</td>
+                  <td>{{ item.IsDoubleFinancing ? 'Yes' : 'No' }}</td>
+                  <td>{{ item.ManufacturingYear }}</td>
+                  <td>{{ item.AssetCondition }}</td>
+                </tr>
+                <tr *ngFor="let acc of item.listAcc; let j = index">
+                  {{letterNumbering(j)}}
+                  <td>{{ i + 1 }}{{this.letter}}</td>
+                  <td>{{ acc.AssetAccessoryName }}</td>
+                  <td>{{ acc.AccessoryPriceAmt | number: '.2':'en-US' }}</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>{{ item.ManufacturingYear }}</td>
+                  <td>{{ item.AssetCondition }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</div>
