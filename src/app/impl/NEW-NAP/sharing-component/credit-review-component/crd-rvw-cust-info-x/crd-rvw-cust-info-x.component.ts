@@ -164,6 +164,20 @@ export class CrdRvwCustInfoXComponent implements OnInit {
   }
   //#endregion
 
+  //#region AnalysisResult
+  modalAnalysisResult: any;
+  ClickLinkAnalysisResult(AnalysisResultContent) {
+    this.modalAnalysisResult = this.modalService.open(AnalysisResultContent);
+    this.modalAnalysisResult.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.modalAnalysisResult.close();
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modalAnalysisResult.close();
+    })
+  }
+  //#endregion
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
