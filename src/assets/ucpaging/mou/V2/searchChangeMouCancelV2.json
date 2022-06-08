@@ -116,7 +116,7 @@
             "url": "",
             "environment": "FOU",
             "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-            "label": "Mou Status",
+            "label": "Change Mou Status",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "Code",

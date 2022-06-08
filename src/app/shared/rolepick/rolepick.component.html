@@ -27,9 +27,7 @@
   </div>
 
   <div class="white-background text-center" *ngIf="isUseNewRolepick == '1'">
-    <div class="card-img">
-        <img alt="element 06" class="mb-1" src="assets/img/rolepick-red.png" width="70" style="margin-top: 10px;">
-    </div>
+    <div class="rolepick-img mb-1"></div>
     <h2 class="text-title">Choose Your Role </h2>
     <form class="form form-group form-horizontal" name="enjiForm" [formGroup]="RolepickForm" #enjiForm="ngForm" novalidate
       (ngSubmit)="enjiForm.form.valid">

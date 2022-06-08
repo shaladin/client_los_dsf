@@ -722,6 +722,21 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   }
 
   SaveData() {
+    let ArraySerial = [this.EditAppAssetForm.controls.SerialNo1.value, this.EditAppAssetForm.controls.SerialNo2.value, 
+    this.EditAppAssetForm.controls.SerialNo3.value, this.EditAppAssetForm.controls.SerialNo4.value, this.EditAppAssetForm.controls.SerialNo5.value];
+
+    for(let i = 0; i < ArraySerial.length; i++){
+      if(ArraySerial[i] == ""){
+        continue;
+      }
+      let x = ArraySerial.filter(f=>f == ArraySerial[i])
+
+      if(x.length > 1){
+        this.toastr.warningMessage("Serial number can't duplicate");
+        return;
+      }
+    }
+
     this.AppAssetRelatedOutput =
       {
         AppAssetId: this.AppAssetObj.AppAssetId,

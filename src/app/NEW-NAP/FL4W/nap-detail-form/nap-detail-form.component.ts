@@ -105,7 +105,7 @@ export class NapDetailFormComponent implements OnInit {
         this.SysConfigResultObj = response;
       });
     await this.GetGSValueShowRferantor();
-    this.claimTask();
+    // this.claimTask();
     this.NapObj.AppId = this.appId;
 
     await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(

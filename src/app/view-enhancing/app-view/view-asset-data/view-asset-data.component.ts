@@ -14,6 +14,7 @@ export class ViewAssetDataComponent implements OnInit {
   getAppUrl: any;
   getAllAssetDataUrl: any;
   @Input() appId: number = 0;
+  @Input() agrmntId: number = 0;
   @Input() BizTemplateCode: string = "";
   appAssetId: number = 0;
   appObj = {
@@ -74,14 +75,30 @@ export class ViewAssetDataComponent implements OnInit {
         await this.GetAllAssetData(this.appObj);
       }
 
-      this.http.post(URLConstant.GetViewAppCollateralObjByAppId, {Id: this.appId}).subscribe(
-        response => {
-          this.appCollateralList = response["AppCollateralObjs"];
-        }
-      );
-
+      if(this.agrmntId != 0){
+        this.GetListAppCollateralByAgrmntId(this.agrmntId);
+      }
+      else{
+        this.GetListAppCollateralByAppId(this.appId);
+      }  
       this.IsReady = true;
     }
+  }
+
+  async GetListAppCollateralByAgrmntId(AgrmntId: number) {
+    this.http.post(URLConstant.GetViewAppCollateralObjByAgrmntId, {Id: AgrmntId}).subscribe(
+      response => {
+        this.appCollateralList = response["AppCollateralObjs"];
+      }
+    );
+  }
+
+  async GetListAppCollateralByAppId(AppId: number) {
+    this.http.post(URLConstant.GetViewAppCollateralObjByAppId, {Id: AppId}).subscribe(
+      response => {
+        this.appCollateralList = response["AppCollateralObjs"];
+      }
+    );
   }
 
   async GetAllAssetData(obj: any) {

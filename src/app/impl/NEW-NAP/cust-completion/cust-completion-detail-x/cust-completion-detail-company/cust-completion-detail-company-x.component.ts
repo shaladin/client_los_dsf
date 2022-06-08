@@ -53,7 +53,7 @@ export class CustCompletionDetailCompanyXComponent implements OnInit {
     "Shrholder": "Please complete required data in tab \"Management / Shareholder\"",
     "Contact": "Please complete required data in tab \"Contact Information\"",
     "Financial": "Please complete required data in tab \"Financial Data\"",
-    "Legal": "Please add at least one data in tab \"Legal Document\"",
+    "Legal": "Please complete required data in tab \"Legal Document\"",
     "Other": "Please complete required data in tab \"Other Attribute\"",
   }
   ReturnHandlingHId: number = 0;

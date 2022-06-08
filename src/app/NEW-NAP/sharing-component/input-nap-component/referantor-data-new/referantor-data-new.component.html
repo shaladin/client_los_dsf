@@ -27,7 +27,7 @@
                       <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
                     </button>
                   </div>
-                  <div formArrayName="AppReferantorObjs" class="table-responsive" *ngIf="IsReady">
+                  <div [formArrayName]="'AppReferantorObjs'" class="table-responsive" *ngIf="IsReady">
                     <table class="table text-center table-hover">
                       <thead>
                         <tr class="table-header">
@@ -43,13 +43,13 @@
                       </thead>
                       <tbody>
                         <tr *ngIf="NapAppReferantorForm.controls['AppReferantorObjs'].controls == 0">
-                          <td align="center" colspan="8">No data available</td>
+                          <td class="text-center" colspan="8">No data available</td>
                         </tr>
-                        <tr *ngFor="let item of NapAppReferantorForm.controls['AppReferantorObjs'].controls;let i = index">
-                          <td [formGroupName]="i" class="text-center">
+                        <tr *ngFor="let item of NapAppReferantorForm.controls['AppReferantorObjs'].controls;let i = index" [formGroupName]="i">
+                          <td class="text-center">
                             {{i + 1}}
                           </td>
-                          <td [formGroupName]="i" class="text-center" >
+                          <td class="text-center" >
                             <select class="form-control" style="display: block; margin:0 auto;" formControlName="ReferantorCategory"
                               (change)="ChangeReferantorCategory(i, $event.target.value)"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].ReferantorCategory.invalid }">
@@ -63,17 +63,17 @@
                               [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
                           </td>
-                          <td [formGroupName]="i" class="text-left">
+                          <td class="text-left">
                             <lib-uclookupgeneric [enjiForm]="enjiForm" 
                               [lookupInput]="dictRefTypeLookup[NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].No.value]"
                               [parentForm]="NapAppReferantorForm"
                               [identifier]="'lookupReferantor' + NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].No.value"
                               (lookup)="SetReferantorLookupChanges(i,$event)"></lib-uclookupgeneric>
                           </td>
-                          <td [formGroupName]="i" class="text-left">
+                          <td class="text-left">
                             {{NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].ReferantorTypeDesc.value}}
                           </td>
-                          <td [formGroupName]="i" class="text-left">
+                          <td class="text-left">
                             <select class="form-control"  formControlName="BankAccNo"
                               (change)="ChangeBankAccount(i, $event.target.value)"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].BankAccNo.invalid }">
@@ -89,7 +89,7 @@
                               [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
                           </td>
-                          <td [formGroupName]="i" class="text-center">
+                          <td class="text-center">
                             <select class="form-control" style="display: block; margin:0 auto;" formControlName="MrTaxCalcMethod"
                               (change)="ChangeMrTaxCalcMethod(i, $event.target.value)" [attr.disabled]="NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].IsDisabledCalcMethod.value == true ? true : null"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].MrTaxCalcMethod.invalid }">
@@ -103,12 +103,12 @@
                               [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
                           </td>
-                          <td [formGroupName]="i" class="text-center">
+                          <td class="text-center">
                             <a (click)="viewDetailReferantor(i)" class="success p-0">
                               <i class="ft-edit-2 font-medium-3 mr-2"></i>
                             </a>
                           </td>
-                          <td [formGroupName]="i" class="text-center">
+                          <td class="text-center">
                             <a (click)="removeReferantor(i)" class="danger p-0">
                               <i class="ft-trash-2 font-medium-3 mr-2"></i>
                             </a>

@@ -288,6 +288,7 @@
                 <div class="col-md-4">
                   <div class="input-group">
                     <select class="form-control" formControlName="CopyFromMailing">
+                      <option value="">-Select One-</option>
                       <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">{{item.Value}}</option>
                     </select>
                     <div class="input-group-append">

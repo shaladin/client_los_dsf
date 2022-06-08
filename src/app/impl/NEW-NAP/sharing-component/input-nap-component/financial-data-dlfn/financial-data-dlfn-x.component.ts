@@ -224,9 +224,6 @@ export class FinancialDataDlfnXComponent implements OnInit {
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
           MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
 
-          GracePeriod: this.appFinDataObj.NumOfInst - 1,
-          MrGracePeriodTypeCode: this.appFinDataObj.MrInstTypeCode == CommonConstant.InstTypeSingle ? "" : "INTEREST_ONLY",
-
           InstAmt: this.appFinDataObj.InstAmt,
           TotalTopAmount: this.appFinDataObj.TotalTopAmount != undefined ? this.appFinDataObj.TotalTopAmount : 0,
           ExistingFinData: this.appFinDataObj.ExistingFinData

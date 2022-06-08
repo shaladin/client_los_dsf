@@ -262,12 +262,12 @@ export class CreditReviewCrDetailComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    await this.http.post(URLConstant.GetAppFinDataByAppId, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetApvAmountForCrdRvwByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
-          AppvAmt: response["ApvAmt"]
+          AppvAmt: response["Result"]
         });
-        this.PlafondAmt = response["ApvAmt"];
+        this.PlafondAmt = response["Result"];
       });
   }
 

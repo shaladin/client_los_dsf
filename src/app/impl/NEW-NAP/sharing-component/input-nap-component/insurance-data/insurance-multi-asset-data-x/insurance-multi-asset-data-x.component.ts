@@ -638,16 +638,21 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
 
         insCoverage.StartDt = startDt;
         let tenorAdded: number = 12;
-        if (totalTenor < 12) tenorAdded = totalTenor;
-        mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
-        insCoverage.EndDt = mainCvgEndDt;
+        if (totalTenor <= 12){
+          tenorAdded = totalTenor;
+          mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
+          insCoverage.EndDt = mainCvgEndDt;
+        } 
+        else{
+          mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + tenorAdded);
+          insCoverage.EndDt = mainCvgEndDt;
+        } 
 
         totalTenor -= 12;
-        if (totalTenor > 12) {
-          startDt = new Date(mainCvgEndDt);
-          startDt.setDate(startDt.getDate() + 1);
-          mainCvgEndDt = new Date(startDt);
-        }
+
+        startDt = new Date(mainCvgEndDt);
+        startDt.setDate(startDt.getDate() + 0);
+        mainCvgEndDt = new Date(startDt);
 
         insCoverage.IsMainIns = true;
         insCoverage.SumInsuredPrcnt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
@@ -755,16 +760,21 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
 
         insCoverage.StartDt = startDt;
         let tenorAdded: number = 12;
-        if (totalTenor < 12) tenorAdded = totalTenor;
-        mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
-        insCoverage.EndDt = mainCvgEndDt;
+        if (totalTenor <= 12){
+          tenorAdded = totalTenor;
+          mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
+          insCoverage.EndDt = mainCvgEndDt;
+        } 
+        else{
+          mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + tenorAdded);
+          insCoverage.EndDt = mainCvgEndDt;
+        } 
 
         totalTenor -= 12;
-        if (totalTenor > 12) {
-          startDt = new Date(mainCvgEndDt);
-          startDt.setDate(startDt.getDate() + 1);
-          mainCvgEndDt = new Date(startDt);
-        }
+
+        startDt = new Date(mainCvgEndDt);
+        startDt.setDate(startDt.getDate() + 0);
+        mainCvgEndDt = new Date(startDt);
 
         insCoverage.IsMainIns = true;
         insCoverage.SumInsuredPrcnt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
