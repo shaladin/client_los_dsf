@@ -2,7 +2,7 @@
   <div class="pl-3 mb-2 mt-2">
     <h4 class="card-title ucSearch-title" translate> Customer History Data View </h4>
   </div>
-  <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+  <app-app-main-info-cr-x [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-cr-x>
   <lib-ucSubsection [id]="'existAgrId'" [title]="'Existing Agreement'" [panel]="'existAgr'">
   </lib-ucSubsection>
   <div id="existAgr">
@@ -178,5 +178,5 @@
         </tr>
       </tbody>
     </table>
-  </div>  
+  </div>
 </div>
