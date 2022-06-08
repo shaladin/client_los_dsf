@@ -104,7 +104,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
         this.SysConfigResultObj = response;
       });
 
-    this.claimTask();
+    //this.claimTask();
     this.NapObj.AppId = this.appId;
 
     await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
