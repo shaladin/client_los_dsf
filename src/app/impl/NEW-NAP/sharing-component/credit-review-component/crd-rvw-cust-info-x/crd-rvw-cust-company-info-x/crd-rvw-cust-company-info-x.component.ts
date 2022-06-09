@@ -21,6 +21,7 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
   @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForCustHistDataX: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForListAsset: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForAnalysisResult: EventEmitter<any> = new EventEmitter();
 
@@ -89,6 +90,10 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
 
   ClickLinkNegativeCheckingList(){
     this.ngModelForNegCheckList.emit();
+  }
+
+  ClickLinkSurvey() {
+    this.ngModelForSurveyDataX.emit();
   }
 
   ClickLinkCustomerHistoryData() {
