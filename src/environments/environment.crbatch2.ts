@@ -10,8 +10,8 @@ export const environment = {
     // FoundationR3Url: 'http://localhost:5000',
     // losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL',
     // FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_DSF_IMPL',
-    losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL_CR_BATCH_2',
-    FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_DSF_IMPL_CR_BATCH_2',
+    losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL',
+    FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_DSF_IMPL',
     DMSUrl: "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
     AMSUrl: "http://r3app-server.ad-ins.com/AMS_DEMO", //OPL dah ada
     LMSUrl: "http://r3app-server.ad-ins.com/LMS_DEMO", //OPL dah ada
