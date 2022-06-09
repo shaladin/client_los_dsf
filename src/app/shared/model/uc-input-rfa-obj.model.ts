@@ -18,19 +18,19 @@ export class UcInputRFAObj {
     SchemeCode: string;
     TrxNo: string;
     Reason: any;
-    OfficeCode: string;
+    OfficeCodes: string;
     RequestedBy: string;
 
     constructor(private cookieService: CookieService) {
         let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.RequestedBy = context[CommonConstant.USER_NAME];
-        this.OfficeCode = context[CommonConstant.OFFICE_CODE];
+        this.OfficeCodes = context[CommonConstant.OFFICE_CODE];
         this.ApvTypecodes = [];
-        this.EnvUrl = environment.FoundationR3Url + "/v1";
+        this.EnvUrl = environment.FoundationR3Url;
         this.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
         this.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
         this.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-        this.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+        this.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExTypeV2;
         this.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
         this.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
         this.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;

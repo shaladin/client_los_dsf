@@ -358,7 +358,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
     this.InputObj.RequestedBy = this.UserAccess.UserName;
-    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes = this.OriOfficeCode;
     this.IsReady = true;
   }
 

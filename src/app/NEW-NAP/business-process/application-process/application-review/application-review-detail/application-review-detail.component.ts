@@ -313,7 +313,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     };
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes = this.OriOfficeCode;
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APP_OPL_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_RENT_APP;

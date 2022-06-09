@@ -75,7 +75,7 @@ export class OfferingValidityCheckingRequestDetailComponent implements OnInit {
         this.InputObj.SchemeCode = response["CompntValue"];
         this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
         this.InputObj.TrxNo = this.TrxNo;
-        this.InputObj.OfficeCode = this.OriOfficeCode;
+        this.InputObj.OfficeCodes = this.OriOfficeCode;
         this.IsReady = true;
       }
     );

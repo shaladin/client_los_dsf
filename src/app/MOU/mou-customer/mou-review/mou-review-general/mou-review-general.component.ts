@@ -177,7 +177,7 @@ export class MouReviewGeneralComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_APV_GENERAL;
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.resultData["MouCustNo"];
-    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes = this.OriOfficeCode;
     this.IsReady = true;
   }
 
