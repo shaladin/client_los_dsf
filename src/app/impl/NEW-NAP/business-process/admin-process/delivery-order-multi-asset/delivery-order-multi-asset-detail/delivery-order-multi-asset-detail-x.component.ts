@@ -33,9 +33,6 @@ import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
-import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
-import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
-import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail-x',
@@ -63,7 +60,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     AddIntrstAmt: [0],
     GoLiveEstimated: ['',Validators.required],
     AdditionalInterestPaidBy: [''],
-    CustBankAcc: ['']
   });
 
   AppTcForm = this.fb.group({});
@@ -82,12 +78,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   isHasPO: boolean = false;
   LobCode: string;
   DeliveryDt: Date = new Date();
-  appCustId: number;
-  wopCode: string;
-  listCustBankAcc: Array<AppCustBankAccObj>;
-  GetBankInfo: AppOtherInfoObj = new AppOtherInfoObj();
 
-  readonly wopAutoDebit = CommonConstant.WopAutoDebit;
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
@@ -118,7 +109,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.appId }).subscribe(
       (response) => {
         this.LobCode = response.LobCode;
-        this.wopCode = response.MrWopCode;
       }
     );
 
@@ -235,11 +225,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
       });
     await this.InitDms();
     await this.getAddInterestPaidBy();
-
-    if(this.wopCode == this.wopAutoDebit)
-    {
-      this.GetListAppCustBankAcc();
-    }
   }
 
   async InitDms() {
@@ -261,7 +246,6 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         (response) => {
           this.agrNo = response[0]['AgrmntNo'];
           this.custNo = response[1]['CustNo'];
-          this.appCustId = response[1]['AppCustId'];
           this.appNo = response[2]['AppNo'];
           let mouId = response[2]['MouCustId'];
 
@@ -502,8 +486,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
           EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
           AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
-          GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
-          AgrmntOtherInfoObj : this.GetBankInfo
+          GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value
         };
         let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
         let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);
@@ -682,24 +665,5 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         GoLiveEstimated: this.DOAssetForm.controls.EffectiveDt.value
       });
     }
-  }
-
-  GetListAppCustBankAcc() {
-    this.http.post<GenericListObj>(URLConstant.GetListAppCustBankAccByAppCustId, { Id: this.appCustId }).subscribe(
-      (response) => {
-        this.listCustBankAcc = response.ReturnObject["AppCustBankAccObjs"];
-      }
-    );
-  }
-
-  selectedBank() {
-    if (this.wopAutoDebit != this.wopAutoDebit) return;
-
-    let custBankAccId: number = this.DOAssetForm.get("CustBankAcc").value;
-    let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
-    this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
-    this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
-    this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
-    this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName;
   }
 }
