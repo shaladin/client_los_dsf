@@ -145,6 +145,9 @@ import { LoanObjectXComponent } from "app/impl/NEW-NAP/sharing-component/input-n
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { ReferantorDataNewComponent } from "./referantor-data-new/referantor-data-new.component";
 import { ReferantorDataNewDetailComponent } from "./referantor-data-new-detail/referantor-data-new-detail.component";
+import { UcInsuranceComponent } from "./insurance-data/uc-insurance/uc-insurance.component";
+import { UcInsuranceDetailComponent } from "./insurance-data/uc-insurance/uc-insurance-detail/uc-insurance-detail.component";
+import { UcInsurancePagingComponent } from "./insurance-data/uc-insurance/uc-insurance-paging/uc-insurance-paging.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -403,7 +406,6 @@ export const customCurrencyMaskConfig = {
     SingleInstDlfnComponent,
     SchmEvenPrincipalDlfnComponent,
     SchmRegularFixDlfnComponent,
-
     FeeCFNAComponent,
     SchmRegulerFixCFNAComponent,
     SchmIrregularCFNAComponent,
@@ -412,7 +414,6 @@ export const customCurrencyMaskConfig = {
     SchmStepUpStepDownCummulativeCFNAComponent,
     SchmBalloonCFNAComponent,
     SchmEvenPrincipalCFNAComponent,
-
     FeeFL4WComponent,
     SchmRegulerFixFL4WComponent,
     SchmIrregularFL4WComponent,
@@ -450,7 +451,10 @@ export const customCurrencyMaskConfig = {
     ApplicationDataXDsfComponent,
     ApplicationDataXFL4WDsfComponent,
     ApplicationDataDlfnXDsfComponent,
-    LoanObjectXComponent
+    LoanObjectXComponent,
+    UcInsuranceComponent,
+    UcInsuranceDetailComponent,
+    UcInsurancePagingComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent, ReferantorDataNewDetailComponent],
   providers: [

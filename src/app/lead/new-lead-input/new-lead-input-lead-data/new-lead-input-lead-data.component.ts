@@ -991,25 +991,37 @@ export class NewLeadInputLeadDataComponent implements OnInit {
 
   checkRapindo() {
     if (this.isNeedCheckBySystem == "0") {
-      if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
+      var listSerialNo = this.LeadDataForm.get('items').value as Array<{SerialNoLabel: string, SerialNoValue: string}>;
+      var indexChasisNo = listSerialNo.findIndex(x => x.SerialNoLabel.toUpperCase() == CommonConstant.Chassis_No.toUpperCase());
 
-        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
-        this.setLeadAsset();
-        this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
-          (response1) => {
-            this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-              (response) => {
-                this.latestReqDtCheckRapindo = response['ReqDt'];
-                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                let reqLatestJson = JSON.parse(response['ReqJson']);
-                if (reqLatestJson != null && reqLatestJson != "") {
-                  this.latestCheckChassisNo = reqLatestJson['AppAssetObj'][0]['SerialNo1'];
-                }
-              }
-            );
-          }
-        );
+      if(indexChasisNo <= -1 || !listSerialNo[indexChasisNo]) 
+      {
+        this.toastr.warningMessage("Serial No with name \""+CommonConstant.Chassis_No+"\" not found.");
+        return;
       }
+
+      if(listSerialNo[indexChasisNo].SerialNoValue == "") {
+        this.toastr.warningMessage("Please Input "+CommonConstant.Chassis_No+" !");
+        return;
+      }
+        
+      this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
+      this.setLeadAsset();
+      this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
+        (response1) => {
+          this.toastr.successMessage("Submit with Integrator");
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+            (response) => {
+              this.latestReqDtCheckRapindo = response['ReqDt'];
+              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+              let reqLatestJson = JSON.parse(response['ReqJson']);
+              if (reqLatestJson != null && reqLatestJson != "") {
+                this.latestCheckChassisNo = reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+              }
+            }
+          );
+        }
+      );
 
     }
   }

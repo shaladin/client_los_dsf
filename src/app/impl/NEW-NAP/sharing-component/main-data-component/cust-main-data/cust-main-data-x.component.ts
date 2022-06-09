@@ -176,6 +176,7 @@ export class CustMainDataXComponent implements OnInit {
   LobCode: string;
   checkIsAddressKnown: boolean = false;
   isDisableCustType: boolean = false;
+  existShrHolder: boolean = false;
 
   constructor(
     private regexService: RegexService,
@@ -1559,6 +1560,27 @@ export class CustMainDataXComponent implements OnInit {
     var isCustAgeValid = await this.validateCustPersonalAge();
     if(!isCustAgeValid) return;
 
+    this.existShrHolder = false;
+    let obj = {
+      AppCustId : this.appCustId,
+      AppId : this.appId,
+      MrIdTypeCode : this.CustMainDataForm.controls.MrIdTypeCode.value,
+      IdNo : this.CustMainDataForm.controls.IdNo.value,
+      IsActive : this.CustMainDataForm.controls.IsActive.value
+    }
+    // get method baru check idno idtype dan isactive
+    await this.http.post(URLConstantX.ShareHolderDuplicateCheck, obj).toPromise().then(
+      (response : boolean) => {
+        this.existShrHolder = response;
+      }
+    )
+
+    if(this.existShrHolder)
+    {
+      this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_SHRHLDR_ID_NO));
+      return false;
+    }
+    
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.setDataCustomerPersonalForSave();
 

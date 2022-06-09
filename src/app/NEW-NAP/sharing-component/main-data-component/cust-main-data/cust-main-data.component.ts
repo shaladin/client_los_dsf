@@ -278,6 +278,8 @@ export class CustMainDataComponent implements OnInit {
     this.professionLookUpObj.isReady = true;
     this.lookUpObjCountry.isReady = true;
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) this.PatchCriteriaLookupProfession();
+
+    this.checkIsDisableCustType();
     await this.getMinMaxAgeCustPersonalFromGenSet();
   }
 
@@ -816,11 +818,11 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.BirthPlace.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrIdTypeCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
-      this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.MobilePhnNo1.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       if (this.custMainDataMode != CommonConstant.CustMainDataModeMgmntShrholder) {
         this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern(CommonConstant.regexEmail)]);
+        this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       }
       else{
         this.CustMainDataForm.controls.Email1.setValidators([Validators.pattern(CommonConstant.regexEmail)]);
@@ -1929,6 +1931,15 @@ export class CustMainDataComponent implements OnInit {
     console.log(invalid);
   }
 
+  checkIsDisableCustType(){
+    if(this.isEditNap1 || this.AppCustCompanyMgmntShrholderId){
+      this.isDisableCustType = true;
+    }
+    else{
+      this.isDisableCustType = false;
+    }
+  }
+
   async getMinMaxAgeCustPersonalFromGenSet()
   {
     var businessDt:Date = new Date(this.UserAccess[CommonConstant.BUSINESS_DT]);
@@ -1983,12 +1994,4 @@ export class CustMainDataComponent implements OnInit {
     return true;
   }
   
-  checkIsDisableCustType(){
-    if(this.isEditNap1 || this.AppCustCompanyMgmntShrholderId){
-      this.isDisableCustType = true;
-    }
-    else{
-      this.isDisableCustType = false;
-    }
-  }
 }

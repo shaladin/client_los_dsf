@@ -26,6 +26,7 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { LeadForLookupObj } from 'app/shared/model/lead-for-lookup-obj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -44,10 +45,10 @@ export class LeadInputMainInfoComponent implements OnInit {
   surveyorNameLookUpObj: InputLookupObj;
   salesNameLookUpObj: InputLookupObj;
   agencyLookUpObj: InputLookupObj;
-  tempCmoUsername: string;
-  tempSurveyorUsername: string;
-  tempSalesUsername: string;
-  tempAgencyCode: string;
+  tempCmoUsername: string = "";
+  tempSurveyorUsername: string = "";
+  tempSalesUsername: string = "";
+  tempAgencyCode: string = "";
   listRefOffice: Array<KeyValueObj>;
   refOfficeObj: RefOfficeObj;
   listRefLob: Array<KeyValueObj>;
@@ -331,7 +332,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
     this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
-    this.agencyLookUpObj.isRequired = true;
 
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
@@ -353,7 +353,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
     this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
-    this.salesNameLookUpObj.isRequired = true;
   }
   OfficeChanged(event) {
     this.MainInfoForm.patchValue({
@@ -414,6 +413,10 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   SaveForm(isNext: boolean = false) {
     if (this.MainInfoForm.valid) {
+      if(this.tempAgencyCode == "" && this.tempCmoUsername == "" && this.tempSalesUsername == ""){
+        this.toastr.warningMessage(ExceptionConstant.LEAD_INPUT_AGENCY_CMO_TELE);
+        return;
+      }
       if (this.pageType == "edit" || this.pageType == "update") {
         this.editLeadObj.LeadId = this.LeadId;
         this.editLeadObj.RowVersion = this.returnLead.RowVersion;
