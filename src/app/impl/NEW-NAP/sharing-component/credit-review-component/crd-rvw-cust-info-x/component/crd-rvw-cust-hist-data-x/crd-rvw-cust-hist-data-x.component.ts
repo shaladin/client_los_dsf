@@ -54,7 +54,7 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
           let reqObjListCustNo = {
             ListCustNo: [this.CustNo]
           }
-          this.http.post(URLConstantX.GetAgrmntHistByListCustNo, reqObjListCustNo).subscribe(
+          this.http.post(URLConstantX.GetAgrmntHistByListCustNoFilterExpired, reqObjListCustNo).subscribe(
             async (response) => {
               this.ExstAgrmnt = response;
               await this.GetGrandTotal();
