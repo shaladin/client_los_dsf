@@ -235,18 +235,25 @@ public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: Http
     return encrypted
   }
 
-  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}, isSkipLocation: boolean = false, isReuseRoute: boolean = false) {
+  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}, isSkipLocation: boolean = false) {
     // Ngebuat bisa jalanin Constructor dan NgOnInit lagi
-    // router.routeReuseStrategy.shouldReuseRoute = () => {
-    //   return isReuseRoute;
-    // }
+    const prev = router.routeReuseStrategy.shouldReuseRoute;
+    if (Object.keys(queryParams).length === 0 
+        && queryParams.constructor === Object) {
+        router.routeReuseStrategy.shouldReuseRoute = () => {
+            return false;
+        }
+    }
     // router.navigateByUrl(
     //   router.createUrlTree(
     //     [url.toString()], { queryParams: queryParams }
     //   ), { skipLocationChange: isSkipLocation }
     // );
     router.navigate(url, { queryParams: queryParams, skipLocationChange: isSkipLocation });
-  }
+    setTimeout(() => {
+        router.routeReuseStrategy.shouldReuseRoute = prev;
+    }, 1);
+}
 
   public static SetLocalStorage(key: string, value: string) {
     return localStorage.setItem(key, this.EncryptString(value, environment.ChipperKeyLocalStorage));
