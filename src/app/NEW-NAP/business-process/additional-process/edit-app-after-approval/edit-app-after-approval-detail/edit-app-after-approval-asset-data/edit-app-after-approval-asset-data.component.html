@@ -77,8 +77,19 @@
 
     <!--ROW 5-->
     <div class="form-group row">
-      <label class="col-md-2  adInsLabel" translate></label>
-      <div class="col-md-4"></div>
+      <label class="col-md-2  adins-required-label" translate>Asset Usage</label>
+      <div class="col-md-4">
+        <select class="form-control" id="assetUsage" formControlName="MrAssetUsageCode"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls.MrAssetUsageCode.invalid }">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of AssetUsageObj" [value]="item.Key">
+            {{item.Value}}
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.MrAssetUsageCode"
+                            [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
+      </div>
 
       <label class="col-md-2 "
              [ngClass]="(SerialNoLabelMandatory[4] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"
