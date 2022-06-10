@@ -48,6 +48,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     OwnerName: ['', Validators.maxLength(500)],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrAssetUsageCode: ['', [Validators.required, Validators.maxLength(50)]],
     OwnerIdNo: ['', Validators.maxLength(50)],
     OwnerAddrType: [''],
     OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -85,6 +86,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   AppCustAddrObj: Array<AppCustAddrObj>;
   AddrObj: Array<AppCustAddrObj>;
   AddrLegalObj: Array<AppCustAddrObj>;
+  AssetUsageObj: Array<KeyValueObj>;
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
   inputAddressObjForOwner: InputAddressObj;
@@ -149,6 +151,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.bindInscoBranchObj();
     await this.getInsuranceData();
     await this.bindAppInsObj();
+    await this.bindAssetUsageObj();
 
     await this.setFormValidators();
 
@@ -743,6 +746,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
         AppAssetObj:
           {
             ManufacturingYear: this.EditAppAssetForm.controls.ManufacturingYear.value,
+            MrAssetUsageCode: this.EditAppAssetForm.controls.MrAssetUsageCode.value,
             Color:this.EditAppAssetForm.controls.AssetColor.value,
             SerialNo1: this.EditAppAssetForm.controls.SerialNo1.value,
             SerialNo2: this.EditAppAssetForm.controls.SerialNo2.value,
@@ -825,6 +829,15 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     }
 
     this.outputPage.emit({ AppAssetRelatedOutput: this.AppAssetRelatedOutput, pageType: "submitAssetData" });
+  }
+
+  async bindAssetUsageObj() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.AssetUsageObj = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 
   async bindOwnerTypeObj() {
