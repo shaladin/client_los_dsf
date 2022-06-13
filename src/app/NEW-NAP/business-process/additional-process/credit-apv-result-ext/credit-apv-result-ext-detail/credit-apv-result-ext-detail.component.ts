@@ -173,7 +173,8 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CR_APV_RES_EXP_D;
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.AgrmntNo == null ? this.AppNo : this.AgrmntNo;
-    this.InputObj.OfficeCodes = this.OriOfficeCode;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.IsReady = true;
   }
 }

@@ -104,7 +104,8 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
     this.http.post(URLConstant.GetProdOfferingByProdOfferingId, this.GenericByIdObj).subscribe(
       (response) => {
         this.InputObj.TrxNo = response["ProdOfferingCode"];
-        this.InputObj.OfficeCodes = response["OfficeCode"];
+        this.InputObj.OfficeCode = response["OfficeCode"];
+        this.InputObj.OfficeCodes.push(response["OfficeCode"]);
         this.IsReady = true;
       });
   }

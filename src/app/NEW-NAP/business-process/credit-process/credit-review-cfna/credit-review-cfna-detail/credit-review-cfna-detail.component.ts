@@ -451,7 +451,8 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
     this.InputObj.RequestedBy = this.UserAccess.UserName;
-    this.InputObj.OfficeCodes = this.OriOfficeCode;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
