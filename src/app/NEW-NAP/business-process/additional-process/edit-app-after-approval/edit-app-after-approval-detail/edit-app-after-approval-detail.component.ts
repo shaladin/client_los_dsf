@@ -121,7 +121,8 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_EDIT_APP_AFT_APV_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL;
     this.InputObj.Reason = this.DDLReason;
-    this.InputObj.OfficeCodes = this.OriOfficeCode;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.InputObj.TrxNo = "-";
     this.IsReady = true;
   }

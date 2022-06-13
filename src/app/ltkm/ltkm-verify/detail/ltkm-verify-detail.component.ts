@@ -319,7 +319,8 @@ export class LtkmVerifyDetailComponent implements OnInit {
         this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_AML_APV;
         this.InputObj.Reason = this.DDLReason;
         this.InputObj.TrxNo = this.LtkmNo;
-        this.InputObj.OfficeCodes = this.OriOfficeCode;
+        this.InputObj.OfficeCode = this.OriOfficeCode;
+        this.InputObj.OfficeCodes.push(this.OriOfficeCode);
         this.IsReady = true;
     }
 

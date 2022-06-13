@@ -18,13 +18,14 @@ export class UcInputRFAObj {
     SchemeCode: string;
     TrxNo: string;
     Reason: any;
-    OfficeCodes: string;
+    OfficeCode: string;
+    OfficeCodes: Array<string>;
     RequestedBy: string;
 
     constructor(private cookieService: CookieService) {
         let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.RequestedBy = context[CommonConstant.USER_NAME];
-        this.OfficeCodes = context[CommonConstant.OFFICE_CODE];
+        this.OfficeCode = context[CommonConstant.OFFICE_CODE];
         this.ApvTypecodes = [];
         this.EnvUrl = environment.FoundationR3Url;
         this.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
@@ -38,5 +39,6 @@ export class UcInputRFAObj {
         this.SchemeCode = "";
         this.TrxNo = "";
         this.Reason = [];
+        this.OfficeCodes = new Array<string>();
     }
 }
