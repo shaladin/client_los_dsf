@@ -1496,7 +1496,7 @@ export class AssetDataXComponent implements OnInit {
           IsEditableDp: this.returnAppAssetObj.IsEditableDp,
           selectedDpType: 'AMT'
         });
-
+        this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value);
         this.updateValueDownPaymentPrctg();
         this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
       }
@@ -1580,6 +1580,7 @@ export class AssetDataXComponent implements OnInit {
         MrOwnerTypeCode: MrOwnerTypeCode
       });
 
+      this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value);
       await this.SelfUsageChange({ checked: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF") });
       await this.SelfOwnerChange(true, MrOwnerTypeCode, true);
       await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
@@ -2840,6 +2841,17 @@ export class AssetDataXComponent implements OnInit {
     }
   }
 
+  ChangeMrIdTypeCode(MrIdTypeCode: string){
+    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+      this.AssetDataForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+    else {
+      this.AssetDataForm.controls.OwnerIdNo.setValidators(Validators.required);
+      this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+  }
+  
   // async getDigitalizationSvcType() {
   //   await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType }).toPromise().then(
   //     (response) => {

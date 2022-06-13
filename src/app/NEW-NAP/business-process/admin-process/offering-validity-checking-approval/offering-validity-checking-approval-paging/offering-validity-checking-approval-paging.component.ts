@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
@@ -24,7 +24,7 @@ import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
   templateUrl: './offering-validity-checking-approval-paging.component.html',
   styleUrls: []
 })
-export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
+export class OfferingValidityCheckingApprovalPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   CrdApvResultExpDt: string;
@@ -35,8 +35,20 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   integrationObj: IntegrationObj = new IntegrationObj();
   businessDt: Date;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService, private apvTaskService: ApprovalTaskService) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -45,16 +57,37 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     var arrCrit = new Array();
 
     var critInputOnlyOffering = new CriteriaObj();
     critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";
     critInputOnlyOffering.restriction = AdInsConstant.RestrictionEq;
     critInputOnlyOffering.value = CommonConstant.OFFERING_VALIDITY_APV;
+    arrCrit.push(critInputOnlyOffering);
 
     this.inputPagingObj._url = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
+    this.inputPagingObj.addCritInput = new Array();
 
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchOfferingValidityCheckingAndApprovalV2.json";
@@ -72,15 +105,14 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
       this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
       this.inputPagingObj.integrationObj = this.integrationObj; 
     }
-    
-    this.inputPagingObj.addCritInput = new Array();
-    arrCrit.push(critInputOnlyOffering);
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'agr.BIZ_TEMPLATE_CODE';
     critObj.value = this.BizTemplateCode;
     arrCrit.push(critObj);
+
+    this.inputPagingObj.addCritInput = arrCrit;
   }
 
   async CallbackHandler(ev) {

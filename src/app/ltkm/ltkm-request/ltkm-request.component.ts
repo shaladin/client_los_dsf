@@ -1964,7 +1964,8 @@ export class LtkmRequestComponent implements OnInit {
             critLookupApplicationObj.value = this.selectedCustNo;
             this.inputLookupApplicationObj.addCritInput = [];
             this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
-            this.ucLookupApplicationData.setAddCritInput();               
+            if (this.ucLookupApplicationData != undefined)
+                this.ucLookupApplicationData.setAddCritInput();
             this.inputLookupApplicationObj.isDisable = false;      
             this.inputLookupApplicationCompanyObj.isDisable = true;                  
         }        
@@ -2039,7 +2040,8 @@ export class LtkmRequestComponent implements OnInit {
             critLookupApplicationObj.value = this.selectedCustNo;
             this.inputLookupApplicationCompanyObj.addCritInput = [];
             this.inputLookupApplicationCompanyObj.addCritInput.push(critLookupApplicationObj);
-            this.ucLookupApplicationCompanyData.setAddCritInput();                                                 
+            if (this.ucLookupApplicationCompanyData != undefined)
+                this.ucLookupApplicationCompanyData.setAddCritInput();
             this.inputLookupApplicationCompanyObj.isDisable = false;     
             this.inputLookupApplicationObj.isDisable = true;
         }    

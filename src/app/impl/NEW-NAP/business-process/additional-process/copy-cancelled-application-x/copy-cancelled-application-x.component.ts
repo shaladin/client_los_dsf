@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -20,17 +20,29 @@ import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/request/product/
   templateUrl: './copy-cancelled-application-x.component.html',
   styleUrls: ['./copy-cancelled-application-x.component.css']
 })
-export class CopyCancelledApplicationXComponent implements OnInit {
+export class CopyCancelledApplicationXComponent implements OnInit, OnDestroy  {
   @ViewChild(UcpagingComponent) paging: UcpagingComponent;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
   IsNapVersionMainData: boolean = false;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) { 
-    this.route.queryParams.subscribe(params => {
+    private route: ActivatedRoute, 
+    private router: Router) { 
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  SubscribeParam(){    this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
@@ -41,11 +53,30 @@ export class CopyCancelledApplicationXComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
   ngOnInit() {
+	  this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.BIZ_TEMPLATE_CODE';
     critObj.value = this.BizTemplateCode;
+	  this.inputPagingObj.addCritInput = new Array();
     
     if(this.BizTemplateCode === CommonConstant.OPL) {
       this.inputPagingObj._url = "./assets/ucpaging/new-nap/business-process/additional-process/copy-cancelled-application/search-cancelled-app-opl.json";

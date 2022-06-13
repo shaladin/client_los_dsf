@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -24,7 +24,7 @@ import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
   selector: 'app-mou-customer-approval',
   templateUrl: './mou-customer-approval.component.html',
 })
-export class MouCustomerApprovalComponent implements OnInit {
+export class MouCustomerApprovalComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj>;
@@ -34,15 +34,47 @@ export class MouCustomerApprovalComponent implements OnInit {
   integrationObj: IntegrationObj = new IntegrationObj();
   user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   MrMouTypeCode: string;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService, private apvTaskService: ApprovalTaskService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["MrMouTypeCode"] != null) {
         this.MrMouTypeCode = params["MrMouTypeCode"];
-      }});
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchMouCustomerApprovalV2.json";
@@ -86,7 +118,6 @@ export class MouCustomerApprovalComponent implements OnInit {
       this.arrCrit.push(critObj);
       this.inputPagingObj.addCritInput = this.arrCrit;
     }
-
   }
 
   async getEvent(event) {

@@ -706,6 +706,7 @@ export class CommonConstant {
   public static ReferantorCategoryAgency = "AGENCY";
   public static ReferantorCategoryCustomer = "CUSTOMER";
   public static ReferantorCategorySupplierEmployee = "SUPPLIER EMPLOYEE";
+  public static ReferantorCategoryMultifinanceEmployee = "MULTIFINANCE EMPLOYEE";
   public static ReferantorTypeSupplierEmployee = "SUPPL_EMP";
 
   //Martial Status
