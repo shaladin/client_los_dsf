@@ -61,6 +61,9 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     OwnerZipcode: ['', Validators.maxLength(50)],
     OwnerProfessionCode: [''],
     MrOwnerTypeCode: [''],
+    SelfUser: [false],
+    UserName: ['', Validators.maxLength(500)],
+    MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
     AppAssetAttrObjs: this.fb.array([]),
     InscoBranchCode: [''],
     InscoBranchName: [''],
@@ -83,6 +86,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj>;
   refMasterObj : RefMasterObj = new RefMasterObj();
   OwnerRelationObj: Array<KeyValueObj>;
+  UserRelationObj: Array<KeyValueObj>;
   AppCustAddrObj: Array<AppCustAddrObj>;
   AddrObj: Array<AppCustAddrObj>;
   AddrLegalObj: Array<AppCustAddrObj>;
@@ -146,6 +150,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.setAddrOwnerObj();
     await this.GetListAddr();
     await this.SetOwnerData();
+    await this.SetUserData();
     await this.GetAppCustPersonalJobData();
     this.GenerataAppAssetAttr(false);
     await this.bindInscoBranchObj();
@@ -177,6 +182,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   {
     this.EditAppAssetForm.patchValue({
       ManufacturingYear: this.AppAssetObj.ManufacturingYear,
+      MrAssetUsageCode: this.AppAssetObj.MrAssetUsageCode,
       AssetColor: this.AppAssetObj.Color,
       SerialNo1: this.AppAssetObj.SerialNo1,
       SerialNo2: this.AppAssetObj.SerialNo2,
@@ -330,6 +336,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     }
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
+        this.UserRelationObj = response[CommonConstant.ReturnObj];
         this.OwnerRelationObj = response[CommonConstant.ReturnObj];
       }
     );
@@ -410,6 +417,30 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       this.EditAppAssetForm.controls["ownerData"].enable();
       this.EditAppAssetForm.controls["OwnerAddrType"].enable();
       this.EditAppAssetForm.controls["MrOwnerTypeCode"].enable();
+    };
+  }
+
+  async SelfUsageChange(event) {
+    if (event.checked == true) {
+      this.EditAppAssetForm.patchValue({
+        UserName: this.AppCustObj.CustName,
+        MrUserRelationshipCode: CommonConstant.SelfCustomer,
+      });
+
+      this.EditAppAssetForm.controls.UserName.clearValidators();
+      this.EditAppAssetForm.controls.UserName.updateValueAndValidity();
+      this.EditAppAssetForm.controls.MrUserRelationshipCode.clearValidators();
+      this.EditAppAssetForm.controls.MrUserRelationshipCode.updateValueAndValidity();
+      this.EditAppAssetForm.controls["UserName"].disable();
+      this.EditAppAssetForm.controls["MrUserRelationshipCode"].disable();
+    };
+    if (event.checked == false) {
+      this.EditAppAssetForm.controls.UserName.setValidators([Validators.required, Validators.maxLength(500)]);
+      this.EditAppAssetForm.controls.UserName.updateValueAndValidity();
+      this.EditAppAssetForm.controls.MrUserRelationshipCode.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.EditAppAssetForm.controls.MrUserRelationshipCode.updateValueAndValidity();
+      this.EditAppAssetForm.controls["UserName"].enable();
+      this.EditAppAssetForm.controls["MrUserRelationshipCode"].enable();
     };
   }
 
@@ -499,6 +530,13 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       OwnerMobilePhnNo: this.AppCollateralRegistrationObj.OwnerMobilePhnNo,
       OwnerProfessionCode: this.AppCollateralRegistrationObj.OwnerProfessionCode,
       MrOwnerTypeCode: this.AppCollateralRegistrationObj.MrOwnerTypeCode
+    });
+  }
+
+  async SetUserData() {
+    this.EditAppAssetForm.patchValue({
+      UserName: this.AppCollateralRegistrationObj.UserName,
+      MrUserRelationshipCode: this.AppCollateralRegistrationObj.MrUserRelationshipCode
     });
   }
 
@@ -771,7 +809,9 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
             OwnerCity: this.EditAppAssetForm.controls.ownerData['controls'].City.value,
             OwnerZipcode: this.EditAppAssetForm.controls.OwnerZipcode.value,
             MrOwnerTypeCode: this.EditAppAssetForm.controls.MrOwnerTypeCode.value,
-            OwnerProfessionCode: this.EditAppAssetForm.controls.OwnerProfessionCode.value
+            OwnerProfessionCode: this.EditAppAssetForm.controls.OwnerProfessionCode.value,
+            UserName: this.EditAppAssetForm.controls.UserName.value,
+            MrUserRelationshipCode: this.EditAppAssetForm.controls.MrUserRelationshipCode.value
           },
         AppAssetAttrObjs: [],
         AppInsObj:
