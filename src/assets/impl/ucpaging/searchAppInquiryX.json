@@ -284,11 +284,6 @@
       "property": "custName"
     },
     {
-      "type": "text",
-      "position": "left",
-      "property": "empName"
-    },
-    {
       "type": "callback",
       "key": "product",
       "position": "left",
