@@ -248,11 +248,11 @@ export class FinancialDataDlfnXComponent implements OnInit {
       return;
     }
     
-    if(this.FinDataForm.get("InterestType").value != "PRCNT"){
-      this.FinDataForm.patchValue({
-        EffectiveRatePrcnt : 0
-      });
-    }    
+    // if(this.FinDataForm.get("InterestType").value != "PRCNT" && this.FinDataForm.get("MrInstTypeCode").value == "SINGLE"){
+    //   this.FinDataForm.patchValue({
+    //     EffectiveRatePrcnt : 0
+    //   });
+    // }    
 
     if (isValidGracePeriod) {
 

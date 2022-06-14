@@ -63,6 +63,7 @@ import { LtkmCustJobDataXComponent } from "app/impl/ltkm/ltkm-request/additional
 import { LtkmRequestXComponent } from "app/impl/ltkm/ltkm-request/ltkm-request-x.component";
 import { LtkmCustPersonalMainDataXComponent } from "app/impl/ltkm/ltkm-request/additional-component/cust-personal-main-data/cust-personal-main-data-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { LtkmFinancialCompanyXComponent } from "app/impl/ltkm/ltkm-request/additional-component/company/financial-company-x/financial-company-x.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -139,7 +140,8 @@ export const customCurrencyMaskConfig = {
     LtkmInquiryComponent,
     LtkmFamilyMainDataPagingComponent,
     LtkmReturnHandlingXComponent,
-    LtkmCustJobDataXComponent
+    LtkmCustJobDataXComponent,
+    LtkmFinancialCompanyXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,
