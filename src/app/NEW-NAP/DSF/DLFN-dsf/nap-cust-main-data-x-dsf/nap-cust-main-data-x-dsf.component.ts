@@ -47,7 +47,7 @@ export class NapCustMainDataXDsfComponent implements OnInit {
   appCustId: number = 0;
   from: string;
   lobCode: string;
-  isNonMandatory: boolean = false;
+  isNonMandatory: boolean = true;
 
   AppStep = {
     "NEW": 1,
@@ -254,5 +254,6 @@ export class NapCustMainDataXDsfComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
+
 
 }
