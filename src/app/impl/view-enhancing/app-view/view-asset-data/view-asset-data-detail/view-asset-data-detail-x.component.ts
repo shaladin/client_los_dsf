@@ -26,7 +26,6 @@ export class ViewAssetDataDetailXComponent implements OnInit {
   adminHeadName: string;
   inputGridObj: InputGridObj = new InputGridObj();
   OwnerProfessionName: string = '-';
-  IsAdmin: boolean = true;
 
   constructor(private httpClient: HttpClient, public activeModal: NgbActiveModal) { }
 
@@ -43,27 +42,25 @@ export class ViewAssetDataDetailXComponent implements OnInit {
         this.appCollateralRegistration = response[2];
         this.GetRefProfession();
 
-        let name = "";
         for (const item of this.appAssetSupplEmp.ReturnObject) {
           if(item.MrSupplEmpPositionCode == CommonConstant.SALES_JOB_CODE){
             this.salesName = item.SupplEmpName;
-            this.IsAdmin = false;
           }
           else if(item.MrSupplEmpPositionCode == CommonConstant.BRANCH_MANAGER_JOB_CODE){
             this.branchManagerName = item.SupplEmpName;
-            name = item.SupplEmpName;
           }
           else if(item.MrSupplEmpPositionCode == CommonConstant.ADMIN_HEAD_JOB_CODE){
             this.adminHeadName = item.SupplEmpName;
-            name = item.SupplEmpName;
           }
         }
 
-        if(this.IsAdmin)
-        {
-          this.salesName = name;
-          this.branchManagerName = name;
-          this.adminHeadName = name;
+        if(this.salesName == null && this.adminHeadName !=null){
+          this.salesName = this.adminHeadName
+        }
+
+        if (this.salesName == null && this.adminHeadName ==null && this.branchManagerName !=null){
+          this.salesName = this.branchManagerName 
+          this.adminHeadName = this.branchManagerName 
         }
 
         this.inputGridObj.resultData = {
@@ -73,8 +70,6 @@ export class ViewAssetDataDetailXComponent implements OnInit {
         this.inputGridObj.resultData.Data = this.appAsset.ResponseAppAssetAccessoryObjs;
       }
     );
-
-    
 
     this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
       (response: any) => {
