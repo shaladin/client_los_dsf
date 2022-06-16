@@ -1230,18 +1230,18 @@ export class AssetDataXComponent implements OnInit {
       });
       if(temp[0].MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE){
         this.IsSales = true;
-        this.AdminHeadChanged(event);
+        // this.AdminHeadChanged(event);
       }
       else{
         this.IsSales = false;
-        this.AdminHeadName = temp[0].VendorEmpName;
-        this.AssetDataForm.patchValue({
-          AdminHeadId: "",
-          AdminHeadName: "",
-          AdminHeadNo: "",
-          AdminHeadPositionCode: "",
-        });
+        this.AdminHeadName = temp[0].VendorEmpName;   
       }
+      this.AssetDataForm.patchValue({
+        AdminHeadId: "",
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
+      });
     }
     else {
       this.AssetDataForm.patchValue({
@@ -1718,9 +1718,20 @@ export class AssetDataXComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseSalesPersonSupp.MrSupplEmpPositionCode;
             }
             else {
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "";
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "";
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
+              if (this.appAssetObj[i].ResponseBranchManagerSupp != null) {
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj[i].ResponseBranchManagerSupp.SupplEmpName;
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj[i].ResponseBranchManagerSupp.SupplEmpNo;
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseBranchManagerSupp.MrSupplEmpPositionCode;
+              }
+              else if (this.appAssetObj[i].ResponseAdminHeadSupp != null) {
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj[i].ResponseAdminHeadSupp.SupplEmpName;
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj[i].ResponseAdminHeadSupp.SupplEmpNo;
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseAdminHeadSupp.MrSupplEmpPositionCode;
+              }else{
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "";
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "";
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
+              }
             }
 
             this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj[i].ResponseAppAssetObj.TaxCityIssuer;
