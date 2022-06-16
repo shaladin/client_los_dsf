@@ -25,7 +25,10 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
 
   TotalNTF: number = 0;
   TotalUnit: number = 0;
-
+  TotalActiveInstallment: number = 0;
+  TotalOSPrincipal: number = 0;
+  TotalAR: number = 0;
+  TotalOSAR: number = 0;
   ReturnAgrmnt: any;
 
   TotalProcessAsset: number = 0;
@@ -35,7 +38,7 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
 
@@ -48,9 +51,10 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
             ListCustNo: [this.CustNo]
           }
           this.http.post(URLConstantX.GetAgrmntHistByListCustNo, reqObjListCustNo).subscribe(
-            (response) => {
+            async (response) => {
               this.ExstAgrmnt = response;
-              this.GetTotalNTFAndUnit();
+              await this.GetGrandTotal();
+              await this.GetTotalARAndOSAR();
             }
           );
 
@@ -83,12 +87,14 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
     );
   }
 
-  GetTotalNTFAndUnit() {
+  async GetGrandTotal() {
     if(this.ExstAgrmnt != undefined && this.ExstAgrmnt.length != 0) {
       var existingAgreement = this.ExstAgrmnt;
       existingAgreement.forEach(element => {
         this.TotalNTF = this.TotalNTF + element.NTFAmount;
         this.TotalUnit = this.TotalUnit + element.NumOfAsset;
+        this.TotalActiveInstallment += element.InstAmount;
+        this.TotalOSPrincipal += element.OsPrincipal;
       });
     }
   }
@@ -102,6 +108,10 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
         this.TotalProcessInstallment += element.InstAmount;
       });
     }
+  }
+  async GetTotalARAndOSAR(){
+    this.TotalAR += this.TotalNTF + this.TotalActiveInstallment;
+    this.TotalOSAR += this.TotalOSPrincipal + this.TotalActiveInstallment;
   }
 
   ClickLinkAppNo(AppId) {
