@@ -2215,6 +2215,15 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
+  GetOwnerRelationship(){
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.OwnerRelationObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
+      }
+    );
+  }
+
   AssetConditionChanged(mode: string = "add") {
     if (this.AssetConditionObj != null && this.AssetDataForm.controls.MrAssetConditionCode.value != "") {
       let filter: any;
@@ -2836,7 +2845,10 @@ export class AssetDataComponent implements OnInit {
     if(OwnerType == CommonConstant.CustTypePersonal){
       this.InputLookupProfessionObj.isRequired = false;
       this.AssetDataForm.controls.OwnerProfessionCode.clearValidators();
-
+      
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+      this.GetOwnerRelationship();
+      
       if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
           OwnerProfessionCode : ""
@@ -2858,6 +2870,9 @@ export class AssetDataComponent implements OnInit {
     }else{
       this.InputLookupProfessionObj.isRequired = true;
       this.AssetDataForm.controls.OwnerProfessionCode.setValidators([Validators.required]);
+      
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+      this.GetOwnerRelationship();
       
       if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
