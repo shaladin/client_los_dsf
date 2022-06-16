@@ -12,7 +12,7 @@
             "ddlType": "all",
             "environment": "FOU",
             "url": "",
-            "path": "/RefOffice/GetListKvpActiveRefOffice",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "items": [],
             "itemsUrl": [],
             "criteriaPropName": "",
