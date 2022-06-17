@@ -15,7 +15,22 @@
             #enjiForm="ngForm">
             <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
 
+            
             <div *ngIf="isDetail">
+              <lib-ucSubsection *ngIf="wopCode == wopAutoDebit" [id]="'BankAccId'" [title]="'Bank Account'" [panel]="'BankAcc'">
+              </lib-ucSubsection>
+              <div *ngIf="wopCode == wopAutoDebit" id="BankAcc">
+                <div class="row mx-2">
+                  <div class="col-md-2 mx-2"><label>Bank Account</label></div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-2">
+                    <button class="btn btn-raised btn-primary" (click)="editBankAccData()">
+                      <i class="ft-edit-2"></i>&nbsp;<span translate>Edit</span>
+                    </button>
+                </div>
+                </div>
+              </div>
+
               <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetList'">
               </lib-ucSubsection>
               <div class="form-body" id="AssetList" style="overflow-x: auto;">
@@ -264,6 +279,14 @@
             <div *ngIf="isEditPoData">
               <app-edit-app-after-approval-purchase-order-data-x [PurchaseOrderHObj]="selectedPurchaseOrderHObj" [CustBankAccList]="CustBankAccList" [LobCode]="LobCode"
                 (outputPage)="getPage($event)"></app-edit-app-after-approval-purchase-order-data-x>
+            </div>
+
+            <div *ngIf="isEditBankAccData">
+              <app-edit-app-after-approval-bank-acc
+              [AppId]="AppId"
+              [editedBankAccData]="editedBankAccData"
+              (outputPage)="getPage($event)"
+              ></app-edit-app-after-approval-bank-acc>
             </div>
 
           </form>
