@@ -36,6 +36,7 @@ import { CrdRvwSurveyDataXComponent } from "app/impl/NEW-NAP/sharing-component/c
 import { CrdRvwThirdPartyCheckingXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-third-party-checking-x/crd-rvw-third-party-checking-x.component";
 import { SharedModule } from "app/shared/shared.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { CrdRvwIncomeExpenseXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-income-expense/crd-rvw-income-expense-x.component";
 
 @NgModule({
     exports: [
@@ -79,7 +80,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         CrdRvwCmoInfoComponent, 
         CrdRvwDealerInfoComponent, 
         CrdRvwCreditScoringComponent, 
-        CrdRvwIncomeExpenseComponent, 
+        CrdRvwIncomeExpenseComponent,
+        CrdRvwIncomeExpenseXComponent, 
         CrdRvwBankStmntComponent, 
         CrdRvwRapindoComponent,
         CrdRvwDukcapilHistComponent,
