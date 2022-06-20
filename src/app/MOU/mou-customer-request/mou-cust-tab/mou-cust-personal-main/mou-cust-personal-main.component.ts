@@ -391,7 +391,7 @@ export class MouCustPersonalMainComponent implements OnInit {
   }
 
   clearExpDt() {
-    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeEKTP) {
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeEKTP || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeNPWP) {
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: '',
       });
