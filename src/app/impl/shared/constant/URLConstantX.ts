@@ -25,7 +25,7 @@ export class URLConstantX {
   public static SyncAppCustWithCustFOU = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOU";
   public static SyncAppCustWithCustFOUSecondary = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOUSecondary";
   public static ShareHolderDuplicateCheck = environment.losUrl + "/v1" + "/AppCustX/ShareHolderDuplicateCheck";
-  
+
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
 
@@ -91,7 +91,7 @@ export class URLConstantX {
   public static SubmitCancel = environment.losUrl + "/v1" + "/Cessie/SubmitCancel";
   public static SubmitCancelV2 = environment.losUrl + "/v2" + "/Cessie/SubmitCancelV2";
   public static GetInitForDmsDataByCessieHXId = environment.losUrl + "/v1" + "/Cessie/GetInitForDmsDataByCessieHXId";
-  public static GetCessieHXById = environment.losUrl + "/v1" + "/Cessie/GetCessieHXById"; 
+  public static GetCessieHXById = environment.losUrl + "/v1" + "/Cessie/GetCessieHXById";
 
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
@@ -162,6 +162,8 @@ export class URLConstantX {
   public static AddNewApplicationFromCopyV2_2 = environment.losUrl + "/v2.2" + "/AppX/AddNewApplicationFromCopy";
   public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/v1" +"/AppX/GetAppByCustNoAndIsAppInitDone";
   public static GetAppByCustNoAndAppStat = environment.losUrl + "/v1" + "/AppX/GetAppByCustNoAndAppStat";
+  public static GetAppByCustNoAndAppStatV2 = environment.losUrl + "/v2" + "/AppX/GetAppByCustNoAndAppStatV2";
+  public static GetAppByCustNoAndIsAppInitDoneV2 = environment.losUrl + "/v2" +"/AppX/GetAppByCustNoAndIsAppInitDoneV2";
 
   //AGRMNT ACTIVATION
   public static SubmitAgrmntActivationByHuman = environment.losUrl + '/v1' + "/AgrmntActivationX/SubmitAgrmntActivationByHuman";
@@ -284,7 +286,7 @@ export class URLConstantX {
 
   //App Agrmnt Cancellation
   public static AddAppAgrmntCancelV2_1X = environment.losUrl + "/v2.1" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
- 
+
   // Invoice
   public static AddInvoiceX = environment.losUrl + "/v1" + "/InvoiceX/AddInvoiceX";
   public static EditInvoiceX= environment.losUrl + "/v1" + "/InvoiceX/EditInvoiceX";

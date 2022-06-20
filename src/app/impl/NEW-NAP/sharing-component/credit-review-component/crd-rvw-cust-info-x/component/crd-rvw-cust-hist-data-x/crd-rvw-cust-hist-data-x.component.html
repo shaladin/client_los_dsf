@@ -140,6 +140,34 @@
       <thead>
         <tr class="table-header">
           <th>
+            <span style="float: center;" translate class="thead-header">No</span>
+          </th>
+          <th>
+            <span style="float: center;" translate class="thead-header" name='AgrmntNo'>Application No</span>
+          </th>
+          <th>
+            <span style="float: center;" translate class="thead-header" name='AssetType'>Asset Type</span>
+          </th>
+          <th>
+            <span style="float: center;" translate class="thead-header" name='Asset'>#Asset</span>
+          </th>
+          <th>
+            <span style="float: center;" translate class="thead-header" name='Principal'>Principal</span>
+          </th>
+          <th>
+            <span style="float: center;" translate class="thead-header" name='Installment'>Installment</span>
+          </th>
+          <th>
+            <span style="float: center;" translate class="thead-header" name='Period'>Period</span>
+          </th>
+          <th>
+            <span style="float: center;" translate class="thead-header" name='ApplicationStep'>Application Step</span>
+          </th>
+        </tr>
+      </thead>
+      <!-- <thead>
+        <tr class="table-header">
+          <th>
             <span translate class="thead-header">No</span>
           </th>
           <th>
@@ -158,25 +186,59 @@
             <span translate class="thead-header" name='OSAR'>Application Step</span>
           </th>
         </tr>
-      </thead>
+      </thead> -->
       <tbody>
         <tr *ngIf="AppPrcs == undefined || AppPrcs?.length == 0">
-          <td align="center" colspan="6">No data found</td>
+          <td align="center" colspan="8">No data found</td>
         </tr>
         <tr *ngFor="let item of AppPrcs; let i = index">
           <td>{{i+1}}</td>
-          <td *ngIf="item.AppNo!=null"><a class="link" (click)="ClickLinkAppNo(item.AppId)">{{item.AppNo}}</a></td>
+          <td *ngIf="item.AppNo!=null">
+            <a class="link" (click)="ClickLinkAppNo(item.AppId)">{{item.AppNo}}</a>
+          </td>
           <td *ngIf="item.AppNo==null"> - </td>
-          <td style="text-align: left;" *ngIf="item.ProdOfferingName!=null">{{item.ProdOfferingName}}</td>
-          <td *ngIf="item.ProdOfferingName==null"> - </td>
-          <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
-          <td *ngIf="item.SalesName==null"> - </td>
-          <td style="text-align: right;" *ngIf="item.TotalNTF!=null">{{item.TotalNTF | number:'.2':'en-US'}}</td>
-          <td style="text-align: right;" *ngIf="item.TotalNTF==null"> - </td>
+          <td *ngIf="item.AssetType!=null">{{item.AssetType}}</td>  <!-- belum ada hasil sama sekali -->
+          <td *ngIf="item.AssetType==null"> - </td>
+          <td *ngIf="item.NumOfAsset!=null">{{item.NumOfAsset}}</td>
+          <td *ngIf="item.NumOfAsset==null"> - </td>
+          <td *ngIf="item.TotalNTF!=null">{{item.TotalNTF | number:'.2':'en-US'}}</td>
+          <td *ngIf="item.TotalNTF==null"> - </td>
+          <td *ngIf="item.InstAmount!=null">{{item.InstAmount | number:'.2':'en-US'}}</td>
+          <td *ngIf="item.InstAmount==null"> - </td>
+          <td *ngIf="item.NumOfInst!=null">{{item.NumOfInst}}</td>  <!-- belum clear. sementaran menggunakan NumOfInst -->
+          <td *ngIf="item.NumOfInst==null"> - </td>
           <td *ngIf="item.AppCurrStep!=null">{{item.AppCurrStep}}</td>
           <td *ngIf="item.AppCurrStep==null"> - </td>
         </tr>
       </tbody>
     </table>
+    <div class="row">
+      <div class="col-md-3">
+        <label class="label-control" translate>Total #Asset</label>
+      </div>
+      <div class="col-md-3">
+        <label class="label-control" translate>{{TotalProcessAsset}}</label>
+      </div>
+      <div class="col-md-3">
+        <label class="label-control" translate>Total AR</label>
+      </div>
+      <div class="col-md-3">
+        <label class="label-control" translate>{{TotalProcessAR | number:'.2':'en-US'}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label class="label-control" translate>Total Principal</label>
+      </div>
+      <div class="col-md-3">
+        <label class="label-control" translate>{{TotalProcessPrincipal | number:'.2':'en-US'}}</label>
+      </div>
+      <div class="col-md-3">
+        <label class="label-control" translate>Total Installment</label>
+      </div>
+      <div class="col-md-3">
+        <label class="label-control" translate>{{TotalProcessInstallment | number:'.2':'en-US'}}</label>
+      </div>
+    </div>
   </div>
 </div>

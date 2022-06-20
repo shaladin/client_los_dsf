@@ -28,6 +28,11 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
 
   ReturnAgrmnt: any;
 
+  TotalProcessAsset: number = 0;
+  TotalProcessPrincipal: number = 0;
+  TotalProcessAR: number = 0;
+  TotalProcessInstallment: number = 0;
+
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
@@ -52,12 +57,13 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
           this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
             (response: AppObj) => {
               let reqObj = {
-                CustNo: this.CustNo, 
+                CustNo: this.CustNo,
                 IsAppInitDone: response.IsAppInitDone
               }
-              this.http.post(URLConstantX.GetAppByCustNoAndIsAppInitDone, reqObj).subscribe(
-                (response) => {
+              this.http.post(URLConstantX.GetAppByCustNoAndIsAppInitDoneV2, reqObj).subscribe(
+                async (response) => {
                   this.AppPrcs = response;
+                  await this.GetProcessGrandTotal();
                 }
               );
             }
@@ -83,6 +89,17 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
       existingAgreement.forEach(element => {
         this.TotalNTF = this.TotalNTF + element.NTFAmount;
         this.TotalUnit = this.TotalUnit + element.NumOfAsset;
+      });
+    }
+  }
+
+  async GetProcessGrandTotal(){
+    if(this.AppPrcs != undefined && this.AppPrcs.length != 0){
+      this.AppPrcs.forEach(element => {
+        this.TotalProcessAsset += element.NumOfAsset;
+        this.TotalProcessPrincipal += element.TotalNTF;
+        this.TotalProcessAR += element.TotalAR;
+        this.TotalProcessInstallment += element.InstAmount;
       });
     }
   }
