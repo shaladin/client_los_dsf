@@ -35,6 +35,10 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   TotalProcessPrincipal: number = 0;
   TotalProcessAR: number = 0;
   TotalProcessInstallment: number = 0;
+  TotalRejectedAsset: number = 0;
+  TotalRejectedPrincipal: number = 0;
+  TotalRejectedAR: number = 0;
+  TotalRejectedInstallment: number = 0;
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -77,9 +81,10 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
             CustNo: this.CustNo,
             AppStat:"RJC"
           }
-          this.http.post(URLConstantX.GetAppByCustNoAndAppStat, reqObj).subscribe(
-            (response) => {
+          this.http.post(URLConstantX.GetAppByCustNoAndAppStatV2, reqObj).subscribe(
+            async (response) => {
               this.AppRjct = response;
+              await this.GetRejectedGrandTotal();
             }
           );
         }
@@ -112,6 +117,17 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   async GetTotalARAndOSAR(){
     this.TotalAR += this.TotalNTF + this.TotalActiveInstallment;
     this.TotalOSAR += this.TotalOSPrincipal + this.TotalActiveInstallment;
+  }
+
+  async GetRejectedGrandTotal(){
+    if(this.AppRjct != undefined && this.AppRjct.length != 0){
+      this.AppRjct.forEach(element => {
+        this.TotalRejectedAsset += element.NumOfAsset;
+        this.TotalRejectedPrincipal += element.TotalNTF;
+        this.TotalRejectedAR += element.TotalAR;
+        this.TotalRejectedInstallment += element.InstAmount;
+      });
+    }
   }
 
   ClickLinkAppNo(AppId) {
