@@ -41,6 +41,7 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
     DictRefMaster: { [id: string]: Array<KeyValueObj> } = {};
     BusinessDate: Date;
     UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    @Input() IsAddrOwnershipMandatory: boolean;
     readonly MasterIdTypeCode: string = CommonConstant.RefMasterTypeCodeIdType;
     readonly MasterGenderCode: string = CommonConstant.RefMasterTypeCodeGender;
     readonly MasterJobPosCode: string = CommonConstant.RefMasterTypeCodeJobPosition;
@@ -187,6 +188,9 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
             this.inputFieldCcObj = new InputFieldObj();
             this.inputFieldCcObj.inputLookupObj = new InputLookupObj();
 
+            this.inputAddressObjForCc.showOwnership = true;
+            this.inputAddressObjForCc.requiredOwnership = this.IsAddrOwnershipMandatory;
+
             this.CcAddrObj.Addr = this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Addr;
             this.CcAddrObj.PhnExt1 = this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnExt1;
             this.CcAddrObj.PhnExt2 = this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnExt2;
@@ -202,6 +206,7 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
             this.CcAddrObj.AreaCode4 = this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode4;
             this.CcAddrObj.City = this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.City;
             this.CcAddrObj.SubZipcode = this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.SubZipcode;
+            this.CcAddrObj.MrHouseOwnershipCode = this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.MrHouseOwnershipCode;
 
             this.inputFieldCcObj.inputLookupObj.nameSelect = this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Zipcode;
             this.inputFieldCcObj.inputLookupObj.jsonSelect = { Zipcode: this.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Zipcode };
@@ -283,7 +288,7 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
         ReqAddr.Fax = TempAddr.Fax;
         ReqAddr.FaxArea = TempAddr.FaxArea;
         ReqAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeCompany;
-        ReqAddr.MrHouseOwnershipCode = "";
+        ReqAddr.MrHouseOwnershipCode = TempAddr.MrHouseOwnershipCode;
         ReqAddr.Zipcode = TempZipVal.value;
         ReqAddr.SubZipcode = TempAddr.SubZipcode;
 

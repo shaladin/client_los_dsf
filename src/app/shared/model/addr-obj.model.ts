@@ -1,4 +1,5 @@
 export class AddrObj {
+    MrCustAddrTypeCode: string;
     Addr: string;
     AreaCode4: string;
     AreaCode3: string;

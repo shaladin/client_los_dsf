@@ -16,6 +16,7 @@ export class CustDataCompanyLtkmObj {
     LtkmCustCompanyObj: LtkmCustCompanyObj;
     LtkmCustAddrLegalObj: LtkmCustAddrObj;
     LtkmCustAddrMailingObj: LtkmCustAddrObj;
+    LtkmCustAddrObjs: Array<LtkmCustAddrObj>;
     LtkmCustCompanyMgmntShrholderObjs: Array<LtkmCustCompanyMgmntShrholderObj>;
     LtkmCustCompanyContactPersonObj: LtkmCustCompanyContactPersonObj;
     LtkmCustCompanyFinDataObjs: Array<LtkmCustCompanyFinDataObj>;
@@ -33,6 +34,7 @@ export class CustDataCompanyLtkmObj {
         this.LtkmCustCompanyObj = new LtkmCustCompanyObj();
         this.LtkmCustAddrLegalObj = new LtkmCustAddrObj();
         this.LtkmCustAddrMailingObj = new LtkmCustAddrObj();
+        this.LtkmCustAddrObjs = new Array<LtkmCustAddrObj>();
         this.LtkmCustCompanyFinDataObjs = new Array<LtkmCustCompanyFinDataObj>();
         this.LtkmCustCompanyMgmntShrholderObjs = new Array<LtkmCustCompanyMgmntShrholderObj>();
         this.LtkmCustCompanyContactPersonObj = new LtkmCustCompanyContactPersonObj();

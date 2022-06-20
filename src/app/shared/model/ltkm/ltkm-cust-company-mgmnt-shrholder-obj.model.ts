@@ -27,6 +27,7 @@ export class LtkmCustCompanyMgmntShrholderObj {
     CustTypeName: string;
     CustNo: string;
     IsGuarantor: boolean;
+    BizPeriodAml: Date;
     RowVersion: string[];
 
     constructor() {
