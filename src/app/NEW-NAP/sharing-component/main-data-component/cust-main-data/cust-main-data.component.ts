@@ -880,11 +880,9 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
     this.CustMainDataForm.controls.Email1.updateValueAndValidity();
     this.setLookup(custType, true);
-    if(this.MrCustTypeCode == CommonConstant.CustTypePersonal && (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder || this.custMainDataMode == CommonConstant.CustMainDataModeFamily)){
+    this.custAttrForm.resetForm();
+    if(this.MrCustTypeCode == CommonConstant.CustTypePersonal){
       this.custAttrForm.GetQuestion();
-    }
-    else{
-      this.custAttrForm.resetForm();
     }
   }
 
