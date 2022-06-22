@@ -489,6 +489,7 @@ export class CommonConstant {
   public static MrIdTypeCodeKITAS = "KITAS";
   public static MrIdTypeCodeNPWP = "NPWP";
   public static MrIdTypeCodeAKTA = "AKTA";
+  public static MrIdTypeCodeKTM = "KTM";
 
   // MR ID TYPE CODE VENDOR
   public static MrIdTypeCodeVendorKTP = "KTP";
