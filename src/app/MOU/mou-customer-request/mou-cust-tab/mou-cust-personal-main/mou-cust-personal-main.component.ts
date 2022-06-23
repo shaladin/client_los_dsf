@@ -390,13 +390,20 @@ export class MouCustPersonalMainComponent implements OnInit {
     });
   }
 
+  readonly MrIdTypeCodeEKTP = CommonConstant.MrIdTypeCodeEKTP
+  readonly MrIdTypeCodeNPWP = CommonConstant.MrIdTypeCodeNPWP
+  readonly MrIdTypeCodeKITAS = CommonConstant.MrIdTypeCodeKITAS
+  readonly MrIdTypeCodeKTM = CommonConstant.MrIdTypeCodeKTM
+  readonly MrIdTypeCodeSIM = CommonConstant.MrIdTypeCodeSIM
+  readonly MrIdTypeCodeAKTA = CommonConstant.MrIdTypeCodeAKTA
+
   clearExpDt() {
-    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeEKTP || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeNPWP) {
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == this.MrIdTypeCodeEKTP || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == this.MrIdTypeCodeNPWP) {
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: '',
       });
     }
-    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeNPWP) {
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == this.MrIdTypeCodeNPWP) {
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
@@ -405,7 +412,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
-    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeKITAS || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeKTM || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeSIM || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == CommonConstant.MrIdTypeCodeAKTA) {
+    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == this.MrIdTypeCodeKITAS || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == this.MrIdTypeCodeKTM || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == this.MrIdTypeCodeSIM || this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == this.MrIdTypeCodeAKTA) {
       idExpiredDate.setValidators([Validators.required]);
     } else {
       idExpiredDate.clearValidators();
