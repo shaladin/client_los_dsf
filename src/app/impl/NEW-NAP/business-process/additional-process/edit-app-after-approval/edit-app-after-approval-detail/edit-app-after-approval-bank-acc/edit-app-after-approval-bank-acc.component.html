@@ -66,9 +66,6 @@
           <div class="col-md-4">
             <input type="text" class="form-control" formControlName="PrsdntDirectorOwnerBnkAcc"
                   [ngClass]="{'is-invalid': enjiForm.submitted && EditBankAccForm.controls.PrsdntDirectorOwnerBnkAcc.invalid}">
-            <lib-uc-show-errors [customPattern]="customPattern"
-                                [control]="EditBankAccForm.controls.PrsdntDirectorOwnerBnkAcc" [submit]="enjiForm.submitted">
-            </lib-uc-show-errors>
           </div>
         </div>
 
@@ -93,9 +90,6 @@
           <div class="col-md-4">
             <input type="text" class="form-control" formControlName="IdNoOwnerBankAcc"
                   [ngClass]="{'is-invalid': enjiForm.submitted && EditBankAccForm.controls.IdNoOwnerBankAcc.invalid}">
-            <lib-uc-show-errors [customPattern]="customPattern"
-                                [control]="EditBankAccForm.controls.IdNoOwnerBankAcc" [submit]="enjiForm.submitted">
-            </lib-uc-show-errors>
           </div>
         </div>
 
@@ -105,9 +99,6 @@
           <div class="col-md-4">
             <input type="text" class="form-control" formControlName="BirthPlaceOwnerBankAcc"
                   [ngClass]="{'is-invalid': enjiForm.submitted && EditBankAccForm.controls.BirthPlaceOwnerBankAcc.invalid}">
-            <lib-uc-show-errors [customPattern]="customPattern"
-                                [control]="EditBankAccForm.controls.BirthPlaceOwnerBankAcc" [submit]="enjiForm.submitted">
-            </lib-uc-show-errors>
           </div>
         </div>
 
@@ -125,7 +116,7 @@
         </div>
 
         <!-- Address -->
-        <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressOwnerBankAccObj" [enjiForm]="enjiForm"
+        <lib-ucaddress [addressObj]="inputAddressOwnerBankAccObj" [enjiForm]="enjiForm"
                       [identifier]="'BankAccOwnerAddress'" [UCAddrForm]="EditBankAccForm"></lib-ucaddress>
       </div>
     </div>

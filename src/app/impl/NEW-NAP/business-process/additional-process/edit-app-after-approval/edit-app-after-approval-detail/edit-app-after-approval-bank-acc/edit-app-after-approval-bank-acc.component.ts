@@ -28,7 +28,7 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
     MrCustTypeOwnerBnkAcc: [''],
     MrIdTypeOwnerBnkAcc: [''],
     PrsdntDirectorOwnerBnkAcc: [''],
-    IdNoOwnerBankAcc: [''],
+    IdNoOwnerBankAcc: ['', [Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]],
     BirthPlaceOwnerBankAcc: [''],
     BirthDtOwnerBankAcc: [''],
   });
@@ -45,6 +45,8 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
               private http: HttpClient) { }
 
   async ngOnInit() {
+    this.initCustBankAccDetail();
+    this.initAddressCustBankAcc();
     await this.GetData();
     await this.getRefMaster();
   }
@@ -57,8 +59,8 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
     this.inputAddressOwnerBankAccObj.title = "Customer Bank Acc Owner Address";
     this.inputAddressOwnerBankAccObj.showAllPhn = false;
     this.inputAddressOwnerBankAccObj.inputField.inputLookupObj = new InputLookupObj();
-    this.inputAddressOwnerBankAccObj.isRequired = false;
     this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.isRequired = false;
+    this.inputAddressOwnerBankAccObj.isRequired = false;
   }
 
   initCustBankAccDetail() {
@@ -85,8 +87,6 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
 
     await this.http.post(URLConstantX.GetAppXDataByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
-        this.initCustBankAccDetail();
-        this.initAddressCustBankAcc();
         if (response["AppId"] != 0) {
           let datePipe = new DatePipe("en-US");
           this.EditBankAccForm.patchValue({
@@ -114,9 +114,6 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
               MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
               MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
             });
-          } else {
-            this.initCustBankAccDetail();
-            this.initAddressCustBankAcc();
           }
         }
         this.isCustomerTypeCompany();
@@ -188,17 +185,20 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
     );
     if(this.editedBankAccData)
     {
-      let selectedBankAcc: AppCustBankAccObj = this.CustBankAccList.find(x => x.BankAccNo == this.editedBankAccData.AgrmntOtherInfoObj.BankAccNo);
-      console.log(selectedBankAcc)
-      this.EditBankAccForm.patchValue({
-        CustBankAcc: selectedBankAcc.AppCustBankAccId
-      });
-      this.EditBankAccForm.updateValueAndValidity();
-
-      this.GetBankInfo.BankCode = this.editedBankAccData.AgrmntOtherInfoObj.BankCode;
-      this.GetBankInfo.BankBranch = this.editedBankAccData.AgrmntOtherInfoObj.BankBranch;
-      this.GetBankInfo.BankAccNo = this.editedBankAccData.AgrmntOtherInfoObj.BankAccNo;
-      this.GetBankInfo.BankAccName = this.editedBankAccData.AgrmntOtherInfoObj.BankAccName;
+      if(this.editedBankAccData.AgrmntOtherInfoObj.BankAccNo)
+      {
+        let selectedBankAcc: AppCustBankAccObj = this.CustBankAccList.find(x => x.BankAccNo == this.editedBankAccData.AgrmntOtherInfoObj.BankAccNo);
+        console.log(selectedBankAcc)
+        this.EditBankAccForm.patchValue({
+          CustBankAcc: selectedBankAcc.AppCustBankAccId
+        });
+        this.EditBankAccForm.updateValueAndValidity();
+  
+        this.GetBankInfo.BankCode = this.editedBankAccData.AgrmntOtherInfoObj.BankCode;
+        this.GetBankInfo.BankBranch = this.editedBankAccData.AgrmntOtherInfoObj.BankBranch;
+        this.GetBankInfo.BankAccNo = this.editedBankAccData.AgrmntOtherInfoObj.BankAccNo;
+        this.GetBankInfo.BankAccName = this.editedBankAccData.AgrmntOtherInfoObj.BankAccName;
+      }
     }
   }
 
@@ -219,6 +219,15 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
   }
 
   selectedBank() {
+    if(this.EditBankAccForm.get("CustBankAcc").value == "")
+    {
+      this.GetBankInfo.BankCode = "";
+      this.GetBankInfo.BankBranch = "";
+      this.GetBankInfo.BankAccNo = "";
+      this.GetBankInfo.BankAccName = "";
+      return;
+    }
+
     let custBankAccId: number = this.EditBankAccForm.get("CustBankAcc").value;
     let selectedBankAcc: AppCustBankAccObj = this.CustBankAccList.find(x => x.AppCustBankAccId == custBankAccId);
     this.GetBankInfo.BankCode = selectedBankAcc.BankCode;

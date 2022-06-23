@@ -1678,7 +1678,17 @@ export class ApplicationDataXComponent implements OnInit {
 
   selectedBank() {
     if (this.NapAppModelForm.controls.MrWopCode.value != this.WopAutoDebit) return;
-
+    
+    if(this.NapAppModelForm.get("CustBankAcc").value == "")
+    {
+      this.GetBankInfo.BankCode = "";
+      this.GetBankInfo.BankBranch = "";
+      this.GetBankInfo.AppId = 0;
+      this.GetBankInfo.BankAccNo = "";
+      this.GetBankInfo.BankAccName = "";
+      return;
+    }
+    
     let custBankAccId: number = this.NapAppModelForm.get("CustBankAcc").value;
     let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
     this.GetBankInfo.BankCode = selectedBankAcc.BankCode;

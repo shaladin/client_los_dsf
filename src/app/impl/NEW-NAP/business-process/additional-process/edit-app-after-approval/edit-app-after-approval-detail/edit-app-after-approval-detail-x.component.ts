@@ -605,14 +605,14 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       return;
     }
 
-    // await this.checkIsEditCommExist();
+    await this.checkIsEditCommExist();
 
     if (this.IsCommissionExist){
       this.toastr.errorMessage("Edit Commission in progress");
       return;
     }
 
-    // this.SetSupplEmpComm();
+    this.SetSupplEmpComm();
 
     this.ApprovalCreateOutput = this.createComponent.output();
 
@@ -632,7 +632,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
         EditedAppXObj: this.editedBankAccData.AppXObj
       };
 
-    let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqV2 : URLConstant.SubmitEditAppAftApvReq;
+    let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqX : URLConstant.SubmitEditAppAftApvReq;
 
     await this.http.post(urlPost, EditAppAftApvObj).subscribe(
       (response) => {

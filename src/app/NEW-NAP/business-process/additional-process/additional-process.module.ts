@@ -78,6 +78,8 @@ import { EditNapCustPagingComponent } from "./edit-nap-cust/edit-nap-cust-paging
 import { EditNapCustDetailComponent } from "./edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component";
 import { MainDataComponentModule } from "app/NEW-NAP/sharing-component/main-data-component/main-data-component.module";
 import { EditAppAfterApprovalBankAccComponent } from "app/impl/new-nap/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-bank-acc/edit-app-after-approval-bank-acc.component";
+import { EditAppAfterApprovalViewXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-view-x/edit-app-after-approval-view-x.component";
+import { EditAppAfterApprovalApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-approval-detail-x/edit-app-after-approval-approval-detail-x.component";
 
 
 
@@ -177,7 +179,9 @@ export const customCurrencyMaskConfig = {
     CustSyncComponent,
     EditNapCustPagingComponent,
     EditNapCustDetailComponent,
-    EditAppAfterApprovalBankAccComponent
+    EditAppAfterApprovalBankAccComponent,
+    EditAppAfterApprovalViewXComponent,
+    EditAppAfterApprovalApprovalDetailXComponent
   ],
   providers: [
     NGXToastrService

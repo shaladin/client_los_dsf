@@ -1598,6 +1598,7 @@ export class URLConstant {
   public static GetAgrmntDataForEditAppAfterApprovalByAgrmntId = environment.losUrl + "/v1" + "/EditAppAftApv/GetAgrmntDataForEditAppAfterApprovalByAgrmntId";
   public static SubmitEditAppAftApvReq = environment.losUrl + "/v1" + "/EditAppAftApv/SubmitEditAppAftApvReq";
   public static SubmitEditAppAftApvReqV2 = environment.losUrl + "/v2" + "/EditAppAftApv/SubmitEditAppAftApvReq";
+  public static SubmitEditAppAftApvReqX = environment.losUrl + "/v1" + "/EditAppAftApvX/SubmitEditAppAftApvReq";
 
   //LTKM
   public static GetCustCompanyLtkmForCopyByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyLtkmForCopyByCustId";
