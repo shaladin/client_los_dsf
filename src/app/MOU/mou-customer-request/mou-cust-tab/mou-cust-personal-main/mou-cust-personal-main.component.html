@@ -163,11 +163,13 @@
             <label class="col-md-4 adins-required-label" for="gender" translate>Gender</label>
             <div class="col-md-4">
               <select class="form-control adInsInput full-width" id="gender" formControlName="MrGenderCode"
-                (change)="ChangeGender()">
+                (change)="ChangeGender()" [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrGenderCode.invalid }">
                 <option *ngFor="let item of GenderObj" [value]="item.Key">
                   {{item.Value}}
                 </option>
               </select>
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrGenderCode"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
           </div>
           <div class="form-group row">
