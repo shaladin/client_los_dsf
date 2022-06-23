@@ -357,7 +357,7 @@ export class ApplicationDataComponent implements OnInit {
       RowVersion: ""
     };
 
-    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
+    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).toPromise().then(
        async (response) => {
         this.resultResponse = response;
         await this.getInterestTypeCode();
