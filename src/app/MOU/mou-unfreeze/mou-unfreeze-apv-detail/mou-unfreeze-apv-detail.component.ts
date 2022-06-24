@@ -7,6 +7,7 @@ import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { ApprovalObj } from "app/shared/model/approval/approval-obj.model";
+import { CustObj } from "app/shared/model/cust-obj.model";
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
@@ -97,12 +98,12 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     if (event.Key == "customer") {
       var custObj = { CustNo: event.ViewObj["CustNo"] };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+        (response: CustObj) => {
+          if(response.MrCustTypeCode == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response.CustId);
           }
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          if(response.MrCustTypeCode == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response.CustId);
           }
         });
     }
