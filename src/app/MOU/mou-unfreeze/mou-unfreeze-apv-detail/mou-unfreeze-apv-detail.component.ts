@@ -11,6 +11,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approva
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
 import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 import { environment } from "environments/environment";
 
@@ -35,7 +36,8 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    private http: HttpClient
+    private adInsHelperService: AdInsHelperService,
+    private http: HttpClient, 
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["TrxId"] != null) {
@@ -91,7 +93,19 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     this.router.navigate([NavigationConstant.MOU_FREEZE_APV_PAGING]);
   }
 
-  GetCallBack(e) {
+  GetCallBack(event) {
+    if (event.Key == "customer") {
+      var custObj = { CustNo: event.ViewObj["CustNo"] };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        });
+    }
   }
 
   initInputApprovalObj() {
