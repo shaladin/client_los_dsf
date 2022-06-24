@@ -1031,6 +1031,7 @@ export class URLConstant {
   public static GetAllAssetDataForPOMultiAsset = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataForPOMultiAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAppId";
+  public static GetAllAssetDataByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAgrmntId";
   public static GetListAllAssetDataByAppId = environment.losUrl + "/v1" + "/AppAsset/GetListAllAssetDataByAppId";
   public static GetAllAssetDataByAppAssetId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAppAssetId";
   public static GetListAppAssetByDOHId = environment.losUrl + "/v1" + "/AppAsset/GetListAppAssetByDOHId";
