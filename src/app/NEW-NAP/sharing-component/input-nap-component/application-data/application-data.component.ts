@@ -316,6 +316,7 @@ export class ApplicationDataComponent implements OnInit {
             InterestTypeDesc: response["CompntValueDesc"],
           });
           this.ChangeInterestType();
+          if(response["MrProdBehaviourCode"] == CommonConstant.ProductBehaviourLock) this.NapAppModelForm.controls.InterestType.disable();
         }
         else {
           // throw new Error("Interest Type component not found, please use the latest product offering");
