@@ -302,11 +302,11 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
-  async getInterestTypeCode() {
+  async getInterestTypeCode(ProdOfferringCode: string, ProdOfferingVersion: string) {
     let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.ProdOfferingCode = ProdOfferringCode;
     obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
-    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+    obj.ProdOfferingVersion = ProdOfferingVersion;
     let noValue: boolean = !this.NapAppModelForm.controls.InterestType.value;
 
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
@@ -360,7 +360,6 @@ export class ApplicationDataComponent implements OnInit {
     await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).toPromise().then(
        async (response) => {
         this.resultResponse = response;
-        await this.getInterestTypeCode();
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
           LeadId: this.resultResponse.LeadId,
@@ -434,7 +433,7 @@ export class ApplicationDataComponent implements OnInit {
         this.initMailingAddress();
 
         if (this.BizTemplateCode != CommonConstant.OPL) {
-          await this.getInterestTypeCode();
+          await this.getInterestTypeCode(this.resultResponse.ProdOfferingCode, this.resultResponse.ProdOfferingVersion);
           this.GetCrossInfoData();
         }
         else {
