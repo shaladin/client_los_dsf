@@ -251,6 +251,10 @@ export class CcContactInformationTabComponent implements OnInit {
     return ReqAddr;
   }
 
+  get isIdExpiredDtReadonly(){
+    return [this.IdTypeNpwp,this.IdTypeAkta,this.IdTypeEktp].includes(this.CcForm.controls.MrIdTypeCode.value);
+  }
+
   CheckDt(inputDate: Date, type: string) {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
