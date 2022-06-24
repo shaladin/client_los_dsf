@@ -46,8 +46,11 @@ export class CcContactInformationTabComponent implements OnInit {
   readonly MasterJobPosCode: string = CommonConstant.RefMasterTypeCodeJobPosition;
   readonly MasterCustRelationCode: string = CommonConstant.RefMasterTypeCodeCustRelationship;
   readonly IdTypeNpwp: string = CommonConstant.MrIdTypeCodeNPWP;
+  readonly IdTypeAkta: string = CommonConstant.MrIdTypeCodeAKTA;
+  readonly IdTypeEktp: string = CommonConstant.MrIdTypeCodeEKTP;
   readonly IdTypeKitas: string = CommonConstant.MrIdTypeCodeKITAS;
   readonly IdTypeSim: string = CommonConstant.MrIdTypeCodeSIM;
+  readonly IdTypeKtm: string = CommonConstant.MrIdTypeCodeKTM;
   readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
   constructor(
     private regexService: RegexService,
@@ -197,7 +200,7 @@ export class CcContactInformationTabComponent implements OnInit {
     }
     this.CcForm.get("IdNo").updateValueAndValidity();
 
-    if (IdTypeCode == this.IdTypeKitas || IdTypeCode == this.IdTypeSim) {
+    if (IdTypeCode == this.IdTypeKitas || IdTypeCode == this.IdTypeSim || IdTypeCode == this.IdTypeKtm) {
       this.CcForm.get("IdExpiredDt").setValidators(Validators.required);
     } else {
       this.CcForm.get("IdExpiredDt").clearValidators();
