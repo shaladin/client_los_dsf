@@ -4,7 +4,7 @@ export class CommonConstant {
   
   // REGEX
   public static regexAPI = "\\/[v,V][1-9]\\d*(\\.[1-9]\\d*)*";
-  public static regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+  public static regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
 
   //FORM
   public static INVALID_FORM = "INVALID";
@@ -489,6 +489,7 @@ export class CommonConstant {
   public static MrIdTypeCodeKITAS = "KITAS";
   public static MrIdTypeCodeNPWP = "NPWP";
   public static MrIdTypeCodeAKTA = "AKTA";
+  public static MrIdTypeCodeKTM = "KTM";
 
   // MR ID TYPE CODE VENDOR
   public static MrIdTypeCodeVendorKTP = "KTP";
