@@ -36,8 +36,8 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    private adInsHelperService: AdInsHelperService,
-    private http: HttpClient, 
+    private http: HttpClient,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["TrxId"] != null) {
