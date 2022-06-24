@@ -23,9 +23,6 @@ export class ViewAssetDataComponent implements OnInit {
   appAssetObj = {
     Id: 0
   };
-  agrmntObj = {
-    Id: 0
-  };
   
   AppObj: any;
   AppAssetObj: any;
@@ -47,9 +44,6 @@ export class ViewAssetDataComponent implements OnInit {
      if (params['AppAssetId'] != null) {
       this.appAssetId = params['AppAssetId'];
      }
-     if (params['AgrmntId'] != null) {
-      this.agrmntId = params['AgrmntId'];
-     }
     });
   }
 
@@ -61,11 +55,6 @@ export class ViewAssetDataComponent implements OnInit {
   initSingleAssetUrl(){
     this.getAppUrl = URLConstant.GetAppById;
     this.getAllAssetDataUrl = URLConstant.GetAllAssetDataByAppAssetId;
-  }
-
-  initSingleAssetByAgrmntUrl(){
-    this.getAppUrl = URLConstant.GetAppById;
-    this.getAllAssetDataUrl = URLConstant.GetAllAssetDataByAgrmntId;
   }
 
   async ngOnInit(): Promise<void> {
@@ -80,11 +69,6 @@ export class ViewAssetDataComponent implements OnInit {
         this.initSingleAssetUrl();
         this.appAssetObj.Id = this.appAssetId;
         await this.GetAllAssetData(this.appAssetObj);
-      }
-      else if(this.agrmntId != 0){
-        this.initSingleAssetByAgrmntUrl();
-        this.agrmntObj.Id = this.agrmntId;
-        await this.GetAllAssetData(this.agrmntObj);
       }
       else {
         this.initUrl();
