@@ -1158,6 +1158,7 @@ export class URLConstant {
   public static GetListInsuranceDataForCopyInsuranceByAppId = environment.losUrl + "/v1" + "/AppIns/GetListInsuranceDataForCopyInsuranceByAppId";
   public static CopyInsuranceData = environment.losUrl + "/v1" + "/AppIns/CopyInsuranceData";
   public static DeleteListInsuranceData = environment.losUrl + "/v1" + "/AppIns/DeleteListInsuranceData";
+  public static ValidateAppInsObjAmtByAppId = environment.losUrl + "/v1" + "/AppIns/ValidateAppInsObjAmtByAppId";
 
   //APP INSURANCE
   public static ExecuteInsRateRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateRule";
