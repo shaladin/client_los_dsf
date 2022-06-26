@@ -20,8 +20,32 @@
             "paramAssignment": 1
         },
         {
+            "type" : "dropdown",
+            "label" : "Status",
+            "name" : "Status",
+            "datatype" : "text",
+            "ddlType": "all",
+            "items" : [
+                {
+                "key": "1",
+                "value": "In Progress"
+            },
+            {
+                "key": "0",
+                "value": "Approved"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
             "type" : "datepicker",
-            "label" : "Agreement Date >=",
+            "label" : "Application Date >=",
             "name" : "LeadDtGte",
             "value" : "BD-10",
             "restriction" : "gte",
@@ -30,7 +54,7 @@
         },
         {
             "type" : "datepicker",
-            "label" : "Agreement Date =<",
+            "label" : "Application Date =<",
             "name" : "LeadDtLte",
             "value" : "BD+10",
             "restriction" : "lte",
