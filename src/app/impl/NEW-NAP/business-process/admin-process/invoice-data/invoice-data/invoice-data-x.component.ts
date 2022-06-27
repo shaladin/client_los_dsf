@@ -3,23 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ToastrService } from 'ngx-toastr';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
-import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
-import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
-import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
-import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
-import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
-import { environment } from 'environments/environment';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-invoice-data-x',
@@ -32,7 +25,7 @@ export class InvoiceDataXComponent implements OnInit {
   AgrmntId: number;
   TaskListId: any;
   arrValue: Array<number> = [];
-  AppAssetList = [];
+  AppAssetList: any;
   tcForm: FormGroup = this.fb.group({
   });
   isDmsReady: boolean = false;
@@ -69,14 +62,18 @@ export class InvoiceDataXComponent implements OnInit {
   async ngOnInit() {
 
     this.arrValue.push(this.AgrmntId);
-    var appAssetObj = {
-      Id: this.AgrmntId
-    }
-
-    this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
-      (response) => {
-        this.AppAssetList = response[CommonConstant.ReturnObj];
+  
+    if(this.BizTemplateCode == CommonConstant.CFNA){
+      await this.http.post(URLConstantX.GetAppCollateralListAndInvoiceXForView, {Id: this.AgrmntId}).subscribe(
+          (response) => {
+            this.AppAssetList = response[CommonConstant.ReturnObj];
       });
+    }else{
+      await this.http.post(URLConstantX.GetAppAssetListAndInvoiceXForView, {Id: this.AgrmntId}).toPromise().then(
+        (response) => {
+          this.AppAssetList = response[CommonConstant.ReturnObj];
+        });
+    }
   }
 
   async SaveForm() {
