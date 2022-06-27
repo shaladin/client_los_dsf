@@ -290,4 +290,5 @@ export class URLConstantX {
   public static EditInvoiceX= environment.losUrl + "/v1" + "/InvoiceX/EditInvoiceX";
   public static GetInvoiceXByVendorCodeAndPurchaseOrderHId = environment.losUrl + "/v1" + "/InvoiceX/GetInvoiceXByVendorCodeAndPurchaseOrderHId";
   public static GetAppAssetListAndInvoiceXForView = environment.losUrl + '/v1' + "/InvoiceX/GetAppAssetListAndInvoiceXForView";
+  public static GetAppCollateralListAndInvoiceXForView = environment.losUrl + '/v1' + "/InvoiceX/GetAppCollateralListAndInvoiceXForView";
 }
