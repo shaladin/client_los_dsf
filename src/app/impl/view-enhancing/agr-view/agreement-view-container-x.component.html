@@ -31,14 +31,14 @@
 
             <mat-tab *ngIf="IsAsset" label="Asset">
               <ng-template matTabContent>
-                <view-asset-data [appId]="ResponseAppDetailData?.AppId" [agrmntId]="AgrmntId"></view-asset-data>
+                <view-asset-data-x [appId]="ResponseAppDetailData?.AppId" [agrmntId]="AgrmntId"></view-asset-data-x>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsMultiAsset">
               <ng-template mat-tab-label>{{ BizTemplateCode == 'CF4W' ? 'Asset' : 'Asset & Collateral Data' }}</ng-template>
               <ng-template matTabContent>
-                <view-asset-data-x [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></view-asset-data-x>
+                <view-multiasset-data [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></view-multiasset-data>
               </ng-template>
             </mat-tab>
 

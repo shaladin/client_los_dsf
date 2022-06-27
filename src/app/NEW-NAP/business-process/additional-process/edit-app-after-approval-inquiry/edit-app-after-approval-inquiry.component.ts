@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -16,24 +16,56 @@ import { environment } from 'environments/environment';
   templateUrl: './edit-app-after-approval-inquiry.component.html',
   styleUrls: ['./edit-app-after-approval-inquiry.component.css']
 })
-export class EditAppAfterApprovalInquiryComponent implements OnInit {
+export class EditAppAfterApprovalInquiryComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(
     private http: HttpClient, 
     private route: ActivatedRoute,
-    private adInsHelperService: AdInsHelperService
+    private adInsHelperService: AdInsHelperService,
+    private router: Router
     ) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+     }
+
+     SubscribeParam(){
       this.route.queryParams.subscribe(params => {
         if (params["BizTemplateCode"] != null) {
           this.BizTemplateCode = params["BizTemplateCode"];
           localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
         }
       });
-     }
+    }
+  
+    ngOnDestroy(): void {
+      if (this.navigationSubscription) {
+        this.navigationSubscription.unsubscribe();
+      }
+    }
+  
+    ngOnInit() {
+      this.SetUcPaging();
+    }
 
-  ngOnInit() {
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchEditAppAfterApprovalInquiry.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditAppAfterApprovalInquiry.json";

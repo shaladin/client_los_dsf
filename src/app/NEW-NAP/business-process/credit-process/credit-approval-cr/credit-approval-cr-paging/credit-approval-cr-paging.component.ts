@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -22,7 +22,7 @@ import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
   selector: 'app-credit-approval-cr-paging',
   templateUrl: './credit-approval-cr-paging.component.html',
 })
-export class CreditApprovalCrPagingComponent implements OnInit {
+export class CreditApprovalCrPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   arrCrit: Array<CriteriaObj>;
@@ -30,8 +30,20 @@ export class CreditApprovalCrPagingComponent implements OnInit {
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   integrationObj: IntegrationObj = new IntegrationObj();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService, private apvTaskService: ApprovalTaskService) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -40,7 +52,26 @@ export class CreditApprovalCrPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApproval.json";
 
@@ -67,7 +98,6 @@ export class CreditApprovalCrPagingComponent implements OnInit {
     critObj.propName = 'RL.BIZ_TMPLT_CODE';
     critObj.value = this.BizTemplateCode;
     arrCrit.push(critObj);
-
 
     this.inputPagingObj.addCritInput = arrCrit;
   }

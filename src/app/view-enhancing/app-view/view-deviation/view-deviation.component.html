@@ -8,6 +8,7 @@
     <tr class="table-header">
       <th class="text-center"><span translate class="thead-header" name='SeqNo'>Seq No</span></th>
       <th class="text-left"><span translate class="thead-header" name='DeviationCategory'>Deviation Category</span></th>
+      <th class="text-left"><span translate class="thead-header" name='TrxTypeCode'>Type</span></th>
       <th class="text-right"><span translate class="thead-header" name='OriginalValue'>Original Value</span></th>
       <th class="text-right"><span translate class="thead-header" name='CurrentValue'>Current Value</span></th>
       <th class="text-left"><span translate class="thead-header" name='ApvAt'>Approval At</span></th>
@@ -18,6 +19,7 @@
     <tr *ngFor="let item of deviationResultList">
       <td class="text-center">{{item.SeqNo}}</td>
       <td class="text-left">{{item.DeviationCategory}}</td>
+      <td class="text-left">{{item.MrDeviationName}}</td>
       <td class="text-right">{{item.OriginalValue}}</td>
       <td class="text-right">{{item.CurrentValue}}</td>
       <td class="text-left">{{item.ApvAt}}</td>

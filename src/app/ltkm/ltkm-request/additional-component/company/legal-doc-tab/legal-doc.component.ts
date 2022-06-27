@@ -11,6 +11,7 @@ import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { LtkmCustCompanyLegalDocObj } from 'app/shared/model/ltkm/ltkm-cust-company-legal-doc-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import {String} from 'typescript-string-operations';
 
 @Component({
     selector: 'app-ltkm-legal-doc-tab',
@@ -156,9 +157,9 @@ export class LtkmLegalDocComponent implements OnInit {
     setForAdd() {
         this.parentForm['controls'][this.identifier]['controls']['MrLegalDocTypeCode'].setValidators([Validators.required]);
         this.parentForm['controls'][this.identifier]['controls']['DocDt'].setValidators([Validators.required]);
-        this.ChangeLegalDocType({
-            selectedIndex: 0
-        });
+        // this.ChangeLegalDocType({
+        //     selectedIndex: 0
+        // });
     }
 
     SetForEdit(LtkmCustCompanyLegalDocObj: LtkmCustCompanyLegalDocObj, index: number) {
@@ -179,7 +180,7 @@ export class LtkmLegalDocComponent implements OnInit {
             // RowVersion: this.LtkmCustCompanyLegalDoc.RowVersion
         })
         this.ChangeLegalDocType({
-            selectedIndex: 0
+            selectedIndex: index
         }, true); //buat edit doang. buat add gak di cek ulang
         this.parentForm['controls'][this.identifier]['controls']['MrLegalDocTypeCode'].disable();
         this.parentForm['controls'][this.identifier].updateValueAndValidity();
@@ -187,9 +188,13 @@ export class LtkmLegalDocComponent implements OnInit {
 
     ChangeLegalDocType(ev, ForEdit: boolean = false) {
         var idx = ev.selectedIndex;
-        this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: this.LegalDocTypeObj[idx].Key }).subscribe(
+        this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: this.listLtkmCustCompanyLegalDoc[idx].MrLegalDocTypeCode }).subscribe(
             (response) => {
                 this.IsExpDateMandatory = response["IsExpDtMandatory"];
+                if(!response["IsDocCodeExistInRule"])
+                {
+                    this.toastr.warningMessage(String.Format(ExceptionConstant.DOC_NOT_YET_CONFIGURED_IN_RULE_MANDATORY_DOC_EXP,response["DocCode"]));
+                }
                 if (!ForEdit) {
                     this.IsExpDateHandler();
                 }

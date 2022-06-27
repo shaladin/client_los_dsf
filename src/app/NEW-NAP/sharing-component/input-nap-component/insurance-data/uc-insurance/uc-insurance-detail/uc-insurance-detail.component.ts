@@ -1455,7 +1455,6 @@ export class UcInsuranceDetailComponent implements OnInit {
         }
         else {
           AppInsAddCvg.patchValue({
-            Value: false,
             SumInsuredAmt: AddCvg[AddCvgIndex].SumInsuredAmt,
             PremiumType: premiumType,
             BaseCustAddPremiRate: custAddPremiRate,
