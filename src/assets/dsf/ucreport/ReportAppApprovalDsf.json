@@ -1,6 +1,6 @@
 { 
-    "title" : "REPORT APPLICATION IN APPROVAL PROCESS",
-    "reportName": "Report Application In Approval Process",
+    "title" : "APPLICATION IN PROCESS REPORT",
+    "reportName": "Application In Process Report",
     "reportTemplateCode": "APP_APPROVAL_REPORT",
     "component": [ 
         {

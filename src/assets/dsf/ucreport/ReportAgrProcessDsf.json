@@ -1,6 +1,6 @@
 { 
-    "title" : "REPORT AGREEMENT IN PROCESS",
-    "reportName": "Report Agreement In Process",
+    "title" : "AGREEMENT IN PROCESS REPORT",
+    "reportName": "Agreement In Process Report",
     "reportTemplateCode": "AGR_PROCESS_REPORT",
     "component": [ 
         {
