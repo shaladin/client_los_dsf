@@ -67,7 +67,7 @@
       {
         "type": "sort",
         "position": "center",
-        "label": "Request Date ryan",
+        "label": "Request Date",
         "name": "RequestDt"
       },
       {
