@@ -79,31 +79,31 @@
             "name": "CustName"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Approval No",
             "name": "ApvNo"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Request By",
             "name": "RequestBy"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Task Owner",
             "name": "MainUserId"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Current User",
             "name": "CurrentUserId"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Request Date",
             "name": "RequestDate"
