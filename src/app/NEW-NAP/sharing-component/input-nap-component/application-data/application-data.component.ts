@@ -214,7 +214,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCspUslAml);
     this.getAppSrcData();
-    setTimeout(() => { this.getAppModelInfo() }, 2000);
+    setTimeout(async() => { this.getAppModelInfo() }, 2000);
 
     this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).subscribe(
       (response: AppCustObj) => {
@@ -302,19 +302,22 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
-  getInterestTypeCode() {
+  async getInterestTypeCode(ProdOfferringCode: string, ProdOfferingVersion: string) {
     let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.ProdOfferingCode = ProdOfferringCode;
     obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
-    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+    obj.ProdOfferingVersion = ProdOfferingVersion;
+    let noValue: boolean = !this.NapAppModelForm.controls.InterestType.value;
 
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
       (response) => {
         if (response && response["StatusCode"] == "200") {
-          this.NapAppModelForm.patchValue({
-            InterestType: response["CompntValue"],
-            InterestTypeDesc: response["CompntValueDesc"],
-          });
+          if(noValue){
+            this.NapAppModelForm.patchValue({
+              InterestType: response["CompntValue"],
+              InterestTypeDesc: response["CompntValueDesc"],
+            });
+          }
           this.ChangeInterestType();
           if(response["MrProdBehaviourCode"] == CommonConstant.ProductBehaviourLock) this.NapAppModelForm.controls.InterestType.disable();
         }
@@ -348,14 +351,14 @@ export class ApplicationDataComponent implements OnInit {
   applicationDDLitems;
   resultResponse;
 
-  getAppModelInfo() {
+  async getAppModelInfo() {
     let obj = {
       Id: this.appId,
       RowVersion: ""
     };
 
-    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
-      (response) => {
+    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).toPromise().then(
+       async (response) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -427,11 +430,10 @@ export class ApplicationDataComponent implements OnInit {
           this.setTenor(this.resultResponse.MouCustId);
         }
         this.makeNewLookupCriteria();
-        this.getInterestTypeCode();
         this.initMailingAddress();
 
         if (this.BizTemplateCode != CommonConstant.OPL) {
-          this.getInterestTypeCode();
+          await this.getInterestTypeCode(this.resultResponse.ProdOfferingCode, this.resultResponse.ProdOfferingVersion);
           this.GetCrossInfoData();
         }
         else {
