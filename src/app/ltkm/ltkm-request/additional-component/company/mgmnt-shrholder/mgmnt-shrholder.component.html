@@ -1,4 +1,7 @@
-<div *ngIf="listLtkmCustCompanyManagementShareholderObj?.length == 0" style="overflow-x: auto;">
+<lib-ucSubsection [id]="'MngmntShrhldrId'" [title]="'Management Shareholder'" [panel]="'MngmntShrhldr'">
+</lib-ucSubsection>
+<div id="MngmntShrhldr">
+  <div *ngIf="listLtkmCustCompanyManagementShareholderObj?.length == 0" style="overflow-x: auto;">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -43,3 +46,4 @@
   <div *ngIf="listLtkmCustCompanyManagementShareholderObj?.length > 0">
     <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
   </div>
+</div>

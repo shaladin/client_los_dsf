@@ -18,32 +18,25 @@ export class ViewInvoiceDataXComponent implements OnInit {
 
   }
 
-  AppAssetListAndInvoiceXForView: any;
+  AppAssetListAndInvoiceXForView: [];
   IsHidden: boolean = true;
   AppId: number;
   SupplCode: string = "";
 
-  // viewPurchaseOrderDetailHandler(item){
-
-  //   const modalPODetail = this.modalService.open(ViewPurchaseOrderDetailXComponent);
-  //   modalPODetail.componentInstance.AgrmntId = item.AgrmntId;
-  //   modalPODetail.componentInstance.AppId = item.AppId;
-  //   modalPODetail.componentInstance.SupplCode = item.SupplCode;
-  //   modalPODetail.componentInstance.LobCode = this.BizTemplateCode;
-  //   modalPODetail.result.then().catch((error) => {
-  //   });
-  // }
-
   async ngOnInit() {
-    let reqAppAssetObj = {
-      Id: this.AgrmntId
+
+    if(this.BizTemplateCode == CommonConstant.CFNA){
+      await this.http.post(URLConstantX.GetAppCollateralListAndInvoiceXForView, {Id: this.AgrmntId}).toPromise().then(
+          (response) => {
+            this.AppAssetListAndInvoiceXForView = response[CommonConstant.ReturnObj];
+            console.log(response)
+        });
+    }else{
+      await this.http.post(URLConstantX.GetAppAssetListAndInvoiceXForView, {Id: this.AgrmntId}).toPromise().then(
+        (response) => {
+          this.AppAssetListAndInvoiceXForView = response[CommonConstant.ReturnObj];
+        });
     }
-    await this.http.post(URLConstantX.GetAppAssetListAndInvoiceXForView, {Id: this.AgrmntId}).toPromise().then(
-    (response) => {
-      this.AppAssetListAndInvoiceXForView = response;
-      console.log(this.AppAssetListAndInvoiceXForView);
-      console.log(response);
-    });
   }
 
   getValue(event){

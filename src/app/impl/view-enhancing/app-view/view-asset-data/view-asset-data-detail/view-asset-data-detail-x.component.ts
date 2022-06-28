@@ -6,6 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { forkJoin } from 'rxjs';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { RefProfessionObj } from 'app/shared/model/ref-profession-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'view-asset-data-detail-x',
@@ -51,6 +52,15 @@ export class ViewAssetDataDetailXComponent implements OnInit {
           else if(item.MrSupplEmpPositionCode == CommonConstant.ADMIN_HEAD_JOB_CODE){
             this.adminHeadName = item.SupplEmpName;
           }
+        }
+
+        if(this.salesName == null && this.adminHeadName !=null){
+          this.salesName = this.adminHeadName
+        }
+
+        if (this.salesName == null && this.adminHeadName ==null && this.branchManagerName !=null){
+          this.salesName = this.branchManagerName 
+          this.adminHeadName = this.branchManagerName 
         }
 
         this.inputGridObj.resultData = {
