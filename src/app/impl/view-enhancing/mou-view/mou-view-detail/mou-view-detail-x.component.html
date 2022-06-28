@@ -82,8 +82,8 @@
     </div>
 
     <div *ngIf="MouType == 'FACTORING'">
-      <div *ngIf="mouCustFctr !=null" class="form-group row">
-        <div *ngIf="mouCustFctr.MrInstTypeCode == 'MULTIPLE'">
+      <div *ngIf="mouCustFctr !=null">
+        <div *ngIf="mouCustFctr.MrInstTypeCode == 'MULTIPLE'" class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Tenor From</label>
           <label class="col-md-4 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to
             &nbsp;&nbsp;&nbsp;&nbsp;
