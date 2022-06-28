@@ -31,6 +31,7 @@ export class OfferingGeneralDataComponent implements OnInit {
   ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   ListGeneralDataObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
   ReqCopyProductOffObj: ReqCopyProductOfferingObj = new ReqCopyProductOfferingObj();
+  isReady: boolean = false;
 
   FormCopyProdOffering = this.fb.group(
     {
@@ -54,6 +55,7 @@ export class OfferingGeneralDataComponent implements OnInit {
 
   ngOnInit() {
     this.initLookup();
+    this.isReady = true;
   }
 
   initLookup() {
@@ -108,22 +110,29 @@ export class OfferingGeneralDataComponent implements OnInit {
     );
   }
 
+  GetLookup(e){
+    this.ReqCopyProductOffObj.ProdOfferingHId = e.ProdOfferingHId;
+    this.ReqCopyProductOffObj.FromProdOfferingId = e.ProdOfferingId;
+  }
+
   reload() {
+    this.isReady = false;
     if (this.InputLookUpObj.jsonSelect["ProdOfferingId"] == undefined) {
       this.toastr.warningMessage(ExceptionConstant.SELECT_PROD_OFF_TO_COPY);
     }
     else {
       if (confirm(ExceptionConstant.CONFIRM_PROD_OFF_TO_COPY)) {
-        this.ReqCopyProductOffObj.ProdOfferingHId = this.ProdOfferingHId;
-        this.ReqCopyProductOffObj.FromProdOfferingId = this.InputLookUpObj.jsonSelect["ProdOfferingId"];
         this.http.post(URLConstant.CopyProductOffering, this.ReqCopyProductOffObj).subscribe(
           (response) => {
             this.toastr.successMessage("Product Offering Copied Successfully");
-            this.ucProdOfferingComp.initiateForm();
+            this.ucProdOfferingComp.initiateForm(this.ReqCopyProductOffObj.ProdOfferingHId);
           }
         );
       }
     }
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
   }
 
   NextDetail(event) {

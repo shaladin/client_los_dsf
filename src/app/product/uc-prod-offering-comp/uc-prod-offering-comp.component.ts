@@ -51,17 +51,17 @@ export class UcProdOfferingCompComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.initiateForm(); 
+    this.initiateForm(this.ProdOfferingHId); 
   }
 
-  initiateForm() {
+  initiateForm(ProdOfferingHId: number) {
     this.FormProdOfferingComp = this.fb.group(
       {
         groups: this.fb.array([])
       }
     );
     
-    this.LoadProdComponent(this.ProdOfferingHId,this.CompGroups, this.IsFilterBizTmpltCode);
+    this.LoadProdComponent(ProdOfferingHId,this.CompGroups, this.IsFilterBizTmpltCode);
 
   }
 
