@@ -65,6 +65,18 @@
         "name": "ProdStatDesc"
       },
       {
+        "type": "sort",
+        "position": "center",
+        "label": "Request Date ryan",
+        "name": "RequestDt"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request No",
+        "name": "RequestNo"
+      },
+      {
         "type": "label",
         "position": "center",
         "label": "Action"
@@ -119,6 +131,16 @@
         "type": "text",
         "position": "center",
         "property": "ProdStatDesc"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "RequestDt"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "RequestNo"
       },
       {
   
