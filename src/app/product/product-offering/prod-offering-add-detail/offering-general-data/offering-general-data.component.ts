@@ -111,8 +111,7 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   GetLookup(e){
-    this.ReqCopyProductOffObj.ProdOfferingHId = e.ProdOfferingHId;
-    this.ReqCopyProductOffObj.FromProdOfferingId = e.ProdOfferingId;
+    this.ProdOfferingHId = e.ProdOfferingHId;
   }
 
   reload() {
@@ -122,10 +121,12 @@ export class OfferingGeneralDataComponent implements OnInit {
     }
     else {
       if (confirm(ExceptionConstant.CONFIRM_PROD_OFF_TO_COPY)) {
+        this.ReqCopyProductOffObj.ProdOfferingHId = this.ProdOfferingHId;
+        this.ReqCopyProductOffObj.FromProdOfferingId = this.InputLookUpObj.jsonSelect["ProdOfferingId"];
         this.http.post(URLConstant.CopyProductOffering, this.ReqCopyProductOffObj).subscribe(
           (response) => {
             this.toastr.successMessage("Product Offering Copied Successfully");
-            this.ucProdOfferingComp.initiateForm(this.ReqCopyProductOffObj.ProdOfferingHId);
+            this.ucProdOfferingComp.initiateForm();
           }
         );
       }
