@@ -14,8 +14,8 @@
             <th style="text-align: left;">
               <span class="thead-header" name='supplierBranch' translate>Supplier Branch</span>
             </th>
-            <th style="text-align: left;" *ngFor="let e of [].constructor(MostSerialNoAssetType?.TotalSerialNoLabel); let i = index">
-              <span class="thead-header" name='serialNo5' translate>Serial No. {{i+1}}</span>
+            <th style="text-align: left;" *ngFor="let e of SerialNoLabelAssetList; let i = index">
+              <span class="thead-header" name='serialNo5' translate>{{SerialNoLabelAssetList[i]}}</span>
             </th>
             <th style="text-align: center;">
               <span class="thead-header" name='viewDetail' translate>View Detail</span>
@@ -33,7 +33,7 @@
             <td style="text-align: left;">
               {{item.SupplName}}
             </td>
-            <td style="text-align: left;" *ngFor="let e of [].constructor(MostSerialNoAssetType?.TotalSerialNoLabel); index as j">
+            <td style="text-align: left;" *ngFor="let e of SerialNoLabelAssetList; index as j">
               {{item['SerialNo'+(j+1)]}}
             </td>
             <td style="text-align: center;">
@@ -63,8 +63,8 @@
             <th style="text-align: right;">
               <span class="thead-header" name='collateralPrice' translate>Collateral Price</span>
             </th>
-            <th style="text-align: left;" *ngFor="let e of [].constructor(MostSerialNoCollateralType?.TotalSerialNoLabel); let i = index">
-              <span class="thead-header" name='serialNo5' translate>Serial No. {{i+1}}</span>
+            <th style="text-align: left;" *ngFor="let e of SerialNoLabelCollateralList let i = index">
+              <span class="thead-header" name='serialNo5' translate>{{SerialNoLabelCollateralList[i]}}</span>
             </th>
             <th style="text-align: left;">
               <span class="thead-header" name='ownerName' translate>Owner Name</span>
@@ -86,7 +86,7 @@
             <td style="text-align: right;">
               {{coll.CollateralValueAmt | number:'.2':'en-US'}}
             </td>
-            <td style="text-align: left;" *ngFor="let e of [].constructor(MostSerialNoCollateralType?.TotalSerialNoLabel); index as j">
+            <td style="text-align: left;" *ngFor="let e of SerialNoLabelCollateralList; index as j">
               {{coll['SerialNo'+(j+1)]}}
             </td>
             <td style="text-align: left;">

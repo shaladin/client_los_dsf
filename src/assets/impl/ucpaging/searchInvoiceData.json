@@ -54,9 +54,9 @@
       {
         "type": "textbox",
         "name": "AGR.CUST_NO",
-        "id": "CustNameId",
+        "id": "CustNoId",
         "value": "",
-        "label": "Customer Name",
+        "label": "Customer No",
         "placeholder": "Placeholder"
       }
     ],
@@ -81,6 +81,12 @@
         "position": "left",
         "label": "OFFICE",
         "name": "A.ORI_OFFICE_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer No",
+        "name": "AGR.CUST_NO"
       },
       {
         "type": "sort",
@@ -132,6 +138,12 @@
         "type": "text",
         "position": "left",
         "property": "OfficeName"
+      },
+      {
+        "type": "callback",
+        "key": "customer",
+        "position": "center",
+        "property": "CustNo"
       },
       {
         "type": "text",

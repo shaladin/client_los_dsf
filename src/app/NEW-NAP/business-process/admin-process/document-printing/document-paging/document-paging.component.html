@@ -1,3 +1,3 @@
 <div class="ucSearch-Button-Right">
 </div>
-<lib-ucpaging [searchObj]="inputPagingObj" (callback)="GetCallback($event)"></lib-ucpaging>
+<lib-ucpaging [searchObj]="inputPagingObj" (callback)="GetCallback($event)" *ngIf="isReady"></lib-ucpaging>

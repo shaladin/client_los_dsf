@@ -1,0 +1,127 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <app-ltkm-mi [arrValue]="arrValue"></app-ltkm-mi>      
+
+    <mat-tab-group mat-align-tabs="center">
+
+      <mat-tab label="Summary">
+        <ng-template matTabContent>
+          <view-ltkm-summary-app [LtkmCustId]="LtkmCustId">
+          </view-ltkm-summary-app>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Customer Data">
+        <ng-template matTabContent>            
+          <app-view-ltkm-cust-data-company-x *ngIf="isCustTypePersonal == false" [LtkmCustId]="LtkmCustId">
+          </app-view-ltkm-cust-data-company-x>
+          <app-view-ltkm-cust-data-personal *ngIf="isCustTypePersonal" [LtkmCustId]="LtkmCustId">
+          </app-view-ltkm-cust-data-personal>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Customer History">
+        <ng-template matTabContent>
+          <view-ltkm-cust-history [LtkmCustId]="LtkmCustId"></view-ltkm-cust-history>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="App Summary" *ngIf="IsFromApp">
+        <ng-template matTabContent>
+          <view-ltkm-app-summary-data [AppId]="AppId"></view-ltkm-app-summary-data>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="card-body">
+      <div class="px-3">
+
+        <form class="form form-horizontal" *ngIf="!isReturnOn" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <div class="form-body">
+
+            <!-- <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
+            </lib-ucSubsection>
+            <div class="form-body" [id]="'formCreditAnalysis'" formArrayName="arr">
+              <div *ngFor="let item of FormObj.controls.arr['controls']; let i = index;">
+                <div [formGroupName]="i">
+
+                  <div class="form-group row">
+                    <div class="form-group col-md-4 adins-required">
+                      <label class="adInsLabel">{{item.controls.Question.value}}</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="text" class="form-control adInsInput width-50-per" formControlName="Answer">
+                      <lib-uc-show-errors [control]="item.controls.Answer" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <br> -->
+            <lib-ucapprovalcreate [parentForm]= "FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" (result)="SaveForm($event)" #ApprovalComponent>
+            </lib-ucapprovalcreate>
+          </div>
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+              <i class="ft-x"></i>&nbsp;<span translate>{{isReturnOn ? 'Cancel Return' : 'Return'}}</span>
+            </button>
+            <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+            </button>
+          </div>
+        </form>
+
+        <form class="form form-horizontal"  *ngIf="isReturnOn" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid && SaveReturnForm()"
+          #enjiForm="ngForm">
+          <div class="form-body">             
+            <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return LTKM'"
+              [panel]="'formReturnCreditReview'">
+            </lib-ucSubsection>
+            <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCreditReview'">
+              <div class="form-group row adins-required">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Reason</label>
+                </div>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                    (change)="onChangeReason($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.Reason.invalid}">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of DDLReasonReturn" value="{{it.Key}}">
+                      {{it.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row adins-required">
+                <div class="form-group col-md-2">
+                  <label class="adInsLabel">Return Notes</label>
+                </div>
+                <div class="col-md-4">
+                  <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.Notes.invalid}"></textarea>
+                  <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()">
+              <i class="ft-x"></i>&nbsp;<span translate>Cancel Return</span>
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

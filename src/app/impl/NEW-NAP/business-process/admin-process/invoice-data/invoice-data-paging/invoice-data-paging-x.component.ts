@@ -9,8 +9,10 @@ import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { String } from 'typescript-string-operations';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-invoice-data-paging-x',
@@ -22,8 +24,9 @@ export class InvoiceDataPagingXComponent implements OnInit {
   bizTemplateCode: string;
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  CustNoObj: GenericObj = new GenericObj();
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private http: HttpClient,) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
@@ -68,6 +71,19 @@ export class InvoiceDataPagingXComponent implements OnInit {
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
+    }
+    else if(ev.Key == "customer"){
+      this.CustNoObj.CustNo = ev.RowObj.CustNo;      
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        }
+      );
     }
   }
 

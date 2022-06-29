@@ -38,7 +38,7 @@ export class ViewAssetDataComponent implements OnInit {
      }
      if (params['AppAssetId'] != null) {
       this.appAssetId = params['AppAssetId'];
-    }
+     }
     });
   }
 

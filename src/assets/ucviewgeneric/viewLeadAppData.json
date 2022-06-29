@@ -28,6 +28,7 @@
                 },
                 {
                     "type": "currency",
+                    "position": "right",
                     "label": "NTF Amount",
                     "property": "NtfAmt"
                 },
@@ -38,6 +39,7 @@
                 },
                 {
                     "type": "currency",
+                    "position": "right",
                     "label": "Total Down Payment Amount",
                     "property": "TotalDownPaymentAmt"
                 },
@@ -48,6 +50,7 @@
                 },
                 {
                     "type": "currency",
+                    "position": "right",
                     "label": "Installment Amount",
                     "property": "InstAmt"
                 }
