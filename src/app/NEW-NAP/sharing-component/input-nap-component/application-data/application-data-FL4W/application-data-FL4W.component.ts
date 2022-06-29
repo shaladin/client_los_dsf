@@ -183,7 +183,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
-    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCspUslAml);
     this.initDdlMrWop();
@@ -204,7 +203,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
           }
         );
       });
-    this.getAppModelInfo();
+      this.getAppModelInfo();
+      this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
   }
 
   Cancel() {
@@ -539,11 +539,17 @@ export class ApplicationDataFL4WComponent implements OnInit {
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
-        if (code == CommonConstant.RefMasterTypeCodeCharacteristicCredit && this.NapAppModelForm.value.CharaCredit == "") {
-          this.NapAppModelForm.patchValue({
-            CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key,
-            MrSlikSecEcoCode: this.defaultSlikSecEcoCode
-          });
+        if (code == CommonConstant.RefMasterTypeCodeCharacteristicCredit) {
+          if(this.NapAppModelForm.value.CharaCredit == ""){
+            this.NapAppModelForm.patchValue({
+              CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key
+            });
+          }
+          if(!this.NapAppModelForm.value.MrSlikSecEcoCode){
+            this.NapAppModelForm.patchValue({
+              MrSlikSecEcoCode: this.defaultSlikSecEcoCode
+            });
+          }
         }
       });
   }
