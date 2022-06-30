@@ -358,10 +358,15 @@ export class ApplicationDataFL4WComponent implements OnInit {
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
-          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode,
           DpSrcPaymentCode: this.resultResponse.MrDpSrcPaymentCode,
           InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
+
+        if(this.resultResponse.MrSlikSecEcoCode){
+          this.NapAppModelForm.patchValue({
+            MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode,
+          });
+        }
 
         if (this.resultResponse.LeadId != null) {
           this.getLeadSrcCodeByLeadId(this.resultResponse.LeadId);
