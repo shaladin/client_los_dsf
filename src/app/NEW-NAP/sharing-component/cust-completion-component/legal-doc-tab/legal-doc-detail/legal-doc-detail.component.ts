@@ -27,6 +27,7 @@ export class LegalDocDetailComponent implements OnInit {
   @Input() ListLegalDocCantDuplicate: Array<string>;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
 
+  IsDisabled: boolean = false;
   IsExpDateMandatory: boolean;
   MinBusinessDt: Date;
   MaxBusinessDt: Date;
@@ -87,9 +88,8 @@ export class LegalDocDetailComponent implements OnInit {
             DocNotes: this.AppCustCompanyLegalDoc.DocNotes,
             RowVersion: this.AppCustCompanyLegalDoc.RowVersion
           })
+          this.IsDisabled = true;
           temp.selectedValue = this.LegalDocTypeObj[0].Key;
-          this.LegalDocForm.controls.MrLegalDocTypeCode.disable();
-          this.LegalDocForm.updateValueAndValidity();
         } else {
           this.LegalDocForm = this.fb.group({
             AppCustCompanyLegalDocId: [0],

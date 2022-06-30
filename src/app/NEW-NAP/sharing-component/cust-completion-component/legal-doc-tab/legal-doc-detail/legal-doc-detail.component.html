@@ -13,7 +13,7 @@
                   <label class="col-md-4 adins-required-label" translate>Legal Document Type</label>
                   <div class="col-md-6">
                     <lib-ucdropdownlist *ngIf="isDdlMrLegalDocTypeReady" [dropdownListObj]="ddlMrLegalDocTypeObj" [parentForm]="LegalDocForm" [enjiForm]="enjiForm"
-                      [identifier]="'MrLegalDocTypeCode'" [genericList]="LegalDocTypeObj"></lib-ucdropdownlist>
+                      [identifier]="'MrLegalDocTypeCode'" [genericList]="LegalDocTypeObj" [isDisabled]="IsDisabled"></lib-ucdropdownlist>
                   </div>
                 </div>
                 <div class="form-group row">
