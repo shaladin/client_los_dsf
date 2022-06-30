@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LtkmRequestXComponent } from 'app/impl/ltkm/ltkm-request/ltkm-request-x.component';
 import { LtkmReturnHandlingXComponent } from 'app/impl/ltkm/ltkm-return-handling/detail/ltkm-return-handling-x.component';
+import { LtkmVerifyDetailXComponent } from 'app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { LtkmApprovalDetailComponent } from './ltkm-approval/detail/ltkm-approval-detail.component';
@@ -45,6 +46,13 @@ const routes: Routes = [
         component: LtkmVerifyDetailComponent,
         data: {
           title: 'LTKM Verify Detail'
+        }
+      },
+      {
+        path: PathConstantX.VERIFY_DETAIL,
+        component: LtkmVerifyDetailXComponent,
+        data: {
+          title: 'LTKM Verify Detail X'
         }
       },
       {

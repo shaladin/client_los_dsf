@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { UcPagingObj } from "app/shared/model/uc-paging-obj.model";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { CriteriaObj } from "app/shared/model/criteria-obj.model";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CookieService } from "ngx-cookie";
@@ -19,13 +19,15 @@ import { String } from 'typescript-string-operations';
   selector: "app-legal-review-paging",
   templateUrl: "./legal-review-paging.component.html",
 })
-export class LegalReviewPagingComponent implements OnInit {
+export class LegalReviewPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   requestTaskModel : RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   MrMouTypeCode : string;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(
     private router: Router,
@@ -34,17 +36,48 @@ export class LegalReviewPagingComponent implements OnInit {
     private AdInsHelperService: AdInsHelperService, 
     private route: ActivatedRoute
   ) {    
-    this.route.queryParams.subscribe(params => {
-    if (params["MrMouTypeCode"] != null) {
-      this.MrMouTypeCode = params["MrMouTypeCode"];
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
     }
-  });}
+
+  SubscribeParam(){
+    this.route.queryParams.subscribe(params => {
+      if (params["MrMouTypeCode"] != null) {
+        this.MrMouTypeCode = params["MrMouTypeCode"];
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/searchLegalReview.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLegalReview.json";
+    this.arrCrit = new Array();
 
     const addCritMouStat = new CriteriaObj();
     addCritMouStat.DataType = "text";
@@ -80,7 +113,6 @@ export class LegalReviewPagingComponent implements OnInit {
       this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
     this.inputPagingObj.addCritInput = this.arrCrit;
-    
   }
 
   getEvent(event) {

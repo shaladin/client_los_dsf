@@ -706,6 +706,7 @@ export class CommonConstant {
   public static ReferantorCategoryAgency = "AGENCY";
   public static ReferantorCategoryCustomer = "CUSTOMER";
   public static ReferantorCategorySupplierEmployee = "SUPPLIER EMPLOYEE";
+  public static ReferantorCategoryMultifinanceEmployee = "MULTIFINANCE EMPLOYEE";
   public static ReferantorTypeSupplierEmployee = "SUPPL_EMP";
 
   //Martial Status
@@ -883,12 +884,12 @@ export class CommonConstant {
   public static DmsTimestamp = "Tiemstamp";
   public static DmsRoleName = "Role Name";
   public static DmsOverideSecurity = "OverideSecurity";
-  public static DmsOverideUpload = "Upload";
+  public static DmsOverideUpload = "Upload,Delete";
   public static DmsOverideView = "View";
-  public static DmsOverideUploadView = "Upload,View";
-  public static DmsOverideUploadDownload = "Upload,Download";
+  public static DmsOverideUploadView = "Upload,Delete,View";
+  public static DmsOverideUploadDownload = "Upload,Delete,Download";
   public static DmsOverideViewDownload = "View,Download";
-  public static DmsOverideUploadDownloadView = "Upload,Download,View";
+  public static DmsOverideUploadDownloadView = "Upload,Delete,Download,View";
   public static DmsViewCodeCust = "ConfinsCust";
   public static DmsViewCodeApp = "ConfinsApp";
   public static DmsViewCodeAgr = "ConfinsAgr";

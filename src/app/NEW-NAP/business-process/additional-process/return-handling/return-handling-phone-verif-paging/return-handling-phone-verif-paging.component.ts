@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { environment } from 'environments/environment';
 import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
@@ -15,13 +15,25 @@ import { CookieService } from 'ngx-cookie';
   selector: 'app-return-handling-phone-verif-paging',
   templateUrl: './return-handling-phone-verif-paging.component.html',
 })
-export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
+export class ReturnHandlingPhoneVerifPagingComponent implements OnInit, OnDestroy {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
-  
-  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
+  isReady: boolean = false;
+  navigationSubscription;
+
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -30,11 +42,31 @@ export class ReturnHandlingPhoneVerifPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingPhnVerif.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingPhnVerif.json";
+    this.inputPagingObj.addCritInput = new Array();
 
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchReturnHandlingPhnVerifV2.json";

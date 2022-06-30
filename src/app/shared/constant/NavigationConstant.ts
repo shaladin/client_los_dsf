@@ -401,7 +401,7 @@ export class NavigationConstant {
   public static LTKM_INQUIRY = "/" + PathConstant.LR_LTKM + "/" + PathConstant.INQUIRY; //'/Ltkm/Inquiry'
   public static LTKM_VIEW = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VIEW; //'/Ltkm/View'
   public static LTKM_VERIFY_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_PAGING; //'/Ltkm/Verify/Paging'
-  public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_DETAIL; //'/Ltkm/Verify/Detail'
+  public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_DETAIL; //'/Ltkm/Verify/DetailX'
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
   public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
   public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'

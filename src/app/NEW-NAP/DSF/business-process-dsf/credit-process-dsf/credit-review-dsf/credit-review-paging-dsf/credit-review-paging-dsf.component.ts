@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -17,15 +17,26 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './credit-review-paging-dsf.component.html',
   styleUrls: ['./credit-review-paging-dsf.component.css']
 })
-export class CreditReviewPagingDsfComponent implements OnInit {
-
+export class CreditReviewPagingDsfComponent implements OnInit, OnDestroy {
+  BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-  BizTemplateCode: string;
+  isReady: boolean = false;
+  navigationSubscription;
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -34,7 +45,26 @@ export class CreditReviewPagingDsfComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditReviewCr.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReviewCr.json";
 
@@ -68,7 +98,6 @@ export class CreditReviewPagingDsfComponent implements OnInit {
     critObj.value = "RVW_" + this.BizTemplateCode;
     arrCrit.push(critObj);
     }
-
     this.inputPagingObj.addCritInput = arrCrit;
   }
 
@@ -77,5 +106,4 @@ export class CreditReviewPagingDsfComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
   }
-
 }

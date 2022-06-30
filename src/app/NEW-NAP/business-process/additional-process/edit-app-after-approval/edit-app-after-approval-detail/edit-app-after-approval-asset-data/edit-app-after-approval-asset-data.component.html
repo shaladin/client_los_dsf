@@ -77,8 +77,19 @@
 
     <!--ROW 5-->
     <div class="form-group row">
-      <label class="col-md-2  adInsLabel" translate></label>
-      <div class="col-md-4"></div>
+      <label class="col-md-2  adins-required-label" translate>Asset Usage</label>
+      <div class="col-md-4">
+        <select class="form-control" id="assetUsage" formControlName="MrAssetUsageCode"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls.MrAssetUsageCode.invalid }">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of AssetUsageObj" [value]="item.Key">
+            {{item.Value}}
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.MrAssetUsageCode"
+                            [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
+      </div>
 
       <label class="col-md-2 "
              [ngClass]="(SerialNoLabelMandatory[4] && IsCheckSerialMandatory)?'adins-required-label':'adInsLabel'"
@@ -91,6 +102,37 @@
     </div>
   </div>
 
+  <lib-ucSubsection [id]="'userDataId'" [title]="'Asset User'" [panel]="'userData'">
+  </lib-ucSubsection>
+  <div id="userData">
+    <div class="form-group row">
+      <label class="col-md-2" for="selfUsage" translate>Self Usage</label>
+      <div class="col-md-4">
+        <mat-checkbox formControlName="SelfUsage" (change)="SelfUsageChange($event)"></mat-checkbox>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2  adInsLabel" translate>User Name </label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="UserName">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2  adins-required-label" translate>User Relationship </label>
+      <div class="col-md-4">
+        <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode"
+                style="width:50%">
+          <option value="">-Select One-</option>
+          <option *ngFor="let item of UserRelationObj" [value]="item.Key">
+            {{item.Value}}
+          </option>
+        </select>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.MrUserRelationshipCode"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+      </div>
+    </div>
+  </div>
+  
   <lib-ucSubsection [id]="'ownerDataId'" [title]="'Asset Owner'" [panel]="'ownerData'">
   </lib-ucSubsection>
   <div id="ownerData">

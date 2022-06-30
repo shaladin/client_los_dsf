@@ -1,28 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
-import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-doc-signer-paging-dsf',
   templateUrl: './doc-signer-paging-dsf.component.html',
   styleUrls: ['./doc-signer-paging-dsf.component.css']
 })
-export class DocSignerPagingDsfComponent implements OnInit {
+export class DocSignerPagingDsfComponent implements OnInit, OnDestroy  {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
-  userAccess: CurrentUserContext;
+  isReady: boolean = false;
+  navigationSubscription;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -31,9 +41,27 @@ export class DocSignerPagingDsfComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
 
+  ngOnInit() {
+
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     var pagingJsonPath = "./assets/dsf/ucpaging/searchDocSignerDsf.json";
 
     if (this.BizTemplateCode == CommonConstant.OPL) {
@@ -42,6 +70,8 @@ export class DocSignerPagingDsfComponent implements OnInit {
 
     this.inputPagingObj._url = pagingJsonPath;
     this.inputPagingObj.pagingJson = pagingJsonPath;
+    this.inputPagingObj.addCritInput = new Array();
+    this.inputPagingObj.whereValue = new Array();
 
     if (this.BizTemplateCode == CommonConstant.OPL) {
 
@@ -59,15 +89,6 @@ export class DocSignerPagingDsfComponent implements OnInit {
       whereValueObj.property = "BizTemplateCode";
       whereValueObj.value = this.BizTemplateCode;
       this.inputPagingObj.whereValue.push(whereValueObj);
-
-      // let arrCritOffice = new Array();
-      // let critOfficeObj = new CriteriaObj();
-      // critOfficeObj.restriction = AdInsConstant.RestrictionLike;
-      // critOfficeObj.propName = 'AG.OFFICE_CODE';
-      // critOfficeObj.value = this.userAccess.OfficeCode;
-      // arrCritOffice.push(critOfficeObj);
-
-      // this.inputPagingObj.addCritInput = arrCritOffice;
     }
   }
 

@@ -5,4 +5,4 @@
     </button>
   </span>
 </div>
-<lib-ucpaging [searchObj]="inputPagingObj" (callback)="customerView($event)"></lib-ucpaging>
+<lib-ucpaging [searchObj]="inputPagingObj" (callback)="customerView($event)" *ngIf="isReady"></lib-ucpaging>

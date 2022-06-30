@@ -219,6 +219,9 @@ export class PathConstantX {
 
   //app agrmnt cancellation
   public static AGRMNT_CANCEL_DETAIL = PathConstant.AGRMNT_CANCEL + "/" + PathConstantX.DETAIL_X;
+
+  //ltkm
+  public static VERIFY_DETAIL = PathConstant.VERIFY_DETAIL + PathConstantX.X;
 }
 
 

@@ -64,6 +64,7 @@ import { TabCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-co
 import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referantor-multi.component";
 import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail/tab-referantor-multi-detail.component";
 import { ListDataCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/list-data-commission/list-data-commission-x.component";
+import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-x.component";
 
 
 @NgModule({
@@ -118,6 +119,7 @@ import { ListDataCommissionXComponent } from "app/impl/view-enhancing/app-view/t
         ApprovalHistComponent,
         ViewSurveyTaskListComponent,
         ViewAssetDataComponent,
+        ViewAssetDataXComponent,
         TabDeviationComponent,
         ViewAssetExpenseComponent,
         ViewSurveyComponent,

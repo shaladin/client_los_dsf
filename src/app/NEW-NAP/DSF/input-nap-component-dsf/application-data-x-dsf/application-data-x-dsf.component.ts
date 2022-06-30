@@ -45,6 +45,7 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-ma
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-application-data-x-dsf',
@@ -52,7 +53,6 @@ import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.
   styleUrls: ['./application-data-x-dsf.component.css']
 })
 export class ApplicationDataXDsfComponent implements OnInit {
-
   @Input() isCollateral: boolean;
   @Input() appId: number;
   @Input() showCancel: boolean = true;
@@ -241,6 +241,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     this.applicationDDLitems = [];
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
+    this.SetRefAttrSettingObj();
     this.initDdlMrWop();
     this.initDdlMrCustNotifyOpt();
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
@@ -271,19 +272,16 @@ export class ApplicationDataXDsfComponent implements OnInit {
         );
       }
     );
-
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
+    
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
         if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-          if (this.user.RoleCode != 'MKT - MAO' || this.user.RoleCode == 'SUPUSR')
-          {
-            this.isSalesOfficerCode = true;
-            this.NapAppModelForm.patchValue({
-              SalesOfficerNo: this.user.EmpNo,
-              SalesOfficerName: this.user.EmpName
-            });
-          }
+          this.isSalesOfficerCode = true;
+          this.NapAppModelForm.patchValue({
+            SalesOfficerNo: this.user.EmpNo,
+            SalesOfficerName: this.user.EmpName
+          });
 
           let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
           ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
@@ -306,7 +304,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
 
   checkIdNoType() {
-    if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+    if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit && this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.NapAppModelForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.NapAppModelForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
@@ -488,7 +486,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
     await this.getAppXData();
 
-    this.http.post(URLConstantX.GetAppDetailForTabAddEditAppByIdX, obj).subscribe(
+    await this.http.post(URLConstantX.GetAppDetailForTabAddEditAppByIdX, obj).toPromise().then(
       (response) => {
 
         this.resultResponse = response;
@@ -582,10 +580,11 @@ export class ApplicationDataXDsfComponent implements OnInit {
         this.initDdlMrFirstInstType();
         this.initDdlPayFreq();
         this.getPayFregData();
-        this.GenerateAppAttrContent();
+        // this.GenerateAppAttrContent();
         this.spinner.hide();
       }
     );
+    this.checkIdNoType();
   }
 
   getAgrmntParent() {
@@ -693,6 +692,19 @@ export class ApplicationDataXDsfComponent implements OnInit {
       });
   }
 
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  readonly identifierAppAttr: string = "AppAttrContentObjs";
+  SetRefAttrSettingObj() {
+    let GenObj =
+    {
+      AppId: this.appId,
+      AttrGroup: CommonConstant.AttrGroupApplicationData + "_" + this.BizTemplateCode,
+      IsRefresh: false
+    };
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
+    this.attrSettingObj.Title = "Application Attribute";
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAttrContentV2;
+  }
   GenerateAppAttrContentForm() {
     if (this.GenerateAppAttrContentObjs != null) {
       this.ListAttrAnswer = [];
@@ -812,13 +824,13 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   getLookupEconomicSector(ev) {
     this.NapAppModelForm.patchValue({
-      MrSlikSecEcoCode: ev.MasterCode
+      MrSlikSecEcoCode: ev.RefSectorEconomySlikCode
     });
   }
-
+  
   setLookupCommodityData(ev) {
     this.NapAppModelForm.patchValue({
-      CommodityCode: ev.RefSectorEconomySlikCode
+      CommodityCode: ev.MasterCode
     });
   }
 
@@ -856,17 +868,23 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }   
     }
 
-    if (this.resultResponse["MrSlikSecEcoDescr"] != null && this.resultResponse["MrSlikSecEcoDescr"] != "") {
-      this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse["MrSlikSecEcoDescr"];
-      this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: this.resultResponse["MrSlikSecEcoDescr"] };
-    } else {
-      this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, { Code: this.defaultSlikSecEcoCode }).subscribe(
-        (response) => {
-          this.slikSecDescr = response['SectorEconomySlikName'];
-          this.inputLookupEconomicSectorObj.nameSelect = response['SectorEconomySlikName'];
-          this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: response['SectorEconomySlikName'] };
-        });
+    let slikReqCode = {
+      Code: this.defaultSlikSecEcoCode
     }
+
+    if (this.resultResponse["MrSlikSecEcoCode"] != null && this.resultResponse["MrSlikSecEcoCode"] != "") {
+      slikReqCode.Code = this.resultResponse["MrSlikSecEcoCode"];
+    }
+
+    this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, slikReqCode).subscribe(
+      (response: any) => {
+        this.slikSecDescr = response.SectorEconomySlikName;
+        this.inputLookupEconomicSectorObj.nameSelect = response.SectorEconomySlikName;
+        this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: response.SectorEconomySlikName };
+        this.NapAppModelForm.patchValue({
+          MrSlikSecEcoCode: response.SectorEconomySlikCode
+        });
+      });
 
     //Lookup Commodity
     this.inputLookupCommodityObj = new InputLookupObj();
@@ -883,18 +901,15 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.inputLookupCommodityObj.jsonSelect = { Descr: this.tempCommodityName };
     }
 
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
         if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-          if (this.user.RoleCode != 'MKT - MAO' || this.user.RoleCode == 'SUPUSR')
-          {
-            this.isSalesOfficerCode = true;
-            this.NapAppModelForm.patchValue({
-              SalesOfficerNo: this.user.EmpNo,
-              SalesOfficerName: this.user.EmpName
-            });
-          }
+          this.isSalesOfficerCode = true;
+          this.NapAppModelForm.patchValue({
+            SalesOfficerNo: this.user.EmpNo,
+            SalesOfficerName: this.user.EmpName
+          });
 
           let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
           ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
@@ -940,6 +955,13 @@ export class ApplicationDataXDsfComponent implements OnInit {
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
 
+    let addCrit5 = new CriteriaObj();
+    addCrit5.DataType = "bit";
+    addCrit5.propName = "RUR.IS_ACTIVE";
+    addCrit5.restriction = AdInsConstant.RestrictionEq;
+    addCrit5.value = "1";
+    this.arrAddCrit.push(addCrit5);
+
     await this.GetGSValueSalesOfficer();
 
     await this.makeLookUpObj();
@@ -962,6 +984,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.LobCode = this.resultResponse.LobCode;
     reqCalculatePlafondAgrmntXObj.AssetTypeCode = this.agrParent.AssetTypeCode;
     reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
+    reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
 
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
       this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
@@ -1002,16 +1025,20 @@ export class ApplicationDataXDsfComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
-      (response) => {
-        let addCrit3 = new CriteriaObj();
-        addCrit3.DataType = "text";
-        addCrit3.propName = "rbt.JOB_TITLE_CODE";
-        addCrit3.restriction = AdInsConstant.RestrictionIn;
-        addCrit3.listValue = [response.GsValue];
-        this.arrAddCrit.push(addCrit3);
-      }
-    );
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
+      });
   }
 
   ChangeNumOfInstallmentTenor() {
@@ -1312,7 +1339,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
       for (let i = 0; i < this.NapAppModelForm.controls["AppAttrContentObjs"].value.length; i++) {
         var appAttrContentObj = new AppAttrContentObj();
         appAttrContentObj.AppId = this.appId;
-        appAttrContentObj.RefAttrCode = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].RefAttrCode;
+        appAttrContentObj.RefAttrCode = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].AttrCode;
         appAttrContentObj.AttrValue = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].AttrValue;
 
         appAttrContentObjs.push(appAttrContentObj);
@@ -1518,6 +1545,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
             CustBankAcc: selectedBankAcc.AppCustBankAccId
           });
 
+          this.GetBankInfo.AppOtherInfoId = response.AppOtherInfoId;
           this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
           this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
           this.GetBankInfo.AppId = this.appId;
@@ -1539,13 +1567,18 @@ export class ApplicationDataXDsfComponent implements OnInit {
   readonly WopAutoDebit: string = CommonConstant.WopAutoDebit;
   setBankAcc(WOP: string) {
     if (WOP == this.WopAutoDebit) {
-      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+      if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
+      }
       this.isShowAppCustBankAcc = true;
     }
     else {
       this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].clearValidators();
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].updateValueAndValidity();
       this.isShowAppCustBankAcc = false;
     }
     this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
@@ -1553,12 +1586,17 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   setBankAccDDL(event: UcDropdownListCallbackObj) {
     if (event.selectedValue == this.WopAutoDebit) {
-      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+      if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
+      }
       this.isShowAppCustBankAcc = true;
     } else {
       this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].clearValidators();
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].updateValueAndValidity();
       this.isShowAppCustBankAcc = false;
     }
     this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
@@ -1694,9 +1732,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           this.tempCommodityName = response["CommodityName"];
         }
         this.isCustomerTypeCompany();
-        this.checkIdNoType();
       }
     );
   }
-
 }

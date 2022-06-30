@@ -1,3 +1,6 @@
+<lib-ucSubsection [id]="'MngmntShrhldrId'" [title]="'Management Shareholder'" [panel]="'MngmntShrhldr'">
+</lib-ucSubsection>
+<div id="MngmntShrhldr">
 <div *ngIf="ListShareholder?.length == 0" style="overflow-x: auto;">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
@@ -51,4 +54,5 @@
   <button type="button" (click)="saveAndContinue()" class="btn btn-raised btn-primary">
     <i class="far fa-check-square"></i>&nbsp;<span translate>Save & Continue</span>
   </button>
+</div>
 </div>

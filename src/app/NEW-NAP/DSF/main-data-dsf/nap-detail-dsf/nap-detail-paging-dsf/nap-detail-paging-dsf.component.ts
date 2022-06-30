@@ -1,28 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
-import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-nap-detail-paging-dsf',
   templateUrl: './nap-detail-paging-dsf.component.html',
   styleUrls: ['./nap-detail-paging-dsf.component.css']
 })
-export class NapDetailPagingDsfComponent implements OnInit {
-
+export class NapDetailPagingDsfComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
   bizTemplateCode: string;
@@ -30,18 +27,36 @@ export class NapDetailPagingDsfComponent implements OnInit {
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
-
+  isReady: boolean = false;
+  navigationSubscription;
+  
   constructor(
     private router: Router,
-    private route: ActivatedRoute, private cookieService: CookieService, private toastr: NGXToastrService,) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   initListValueCurrStep(){
     let tempList: Array<string> = new Array();
-    tempList = [CommonConstant.AppStepNapd, CommonConstant.AppStepRef, CommonConstant.AppStepApp, CommonConstant.AppStepAsset, CommonConstant.AppStepIns, CommonConstant.AppStepLIns, CommonConstant.AppStepFin, CommonConstant.AppStepTC, CommonConstant.AppStepUplDoc, CommonConstant.AppStepInvoice];
+    tempList = [CommonConstant.AppStepNapd, CommonConstant.AppStepRef, CommonConstant.AppStepApp, CommonConstant.AppStepAsset, CommonConstant.AppStepColl, CommonConstant.AppStepIns, CommonConstant.AppStepLIns, CommonConstant.AppStepFin, CommonConstant.AppStepTC, CommonConstant.AppStepUplDoc, CommonConstant.AppStepInvoice];
     return tempList;
   }
 
@@ -64,44 +79,51 @@ export class NapDetailPagingDsfComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'a.BIZ_TEMPLATE_CODE';
     critObj.value = this.bizTemplateCode;
-    this.arrCrit.push(critObj);				   
+    this.arrCrit.push(critObj);
   }
 
   async ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    // if (this.userAccess.RoleCode == 'MKT-MAO' || this.userAccess.RoleCode == 'DPC' || this.userAccess.RoleCode == 'MKT-MO')
-    // {
-      this.arrCrit = new Array();
-      this.makeCriteria();
 
-      this.inputPagingObj.title = "Application Data Paging";
-      this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
-      this.inputPagingObj.addCritInput = this.arrCrit;
+    this.arrCrit = new Array();
+    this.makeCriteria();
 
-      if(environment.isCore){
-        this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
-        this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
-        this.inputPagingObj.isJoinExAPI = true
-        
-        this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
-        this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_NAPD_MD + this.bizTemplateCode;
-        this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                                this.userAccess[CommonConstant.OFFICE_CODE], 
-                                                this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
-        
-        this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
-        this.IntegrationObj.requestObj = this.RequestTaskModel;
-        this.IntegrationObj.leftColumnToJoin = "AppNo";
-        this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
-        this.inputPagingObj.integrationObj = this.IntegrationObj;
-      }
+    this.inputPagingObj.title = "Application Data Paging";
+    this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
+    this.inputPagingObj.addCritInput = this.arrCrit;
+
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+      this.inputPagingObj.isJoinExAPI = true
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_NAPD_MD + this.bizTemplateCode;
+      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                               this.userAccess[CommonConstant.OFFICE_CODE], 
+                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "AppNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
-    // else
-    // {
-    //   this.toastr.warningMessage(ExceptionConstantDsf.NOT_ELIGIBLE);
-    // }
-  // }
+  }
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
@@ -134,5 +156,4 @@ export class NapDetailPagingDsfComponent implements OnInit {
       }
     }
   }
-
 }

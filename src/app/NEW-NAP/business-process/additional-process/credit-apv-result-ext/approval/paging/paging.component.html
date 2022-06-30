@@ -21,8 +21,7 @@
                 </div>
             </div>
             <br>
-            <ng-template #PagingModal></ng-template>
-            <!-- <lib-ucpaging [searchObj]="inputPagingObj" (callback)="CallBackHandler($event)"></lib-ucpaging> -->
+            <lib-ucpaging [searchObj]="inputPagingObj" (callback)="CallBackHandler($event)" *ngIf="isReady"></lib-ucpaging>
         </div>
     </div>
 </div>

@@ -38,6 +38,7 @@ import { CrdRvwThirdPartyCheckingXComponent } from "app/impl/NEW-NAP/sharing-com
 import { SharedModule } from "app/shared/shared.module";
 import { CrdRvwThirdPartyCheckingXDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/crd-rvw-third-party-checking-x-dsf/crd-rvw-third-party-checking-x-dsf.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { CrdRvwIncomeExpenseXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-income-expense/crd-rvw-income-expense-x.component";
 
 @NgModule({
     exports: [
@@ -74,17 +75,18 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         MatRadioModule
     ],
     declarations: [
-        CrdRvwCustInfoComponent,
-        CrdRvwFamGuarComponent,
-        CrdRvwThirdPartyCheckingComponent,
-        CrdRvwAppInfoComponent,
-        CrdRvwAssetComponent,
-        CrdRvwAdditionalCollComponent,
-        CrdRvwCmoInfoComponent,
-        CrdRvwDealerInfoComponent,
-        CrdRvwCreditScoringComponent,
+        CrdRvwCustInfoComponent, 
+        CrdRvwFamGuarComponent, 
+        CrdRvwThirdPartyCheckingComponent, 
+        CrdRvwAppInfoComponent, 
+        CrdRvwAssetComponent, 
+        CrdRvwAdditionalCollComponent, 
+        CrdRvwCmoInfoComponent, 
+        CrdRvwDealerInfoComponent, 
+        CrdRvwCreditScoringComponent, 
         CrdRvwIncomeExpenseComponent,
-        CrdRvwBankStmntComponent,
+        CrdRvwIncomeExpenseXComponent, 
+        CrdRvwBankStmntComponent, 
         CrdRvwRapindoComponent,
         CrdRvwDukcapilHistComponent,
         CrdRvwCustPersonalInfoComponent,

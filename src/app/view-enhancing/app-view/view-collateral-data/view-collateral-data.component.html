@@ -9,7 +9,48 @@
         </span>
       </div>
     </div>
-    <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
+    <div class="px-3">
+      <lib-ucSubsection [id]="'appCollateralId'" [title]="'Collateral Information'" [panel]="'asset'">
+      </lib-ucSubsection>
+      <div id="asset">
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Type</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.AssetTypeName? AppCollateral.AssetTypeName : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>Collateral Name</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.FullAssetName? AppCollateral.FullAssetName : "-"}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Price</label>
+          <label class="col-md-4  adinslabel text-right" translate>{{AppCollateral?.CollateralValueAmt? (AppCollateral.CollateralValueAmt | number:'.2':'en-US') : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>Manufacturing Year</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.ManufacturingYear? AppCollateral.ManufacturingYear : "-"}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Condition</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.MrCollateralConditionCodeDesc? AppCollateral.MrCollateralConditionCodeDesc : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>{{SerialNoLabelCollateralList[0]? SerialNoLabelCollateralList[0] : ""}}</label>
+          <label class="col-md-4  adinslabel" translate>{{SerialNoLabelCollateralList[0]? (AppCollateral?.SerialNo1? AppCollateral.SerialNo1 : "-") : ""}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Usage</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.MrCollateralUsageDesc? AppCollateral.MrCollateralUsageDesc : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>{{SerialNoLabelCollateralList[1]? SerialNoLabelCollateralList[1] : ""}}</label>
+          <label class="col-md-4  adinslabel" translate>{{SerialNoLabelCollateralList[1]? (AppCollateral?.SerialNo2? AppCollateral.SerialNo2 : "-") : ""}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Tax Date</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.AssetTaxDt? (AppCollateral.AssetTaxDt | date : "dd-MMM-yyyy") : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>{{SerialNoLabelCollateralList[2]? SerialNoLabelCollateralList[2] : ""}}</label>
+          <label class="col-md-4  adinslabel" translate>{{SerialNoLabelCollateralList[2]? (AppCollateral?.SerialNo3? AppCollateral.SerialNo3 : "-") : ""}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Portion Percentage</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.CollateralPrcnt? (AppCollateral.CollateralPrcnt | number:'.6':'en-US') + " %" : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>Notes</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.CollateralNotes? AppCollateral?.CollateralNotes : "-"}}</label>
+        </div>
+      </div>
+    </div>
     <div class="px-3">
       <div *ngIf="AppCollateralDocs?.length">
         <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
