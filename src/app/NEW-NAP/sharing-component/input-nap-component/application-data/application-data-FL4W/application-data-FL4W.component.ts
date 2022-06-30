@@ -183,6 +183,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
+    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCspUslAml);
     this.initDdlMrWop();
@@ -203,8 +204,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
           }
         );
       });
-      this.getAppModelInfo();
-      this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
+    this.getAppModelInfo();
   }
 
   Cancel() {
@@ -362,6 +362,12 @@ export class ApplicationDataFL4WComponent implements OnInit {
           DpSrcPaymentCode: this.resultResponse.MrDpSrcPaymentCode,
           InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
+
+        if(this.resultResponse.MrSlikSecEcoCode){
+          this.NapAppModelForm.patchValue({
+            MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode,
+          });
+        }
 
         if (this.resultResponse.LeadId != null) {
           this.getLeadSrcCodeByLeadId(this.resultResponse.LeadId);
@@ -539,17 +545,11 @@ export class ApplicationDataFL4WComponent implements OnInit {
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
-        if (code == CommonConstant.RefMasterTypeCodeCharacteristicCredit) {
-          if(this.NapAppModelForm.value.CharaCredit == ""){
-            this.NapAppModelForm.patchValue({
-              CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key
-            });
-          }
-          if(!this.NapAppModelForm.value.MrSlikSecEcoCode){
-            this.NapAppModelForm.patchValue({
-              MrSlikSecEcoCode: this.defaultSlikSecEcoCode
-            });
-          }
+        if (code == CommonConstant.RefMasterTypeCodeCharacteristicCredit && this.NapAppModelForm.value.CharaCredit == "") {
+          this.NapAppModelForm.patchValue({
+            CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key,
+            MrSlikSecEcoCode: this.defaultSlikSecEcoCode
+          });
         }
       });
   }
