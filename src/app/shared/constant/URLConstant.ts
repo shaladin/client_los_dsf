@@ -1970,4 +1970,7 @@ export class URLConstant {
   public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
   public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
   
+  //Ref Fin Asset Usage Map
+  public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
+
 }
