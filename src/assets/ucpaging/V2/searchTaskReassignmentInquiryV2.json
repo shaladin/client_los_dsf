@@ -5,7 +5,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "TRT.WF_ACTIVITY_CODE",
+            "name": "(TRT.WF_CODE + ';' + TRT.WF_ACTIVITY_CODE)",
             "id": "WfCodeId",
             "value": "",
             "placeholder": "Placeholder",
