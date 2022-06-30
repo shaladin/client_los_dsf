@@ -77,25 +77,25 @@
             "type": "sort",
             "position": "left",
             "label": "Office",
-            "name": "OfficeName"
+            "name": "a.ORI_OFFICE_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Application No",
-            "name": "AppNo"
+            "name": "a.APP_NO"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Customer Name",
-            "name": "CustName"
+            "name": "ac.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Product Offering Name",
-            "name": "ProdOfferingName"
+            "name": "a.PROD_OFFERING_NAME"
         },
         {
             "type": "label",
