@@ -666,7 +666,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       this.PatchNumOfInstallment(temp)
     }
     else {
-      var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }
   }
@@ -678,7 +678,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     if (!isNaN(temp)) {
       this.PayFreqVal = this.applicationDDLitems["Pay_Freq"][idx].PayFreqVal;
       this.PayFreqTimeOfYear = this.applicationDDLitems["Pay_Freq"][idx].TimeOfYear;
-      var total = Math.floor((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }
   }
