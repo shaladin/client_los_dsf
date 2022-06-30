@@ -358,7 +358,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
-          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode,
           DpSrcPaymentCode: this.resultResponse.MrDpSrcPaymentCode,
           InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
