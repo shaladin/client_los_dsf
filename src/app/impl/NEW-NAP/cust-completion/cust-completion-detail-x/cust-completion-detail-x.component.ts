@@ -186,8 +186,8 @@ export class CustCompletionDetailXComponent implements OnInit {
 
   async buttonSubmitOnClick() {
     
-    if (!await this.checkSlikValidation()) return;
     if (!await this.checkNap4Validation()) return;
+    if (!await this.checkSlikValidation()) return;    
 
     let reqObj: SubmitNapObj = new SubmitNapObj();
     reqObj.AppId = this.AppId;
