@@ -964,6 +964,7 @@ export class CommonConstant {
   //Product Status
   public static ProdStatApproval = "APVL";
   public static ProdStatReqDeact = "REQD";
+  public static ProdStatNew = "NEW";
 
   //Product Approval
   public static SCHM_CODE_APV_HO_ACT_SCHM = "APV_HO_ACT_SCHM";
@@ -978,6 +979,9 @@ export class CommonConstant {
   public static PRD_HO_DEACT_APV_TYPE = "PROD_HO_DEACT_APV_TYPE";
   public static PRD_OFR_APV_TYPE = "PROD_OFR_APV_TYPE";
   public static PRD_OFR_DEACT_APV_TYPE = "PROD_OFR_DEACT_APV_TYPE";    
+
+  //Product Component
+  public static LIST_EDITABLE_PROD_COMPNT = "LIST_EDITABLE_PROD_COMPNT";
 
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";
