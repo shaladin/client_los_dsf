@@ -48,6 +48,8 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-jo
 import { RefCoyObj } from 'app/shared/model/ref-coy-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -945,9 +947,20 @@ export class AssetDataAddEditComponent implements OnInit {
 
     await this.GetUserRelationship();
     
-    this.assetUsageObj = new RefMasterObj();
-    this.assetUsageObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetUsageObj).subscribe(
+    //START RTHREE-349 - Mapping Purpose of Finance dengan asset usage
+    let appObj4: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj4.ProdOfferingCode = this.appData.ProdOfferingCode;
+    appObj4.RefProdCompntCode = CommonConstant.RefProdCompntCodePurposeOfFinancing;
+    appObj4.ProdOfferingVersion = this.appData.ProdOfferingVersion;
+    let refProdCmptPurposeOfFinancing: ProdOfferingDObj;
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj4).toPromise().then(
+      (response: any) => {
+        refProdCmptPurposeOfFinancing = response;
+      }
+    );
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = refProdCmptPurposeOfFinancing.CompntValue;
+    await this.http.post(URLConstant.GetListKeyValueAssetUsageByPurposeOfFinCode, reqByCode).toPromise().then(
       (response) => {
         this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
         if (this.mode != 'editAsset') {
@@ -957,6 +970,8 @@ export class AssetDataAddEditComponent implements OnInit {
         }
       }
     );
+    //END RTHREE-349 - Mapping Purpose of Finance dengan asset usage
+
 
     this.isAddressReady = true;
   }
