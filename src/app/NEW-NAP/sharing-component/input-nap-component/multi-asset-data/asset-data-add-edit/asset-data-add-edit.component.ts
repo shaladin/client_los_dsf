@@ -946,6 +946,7 @@ export class AssetDataAddEditComponent implements OnInit {
     );
 
     await this.GetUserRelationship();
+    this.isAddressReady = true;
     
     //START RTHREE-349 - Mapping Purpose of Finance dengan asset usage
     let appObj4: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
@@ -971,9 +972,6 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     );
     //END RTHREE-349 - Mapping Purpose of Finance dengan asset usage
-
-
-    this.isAddressReady = true;
   }
 
   async GetEditData() {
@@ -2194,7 +2192,7 @@ export class AssetDataAddEditComponent implements OnInit {
           MrOwnerTypeCode : OwnerType
         });
 
-        this.OwnerTypeChange(OwnerType, true);
+        await this.OwnerTypeChange(OwnerType, true);
       }
 
       if (!isEdit) {
