@@ -26,7 +26,7 @@
                                 </div>
                             </ng-template>
                         </mat-tab>
-                        <mat-tab label="Fee">
+                        <mat-tab label="Fee" *ngIf="MrMouTypeCode == 'FINANCING'">
                             <ng-template matTabContent>
                                 <div class="px-3">
                                     <app-mou-view-fee [MouCustId]="MouCustId"></app-mou-view-fee>

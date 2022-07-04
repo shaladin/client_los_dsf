@@ -203,7 +203,7 @@ export class AssetDataXComponent implements OnInit {
   vendorObj = {
     VendorId: 0,
     VendorCode: "",
-    MrVendorEmpPositionCodes: [CommonConstant.ADMIN_HEAD_JOB_CODE, CommonConstant.SALES_JOB_CODE, CommonConstant.BRANCH_MANAGER_JOB_CODE],
+    MrVendorEmpPositionCodes: [],
   };
 
   vendorAccSuppObj = {
@@ -333,6 +333,7 @@ export class AssetDataXComponent implements OnInit {
   OwnerTypeObj: Array<KeyValueObj> = new Array();
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
   RoundedAmt: number = 2;
+  ListVendorEmpPositionCodes : Array<String> = new Array();
 
   readonly CurrencyMaskPrct = CommonConstantX.CurrencyMaskPrct;
   constructor(
@@ -369,6 +370,7 @@ export class AssetDataXComponent implements OnInit {
     await this.GetAppCustPersonalJobData();
     await this.GetAppCustPhone();
     await this.bindAllRefMasterObj();
+    await this.SetMrVendorEmpPositionCodes();
     this.initLookup();
     this.locationAddrObj = new AddrObj();
     this.delivAddrObj = new AddrObj();
@@ -1181,6 +1183,16 @@ export class AssetDataXComponent implements OnInit {
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.allAssetDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
+  }
+
+  async SetMrVendorEmpPositionCodes() {
+    var generalSettingObj: GenericObj = new GenericObj();
+    generalSettingObj.Code = "LIST_VENDOR_EMP_POS_CODES";
+    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
+        (response) => {
+          this.ListVendorEmpPositionCodes = response["GsValue"].split(';');
+          this.vendorObj.MrVendorEmpPositionCodes = this.ListVendorEmpPositionCodes;
+        });
   }
 
   async SetSupplier(event) {

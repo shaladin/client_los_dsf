@@ -4,9 +4,10 @@
   </lib-ucSubsection>
   <div class="form-body" id="MouData">
     <div class="form-group row" *ngIf="MouType != 'FINANCING'">
-      <label class="col-md-2 adInsLabel" translate>Virtual Account </label>
-      <label class="col-md-4 adInsLabel" translate>{{VirtualAccNo}} </label>
-
+      <div class="col-md-6" *ngIf="MouType == 'FACTORING'">
+        <label class="col-md-4 adInsLabel px-0" translate>Virtual Account </label>
+        <label class="col-md-8 adInsLabel px-0" translate>{{VirtualAccNo}} </label>
+      </div>
       <label class="col-md-2 adInsLabel" translate>Currency </label>
       <label class="col-md-4 adInsLabel" translate>{{dictRefCurr[CurrCode]}} </label>
     </div>
@@ -82,8 +83,8 @@
     </div>
 
     <div *ngIf="MouType == 'FACTORING'">
-      <div *ngIf="mouCustFctr !=null" class="form-group row">
-        <div *ngIf="mouCustFctr.MrInstTypeCode == 'MULTIPLE'">
+      <div *ngIf="mouCustFctr !=null">
+        <div *ngIf="mouCustFctr.MrInstTypeCode == 'MULTIPLE'" class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Tenor From</label>
           <label class="col-md-4 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to
             &nbsp;&nbsp;&nbsp;&nbsp;
