@@ -26,6 +26,9 @@ export class URLConstantX {
   public static SyncAppCustWithCustFOUSecondary = environment.losUrl + "/v1" + "/AppCustX/SyncAppCustWithCustFOUSecondary";
   public static ShareHolderDuplicateCheck = environment.losUrl + "/v1" + "/AppCustX/ShareHolderDuplicateCheck";
 
+  public static GetCustDataCompanyForViewXByAppId = environment.losUrl + "/v1" + "/AppCustX/GetCustDataCompanyXForViewByAppId";
+  public static GetCustDataPersonalXForViewByAppId = environment.losUrl + "/v1" + "/AppCustX/GetCustDataPersonalXForViewByAppId";
+  
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
 
