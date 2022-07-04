@@ -26,12 +26,13 @@ export class ViewAssetDataDetailXComponent implements OnInit {
   adminHeadName: string;
   inputGridObj: InputGridObj = new InputGridObj();
   OwnerProfessionName: string = '-';
+  isOtherEmpPosCode: boolean;
 
   constructor(private httpClient: HttpClient, public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
     this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryFL4W.json";
-
+    this.isOtherEmpPosCode = false;
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { Id: this.AppAssetId });
     let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { Id: this.AppAssetId });
     let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, { Id: this.AppCollateralId });
@@ -52,6 +53,12 @@ export class ViewAssetDataDetailXComponent implements OnInit {
           else if(item.MrSupplEmpPositionCode == CommonConstant.ADMIN_HEAD_JOB_CODE){
             this.adminHeadName = item.SupplEmpName;
           }
+          else
+          {
+            this.salesName = item.SupplEmpName;
+            this.isOtherEmpPosCode = true;
+            break;
+          }
         }
 
         if(this.salesName == null && this.adminHeadName !=null){
@@ -61,6 +68,12 @@ export class ViewAssetDataDetailXComponent implements OnInit {
         if (this.salesName == null && this.adminHeadName ==null && this.branchManagerName !=null){
           this.salesName = this.branchManagerName 
           this.adminHeadName = this.branchManagerName 
+        }
+
+        if(this.isOtherEmpPosCode)
+        {
+          this.adminHeadName = null;
+          this.branchManagerName = null;
         }
 
         this.inputGridObj.resultData = {
