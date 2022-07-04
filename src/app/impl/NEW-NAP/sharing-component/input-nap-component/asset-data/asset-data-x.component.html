@@ -26,7 +26,7 @@
                       <span *ngIf="item.MrVendorEmpPositionCode === 'SALES_PERSON'">{{item.VendorEmpName}} - SALES PERSON</span>
                       <span *ngIf="item.MrVendorEmpPositionCode === 'ADMIN_HEAD'">{{item.VendorEmpName}} - ADMIN HEAD</span>
                       <span *ngIf="item.MrVendorEmpPositionCode === 'BRANCH_MANAGER'">{{item.VendorEmpName}} - BRANCH MANAGER</span>
-                      
+                      <span *ngIf="!(item.MrVendorEmpPositionCode === 'BRANCH_MANAGER' || item.MrVendorEmpPositionCode === 'ADMIN_HEAD' || item.MrVendorEmpPositionCode === 'SALES_PERSON')">{{item.VendorEmpName}} - {{item.MrVendorEmpPositionCode}}</span>
                     </option>
                   </select>
                   <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonId" [submit]="enjiForm.submitted">
