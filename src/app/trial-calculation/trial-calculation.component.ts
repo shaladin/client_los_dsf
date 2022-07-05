@@ -51,11 +51,18 @@ export class TrialCalculationComponent implements OnInit {
     PayFreqCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrInstSchemeCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrFirstInstTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrInstSchemeName: [''],
+    MrFirstInstTypeName: [''],
     NumOfInst: [''],
     AppFee: this.fb.array([]),
     LobCode: [''],
     BizTemplateCode: [''],
 
+    PrcntDp: 0,
+    PrcntDpNett: 0,
+    DownPaymentGrossAmt: 0,
+    TotalAccessoryPriceAmt: 0,
+    TotalAssetPriceAmtOnly: 0,
     TotalAssetPriceAmt: 0,
     TotalFeeAmt: 0,
     TotalFeeCptlzAmt: 0,
@@ -64,7 +71,6 @@ export class TrialCalculationComponent implements OnInit {
     TotalInsInscoAmt: 0,
     TotalLifeInsCustAmt: 0,
     LifeInsCptlzAmt: 0,
-    DownPaymentGrossAmt: 0,
     DownPaymentNettAmt: 0,
 
     TotalDownPaymentNettAmt: 0, //muncul di layar
@@ -189,7 +195,9 @@ export class TrialCalculationComponent implements OnInit {
     this.TrialForm.patchValue({
       PayFreqCode: '',
       MrInstSchemeCode: '',
-      MrFirstInstTypeCode: ''
+      MrFirstInstTypeCode: '',
+      MrInstSchemeName: '',
+      MrFirstInstTypeName: ''
     });
   }
 
@@ -343,6 +351,25 @@ export class TrialCalculationComponent implements OnInit {
           listAppFee.removeAt(0);
         }
       }
+
+      var mrFirstInstTypeName = this.TrialForm.controls.MrFirstInstTypeCode.value;
+      if(this.applicationDDLitems['FIRSTINSTTYPE'])
+      {
+        var itemFirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'].find((obj) => {
+          return obj["Key"] === this.TrialForm.controls.MrFirstInstTypeCode.value;
+        });
+        if (itemFirstInstType) mrFirstInstTypeName = itemFirstInstType["Value"];
+      }
+
+      var mrInstSchemeName = this.TrialForm.controls.MrInstSchemeCode.value;
+      if(this.applicationDDLitems['INST_SCHM'])
+      {
+        var itemInstSchemeName = this.applicationDDLitems['INST_SCHM'].find((obj) => {
+          return obj["Key"] === this.TrialForm.controls.MrInstSchemeCode.value;
+        });
+        if (itemInstSchemeName) mrInstSchemeName = itemInstSchemeName["Value"];
+      }
+
       this.IsGenerate = true;
       this.LoadFinData();
       this.TrialForm.patchValue({
@@ -351,6 +378,11 @@ export class TrialCalculationComponent implements OnInit {
         MrInstSchemeCode: this.TrialForm.controls.MrInstSchemeCode.value,
         MrFirstInstTypeCode: this.TrialForm.controls.MrFirstInstTypeCode.value,
         BizTemplateCode: this.BizTmpltCode,
+        MrFirstInstTypeName: mrFirstInstTypeName,
+        MrInstSchemeName: mrInstSchemeName,
+        TotalAssetPriceAmtOnly: this.TrialForm.controls.TotalAssetPriceAmt.value,
+        PrcntDp: this.TrialForm.controls.DownPaymentPrctg.value,
+        PrcntDpNett: this.TrialForm.controls.DownPaymentPrctg.value,
         TotalAssetPriceAmt: this.TrialForm.controls.AssetPriceAmt.value,
         DownPaymentGrossAmt: this.TrialForm.controls.DownPaymentAmt.value,
         DownPaymentNettAmt: this.TrialForm.controls.DownPaymentAmt.value,
