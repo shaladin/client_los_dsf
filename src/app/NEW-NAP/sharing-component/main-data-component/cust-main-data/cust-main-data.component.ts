@@ -1435,8 +1435,11 @@ export class CustMainDataComponent implements OnInit {
   async SaveForm() {
     if (this.CekIsCustomer()) return;
 
-    await this.checkIsCustAllowedContinue();
-    if(!this.IsCustAllowedContinue) return;
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust)
+    {
+      await this.checkIsCustAllowedContinue();
+      if(!this.IsCustAllowedContinue) return;
+    }
 
     var isCustAgeValid = await this.validateCustPersonalAge();
     if(!isCustAgeValid) return;
