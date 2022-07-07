@@ -875,6 +875,7 @@ export class URLConstant {
   public static GetAssetListForDOMultiAssetView = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAssetView";
 
   //PURCHASE ORDER
+  public static ValidatePurchaseOrderAmountByAgrmntId = environment.losUrl + "/v1" + "/PurchaseOrderH/ValidatePurchaseOrderAmountByAgrmntId";
   public static SubmitPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitPurchaseOrder";
   public static AddPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/AddPurchaseOrder";
   public static EditPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/EditPurchaseOrder";
@@ -1705,23 +1706,25 @@ export class URLConstant {
   public static ResultExpiredDaysApproval = environment.losUrl + "/v1" + "/Approval/ResultExpiredDaysApproval";
 
   // New Approval R3
-  public static CreateNewRFA = "/Approval/CreateNewRFA";
-  public static CreateJumpRFA = "/Approval/CreateJumpRFA";
-  public static GetRefSingleCategoryByCategoryCode = "/Approval/GetRefSingleCategoryByCategoryCode";
-  public static GetSchemesBySchemeCode = "/Approval/GetSchemesBySchemeCode";
-  public static GetRefAdtQuestion = "/Approval/GetRefAdtQuestion";
-  public static GetPossibleMemberAndAttributeExType = "/Approval/GetPossibleMemberAndAttributeExType";
-  public static GetApprovalReturnHistory = "/Approval/GetApprovalReturnHistory";
+  public static CreateNewRFA = "/v1" + "/Approval/CreateNewRFA";
+  public static CreateJumpRFA = "/v1" + "/Approval/CreateJumpRFA";
+  public static GetRefSingleCategoryByCategoryCode = "/v1" + "/Approval/GetRefSingleCategoryByCategoryCode";
+  public static GetSchemesBySchemeCode = "/v1" + "/Approval/GetSchemesBySchemeCode";
+  public static GetRefAdtQuestion = "/v1" + "/Approval/GetRefAdtQuestion";
+  public static GetPossibleMemberAndAttributeExType = "/v1" + "/Approval/GetPossibleMemberAndAttributeExType";
+  public static GetPossibleMemberAndAttributeExTypeV2 = "/v2" + "/Approval/GetPossibleMemberAndAttributeExType";
+  public static GetApprovalReturnHistory = "/v1" + "/Approval/GetApprovalReturnHistory";
   public static GetSchemesByCategoryId = "/Approval/GetSchemesByCategoryId";
-  public static SubmitApproval = "/Approval/SubmitApproval";
-  public static GetLevelVoting = "/Approval/GetLevelVoting";
-  public static GetPossibleResult = "/Approval/GetPossibleResult";
-  public static GetNextNodeMember = "/Approval/GetNextNodeMember";
-  public static GetRefReasonActive = "/Approval/GetRefReasonActive";
-  public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
-  public static GetTaskHistory = "/Approval/GetTaskHistory";
-  public static ReturnLevel = "/Approval/ReturnLevel";
-  public static ContinueToLevel = "/Approval/ContinueToLevel";
+  public static SubmitApproval = "/v1" + "/Approval/SubmitApproval";
+  public static GetLevelVoting = "/v1" + "/Approval/GetLevelVoting";
+  public static GetPossibleResult = "/v1" + "/Approval/GetPossibleResult";
+  public static GetNextNodeMember = "/v1" + "/Approval/GetNextNodeMember";
+  public static GetNextNodeMemberV2 = "/v2" + "/Approval/GetNextNodeMember";
+  public static GetRefReasonActive = "/v1" + "/Approval/GetRefReasonActive";
+  public static GetCanChangeMinFinalLevel = "/v1" + "/Approval/GetCanChangeMinFinalLevel";
+  public static GetTaskHistory = "/v1" + "/Approval/GetTaskHistory";
+  public static ReturnLevel = "/v1" + "/Approval/ReturnLevel";
+  public static ContinueToLevel = "/v1" + "/Approval/ContinueToLevel";
   public static GetSingleTaskInfo = "/Approval/GetSingleTaskInfo";
 
   // Digitalization

@@ -320,6 +320,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
         this.InputObj.Reason = this.DDLReason;
         this.InputObj.TrxNo = this.LtkmNo;
         this.InputObj.OfficeCode = this.OriOfficeCode;
+        this.InputObj.OfficeCodes.push(this.OriOfficeCode);
         this.IsReady = true;
     }
 

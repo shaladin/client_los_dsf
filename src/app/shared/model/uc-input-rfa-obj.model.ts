@@ -19,6 +19,7 @@ export class UcInputRFAObj {
     TrxNo: string;
     Reason: any;
     OfficeCode: string;
+    OfficeCodes: Array<string>;
     RequestedBy: string;
 
     constructor(private cookieService: CookieService) {
@@ -26,11 +27,11 @@ export class UcInputRFAObj {
         this.RequestedBy = context[CommonConstant.USER_NAME];
         this.OfficeCode = context[CommonConstant.OFFICE_CODE];
         this.ApvTypecodes = [];
-        this.EnvUrl = environment.FoundationR3Url + "/v1";
+        this.EnvUrl = environment.FoundationR3Url;
         this.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
         this.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
         this.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-        this.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+        this.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExTypeV2;
         this.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
         this.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
         this.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
@@ -38,5 +39,6 @@ export class UcInputRFAObj {
         this.SchemeCode = "";
         this.TrxNo = "";
         this.Reason = [];
+        this.OfficeCodes = new Array<string>();
     }
 }

@@ -44,9 +44,9 @@
               *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'KITAS' || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'SIM'"
               translate>Id Expired Date</label>
             <div class="col-md-8">
-              <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'EKTP'" readonly
+              <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'EKTP' || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'NPWP'" readonly
                 type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
-              <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'EKTP'"
+              <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'EKTP' && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'NPWP'"
                 min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="idExpDt"
                 formControlName="IdExpiredDt">
               <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].IdExpiredDt"

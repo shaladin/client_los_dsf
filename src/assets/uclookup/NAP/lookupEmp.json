@@ -15,12 +15,12 @@
         "name": "re.EMP_NAME",
         "id": "salesOfficerName",
         "value": "",
-        "label": "Marketing Officer Name",
+        "label": "Sales Officer Name",
         "placeholder": "Sales Officer Name"
       },
       {
         "type": "textbox",
-        "name": "ru.USERNAME",
+        "name": "reHead.EMP_NAME",
         "id": "salesHeadName",
         "value": "",
         "label": "MO Head Name",

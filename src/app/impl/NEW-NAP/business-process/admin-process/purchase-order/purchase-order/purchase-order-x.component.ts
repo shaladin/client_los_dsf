@@ -210,6 +210,15 @@ export class PurchaseOrderXComponent implements OnInit {
 
     let listAgrmntTcObj: Array<AgrmntTcObj> = this.SetTcForm();
     if (IsSave) {
+      //RTHREE-322 : Penambahan validasi Purchase Order
+      var isPoAmtIsValid = false;
+      await this.http.post(URLConstant.ValidatePurchaseOrderAmountByAgrmntId, {Id: this.AgrmntId}).toPromise().then(
+        (response) => {
+          isPoAmtIsValid = response && response["StatusCode"] == 200;
+        }
+      );
+      if(!isPoAmtIsValid) return;  
+      
       var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
       reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
       reqSubmitAgrmntTcObj.ListAgrmntTcObj = listAgrmntTcObj;
