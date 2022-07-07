@@ -53,9 +53,10 @@
         "name": "OfficeName"
       },
       {
-        "type": "label",
+        "type": "sort",
         "position": "center",
-        "label": "Task Reassignment No"
+        "label": "Task Reassignment No",
+        "name": "T.TASK_REASSIGNMENT_TRX_ID"
       },
       {
         "type": "sort",
@@ -70,9 +71,10 @@
         "name": "T.OLD_CURRENT_USER"
       },
       {
-        "type": "label",
+        "type": "sort",
         "position": "left",
-        "label": "Activity Name"
+        "label": "Activity Name",
+        "name": "T.WF_ACTIVITY_NAME"
       },
       {
         "type": "label",
