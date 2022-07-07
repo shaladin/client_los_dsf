@@ -138,6 +138,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL;
     this.InputObj.Reason = this.DDLReason;
     this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.InputObj.TrxNo = "-";
   }
 
