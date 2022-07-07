@@ -56,7 +56,7 @@
         "type": "sort",
         "position": "center",
         "label": "Task Reassignment No",
-        "name": "T.TASK_REASSIGNMENT_TRX_ID"
+        "name": "T.TASK_REASSIGNMENT_TRX_NO"
       },
       {
         "type": "sort",
