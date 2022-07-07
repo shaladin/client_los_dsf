@@ -53,10 +53,9 @@
         "name": "OfficeName"
       },
       {
-        "type": "sort",
+        "type": "label",
         "position": "center",
-        "label": "Task Reassignment No",
-        "name": "WF.TRANSACTION_CODE"
+        "label": "Task Reassignment No"
       },
       {
         "type": "sort",
@@ -71,10 +70,9 @@
         "name": "T.OLD_CURRENT_USER"
       },
       {
-        "type": "sort",
+        "type": "label",
         "position": "left",
-        "label": "Activity Name",
-        "name": "Name"
+        "label": "Activity Name"
       },
       {
         "type": "label",
