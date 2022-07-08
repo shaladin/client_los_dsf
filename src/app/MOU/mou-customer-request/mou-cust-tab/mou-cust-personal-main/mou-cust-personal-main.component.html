@@ -38,17 +38,17 @@
           </div>
           <div class="form-group row">
             <label class="col-md-4" for="idExpDt"
-              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'KITAS' && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'SIM'"
+              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != MrIdTypeCodeKITAS && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != MrIdTypeCodeSIM && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != MrIdTypeCodeAKTA && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != MrIdTypeCodeKTM"
               translate>Id Expired Date</label>
             <label class="col-md-4 adins-required-label" for="idExpDt"
-              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'KITAS' || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'SIM'"
+              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == MrIdTypeCodeKITAS || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == MrIdTypeCodeSIM || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == MrIdTypeCodeAKTA || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == MrIdTypeCodeKTM"
               translate>Id Expired Date</label>
             <div class="col-md-8">
-              <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'EKTP' || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'NPWP'" readonly
+              <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == MrIdTypeCodeEKTP || parentForm.controls[identifier]['controls'].MrIdTypeCode.value == MrIdTypeCodeNPWP" readonly
                 type="date" class="form-control" id="idExpDt" formControlName="IdExpiredDt">
-              <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'EKTP' && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'NPWP'"
+              <input *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != MrIdTypeCodeEKTP && parentForm.controls[identifier]['controls'].MrIdTypeCode.value != MrIdTypeCodeNPWP"
                 min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="idExpDt"
-                formControlName="IdExpiredDt">
+                formControlName="IdExpiredDt" [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].IdExpiredDt.invalid}">
               <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].IdExpiredDt"
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
@@ -74,9 +74,9 @@
           </div>
           <div class="form-group row">
             <label class="col-md-4" for="TaxIdNo" translate
-              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != 'NPWP'">Tax Id No</label>
+              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value != MrIdTypeCodeNPWP">Tax Id No</label>
             <label class="col-md-4 adins-required-label" for="TaxIdNo" translate
-              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == 'NPWP'">Tax Id No</label>
+              *ngIf="parentForm.controls[identifier]['controls'].MrIdTypeCode.value == MrIdTypeCodeNPWP">Tax Id No</label>
             <div class="col-md-8">
               <input type="text" class="form-control" id="TaxIdNo" formControlName="TaxIdNo">
               <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].TaxIdNo"
@@ -163,11 +163,13 @@
             <label class="col-md-4 adins-required-label" for="gender" translate>Gender</label>
             <div class="col-md-4">
               <select class="form-control adInsInput full-width" id="gender" formControlName="MrGenderCode"
-                (change)="ChangeGender()">
+                (change)="ChangeGender()" [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrGenderCode.invalid }">
                 <option *ngFor="let item of GenderObj" [value]="item.Key">
                   {{item.Value}}
                 </option>
               </select>
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrGenderCode"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
           </div>
           <div class="form-group row">

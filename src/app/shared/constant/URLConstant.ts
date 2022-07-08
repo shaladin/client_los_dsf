@@ -1032,6 +1032,7 @@ export class URLConstant {
   public static GetAllAssetDataForPOMultiAsset = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataForPOMultiAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAppId";
+  public static GetAllAssetDataByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAgrmntId";
   public static GetListAllAssetDataByAppId = environment.losUrl + "/v1" + "/AppAsset/GetListAllAssetDataByAppId";
   public static GetAllAssetDataByAppAssetId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAppAssetId";
   public static GetListAppAssetByDOHId = environment.losUrl + "/v1" + "/AppAsset/GetListAppAssetByDOHId";
@@ -1157,6 +1158,7 @@ export class URLConstant {
   public static GetListInsuranceDataForCopyInsuranceByAppId = environment.losUrl + "/v1" + "/AppIns/GetListInsuranceDataForCopyInsuranceByAppId";
   public static CopyInsuranceData = environment.losUrl + "/v1" + "/AppIns/CopyInsuranceData";
   public static DeleteListInsuranceData = environment.losUrl + "/v1" + "/AppIns/DeleteListInsuranceData";
+  public static ValidateAppInsObjAmtByAppId = environment.losUrl + "/v1" + "/AppIns/ValidateAppInsObjAmtByAppId";
 
   //APP INSURANCE
   public static ExecuteInsRateRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateRule";
@@ -1969,5 +1971,8 @@ export class URLConstant {
   public static SendOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/SendOtp";
   public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
   public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
+  
+  //Ref Fin Asset Usage Map
+  public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
 
 }
