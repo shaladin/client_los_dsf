@@ -286,7 +286,7 @@ export class NavigationConstant {
 
   //#region FOU-VIEW
   public static VIEW_FOU_CUST_PERSONAL_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_FOU_CUST_PERSONAL_DETAIL_X; //'/View/Customer/X/PersonalDetailX'
-  public static VIEW_FOU_CUST_COY_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_FOU_CUST_COY_DETAIL_X; //'/View/Customer/CoyDetail'
+  public static VIEW_FOU_CUST_COY_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_FOU_CUST_COY_DETAIL_X; //'/View/Customer/X/CoyDetail/X'
   public static VIEW_FOU_CUST_TRUST_SOC = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_TRUST_SOC; //'/View/Customer/CustTrustSoc'
   public static VIEW_FOU_SRVY_ORDER = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_ORDER; //'/View/Survey/SurveyOrder'
   public static VIEW_FOU_SRVY_TASK = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_TASK; //'/View/Survey/SurveyTask'
