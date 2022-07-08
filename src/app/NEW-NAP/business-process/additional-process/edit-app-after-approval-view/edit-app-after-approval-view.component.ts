@@ -32,6 +32,7 @@ export class EditAppAfterApprovalViewComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   agrmntId: number;
   isReady: boolean = false;
+  RefMasterUsageCode = [];
 
   constructor(private router: Router, 
     private route: ActivatedRoute, 
@@ -65,6 +66,7 @@ export class EditAppAfterApprovalViewComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    this.setAssetUsage();
     this.isReady = true;
   }
 
@@ -72,16 +74,39 @@ export class EditAppAfterApprovalViewComponent implements OnInit {
   {
     let reqGetEditAppAftApv : GenericObj = new GenericObj();
     reqGetEditAppAftApv.Id = this.EditAppAftApvTrxHId;
-    await this.http.post(URLConstant.GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId, reqGetEditAppAftApv).subscribe(
+    await this.http.post(URLConstant.GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId, reqGetEditAppAftApv).toPromise().then(
       (response) => {
         this.ChangeSummaryObj = response["ReturnObject"];
-      
       });
+    
+    await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, {Codes: [CommonConstant.RefMasterTypeCodeAssetUsage]}).toPromise().then(
+      (response) => {
+        this.RefMasterUsageCode = response["ReturnObject"];
+      }
+    )
   }
 
   GetCallBack(ev){
     if(ev.Key == "ViewProdOffering"){ 
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
+    }
+  }
+
+  setAssetUsage()
+  {
+    for(let i = 0; i < this.ChangeSummaryObj.AssetDataObjs.length; i++)
+    {
+      var AssetDataObj = this.ChangeSummaryObj.AssetDataObjs[i];
+      for(let j = 0; j < AssetDataObj.EditAppAftApvTrxDObjs.length; j++)
+      {
+        var EditAppAftApvTrxDObj = AssetDataObj.EditAppAftApvTrxDObjs[j];
+        if(EditAppAftApvTrxDObj.ChangeItemCode == 'ASSET_DATA_MR_ASSET_USAGE_CODE')
+        {
+          EditAppAftApvTrxDObj.OldValue = this.RefMasterUsageCode.find(x => x.MasterCode === EditAppAftApvTrxDObj.OldValue).Descr
+          EditAppAftApvTrxDObj.NewValue = this.RefMasterUsageCode.find(x => x.MasterCode === EditAppAftApvTrxDObj.NewValue).Descr
+
+        }
+      }
     }
   }
 }
