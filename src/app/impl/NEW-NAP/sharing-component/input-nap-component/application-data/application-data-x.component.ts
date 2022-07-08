@@ -271,7 +271,7 @@ export class ApplicationDataXComponent implements OnInit {
         );
       }
     );
-    
+
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
@@ -826,7 +826,7 @@ export class ApplicationDataXComponent implements OnInit {
       MrSlikSecEcoCode: ev.RefSectorEconomySlikCode
     });
   }
-  
+
   setLookupCommodityData(ev) {
     this.NapAppModelForm.patchValue({
       CommodityCode: ev.MasterCode
@@ -858,13 +858,13 @@ export class ApplicationDataXComponent implements OnInit {
         }
       );
       this.agrmntParentNo = this.resultResponse.AgrmntParentNo;
-      
+
       if(this.agrParentList.length)
       {
         var idx = -1;
         for(var i=0; i<this.agrParentList.length; i++) if(this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
         if (idx > -1) this.copyAgrmntParentEvent(idx);
-      }   
+      }
     }
 
     let slikReqCode = {
@@ -1566,6 +1566,10 @@ export class ApplicationDataXComponent implements OnInit {
   readonly WopAutoDebit: string = CommonConstant.WopAutoDebit;
   setBankAcc(WOP: string) {
     if (WOP == this.WopAutoDebit) {
+      if (this.BizTemplateCode == CommonConstant.CFNA){
+      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+      }
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
         this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
@@ -1585,6 +1589,10 @@ export class ApplicationDataXComponent implements OnInit {
 
   setBankAccDDL(event: UcDropdownListCallbackObj) {
     if (event.selectedValue == this.WopAutoDebit) {
+      if (this.BizTemplateCode == CommonConstant.CFNA){
+        this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+        this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+        }
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
         this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
@@ -1678,7 +1686,17 @@ export class ApplicationDataXComponent implements OnInit {
 
   selectedBank() {
     if (this.NapAppModelForm.controls.MrWopCode.value != this.WopAutoDebit) return;
-
+    
+    if(this.NapAppModelForm.get("CustBankAcc").value == "")
+    {
+      this.GetBankInfo.BankCode = "";
+      this.GetBankInfo.BankBranch = "";
+      this.GetBankInfo.AppId = 0;
+      this.GetBankInfo.BankAccNo = "";
+      this.GetBankInfo.BankAccName = "";
+      return;
+    }
+    
     let custBankAccId: number = this.NapAppModelForm.get("CustBankAcc").value;
     let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
     this.GetBankInfo.BankCode = selectedBankAcc.BankCode;

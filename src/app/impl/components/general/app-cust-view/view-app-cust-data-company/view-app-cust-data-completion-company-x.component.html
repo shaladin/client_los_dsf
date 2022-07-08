@@ -171,6 +171,11 @@
           <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DateAsOf == 0">-</label> -->
         </div>
         <div class="form-group row ">
+          <label class="col-md-3 adInsLabel" translate>Other Monthly Installment DSF Amount</label>
+          <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OtherMonthlyInstallmentDsf != 0">{{CustCoyFinData.OtherMonthlyInstallmentDsf | number:'.2':'en-US'}}</label>
+          <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OtherMonthlyInstallmentDsf == 0">-</label>
+        </div>
+        <div class="form-group row ">
           <!-- <label class="col-md-3 adInsLabel" translate>Revenue</label>
           <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue != 0">{{CustCoyFinData.Revenue | number:'.2':'en-US'}}</label>
           <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue == 0">-</label> -->

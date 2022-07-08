@@ -59,7 +59,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     EffectiveDt: ['', Validators.required],
     AddIntrstAmt: [0],
     GoLiveEstimated: ['',Validators.required],
-    AdditionalInterestPaidBy: [''],
+    AdditionalInterestPaidBy: ['']
   });
 
   AppTcForm = this.fb.group({});
@@ -78,6 +78,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   isHasPO: boolean = false;
   LobCode: string;
   DeliveryDt: Date = new Date();
+  appCustId: number;
 
   constructor(
     private httpClient: HttpClient,

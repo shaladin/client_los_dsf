@@ -25,12 +25,24 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
 
   TotalNTF: number = 0;
   TotalUnit: number = 0;
-
+  TotalActiveInstallment: number = 0;
+  TotalOSPrincipal: number = 0;
+  TotalAR: number = 0;
+  TotalOSAR: number = 0;
   ReturnAgrmnt: any;
+
+  TotalProcessAsset: number = 0;
+  TotalProcessPrincipal: number = 0;
+  TotalProcessAR: number = 0;
+  TotalProcessInstallment: number = 0;
+  TotalRejectedAsset: number = 0;
+  TotalRejectedPrincipal: number = 0;
+  TotalRejectedAR: number = 0;
+  TotalRejectedInstallment: number = 0;
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
 
@@ -42,22 +54,24 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
           let reqObjListCustNo = {
             ListCustNo: [this.CustNo]
           }
-          this.http.post(URLConstantX.GetAgrmntHistByListCustNo, reqObjListCustNo).subscribe(
-            (response) => {
+          this.http.post(URLConstantX.GetAgrmntHistByListCustNoFilterExpired, reqObjListCustNo).subscribe(
+            async (response) => {
               this.ExstAgrmnt = response;
-              this.GetTotalNTFAndUnit();
+              await this.GetGrandTotal();
+              await this.GetTotalARAndOSAR();
             }
           );
 
           this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
             (response: AppObj) => {
               let reqObj = {
-                CustNo: this.CustNo, 
+                CustNo: this.CustNo,
                 IsAppInitDone: response.IsAppInitDone
               }
-              this.http.post(URLConstantX.GetAppByCustNoAndIsAppInitDone, reqObj).subscribe(
-                (response) => {
+              this.http.post(URLConstantX.GetAppByCustNoAndIsAppInitDoneV2, reqObj).subscribe(
+                async (response) => {
                   this.AppPrcs = response;
+                  await this.GetProcessGrandTotal();
                 }
               );
             }
@@ -67,9 +81,10 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
             CustNo: this.CustNo,
             AppStat:"RJC"
           }
-          this.http.post(URLConstantX.GetAppByCustNoAndAppStat, reqObj).subscribe(
-            (response) => {
+          this.http.post(URLConstantX.GetAppByCustNoAndAppStatV2, reqObj).subscribe(
+            async (response) => {
               this.AppRjct = response;
+              await this.GetRejectedGrandTotal();
             }
           );
         }
@@ -77,12 +92,40 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
     );
   }
 
-  GetTotalNTFAndUnit() {
+  async GetGrandTotal() {
     if(this.ExstAgrmnt != undefined && this.ExstAgrmnt.length != 0) {
       var existingAgreement = this.ExstAgrmnt;
       existingAgreement.forEach(element => {
         this.TotalNTF = this.TotalNTF + element.NTFAmount;
         this.TotalUnit = this.TotalUnit + element.NumOfAsset;
+        this.TotalActiveInstallment += element.InstAmount;
+        this.TotalOSPrincipal += element.OsPrincipal;
+      });
+    }
+  }
+
+  async GetProcessGrandTotal(){
+    if(this.AppPrcs != undefined && this.AppPrcs.length != 0){
+      this.AppPrcs.forEach(element => {
+        this.TotalProcessAsset += element.NumOfAsset;
+        this.TotalProcessPrincipal += element.TotalNTF;
+        this.TotalProcessAR += element.TotalAR;
+        this.TotalProcessInstallment += element.InstAmount;
+      });
+    }
+  }
+  async GetTotalARAndOSAR(){
+    this.TotalAR += this.TotalNTF + this.TotalActiveInstallment;
+    this.TotalOSAR += this.TotalOSPrincipal + this.TotalActiveInstallment;
+  }
+
+  async GetRejectedGrandTotal(){
+    if(this.AppRjct != undefined && this.AppRjct.length != 0){
+      this.AppRjct.forEach(element => {
+        this.TotalRejectedAsset += element.NumOfAsset;
+        this.TotalRejectedPrincipal += element.TotalNTF;
+        this.TotalRejectedAR += element.TotalAR;
+        this.TotalRejectedInstallment += element.InstAmount;
       });
     }
   }
