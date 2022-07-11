@@ -2990,7 +2990,7 @@ export class AssetDataXComponent implements OnInit {
     let ownerCode: string = "";
     if (this.appAssetObj) ownerCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
     if (OwnerType == CommonConstant.CustTypePersonal) {
-      this.InputLookupProfessionObj.isRequired = false;
+      this.InputLookupProfessionObj.isRequired = true;
       this.AssetDataForm.controls.OwnerProfessionCode.clearValidators();
 
       if (IsOwnerTypeChanged) {
@@ -3012,7 +3012,7 @@ export class AssetDataXComponent implements OnInit {
         );
       }
     } else {
-      this.InputLookupProfessionObj.isRequired = true;
+      this.InputLookupProfessionObj.isRequired = false;
       this.AssetDataForm.controls.OwnerProfessionCode.setValidators([Validators.required]);
 
       if (IsOwnerTypeChanged) {
