@@ -388,6 +388,7 @@ export class TrialCalculationComponent implements OnInit {
         DownPaymentNettAmt: this.TrialForm.controls.DownPaymentAmt.value,
         TotalDownPaymentNettAmt: this.TrialForm.controls.DownPaymentAmt.value,
         TotalDownPaymentGrossAmt: this.TrialForm.controls.DownPaymentAmt.value,
+        TotalDpAmt: this.TrialForm.controls.DownPaymentAmt.value,
         TotalInsCustAmt: this.TrialForm.controls.TotalInsCustAmt.value,
         InsCptlzAmt: this.TrialForm.controls.InsCptlzAmt.value,
       });
@@ -433,7 +434,6 @@ export class TrialCalculationComponent implements OnInit {
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          TotalDpAmt: this.appFinDataObj.TotalDpAmt,
           VendorAtpmCode: this.appFinDataObj.VendorAtpmCode,
           BalloonValueAmt: this.appFinDataObj.BalloonValueAmt,
           ResidualValueAmt: this.appFinDataObj.ResidualValueAmt && this.appFinDataObj.ResidualValueAmt > 0 ? this.appFinDataObj.ResidualValueAmt : 0,
