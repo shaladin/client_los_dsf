@@ -140,6 +140,12 @@ export class UcProdOfferingCompComponent implements OnInit {
       offeringMrProdBehaviour = CommonConstant.BehaviourTypeLock;
     }
 
+    if(this.CompGroups == CommonConstant.PRODUCT_COMP_GRP_GEN)
+    {
+      hoMrProdBehaviour = obj.HOMrProdBehaviour == "" ? hoMrProdBehaviour : obj.HOMrProdBehaviour;
+      offeringMrProdBehaviour = obj.OfferingMrProdBehaviour == ""  ? offeringMrProdBehaviour : obj.OfferingMrProdBehaviour;
+    }
+
     return this.fb.group({
       RefProdCompntId:obj.RefProdCompntId,
       RefProdCompntCode: obj.RefProdCompntCode,
