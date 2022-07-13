@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/request/delivery-order/req-get-do-multi-asset-information-obj.model';
+import { AgrmntOtherInfoObj } from 'app/shared/model/agrmnt-other-info-obj.model';
 
 @Component({
   selector: "agrmnt-view-delivery-order",
@@ -23,6 +24,7 @@ export class ViewDeliveryOrderComponent implements OnInit {
   isReady: boolean = false;
   DeliveryOrderHObjs: Array<DeliveryOrderHObj> = new Array<DeliveryOrderHObj>();
   doDetailObj: DeliveryOrderHObj;
+  agrmntOtherInfoObj: AgrmntOtherInfoObj;
 
   agrmntObj = {
     AgrmntId: 0,
@@ -38,7 +40,7 @@ export class ViewDeliveryOrderComponent implements OnInit {
   async ngOnInit() {
     this.agrmntObj.AgrmntId = this.agrmntId;
     await this.GetDeliveryOrderData();
-    await this.GetListDeliveryOrderData();
+    await this.GetListDeliveryOrderData();    
     this.isReady = true;
   }
 

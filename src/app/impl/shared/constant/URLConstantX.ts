@@ -235,6 +235,7 @@ export class URLConstantX {
   public static GetAgrmntHistByListCustNoFilterExpired = environment.losUrl + "/v1" +"/AgrmntX/GetAgrmntHistByListCustNoFilterExpired";
   public static GetAgrmntFinDataNtfAmtByAgrmntId = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntFinDataNtfAmtByAgrmntId";
   public static GetAgrmntOtherInfoByAgrmntIdX = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntOtherInfoByAgrmntId";
+  public static GetAgrmntOtherInfoByAgrmntIdForViewX = 'http://localhost:5002' + "/v1" + "/AgrmntX/GetAgrmntOtherInfoByAgrmntIdForView";
 
   //ASSET
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocListX/GetListAssetDocListByAssetTypeCode";
