@@ -82,7 +82,7 @@ export class ApplicationDataDlfnXComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     MrSlikSecEcoCode: [''],
-    CustBankAcc: [''],
+    CustBankAcc: ['',[Validators.required]],
     IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     BpkbStatCode: [''],
@@ -211,7 +211,6 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       this.isShowAppCustBankAcc = false;
     }
     this.checkIsTopDaysNull();
-
   }
 
 
