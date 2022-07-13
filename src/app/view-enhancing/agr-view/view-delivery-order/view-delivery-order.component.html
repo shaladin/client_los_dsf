@@ -1,2 +1,2 @@
-<app-view-delivery-order-multi *ngIf="isMultiAsset && isReady" [doList]="DeliveryOrderHObjs" [appId]="appId"></app-view-delivery-order-multi>
-<app-view-delivery-order-detail *ngIf="!isMultiAsset && isReady" [doDetailObj]="doDetailObj" [appId]="appId"></app-view-delivery-order-detail>
+<app-view-delivery-order-multi *ngIf="isMultiAsset && isReady" [doList]="DeliveryOrderHObjs" [appId]="appId" [agrmntId]="agrmntId"></app-view-delivery-order-multi>
+<app-view-delivery-order-detail *ngIf="!isMultiAsset && isReady" [doDetailObj]="doDetailObj" [appId]="appId" [agrmntId]="agrmntId"></app-view-delivery-order-detail>
