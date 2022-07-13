@@ -14,6 +14,9 @@ export class CommonConstantX {
     //LOB
     public static SLB = "SLB";
 
+    //WOP Descr
+    public static WOPADDescr = "Auto Debit";
+    
     //General Setting Code
     public static GSVendorSlbCode = "VENDOR_SLB_CODE";
     public static GSVendorMpfFdCode = "VENDOR_MPFFD_CODE";

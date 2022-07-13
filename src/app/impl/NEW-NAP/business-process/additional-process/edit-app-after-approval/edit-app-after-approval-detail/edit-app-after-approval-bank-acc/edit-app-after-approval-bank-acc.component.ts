@@ -3,16 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AddrObj } from 'app/shared/model/addr-obj.model';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
 import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-edit-app-after-approval-bank-acc',
@@ -40,11 +43,14 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
   GetBankInfo: AppOtherInfoObj = new AppOtherInfoObj();
   BankAccRelatedOutput: any;
 
-
+  UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  MaxDate: Date;
   constructor(private fb: FormBuilder,
-              private http: HttpClient) { }
+              private http: HttpClient,
+              private cookieService: CookieService) { }
 
   async ngOnInit() {
+    this.MaxDate = this.UserAccess.BusinessDt;
     this.initCustBankAccDetail();
     this.initAddressCustBankAcc();
     await this.GetData();
