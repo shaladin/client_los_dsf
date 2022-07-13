@@ -5,6 +5,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AllAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
 
 @Component({
   selector: "view-asset-data-x",
@@ -34,6 +35,7 @@ export class ViewAssetDataXComponent implements OnInit {
   SalesName: string;
   AdminName: string;
   ManagerName: string;
+  SerialNoLabelCollateralList: Array<string> = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -128,7 +130,9 @@ export class ViewAssetDataXComponent implements OnInit {
   async GetListAppCollateralByAgrmntId(AgrmntId: number) {
     this.http.post(URLConstant.GetViewAppCollateralObjByAgrmntId, {Id: AgrmntId}).subscribe(
       response => {
-        this.appCollateralList = response["AppCollateralObjs"];
+        this.appCollateralList = response["ReturnObj"];
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + this.appCollateralList);
+        this.GetSerialNoList();
       }
     );
   }
@@ -136,11 +140,59 @@ export class ViewAssetDataXComponent implements OnInit {
   async GetListAppCollateralByAppId(AppId: number) {
     this.http.post(URLConstant.GetViewAppCollateralObjByAppId, {Id: AppId}).subscribe(
       response => {
-        this.appCollateralList = response["AppCollateralObjs"];
+        this.appCollateralList = response["ReturnObj"];
+        this.GetSerialNoList();
       }
     );
   }
 
+  async GetSerialNoList()
+  {
+    let reqByListCodes: GenericListByCodeObj = new GenericListByCodeObj();
+    this.appCollateralList.forEach(x => {
+      reqByListCodes.Codes.push(x.AssetTypeCode);
+    });
+    
+    let x = [];
+    let temp = 0;
+    for(let i = 0; i < reqByListCodes.Codes.length; i++)
+    {
+      await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+        Code: this.appCollateralList[i].AssetTypeCode
+      }).toPromise().then(
+        (response) => {
+          if(i == 0)
+          {
+            response[CommonConstant.ReturnObj].length <= 3? temp = response[CommonConstant.ReturnObj].length : temp = 3;
+          }
+          else
+          {
+            response[CommonConstant.ReturnObj].length >= temp? (response[CommonConstant.ReturnObj].length >= 3? temp = 3 : temp = response[CommonConstant.ReturnObj].length) : temp = temp;
+          }
+        });
+      x = reqByListCodes.Codes.filter(f => f == reqByListCodes.Codes[i]);
+    }
+    if(x.length == reqByListCodes.Codes.length)
+    {
+      await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+        Code: this.appCollateralList[0].AssetTypeCode
+      }).toPromise().then(
+        (response) => {
+          for(let i = 0; i < temp; i++)
+          {
+            this.SerialNoLabelCollateralList.push(response[CommonConstant.ReturnObj][i].SerialNoLabel)
+          }
+        });
+    }
+    else
+    {
+      for(let i = 0; i < temp; i++)
+      {
+        this.SerialNoLabelCollateralList.push("Serial No " + (i+1))
+      }
+    }
+  }
+  
   viewDetailCollateralHandler(AppCollateralId){
     this.IsHidden = false;
     this.AppCollateralId = AppCollateralId;
