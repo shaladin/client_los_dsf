@@ -204,6 +204,9 @@ export class UcProdOfferingCompComponent implements OnInit {
     if (url != "") {
       var url = obj.ProdCompntDtaSrcApi;
       var payload = JSON.parse(obj.ProdCompntDtaValue);
+      if(obj.ProdCompntAddCrit != null){
+        payload = await this.getPayload(obj);
+      }
       await this.http.post(url, payload).toPromise().then(
         (response) => {
           var result = response[CommonConstant.ReturnObj];
