@@ -125,9 +125,9 @@
                     <label class="col-md-3 adInsLabel" translate>Source of Income</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeDescr != null">{{CustPersonalFinData.MrSourceOfIncomeTypeDescr}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeDescr == null">-</label>
-                    <label class="col-md-3 adInsLabel" translate>Other Monthly Installment</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt != 0">{{CustPersonalFinData.OtherMonthlyInstAmt | number:'.2':'en-US'}}</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Total Monthly Expense</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt != 0">{{CustPersonalFinData.TotalMonthlyExpenseAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt == 0">-</label>
                 </div>
                 <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Spouse Monthly Income</label>
@@ -140,9 +140,9 @@
                 <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Join Income</label>
                     <label class="col-md-3 adInsLabel" >{{CustPersonalFinData.IsJoinIncome ? 'Yes' : 'No'}}</label>
-                    <label class="col-md-3 adInsLabel" translate>Other Income</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherIncomeAmt != 0">{{CustPersonalFinData.OtherIncomeAmt | number:'.2':'en-US'}}</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherIncomeAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Other Monthly Installment</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt != 0">{{CustPersonalFinData.OtherMonthlyInstAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt == 0">-</label>  
                     <label class="col-md-3"></label>
 <!--                    <label class="col-md-3 adInsLabel" translate>Other Monthly Installment</label>-->
 <!--                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt != 0">{{CustPersonalFinData.OtherMonthlyInstAmt | number:'.2':'en-US'}}</label>-->
@@ -152,16 +152,17 @@
                     <label class="col-md-3 adInsLabel" translate>Total Monthly Income</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalIncomeAmt != 0">{{CustPersonalFinData.TotalIncomeAmt | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalIncomeAmt == 0">-</label>
-                    <label class="col-md-3 adInsLabel" translate>Total Monthly Expense</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt != 0">{{CustPersonalFinData.TotalMonthlyExpenseAmt | number:'.2':'en-US'}}</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt == 0">-</label>
                 </div>
                 <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Nett Monthly Income</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.NettIncomeAmt != 0">{{CustPersonalFinData.NettIncomeAmt | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.NettIncomeAmt == 0">-</label>
                 </div>
-
+                <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Other Income</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherIncomeAmt != 0">{{CustPersonalFinData.OtherIncomeAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherIncomeAmt == 0">-</label>
+                </div>
             </div>
         </form>
     </div>
