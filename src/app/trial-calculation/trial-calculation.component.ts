@@ -78,7 +78,7 @@ export class TrialCalculationComponent implements OnInit {
     TdpPaidCoyAmt: 0, // input layar
 
     NtfAmt: 0,
-    RateType: "EFCTV",
+    RateType: ["EFCTV", [Validators.required]],
     EffectiveRatePrcnt: 0, //eff rate to cust
     EffectiveRateBhv: "",
     StdEffectiveRatePrcnt: 0, //base eff rate to cust
@@ -288,6 +288,16 @@ export class TrialCalculationComponent implements OnInit {
     this.TrialForm.patchValue({
       TotalInsCustAmt: TotalInsCustAmt,
       InsCptlzAmt: InsCptlzAmt
+    });
+  }
+
+  updateLifeInsuranceAmt() {
+    this.ChangeIsGenerateHandler();
+    var TotalLifeInsCustAmt = this.TrialForm.controls.TotalLifeInsCustAmt.value;
+    var LifeInsCptlzAmt = this.TrialForm.controls.LifeInsCptlzAmt.value;
+    this.TrialForm.patchValue({
+      TotalLifeInsCustAmt: TotalLifeInsCustAmt,
+      LifeInsCptlzAmt: LifeInsCptlzAmt
     });
   }
 

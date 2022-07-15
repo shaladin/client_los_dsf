@@ -42,7 +42,7 @@ export class ExceptionConstant {
     public static END_DATE_CANNOT_LOWER_THAN = "End Date can't be lower than ";
     public static TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN = "Total Reserved Fund Amount Must be Less Than ";
     public static EFF_RATE_CANNOT_LESS_THAN_STD_RATE = "Effective Rate cannot be less than Standard Rate.";
-    public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate.";
+    public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate ";
     public static COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT = "Collateral Value can not be less than Plafond Amount.";
     public static COLL_VALUE_CANNOT_LESS_THAN_EQUALS_PLAFOND_AMT = "Collateral Value can not be less than or equals Plafond Amount.";
     public static COLL_VALUE_MUST_EQUALS_PLAFOND_AMT = "Collateral Value must equals Plafond Amount.";
@@ -76,6 +76,7 @@ export class ExceptionConstant {
     public static CHOOSE_CUST_RELATIONSHIP= "Please Choose Cust Relationship.";
     public static INPUT_INSURANCE_LENGTH = "Please input Insurance Length.";
     public static CHOOSE_CALCULATE_BASE = "Please choose Calculate Base.";
+    public static CHOOSE_RATE_TYPE = "Please choose Rate Type.";
     public static SAVE_TC_DATA = "Please Save TC Data First!";
     public static SELECT_ONE_DATA_ON_LEAD = "Please select at least one Available Lead";
     public static DELETE_CONFIRMATION = 'Are you sure to delete this record?';
