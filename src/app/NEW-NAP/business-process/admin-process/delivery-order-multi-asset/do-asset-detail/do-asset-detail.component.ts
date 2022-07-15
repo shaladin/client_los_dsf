@@ -195,7 +195,7 @@ export class DoAssetDetailComponent implements OnInit {
 
   async GetPODate(AgrmntId: number)
   {
-    await this.httpClient.post(this.UrlConstantNew.GetPurchaseOrderHByAgrmntId, { Id: AgrmntId }).toPromise().then(
+    await this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { Id: AgrmntId }).toPromise().then(
       (res) => {
         console.log(res)
         if(res["PurchaseOrderDt"] != null)
