@@ -245,6 +245,7 @@ export class URLConstantX {
 
   //GENERIC
   public static GetPagingObjectR2BySQL = "/GenericX/GetPagingObjectR2BySQL";
+  public static RunSpBySpNameWithParam = environment.FoundationR3Url + "/v1" + "/GenSpX/RunSpBySpNameWithParam";
 
   //SURVEY VERIF X
   public static SubmitReturnHandlingSurveyVerif = environment.losUrl + "/v2" + "/SurveyVerifX/SubmitReturnHandlingSurveyVerif";
