@@ -64,5 +64,23 @@ export class ViewLtkmAppSummaryDataComponent implements OnInit {
             (response) => {
                 this.firstInstType = response["Descr"];
             });
+
+        var objAssetUsage: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+            RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetUsage,
+            MasterCode: this.SummaryObj.AppAsset.MrAssetUsageCode
+        }
+        this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, objAssetUsage).subscribe(
+            (response) => {
+                this.SummaryObj.AppAsset.MrAssetUsageCode = response["Descr"];
+            });
+
+        var objInsPaidBy: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+            RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsPaidBy,
+            MasterCode: this.SummaryObj.AppIns.InsAssetPaidBy
+        }
+        this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, objInsPaidBy).subscribe(
+            (response) => {
+                this.SummaryObj.AppIns.InsAssetPaidBy = response["Descr"];
+            });    
     }
 }
