@@ -6,6 +6,15 @@ export class ReqAgrmntMasterDataObjX {
     PlafondAgrmntAmt: number;
     MaxPlafondAgrmntAmt: number;
     MaxTenor: number;
+    AgrmntDt: Date;
+    OsPrincipal: number;
+    OsInterest: number;
+    NumOfAsset: number;
+    EffRate: number;
+    PurposeOfFinancing: string;
+    WayOfFinancing: string;
+    ProductType: string;
+    ApToSupplierDisburseDt: Date;
     RowVersion: string;
   
     constructor() {

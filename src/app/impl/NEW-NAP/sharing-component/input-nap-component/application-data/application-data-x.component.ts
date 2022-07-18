@@ -214,6 +214,16 @@ export class ApplicationDataXComponent implements OnInit {
   MasterCustType: string = "";
   MasterIdNoType: string = "";
 
+  AgrmntDt: Date = new Date();
+  OsPrincipal: number = 0;
+  OsInterest: number = 0;
+  NumberOfAsset: number = 0;
+  EffRate: number = 0;
+  PurposeOfFinancing: string = "";
+  WayOfFinancing: string = "";
+  ProductType: string = "";
+  ApToSupplierDisburseDt: Date = new Date();
+
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -974,6 +984,16 @@ export class ApplicationDataXComponent implements OnInit {
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
     this.goLiveDt = this.agrParent.GoLiveDt;
+    this.AgrmntDt = this.agrParent.AgrmntDt;
+    this.OsPrincipal = this.agrParent.OsPrincipal;
+    this.OsInterest = this.agrParent.OsInterest;
+    this.NumberOfAsset = this.agrParent.NumOfAsset;
+    this.EffRate = this.agrParent.EffRate;
+    this.PurposeOfFinancing = this.agrParent.PurposeOfFinancing;
+    this.WayOfFinancing = this.agrParent.WayOfFinancing;
+    this.ProductType = this.agrParent.ProductType;
+    this.ApToSupplierDisburseDt = this.agrParent.ApToSupplierDisburseDt;
+    
     const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
     reqCalculatePlafondAgrmntXObj.AgrmntParentNo = this.agrParent.AgrmntNo;
@@ -1227,6 +1247,15 @@ export class ApplicationDataXComponent implements OnInit {
               PlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt,
               MaxPlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt,
               MaxTenor: this.maxTenor,
+              AgrmntDt: this.AgrmntDt,
+              OsPrincipal: this.OsPrincipal,
+              OsInterest:this.OsInterest,
+              NumOfAsset: this.NumberOfAsset,
+              EffRate: this.EffRate,
+              PurposeOfFinancing: this.PurposeOfFinancing,
+              WayOfFinancing:this.WayOfFinancing,
+              ProductType:this.ProductType,
+              ApToSupplierDisburseDt: this.ApToSupplierDisburseDt,
               RowVersion: this.resultResponse.RowVersionAgrmntMasterX
             }
             let obj = {
@@ -1566,10 +1595,9 @@ export class ApplicationDataXComponent implements OnInit {
   readonly WopAutoDebit: string = CommonConstant.WopAutoDebit;
   setBankAcc(WOP: string) {
     if (WOP == this.WopAutoDebit) {
-      if (this.BizTemplateCode == CommonConstant.CFNA){
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
-      }
+
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
         this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
@@ -1589,10 +1617,9 @@ export class ApplicationDataXComponent implements OnInit {
 
   setBankAccDDL(event: UcDropdownListCallbackObj) {
     if (event.selectedValue == this.WopAutoDebit) {
-      if (this.BizTemplateCode == CommonConstant.CFNA){
-        this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-        this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
-        }
+      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
         this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
