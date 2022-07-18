@@ -503,13 +503,13 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
       if (this.isMarried == true && this.spouseGender == CommonConstant.MasteCodeGenderMale) {
         this.ContactInfoPersonalForm.patchValue({
-          MrGenderCode: CommonConstant.MasteCodeGenderMale
+          MrGenderCode: CommonConstant.MasterCodeGenderFemale
         });
         this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
       }
       else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
         this.ContactInfoPersonalForm.patchValue({
-          MrGenderCode: CommonConstant.MasterCodeGenderFemale
+          MrGenderCode: CommonConstant.MasteCodeGenderMale
         });
         this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
       }

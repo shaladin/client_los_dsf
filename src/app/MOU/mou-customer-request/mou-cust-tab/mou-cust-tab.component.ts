@@ -164,7 +164,6 @@ export class MouCustTabComponent implements OnInit {
   defCustModelCode: string;
   MrCustTypeCode: string;
   isMarried: boolean = true;
-  spouseGender: string = "";
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
   appId: number;
@@ -1964,7 +1963,6 @@ export class MouCustTabComponent implements OnInit {
         this.IsSpouseExist = false;
       }
     }
-    this.spouseGender = event.SpouseGender;
   }
   MaritalChanged(event) {
     this.isMarried = event;
@@ -2199,5 +2197,10 @@ export class MouCustTabComponent implements OnInit {
         this.IsSvcExist = true;
       }
     }
+  }
+
+  private readonly identifierPersonalMain = 'PersonalMain'
+  get CustPersonalMainDataGenderType(){
+    return this.CustDataForm.controls[this.identifierPersonalMain]['controls'].MrGenderCode.value;
   }
 }
