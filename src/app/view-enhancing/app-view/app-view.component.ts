@@ -231,6 +231,7 @@ export class AppViewComponent implements OnInit {
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
       this.IsCustomerOpl = false;
+      if(this.CustType == CommonConstant.CustTypeCompany) this.IsPhoneVerification = false;
     }
     else if (this.bizTemplateCode == CommonConstant.FL4W) {
       this.IsAsset = false;
@@ -242,6 +243,7 @@ export class AppViewComponent implements OnInit {
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
       this.IsCustomerOpl = false;
+      if(this.CustType == CommonConstant.CustTypeCompany) this.IsPhoneVerification = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFNA) {
       if(this.CustType == CommonConstant.CustTypeCompany){
@@ -256,6 +258,7 @@ export class AppViewComponent implements OnInit {
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
       this.IsCustomerOpl = false;
+      if(this.CustType == CommonConstant.CustTypeCompany) this.IsPhoneVerification = false;
     }
     else if (this.bizTemplateCode == CommonConstant.OPL) {
       this.IsCustomer = false;
