@@ -1595,8 +1595,10 @@ export class ApplicationDataXComponent implements OnInit {
   readonly WopAutoDebit: string = CommonConstant.WopAutoDebit;
   setBankAcc(WOP: string) {
     if (WOP == this.WopAutoDebit) {
-      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+      if (this.BizTemplateCode == CommonConstant.CFNA){
+        this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+        this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+      }
 
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
@@ -1617,8 +1619,10 @@ export class ApplicationDataXComponent implements OnInit {
 
   setBankAccDDL(event: UcDropdownListCallbackObj) {
     if (event.selectedValue == this.WopAutoDebit) {
-      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+      if (this.BizTemplateCode == CommonConstant.CFNA){
+        this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+        this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+        }
 
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
