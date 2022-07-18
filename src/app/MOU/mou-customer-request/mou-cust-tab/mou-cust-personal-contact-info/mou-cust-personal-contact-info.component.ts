@@ -501,20 +501,19 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     if (this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == CommonConstant.MasteCodeRelationshipSpouse) {
       this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
       this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
-      if (this.isMarried == true && this.spouseGender == CommonConstant.MasteCodeGenderMale) {
-        this.ContactInfoPersonalForm.patchValue({
-          MrGenderCode: CommonConstant.MasterCodeGenderFemale
-        });
-        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
-      }
-      else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
-        this.ContactInfoPersonalForm.patchValue({
-          MrGenderCode: CommonConstant.MasteCodeGenderMale
-        });
-        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
-      }
-      else {
-        this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
+      if (this.isMarried == true) {
+        if (this.spouseGender == CommonConstant.MasteCodeGenderMale){
+          this.ContactInfoPersonalForm.patchValue({
+            MrGenderCode: CommonConstant.MasterCodeGenderFemale
+          });
+          this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        }
+        else if (this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
+          this.ContactInfoPersonalForm.patchValue({
+            MrGenderCode: CommonConstant.MasteCodeGenderMale
+          });
+          this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        }
       }
     }
     else {
