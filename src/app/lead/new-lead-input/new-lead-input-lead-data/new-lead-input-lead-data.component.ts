@@ -223,7 +223,10 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       }
     );
 
-
+    let objGetLeadAppByLeadId = {
+      Id: this.LeadId
+    }
+    this.GetLeadAppByLeadId(objGetLeadAppByLeadId, false);
 
     if (this.CopyFrom != null) {
       this.reqLeadAssetObj = new LeadAssetObj();
@@ -328,19 +331,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       obj = {
         Id: this.reqLeadAppObj.LeadId
       }
-      this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
-        (response: LeadAppObj) => {
-          this.resLeadAppObj = response;
-          if (this.resLeadAppObj.LeadAppId != 0) {
-            this.LeadDataForm.patchValue({
-              Tenor: this.resLeadAppObj.Tenor,
-              MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
-              NTFAmt: this.resLeadAppObj.NtfAmt,
-              TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
-              InstallmentAmt: this.resLeadAppObj.InstAmt,
-            });
-          }
-        });
+      this.GetLeadAppByLeadId(obj, true);
     }
 
       this.reqLeadAssetObj = new LeadAssetObj();
@@ -447,20 +438,27 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             let obj = {
               Id: this.reqLeadAppObj.LeadId
             }
-            this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
-              (response: LeadAppObj) => {
-                this.resLeadAppObj = response;
-                this.LeadDataForm.patchValue({
-                  Tenor: this.resLeadAppObj.Tenor,
-                  MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
-                  NTFAmt: this.resLeadAppObj.NtfAmt,
-                  TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
-                  InstallmentAmt: this.resLeadAppObj.InstAmt,
-                });
-              });
+            this.GetLeadAppByLeadId(obj, false);
           }
         });
 
+  }
+
+  GetLeadAppByLeadId(obj, checkLeadAppId: boolean){
+    this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
+      (response: LeadAppObj) => {
+        this.resLeadAppObj = response;
+        if(checkLeadAppId){
+          if(this.resLeadAppObj.LeadAppId == 0) return;
+        }
+        this.LeadDataForm.patchValue({
+          Tenor: this.resLeadAppObj.Tenor,
+          MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
+          NTFAmt: this.resLeadAppObj.NtfAmt,
+          TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
+          InstallmentAmt: this.resLeadAppObj.InstAmt,
+        });
+      });
   }
 
   SetAsset(event) {
