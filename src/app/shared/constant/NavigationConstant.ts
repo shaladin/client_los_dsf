@@ -274,6 +274,7 @@ export class NavigationConstant {
   public static VIEW_FOU_SRVY_ORDER = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_ORDER; //'/View/Survey/SurveyOrder'
   public static VIEW_FOU_SRVY_TASK = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_TASK; //'/View/Survey/SurveyTask'
   public static VIEW_FOU_VENDOR_BRANCH = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_VENDOR_BRANCH; //'/View/Vendor/VendorBranch'
+  public static VIEW_FOU_ASLI_RI = "/" + PathConstant.VIEW +"/" + PathConstant.VIEW_CUST_ASLI_RI; //'/View/Customer/CustAsliRi'
   //#endregion
 
   //#region MOU
