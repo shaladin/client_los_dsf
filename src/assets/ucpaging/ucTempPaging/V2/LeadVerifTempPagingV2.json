@@ -88,7 +88,7 @@
   },
     "headerList": [
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Claim By",
             "name": "Assignee"
@@ -121,7 +121,7 @@
             "type": "sort",
             "position": "left",
             "label": "Lead Source",
-            "name": "RM.DESCR"
+            "name": "VRAS.APP_SRC_NAME"
         },
         {
             "type": "sort",
