@@ -74,7 +74,7 @@ import { MainDataComponentModule } from "app/NEW-NAP/sharing-component/main-data
 
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

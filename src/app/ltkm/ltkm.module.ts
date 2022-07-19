@@ -61,7 +61,7 @@ import { UcdropdownlistModule } from "@adins/ucdropdownlist";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,
