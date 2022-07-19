@@ -178,6 +178,7 @@ export class MouReviewGeneralComponent implements OnInit {
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.resultData["MouCustNo"];
     this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.IsReady = true;
   }
 

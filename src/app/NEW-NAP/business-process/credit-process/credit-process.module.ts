@@ -57,7 +57,7 @@ import { FormCommissionGenerateV2Component } from "./commission-reserved-fund/co
 
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

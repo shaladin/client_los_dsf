@@ -241,20 +241,24 @@ export class CollateralAddEditComponent implements OnInit {
 
   isReadyAttrSetting: boolean = false;
   attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
-  identifierAppCollAttr: string = "appCollateralAttrTestObjs";
+  identifierAppCollAttr: string = "AppCollateralAttrObjs";
+
   SetRefAttrSettingObj() {
+    this.isReadyAttrSetting = false;
     let GenObj =
     {
       AppCollateralId: this.AppCollateralId,
       AssetTypeCode: this.AddCollForm.get("AssetTypeCode").value,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
       IsRefresh: false
-    };
+    }
     this.attrSettingObj.ReqGetListAttrObj = GenObj;
     this.attrSettingObj.Title = "Collateral Attribute";
     this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppCollateralAttrV2;
-    this.isReadyAttrSetting = true;
+    setTimeout(() => {
+      this.isReadyAttrSetting = true;
+    }, 100);
   }
+
   back() {
     if (this.isReturnHandlingSave) {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT], { AppId: this.AppId, ReturnHandlingHId: this.ReturnHandlingHId, WfTaskListId: this.WfTaskListId });
@@ -684,16 +688,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.collateralPortionHandler();
       });
 
-    await this.GenerateAppCollateralAttr(false);
-    // let GenObj =
-    // {
-    //   AppCollateralId: this.AppCollateralId,
-    //   AssetTypeCode: this.AddCollForm.get("AssetTypeCode").value,
-    //   AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-    //   IsRefresh: false
-    // };
-    // this.attrSettingObj.GetQuestionReqObj = GenObj;
-    // this.ucAttrComp.GetListAttribute();
+    await this.SetRefAttrSettingObj();
     await this.CheckManufacturingYearMandatory();
   }
 
@@ -703,8 +698,8 @@ export class CollateralAddEditComponent implements OnInit {
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
-          LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'],
-          CollateralOwnerAddr: response[CommonConstant.ReturnObj][0]['AppCustAddrId']
+          LocationAddrType: "",//response[CommonConstant.ReturnObj][0]['AppCustAddrId'],
+          CollateralOwnerAddr: "",//response[CommonConstant.ReturnObj][0]['AppCustAddrId']
         });
       }
     );
@@ -770,6 +765,7 @@ export class CollateralAddEditComponent implements OnInit {
       this.AddCollForm.controls.OwnerProfessionCode.enable();
       this.AddCollForm.controls.MrOwnerTypeCode.enable();
       this.InputLookupProfessionObj.isDisable = false;
+      this.OwnerTypeChange(this.AddCollForm.get('MrOwnerTypeCode').value, true);
     }
   }
 
@@ -793,6 +789,9 @@ export class CollateralAddEditComponent implements OnInit {
         this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
         this.inputAddressObjForLoc.default = this.locationAddrObj;
         this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
+        this.AddCollForm.patchValue({
+          LocationAddrType: ""
+        });
       });
   }
 
@@ -816,6 +815,10 @@ export class CollateralAddEditComponent implements OnInit {
         this.inputFieldCollOwnerObj.inputLookupObj.jsonSelect = { Zipcode: this.returnCollOwnerObj.Zipcode };
         this.inputAddressObjForColl.default = this.collOwnerAddrObj;
         this.inputAddressObjForColl.inputField = this.inputFieldCollOwnerObj;
+
+        this.AddCollForm.patchValue({
+          CollateralOwnerAddr: ""
+        });
       });
   }
 
@@ -928,6 +931,7 @@ export class CollateralAddEditComponent implements OnInit {
           });
           
           await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
+          this.ChangeMrIdTypeCode(this.AddCollForm.controls.MrIdTypeCode.value);
 
           if (this.AddCollForm.controls.SelfOwner.value == true) {
             this.AddCollForm.controls.OwnerName.disable();
@@ -971,71 +975,6 @@ export class CollateralAddEditComponent implements OnInit {
           this.inputAddressObjForLoc.default = this.locationAddrObj;
           this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
         });
-
-      await this.http.post(URLConstant.GetAppCollateralAttrByAppCollateralId, { Id: this.AppCollateralId }).toPromise().then(
-        (response) => {
-          var colObj = {
-            AssetRegion: "",
-            Color: "",
-            Category: "",
-            Transmition: "",
-            TaxCityIssuer: "",
-            BpkpIssueDate: "",
-          };
-          for (const item of response["AppCollateralAttrObjs"]) {
-            switch (item["CollateralAttrCode"]) {
-              case CommonConstant.AppCollateralAttrAssetRegion:
-                colObj.AssetRegion = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrColor:
-                colObj.Color = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrCategory:
-                colObj.Category = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrTransmition:
-                colObj.Transmition = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrTaxCityIssuer:
-                colObj.TaxCityIssuer = item["AttrValue"];
-                break;
-
-              case CommonConstant.AppCollateralAttrBpkbIssueDate:
-                colObj.BpkpIssueDate = item["AttrValue"];
-                break;
-
-              default:
-                break;
-            }
-          }
-          this.AddCollForm.patchValue({
-            AssetRegion: colObj.AssetRegion,
-            Color: colObj.Color,
-            Category: colObj.Category,
-            Transmition: colObj.Transmition,
-            TaxCityIssuer: colObj.TaxCityIssuer,
-            BpkpIssueDate: colObj.BpkpIssueDate
-          });
-          this.InputLookupCityIssuerObj = new InputLookupObj();
-          this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
-          this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-          this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
-          this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
-          var disCrit = new Array();
-          var critDisObj = new CriteriaObj();
-          critDisObj.DataType = 'text';
-          critDisObj.restriction = AdInsConstant.RestrictionEq;
-          critDisObj.propName = 'TYPE';
-          critDisObj.value = 'DIS';
-          disCrit.push(critDisObj);
-          this.InputLookupCityIssuerObj.addCritInput = disCrit;
-          this.InputLookupCityIssuerObj.nameSelect = colObj.TaxCityIssuer;
-          this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer };
-        });
     }
     
     this.GetListAddr();
@@ -1057,18 +996,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       });
-
-    this.ownerRelationshipObj = new RefMasterObj();
-    this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.ownerRelationshipObj).subscribe(
-      (response) => {
-        this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
-        if(this.mode != CommonConstant.ModeEditColl){
-          this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
-        }
-      }
-    );
-
+    
     this.assetRegionObj = new RefMasterObj();
     this.assetRegionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetInsRegion;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetRegionObj).subscribe(
@@ -1126,8 +1054,7 @@ export class CollateralAddEditComponent implements OnInit {
     disCrit.push(critDisObj);
     this.InputLookupCityIssuerObj.addCritInput = disCrit;
 
-    await this.GenerateAppCollateralAttr(false);
-
+    await this.SetRefAttrSettingObj();
 
     this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex }).subscribe(
       (response) => {
@@ -1139,102 +1066,78 @@ export class CollateralAddEditComponent implements OnInit {
         }
         this.ListPattern.push(obj);
       }
-    );
+    );    
+
+    await this.http.post(URLConstant.GetAppCollateralAttrByAppCollateralId, { Id: this.AppCollateralId }).toPromise().then(
+      (response) => {
+        var colObj = {
+          AssetRegion: "",
+          Color: "",
+          Category: "",
+          Transmition: "",
+          TaxCityIssuer: "",
+          BpkpIssueDate: "",
+        };
+        for (const item of response["AppCollateralAttrObjs"]) {
+          switch (item["CollateralAttrCode"]) {
+            case CommonConstant.AppCollateralAttrAssetRegion:
+              colObj.AssetRegion = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrColor:
+              colObj.Color = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrCategory:
+              colObj.Category = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrTransmition:
+              colObj.Transmition = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrTaxCityIssuer:
+              colObj.TaxCityIssuer = item["AttrValue"];
+              break;
+
+            case CommonConstant.AppCollateralAttrBpkbIssueDate:
+              colObj.BpkpIssueDate = item["AttrValue"];
+              break;
+
+            default:
+              break;
+          }
+        }
+        this.AddCollForm.patchValue({
+          AssetRegion: colObj.AssetRegion,
+          Color: colObj.Color,
+          Category: colObj.Category,
+          Transmition: colObj.Transmition,
+          TaxCityIssuer: colObj.TaxCityIssuer,
+          BpkpIssueDate: colObj.BpkpIssueDate
+        });
+        this.InputLookupCityIssuerObj = new InputLookupObj();
+        this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
+        this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+        this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+        this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
+        var disCrit = new Array();
+        var critDisObj = new CriteriaObj();
+        critDisObj.DataType = 'text';
+        critDisObj.restriction = AdInsConstant.RestrictionEq;
+        critDisObj.propName = 'TYPE';
+        critDisObj.value = 'DIS';
+        disCrit.push(critDisObj);
+        this.InputLookupCityIssuerObj.addCritInput = disCrit;
+        this.InputLookupCityIssuerObj.nameSelect = colObj.TaxCityIssuer;
+        this.InputLookupCityIssuerObj.jsonSelect = { DistrictCode: colObj.TaxCityIssuer };
+      });
 
     if(this.collateral == 'Exist'){
       this.disabledForm(true);
     }
   }
-
-  async GenerateAppCollateralAttr(isRefresh: boolean) {
-    var GenObj =
-    {
-      AppCollateralId: this.AppCollateralId,
-      AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-      IsRefresh: isRefresh
-    };
-    await this.http.post(URLConstant.GenerateAppCollateralAttr, GenObj).toPromise().then(
-      (response) => {
-        this.AppCollateralAttrObj = response['ResponseAppCollateralAttrObjs'];
-        if (response['IsDiffWithRefAttr']) {
-          this.isDiffWithRefAttr = true;
-          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
-        }
-
-        this.GenerateAppCollateralAttrForm();
-      });
-  }
-  GenerateAppCollateralAttrForm() {
-    if (this.AppCollateralAttrObj != null) {
-      this.AppCollateralAttrObjs = new Array<AppCollateralAttrCustomObj>();
-      for (let i = 0; i < this.AppCollateralAttrObj.length; i++) {
-        this.ListAttrAnswer.push([]);
-        var AppCollateralAttrObj = new AppCollateralAttrCustomObj();
-        AppCollateralAttrObj.CollateralAttrCode = this.AppCollateralAttrObj[i].AttrCode;
-        AppCollateralAttrObj.CollateralAttrName = this.AppCollateralAttrObj[i].AttrName;
-        AppCollateralAttrObj.AttrValue = this.AppCollateralAttrObj[i].AttrValue;
-        AppCollateralAttrObj.AttrInputType = this.AppCollateralAttrObj[i].AttrInputType;
-        AppCollateralAttrObj.AttrLength = this.AppCollateralAttrObj[i].AttrLength;
-        if (this.AppCollateralAttrObj[i].AttrQuestionValue != null) {
-          this.ListAttrAnswer[i].push(this.AppCollateralAttrObj[i].AttrQuestionValue);
-          if (AppCollateralAttrObj.AttrValue == null) {
-            AppCollateralAttrObj.AttrValue = this.AppCollateralAttrObj[i].AttrQuestionValue[0]
-          }
-        }
-        else {
-          this.ListAttrAnswer[i].push("");
-        }
-        this.AppCollateralAttrObjs.push(AppCollateralAttrObj);
-
-      }
-      var listAppAssetAttrs = this.AddCollForm.controls["AppCollateralAttrObjs"] as FormArray;
-      while (listAppAssetAttrs.length !== 0) {
-        listAppAssetAttrs.removeAt(0);
-      }
-      for (let j = 0; j < this.AppCollateralAttrObjs.length; j++) {
-        listAppAssetAttrs.push(this.addGroupAppCollateralAttr(this.AppCollateralAttrObjs[j], j));
-      }
-      this.isAssetAttrReady = true;
-    }
-
-  }
-
-  private setValidators(appCollateralAttrObj: AppCollateralAttrCustomObj) {
-    let ListValidator: Array<ValidatorFn> = new Array<ValidatorFn>();
-
-    if (appCollateralAttrObj.AttrLength != null && appCollateralAttrObj.AttrLength != 0) {
-      ListValidator.push(Validators.maxLength(appCollateralAttrObj.AttrLength));
-    }
-
-    return ListValidator;
-  }
-
-  private setFbGroupAssetAttribute(appCollateralAttrObj: AppCollateralAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>) {
-    let tempFB = this.fb.group({
-      No: [i],
-      AssetAttrCode: [appCollateralAttrObj.CollateralAttrCode],
-      AssetAttrName: [appCollateralAttrObj.CollateralAttrName],
-      AttrInputType: [appCollateralAttrObj.AttrInputType],
-      AttrValue: [appCollateralAttrObj.AttrValue]
-    });
-    if (ListValidator.length > 0) {
-      tempFB.get("AttrValue").setValidators(ListValidator);
-    }
-
-    return tempFB;
-  }
-
-  addGroupAppCollateralAttr(appCollateralAttrObj: AppCollateralAttrCustomObj, i: number) {
-    let ListValidator: Array<ValidatorFn> = this.setValidators(appCollateralAttrObj);
-
-    return this.setFbGroupAssetAttribute(appCollateralAttrObj, i, ListValidator);
-  }
-
-  refreshAttr() {
-    this.isAssetAttrReady = false;
-    this.GenerateAppCollateralAttr(true);
-  }
+  
   collateralPortionHandler() {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
@@ -1326,15 +1229,13 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   setCollateralAttribute() {
-    if (this.AppCollateralAttrObj != null) {
-      for (let i = 0; i < this.AddCollForm.controls["AppCollateralAttrObjs"].value.length; i++) {
-        var appCollAttrcObj = new AppCollateralAttrObj();
-        appCollAttrcObj.CollateralAttrName = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AssetAttrName;
-        appCollAttrcObj.CollateralAttrCode = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AssetAttrCode;
-        appCollAttrcObj.AttrValue = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AttrValue;
+    for (let i = 0; i < this.AddCollForm.controls["AppCollateralAttrObjs"].value.length; i++) {
+      var appCollAttrcObj = new AppCollateralAttrObj();
+      appCollAttrcObj.CollateralAttrName = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AttrName;
+      appCollAttrcObj.CollateralAttrCode = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AttrCode;
+      appCollAttrcObj.AttrValue = this.AddCollForm.controls["AppCollateralAttrObjs"].value[i].AttrValue;
 
-        this.appCollateralDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
-      }
+      this.appCollateralDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
     }
   }
 
@@ -1473,6 +1374,8 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
+    await this.GetOwnerRelationship();
+
     if(OwnerType == CommonConstant.CustTypePersonal){
       if(IsOwnerTypeChanged){
         this.AddCollForm.patchValue({
@@ -1504,4 +1407,39 @@ export class CollateralAddEditComponent implements OnInit {
       }
     }
   }
+
+  ChangeMrIdTypeCode(MrIdTypeCode: string){
+    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+      this.AddCollForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.AddCollForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+    else {
+      this.AddCollForm.controls.OwnerIdNo.setValidators(Validators.required);
+      this.AddCollForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+  }
+
+  async GetOwnerRelationship()
+  {
+    this.ownerRelationshipObj = new RefMasterObj();
+    this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+    var mrOwnerTypeCode = this.AddCollForm.get('MrOwnerTypeCode').value;
+    if(!mrOwnerTypeCode) mrOwnerTypeCode = this.custType;
+
+    if(this.custType == CommonConstant.CustTypePersonal && mrOwnerTypeCode == CommonConstant.CustTypePersonal)
+    {
+      this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    }
+
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.ownerRelationshipObj).toPromise().then(
+      (response) => {
+        this.returnOwnerRelationshipObj = new Array();
+        this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
+        if(this.mode != CommonConstant.ModeEditColl){
+          this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
+        }
+      }
+    );
+  }
+
 }

@@ -126,6 +126,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: response["CustObj"].CustNo,
         // CustModelCode: response["CustObj"].MrCustModelCode,
+        IsAffiliated: response["CustObj"].IsAffiliateWithMf,
         TaxIdNo: response["CustObj"].TaxIdNo,
         IsVip: response["CustObj"].IsVip
       });
@@ -153,7 +154,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
         CompanyBrandName: response["CustCompanyObj"].CompanyBrandName,
         MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,
         NumOfEmp: response["CustCompanyObj"].NumOfEmp,
-        IsAffiliated: response["CustCompanyObj"].IsAffiliated,
+        //IsAffiliated: response["CustCompanyObj"].IsAffiliated,
         EstablishmentDt: formatDate(response["CustCompanyObj"].EstablishmentDt, 'yyyy-MM-dd', 'en-US')
       });
 

@@ -28,6 +28,9 @@
                     <th class="text-right">
                       <span class="thead-header" translate>Total Down Payment</span>
                     </th>
+                    <th class="text-right">
+                      <span class="thead-header" translate>NTF Amount</span>
+                    </th>
                     <th>
                       <span class="thead-header" translate>Application Step</span>
                     </th>
@@ -45,6 +48,7 @@
                     <td class="text-right">{{item.InstAmt == null ? '-' : item.InstAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.AssetPriceAmt == null ? '-' : item.AssetPriceAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.TotalDownPaymentAmt == null ? '-' : item.TotalDownPaymentAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="text-right">{{item.NtfAmt == null ? '-' : item.NtfAmt | number:'1.2-2':'en-US'}}</td>
                     <td>{{item.AppCurrStep}}</td>
                   </tr>
                 </tbody>

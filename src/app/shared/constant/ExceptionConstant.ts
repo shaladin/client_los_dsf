@@ -103,7 +103,8 @@ export class ExceptionConstant {
     public static ASSET_DATA_NOT_COMPLETE = "Asset data not completed, Please complete asset data first";
     public static UNIT_CANT_BE_ZERO = "Unit cannot be 0.";
     public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input";
-    public static INPUT_MIN_1_HISTORY = "Please Input At Least 1 History"; 
+    public static INPUT_MIN_1_HISTORY = "Please Input At Least 1 History";
+    public static TEMP_REG_LETT_DATE_CAN_NOT_BE_LESS_THAN_PO_DATE = "Temporary Registration Letter Date can not be less than Purchase Order Date"
 
     public static CANT_HAVE_THE_SAME_CUST_MEMBER = " cannot have the same customer group member as No ";
     public static CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER = " cannot have the same relationship as customer group member No ";
@@ -121,7 +122,7 @@ export class ExceptionConstant {
     public static COMPLETE_SHAREHOLDER_COMPANY_MODEL = "Please complete all shareholder company model";
     public static MUST_COMPLETE_SHAREHOLDER_DATA = "Please complete all shareholder data";
     public static DUPLICATE_LEGAL_DOC = "Document with Legal Document Type {0} and Document No {1} already exists";
-
+    public static DUPLICATE_SHRHLDR_ID_NO = "Shareholder's Id No cannot duplicate";
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
@@ -176,7 +177,7 @@ export class ExceptionConstant {
     public static COLL_VALUE_MUST_EQUALS_INVOICE_AMT = "Collateral Value must equals Invoice Amount.";
     public static DOUBLE_FINANCING = "Double Financing";
     public static START_DATE_CANNOT_MORE_THAN = "Start Date can not be more than ";
-    public static START_DATE_CANNOT_LESS_THAN = "Start Date can not be lses than ";
+    public static START_DATE_CANNOT_LESS_THAN = "Start Date can not be less than ";
     public static END_DATE_CANNOT_LESS_THAN = "End Date can not be less than ";
     public static MOU_DATE_CANNOT_LESS_THAN = "MOU Date can not be less than ";
     public static PRODUCT_HAS = "This Product has ";
@@ -204,5 +205,13 @@ export class ExceptionConstant {
 
     public static MAX_REFERANTOR_EXCEPTION = "Number of Referantor Cannot Be More than {0}";
     public static DUPLICATE_SUPPL_EMP = "Supplier Employee {0} Receiving More Than 1 Commission";
+    public static X_CANT_BE_GREATER_THAN_Y = "{0} cannot be greater than {1}";
+    
+    public static MANDATORY_LEGAL_DOC = "Legal Documents with following type are mandatory: {0}";
+    public static DOC_NOT_YET_CONFIGURED_IN_RULE_MANDATORY_DOC_EXP = "Document {0} not yet configured in Rule Set 'RS.Document Expired Date Mandatory'";
+    public static CUST_AGE_BETWEEN = "Customer age must be between {0} and {1} year old";
+    public static CUST_AGE_MIN = "Customer age must be at least {0} year old";
+
+    public static LEAD_INPUT_AGENCY_CMO_TELE = "Please input either Agency, CMO or Tele Sales";
 }
 

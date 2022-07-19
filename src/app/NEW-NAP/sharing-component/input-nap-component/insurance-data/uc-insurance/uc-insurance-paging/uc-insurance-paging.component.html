@@ -1,0 +1,13 @@
+<lib-ucSubsection [id]="'collateralId'" [title]="'Collateral'" [panel]="'collateral'">
+</lib-ucSubsection>
+<div id="collateral">
+  <div class="text-right">
+    <button type="button" class="backButton mr-1" (click)="deleteListCollateral()"
+    *ngIf="listAppCollateralIdtoDelete.length > 0">
+    <i class="ft-x"></i>&nbsp;<span translate>Delete Selected</span>
+  </button>
+  </div>
+  <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"
+    (callbackCheckBox)="getIds($event)"></lib-ucgridview>
+</div>
+

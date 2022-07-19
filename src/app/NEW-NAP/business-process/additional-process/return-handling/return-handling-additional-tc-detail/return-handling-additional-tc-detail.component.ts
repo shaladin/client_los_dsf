@@ -20,6 +20,7 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -49,6 +50,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   inputGridObj: InputGridObj;
   ReqTCObj = new ReqTCObj();
   IsViewReady: boolean = false;
+  maxPromisedDt: Date;
+  currentUserContext: CurrentUserContext;
 
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
@@ -93,6 +96,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.maxPromisedDt = this.currentUserContext.BusinessDt;
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.claimTask();

@@ -61,6 +61,7 @@ export class DoAssetDetailComponent implements OnInit {
   AppCustAddrObj: Array<AppCustAddrObj> = new Array();
   AddrLegalObj: Array<AppCustAddrObj> = new Array();
   isOwnerReady: boolean = false;
+  minTempRegLettDt: Date;
 
   DOAssetDetail = this.fb.group({
     AppAssetId: [0, [Validators.required]],
@@ -120,6 +121,7 @@ export class DoAssetDetailComponent implements OnInit {
         var appCollateral = response["AppCollateralDoc"];
         appAsset.TempRegisLettDt = this.datePipe.transform(appAsset.TempRegisLettDt, "yyyy-MM-dd");
         appAsset.TaxIssueDt = this.datePipe.transform(appAsset.TaxIssueDt, "yyyy-MM-dd");
+        this.GetPODate(appAsset.AgrmntId);
         
         this.InputLookupCityIssuerObj.nameSelect = appAsset.TaxCityIssuer;
         this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: appAsset.TaxCityIssuer };
@@ -189,6 +191,19 @@ export class DoAssetDetailComponent implements OnInit {
     await this.GetCurrentAssetCollRegis();
     this.InputLookupCityIssuerObj.isReady = true;
     this.isOwnerReady = true;
+  }
+
+  async GetPODate(AgrmntId: number)
+  {
+    await this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { Id: AgrmntId }).toPromise().then(
+      (res) => {
+        console.log(res)
+        if(res["PurchaseOrderDt"] != null)
+        {
+          this.minTempRegLettDt = new Date(res["PurchaseOrderDt"]);
+          this.minTempRegLettDt.setDate(this.minTempRegLettDt.getDate())
+        }
+      });
   }
 
   lookupReady(){
@@ -263,6 +278,13 @@ export class DoAssetDetailComponent implements OnInit {
   Save(){
     this.reqAssetDataObj = new ReqAssetDataObj();
     var formData = this.DOAssetDetail.value;
+
+    let d1 = new Date(formData.TempRegisLettDt);
+    let d2 = new Date(this.minTempRegLettDt);
+    if (d1 < d2) {
+      this.toastr.warningMessage(ExceptionConstant.TEMP_REG_LETT_DATE_CAN_NOT_BE_LESS_THAN_PO_DATE);
+      return
+    }
 
     this.setAsset(formData);
     this.setCollateralDoc(formData);

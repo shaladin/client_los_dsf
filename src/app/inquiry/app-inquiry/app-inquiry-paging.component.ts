@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { UcPagingObj } from "app/shared/model/uc-paging-obj.model";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
@@ -15,23 +15,51 @@ import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
   selector: "app-inquiry-paging",
   templateUrl: "./app-inquiry-paging.component.html"
 })
-export class AppInquiryPagingComponent implements OnInit {
+export class AppInquiryPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   BizTemplateCode: string;
   isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private http: HttpClient,
-    private route: ActivatedRoute, private cookieService: CookieService, private adInsHelperService: AdInsHelperService) {
+    private route: ActivatedRoute, private router: Router, private cookieService: CookieService, private adInsHelperService: AdInsHelperService) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
-        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
-      }
-    });
+      }});
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.inputPagingObj._url = "./assets/ucpaging/searchAppInquiryOpl.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppInquiryOpl.json";
@@ -48,8 +76,6 @@ export class AppInquiryPagingComponent implements OnInit {
     critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
     critLobObj.value = this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critLobObj);
-
-    this.isReady = true;
   }
 
   getEvent(event) {

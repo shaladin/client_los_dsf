@@ -32,6 +32,12 @@ export class ViewDeviationComponent implements OnInit {
         this.http.post<Array<DeviationResultObj>>(URLConstant.GetListDeviationResultByAppNo, { TrxNo: response.AppNo }).subscribe(
           (response) => {
             this.deviationResultList = response[CommonConstant.ReturnObj];
+
+            if(!this.deviationResultList) return;
+            this.deviationResultList.forEach((item, index) => {
+              item.IsOriginalValueNumber = !Number.isNaN(Number(item.OriginalValue));
+              item.IsCurrentValueNumber = !Number.isNaN(Number(item.CurrentValue));
+            }, this.deviationResultList);
           }
         );
       }

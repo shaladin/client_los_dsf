@@ -20,6 +20,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts'
 import { DashboardSupersetComponent } from './dashboard-superset/dashboard-superset.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
+import { DashboardArsModule } from './dashboard-ars/dashboard-ars.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -33,7 +34,8 @@ import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.modu
         SharingComponentModule,
         ucdashboard2Module,
         NgxChartsModule,
-        SharedModule
+        SharedModule,
+        DashboardArsModule
     ],
     exports: [],
     declarations: [

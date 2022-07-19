@@ -74,7 +74,7 @@ import { OfferingValidityCheckingRequestDetailComponent } from "./offering-valid
 
 export const customCurrencyMaskConfig = {     
   align: "left",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

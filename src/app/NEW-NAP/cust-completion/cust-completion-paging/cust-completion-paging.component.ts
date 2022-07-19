@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -19,13 +19,26 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './cust-completion-paging.component.html',
   styleUrls: ['./cust-completion-paging.component.scss']
 })
-export class CustCompletionPagingComponent implements OnInit {
+export class CustCompletionPagingComponent implements OnInit, OnDestroy {
   bizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  isReady: boolean = false;
+  navigationSubscription;
+
   userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   constructor(private route: ActivatedRoute, private router: Router, private cookieService: CookieService, private http: HttpClient ) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.bizTemplateCode = params['BizTemplateCode'];
@@ -33,9 +46,29 @@ export class CustCompletionPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCustCompletion.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustCompletion.json";
+    this.inputPagingObj.addCritInput = new Array();
 
     if (environment.isCore) {
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchCustCompletionV2.json";

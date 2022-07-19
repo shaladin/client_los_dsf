@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -22,7 +22,7 @@ import { String } from 'typescript-string-operations';
   templateUrl: './doc-signer.component.html',
   providers: [DecimalPipe]
 })
-export class DocSignerComponent implements OnInit {
+export class DocSignerComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj>;
@@ -30,15 +30,47 @@ export class DocSignerComponent implements OnInit {
   IntegrationObj: IntegrationObj = new IntegrationObj();
   user: CurrentUserContext;
   MrMouTypeCode: string;
+  isReady: boolean = false;
+  navigationSubscription;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {    
-      this.route.queryParams.subscribe(params => {
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {  
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
+    this.route.queryParams.subscribe(params => {
       if (params["MrMouTypeCode"] != null) {
         this.MrMouTypeCode = params["MrMouTypeCode"];
       }
-    });}
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj._url = "./assets/ucpaging/searchMouCustDocSigner.json";
@@ -73,7 +105,6 @@ export class DocSignerComponent implements OnInit {
     }
 
     this.inputPagingObj.addCritInput = this.arrCrit;
-
   }
 
   getEvent(event) {

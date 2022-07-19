@@ -46,7 +46,11 @@ const routes: Routes = [
         data: {
           title: 'Dashboard Superset'
         }
-      }
+      },
+      {
+        path: PathConstant.DASHBOARD_ARS,
+        loadChildren: './dashboard-ars/dashboard-ars.module#DashboardArsModule'
+      },
     ]
   }
 ];

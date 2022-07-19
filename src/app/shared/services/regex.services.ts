@@ -23,6 +23,10 @@ export class RegexService {
           case "^\\d{0,20}$":
             errMessage = 'must be numeric and between 20 characters';
             break;
+          case "^[a-zA-Z0-9]{1,9}$":
+            errMessage = 'must be alpanumeric and max 9 characters';
+            break;
+          
           default:
             errMessage = 'Not yet setting';
             break;

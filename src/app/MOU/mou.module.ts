@@ -113,7 +113,7 @@ import { MouCustAttrContentComponentComponent } from "./mou-customer-request/mou
 
 export const customCurrencyMaskConfig = {
   align: "left",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

@@ -29,7 +29,7 @@
       {
         "type": "dropdown",
         "datatype": "text",
-        "name": "T.WF_ACTIVITY_CODE",
+        "name": "(T.WF_CODE + ';' + T.WF_ACTIVITY_CODE)",
         "id": "WfCodeId",
         "value": "",
         "placeholder": "Placeholder",
@@ -56,7 +56,7 @@
         "type": "sort",
         "position": "center",
         "label": "Task Reassignment No",
-        "name": "WF.TRANSACTION_CODE"
+        "name": "T.TASK_REASSIGNMENT_TRX_NO"
       },
       {
         "type": "sort",
@@ -74,7 +74,7 @@
         "type": "sort",
         "position": "left",
         "label": "Activity Name",
-        "name": "Name"
+        "name": "T.WF_ACTIVITY_NAME"
       },
       {
         "type": "label",
