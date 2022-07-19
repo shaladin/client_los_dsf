@@ -502,18 +502,14 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
       this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
       if (this.isMarried == true) {
-        if (this.spouseGender == CommonConstant.MasteCodeGenderMale){
-          this.ContactInfoPersonalForm.patchValue({
-            MrGenderCode: CommonConstant.MasterCodeGenderFemale
-          });
-          this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
+        let SpouseGender = CommonConstant.MasterCodeGenderFemale;
+        if (this.spouseGender == CommonConstant.MasterCodeGenderFemale){
+          SpouseGender = CommonConstant.MasteCodeGenderMale;
         }
-        else if (this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
-          this.ContactInfoPersonalForm.patchValue({
-            MrGenderCode: CommonConstant.MasteCodeGenderMale
-          });
-          this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
-        }
+        this.ContactInfoPersonalForm.patchValue({
+          MrGenderCode: SpouseGender
+        });
+        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
       }
     }
     else {
