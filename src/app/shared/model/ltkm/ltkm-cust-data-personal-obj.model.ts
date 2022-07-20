@@ -19,6 +19,7 @@ export class LtkmCustDataPersonalObj {
     LtkmCustAddrLegalObj: LtkmCustAddrObj;
     LtkmCustAddrResidenceObj: LtkmCustAddrObj;
     LtkmCustAddrMailingObj: LtkmCustAddrObj;
+    LtkmCustAddrObjs: Array<LtkmCustAddrObj>;
     LtkmCustPersonalContactPersonObjs: Array<LtkmCustPersonalContactPersonObj>;
     LtkmCustPersonalFinDataObj: Array<LtkmCustPersonalFinDataObj>;
     LtkmCustBankAccObjs: Array<LtkmCustBankAccObj>;
@@ -42,6 +43,7 @@ export class LtkmCustDataPersonalObj {
         this.LtkmCustAddrLegalObj = new LtkmCustAddrObj();
         this.LtkmCustAddrResidenceObj = new LtkmCustAddrObj();
         this.LtkmCustAddrMailingObj = new LtkmCustAddrObj();
+        this.LtkmCustAddrObjs = new Array<LtkmCustAddrObj>();
         this.LtkmCustPersonalFinDataObj = new Array<LtkmCustPersonalFinDataObj>();
         this.LtkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
         this.LtkmCustSocmedObjs = new Array<LtkmCustSocmedObj>();

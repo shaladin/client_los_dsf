@@ -20,8 +20,12 @@
       <td class="text-center">{{item.SeqNo}}</td>
       <td class="text-left">{{item.DeviationCategory}}</td>
       <td class="text-left">{{item.MrDeviationName}}</td>
-      <td class="text-right">{{item.OriginalValue}}</td>
-      <td class="text-right">{{item.CurrentValue}}</td>
+
+      <td class="text-right" *ngIf="item.IsOriginalValueNumber">{{ item.OriginalValue | number:'.2':'en-US' }}</td>
+      <td class="text-center" *ngIf="!item.IsOriginalValueNumber">{{ item.OriginalValue }}</td>
+      <td class="text-right" *ngIf="item.IsCurrentValueNumber">{{ item.CurrentValue | number:'.2':'en-US'}}</td>
+      <td class="text-center" *ngIf="!item.IsCurrentValueNumber">{{ item.CurrentValue }}</td>
+
       <td class="text-left">{{item.ApvAt}}</td>
       <td class="text-left" >{{item.Notes}}</td>
     </tr>

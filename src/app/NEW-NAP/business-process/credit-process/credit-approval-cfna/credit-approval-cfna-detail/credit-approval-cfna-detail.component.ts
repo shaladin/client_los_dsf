@@ -185,6 +185,7 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
+    this.InputApvObj.OfficeCodes.push(this.AppObj.OriOfficeCode);
     this.IsReady = true;
   }
 

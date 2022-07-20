@@ -30,13 +30,13 @@ export class ViewAssetDataDetailXComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, public activeModal: NgbActiveModal) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryFL4W.json";
     this.isOtherEmpPosCode = false;
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { Id: this.AppAssetId });
     let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { Id: this.AppAssetId });
     let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, { Id: this.AppCollateralId });
-    forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
+    await forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).toPromise().then(
       (response: any) => {
         this.appAsset = response[0];
         this.appAssetSupplEmp = response[1];
@@ -84,7 +84,7 @@ export class ViewAssetDataDetailXComponent implements OnInit {
       }
     );
 
-    this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
+    await this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).toPromise().then(
       (response: any) => {
         this.AssetTypeObj = response;
       }

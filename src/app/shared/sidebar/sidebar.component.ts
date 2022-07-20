@@ -38,7 +38,6 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit() {
-        $.getScript('./assets/js/app-sidebar.js');
         // this.url = "./assets/menu.json";
         // this.getJSON(this.url).subscribe
         //     (data => {
@@ -53,6 +52,10 @@ export class SidebarComponent implements OnInit {
                 (response) => {
                     AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.ReturnObj]));
                     this.menuItems = JSON.parse(AdInsHelper.GetLocalStorage(CommonConstant.MENU));
+                    $.getScript('./assets/js/app-sidebar.js');
+                    setTimeout(() => {
+                        $.getScript('./assets/js/auto-scroll.js');
+                    }, 10);
                 });
         }
         else

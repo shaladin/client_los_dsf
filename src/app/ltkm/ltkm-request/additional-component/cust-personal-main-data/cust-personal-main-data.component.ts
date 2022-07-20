@@ -97,6 +97,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
         NoOfResidence: [''],
         Email3: [''],
         NoOfDependents: ['0'],
+        IsAffiliateWithMf:[false]
       }));
     }else{
       this.parentForm.addControl(this.identifier, this.fb.group({
@@ -123,6 +124,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
         NoOfResidence: ['', [Validators.maxLength(4)]],
         Email3: ['', [Validators.maxLength(50), Validators.pattern(CommonConstant.regexEmail)]],
         NoOfDependents: ['0', [Validators.pattern("^[0-9]+$")]],
+        IsAffiliateWithMf:[false]
       }));
     }
     this.initLookup();
@@ -150,6 +152,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
         IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US'),
         TaxIdNo: response["CustObj"].TaxIdNo,
         IsVip: response["CustObj"].IsVip,
+        IsAffiliateWithMf: response["CustObj"].IsAffiliateWithMf,
       });
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
       this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};

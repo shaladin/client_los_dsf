@@ -65,43 +65,43 @@
           "type": "sort",
           "position": "center",
           "label": "COLLATERAL CODE",
-          "name": "MCC.FULL_ASSET_CODE"
+          "name": "MIN(MCC.FULL_ASSET_CODE)"
         },
         {
           "type": "sort",
           "position": "left",
           "label": "COLLATERAL NAME",
-          "name": "MCC.FULL_ASSET_NAME"
+          "name": "MIN(MCC.FULL_ASSET_NAME)"
         },
         {
           "type": "sort",
           "position": "center",
           "label": "MANUFACTURING YEAR",
-          "name": "MCC.MANUFACTURING_YEAR"
+          "name": "MIN(MCC.MANUFACTURING_YEAR)"
         },
         {
           "type": "sort",
           "position": "center",
           "label": "SERIAL NO 1",
-          "name": "MCC.SERIAL_NO_1"
+          "name": "MIN(MCC.SERIAL_NO_1)"
         },
         {
           "type": "sort",
           "position": "center",
           "label": "SERIAL NO 2",
-          "name": "MCC.SERIAL_NO_2"
+          "name": "MIN(MCC.SERIAL_NO_2)"
         },
         {
           "type": "sort",
           "position": "center",
           "label": "SERIAL NO 3",
-          "name": "MCC.SERIAL_NO_3"
+          "name": "MIN(MCC.SERIAL_NO_3)"
         },
         {
           "type": "sort",
           "position": "right",
           "label": "Collateral Price",
-          "name": "MCC.COLLATERAL_VALUE_AMT"
+          "name": "MIN(MCC.COLLATERAL_VALUE_AMT)"
         },
         {
           "type": "sort",
