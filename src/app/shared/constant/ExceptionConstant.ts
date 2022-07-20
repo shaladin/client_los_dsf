@@ -214,5 +214,6 @@ export class ExceptionConstant {
     public static CUST_AGE_MIN = "Customer age must be at least {0} year old";
 
     public static LEAD_INPUT_AGENCY_CMO_TELE = "Please input either Agency, CMO or Tele Sales";
+    public static FINANCING_AMT_MORE_THAN_COLL_PORTION_AMT = "Total Financing Amount is More Than Total Collateral Portion Amount";
 }
 
