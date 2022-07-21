@@ -420,6 +420,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
       }
     } else {
       this.isSingle = true;
+      this.SalesAppInfoForm.controls.Tenor.disable();
       this.SalesAppInfoForm.controls['TopDays'].setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
 
