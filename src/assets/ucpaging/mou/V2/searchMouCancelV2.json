@@ -134,7 +134,7 @@
             "type": "sort",
             "position": "center",
             "label": "MOU STATUS",
-            "name": "MC.MOU_STAT"
+            "name": "MouStatDesc.DESCR"
         },
         {
             "type": "sort",
