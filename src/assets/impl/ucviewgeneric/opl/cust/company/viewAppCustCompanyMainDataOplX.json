@@ -1,0 +1,65 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustCompanyMainDataId",
+        "subSectionTitle": "Customer Main Data",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Customer Model",
+            "property": "CustModelName"
+          },
+          {
+            "type": "text",
+            "label": "Industry Type",
+            "property": "IndustryTypeName"
+          },
+          {
+            "type": "text",
+            "label": "Company Type",
+            "property": "CompanyTypeName"
+          },
+          {
+            "type": "text",
+            "label": "Number Of Employee",
+            "property": "NumOfEmp"
+          },
+          {
+            "type": "text",
+            "label": "NPWP",
+            "property": "TaxIdNo"
+          },
+          {
+            "type": "boolean",
+            "label": "Affiliation MF",
+            "property": "IsAffiliated"
+          },
+          {
+            "type": "boolean",
+            "label": "SKT",
+            "property": "IsSkt"
+          },
+          {
+            "type": "date",
+            "label": "Establishment Date",
+            "property": "EstablishmentDt"
+          },
+          {
+            "type": "boolean",
+            "label": "VIP",
+            "property": "IsVip"
+          }
+        ],
+        "querystring": {
+          "name": "viewAppCustCompanyMainData"
+        }
+      }
+    ]
+  }  

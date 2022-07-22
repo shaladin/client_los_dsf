@@ -4,7 +4,7 @@
       <h4 class="card-title ucSearch-title" translate>Credit Approval</h4>
     </div>
     <br>
-    <app-app-main-info-x [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-x>
+    <app-app-main-info-cr-x [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-cr-x>
     <div class="card-body">
       <div class="px-3" *ngIf="isShow">
         <app-crd-rvw-cust-info-x *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
@@ -27,6 +27,7 @@
         <app-crd-rvw-dealer-info *ngIf="!IsFD" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
         <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>
+        <app-asset-accessory-info> *ngIf="isShow" [AppId]="appId" </app-asset-accessory-info>
 
       </div>
     </div>

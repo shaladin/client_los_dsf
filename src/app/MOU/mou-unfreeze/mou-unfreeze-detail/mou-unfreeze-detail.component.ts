@@ -152,6 +152,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_FREEZE_UNFREEZE;
     this.InputObj.Reason = this.listReason;

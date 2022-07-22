@@ -1,0 +1,645 @@
+<div class="px-3">
+  <lib-ucSubsection [id]="'customerId'" [title]="'Customer'" [panel]="'customer'">
+  </lib-ucSubsection>
+  <div class="form-body" id="customer">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Customer Name</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.AppCust">{{SummaryObj.AppCust.CustName}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Gender</label>
+          <label class="col-md-6 adinslabel" translate>{{SummaryObj?.AppCustPersonal?.MrGenderName}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Birth Place / Date</label>
+          <label class="col-md-6 adinslabel" translate>{{SummaryObj?.AppCustPersonal?.BirthPlace}} / {{SummaryObj?.AppCustPersonal?.BirthDt | date: 'dd-MMMM-yyyy'}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Marital Status</label>
+          <label class="col-md-6 adinslabel" translate>{{SummaryObj?.AppCustPersonal?.MrMaritalStatName}}</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6  adInsLabel" translate>NPWP</label>
+          <label class="col-md-6  adinslabel" translate *ngIf="SummaryObj?.AppCust?.TaxIdNo != '' && SummaryObj?.AppCust?.TaxIdNo">{{SummaryObj?.AppCust?.TaxIdNo}}</label>
+          <label class="col-md-6  adinslabel" translate *ngIf="!SummaryObj?.AppCust?.TaxIdNo">-</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Education</label>
+          <label class="col-md-6 adinslabel" translate>{{SummaryObj?.AppCustPersonal?.MrEducationName}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Email</label>
+          <label class="col-md-6 adinslabel" translate>{{SummaryObj?.AppCustPersonal?.Email1}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Religion</label>
+          <label class="col-md-6 adinslabel" translate>{{SummaryObj?.AppCustPersonal?.MrReligionName}}</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>VIP</label>
+          <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppCust?.IsVip">Yes</label>
+          <label class="col-md-6 adinslabel" translate *ngIf="!SummaryObj?.AppCust?.IsVip">No</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="SummaryObj?.AppCustPersonalJobData">
+    <lib-ucSubsection [id]="'joddataId'" [title]="'Job Data'" [panel]="'jobdata'">
+    </lib-ucSubsection>
+    <div id="jobdata">
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Customer Model</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppCust">{{this.SummaryObj.AppCust.MrCustModelDescr}}</label>
+        <label class="col-md-3 adInsLabel" translate>Total Monthly Income</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppCustPersonalFinData">{{this.SummaryObj.AppCustPersonalFinData.TotalMonthlyIncomeAmt |
+          number:'.2':'en-US'}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Profession</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppCustPersonalJobData">{{this.SummaryObj.AppCustPersonalJobData.MrProfessionName}}</label>
+        <label class="col-md-3 adInsLabel" translate>Total Monthly Expense</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppCustPersonalFinData">{{this.SummaryObj.AppCustPersonalFinData.MonthlyExpenseAmt |
+          number:'.2':'en-US'}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Company Name</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppCustPersonalJobData">{{this.SummaryObj.AppCustPersonalJobData.CompanyName}}</label>
+        <label class="col-md-3 adInsLabel" translate>DSR</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.Dsr}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Job Position</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppCustPersonalJobData">{{this.SummaryObj.AppCustPersonalJobData.MrJobPositionName}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Job Status</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppCustPersonalJobData">{{this.SummaryObj.AppCustPersonalJobData.MrJobStatName}}</label>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'guarantorId'" [title]="'Guarantor'" [panel]="'guarantor'">
+  </lib-ucSubsection>
+  <div id="guarantor" style="overflow-x: auto;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th translate class="text-center">No</th>
+          <th translate class="text-left">Guarantor Type</th>
+          <th translate class="text-left">Guarantor Name</th>
+          <th translate class="text-left">Guarantor Relationship</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of SummaryObj?.AppCustGuarantorObjs;let i=index">
+          <td class="text-center">{{i+1}}</td>
+          <td class="text-left">{{item.MrCustTypeDescr}}</td>
+          <td class="text-left">{{item.CustName}}</td>
+          <td class="text-left">{{item.MrCustRelationshipDescr}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <lib-ucSubsection [id]="'agreementId'" [title]="'Agreement'" [panel]="'agreement'">
+  </lib-ucSubsection>
+  <div class="form-body" id="agreement">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Sales Name</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.SalesName}}</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Agreement Date</label>
+          <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.AgrmntCreatedDt
+            | date: 'dd-MMMM-yyyy'}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Payment Frequency</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PayFreqCodeDesc}}</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Effective Date</label>
+          <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.EffectiveDt |
+            date: 'dd-MMMM-yyyy'}}</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode != 'DLFN'" translate>Installment
+            Scheme</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.AgrmntFinData && SummaryObj?.Agrmnt?.BizTemplateCode != 'DLFN'">{{this.SummaryObj.AgrmntFinData.MrInstSchemeDescr}}</label>
+    
+          <label class="col-md-6 adInsLabel" *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'" translate>Installment
+            Type</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'">{{this.SummaryObj.AppDlrFncngObj.InsTypeName}}</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Pre Go Live Date</label>
+          <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PreGoLiveDt |
+            date: 'dd-MMMM-yyyy'}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Way of Payment</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrWopDescr}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Pre Go Live Notes</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PreGoLiveNotes}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Term Of Payment</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.AppDlrFncngObj">{{this.SummaryObj.AppDlrFncngObj.TopDays}}</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.Agrmnt?.MrWopDescr == wopAD">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Customer Bank Info</label>
+          <label class="col-md-6 adinslabel" translate *ngIf="this.BankCode">{{this.BankName}} - {{this.BankAccNo}} - {{this.BankAccName}}</label>
+          <label class="col-md-6 adinslabel" translate *ngIf="!this.BankCode">-</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'CF4W'">
+    <lib-ucSubsection [id]="'assetId'" [title]="'Asset'" [panel]="'asset'">
+    </lib-ucSubsection>
+    <div id="asset">
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Asset Name</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.FullAssetName}}</label>
+        <label class="col-md-3 adInsLabel" translate>Asset Price</label>
+        <label class="col-md-3 adinslabel" translate *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.AssetPriceAmt |
+          number:'.2':'en-US'}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetConditionCodeDesc}}</label>
+        <label class="col-md-3 adInsLabel" translate>Down Payment</label>
+        <label class="col-md-3 adinslabel" translate *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.DownPaymentAmt
+          | number:'.2':'en-US'}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo1Label">{{SummaryObj.AppAsset.SerialNo1Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo1Label">{{SummaryObj.AppAsset.SerialNo1}}</label>
+        <label class="col-md-3 adInsLabel" translate>Asset Usage</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetUsageCodeDesc}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo2Label">{{SummaryObj.AppAsset.SerialNo2Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo2Label">{{SummaryObj.AppAsset.SerialNo2}}</label>
+        <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.ManufacturingYear}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo3Label">{{SummaryObj.AppAsset.SerialNo3Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo3Label">{{SummaryObj.AppAsset.SerialNo3}}</label>
+        <label class="col-md-3 adInsLabel" translate>Color</label>
+        <label class="col-md-3 adinslabel" translate *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.Color}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo4Label">{{SummaryObj.AppAsset.SerialNo4Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo4Label">{{SummaryObj.AppAsset.SerialNo4}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo5Label">{{SummaryObj.AppAsset.SerialNo5Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo5Label">{{SummaryObj.AppAsset.SerialNo5}}</label>
+      </div>
+    </div>
+    <lib-ucSubsection [id]="'supplierId'" [title]="'Supplier Information'" [panel]="'supplier'">
+    </lib-ucSubsection>
+    <div id="supplier">
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Supplier Name</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.SupplName}}</label>
+        <label class="col-md-3 adInsLabel" translate>Sales Person</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAssetEmpList">{{SummaryObj.AppAssetEmpList.SalesPerson}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Admin Head</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAssetEmpList">{{SummaryObj.AppAssetEmpList.AdminHead}}</label>
+        <label class="col-md-3 adInsLabel" translate>Branch Manager</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAssetEmpList">{{SummaryObj.AppAssetEmpList.BranchManager}}</label>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'CFRFN4W' || SummaryObj?.Agrmnt?.BizTemplateCode == 'FCTR'">
+
+    <lib-ucSubsection [id]="'CollateralId'" [title]="'Collateral'" [panel]="'Collateral'">
+    </lib-ucSubsection>
+
+    <div id="Collateral">
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Collateral Name</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppCollateral">{{SummaryObj.AppCollateral.FullAssetName}}</label>
+        <label class="col-md-3 adInsLabel" translate>Colllate Price</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppCollateral.CollateralValueAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Collateral Condition</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppCollateral.MrCollateralConditionCodeDesc}}</label>
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo1Label">{{SummaryObj.AppAsset.SerialNo1Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo1Label">{{SummaryObj.AppCollateral.SerialNo1}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Collateral Usage</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppCollateral.MrCollateralUsageCodeDesc}}</label>
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo2Label">{{SummaryObj.AppAsset.SerialNo2Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo2Label">{{SummaryObj.AppCollateral.SerialNo2}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppCollateral.ManufacturingYear}}</label>
+
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo3Label">{{SummaryObj.AppAsset.SerialNo3Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo3Label">{{SummaryObj.AppCollateral.SerialNo3}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo4Label">{{SummaryObj.AppAsset.SerialNo4Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo4Label">{{SummaryObj.AppCollateral.SerialNo4}}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-3 adInsLabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo5Label">{{SummaryObj.AppAsset.SerialNo5Label}}</label>
+        <label class="col-md-3 adinslabel" translate
+          *ngIf="SummaryObj?.AppAsset?.SerialNo5Label">{{SummaryObj.AppCollateral.SerialNo5}}</label>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'CFNA'">
+    <app-view-app-collateral-multi [agrmntId]="agrmntId"></app-view-app-collateral-multi>
+
+  </div>
+  <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'FL4W'">
+    <view-asset-collateral [agrmntId]="agrmntId"></view-asset-collateral>
+    <lib-ucSubsection [id]="'LoanObjectId'" [title]="'Insurance Loan Object'" [panel]="'LoanObjectSection'">
+    </lib-ucSubsection>
+    <div id="LoanObjectSection" class="row">
+      <div class="col-md-12">
+        <lib-ucgridview [gridInput]="inputGridObj" (callback)="getEvent($event)"></lib-ucgridview>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode != 'FL4W'">
+    <lib-ucSubsection [id]="'insuranceId'" [title]="'Insurance'" [panel]="'insurance'">
+    </lib-ucSubsection>
+    <div class="form-body" id="insurance">
+      <div class="form-group row" *ngIf="SummaryObj?.AppIns?.InsAssetCoveredBy == 'CU'">
+        <div class="col-md-6">
+          <div class="row">
+              <label class="col-md-6 adInsLabel" translate>Insured By</label>
+              <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">Customer</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Policy No</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsPolicyNo}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Insco Branch Name</label>
+            <label class="col-md-6 adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.CustInscoBranchName}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Policy Name</label>
+            <label class="col-md-6 adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsPolicyName}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Coverage Amount</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.CvgAmt |
+              number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Start Date</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.StartDt | date:
+              'dd-MMMM-yyyy'}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Insurance Notes</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.Notes}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>End Date</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.EndDt | date:
+              'dd-MMMM-yyyy'}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="SummaryObj?.AppIns?.InsAssetCoveredBy == 'CO'">
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Insured By</label>
+            <label class="col-md-6  adinslabel" translate *ngIf="SummaryObj?.AppIns">Company</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Total Main Premi</label>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.TotalInscoMainPremiAmt
+                | number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Insurance Company</label>
+            <label class="col-md-6  adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoBranchName}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Total Additonal Premi</label>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.TotalInscoAddPremiAmt |
+                number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Insurance Paid By</label>
+            <label class="col-md-6 adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsAssetPaidByDescr}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Total Fee</label>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoAdminFeeAmt |
+                number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Insurance Length</label>
+            <label class="col-md-6  adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsLength}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Total Insurance Premi</label>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adinslabel" translate>{{totalInsPremi | number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="SummaryObj?.AppIns?.InsAssetCoveredBy == 'CUCO'">
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Insured By</label>
+            <label class="col-md-6  adinslabel" translate *ngIf="SummaryObj?.AppIns">Customer - Company</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Policy No</label>
+            <label class="col-md-6 adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsPolicyNo}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Insco Branch Name</label>
+            <label class="col-md-6  adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.CustInscoBranchName}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Policy Name</label>
+            <label class="col-md-6 adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsPolicyName}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Coverage Amount</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.CvgAmt |
+              number:'.2':'en-US'}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Start Date</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.StartDt | date:
+              'dd-MMMM-yyyy'}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Insurance Notes</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.Notes}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>End Date</label>
+            <label class="col-md-6 adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.EndDt | date:
+              'dd-MMMM-yyyy'}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate> </label>
+            <label class="col-md-6 adinslabel" translate> </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Total Main Premi</label>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.TotalInscoMainPremiAmt
+                | number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Insurance Company</label>
+            <label class="col-md-6 adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoBranchName}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Total Additonal Premi</label>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.TotalInscoAddPremiAmt |
+                number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Insurance Paid By</label>
+            <label class="col-md-6 adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsAssetPaidBy}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Total Fee</label>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoAdminFeeAmt |
+                number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel" translate>Insurance Length</label>
+            <label class="col-md-6 adinslabel" translate
+              *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsLength}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Total Insurance Premi</label>
+            <div class="col-md-6" style="text-align: right;">
+              <label class="adinslabel" translate>{{totalInsPremi | number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="SummaryObj?.AppIns?.InsAssetCoveredBy == 'OFF'">
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Insured By</label>
+            <label class="col-md-6  adinslabel" translate *ngIf="SummaryObj?.AppIns">Off System</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6  adInsLabel" translate>Insurance Notes</label>
+            <label class="col-md-6  adinslabel" translate *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.Notes}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="SummaryObj?.AgrmntLifeIns != undefined">
+    <lib-ucSubsection [id]="'lifeinsId'" [title]="'Life Insurance'" [panel]="'lifeins'">
+    </lib-ucSubsection>
+    <div id="lifeins">
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Life Insurance Cover</label>
+        <label class="col-md-2  adinslabel" translate *ngIf="SummaryObj?.AgrmntLifeIns?.IsCustCover == 1">Yes</label>
+        <label class="col-md-2  adinslabel" translate *ngIf="SummaryObj?.AgrmntLifeIns?.IsCustCover == 0">No</label>
+        <label class="col-md-4  adInsLabel" translate>Life Insurance Company</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntLifeIns">{{this.SummaryObj.AgrmntLifeIns.LifeInscoBrnchName}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Life Insurance Object</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntLifeIns">{{this.SummaryObj.AgrmntLifeIns.LifeInsuranceObject}}</label>
+        <label class="col-md-4  adInsLabel" translate>Total Life Insurance Premi</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntLifeIns?.TotalPremiFromInsco != undefined">{{this.SummaryObj.AgrmntLifeIns.TotalPremiFromInsco
+          | number:'.2':'en-US'}}</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntLifeIns?.TotalPremiFromInsco == undefined"></label>
+      </div>
+    </div>
+  </div>
+</div>
+<app-agrmnt-financial [AgrmntId]="agrmntId" [BizTemplateCode]="SummaryObj?.Agrmnt?.BizTemplateCode">
+</app-agrmnt-financial>

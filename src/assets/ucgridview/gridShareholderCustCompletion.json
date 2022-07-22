@@ -5,13 +5,13 @@
       "type": "label",
       "position": "left",
       "label": "Shareholder Name",
-      "name": "MgmntShrholderName"
+      "name": "ShareholderName"
     },
     {
       "type": "label",
       "position": "left",
       "label": "Shareholder Type",
-      "name": "CustTypeName"
+      "name": "ShareholderTypeDesc"
     },
     {
       "type": "label",
@@ -42,12 +42,12 @@
     {
       "type": "text",
       "position": "left",
-      "property": "MgmntShrholderName"
+      "property": "ShareholderName"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "CustTypeName"
+      "property": "ShareholderTypeDesc"
     },
     {
       "type": "decimal",

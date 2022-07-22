@@ -115,6 +115,7 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo =  this.TaskReassignmentObj.TaskReassignmentTrxNo;
     this.InputApvObj.RequestId = this.ApvReqId;
+    this.InputApvObj.OfficeCodes.push(this.TaskReassignmentObj.OfficeCode);
     this.IsReady = true;
   }
 

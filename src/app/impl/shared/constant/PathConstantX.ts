@@ -163,6 +163,10 @@ export class PathConstantX {
   public static RETURN_HANDLING_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
   public static RETURN_HANDLING_SURVEY_VERIF_PAGING_X = PathConstant.RETURN_HANDLING + "/" + PathConstantX.SURVEY_VERIF_PAGING;
   public static EDIT_APP_AFT_APV_DETAIL_X = PathConstant.EDIT_APP_AFT_APV + "/" + PathConstantX.DETAIL_X;
+  public static EDIT_APP_AFT_APV_VIEW_X = PathConstant.EDIT_APP_AFT_APV + "/" + PathConstantX.VIEW;
+  public static EDIT_APP_AFT_APV_APPRV_DETAIL= PathConstant.EDIT_APP_AFT_APV_APPRV + "/" + PathConstantX.DETAIL_X;
+
+
   
   public static EDIT_COMM_AFT_APV = "EditCommAftApv";
   public static EDIT_COMM_AFT_APV_PAGING = PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.PAGING;

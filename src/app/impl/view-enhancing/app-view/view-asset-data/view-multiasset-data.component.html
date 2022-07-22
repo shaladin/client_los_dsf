@@ -88,14 +88,8 @@
               <th style="text-align: right;">
                 <span class="thead-header" name='collateralPrice' translate>Collateral Price</span>
               </th>
-              <th style="text-align: left;">
-                <span class="thead-header" name='licensePlateNo' translate>Serial No 3</span>
-              </th>
-              <th style="text-align: left;">
-                <span class="thead-header" name='chassisNo' translate>Serial No 1</span>
-              </th>
-              <th style="text-align: left;">
-                <span class="thead-header" name='engineNo' translate>Serial No 2</span>
+              <th style="text-align: left;" *ngFor="let e of SerialNoLabelCollateralList; let i = index">
+                <span class="thead-header" name='serialNo1' translate>{{SerialNoLabelCollateralList[i]}}</span>
               </th>
               <th style="text-align: left;">
                 <span class="thead-header" name='ownerName' translate>Owner Name</span>
@@ -117,14 +111,8 @@
               <td style="text-align: right;">
                 {{coll.CollateralValueAmt | number:'.2':'en-US'}}
               </td>
-              <td style="text-align: left;">
-                {{coll[coll.LicensePlateNo]}}
-              </td>
-              <td style="text-align: left;">
-                {{coll[coll.ChassisNo]}}
-              </td>
-              <td style="text-align: left;">
-                {{coll[coll.EngineNo]}}
+              <td style="text-align: left;" *ngFor="let e of SerialNoLabelCollateralList; index as j">
+                {{coll['SerialNo'+(j+1)]}}
               </td>
               <td style="text-align: left;">
                 {{coll.OwnerName}}
