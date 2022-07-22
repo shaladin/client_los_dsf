@@ -24,6 +24,7 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
   @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForListAsset: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForAnalysisResult: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForFinancialData: EventEmitter<any> = new EventEmitter();
 
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
@@ -106,6 +107,10 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
 
   ClickLinkAnalysisResult() {
     this.ngModelForAnalysisResult.emit();
+  }
+
+  ClickLinkFinancialData() {
+    this.ngModelForFinancialData.emit();
   }
   //#endregion
 

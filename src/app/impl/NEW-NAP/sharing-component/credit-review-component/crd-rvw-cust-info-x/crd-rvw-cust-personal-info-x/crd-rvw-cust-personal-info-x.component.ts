@@ -26,6 +26,7 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
   @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForListAsset: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForAnalysisResult: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForFinancialData: EventEmitter<any> = new EventEmitter();
 
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
@@ -174,5 +175,8 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
     this.ngModelForAnalysisResult.emit();
   }
 
+  ClickLinkFinancialData() {
+    this.ngModelForFinancialData.emit();
+  }
   //#endregion
 }

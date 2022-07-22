@@ -40,6 +40,7 @@ import { CrdRvwIncomeExpenseXComponent } from "app/impl/NEW-NAP/sharing-componen
 import { AssetAccessoryInfoComponent } from "app/impl/NEW-NAP/business-process/credit-process/shared-component/asset-accessory-info/asset-accessory-info.component";
 import { CrdRvwListAssetComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-list-asset/crd-rvw-list-asset.component";
 import { CrdRvwResultAnalysisComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-result-analysis/crd-rvw-result-analysis.component";
+import { CrdRvwFinancialDataComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-financial-data/crd-rvw-financial-data.component";
 
 @NgModule({
     exports: [
@@ -66,7 +67,8 @@ import { CrdRvwResultAnalysisComponent } from "app/impl/NEW-NAP/sharing-componen
         CrdRvwThirdPartyCheckingXComponent,
         AssetAccessoryInfoComponent,
         CrdRvwListAssetComponent,
-        CrdRvwResultAnalysisComponent
+        CrdRvwResultAnalysisComponent,
+        CrdRvwFinancialDataComponent
     ],
     imports: [
         CommonModule,
@@ -110,7 +112,8 @@ import { CrdRvwResultAnalysisComponent } from "app/impl/NEW-NAP/sharing-componen
         CrdRvwThirdPartyCheckingXComponent,
         AssetAccessoryInfoComponent,
         CrdRvwListAssetComponent,
-        CrdRvwResultAnalysisComponent
+        CrdRvwResultAnalysisComponent,
+        CrdRvwFinancialDataComponent
     ],
     providers: [
         NGXToastrService
