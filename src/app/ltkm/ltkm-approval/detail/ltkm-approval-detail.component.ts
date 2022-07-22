@@ -170,6 +170,7 @@ export class LtkmApprovalDetailComponent implements OnInit {
         this.InputApvObj.TaskId = this.taskId;
         this.InputApvObj.TrxNo = this.LtkmNo;
         this.InputApvObj.RequestId = this.ApvReqId;
+        this.InputApvObj.OfficeCodes.push(this.ltkmReq.OfficeCode);
 
         this.IsReady = true;
     }

@@ -21,6 +21,8 @@ import { ResGetProdCmpntGroupedObj } from 'app/shared/model/response/product/res
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ResGetProductHObj } from 'app/shared/model/response/product/res-get-prod-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 
 @Component({
@@ -45,6 +47,8 @@ export class HoGeneralDataComponent implements OnInit {
   ReqGetProdCmpntObj : ReqGetProdCompntObj = new ReqGetProdCompntObj();
   ReqListProductDObj: ReqListProductDetailObj = new ReqListProductDetailObj();
   ReqCopyProdObj: ReqCopyProductObj = new ReqCopyProductObj();
+  ListEditableProdCompntDict = {};
+  IsProdVersionOne: boolean = false;
 
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
@@ -70,14 +74,15 @@ export class HoGeneralDataComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.FormProdComp = this.fb.group(
       {
         groups: this.fb.array([])
       }
     );
 
-    this.LoadProdComponent(this.ProdHId, "GEN", true, "");
+    await this.getProdStatAndVersion();
+    await this.LoadProdComponent(this.ProdHId, "GEN", true, "");
 
     this.InputLookUpObj.urlJson = "./assets/uclookup/product/lookupProduct.json";
     this.InputLookUpObj.urlEnviPaging = environment.losUrl + "/v1";
@@ -91,6 +96,30 @@ export class HoGeneralDataComponent implements OnInit {
     critObj.value = this.ProdId.toString();
     this.ArrCrit.push(critObj);
     this.InputLookUpObj.addCritInput = this.ArrCrit;
+    this.InputLookUpObj.isReady = true;
+  }
+
+  async getListEditableProdCompnt() {
+    let reqByCodeObj: GenericObj = new GenericObj();
+    reqByCodeObj.Code = CommonConstant.LIST_EDITABLE_PROD_COMPNT;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, reqByCodeObj).toPromise().then(
+      (response: GeneralSettingObj) => {
+        let ListEditableProdCompnt: Array<string> = response.GsValue.split(";");
+        ListEditableProdCompnt.forEach(x => {
+          this.ListEditableProdCompntDict[x] = true;
+        });
+      }
+    );
+  }
+
+  async getProdStatAndVersion() {
+    await this.http.post(URLConstant.GetProdHById, {Id: this.ProdHId}).toPromise().then(
+      (response: ResGetProductHObj) => {
+        if(response.ProdStat == CommonConstant.ProdStatNew && response.ProdVersion == "1") {
+          this.IsProdVersionOne = true;
+        }
+      }
+    )
   }
 
   addGroup(groupCode, groupName) {
@@ -237,13 +266,13 @@ export class HoGeneralDataComponent implements OnInit {
     )
   }
 
-  LoadProdComponent(ProdHId: number, CompGroups: string, IsFilterBizTmpltCode: boolean, Lob: string) {
+  async LoadProdComponent(ProdHId: number, CompGroups: string, IsFilterBizTmpltCode: boolean, Lob: string) {
     this.ReqGetProdCmpntObj.ProdHId = ProdHId;
     this.ReqGetProdCmpntObj.GroupCodes = CompGroups.split(",");
     this.ReqGetProdCmpntObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode;
     this.ReqGetProdCmpntObj.Lob = Lob;
 
-    this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdCmpntObj).toPromise().then(
+    await this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdCmpntObj).toPromise().then(
       async (response : ResGetProdCmpntGroupedObj) => {
         let fa_group = this.FormProdComp.controls['groups'] as FormArray;
         while (fa_group.length) {
@@ -256,6 +285,7 @@ export class HoGeneralDataComponent implements OnInit {
 
           for (var j = 0; j < group.Components.length; j++) {
             let comp = group.Components[j];
+            this.ListEditableProdCompntDict[comp.RefProdCompntCode] = false;
             if (comp.ProdCompntType == "DDL") {
               await this.PopulateDDL(comp);
             }
@@ -277,6 +307,7 @@ export class HoGeneralDataComponent implements OnInit {
         }
       }
     )
+    await this.getListEditableProdCompnt();
   }
 
   onChangeEvent(val: string, event, index: number, indexparent: number) {

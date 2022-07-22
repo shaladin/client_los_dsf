@@ -41,7 +41,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  SaveForm(event) {
+  async SaveForm(event) {
     if(event.Action == "SaveDetail"){
       let url = URLConstant.EditInsuranceDataMultiAsset;
       if (event.InsuranceData.AppInsObjObj.AppInsObjId == 0) url = URLConstant.AddInsuranceDataMultiAsset;
@@ -50,6 +50,16 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           this.toastr.successMessage(response["Message"]);
           this.ucInsCom.Cancel();
         });
-    }else this.outputTab.emit();
+    }else 
+    {
+      var isValid = true;
+      await this.http.post(URLConstant.ValidateAppInsObjAmtByAppId, {id : this.appId}).toPromise().then(
+        (response) => {
+          if (!response || response['StatusCode'] != 200) isValid = false;
+        }
+      );
+      if(!isValid) return;
+      this.outputTab.emit();
+    }
   }
 }

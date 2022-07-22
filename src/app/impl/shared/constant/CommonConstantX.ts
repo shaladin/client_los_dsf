@@ -14,6 +14,9 @@ export class CommonConstantX {
     //LOB
     public static SLB = "SLB";
 
+    //WOP Descr
+    public static WOPADDescr = "Auto Debit";
+    
     //General Setting Code
     public static GSVendorSlbCode = "VENDOR_SLB_CODE";
     public static GSVendorMpfFdCode = "VENDOR_MPFFD_CODE";
@@ -76,6 +79,16 @@ export class CommonConstantX {
 
     //Insurance
     public static PayPeriodAnnualy = "ANNUALY";
+    public static ALLRISK = "ALLRISK";
+    public static ALL_RISK = "ALL RISK"
+    public static TLO = "TLO";
+    public static TOTAL_LOSS_ONLY = "TOTAL LOSS ONLY"
+    public static ALLRISK_MIP = "ALLRISK_MIP";
+    public static ALL_RISK_MIP = "ALL_RISK_MIP";
+    public static TLO_MIP = "TLO_MIP";
+    public static TOTAL_LOSS_ONLY_MIP = "TOTAL LOSS ONLY MIP";
+    public static ALLRISK_OTR = "ALLRISK_OTR";
+    public static ALL_RISK_OTHER = "ALL RISK OTHER";
 
     //Survey Verification
     public static ACT_CODE_SURVEY_VERIF = "SURVEY_"

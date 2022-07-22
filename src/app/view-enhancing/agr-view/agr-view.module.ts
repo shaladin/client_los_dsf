@@ -62,6 +62,7 @@ import { ViewCommissionXComponent } from "app/impl/view-enhancing/agr-view/view-
 import { ListDataCommissionAgrmntXComponent } from "app/impl/view-enhancing/agr-view/view-commission/list-data-commission/list-data-commission-x.component";
 import { ViewInvoiceDataXComponent } from "app/impl/view-enhancing/agr-view/view-invoice-data/view-invoice-data-x.component";
 import { InvoiceMainInfoXComponent } from "app/impl/view-enhancing/invoice-main-info/invoice-main-info-x.component";
+import { ViewSummaryXComponent } from "app/impl/view-enhancing/agr-view/view-summary-x/view-summary-x.component";
 
 @NgModule({
     imports: [
@@ -126,7 +127,8 @@ import { InvoiceMainInfoXComponent } from "app/impl/view-enhancing/invoice-main-
         ViewPurchaseOrderDetailXComponent,
         ViewCommissionXComponent,
         ListDataCommissionAgrmntXComponent,
-        ViewInvoiceDataXComponent
+        ViewInvoiceDataXComponent,
+        ViewSummaryXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

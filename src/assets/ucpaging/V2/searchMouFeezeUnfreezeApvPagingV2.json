@@ -50,31 +50,31 @@
       "name": "MOU_CUST_NO"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
       "label": "Apv No",
       "name": "RequestNo"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
       "label": "Request By",
       "name": "RequestBy"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
       "label": "Request Date",
       "name": "RequestDate"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
       "label": "Main User Id",
       "name": "MainUser"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
       "label": "Current User Id",
       "name": "CurrentUser"

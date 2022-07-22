@@ -14,6 +14,8 @@ export class DeviationResultObj {
     IsFatal: boolean;
     Notes: string;
     RowVersion: string;
+    IsOriginalValueNumber: boolean = false;
+    IsCurrentValueNumber: boolean = false;
     
     constructor() { 
         this.RowVersion = "";

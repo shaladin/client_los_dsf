@@ -85,10 +85,10 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPR_RES_EXT_APPRVL_PAGING;//"/Nap/AddProcess/CreditApvResultExtApproval/Paging"
   public static NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPR_RES_EXT_APPRVL_DETAIL;//"/Nap/AddProcess/CreditApvResultExtApproval/Detail"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_PAGING;//"/Nap/AddProcess/EditAppAftApv/Paging"
-  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_APP_AFT_APV_DETAIL_X;//"/Nap/AddProcess/EditAppAftApv/Detail"
-  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_VIEW;//"/Nap/AddProcess/EditAppAftApv/View"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_APP_AFT_APV_DETAIL_X;//"/Nap/AddProcess/EditAppAftApv/DetailX"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_APP_AFT_APV_VIEW_X;//"/Nap/AddProcess/EditAppAftApv/ViewX"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_APPRV_PAGING;//"/Nap/AddProcess/EditAppAftApv/Approval/Paging"
-  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_APPRV_DETAIL;//"/Nap/AddProcess/EditAppAftApv/Approval/Detail"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.EDIT_APP_AFT_APV_APPRV_DETAIL;//"/Nap/AddProcess/EditAppAftApv/Approval/DetailX"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_INQUIRY;//"/Nap/AddProcess/EditAppAftApv/Inquiry"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2;//"/Nap/AddProcess/ReturnHandling/NAP2"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4;//"/Nap/AddProcess/ReturnHandling/NAP4"
@@ -286,7 +286,7 @@ export class NavigationConstant {
 
   //#region FOU-VIEW
   public static VIEW_FOU_CUST_PERSONAL_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_FOU_CUST_PERSONAL_DETAIL_X; //'/View/Customer/X/PersonalDetailX'
-  public static VIEW_FOU_CUST_COY_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_FOU_CUST_COY_DETAIL_X; //'/View/Customer/CoyDetail'
+  public static VIEW_FOU_CUST_COY_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_FOU_CUST_COY_DETAIL_X; //'/View/Customer/X/CoyDetail/X'
   public static VIEW_FOU_CUST_TRUST_SOC = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_TRUST_SOC; //'/View/Customer/CustTrustSoc'
   public static VIEW_FOU_SRVY_ORDER = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_ORDER; //'/View/Survey/SurveyOrder'
   public static VIEW_FOU_SRVY_TASK = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_TASK; //'/View/Survey/SurveyTask'
