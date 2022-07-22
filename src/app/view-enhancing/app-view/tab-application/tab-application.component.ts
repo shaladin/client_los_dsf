@@ -77,6 +77,10 @@ export class TabApplicationComponent implements OnInit {
         this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationOPLInfo.json";
       }
     }
+    else if (this.BizTemplateCode == CommonConstant.DF)
+    {
+      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfoDlfn.json";
+    }
     else {
       this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
     }
