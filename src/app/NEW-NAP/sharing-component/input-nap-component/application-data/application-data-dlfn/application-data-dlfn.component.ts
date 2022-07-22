@@ -424,7 +424,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
       this.SalesAppInfoForm.controls['TopDays'].setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
 
-      if (this.mode != 'edit') {
+      if (this.mode != 'edit' || this.mode == 'edit') {
         this.SalesAppInfoForm.controls.Tenor.setValue(1);
       }
     }
