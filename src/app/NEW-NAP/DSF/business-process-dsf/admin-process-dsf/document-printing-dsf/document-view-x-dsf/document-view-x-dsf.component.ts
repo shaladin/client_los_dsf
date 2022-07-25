@@ -21,6 +21,8 @@ import { AgrmntDocPrintObj } from 'app/shared/model/agrmnt-doc-print-obj.model';
 import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/rdlc-report-obj.model';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { AgrmntSignerObj } from 'app/shared/model/agrmnt-signer-obj.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 
 @Component({
   selector: 'app-document-view-x-dsf',
@@ -48,6 +50,7 @@ export class DocumentViewXDsfComponent implements OnInit {
   getUrl: string;
   RdlcReport: RdlcReportObj = new RdlcReportObj();
   BizTemplateCode: string;
+  WOF: string;
   isDocSignerAvailable: boolean;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING_DSF;
@@ -62,6 +65,9 @@ export class DocumentViewXDsfComponent implements OnInit {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
       }
+      if (params["WOF"] != null) {
+        this.WOF = params["WOF"];
+      }
     });
     this.isDocSignerAvailable = false;
   }
@@ -70,8 +76,11 @@ export class DocumentViewXDsfComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.viewGenericObj.viewInput = "./assets/dsf/ucviewgeneric/viewNapAppOPLMainInformationAgrmnt.json";
     }
-    else {
+    else if (this.BizTemplateCode == CommonConstant.CFNA) {
       this.viewGenericObj.viewInput = "./assets/dsf/ucviewgeneric/viewDocumentDsf.json";
+    }
+    else {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
     }
 
     this.GetListAgrmntDocByAgrmntId();
@@ -155,11 +164,22 @@ export class DocumentViewXDsfComponent implements OnInit {
 
   GetListAgrmntDocByAgrmntId() {
     var obj = { Id: this.AgrmntId }
-    this.http.post(URLConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
-      (response) => {
-        this.AgrmntDocObj = response[CommonConstant.ReturnObj];
-      }
-    );
+    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB) 
+    {
+      this.http.post(URLConstantDsf.GetListAgrmntDocByAgrmntIdDsf, obj).subscribe(
+        (response) => {
+          this.AgrmntDocObj = response[CommonConstant.ReturnObj];
+        }
+      );
+    }
+    else
+    {
+      this.http.post(URLConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
+        (response) => {
+          this.AgrmntDocObj = response[CommonConstant.ReturnObj];
+        }
+      );
+    }
   }
 
   SaveAgrmntDocPrint(agrmntDocId) {
@@ -168,10 +188,20 @@ export class DocumentViewXDsfComponent implements OnInit {
     this.agrmntDocPrintObj.RowVersion = "";
     this.agrmntDocPrintObj.AgrmntDocId = agrmntDocId;
 
-    this.http.post(URLConstant.AddAgrmntDocPrint, this.agrmntDocPrintObj).subscribe(
-      () => {
-        this.GetListAgrmntDocByAgrmntId();
-      });
+    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB)
+    {
+      this.http.post(URLConstantDsf.AddAgrmntDocPrintDsf, this.agrmntDocPrintObj).subscribe(
+        () => {
+          this.GetListAgrmntDocByAgrmntId();
+        });
+    }
+    else
+    {
+      this.http.post(URLConstant.AddAgrmntDocPrint, this.agrmntDocPrintObj).subscribe(
+        () => {
+          this.GetListAgrmntDocByAgrmntId();
+        });
+    }
   }
 
   Print(item) {

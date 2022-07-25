@@ -57,7 +57,7 @@
         }
     ],
     "querystring": {
-        "name": "searchDocument"
+        "name": "searchDocumentDsf"
     },
     "headerList": [
         {
@@ -280,18 +280,8 @@
             "position": "center",
             "action": [
                 {
-                    "type": "edit",
-                    "path": "NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW_DSF",
-                    "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        },
-                        {
-                            "type": "BizTemplateCode",
-                            "property": "BizTemplateCode"
-                        }
-                    ]
+                    "type": "callback",
+                    "key": "ViewAgrmntDocDsf"
                 }
             ]
         }
