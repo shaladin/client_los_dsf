@@ -425,7 +425,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
 
       if (this.mode != 'edit' || this.mode == 'edit') {
-        this.SalesAppInfoForm.controls.Tenor.setValue(1);
+        this.SalesAppInfoForm.controls.Tenor.setValue(0);
       }
     }
 
