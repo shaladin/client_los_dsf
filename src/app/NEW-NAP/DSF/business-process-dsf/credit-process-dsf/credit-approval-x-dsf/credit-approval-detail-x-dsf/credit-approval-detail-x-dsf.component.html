@@ -27,6 +27,7 @@
         <app-crd-rvw-dealer-info *ngIf="!IsFD" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
         <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>
+        <app-asset-accessory-info> *ngIf="isShow" [AppId]="appId" </app-asset-accessory-info>
 
       </div>
     </div>
