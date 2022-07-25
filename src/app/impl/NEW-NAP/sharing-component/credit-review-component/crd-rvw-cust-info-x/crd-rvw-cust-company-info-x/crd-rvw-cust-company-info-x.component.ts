@@ -21,6 +21,9 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
   @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForCustHistDataX: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForListAsset: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForAnalysisResult: EventEmitter<any> = new EventEmitter();
 
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
@@ -89,8 +92,20 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
     this.ngModelForNegCheckList.emit();
   }
 
+  ClickLinkSurvey() {
+    this.ngModelForSurveyDataX.emit();
+  }
+
   ClickLinkCustomerHistoryData() {
     this.ngModelForCustHistDataX.emit();
+  }
+  
+  ClickLinkListAssetInOperation() {
+    this.ngModelForListAsset.emit();
+  }
+
+  ClickLinkAnalysisResult() {
+    this.ngModelForAnalysisResult.emit();
   }
   //#endregion
 

@@ -221,6 +221,28 @@ export class CessiePreGoLiveComponent implements OnInit {
       });
   }
 
+  async CalculateAdminFee1(){
+    if(confirm("This action will recalculate Cessie No " + this.CessieNo + ", Are you sure to recalculate this data?" )){
+      var reqRunSpByNameWithParam = { SpName: "spUpdateFeeCessie", Code: this.CessieNo  };
+      await this.http.post(URLConstantX.RunSpBySpNameWithParam, reqRunSpByNameWithParam).subscribe(
+        (response) => {
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], {});
+          this.toastr.successMessage(response['message']);
+      });
+    }    
+  }
+
+  async CalculateAdminFee2(){
+    if(confirm("This action will recalculate Cessie No " + this.CessieNo + ", Are you sure to recalculate this data?" )){
+      var reqRunSpByNameWithParam = { SpName: "spUpdateFeeCessie2", Code: this.CessieNo  };
+      await this.http.post(URLConstantX.RunSpBySpNameWithParam, reqRunSpByNameWithParam).subscribe(
+        (response) => {
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], {});
+          this.toastr.successMessage(response['message']);
+      });
+    }
+  }
+
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
   mouCustNo: string;

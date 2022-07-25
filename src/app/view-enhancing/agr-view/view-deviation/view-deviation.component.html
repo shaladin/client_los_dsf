@@ -7,7 +7,7 @@
   <thead>
     <tr class="table-header">
       <th class="text-center"><span translate class="thead-header" name='SeqNo'>Seq No</span></th>
-      <th class="text-left"><span translate class="thead-header" name='DeviationCategory'>Deviation Category</span></th>
+      <th class="text-left"><span translate class="thead-header" name='DeviationCategory'>Deviation Category XXX</span></th>
       <th class="text-right"><span translate class="thead-header" name='OriginalValue'>Original Value</span></th>
       <th class="text-right"><span translate class="thead-header" name='CurrentValue'>Current Value</span></th>
       <th class="text-left"><span translate class="thead-header" name='ApvAt'>Approval At</span></th>
@@ -20,6 +20,12 @@
       <td class="text-left">{{item.DeviationCategory}}</td>
       <td class="text-right">{{item.OriginalValue}}</td>
       <td class="text-right">{{item.CurrentValue}}</td>
+
+      <td class="text-right" *ngIf="item.IsOriginalValueNumber">{{ item.OriginalValue | number:'.2':'en-US' }}</td>
+      <td class="text-center" *ngIf="!item.IsOriginalValueNumber">{{ item.OriginalValue }}</td>
+      <td class="text-right" *ngIf="item.IsCurrentValueNumber">{{ item.CurrentValue | number:'.2':'en-US'}}</td>
+      <td class="text-center" *ngIf="!item.IsCurrentValueNumber">{{ item.CurrentValue }}</td>
+
       <td class="text-left">{{item.ApvAt}}</td>
       <td class="text-left" >{{item.Notes}}</td>
     </tr>

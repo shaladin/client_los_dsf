@@ -84,6 +84,7 @@ export class CreditApprovalDetailDsfComponent implements OnInit {
     });
   }
 
+  readonly bizCfna: string = CommonConstant.CFNA;
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;

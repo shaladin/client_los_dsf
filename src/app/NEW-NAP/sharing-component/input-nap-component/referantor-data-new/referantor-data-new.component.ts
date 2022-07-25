@@ -77,6 +77,12 @@ export class ReferantorDataNewComponent implements OnInit {
 
   TurnReferantor() {
     this.ReferantorOn = this.NapAppReferantorForm.controls.CheckBoxAppReferantor.value;
+    if(!this.ReferantorOn){
+      this.NapAppReferantorForm = this.fb.group({
+        CheckBoxAppReferantor: [false],
+        AppReferantorObjs: this.fb.array([])
+      });
+    }
   }
 
   async getAppReferantorData() {

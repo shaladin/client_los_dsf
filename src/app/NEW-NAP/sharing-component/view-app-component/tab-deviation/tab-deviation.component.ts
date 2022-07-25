@@ -9,7 +9,6 @@ import { DeviationResultObj } from 'app/shared/model/deviation-result-obj.model'
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { isNumber } from 'util';
 
 @Component({
   selector: 'app-tab-deviation',
@@ -79,8 +78,8 @@ export class TabDeviationComponent implements OnInit {
               CurrValue: temp[i].CurrentValue,
               AppvAt: temp[i].ApvAt,
               Notes: temp[i].Notes,
-              isNumberOriValue:  isNumber(temp[i].OriginalValue),
-              isNumberCurrValue: isNumber(temp[i].CurrentValue),
+              isNumberOriValue:  !Number.isNaN(Number(temp[i].OriginalValue)),
+              isNumberCurrValue: !Number.isNaN(Number(temp[i].CurrentValue)),
             };
             this.AutoDeviationData.push(tempObj);
           }

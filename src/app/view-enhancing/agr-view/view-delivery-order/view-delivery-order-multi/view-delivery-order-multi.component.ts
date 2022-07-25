@@ -8,6 +8,7 @@ import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
 export class ViewDeliveryOrderMultiComponent implements OnInit {
   @Input() doList: Array<DeliveryOrderHObj>;
   @Input() appId: number;
+  @Input() agrmntId: number;
   doDetail: boolean = false;
   doDetailObj: DeliveryOrderHObj;
 

@@ -274,6 +274,7 @@ export class AssetDataComponent implements OnInit {
   RefProdCmptAssetCond: ProdOfferingDObj;
   RefProdCmptSupplSchm: ProdOfferingDObj;
   RefProdCmptAssetSchm: ProdOfferingDObj;
+  RefProdCmptPurposeOfFinancing: ProdOfferingDObj;
   AppCustCoyObj: AppCustCompanyObj;
   CheckValidationObj: ResAssetValidationRuleObj;
   SetManuYearObj: ResAssetValidationRuleObj;
@@ -1966,8 +1967,9 @@ export class AssetDataComponent implements OnInit {
   }
 
   async bindAssetUsageObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = this.RefProdCmptPurposeOfFinancing.CompntValue;
+    await this.http.post(URLConstant.GetListKeyValueAssetUsageByPurposeOfFinCode, reqByCode).subscribe(
       (response) => {
         this.AssetUsageObj = response[CommonConstant.ReturnObj];
       }
@@ -2211,6 +2213,15 @@ export class AssetDataComponent implements OnInit {
           this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
           this.InputLookupAssetObj.nameSelect = this.AssetMasterObj.FullAssetName;
         }
+      }
+    );
+  }
+
+  GetOwnerRelationship(){
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.OwnerRelationObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
   }
@@ -2658,6 +2669,17 @@ export class AssetDataComponent implements OnInit {
         this.RefProdCmptAssetSchm = response;
       }
     );
+    
+    let appObj4: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj4.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj4.RefProdCompntCode = CommonConstant.RefProdCompntCodePurposeOfFinancing;
+    appObj4.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj4).toPromise().then(
+      (response: any) => {
+        this.RefProdCmptPurposeOfFinancing = response;
+      }
+    );
   }
 
   GetRefAssetDocList(isInit: boolean) {
@@ -2836,7 +2858,10 @@ export class AssetDataComponent implements OnInit {
     if(OwnerType == CommonConstant.CustTypePersonal){
       this.InputLookupProfessionObj.isRequired = false;
       this.AssetDataForm.controls.OwnerProfessionCode.clearValidators();
-
+      
+      this.refMasterObj.RefMasterTypeCode = this.CustType == CommonConstant.CustTypeCompany ? CommonConstant.RefMasterTypeCodeCustCompanyRelationship :  CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+      this.GetOwnerRelationship();
+      
       if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
           OwnerProfessionCode : ""
@@ -2858,7 +2883,10 @@ export class AssetDataComponent implements OnInit {
     }else{
       this.InputLookupProfessionObj.isRequired = true;
       this.AssetDataForm.controls.OwnerProfessionCode.setValidators([Validators.required]);
-
+      
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+      this.GetOwnerRelationship();
+      
       if(IsOwnerTypeChanged){
         this.AssetDataForm.patchValue({
           OwnerProfessionCode : ""

@@ -5,7 +5,7 @@
     "component": [
       {
         "type": "textbox",
-        "name": "MasterCode",
+        "name": "MASTER_CODE",
         "id": "masterCodeId",
         "value": "",
         "label": "Economic Sector Code",
@@ -13,7 +13,7 @@
       },
       {
         "type": "textbox",
-        "name": "Descr",
+        "name": "DESCR",
         "id": "descrId",
         "value": "",
         "label": "Economic Sector Description",

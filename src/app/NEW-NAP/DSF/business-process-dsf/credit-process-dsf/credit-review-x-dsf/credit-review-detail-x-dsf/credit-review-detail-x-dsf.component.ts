@@ -61,6 +61,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   NapObj: AppObj = new AppObj();
   bizTemplateCode: string;
   apvSchmCode: string = "";
+  OriOfficeCode: string;
   
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -406,6 +407,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     this.InputObj.SchemeCode = this.apvSchmCode;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
+    this.InputObj.RequestedBy = this.UserAccess.UserName;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.IsReady = true;
   }
 

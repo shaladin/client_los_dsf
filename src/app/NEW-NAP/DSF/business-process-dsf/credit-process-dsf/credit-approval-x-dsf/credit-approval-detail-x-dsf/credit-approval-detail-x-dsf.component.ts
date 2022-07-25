@@ -156,6 +156,7 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
     this.InputApvObj.TaskId = this.inputObj.taskId;
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
+    this.InputApvObj.OfficeCodes.push(this.AppObj.OriOfficeCode);
     this.IsReady = true;
   }
 
