@@ -1448,7 +1448,7 @@ export class CustMainDataComponent implements OnInit {
       this.setDataCustomerPersonalForSave();
 
       if(this.custMainDataMode != CommonConstant.CustMainDataModeCust && this.custMainDataMode != CommonConstant.CustMainDataModeGuarantor){
-        if(this.custDataPersonalObj.AppCustPersonalJobDataObj != null){
+        if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt != null){
           if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtEmpEstblshmntDtValidate){
             this.toastr.warningMessage(String.Format(ExceptionConstant.EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
             return false;
