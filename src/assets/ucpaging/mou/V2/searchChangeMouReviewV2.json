@@ -112,7 +112,7 @@
         "type": "textbox",
         "name": "Assignee",
         "id": "AssigneeId",
-        "value": null,
+        "value": "",
         "label": "Claim By",
         "placeholder": "Placeholder",
         "isCriteriaDataTable" : true
