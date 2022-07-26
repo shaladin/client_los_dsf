@@ -479,8 +479,8 @@ export class MouDetailFinancingComponent implements OnInit {
       this.InputLookupLinkManufacturerObj.isDisable = false;
       this.InputLookupManufacturerObj.isDisable = false;
 
-      this.InputLookupLinkManufacturerObj.isRequired = false;
-      this.InputLookupManufacturerObj.isRequired = false;
+      this.InputLookupLinkManufacturerObj.isRequired = true;
+      this.InputLookupManufacturerObj.isRequired = true;
 
       this.MouDetailFinancingForm.controls.lookupLinkManufacturer.setValidators(Validators.required);
       this.MouDetailFinancingForm.controls.lookupManufacturer.setValidators(Validators.required);
