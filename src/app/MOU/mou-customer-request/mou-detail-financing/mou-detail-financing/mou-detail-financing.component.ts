@@ -272,7 +272,6 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.isReadonly = false;
     this.InputLookupCustomerObj.isRequired = true;
 
     this.InputLookupLinkSupplGradingObj = new InputLookupObj();
@@ -280,8 +279,6 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupLinkSupplGradingObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupLinkSupplGradingObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
-    this.InputLookupLinkSupplGradingObj.isReadonly = false;
-    this.InputLookupLinkSupplGradingObj.isRequired = false;
     this.InputLookupLinkSupplGradingObj.title = "Link Supplier Grading";
 
     this.InputLookupLinkManufacturerObj = new InputLookupObj();
@@ -289,7 +286,6 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupLinkManufacturerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupLinkManufacturerObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkManufacturerObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
-    this.InputLookupLinkManufacturerObj.isReadonly = false;
     this.InputLookupLinkManufacturerObj.isRequired = false;
     this.InputLookupLinkManufacturerObj.title = "Link Manufacturer";
 
@@ -298,7 +294,6 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupManufacturerObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.InputLookupManufacturerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupManufacturerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupManufacturerObj.isReadonly = false;
     this.InputLookupManufacturerObj.isRequired = true;
     this.InputLookupManufacturerObj.title = "Manufacture";
   }
