@@ -60,6 +60,7 @@ import { EditNapCustPagingComponent } from './edit-nap-cust/edit-nap-cust-paging
 import { EditNapCustDetailComponent } from './edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component';
 import { EditAppAfterApprovalViewXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-view-x/edit-app-after-approval-view-x.component';
 import { EditAppAfterApprovalApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-approval-detail-x/edit-app-after-approval-approval-detail-x.component';
+import { EditAppAfterApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-paging-x/edit-app-after-approval-paging-x.component';
 
 
 const routes: Routes = [
@@ -345,7 +346,11 @@ const routes: Routes = [
         component: EditAppAfterApprovalPagingComponent,
         data: {title: 'Edit Application After Approval Request Paging'}
       },
-    
+      {
+        path: PathConstantX.EDIT_APP_AFT_APV_PAGING_X,
+        component: EditAppAfterApprovalPagingXComponent,
+        data: {title: 'Edit Application After Approval Request Paging'}
+      },
       {
         path: PathConstant.EDIT_APP_AFT_APV_INQUIRY,
         component: EditAppAfterApprovalInquiryComponent,

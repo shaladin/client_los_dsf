@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -10,24 +10,40 @@ import { environment } from 'environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
-  selector: 'app-comm-app-after-approval-paging-x',
-  templateUrl: './edit-comm-after-approval-paging-x.component.html'
+  selector: 'app-edit-app-after-approval-paging-x',
+  templateUrl: './edit-app-after-approval-paging-x.component.html',
+  styleUrls: ['./edit-app-after-approval-paging-x.component.css']
 })
-export class EditCommAfterApprovalPagingXComponent implements OnInit {
+export class EditAppAfterApprovalPagingXComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
   CustNoObj: GenericObj = new GenericObj();
+  isReady: boolean = false;
+  navigationSubscription;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private adInsHelperService: AdInsHelperService) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  IsApplicationExist: boolean = false;
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -36,12 +52,29 @@ export class EditCommAfterApprovalPagingXComponent implements OnInit {
     });
   }
 
-  IsApplicationExist: boolean = false;
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/impl/ucpaging/searchEditCommAfterApproval.json";
-    this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchEditCommAfterApproval.json";
+    this.inputPagingObj._url = "./assets/impl/ucpaging/searchEditAppAfterApprovalX.json";
+    this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchEditAppAfterApprovalX.json";
     var arrAddCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -67,20 +100,20 @@ export class EditCommAfterApprovalPagingXComponent implements OnInit {
           }
         });
     }else if (ev.Key == "Edit") {
-    let reqObj: GenericObj = new GenericObj();
-    reqObj.Id = ev.RowObj.AgrmntId;
-    this.http.post(URLConstantX.GetEditAppReqAndApvByAgrmntId, reqObj).toPromise().then(
-      (response) => {
-        if(response["ReturnObject"] == null){
-          this.IsApplicationExist = false;
-        }
-        else {this.IsApplicationExist = true;}
-        if (this.IsApplicationExist == false){
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.EDIT_COMM_AFT_APV_DETAIL], { "AppId": ev.RowObj.AppId, "BizTemplateCode": ev.RowObj.BizTemplateCode, "AgrmntId": ev.RowObj.AgrmntId });
-        }
-        else {this.toastr.errorMessage("Edit Application in progress");
-        return;}
-      });
-    }
+      let reqObj: GenericObj = new GenericObj();
+      reqObj.Id = ev.RowObj.AgrmntId;
+      this.http.post(URLConstantX.GetEditComReqAndApvByAgrmntId, reqObj).toPromise().then(
+        (response) => {
+          if(response["ReturnObject"] == null){
+            this.IsApplicationExist = false;
+          }
+          else {this.IsApplicationExist = true;}
+          if (this.IsApplicationExist == false){
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL], { "AgrmntId": ev.RowObj.AgrmntId });
+          }
+          else {this.toastr.errorMessage("Edit Commission in progress");
+          return;}
+        });
+      }
   }
 }
