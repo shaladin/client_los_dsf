@@ -220,7 +220,17 @@ export class DocumentViewXDsfComponent implements OnInit {
         reportParamObj.paramAssignment = 1;
         reportParamObj.paramDescr = "";
         this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
-        this.RdlcReport.ReportInfo.SubReports = new Array();
+        //this.RdlcReport.ReportInfo.SubReports = new Array();
+        this.RdlcReport.ReportInfo.SubReports = [
+          {
+            reportName: "Lampiran IF",
+            reportTemplateCode: "DSF_IF_LAMPIRAN",
+            reportPath: "",
+            exportFormat: 0,
+            reportParameters: [reportParamObj],
+            subReports: []
+          }
+        ]
 
         //if(environment.isCore){
         //  this.RdlcReport.ReportInfo.SubReports = new Array();
@@ -238,7 +248,17 @@ export class DocumentViewXDsfComponent implements OnInit {
         // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
 
         if(environment.isCore){
-          this.RdlcReport.ReportInfo.SubReports = new Array();
+          //this.RdlcReport.ReportInfo.SubReports = new Array();
+          this.RdlcReport.ReportInfo.SubReports = [
+            {
+              reportName: "Lampiran IF",
+              reportTemplateCode: "DSF_IF_LAMPIRAN",
+              reportPath: "",
+              exportFormat: 0,
+              reportParameters: [reportParamObj],
+              subReports: []
+            }
+          ]
           if(this.RdlcReport.ReportInfo.ReportTemplateCode == "INSPREMIUMSLIP"){
             this.RdlcReport.ReportInfo.SubReports = [
               {
