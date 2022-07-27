@@ -1400,9 +1400,12 @@ export class ApplicationDataXComponent implements OnInit {
       }
     }
 
-    if (plafondUsed < financingAmt) {
-      this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
-      return false;
+    if(this.NapAppModelForm.controls.LobCode.value == 'FD')
+    {
+      if (plafondUsed < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+        return false;
+      }
     }
 
     if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
