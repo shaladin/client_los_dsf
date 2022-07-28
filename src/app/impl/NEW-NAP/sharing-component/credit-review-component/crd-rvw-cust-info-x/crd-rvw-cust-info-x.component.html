@@ -12,7 +12,7 @@
             <label class="label-control"> {{captureStat}} </label>
           </div>
         </div>
-      </div>      
+      </div>
       <div class="col-md-6">
         <div class="row" style="font-weight: bold;">
           <div class="col-md-6">
@@ -26,32 +26,28 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <app-crd-rvw-cust-personal-info-x *ngIf="crdRvwCustInfoObj.MrCustTypeCode != CustTypeCompany" 
-          (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" 
-          (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" 
+        <app-crd-rvw-cust-personal-info-x *ngIf="crdRvwCustInfoObj.MrCustTypeCode != CustTypeCompany"
+          (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)"
+          (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)"
           (ngModelForCustHistDataX)="ClickLinkCustHistData(CustHistDataContent)"
           (ngModelForSurveyDataX)="ClinkLinkSurveyData(SurveyDataContent)"
-          (ngModelForListAsset)="ClickLinkListAsset(ListAssetContent)"
-          (ngModelForAnalysisResult)="ClickLinkAnalysisResult(AnalysisResultContent)"
           (ngModelForFinancialData)="ClickLinkFinancialData(FinancialDataContent)"
           [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info-x>
-        <app-crd-rvw-cust-company-info-x *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" 
-          (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" 
-          (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" 
+        <app-crd-rvw-cust-company-info-x *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany"
+          (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)"
+          (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)"
           (ngModelForCustHistDataX)="ClickLinkCustHistData(CustHistDataContent)"
           (ngModelForSurveyDataX)="ClinkLinkSurveyData(SurveyDataContent)"
-          (ngModelForListAsset)="ClickLinkListAsset(ListAssetContent)"
-          (ngModelForAnalysisResult)="ClickLinkAnalysisResult(AnalysisResultContent)"
           (ngModelForFinancialData)="ClickLinkFinancialData(FinancialDataContent)"
           [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-company-info-x>
       </div>
       <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-12">
-            <label class="label-control" *ngIf="isCustCrdRvwExposureObj"> 
+            <label class="label-control" *ngIf="isCustCrdRvwExposureObj">
               <a class="font-weight-bold" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
              </label>
-             <label class="label-control" *ngIf="!isCustCrdRvwExposureObj"> 
+             <label class="label-control" *ngIf="!isCustCrdRvwExposureObj">
                 Exposure .000 (#Active / OS Principal / OS AR)
              </label>
           </div>
@@ -173,24 +169,6 @@
     </button>
   </div>
   <app-crd-rvw-survey-data-x [AppId]="appId"></app-crd-rvw-survey-data-x>
-</ng-template>
-<ng-template #ListAssetContent let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title" translate></h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <app-crd-rvw-list-asset [AppCustId]="crdRvwCustInfoObj.AppCustId"></app-crd-rvw-list-asset>
-</ng-template>
-<ng-template #AnalysisResultContent let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title" translate></h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <app-crd-rvw-result-analysis [appId]="appId"></app-crd-rvw-result-analysis>
 </ng-template>
 <ng-template #FinancialDataContent let-c="close" let-d="dismiss">
   <div class="modal-header">

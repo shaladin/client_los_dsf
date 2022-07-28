@@ -150,34 +150,6 @@ export class CrdRvwCustInfoXComponent implements OnInit {
   }
   //#endregion
 
-  //#region ListAsset
-  modalListAsset: any;
-  ClickLinkListAsset(ListAssetContent) {
-    this.modalListAsset = this.modalService.open(ListAssetContent);
-    this.modalListAsset.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      this.modalListAsset.close();
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      this.modalListAsset.close();
-    })
-  }
-  //#endregion
-
-  //#region AnalysisResult
-  modalAnalysisResult: any;
-  ClickLinkAnalysisResult(AnalysisResultContent) {
-    this.modalAnalysisResult = this.modalService.open(AnalysisResultContent);
-    this.modalAnalysisResult.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      this.modalAnalysisResult.close();
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      this.modalAnalysisResult.close();
-    })
-  }
-  //#endregion
-
   //#region FinancialData
   modalFinancialData: any;
   ClickLinkFinancialData(FinancialDataContent) {
