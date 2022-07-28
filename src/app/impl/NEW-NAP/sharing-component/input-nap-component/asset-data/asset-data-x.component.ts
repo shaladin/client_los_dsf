@@ -1204,6 +1204,7 @@ export class AssetDataXComponent implements OnInit {
     this.vendorObj.VendorId = event.VendorId;
     await this.GetVendor();
     await this.GetVendorEmpList();
+    await this.SalesPersonChangedx("");
   }
 
   SetBpkbCity(event) {
@@ -1262,6 +1263,13 @@ export class AssetDataXComponent implements OnInit {
         SalesPersonNo: "",
         SalesPersonPositionCode: "",
       });
+      this.AssetDataForm.patchValue({
+        AdminHeadId: "",
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
+      });
+      this.IsSales = true;
     }
   }
 
@@ -1281,13 +1289,13 @@ export class AssetDataXComponent implements OnInit {
       else{
         this.IsSales = false;
         this.AdminHeadName = temp[0].VendorEmpName;   
+        this.AssetDataForm.patchValue({
+          AdminHeadId: "",
+          AdminHeadName: "",
+          AdminHeadNo: "",
+          AdminHeadPositionCode: "",
+        });
       }
-      this.AssetDataForm.patchValue({
-        AdminHeadId: "",
-        AdminHeadName: "",
-        AdminHeadNo: "",
-        AdminHeadPositionCode: "",
-      });
     }
     else {
       this.AssetDataForm.patchValue({
@@ -1296,6 +1304,13 @@ export class AssetDataXComponent implements OnInit {
         SalesPersonNo: "",
         SalesPersonPositionCode: "",
       });
+      this.AssetDataForm.patchValue({
+        AdminHeadId: "",
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
+      });
+      this.IsSales = true;
     }
   }
 
@@ -2096,7 +2111,6 @@ export class AssetDataXComponent implements OnInit {
   }
 
   empNo: string;
-  SalesExist: boolean = false;
   async GetVendorForView() {
     await this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.vendorObj.VendorCode }).toPromise().then(
       (response: any) => {
@@ -2111,7 +2125,6 @@ export class AssetDataXComponent implements OnInit {
           GetVendorEmpSales.Code = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
           this.GetVendorEmpSalesPerson(GetVendorEmpSales);
           this.empNo = GetVendorEmpSales.Code;
-          this.SalesExist = true;
         } else if (this.appAssetObj.ResponseAdminHeadSupp != null) {
           let GetVendorEmpAdminHead: GenericObj = new GenericObj();
           GetVendorEmpAdminHead.Id = this.VendorObj.VendorId;
@@ -2131,11 +2144,13 @@ export class AssetDataXComponent implements OnInit {
           GetVendorEmpAdminHead.Id = this.VendorObj.VendorId;
           GetVendorEmpAdminHead.Code = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
           this.GetVendorEmpAdminHead(GetVendorEmpAdminHead);
+          this.IsSales = false;
         } else if (this.appAssetObj.ResponseBranchManagerSupp != null) {
           let GetVendorEmpBM: GenericObj = new GenericObj();
           GetVendorEmpBM.Id = this.VendorObj.VendorId;
           GetVendorEmpBM.Code = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
           this.GetVendorEmpAdminHead(GetVendorEmpBM);
+          this.IsSales = false;
         }
 
         if (this.appAssetObj.ResponseBranchManagerSupp != null) {
@@ -2143,6 +2158,7 @@ export class AssetDataXComponent implements OnInit {
           GetVendorEmpBM.Id = this.VendorObj.VendorId;
           GetVendorEmpBM.Code = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
           this.GetVendorEmpBM(GetVendorEmpBM);
+          this.IsSales = false;
         }
       }
     );
@@ -2150,10 +2166,7 @@ export class AssetDataXComponent implements OnInit {
     await this.GetVendorEmpList();
     this.InputLookupSupplierObj.jsonSelect = this.VendorObj;
     this.InputLookupSupplierObj.nameSelect = this.VendorObj.VendorName;
-    if(!this.SalesExist)
-    {
-      await this.SalesPersonChangedx(this.empNo);
-    }
+    await this.SalesPersonChangedx(this.empNo);
   }
 
   GetProvDistrict() {
