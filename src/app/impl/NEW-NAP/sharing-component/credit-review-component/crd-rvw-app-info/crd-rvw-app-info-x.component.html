@@ -144,7 +144,7 @@
             <label class="label-control" translate> Total Income Application </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{crdRvwAppObj.TotalIncome | number:'.2':'en-US'}} </label>
+            <label class="label-control"> {{totalIncomeAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
         <div class="row">
@@ -152,7 +152,7 @@
             <label class="label-control" translate> Total Expense Application </label>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{crdRvwAppObj.TotalExpense | number:'.2':'en-US'}} </label>
+            <label class="label-control"> {{tacAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
         <div class="row">
@@ -175,7 +175,7 @@
             </div>
           </div>
           <div class="col-md-6 ">
-            <label class="label-control"> {{crdRvwAppObj.Tac | number:'.6':'en-US'}}% </label>
+            <label class="label-control"> {{tacAmt/totalIncomeAmt*100 | number:'.6':'en-US' }}% </label>
           </div>
         </div>
       </div>
