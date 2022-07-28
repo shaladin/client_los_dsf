@@ -40,20 +40,23 @@ import { CrdRvwIncomeExpenseXComponent } from "app/impl/NEW-NAP/sharing-componen
 import { AssetAccessoryInfoComponent } from "app/impl/NEW-NAP/business-process/credit-process/shared-component/asset-accessory-info/asset-accessory-info.component";
 import { CrdRvwListAssetComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-list-asset/crd-rvw-list-asset.component";
 import { CrdRvwResultAnalysisComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-result-analysis/crd-rvw-result-analysis.component";
+import { CrdRvwFinancialDataComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-financial-data/crd-rvw-financial-data.component";
+import { CrdRvwAppFinInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-fin-info/crd-rvw-app-fin-info-x.component";
+import { CrdRvwAppAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-app-info/crd-rvw-app-app-info-x.component";
 
 @NgModule({
     exports: [
-        CrdRvwCustInfoComponent, 
-        CrdRvwFamGuarComponent, 
-        CrdRvwThirdPartyCheckingComponent, 
-        CrdRvwAppInfoComponent, 
-        CrdRvwAssetComponent, 
-        CrdRvwAdditionalCollComponent, 
-        CrdRvwCmoInfoComponent, 
-        CrdRvwDealerInfoComponent, 
-        CrdRvwCreditScoringComponent, 
-        CrdRvwIncomeExpenseComponent, 
-        CrdRvwBankStmntComponent, 
+        CrdRvwCustInfoComponent,
+        CrdRvwFamGuarComponent,
+        CrdRvwThirdPartyCheckingComponent,
+        CrdRvwAppInfoComponent,
+        CrdRvwAssetComponent,
+        CrdRvwAdditionalCollComponent,
+        CrdRvwCmoInfoComponent,
+        CrdRvwDealerInfoComponent,
+        CrdRvwCreditScoringComponent,
+        CrdRvwIncomeExpenseComponent,
+        CrdRvwBankStmntComponent,
         CrdRvwRapindoComponent,
         CrdRvwDukcapilHistComponent,
         CrdRvwLegalDocComponent,
@@ -66,7 +69,10 @@ import { CrdRvwResultAnalysisComponent } from "app/impl/NEW-NAP/sharing-componen
         CrdRvwThirdPartyCheckingXComponent,
         AssetAccessoryInfoComponent,
         CrdRvwListAssetComponent,
-        CrdRvwResultAnalysisComponent
+        CrdRvwResultAnalysisComponent,
+        CrdRvwFinancialDataComponent,
+        CrdRvwAppFinInfoXComponent,
+        CrdRvwAppAppInfoXComponent
     ],
     imports: [
         CommonModule,
@@ -77,18 +83,18 @@ import { CrdRvwResultAnalysisComponent } from "app/impl/NEW-NAP/sharing-componen
         MatRadioModule
     ],
     declarations: [
-        CrdRvwCustInfoComponent, 
-        CrdRvwFamGuarComponent, 
-        CrdRvwThirdPartyCheckingComponent, 
-        CrdRvwAppInfoComponent, 
-        CrdRvwAssetComponent, 
-        CrdRvwAdditionalCollComponent, 
-        CrdRvwCmoInfoComponent, 
-        CrdRvwDealerInfoComponent, 
-        CrdRvwCreditScoringComponent, 
+        CrdRvwCustInfoComponent,
+        CrdRvwFamGuarComponent,
+        CrdRvwThirdPartyCheckingComponent,
+        CrdRvwAppInfoComponent,
+        CrdRvwAssetComponent,
+        CrdRvwAdditionalCollComponent,
+        CrdRvwCmoInfoComponent,
+        CrdRvwDealerInfoComponent,
+        CrdRvwCreditScoringComponent,
         CrdRvwIncomeExpenseComponent,
-        CrdRvwIncomeExpenseXComponent, 
-        CrdRvwBankStmntComponent, 
+        CrdRvwIncomeExpenseXComponent,
+        CrdRvwBankStmntComponent,
         CrdRvwRapindoComponent,
         CrdRvwDukcapilHistComponent,
         CrdRvwCustPersonalInfoComponent,
@@ -110,7 +116,10 @@ import { CrdRvwResultAnalysisComponent } from "app/impl/NEW-NAP/sharing-componen
         CrdRvwThirdPartyCheckingXComponent,
         AssetAccessoryInfoComponent,
         CrdRvwListAssetComponent,
-        CrdRvwResultAnalysisComponent
+        CrdRvwResultAnalysisComponent,
+        CrdRvwFinancialDataComponent,
+        CrdRvwAppFinInfoXComponent,
+        CrdRvwAppAppInfoXComponent
     ],
     providers: [
         NGXToastrService

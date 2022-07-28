@@ -28,7 +28,7 @@ export class URLConstantX {
 
   public static GetCustDataCompanyForViewXByAppId = environment.losUrl + "/v1" + "/AppCustX/GetCustDataCompanyXForViewByAppId";
   public static GetCustDataPersonalXForViewByAppId = environment.losUrl + "/v1" + "/AppCustX/GetCustDataPersonalXForViewByAppId";
-  
+
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
 
@@ -73,6 +73,7 @@ export class URLConstantX {
   public static SubmitEditCommAftApvApproval = environment.losUrl  + "/v1" + "/AppCommissionX/SubmitEditCommAftApvApproval";
   public static GetAgrmntCommissionDataForEditByAgrmntId = environment.losUrl + "/v1"+ "/AppCommissionX/GetAgrmntCommissionDataForEditByAgrmntId";
   public static GetEditComReqAndApvByAgrmntId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditComReqAndApvByAgrmntId";
+  public static GetEditAppReqAndApvByAgrmntId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditAppReqAndApvByAgrmntId"
 
 
   //App Asset

@@ -629,9 +629,15 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
           Notes: this.EditAppForm.controls.Notes.value,
           RequestRFAObj: this.RFAInfo
         },
-        EditedAgrmntOtherInfoObj: this.editedBankAccData.AgrmntOtherInfoObj,
-        EditedAppXObj: this.editedBankAccData.AppXObj
+        EditedAgrmntOtherInfoObj: new Object,
+        EditedAppXObj: new Object
       };
+
+    if(this.editedBankAccData)
+    {
+      EditAppAftApvObj.EditedAgrmntOtherInfoObj = this.editedBankAccData.AgrmntOtherInfoObj;
+      EditAppAftApvObj.EditedAppXObj = this.editedBankAccData.AppXObj;
+    }
 
     let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqX : URLConstant.SubmitEditAppAftApvReq;
 

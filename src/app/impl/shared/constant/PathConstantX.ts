@@ -120,7 +120,7 @@ export class PathConstantX {
   public static MOU_CUST_INQUIRY_X = PathConstant.MOU_CUST + "/InquiryX";
 
   public static MOU_CUST_APPRV_X = PathConstant.MOU_CUST + "/ApprovalX";
-  
+
   //#endregion
 
   //#region Change mou
@@ -162,12 +162,14 @@ export class PathConstantX {
   public static RETURN_HANDLING_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstantX.PAGING;
   public static RETURN_HANDLING_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
   public static RETURN_HANDLING_SURVEY_VERIF_PAGING_X = PathConstant.RETURN_HANDLING + "/" + PathConstantX.SURVEY_VERIF_PAGING;
+
+  public static EDIT_APP_AFT_APV_PAGING_X = PathConstant.EDIT_APP_AFT_APV + "/" + PathConstantX.PAGING;
   public static EDIT_APP_AFT_APV_DETAIL_X = PathConstant.EDIT_APP_AFT_APV + "/" + PathConstantX.DETAIL_X;
   public static EDIT_APP_AFT_APV_VIEW_X = PathConstant.EDIT_APP_AFT_APV + "/" + PathConstantX.VIEW;
   public static EDIT_APP_AFT_APV_APPRV_DETAIL= PathConstant.EDIT_APP_AFT_APV_APPRV + "/" + PathConstantX.DETAIL_X;
 
 
-  
+
   public static EDIT_COMM_AFT_APV = "EditCommAftApv";
   public static EDIT_COMM_AFT_APV_PAGING = PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.PAGING;
   public static EDIT_COMM_AFT_APV_DETAIL_X = PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstantX.DETAIL_X;
@@ -178,7 +180,7 @@ export class PathConstantX {
   public static EDIT_COMM_AFT_APV_APPRV= PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.APPRV;
   public static EDIT_COMM_AFT_APV_APPRV_PAGING = PathConstantX.EDIT_COMM_AFT_APV_APPRV + "/" + PathConstant.PAGING;
   public static EDIT_COMM_AFT_APV_APPRV_DETAIL= PathConstantX.EDIT_COMM_AFT_APV_APPRV + "/" + PathConstant.DETAIL;
-  
+
   public static EDIT_COMM_AFT_APV_INQUIRY= PathConstantX.EDIT_COMM_AFT_APV + "/" + PathConstant.INQUIRY;
   public static EDIT_COMM_AFT_APV_INQUIRY_PAGING = PathConstantX.EDIT_COMM_AFT_APV_INQUIRY + "/" + PathConstant.PAGING;
   public static EDIT_COMM_AFT_APV_INQUIRY_DETAIL= PathConstantX.EDIT_COMM_AFT_APV_INQUIRY + "/" + PathConstant.DETAIL;

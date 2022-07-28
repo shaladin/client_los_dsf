@@ -24,8 +24,7 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
   @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForCustHistDataX: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
-  @Output() ngModelForListAsset: EventEmitter<any> = new EventEmitter();
-  @Output() ngModelForAnalysisResult: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForFinancialData: EventEmitter<any> = new EventEmitter();
 
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;
@@ -62,7 +61,7 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
     let reqObj: ReqCrdRvwDiffAppToInPrcAppCustObj = { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true };
     await this.http.post<ResponseCrdRvwDiffAppToInPrcAppCustObj>(URLConstant.GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId, reqObj).toPromise().then(
       (response) => {
-        this.responseCrdRvwDiffAppToInPrcAppCustObj = response;        
+        this.responseCrdRvwDiffAppToInPrcAppCustObj = response;
       }
     );
   }
@@ -71,7 +70,7 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
   async GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        this.ListCrdRvwDiffAppToMasterCustObj = response.ListCrdRvwDiffAppToMasterCustObj;        
+        this.ListCrdRvwDiffAppToMasterCustObj = response.ListCrdRvwDiffAppToMasterCustObj;
       }
     );
   }
@@ -166,13 +165,8 @@ export class CrdRvwCustPersonalInfoXComponent implements OnInit {
     this.ngModelForCustHistDataX.emit();
   }
 
-  ClickLinkListAssetInOperation() {
-    this.ngModelForListAsset.emit();
+  ClickLinkFinancialData() {
+    this.ngModelForFinancialData.emit();
   }
-
-  ClickLinkAnalysisResult() {
-    this.ngModelForAnalysisResult.emit();
-  }
-
   //#endregion
 }
