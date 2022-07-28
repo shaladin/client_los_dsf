@@ -210,6 +210,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
           this.lobCode = response.LobCode;
           this.ProdOfferingCode = response.ProdOfferingCode;
           this.ProdOfferingVersion = response.ProdOfferingVersion;
+          this.OriOfficeCode = response.OriOfficeCode;
           await this.GetCreditScoring(response.AppNo);
         }
       });
