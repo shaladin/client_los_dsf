@@ -29,6 +29,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
   arrValue = [];
   TCList: Array<AppTCObj> = new Array();
   AppNo: string;
+  AppObj: NapAppModel;
   IsApvReady: boolean = false;
   listAppTCObj: ListAppTCObj;
   appTC: AppTCObj;
@@ -78,6 +79,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
     };
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response: NapAppModel) => {
+        this.AppObj = response;
         this.AppNo = response.AppNo;
       }
     );
@@ -116,6 +118,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo = this.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
+    this.InputApvObj.OfficeCodes.push(this.AppObj.OriOfficeCode);
     this.IsReady = true;
   }
 

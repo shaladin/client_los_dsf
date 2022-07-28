@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -16,22 +16,55 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
   selector: 'app-customer-doc-printing-paging',
   templateUrl: './customer-doc-printing-paging.component.html',
 })
-export class CustomerDocPrintingPagingComponent implements OnInit {
+export class CustomerDocPrintingPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   user: CurrentUserContext;
   MrMouTypeCode: string;
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private AdInsHelperService: AdInsHelperService, private route: ActivatedRoute) {    
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
-    if (params["MrMouTypeCode"] != null) {
-      this.MrMouTypeCode = params["MrMouTypeCode"];
-    }});
+      if (params["MrMouTypeCode"] != null) {
+        this.MrMouTypeCode = params["MrMouTypeCode"];
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCustomerDocPrinting.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustomerDocPrinting.json";
+    this.inputPagingObj.addCritInput = new Array();
 
     const addCritMouType = new CriteriaObj();
     addCritMouType.DataType = "text";

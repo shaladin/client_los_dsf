@@ -262,12 +262,12 @@ export class CreditReviewCrDetailComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    await this.http.post(URLConstant.GetAppFinDataByAppId, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetApvAmountForCrdRvwByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
-          AppvAmt: response["ApvAmt"]
+          AppvAmt: response["Result"]
         });
-        this.PlafondAmt = response["ApvAmt"];
+        this.PlafondAmt = response["Result"];
       });
   }
 
@@ -360,6 +360,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.InputObj.TrxNo = this.appNo;
     this.InputObj.RequestedBy = this.UserAccess.UserName;
     this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.IsReady = true;
   }
 
@@ -414,7 +415,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
   }
 

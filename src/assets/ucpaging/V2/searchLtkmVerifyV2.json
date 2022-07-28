@@ -35,6 +35,24 @@
         "placeholder": "Placeholder"
       },
       {
+        "type": "datepicker",
+        "name": "LR.DTM_CRT",
+        "id": "LrDtmCrtGteId",
+        "value": "",
+        "label": "LTKM Date >=",
+        "restriction": "gte",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "datepicker",
+        "name": "LR.DTM_CRT",
+        "id": "LrDtmCrtLteId",
+        "value": "",
+        "label": "LTKM Date <=",
+        "restriction": "lte",
+        "placeholder": "Placeholder"
+      },
+      {
         "type" : "claim",
         "label": "Task Claim Status",
         "id": "ClaimStatId",
@@ -84,6 +102,12 @@
       },
       {
         "type": "sort",
+        "position": "center",
+        "label": "LTKM Date",
+        "name": "LR.DTM_CRT"
+      },
+      {
+        "type": "sort",
         "position": "left",
         "label": "TYPE",
         "name": "LC.MR_CUST_TYPE_CODE"
@@ -129,6 +153,11 @@
         "key": "ltkmno",
         "position": "center",
         "property": "LtkmNo"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "LtkmDate"
       },
       {
         "type": "text",

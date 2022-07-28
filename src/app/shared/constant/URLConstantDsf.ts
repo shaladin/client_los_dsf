@@ -27,4 +27,8 @@ export class URLConstantDsf {
     public static GetAgrmntSignerDsfByAgrmntId = environment.losUrl + "/DocumentDsf/GetAgrmntSignerDsfByAgrmntId";
     public static SubmitAgrmntSignerDsfData = environment.losUrl + "/DocumentDsf/SubmitAgrmntSignerDsfData";
     public static EditAgrmntSignerDsfData = environment.losUrl + "/DocumentDsf/EditAgrmntSignerDsfData";
+
+    public static AddListDocumentPrintingLBByAgrmntIdDsf = environment.losUrl + "/DocumentDsf/AddListDocumentPrintingLBByAgrmntIdDsf";
+    public static GetListAgrmntDocByAgrmntIdDsf = environment.losUrl + "/DocumentDsf/GetListAgrmntDocByAgrmntIdDsf";
+    public static AddAgrmntDocPrintDsf = environment.losUrl + "/DocumentDsf/AddAgrmntDocPrintDsf"
 }

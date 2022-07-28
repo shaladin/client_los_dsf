@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
@@ -7,7 +7,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
@@ -24,7 +24,7 @@ import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-m
   templateUrl: './cust-main-data-paging-x-dsf.component.html',
   styleUrls: ['./cust-main-data-paging-x-dsf.component.css']
 })
-export class CustMainDataPagingXDsfComponent implements OnInit {
+export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
@@ -33,19 +33,47 @@ export class CustMainDataPagingXDsfComponent implements OnInit {
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  isReady: boolean = false;
+  navigationSubscription;
   SpvDPCDsfObj: SpvDPCDsfObj = new SpvDPCDsfObj();
   ReqSpvDPCDsfObj: SpvDPCDsfObj = new SpvDPCDsfObj();
   isSpvDPC: boolean = false;
   isDPC: boolean = false;
   
+  // constructor(
+  //   private http: HttpClient,
+  //   private toastr: NGXToastrService,
+  //   private router: Router,
+  //   private route: ActivatedRoute, private cookieService: CookieService) {
+  //   this.route.queryParams.subscribe(params => {
+  //     if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
+  //   });
+  // }
+
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
     private router: Router,
     private route: ActivatedRoute, private cookieService: CookieService) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   makeCriteria() {
@@ -71,48 +99,61 @@ export class CustMainDataPagingXDsfComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    
-      this.arrCrit = new Array();
-      this.makeCriteria();
 
-      this.inputPagingObj.title = "Applicant Data Paging";
-      this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
-      this.inputPagingObj.addCritInput = this.arrCrit;
+    this.arrCrit = new Array();
+    this.makeCriteria();
 
-      if(environment.isCore){
-        this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
-        this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
-        this.inputPagingObj.isJoinExAPI = true
-        
-        this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
-        this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CUST_MD + this.bizTemplateCode;
-        this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                                this.userAccess[CommonConstant.OFFICE_CODE],
-                                                this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
-        
-        this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
-        this.IntegrationObj.requestObj = this.RequestTaskModel;
-        this.IntegrationObj.leftColumnToJoin = "AppNo";
-        this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
-        this.inputPagingObj.integrationObj = this.IntegrationObj;
-      }
+    this.inputPagingObj.title = "Applicant Data Paging";
+    this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
+    this.inputPagingObj.addCritInput = this.arrCrit;
 
-      if (this.userAccess[CommonConstant.ROLE_CODE] == 'DPC')
-      {
-        this.isDPC = true;
-        this.ReqSpvDPCDsfObj.userName = this.userAccess.UserName;
-        this.http.post(URLConstantDsf.GetSpvDPCDSF, this.ReqSpvDPCDsfObj).subscribe(
-          (response) => {
-            this.SpvDPCDsfObj.userName = response["userName"];
-            if (this.SpvDPCDsfObj.userName != null && this.SpvDPCDsfObj.userName != '')
-            {
-              this.isSpvDPC = true;
-            }
+    if(environment.isCore){
+      this.inputPagingObj._url = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppCustMainDataV2.json";
+      this.inputPagingObj.isJoinExAPI = true
+      
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.bizTemplateCode;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_CUST_MD + this.bizTemplateCode;
+      this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                               this.userAccess[CommonConstant.OFFICE_CODE],
+                                               this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+      
+      this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+      this.IntegrationObj.requestObj = this.RequestTaskModel;
+      this.IntegrationObj.leftColumnToJoin = "AppNo";
+      this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+      this.inputPagingObj.integrationObj = this.IntegrationObj;
+    }
+
+    if (this.userAccess[CommonConstant.ROLE_CODE] == 'DPC')
+    {
+      this.isDPC = true;
+      this.ReqSpvDPCDsfObj.userName = this.userAccess.UserName;
+      this.http.post(URLConstantDsf.GetSpvDPCDSF, this.ReqSpvDPCDsfObj).subscribe(
+        (response) => {
+          this.SpvDPCDsfObj.userName = response["userName"];
+          if (this.SpvDPCDsfObj.userName != null && this.SpvDPCDsfObj.userName != '')
+          {
+            this.isSpvDPC = true;
           }
-        )
-      }
+        }
+      )
+    }
   }
 
   AddApp(addType = '') {

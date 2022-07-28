@@ -74,7 +74,7 @@
             <mat-tab *ngIf="IsMultiAsset">
               <ng-template mat-tab-label>{{ bizTemplateCode == 'CF4W' ? 'Asset' : 'Asset & Collateral Data' }}</ng-template>
               <ng-template matTabContent>
-                <view-asset-data-x [AppId]="AppId" [BizTemplateCode]="bizTemplateCode"></view-asset-data-x>
+                <view-multiasset-data [AppId]="AppId" [BizTemplateCode]="bizTemplateCode"></view-multiasset-data>
               </ng-template>
             </mat-tab>
 
@@ -187,7 +187,7 @@
 
             <mat-tab label="Credit Process Flow">
               <ng-template matTabContent>
-                <app-view-credit-process-flow [AppNo]="AppNo"></app-view-credit-process-flow>
+                <app-view-credit-process-flow [AppNo]="AppNo" [BizTemplateCode]="bizTemplateCode"></app-view-credit-process-flow>
               </ng-template>
             </mat-tab>
           </mat-tab-group>

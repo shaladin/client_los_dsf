@@ -37,7 +37,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngIf="ListExstAgrmnt?.length == 0">
+                  <tr *ngIf="ListExstAgrmnt?.length == 0 || ListExstAgrmnt == null">
                     <td align="center" colspan="7">No data found</td>
                   </tr>
                   <tr *ngFor="let item of ListExstAgrmnt; let i = index">
@@ -95,7 +95,7 @@
                     <td *ngIf="item.ProdOfferingName==null"> - </td>
                     <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
                     <td *ngIf="item.SalesName==null"> - </td>
-                    <td style="text-align: right;"*ngIf="item.TotalNTF!=null">{{item.TotalNTF}}</td>
+                    <td style="text-align: right;"*ngIf="item.TotalNTF!=null">{{item.TotalNTF | number:'.2':'en-US' }}</td>
                     <td style="text-align: right;" *ngIf="item.TotalNTF==null"> - </td>
                     <td>View</td>
                   </tr>
@@ -137,7 +137,7 @@
                     <td *ngIf="item.ProdOfferingName==null"> - </td>
                     <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
                     <td *ngIf="item.SalesName==null"> - </td>
-                    <td style="text-align: right;" *ngIf="item.TotalNTF!=null">{{item.TotalNTF}}</td>
+                    <td style="text-align: right;" *ngIf="item.TotalNTF!=null">{{item.TotalNTF| number:'.2':'en-US' }}</td>
                     <td style="text-align: right;" *ngIf="item.TotalNTF==null"> - </td>
                     <td *ngIf="item.AppCurrStep!=null">{{item.AppCurrStep}}</td>
                     <td *ngIf="item.AppCurrStep==null"> - </td>

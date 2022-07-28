@@ -27,6 +27,8 @@
         </app-crd-rvw-dealer-info>
         <app-tab-deviation [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
         
+        <app-asset-accessory-info *ngIf="isShow" [AppId]="appId"></app-asset-accessory-info>
+        
       </div>
       <form class="form form-horizontal" *ngIf="!isReturnOn" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
             #enjiForm="ngForm">

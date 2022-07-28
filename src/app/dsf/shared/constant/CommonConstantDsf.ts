@@ -12,4 +12,7 @@ export class CommonConstantDsf {
     public static JOB_TITLE_CODE_DIR = "04";
     public static JOB_TITLE_CODE_VP = "43";
     public static JOB_TITLE_CODE_PD = "03";
+
+    public static WOF_IF = "IF";
+    public static WOF_LB = "LB";
 }

@@ -1,0 +1,195 @@
+{
+    "title": "MOU Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "M.MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "M.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MCLCF.CUST_NAME",
+            "id": "VendorName",
+            "value": "",
+            "label": "Vendor Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "M.IS_REVOLVING",
+            "id": "IsRevolvingId",
+            "label": "Revolving",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": true,
+                    "value": "Yes"
+                },
+                {
+                    "key": false,
+                    "value": "No"
+                }
+            ],
+            "url": "",
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": ""
+        },
+        {
+            "type": "textbox",
+            "name": "M.PLAFOND_AMT",
+            "id": "GreaterPlafondAmt",
+            "value": "",
+            "label": "Plafond Amount From",
+            "restriction": "gte",
+            "datatype": "numeric"
+        },
+        {
+            "type": "textbox",
+            "name": "M.PLAFOND_AMT",
+            "id": "LessPlafondAmt",
+            "value": "",
+            "label": "Plafond Amount To",
+            "restriction": "lte",
+            "datatype": "numeric"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "M.MOU_STAT",
+            "id": "StatusCode",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Mou Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "MOUC_STAT"
+        }
+    ],
+  "querystring": {
+    "name": "searchMouCustomerInquiryFactoring"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "MouCustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "VENDOR NAME",
+            "name": "MCLCF.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "EXPIRED DATE",
+            "name": "EndDt"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "PLAFOND AMOUNT",
+            "name": "PlafondAmt"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REVOLVING",
+            "name": "IsRevolving"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU STATUS",
+            "name": "M.MOU_STAT"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU TYPE",
+            "name": "M.MR_MOU_TYPE_CODE"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "vendor",
+            "position": "left",
+            "property": "VendorName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "EndDt"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "PlafondAmt"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsRevolving"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MouStatDesc"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MouTypeName"
+        }
+    ]
+}

@@ -105,6 +105,7 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
       (response) => {
         this.InputObj.TrxNo = response["ProdOfferingCode"];
         this.InputObj.OfficeCode = response["OfficeCode"];
+        this.InputObj.OfficeCodes.push(response["OfficeCode"]);
         this.IsReady = true;
       });
   }

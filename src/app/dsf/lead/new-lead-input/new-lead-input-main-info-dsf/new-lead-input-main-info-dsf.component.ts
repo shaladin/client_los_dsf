@@ -6,6 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
@@ -38,10 +39,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   surveyorNameLookUpObj: InputLookupObj;
   salesNameLookUpObj: InputLookupObj;
   agencyLookUpObj: InputLookupObj;
-  tempCmoUsername: string;
-  tempSurveyorUsername: string;
-  tempSalesUsername: string;
-  tempAgencyCode: string;
+  tempCmoUsername: string = "";
+  tempSurveyorUsername: string = "";
+  tempSalesUsername: string = "";
+  tempAgencyCode: string = "";
   listRefOffice: Array<KeyValueObj>;
   refOfficeObj: RefOfficeObj;
   listRefLob: Array<KeyValueObj>;
@@ -438,6 +439,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
   SaveForm() {
     if (this.MainInfoForm.valid) {
+      if(this.tempAgencyCode == "" && this.tempCmoUsername == "" && this.tempSalesUsername == ""){
+        this.toastr.warningMessage(ExceptionConstant.LEAD_INPUT_AGENCY_CMO_TELE);
+        return;
+      }
       if (this.pageType == "edit" || this.pageType == "update") {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;

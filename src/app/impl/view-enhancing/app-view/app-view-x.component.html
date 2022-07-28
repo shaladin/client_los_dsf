@@ -18,8 +18,8 @@
           <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
             <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
-                <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'">
-                </app-view-app-cust-data-personal>
+                <app-view-app-cust-data-personal-x [appId]="AppId" *ngIf="CustType=='PERSONAL'">
+                </app-view-app-cust-data-personal-x>
                 <app-view-app-cust-data-company-x [appId]="AppId" [BizTemplateCode]="bizTemplateCode"
                                                   *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company-x>
               </ng-template>
@@ -61,7 +61,7 @@
 
             <mat-tab *ngIf="IsAsset" label="Asset">
               <ng-template matTabContent>
-                <view-asset-data [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></view-asset-data>
+                <view-asset-data-x [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></view-asset-data-x>
               </ng-template>
             </mat-tab>
 
@@ -74,7 +74,7 @@
             <mat-tab *ngIf="IsMultiAsset">
               <ng-template mat-tab-label>{{ bizTemplateCode == 'CF4W' ? 'Asset' : 'Asset & Collateral Data' }}</ng-template>
               <ng-template matTabContent>
-                <view-asset-data-x [AppId]="AppId" [BizTemplateCode]="bizTemplateCode"></view-asset-data-x>
+                <view-multiasset-data [AppId]="AppId" [BizTemplateCode]="bizTemplateCode"></view-multiasset-data>
               </ng-template>
             </mat-tab>
 
@@ -187,7 +187,7 @@
 
             <mat-tab label="Credit Process Flow">
               <ng-template matTabContent>
-                <app-view-credit-process-flow [AppNo]="AppNo"></app-view-credit-process-flow>
+                <app-view-credit-process-flow [AppNo]="AppNo" [BizTemplateCode]="bizTemplateCode"></app-view-credit-process-flow>
               </ng-template>
             </mat-tab>
           </mat-tab-group>

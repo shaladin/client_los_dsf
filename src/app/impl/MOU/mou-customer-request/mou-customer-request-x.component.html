@@ -1,0 +1,8 @@
+<div class="ucSearch-Button-Right">
+  <span class="mr-1">
+    <button type="button" class="addButton" [routerLink]="[AddLink]" [queryParams]="{MrMouTypeCode: MrMouTypeCode}">
+      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add MOU</span>
+    </button>
+  </span>
+</div>
+<lib-ucpaging [searchObj]="inputPagingObj" (callback)="customerView($event)"></lib-ucpaging>

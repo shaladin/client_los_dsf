@@ -1,33 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 
 @Component({
   selector: 'app-credit-review-paging-x-dsf',
   templateUrl: './credit-review-paging-x-dsf.component.html',
   styleUrls: ['./credit-review-paging-x-dsf.component.css']
 })
-export class CreditReviewPagingXDsfComponent implements OnInit {
-
+export class CreditReviewPagingXDsfComponent implements OnInit, OnDestroy  {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -36,7 +46,26 @@ export class CreditReviewPagingXDsfComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj._url = "./assets/impl/ucpaging/searchCreditReviewCr.json";
     this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchCreditReviewCr.json";
 
@@ -45,7 +74,7 @@ export class CreditReviewPagingXDsfComponent implements OnInit {
       this.inputPagingObj._url = "./assets/dsf/ucpaging/searchCreditReviewCrV2Dsf.json";
       this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchCreditReviewCrV2Dsf.json";
       this.inputPagingObj.isJoinExAPI = true
-      
+  
       this.RequestTaskModel.UserName = this.userAccess[CommonConstant.USER_NAME];
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RVW + this.BizTemplateCode;

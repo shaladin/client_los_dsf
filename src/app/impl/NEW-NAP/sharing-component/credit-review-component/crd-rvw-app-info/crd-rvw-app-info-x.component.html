@@ -29,13 +29,14 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-10" translate>
-                <a class="link" (click)="ClickLinkCreditScoring(CreditScoring)"> Credit Scoring </a>
+                <label class="label-control" translate> Credit Scoring </label>
+<!--                <a class="link" (click)="ClickLinkCreditScoring(CreditScoring)"> Credit Scoring </a>-->
               </div>
               <div class="col-md-2">
                 <span id="CreditScoringIndicator" style="float: right;">
@@ -112,6 +113,21 @@
             <label class="label-control"> {{crdRvwAppObj.TotalDownPaymentNettAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-6">
+             <label class="label-control" translate> Installment Scheme </label>
+          </div>
+          <div class="col-md-6 ">
+            <label *ngIf="appFinDataObj.MrInstSchemeCode == 'BL'" class="label-control" translate>Balloon </label>
+            <label *ngIf="appFinDataObj.MrInstSchemeCode == 'EP'" class="label-control" translate>Even Principle </label>
+            <label *ngIf="appFinDataObj.MrInstSchemeCode == 'IR'" class="label-control" translate>Irregular </label>
+            <label *ngIf="appFinDataObj.MrInstSchemeCode == 'RF'" class="label-control" translate>Regular Fixed </label>
+            <label *ngIf="appFinDataObj.MrInstSchemeCode == 'STLS'" class="label-control" translate>Step Up Step Down Leasing </label>
+            <label *ngIf="appFinDataObj.MrInstSchemeCode == 'STNM'" class="label-control" translate>Step Up Step Down Normal </label>
+            <label *ngIf="appFinDataObj.MrInstSchemeCode == 'STRL'" class="label-control" translate>Step Up Step Down Regular Leasing</label>
+            <!-- <label class="label-control"> {{appFinDataObj.MrInstSchemeCode}} </label> -->
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-6">
@@ -176,7 +192,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <app-crd-rvw-income-expense [crdRvwCustInfoIncomeAndExpenseDetailsObj]="crdRvwCustInfoIncomeAndExpenseDetailsObj"></app-crd-rvw-income-expense>
+  <app-crd-rvw-income-expense-x [appId]="appId" [crdRvwCustInfoIncomeAndExpenseDetailsObj]="crdRvwCustInfoIncomeAndExpenseDetailsObj"></app-crd-rvw-income-expense-x>
 </ng-template>
 
 <ng-template #CreditScoring let-c="close" let-d="dismiss">

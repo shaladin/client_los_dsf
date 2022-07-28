@@ -51,7 +51,7 @@
               "src/assets/css/demo.css",
               "src/assets/sass/app.scss",
               "src/styles.css",
-              "src/adins-theme/styles-theme-red.scss",
+              "src/adins-theme/styles-theme-blue.scss",
               "src/adInsStyles.css"
             ],
             "scripts": [
@@ -234,6 +234,56 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/envi_1_4_16.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false
+            },
+            "crbatch1": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.crbatch1.ts"
+                },
+                {
+                  "replace": "src/assets/i18n/en.json",
+                  "with": "src/assets/impl/i18n/en-x.json"
+                },
+                {
+                  "replace": "src/assets/i18n/id.json",
+                  "with": "src/assets/impl/i18n/id-x.json"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false
+            },
+            "crbatch2": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.crbatch2.ts"
+                },
+                {
+                  "replace": "src/assets/i18n/en.json",
+                  "with": "src/assets/impl/i18n/en-x.json"
+                },
+                {
+                  "replace": "src/assets/i18n/id.json",
+                  "with": "src/assets/impl/i18n/id-x.json"
                 }
               ],
               "optimization": true,

@@ -4,6 +4,7 @@ export class DeviationResultObj {
     SeqNo: number;
     DeviationCategory: string;
     MrDeviationType: string;
+    MrDeviationName: string;
     RefNo: string;
     TrxTypeCode: string;
     ApvAt: string;
@@ -13,6 +14,8 @@ export class DeviationResultObj {
     IsFatal: boolean;
     Notes: string;
     RowVersion: string;
+    IsOriginalValueNumber: boolean = false;
+    IsCurrentValueNumber: boolean = false;
     
     constructor() { 
         this.RowVersion = "";

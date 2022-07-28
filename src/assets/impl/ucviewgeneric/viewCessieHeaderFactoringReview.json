@@ -1,0 +1,60 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustMainInfoHeaderId",
+        "subSectionTitle": "Main Info",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Cessie No",
+            "property": "CessieNo"
+          },
+          {
+            "type": "text",
+            "label": "Product Offering Name",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "date",
+            "label": "Cessie Date",
+            "property": "CessieDt"
+          },
+          {
+            "type": "text",
+            "label": "ATPM Name",
+            "property": "AtpmName"
+          },
+          {
+            "type": "text",
+            "label": "Cessie Type",
+            "property": "CessieType"
+          },
+          {
+            "type": "currency",
+            "label": "Total Receivable Amount",
+            "property": "TotalReceivableAmt"
+          },
+          {
+            "type": "text",
+            "label": "Total Sales Order",
+            "property": "TotalSalesOrder"
+          },
+          {
+            "type": "currency",
+            "label": "Total Purchase Amount",
+            "property": "TotalPurchaseAmt"
+          },
+          {
+            "type": "currency",
+            "label": "Total Fee Amount",
+            "property": "TotalFeeAmt"
+          }
+        ],
+        "querystring": {
+          "name": "viewCessieHeader"
+        }
+      }
+    ]
+  }

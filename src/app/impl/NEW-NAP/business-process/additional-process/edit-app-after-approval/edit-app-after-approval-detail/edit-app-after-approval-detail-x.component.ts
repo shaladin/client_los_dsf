@@ -27,6 +27,15 @@ import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { DatePipe } from '@angular/common';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 
 @Component({
   selector: 'app-edit-app-after-approval-detail-x',
@@ -57,9 +66,11 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
   isEditAssetData: boolean = false;
   tempAssetDataIdx: number = 0;
   isEditPoData: Boolean = false;
+  isEditBankAccData: boolean = false;
   listEditedPoData = new Array();
   listEditedAssetData = new Array();
   listEditedCommissionData = new Array();
+  editedBankAccData: any;
   apvBaseUrl = environment.ApprovalR3Url;
   InputObj: UcInputRFAObj;
   ApprovalCreateOutput: any;
@@ -82,7 +93,10 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     Notes: ['', [Validators.maxLength(4000), Validators.required]]
   });
   IsCommissionChanged: boolean = false;
+  IsCommissionExist: boolean = false;
+  wopCode: string;
 
+  readonly wopAutoDebit = CommonConstant.WopAutoDebit;
   constructor(private fb: FormBuilder,
               private http: HttpClient,
               private toastr: NGXToastrService,
@@ -105,6 +119,17 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     await this.setdata();
   }
 
+  async checkIsEditCommExist() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.agrmntId;
+    await this.http.post(URLConstantX.GetEditComReqAndApvByAgrmntId, reqObj).toPromise().then(
+      (response) => {  
+        if(response["ReturnObject"] != null){
+          this.IsCommissionExist = true;
+        }
+      });
+  }
+
   async BindDDLReason() {
     var Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeEditAppAfterApproval };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
@@ -125,6 +150,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL;
     this.InputObj.Reason = this.DDLReason;
     this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.InputObj.TrxNo = "-";
   }
 
@@ -148,6 +174,7 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       (response) => {
         this.LobCode = response["LobCode"];
         this.AppId = response["AppId"];
+        this.wopCode = response["MrWopCode"];
       }
     );
 
@@ -353,6 +380,11 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
     this.isDetail = false;
   }
 
+  editBankAccData() {
+    this.isEditBankAccData = true;
+    this.isDetail = false;
+  }
+
   getPage(e) {
     if (e.pageType == "submitAssetData") {
       this.isEditAssetData = false;
@@ -386,11 +418,18 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       this.selectedPurchaseOrderHObj = e.PurchaseOrderHOutput;
       this.IsPOEdited = true;
       this.toastr.successMessage("Success");
-
     }
-    else if (e.pageType == "cancelPoData" || e.pageType == "cancelAssetData") {
+    else if (e.pageType == "submitBankAccData") {
+      this.isEditBankAccData = false;
+      this.isDetail = true;
+      this.editedBankAccData = e.BankAccRelatedOutput;
+      console.log(this.editedBankAccData);
+      this.toastr.successMessage("Success");
+    }
+    else if (e.pageType == "cancelPoData" || e.pageType == "cancelAssetData" || e.pageType == "cancelBankAccData") {
       this.isEditPoData = false;
       this.isEditAssetData = false;
+      this.isEditBankAccData = false;
       this.isDetail = true;
       if (e.pageType == "cancelPoData") this.selectedPurchaseOrderHObj = e.PurchaseOrderHOutput;
 
@@ -557,32 +596,46 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
   }
 
   RFAInfo: Object = new Object();
-  SaveForm() {
+  async SaveForm() {
     this.RFAInfo = { RFAInfo: this.EditAppForm.controls.RFAInfo.value };
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    if(this.listEditedAssetData.length <= 0 && this.listEditedPoData.length <= 0 && !this.IsCommissionChanged)
+    if(this.listEditedAssetData.length <= 0 && this.listEditedPoData.length <= 0 && !this.IsCommissionChanged && !this.editedBankAccData)
     {
       this.toastr.errorMessage(ExceptionConstant.NO_DATA_EDITED);
       return;
     }
+
+    await this.checkIsEditCommExist();
+
+    if (this.IsCommissionExist){
+      this.toastr.errorMessage("Edit Commission in progress");
+      return;
+    }
+
     this.SetSupplEmpComm();
 
     this.ApprovalCreateOutput = this.createComponent.output();
 
     var EditAppAftApvObj =
       {
-        AgrmntId: this.agrmntId,
-        CurrentOfficeCode: currentUserContext[CommonConstant.OFFICE_CODE],
-        EditedAssetDataObjs: this.listEditedAssetData,
-        EditedPoDataObjs: this.listEditedPoData,
-        EditedCommissionDataObjs: this.listEditedCommissionData,
-        Notes: this.EditAppForm.controls.Notes.value,
-        RequestRFAObj: this.RFAInfo
+        RequestEditAppAftApvForSubmitRequest: 
+        {  
+          AgrmntId: this.agrmntId,
+          CurrentOfficeCode: currentUserContext[CommonConstant.OFFICE_CODE],
+          EditedAssetDataObjs: this.listEditedAssetData,
+          EditedPoDataObjs: this.listEditedPoData,
+          EditedCommissionDataObjs: this.listEditedCommissionData,
+          Notes: this.EditAppForm.controls.Notes.value,
+          RequestRFAObj: this.RFAInfo
+        },
+        EditedAgrmntOtherInfoObj: this.editedBankAccData.AgrmntOtherInfoObj,
+        EditedAppXObj: this.editedBankAccData.AppXObj
       };
 
-    let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqV2 : URLConstant.SubmitEditAppAftApvReq;
-    this.http.post(urlPost, EditAppAftApvObj).subscribe(
+    let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqX : URLConstant.SubmitEditAppAftApvReq;
+
+    await this.http.post(urlPost, EditAppAftApvObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING], { BizTemplateCode: this.BizTemplateCode });
@@ -614,5 +667,4 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
       }
     }
   }
-
 }

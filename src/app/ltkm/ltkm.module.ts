@@ -63,6 +63,11 @@ import { LtkmCustJobDataXComponent } from "app/impl/ltkm/ltkm-request/additional
 import { LtkmRequestXComponent } from "app/impl/ltkm/ltkm-request/ltkm-request-x.component";
 import { LtkmCustPersonalMainDataXComponent } from "app/impl/ltkm/ltkm-request/additional-component/cust-personal-main-data/cust-personal-main-data-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { LtkmFinancialCompanyXComponent } from "app/impl/ltkm/ltkm-request/additional-component/company/financial-company-x/financial-company-x.component";
+import { ViewLtkmCustDataCompletionCompanyXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-company/view-ltkm-cust-data-completion-company-x.component";
+import { ViewLtkmCustomerDataCompanyXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-company/view-ltkm-customer-data-company-x.component";
+import { LtkmVerifyDetailXComponent } from "app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component";
+import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail-x.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -139,7 +144,12 @@ export const customCurrencyMaskConfig = {
     LtkmInquiryComponent,
     LtkmFamilyMainDataPagingComponent,
     LtkmReturnHandlingXComponent,
-    LtkmCustJobDataXComponent
+    LtkmCustJobDataXComponent,
+    LtkmFinancialCompanyXComponent,
+    ViewLtkmCustDataCompletionCompanyXComponent,
+    ViewLtkmCustomerDataCompanyXComponent,
+    LtkmVerifyDetailXComponent,
+    ViewLtkmCustDetailXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

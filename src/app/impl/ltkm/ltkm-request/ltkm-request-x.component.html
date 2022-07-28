@@ -242,11 +242,12 @@
                         [identifier]="'contactPersonCompany'" 
                         [parentForm]="CustDataCompanyForm"
                         [LtkmCustCompanyContactPersonObj]= "ContactPersonCompany"
+                        [IsAddrOwnershipMandatory]="isCcAddrOwnershipMandatory"
                         [isLockMode]="isLockMode"
                     >  
                     </app-ltkm-cc-contact-information>
 
-                    <app-ltkm-financial-company 
+                    <app-ltkm-financial-company-x 
                     [isLockMode]="isLockMode"
                       [ListLtkmCustCoyFinData]="listLtkmCustCoyFinData"
                       [enjiForm]="enjiFormCompany" 
@@ -254,7 +255,7 @@
                       [identifier]="'financialDataCompany'"
                       (UpdateSource)="updateListLtkmCustCoyFinDatas($event)"
                       >
-                    </app-ltkm-financial-company>
+                    </app-ltkm-financial-company-x>
 
                     <app-ltkm-attr-content-component 
                     [isLockMode]="isLockMode" #attrlistfindatacomponentcoy

@@ -97,6 +97,7 @@ export class AssetDataXComponent implements OnInit {
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
+  IsSales: boolean = true;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -202,7 +203,7 @@ export class AssetDataXComponent implements OnInit {
   vendorObj = {
     VendorId: 0,
     VendorCode: "",
-    MrVendorEmpPositionCodes: [CommonConstant.ADMIN_HEAD_JOB_CODE, CommonConstant.SALES_JOB_CODE, CommonConstant.BRANCH_MANAGER_JOB_CODE],
+    MrVendorEmpPositionCodes: [],
   };
 
   vendorAccSuppObj = {
@@ -290,6 +291,7 @@ export class AssetDataXComponent implements OnInit {
   SetManuYearObj: ResAssetValidationRuleObj;
   SetDpObj: ResAssetValidationRuleObj;
   isValidOk: boolean = true;
+  AdminHeadName: string;
 
   AssetConditionName: string = "";
   OfficeCode: string;
@@ -331,6 +333,7 @@ export class AssetDataXComponent implements OnInit {
   OwnerTypeObj: Array<KeyValueObj> = new Array();
   OwnerProfessionObj: Array<KeyValueObj> = new Array();
   RoundedAmt: number = 2;
+  ListVendorEmpPositionCodes : Array<String> = new Array();
 
   readonly CurrencyMaskPrct = CommonConstantX.CurrencyMaskPrct;
   constructor(
@@ -367,6 +370,7 @@ export class AssetDataXComponent implements OnInit {
     await this.GetAppCustPersonalJobData();
     await this.GetAppCustPhone();
     await this.bindAllRefMasterObj();
+    await this.SetMrVendorEmpPositionCodes();
     this.initLookup();
     this.locationAddrObj = new AddrObj();
     this.delivAddrObj = new AddrObj();
@@ -1181,6 +1185,16 @@ export class AssetDataXComponent implements OnInit {
     this.allAssetDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
   }
 
+  async SetMrVendorEmpPositionCodes() {
+    var generalSettingObj: GenericObj = new GenericObj();
+    generalSettingObj.Code = "LIST_VENDOR_EMP_POS_CODES";
+    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
+        (response) => {
+          this.ListVendorEmpPositionCodes = response["GsValue"].split(';');
+          this.vendorObj.MrVendorEmpPositionCodes = this.ListVendorEmpPositionCodes;
+        });
+  }
+
   async SetSupplier(event) {
     this.AdminHeadObj = null;
     this.SalesPersonObj = null;
@@ -1189,7 +1203,7 @@ export class AssetDataXComponent implements OnInit {
     this.vendorObj.VendorCode = event.VendorCode;
     this.vendorObj.VendorId = event.VendorId;
     await this.GetVendor();
-    this.GetVendorEmpList();
+    await this.GetVendorEmpList();
   }
 
   SetBpkbCity(event) {
@@ -1225,6 +1239,54 @@ export class AssetDataXComponent implements OnInit {
         SalesPersonName: temp[0].VendorEmpName,
         SalesPersonNo: temp[0].VendorEmpNo,
         SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+      if(temp[0].MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE){
+        this.IsSales = true;
+        // this.AdminHeadChanged(event);
+      }
+      else{
+        this.IsSales = false;
+        this.AdminHeadName = temp[0].VendorEmpName;   
+      }
+      this.AssetDataForm.patchValue({
+        AdminHeadId: "",
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        SalesPersonId: "",
+        SalesPersonName: "",
+        SalesPersonNo: "",
+        SalesPersonPositionCode: "",
+      });
+    }
+  }
+
+  async SalesPersonChangedx(No: string)  {
+    if (No) {
+      var temp: any;
+      temp = this.EmpObj.filter(emp => emp.VendorEmpNo == No);
+      this.AssetDataForm.patchValue({
+        SalesPersonId: temp[0].VendorEmpId,
+        SalesPersonName: temp[0].VendorEmpName,
+        SalesPersonNo: temp[0].VendorEmpNo,
+        SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+      if(temp[0].MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE){
+        this.IsSales = true;
+      }
+      else{
+        this.IsSales = false;
+        this.AdminHeadName = temp[0].VendorEmpName;   
+      }
+      this.AssetDataForm.patchValue({
+        AdminHeadId: "",
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
       });
     }
     else {
@@ -1496,7 +1558,7 @@ export class AssetDataXComponent implements OnInit {
           IsEditableDp: this.returnAppAssetObj.IsEditableDp,
           selectedDpType: 'AMT'
         });
-
+        this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value);
         this.updateValueDownPaymentPrctg();
         this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
       }
@@ -1580,6 +1642,7 @@ export class AssetDataXComponent implements OnInit {
         MrOwnerTypeCode: MrOwnerTypeCode
       });
 
+      this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value);
       await this.SelfUsageChange({ checked: (this.appAssetObj.ResponseAppCollateralRegistrationObj.MrUserRelationshipCode == "SELF") });
       await this.SelfOwnerChange(true, MrOwnerTypeCode, true);
       await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
@@ -1701,9 +1764,20 @@ export class AssetDataXComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseSalesPersonSupp.MrSupplEmpPositionCode;
             }
             else {
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "";
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "";
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
+              if (this.appAssetObj[i].ResponseBranchManagerSupp != null) {
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj[i].ResponseBranchManagerSupp.SupplEmpName;
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj[i].ResponseBranchManagerSupp.SupplEmpNo;
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseBranchManagerSupp.MrSupplEmpPositionCode;
+              }
+              else if (this.appAssetObj[i].ResponseAdminHeadSupp != null) {
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj[i].ResponseAdminHeadSupp.SupplEmpName;
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj[i].ResponseAdminHeadSupp.SupplEmpNo;
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseAdminHeadSupp.MrSupplEmpPositionCode;
+              }else{
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "";
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "";
+                this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
+              }
             }
 
             this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj[i].ResponseAppAssetObj.TaxCityIssuer;
@@ -2021,6 +2095,8 @@ export class AssetDataXComponent implements OnInit {
     );
   }
 
+  empNo: string;
+  SalesExist: boolean = false;
   async GetVendorForView() {
     await this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.vendorObj.VendorCode }).toPromise().then(
       (response: any) => {
@@ -2029,32 +2105,55 @@ export class AssetDataXComponent implements OnInit {
           SupplName: this.VendorObj.VendorName,
           SupplCode: this.VendorObj.VendorCode,
         });
-        if (this.appAssetObj.ResponseAdminHeadSupp != null) {
-          let GetVendorEmpAdminHead: GenericObj = new GenericObj();
-          GetVendorEmpAdminHead.Id = this.VendorObj.VendorId;
-          GetVendorEmpAdminHead.Code = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
-          this.GetVendorEmpAdminHead(GetVendorEmpAdminHead);
-        }
         if (this.appAssetObj.ResponseSalesPersonSupp != null) {
           let GetVendorEmpSales: GenericObj = new GenericObj();
           GetVendorEmpSales.Id = this.VendorObj.VendorId;
           GetVendorEmpSales.Code = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
           this.GetVendorEmpSalesPerson(GetVendorEmpSales);
+          this.empNo = GetVendorEmpSales.Code;
+          this.SalesExist = true;
+        } else if (this.appAssetObj.ResponseAdminHeadSupp != null) {
+          let GetVendorEmpAdminHead: GenericObj = new GenericObj();
+          GetVendorEmpAdminHead.Id = this.VendorObj.VendorId;
+          GetVendorEmpAdminHead.Code = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
+          this.GetVendorEmpSalesPerson(GetVendorEmpAdminHead);
+          this.empNo = GetVendorEmpAdminHead.Code;
+        } else if (this.appAssetObj.ResponseBranchManagerSupp != null) {
+          let GetVendorEmpBM: GenericObj = new GenericObj();
+          GetVendorEmpBM.Id = this.VendorObj.VendorId;
+          GetVendorEmpBM.Code = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
+          this.GetVendorEmpSalesPerson(GetVendorEmpBM);
+          this.empNo = GetVendorEmpBM.Code;
         }
+
+        if (this.appAssetObj.ResponseAdminHeadSupp != null) {
+          let GetVendorEmpAdminHead: GenericObj = new GenericObj();
+          GetVendorEmpAdminHead.Id = this.VendorObj.VendorId;
+          GetVendorEmpAdminHead.Code = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
+          this.GetVendorEmpAdminHead(GetVendorEmpAdminHead);
+        } else if (this.appAssetObj.ResponseBranchManagerSupp != null) {
+          let GetVendorEmpBM: GenericObj = new GenericObj();
+          GetVendorEmpBM.Id = this.VendorObj.VendorId;
+          GetVendorEmpBM.Code = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
+          this.GetVendorEmpAdminHead(GetVendorEmpBM);
+        }
+
         if (this.appAssetObj.ResponseBranchManagerSupp != null) {
           let GetVendorEmpBM: GenericObj = new GenericObj();
           GetVendorEmpBM.Id = this.VendorObj.VendorId;
           GetVendorEmpBM.Code = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
           this.GetVendorEmpBM(GetVendorEmpBM);
         }
-
-        this.vendorObj.VendorId = this.VendorObj.VendorId;
-        this.GetVendorEmpList();
-        this.InputLookupSupplierObj.jsonSelect = this.VendorObj;
-        this.InputLookupSupplierObj.nameSelect = this.VendorObj.VendorName;
-
       }
     );
+    this.vendorObj.VendorId = this.VendorObj.VendorId;
+    await this.GetVendorEmpList();
+    this.InputLookupSupplierObj.jsonSelect = this.VendorObj;
+    this.InputLookupSupplierObj.nameSelect = this.VendorObj.VendorName;
+    if(!this.SalesExist)
+    {
+      await this.SalesPersonChangedx(this.empNo);
+    }
   }
 
   GetProvDistrict() {
@@ -2105,11 +2204,12 @@ export class AssetDataXComponent implements OnInit {
     );
   }
 
-  GetVendorEmpList() {
+  empIsReady: boolean = false;
+  async GetVendorEmpList() {
     let ReqGetListActiveVendor: ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
     ReqGetListActiveVendor.VendorId = this.vendorObj.VendorId;
     ReqGetListActiveVendor.MrVendorEmpPositionCodes = this.vendorObj.MrVendorEmpPositionCodes;
-    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendor).subscribe(
+    await this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendor).toPromise().then(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
 
@@ -2135,6 +2235,7 @@ export class AssetDataXComponent implements OnInit {
           emp => emp.MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE);
       }
     );
+    this.empIsReady = true;
   }
 
   async GetAssetMaster(FullAssetCode: string, isFromSave: boolean = false) {
@@ -2151,6 +2252,15 @@ export class AssetDataXComponent implements OnInit {
           this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
           this.InputLookupAssetObj.nameSelect = this.AssetMasterObj.FullAssetName;
         }
+      }
+    );
+  }
+
+  GetOwnerRelationship(){
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.OwnerRelationObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
   }
@@ -2840,6 +2950,17 @@ export class AssetDataXComponent implements OnInit {
     }
   }
 
+  ChangeMrIdTypeCode(MrIdTypeCode: string){
+    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+      this.AssetDataForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+    else {
+      this.AssetDataForm.controls.OwnerIdNo.setValidators(Validators.required);
+      this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+  }
+  
   // async getDigitalizationSvcType() {
   //   await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeDigitalizationSvcType }).toPromise().then(
   //     (response) => {
@@ -2878,8 +2999,11 @@ export class AssetDataXComponent implements OnInit {
     let ownerCode: string = "";
     if (this.appAssetObj) ownerCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.OwnerProfessionCode;
     if (OwnerType == CommonConstant.CustTypePersonal) {
-      this.InputLookupProfessionObj.isRequired = false;
+      this.InputLookupProfessionObj.isRequired = true;
       this.AssetDataForm.controls.OwnerProfessionCode.clearValidators();
+
+      this.refMasterObj.RefMasterTypeCode = this.CustType == CommonConstant.CustTypeCompany ? CommonConstant.RefMasterTypeCodeCustCompanyRelationship :  CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+      this.GetOwnerRelationship();
 
       if (IsOwnerTypeChanged) {
         this.AssetDataForm.patchValue({
@@ -2900,9 +3024,12 @@ export class AssetDataXComponent implements OnInit {
         );
       }
     } else {
-      this.InputLookupProfessionObj.isRequired = true;
+      this.InputLookupProfessionObj.isRequired = false;
       this.AssetDataForm.controls.OwnerProfessionCode.setValidators([Validators.required]);
 
+      this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+      this.GetOwnerRelationship();
+      
       if (IsOwnerTypeChanged) {
         this.AssetDataForm.patchValue({
           OwnerProfessionCode: ""

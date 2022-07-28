@@ -95,31 +95,31 @@
             "name": "CustName"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Approval No",
             "name": "RequestNo"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Request By",
             "name": "RequestBy"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Task Owner",
             "name": "MainUser"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Current User",
             "name": "CurrentUser"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "Request Date",
             "name": "RequestDate"

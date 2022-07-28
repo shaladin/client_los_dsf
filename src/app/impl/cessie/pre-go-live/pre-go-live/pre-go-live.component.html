@@ -33,6 +33,16 @@
             <lib-ucapprovalcreate [parentForm]= "FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent>
             </lib-ucapprovalcreate>
 
+            <div class="form-actions left">
+              <button class="btn btn-raised btn-primary mr-1" type="button" (click)="CalculateAdminFee1()">
+                Calculate Admin 1
+              </button>
+  
+              <button class="btn btn-raised btn-primary mr-1" type="button" (click)="CalculateAdminFee2()">
+                Calculate Admin 2
+              </button>
+            </div>            
+
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
                 <i class="ft-x"></i> Cancel

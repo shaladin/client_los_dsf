@@ -554,7 +554,7 @@ export class CommissionV2XComponent implements OnInit {
       TaxOfficeCode: this.taxOfficeCode
     };
     //await listTrxAmt.forEach(a=> a.forEach(b=>this.TotalInput += b));
-    
+
     if(this.TotalInput>this.maxAllocAmt){
       return this.toastr.warningMessage("Total Input Commission (" + formatNumber(this.TotalInput, 'en-US', '.2') + ") Exceeded Remaining Allocation Amount (" + formatNumber(this.maxAllocAmt, 'en-US', '.2') + ")");
     }
@@ -697,7 +697,7 @@ export class CommissionV2XComponent implements OnInit {
 
     if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
     if (this.totalExpenseAmt > this.maxAllocRefundAmt) return this.toastr.warningMessage("Total Expense (" + formatNumber(this.totalExpenseAmt, 'en-US', '.2') + ") Exceeded Total Max Refund Amount (" + formatNumber(this.maxAllocRefundAmt, 'en-US', '.2') + ")");
-    
+
     let listAppCommissionHAddObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
     let listAppCommissionHEditObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
     for (let i = 0; i < this.ListAppCommHObj.length; i++) {
@@ -719,7 +719,9 @@ export class CommissionV2XComponent implements OnInit {
       WfTaskIdListId: this.ReturnHandlingHObj.WfTaskListId,
       IsPersonal: this.AppIsPersonal,
       ListAppCommissionHAddObj: listAppCommissionHAddObj,
-      ListAppCommissionHEditObj: listAppCommissionHEditObj
+      ListAppCommissionHEditObj: listAppCommissionHEditObj,
+      ListResultRefundRsvFundObjs : this.ListResultRefundIncomeInfo, // START UATDSFCF-911
+      MaxAllocAmt : this.maxAllocAmt //END UATDSFCF-911
     };
     let lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     let AddEditUrl = environment.isCore ? URLConstantX.AddEditAppCommissionDataV2 : URLConstantX.AddEditAppCommissionData;
@@ -1001,7 +1003,7 @@ export class CommissionV2XComponent implements OnInit {
           this.taxOfficeCode = response["TaxOfficeCode"];
       });
   }
-  
+
   ChangeEmpPos(idx: number) {
     let ListIdx = idx;
     for (let i = 0; i < this.ListAppCommHObj.length; i++) {

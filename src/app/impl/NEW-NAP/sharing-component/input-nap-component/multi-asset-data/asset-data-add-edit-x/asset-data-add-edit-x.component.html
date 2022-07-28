@@ -528,7 +528,7 @@
                   </div>
                   <label class="col-md-2  adins-required-label" translate>Owner Id Type </label>
                   <div class="col-md-4">
-                    <select class="form-control" id="idType" formControlName="MrIdTypeCode"
+                    <select (change)="ChangeMrIdTypeCode($event.target.value)" class="form-control" id="idType" formControlName="MrIdTypeCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrIdTypeCode.invalid }"
                       style="width:50%">
                       <option value="">-Select One-</option>
@@ -554,9 +554,11 @@
                     <lib-uc-show-errors [control]="AssetDataForm.controls.MrOwnerRelationshipCode"
                       [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
+                  <label class="col-md-2  adins-required-label" translate>Owner Id No </label>
                   <div class="col-md-4">
                     <input type="text" class="form-control" formControlName="OwnerIdNo">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.OwnerIdNo"
+                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -618,21 +620,23 @@
               </lib-ucSubsection>
               <div id="assetLoc">
                 <div class="form-group row">
-                  <label class="col-md-2  adInsLabel" translate>Copy Address </label>
-                  <div class="col-md-2">
+                  <label class="col-md-2 adInsLabel" translate>Copy Address </label>
+                  <div class="col-md-4">
+                    <div class="input-group">
                     <select class="form-control adInsInput" formControlName="LocationAddrType">
                       <option value="" translate>-Select One-</option>
                       <option *ngFor="let ram of AppCustAddrObj" [value]="ram.AppCustAddrId">
                         {{ram.MrCustAddrTypeCode}}
                       </option>
                     </select>
-                  </div>
                   <div class="input-group-append">
                     <span class="input-group-btn">
                       <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
                         <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
                       </button>
                     </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div id="AssetLocation" *ngIf="inputAddressObjForLoc && isAddressReady">

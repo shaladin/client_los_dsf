@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { HttpClient } from '@angular/common/http';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { AgrmntDocDsfObj } from 'app/shared/model/agrmnt-doc-dsf-obj.model';
 
 @Component({
   selector: 'app-document-paging-dsf',
@@ -14,8 +18,10 @@ export class DocumentPagingDsfComponent implements OnInit {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
+  LobCode: string;
+  agrmntDoc: AgrmntDocDsfObj;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient,) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -39,6 +45,25 @@ export class DocumentPagingDsfComponent implements OnInit {
   GetCallback(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
+    }
+
+    if (ev.Key = "ViewAgrmntDocDsf") {
+      this.agrmntDoc = new AgrmntDocDsfObj();
+      this.agrmntDoc.AgrmntId = ev.RowObj.AgrmntId;
+      this.agrmntDoc.WOF = ev.RowObj.WOF;
+
+      if (ev.RowObj.WOF == "LB" || ev.RowObj.WOF == "IF")
+      {
+      this.http.post(URLConstantDsf.AddListDocumentPrintingLBByAgrmntIdDsf, this.agrmntDoc).subscribe(
+        (response) => {
+          this.router.navigate([NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW_DSF], { queryParams: { "AgrmntId": ev.RowObj.AgrmntId, "BizTemplateCode": ev.RowObj.BizTemplateCode, "WOF": ev.RowObj.WOF } });
+        });
+      }
+
+      else
+      {
+        this.router.navigate([NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW_DSF], { queryParams: { "AgrmntId": ev.RowObj.AgrmntId, "BizTemplateCode": ev.RowObj.BizTemplateCode } });
+      }
     }
   }
 

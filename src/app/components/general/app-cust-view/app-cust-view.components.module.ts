@@ -13,6 +13,8 @@ import { GuarantorComponent } from './view-guarantor/view-guarantor.component';
 import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 import { ViewAppCustDataCompanyXComponent } from 'app/impl/components/general/app-cust-view/view-app-cust-data-company/view-app-cust-data-company-x.component';
 import { ViewAppCustDataCompletionCompanyXComponent } from 'app/impl/components/general/app-cust-view/view-app-cust-data-company/view-app-cust-data-completion-company-x.component';
+import { ViewAppCustDataPersonalXComponent } from 'app/impl/components/general/app-cust-view/view-app-cust-data-personal/view-app-cust-data-personal-x.component';
+import { ViewAppCustDataCompletionPersonalXComponent } from 'app/impl/components/general/app-cust-view/view-app-cust-data-personal/view-app-cust-data-completion-personal-x.component';
 
 @NgModule({
     imports: [
@@ -26,7 +28,9 @@ import { ViewAppCustDataCompletionCompanyXComponent } from 'app/impl/components/
         ViewAppCustDataCompanyComponent,
         ViewAppCustDataCompanyXComponent,
         ViewAppCustDataPersonalComponent,
+        ViewAppCustDataPersonalXComponent,
         ViewAppCustDataCompletionPersonalComponent,
+        ViewAppCustDataCompletionPersonalXComponent,
         ViewAppCustDataCompletionCompanyComponent,
         ViewAppCustDataCompletionCompanyXComponent,
         ViewAppCustDetailComponent,
@@ -37,6 +41,7 @@ import { ViewAppCustDataCompletionCompanyXComponent } from 'app/impl/components/
         ViewAppCustDataCompanyComponent,
         ViewAppCustDataCompanyXComponent,
         ViewAppCustDataPersonalComponent,
+        ViewAppCustDataPersonalXComponent,
         GuarantorComponent,
     ],
     entryComponents: [

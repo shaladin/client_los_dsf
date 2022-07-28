@@ -4,7 +4,7 @@ export class CommonConstant {
 
   // REGEX
   public static regexAPI = "\\/[v,V][1-9]\\d*(\\.[1-9]\\d*)*";
-  public static regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+  public static regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
 
   //FORM
   public static INVALID_FORM = "INVALID";
@@ -305,6 +305,7 @@ export class CommonConstant {
   public static AttrGroupCustCompanyFinDataExpense = "CUST_COMPANY_FINDATA_EXPENSE"
   public static AttrGroupCustCompanyFinDataOther = "CUST_COMPANY_FINDATA_OTHER"
   public static AttrGroupApplicationData = "APPLICATION_DATA";
+  public static AttrGroupAsset = "ASSET";
 
   //ATTR INTPUT TYPE
   public static AttrInputTypeDate = "D";
@@ -319,6 +320,11 @@ export class CommonConstant {
   //ATTR CODE
   public static AttrCodeDeptAml = "AML_CUST_DEPARTMENT";
   public static AttrCodeAuthAml = "AUTH_AML";
+  public static AttrCodeRoadWorthinessDoc = "ROAD_WORTHINESS_DOC";
+  
+  //ATTR VALUE
+  public static AttrValueOnTheRoad = "ON_THE_ROAD";
+  public static AttrValueOffTheRoad = "OFF_THE_ROAD";
 
   //Interest Type
   public static InterestTypeFixed = "FIXED";
@@ -483,6 +489,7 @@ export class CommonConstant {
   public static MrIdTypeCodeKITAS = "KITAS";
   public static MrIdTypeCodeNPWP = "NPWP";
   public static MrIdTypeCodeAKTA = "AKTA";
+  public static MrIdTypeCodeKTM = "KTM";
 
   // MR ID TYPE CODE VENDOR
   public static MrIdTypeCodeVendorKTP = "KTP";
@@ -700,6 +707,7 @@ export class CommonConstant {
   public static ReferantorCategoryAgency = "AGENCY";
   public static ReferantorCategoryCustomer = "CUSTOMER";
   public static ReferantorCategorySupplierEmployee = "SUPPLIER EMPLOYEE";
+  public static ReferantorCategoryMultifinanceEmployee = "MULTIFINANCE EMPLOYEE";
   public static ReferantorTypeSupplierEmployee = "SUPPL_EMP";
 
   //Martial Status
@@ -770,6 +778,7 @@ export class CommonConstant {
   public static GSCodeCoyMandatoryLegalDocs = "COY_MANDATORY_LEGAL_DOCS";
   public static GSCodeCustAgeLimit = "CUST_AGE_LIMIT";
   public static GsCodeNegCustAllowNap = "NEGCUSTALLOWNAP";
+  public static GsCodeAssetTypeForHeavyEquipment = "ASSET_TYPE_CODE_FOR_HEAVY_EQUIPMENT";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
@@ -876,12 +885,12 @@ export class CommonConstant {
   public static DmsTimestamp = "Tiemstamp";
   public static DmsRoleName = "Role Name";
   public static DmsOverideSecurity = "OverideSecurity";
-  public static DmsOverideUpload = "Upload";
+  public static DmsOverideUpload = "Upload,Delete";
   public static DmsOverideView = "View";
-  public static DmsOverideUploadView = "Upload,View";
-  public static DmsOverideUploadDownload = "Upload,Download";
+  public static DmsOverideUploadView = "Upload,Delete,View";
+  public static DmsOverideUploadDownload = "Upload,Delete,Download";
   public static DmsOverideViewDownload = "View,Download";
-  public static DmsOverideUploadDownloadView = "Upload,Download,View";
+  public static DmsOverideUploadDownloadView = "Upload,Delete,Download,View";
   public static DmsViewCodeCust = "ConfinsCust";
   public static DmsViewCodeApp = "ConfinsApp";
   public static DmsViewCodeAgr = "ConfinsAgr";
@@ -956,6 +965,7 @@ export class CommonConstant {
   //Product Status
   public static ProdStatApproval = "APVL";
   public static ProdStatReqDeact = "REQD";
+  public static ProdStatNew = "NEW";
 
   //Product Approval
   public static SCHM_CODE_APV_HO_ACT_SCHM = "APV_HO_ACT_SCHM";
@@ -970,6 +980,9 @@ export class CommonConstant {
   public static PRD_HO_DEACT_APV_TYPE = "PROD_HO_DEACT_APV_TYPE";
   public static PRD_OFR_APV_TYPE = "PROD_OFR_APV_TYPE";
   public static PRD_OFR_DEACT_APV_TYPE = "PROD_OFR_DEACT_APV_TYPE";
+
+  //Product Component
+  public static LIST_EDITABLE_PROD_COMPNT = "LIST_EDITABLE_PROD_COMPNT";
 
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";

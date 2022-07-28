@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -24,7 +24,7 @@ import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
   selector: 'app-pre-go-live-approval-paging',
   templateUrl: './pre-go-live-approval-paging.component.html'
 })
-export class PreGoLiveApprovalPagingComponent implements OnInit {
+export class PreGoLiveApprovalPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
@@ -32,13 +32,24 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
   IntegrationObj: IntegrationObj = new IntegrationObj();
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private route: ActivatedRoute,
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
     private router: Router, private cookieService: CookieService,
     private apvTaskService: ApprovalTaskService) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -47,7 +58,26 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj._url = "./assets/ucpaging/searchPreGoLiveApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPreGoLiveApproval.json";
 

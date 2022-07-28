@@ -258,7 +258,7 @@
                   </div>
                 </div>
 
-                <div class="form-group row adins-required"
+                <div [ngClass]="(BizTemplateCode == 'CFNA')?'form-group row adins-required':'form-group row'"
                      *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <!-- Customer Bank Account -->
                   <label class="col-md-4 adInsLabel"> Customer Bank Account </label>

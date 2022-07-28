@@ -26,6 +26,7 @@ import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.mode
 import { TypeResultObj } from 'app/shared/model/type-result/type-result-obj.model';
 import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
+import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
 
 @Component({
   selector: 'app-credit-review-detail-dsf',
@@ -51,6 +52,9 @@ export class CreditReviewDetailDsfComponent implements OnInit {
   IsReady: boolean = false;
   IsViewReady: boolean = false;
   RFAInfo: Object = new Object();
+  apvSchmCode: string = "";
+  OriOfficeCode: string;
+
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -67,18 +71,19 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     CreditScoring: ['']
   });
 
-  FormReturnObj  =this.fb.group({
+  FormReturnObj = this.fb.group({
     Reason: [''],
     Notes: ['']
   });
 
+  crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   constructor(
     private route: ActivatedRoute,
     private ref: ApplicationRef,
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: ToastrService, 
+    public toastr: ToastrService,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService
   ) {
@@ -93,6 +98,7 @@ export class CreditReviewDetailDsfComponent implements OnInit {
 
   }
 
+  readonly bizCfna: string = CommonConstant.CFNA;
   initData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
@@ -103,6 +109,7 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     this.initData();
     this.ClaimTask();
     await this.GetAppNo();
+    await this.GetApvSchemeFromRefProdCompnt();
     await this.GetListDeviation();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
@@ -113,9 +120,13 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     this.initInputApprovalObj();
   }
 
+  getCrdRvwAppObj(ev: CrdRvwAppObj) {
+    this.crdRvwAppObj = ev;
+  }
+
   responseListTypeCodes: Array<TypeResultObj> = new Array();
-  async GetListDeviation(){    
-    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {TrxNo: this.appNo}).toPromise().then(
+  async GetListDeviation() {
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, { TrxNo: this.appNo }).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
       });
@@ -132,7 +143,7 @@ export class CreditReviewDetailDsfComponent implements OnInit {
 
         var Attributes = []
         var attribute1 = {
-          "AttributeName": "ApvAt",
+          "AttributeName": "APPROVAL AT",
           "AttributeValue": this.ManualDeviationData[this.ManualDeviationData.length - 1].ApvAt
         };
         Attributes.push(attribute1);
@@ -161,6 +172,25 @@ export class CreditReviewDetailDsfComponent implements OnInit {
   }
   //#endregion
 
+  //#region GET Approval Scheme Code
+  prodOfferingCode: string = "";
+  prodOfferingVersion: string = "";
+  async GetApvSchemeFromRefProdCompnt() {
+    let obj = {
+      prodOfferingCode: this.prodOfferingCode,
+      prodOfferingVersion: this.prodOfferingVersion,
+      refProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CRD_APV
+    };
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      response => {
+        if(response != undefined){
+          this.apvSchmCode = response["CompntValue"];
+        }
+      }
+    );
+  }
+  //#endregion
+
   //#region Get API Data
   appNo: string = "";
   async GetAppNo() {
@@ -169,6 +199,9 @@ export class CreditReviewDetailDsfComponent implements OnInit {
       async (response) => {
         if (response != undefined) {
           this.appNo = response.AppNo;
+          this.prodOfferingCode = response.ProdOfferingCode;
+          this.prodOfferingVersion = response.ProdOfferingVersion;
+          this.OriOfficeCode = response.OriOfficeCode;
           await this.GetCreditScoring(response.AppNo);
         }
       });
@@ -230,12 +263,12 @@ export class CreditReviewDetailDsfComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    await this.http.post(URLConstant.GetAppFinDataByAppId, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetApvAmountForCrdRvwByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
-          AppvAmt: response["ApvAmt"]
+          AppvAmt: response["Result"]
         });
-        this.PlafondAmt = response["ApvAmt"];
+        this.PlafondAmt = response["Result"];
       });
   }
 
@@ -323,9 +356,12 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     }
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
+    this.InputObj.SchemeCode = this.apvSchmCode;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
+    this.InputObj.RequestedBy = this.UserAccess.UserName;
+    this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.IsReady = true;
   }
 
@@ -343,8 +379,8 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
 
     if (!this.isReturnOn) {
-      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
-      
+      this.RFAInfo = { RFAInfo: this.FormObj.controls.RFAInfo.value };
+
     }
 
     let apiObj = {
@@ -358,6 +394,7 @@ export class CreditReviewDetailDsfComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: this.RFAInfo
     };
+
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
@@ -375,7 +412,7 @@ export class CreditReviewDetailDsfComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId
     }
-    console.log(apiObj);
+
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
@@ -417,7 +454,8 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     return AppCrdRvwDObjs;
   }
   //#endregion
-  ClaimTask(){
+
+  ClaimTask() {
     if (environment.isCore) {
       if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
         this.claimTaskService.ClaimTaskV2(this.wfTaskListId);

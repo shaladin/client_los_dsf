@@ -28,6 +28,8 @@ import { MonthlyDisbDsfComponent } from './report/factoring/monthly-disb-dsf/mon
 import { ListOutstandingComponent } from './report/factoring/list-outstanding/list-outstanding.component';
 import { VirtualaccountPaymentAllocationunitComponent } from './report/factoring/virtualaccount-payment-allocationunit/virtualaccount-payment-allocationunit.component';
 import { RawDataFactoringComponent } from './report/factoring/raw-data-factoring/raw-data-factoring.component';
+import { ReportAppApprovalDsfComponent } from './report/report-app-approval-dsf/report-app-approval-dsf.component';
+import { ReportAgrProcessDsfComponent } from './report/report-agr-process-dsf/report-agr-process-dsf.component';
 
 const routes: Routes = [
   {
@@ -194,6 +196,30 @@ const routes: Routes = [
         component: AppStatusDsfComponent,
         data: {
           title: "Report Application Status"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_APP_APPROVAL,
+        component: ReportAppApprovalDsfComponent,
+        data: {
+          title: "Report Application Approval"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_AGR_PROCESS,
+        component: ReportAgrProcessDsfComponent,
+        data: {
+          title: "Report Agreement Process"
         }
       }
     ]

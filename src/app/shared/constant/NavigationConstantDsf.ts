@@ -96,5 +96,9 @@ export class NavigationConstantDsf {
      public static NAP_CRD_PRCS_CRD_APPRV_DETAIL_X = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantDsf.CRD_APPRV_DETAIL_X; //"/Nap/CreditProcess/CreditApproval/Paging"
 
      public static CUST_NEW_FORM_DSF = "/" + PathConstantDsf.LR_CUST + "/" + PathConstantDsf.NEW_CUST; //'/Customer/NewCustomerX'
+
+     public static REPORT_APP_APPROVAL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_APP_APPROVAL;
+
+     public static REPORT_AGR_PROCESS = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_AGR_PROCESS;
 }
  

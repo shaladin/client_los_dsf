@@ -31,6 +31,9 @@ export class AgrMainInfoXComponent implements OnInit {
             else if (response['BizTemplateCode'] == CommonConstant.CFNA) {
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoCfna.json";
             }
+            else if (response['BizTemplateCode'] == CommonConstant.FCTR) {
+              this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewAgrMainInfoFactoringX.json";
+            }
             else {
               this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewAgrMainInfoX.json";
             }
@@ -47,6 +50,20 @@ export class AgrMainInfoXComponent implements OnInit {
     else if (ev.Key == "Customer") {
       var custObj = {
         CustNo: ev.ViewObj.CustNo
+      };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        (response) => {
+          if(response['MrCustTypeCode'] == CommonConstant.CustTypePersonal) {
+            AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          } else if(response['MrCustTypeCode'] == CommonConstant.CustTypeCompany) {
+            AdInsHelper.OpenCustomerCoyViewByCustId(response['CustId']);
+          }
+        }
+      )
+    }
+    else if (ev.Key == "AtpmName") {
+      var custObj = {
+        CustNo: ev.ViewObj.AtpmCustNo
       };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         (response) => {
