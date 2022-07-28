@@ -5,6 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
@@ -31,6 +32,7 @@ export class EditAppAfterApprovalViewXComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   agrmntId: number;
   isReady: boolean = false;
+  RefMasterUsageCode = [];
 
   constructor(private router: Router, 
     private route: ActivatedRoute, 
@@ -64,6 +66,7 @@ export class EditAppAfterApprovalViewXComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    this.setAssetUsage();
     this.isReady = true;
   }
 
@@ -71,16 +74,39 @@ export class EditAppAfterApprovalViewXComponent implements OnInit {
   {
     let reqGetEditAppAftApv : GenericObj = new GenericObj();
     reqGetEditAppAftApv.Id = this.EditAppAftApvTrxHId;
-    await this.http.post(URLConstantX.GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId, reqGetEditAppAftApv).subscribe(
+    await this.http.post(URLConstantX.GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId, reqGetEditAppAftApv).toPromise().then(
       (response) => {
         this.ChangeSummaryObj = response["ReturnObject"];
       
       });
+      
+    await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, {Codes: [CommonConstant.RefMasterTypeCodeAssetUsage]}).toPromise().then(
+      (response) => {
+        this.RefMasterUsageCode = response["ReturnObject"];
+      }
+    )
   }
 
   GetCallBack(ev){
     if(ev.Key == "ViewProdOffering"){ 
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
+    }
+  }
+  
+  setAssetUsage()
+  {
+    for(let i = 0; i < this.ChangeSummaryObj.AssetDataObjs.length; i++)
+    {
+      var AssetDataObj = this.ChangeSummaryObj.AssetDataObjs[i];
+      for(let j = 0; j < AssetDataObj.EditAppAftApvTrxDObjs.length; j++)
+      {
+        var EditAppAftApvTrxDObj = AssetDataObj.EditAppAftApvTrxDObjs[j];
+        if(EditAppAftApvTrxDObj.ChangeItemCode == 'ASSET_DATA_MR_ASSET_USAGE_CODE')
+        {
+          EditAppAftApvTrxDObj.OldValue = this.RefMasterUsageCode.find(x => x.MasterCode === EditAppAftApvTrxDObj.OldValue).Descr
+          EditAppAftApvTrxDObj.NewValue = this.RefMasterUsageCode.find(x => x.MasterCode === EditAppAftApvTrxDObj.NewValue).Descr
+        }
+      }
     }
   }
 }
