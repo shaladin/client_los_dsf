@@ -196,7 +196,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "LeadSource"
+            "property": "LeadSourceName"
         },
         {
             "type": "text",
