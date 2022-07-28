@@ -223,6 +223,9 @@ export class ApplicationDataXComponent implements OnInit {
   WayOfFinancing: string = "";
   ProductType: string = "";
   ApToSupplierDisburseDt: Date = new Date();
+  EffectiveDt: Date = new Date();
+  TotalAssetPrice: number = 0;
+  Tenor: number = 0;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -869,10 +872,9 @@ export class ApplicationDataXComponent implements OnInit {
       );
       this.agrmntParentNo = this.resultResponse.AgrmntParentNo;
 
-      if(this.agrParentList.length)
-      {
+      if (this.agrParentList.length) {
         var idx = -1;
-        for(var i=0; i<this.agrParentList.length; i++) if(this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
+        for (var i = 0; i < this.agrParentList.length; i++) if (this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
         if (idx > -1) this.copyAgrmntParentEvent(idx);
       }
     }
@@ -993,7 +995,10 @@ export class ApplicationDataXComponent implements OnInit {
     this.WayOfFinancing = this.agrParent.WayOfFinancing;
     this.ProductType = this.agrParent.ProductType;
     this.ApToSupplierDisburseDt = this.agrParent.ApToSupplierDisburseDt;
-    
+    this.EffectiveDt = this.agrParent.EffectiveDt;
+    this.Tenor = this.agrParent.Tenor;
+    this.TotalAssetPrice = this.agrParent.TotalAssetPrice;
+
     const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
     reqCalculatePlafondAgrmntXObj.AgrmntParentNo = this.agrParent.AgrmntNo;
@@ -1004,6 +1009,7 @@ export class ApplicationDataXComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.AssetTypeCode = this.agrParent.AssetTypeCode;
     reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
     reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
+    reqCalculatePlafondAgrmntXObj.Tenor = this.agrParent.Tenor;
 
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
       this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
@@ -1249,13 +1255,17 @@ export class ApplicationDataXComponent implements OnInit {
               MaxTenor: this.maxTenor,
               AgrmntDt: this.AgrmntDt,
               OsPrincipal: this.OsPrincipal,
-              OsInterest:this.OsInterest,
+              OsInterest: this.OsInterest,
               NumOfAsset: this.NumberOfAsset,
               EffRate: this.EffRate,
               PurposeOfFinancing: this.PurposeOfFinancing,
-              WayOfFinancing:this.WayOfFinancing,
-              ProductType:this.ProductType,
+              WayOfFinancing: this.WayOfFinancing,
+              ProductType: this.ProductType,
               ApToSupplierDisburseDt: this.ApToSupplierDisburseDt,
+              EffectiveDt: this.EffectiveDt,
+              GoLiveDt: this.goLiveDt,
+              Tenor: this.Tenor,
+              TotalAssetPrice: this.TotalAssetPrice,
               RowVersion: this.resultResponse.RowVersionAgrmntMasterX
             }
             let obj = {
