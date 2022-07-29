@@ -1,5 +1,5 @@
 {
-  "title": "Edit Commission Reserved Fund After Credit Approval Request",
+  "title": "Edit Agreement After Credit Approval Request",
   "exportExcel": false,
   "component": [
     {
@@ -53,7 +53,7 @@
     }
   ],
   "querystring": {
-    "name": "searchEditCommAfterApproval"
+    "name": "searchEditAppAfterApproval"
   },
   "headerList": [
     {

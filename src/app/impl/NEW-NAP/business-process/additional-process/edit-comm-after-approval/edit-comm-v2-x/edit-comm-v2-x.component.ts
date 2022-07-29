@@ -127,6 +127,7 @@ export class EditCommV2XComponent implements OnInit {
   HideForm1: boolean = false;
   HideForm2: boolean = false;
   HideForm3: boolean = false;
+  IsApplicationExist: boolean = false;
 
   listPrioritySuppl: Array<string> = new Array();
   listPrioritySupplEmp: Array<string> = new Array();
@@ -179,6 +180,17 @@ export class EditCommV2XComponent implements OnInit {
         this.Agrmnt = response;
       }
     );
+  }
+
+  async checkIsEditAppExist() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.AgrmntId;
+    await this.http.post(URLConstantX.GetEditAppReqAndApvByAgrmntId, reqObj).toPromise().then(
+      (response) => {
+        if(response["ReturnObject"] != null){
+          this.IsApplicationExist = true;
+        }
+      });
   }
 
   GetFormAddDynamicObj(content) {
@@ -516,7 +528,7 @@ export class EditCommV2XComponent implements OnInit {
 
   async GetExistingAppCommData() {
     let objApi = {Id: this.AgrmntId};
-    await this.http.post(URLConstantX.GetAgrmntCommissionDataForEditByAgrmntId, objApi).toPromise().then( 
+    await this.http.post(URLConstantX.GetAgrmntCommissionDataForEditByAgrmntId, objApi).toPromise().then(
       (response) => {
         let tempObj: Array<AgreementCommissionHXObj> = response[CommonConstant.ReturnObj];
         if (tempObj.length > 0) {
@@ -750,7 +762,7 @@ export class EditCommV2XComponent implements OnInit {
     return idxStart;
   }
 
-  SaveForm() {
+  async SaveForm() {
     this.RFAInfo = {RFAInfo: this.CommissionForm.controls.RFAInfo.value};
     const currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     if (!this.IsCalculated) {
@@ -761,7 +773,14 @@ export class EditCommV2XComponent implements OnInit {
       return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + 'Remaining Allocated Amount');
     }
     if (this.totalExpenseAmt > this.maxAllocRefundAmt) {
-      return this.toastr.warningMessage('Total Expense (' + formatNumber(this.totalExpenseAmt, 'en-US', '.2') + ') Exceeded Total Max Refund Amount (' + formatNumber(this.maxAllocRefundAmt, 'en-US', '.2') + ')');
+      return this.toastr.
+      warningMessage('Total Expense (' + formatNumber(this.totalExpenseAmt, 'en-US', '.2') + ') Exceeded Total Max Refund Amount (' + formatNumber(this.maxAllocRefundAmt, 'en-US', '.2') + ')');
+    }
+
+    await this.checkIsEditAppExist();
+    if (this.IsApplicationExist){
+      this.toastr.errorMessage("Edit Application in progress");
+      return;
     }
 
     let listAppCommissionHAddObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();

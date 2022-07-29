@@ -22,8 +22,7 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
   @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForCustHistDataX: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
-  @Output() ngModelForListAsset: EventEmitter<any> = new EventEmitter();
-  @Output() ngModelForAnalysisResult: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForFinancialData: EventEmitter<any> = new EventEmitter();
 
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
@@ -60,8 +59,8 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
         this.crdRvwCustCoyInfoObj = response;
       }
     );
-  }  
-  
+  }
+
   ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> = new Array<CrdRvwDiffAppToMasterCustObj>();
   async GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
@@ -70,7 +69,7 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
       }
     );
   }
-  
+
   responseCrdRvwDiffAppToInPrcAppCustObj: ResponseCrdRvwDiffAppToInPrcAppCustObj = new ResponseCrdRvwDiffAppToInPrcAppCustObj();
   async GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId() {
     let reqObj: ReqCrdRvwDiffAppToInPrcAppCustObj = { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true };
@@ -100,12 +99,8 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
     this.ngModelForCustHistDataX.emit();
   }
   
-  ClickLinkListAssetInOperation() {
-    this.ngModelForListAsset.emit();
-  }
-
-  ClickLinkAnalysisResult() {
-    this.ngModelForAnalysisResult.emit();
+  ClickLinkFinancialData() {
+    this.ngModelForFinancialData.emit();
   }
   //#endregion
 

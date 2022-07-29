@@ -88,7 +88,7 @@
     <div class="col-md-6">
       <label class="label-control" translate> Phone </label>
     </div>
-    <div class="col-md-6 "> 
+    <div class="col-md-6 ">
       <span *ngFor="let item of ListCrdRvwCustPhnStatusObj; let i = index">
         <label *ngIf="i!=0" class="label-control"> &nbsp;/&nbsp; </label>
         <span id="PhnIndicator{{i}}">
@@ -107,10 +107,10 @@
   <div class="row">
     <div class="col-md-6">
       <div class="row">
-        <div class="col-md-10">  
-          <label class="label-control" translate>         
+        <div class="col-md-10">
+          <label class="label-control" translate>
             <a class="link" (click)="ClickLinkDiffCust(DiffCustContent)"> Difference with master customer </a>
-          </label>        
+          </label>
         </div>
         <div class="col-md-2">
           <span id="DiffToMasterCustIndicator" style="float: right;">
@@ -121,7 +121,7 @@
                 <span *ngIf="crdRvwCustInfoObj.DiffToMasterIndicatorDescr == null || crdRvwCustInfoObj.DiffToMasterIndicatorDescr == ''"> No Data </span>
               </span>
             </i>
-          </span>        
+          </span>
         </div>
       </div>
     </div>
@@ -133,7 +133,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-10">
-          <label class="label-control" translate> 
+          <label class="label-control" translate>
             <a class="link" (click)="ClickLinkDiffApp(DiffAppContent)"> Difference with in process Application </a>
           </label>
         </div>
@@ -167,9 +167,7 @@
       <label class="label-control"> &nbsp;|&nbsp; </label>
       <a class="link" (click)="ClickLinkCustomerHistoryData()">Customer History Data</a>
       <label class="label-control"> &nbsp;|&nbsp; </label>
-      <a class="link" (click)="ClickLinkListAssetInOperation()">List Asset In Operation</a>
-      <label class="label-control"> &nbsp;|&nbsp; </label>
-      <a class="link" (click)="ClickLinkAnalysisResult()">Analysis Result</a>
+      <a class="link" (click)="ClickLinkFinancialData()">Financial Data</a>
     </div>
   </div>
 </div>

@@ -4,31 +4,34 @@
       <h4 class="card-title ucSearch-title" translate>Credit Approval</h4>
     </div>
     <br>
-    <app-app-main-info-x [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-x>
+    <app-app-main-info-cr-x [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-cr-x>
     <div class="card-body">
       <div class="px-3" *ngIf="isShow">
-        <app-crd-rvw-cust-info-x *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
-        </app-crd-rvw-cust-info-x>
-        <app-crd-rvw-fam-guar [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
-        </app-crd-rvw-fam-guar>
-        <app-crd-rvw-legal-doc *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany"
-          [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
-
-        <app-crd-rvw-third-party-checking-x-dsf *ngIf="AppObj.AppNo != ''" [AppNo]="AppObj.AppNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
-        </app-crd-rvw-third-party-checking-x-dsf>
-        <app-crd-rvw-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
-        </app-crd-rvw-app-info-x>
-        <app-crd-rvw-asset *ngIf="BizTemplateCode!='CFNA'" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
-        <app-crd-rvw-asset-acc *ngIf="BizTemplateCode!='CFNA'" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-asset-acc>
+        <app-asset-accessory-info *ngIf="isShow" [AppId]="appId">
+        </app-asset-accessory-info>
         <app-crd-rvw-additional-coll [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-additional-coll>
+        <app-crd-rvw-cust-info-x *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
+        </app-crd-rvw-cust-info-x>
+        <app-crd-rvw-result-analysis [appId]="appId">
+        </app-crd-rvw-result-analysis>
+        <app-crd-rvw-legal-doc *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId">
+        </app-crd-rvw-legal-doc>
+        <app-crd-rvw-fam-guar [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+        </app-crd-rvw-fam-guar>
+        <app-crd-rvw-app-fin-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
+        </app-crd-rvw-app-fin-info-x>
+        <app-crd-rvw-third-party-checking-x-dsf *ngIf="AppObj.AppNo != ''" [AppNo]="AppObj.AppNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
+        </app-crd-rvw-third-party-checking-x-dsf>
+        <app-crd-rvw-app-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
+        </app-crd-rvw-app-app-info-x>
+        <!-- <app-crd-rvw-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
+        </app-crd-rvw-app-info-x> -->
         <app-crd-rvw-cmo-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-cmo-info>
         <app-crd-rvw-dealer-info *ngIf="!IsFD" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
         <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>
-        <app-asset-accessory-info> *ngIf="isShow" [AppId]="appId" </app-asset-accessory-info>
-
       </div>
     </div>
 

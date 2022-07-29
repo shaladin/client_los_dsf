@@ -12,13 +12,14 @@ export class AgrParentObjX {
   EffectiveDt: Date;
   MaturityDt: Date;
   GoLiveDt: Date;
-  AgrmntDt : Date;
-  OsPrincipal : number;
-  OsInterest : number;
-  NumOfAsset : number;
-  EffRate : number;
-  PurposeOfFinancing : string;
-  WayOfFinancing : string;
-  ProductType : string;
-  ApToSupplierDisburseDt : Date;
+  AgrmntDt: Date;
+  OsPrincipal: number;
+  OsInterest: number;
+  NumOfAsset: number;
+  EffRate: number;
+  PurposeOfFinancing: string;
+  WayOfFinancing: string;
+  ProductType: string;
+  ApToSupplierDisburseDt: Date;
+  Tenor: number;
 }

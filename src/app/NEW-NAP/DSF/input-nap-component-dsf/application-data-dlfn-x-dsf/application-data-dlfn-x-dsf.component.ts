@@ -35,6 +35,9 @@ import { RefPayFreqObj } from 'app/shared/model/ref-pay-freq-obj.model';
 import { ResApplicationDataObj } from 'app/shared/model/response/application-data/res-application-data-obj.model';
 import { ResGetListMouByAppAndTypeObj } from 'app/shared/model/response/mou/mou-cust/res-get-list-mou-by-app-and-type-obj.model';
 import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-application-data-dlfn-x-dsf',
@@ -42,8 +45,9 @@ import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.
   styleUrls: ['./application-data-dlfn-x-dsf.component.css']
 })
 export class ApplicationDataDlfnXDsfComponent implements OnInit {
-
+  
   @Input() AppId: number;
+  @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   mode: string;
@@ -58,6 +62,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj: boolean;
+  isInterestCalcBasedTOP: boolean = false;
 
   SalesAppInfoForm = this.fb.group({
     MouCustId: [''],
@@ -69,7 +74,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     SalesOfficerName: [''],
     MrInstTypeCode: [''],
     TopDays: ['', [Validators.pattern('^[0-9]+$')]],
-    Tenor: ['', [Validators.pattern('^[0-9]+$')]],
+    Tenor: ['', [Validators.pattern("^[0-9]+$"), Validators.required]],
     NumOfInst: [1],
     MrInstSchemeCode: [''],
     IsDisclosed: [false],
@@ -80,7 +85,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     MrSlikSecEcoCode: [''],
-    CustBankAcc: [''],
+    CustBankAcc: ['',[Validators.required]],
     IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     BpkbStatCode: [''],
@@ -127,18 +132,17 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   allCharacteristicCredit: Array<KeyValueObj>;
   responseApp: AppObj;
   responseProd: ProdOfferingDObj;
-  user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-  salesOfficerCode: Array<string> = new Array();
-  refEmpSpvObj: ResRefEmpObj;
-
+  userContext: CurrentUserContext;
   listCustBankAcc: Array<AppCustBankAccObj>;
   selectedBankAcc: any;
   GetBankInfo: any;
   appCustId: number;
   IsMouSelect: boolean = false;
+  wopCodeAutoDebit: string = CommonConstant.WopAutoDebit;
   MouOsPlafond: number;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  MaxEffDt: Date;
   isMrCustTypeCompany: boolean = false;
   MasterCustType: string = "";
   MasterIdNoType: string = "";
@@ -155,6 +159,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.ListCrossAppObj['appId'] = this.AppId;
     this.ListCrossAppObj['result'] = [];
 
@@ -197,7 +202,10 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
         TopIntrstRatePrcnt: this.resultData.TopInterestRatePrcnt,
         MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode,
       });
+      this.changePaymentFreq();
     }
+
+
 
     this.getAppXData();
     if (this.SalesAppInfoForm.controls.MrWopCode.value == CommonConstant.WopAutoDebit) {
@@ -205,6 +213,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     } else {
       this.isShowAppCustBankAcc = false;
     }
+    this.checkIsTopDaysNull();
   }
 
 
@@ -212,6 +221,18 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+  }
+
+  checkIsTopDaysNull() {
+    console.log(this.SalesAppInfoForm.controls.TopDays.value)
+    if(this.SalesAppInfoForm.controls.TopDays.value == 0){
+      this.SalesAppInfoForm.controls.IntrstRatePrcnt.disable();
+      this.SalesAppInfoForm.patchValue({
+        IntrstRatePrcnt: 0
+      });
+    }else{
+      this.SalesAppInfoForm.controls.IntrstRatePrcnt.enable();
     }
   }
 
@@ -353,7 +374,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
         });
 
         await this.SetPayFreq(MouCustId, true);
-        this.makeNewLookupCriteria();
+        await this.makeNewLookupCriteria();
       });
   }
 
@@ -390,9 +411,14 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
+    this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).toPromise().then(
       (response) => {
         this.allInSalesOffice = response[CommonConstant.ReturnObj];
+
+        if(this.allInSalesOffice.length == 0){
+          this.toastr.warningMessage(String.Format(ExceptionConstant.SALES_PERSON_NOT_AVAILABLE_IN_OFFICE, this.userContext.OfficeName));
+        }
+
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
             SalesOfficerNo: this.allInSalesOffice[0].empNo,
@@ -401,13 +427,12 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterInsType).toPromise().then(
       (response) => {
         this.allInType = response[CommonConstant.ReturnObj];
         // to be comment, 17 september 2021 richard, utk wop sifatnya mandatory pada mou, nilainya akan di set pada SetPayFreq(on init true/false), jika tdk ada mou sama skali, baru set default
-        if(!this.SalesAppInfoForm.controls.MouCustId.value)
-        {
-           this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
+        if (!this.SalesAppInfoForm.controls.MouCustId.value) {
+          this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
         }
         // if (this.mode != 'edit') {
         //   this.isSingle = this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle;
@@ -418,11 +443,10 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       (response) => {
         this.allWOP = response[CommonConstant.ReturnObj];
         // to be comment, 17 september 2021 richard, utk wop sifatnya mandatory pada mou, nilainya akan di set pada SetPayFreq(on init true/false), jika tdk ada mou sama skali, baru set default
-        if(!this.SalesAppInfoForm.controls.MouCustId.value)
-        {
-            this.SalesAppInfoForm.patchValue({
-              MrWopCode: this.allWOP[0].Key
-            });
+        if (!this.SalesAppInfoForm.controls.MouCustId.value) {
+          this.SalesAppInfoForm.patchValue({
+            MrWopCode: this.allWOP[0].Key
+          });
         }
         // if (this.mode != 'edit') {
         //   this.SalesAppInfoForm.patchValue({
@@ -503,6 +527,11 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
         this.IsMouSelect = true;
 
         this.isSingle = this.mouCustDlrFinObj.MrInstTypeCode != CommonConstant.InstTypeMultiple;
+        if(this.isSingle){
+          if(response["InterestCalcBased"] == "TOP"){
+            this.isInterestCalcBasedTOP = true;
+          }
+        }
       });
 
     await Promise.all([getOsPlaffond, getMouCustDlfn]);
@@ -568,10 +597,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.isSingle = false;
-      this.SalesAppInfoForm.controls.TopDays.disable();
-      this.SalesAppInfoForm.controls.TopBased.disable();
       this.SalesAppInfoForm.controls.Tenor.enable();
-      this.SalesAppInfoForm.controls.TopDays.setValue(0);
       this.SalesAppInfoForm.controls['TopDays'].clearValidators();
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
       if (this.mode != 'edit') {
@@ -579,13 +605,11 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       }
     } else {
       this.isSingle = true;
-      this.SalesAppInfoForm.controls.TopDays.enable();
-      this.SalesAppInfoForm.controls.TopBased.enable();
       this.SalesAppInfoForm.controls['TopDays'].setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
 
       if (this.mode != 'edit') {
-        this.SalesAppInfoForm.controls.Tenor.setValue(1);
+        this.SalesAppInfoForm.controls.Tenor.setValue(0);
       }
     }
 
@@ -616,36 +640,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     this.inputLookupObj.jsonSelect = { SalesOfficerName: this.resultData.SalesOfficerName };
     this.inputLookupObj.nameSelect = this.resultData.SalesOfficerName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
-    if (this.user.RoleCode == 'MKT - MAO' || this.user.RoleCode == 'SUPUSR')
-    {
-      this.isInputLookupObj = true;
-    }
-      this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
-        (response: GeneralSettingObj) => {
-          this.salesOfficerCode = response.GsValue.split(',');
-          if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-              this.SalesAppInfoForm.patchValue({
-                SalesOfficerNo: this.user.EmpNo,
-                SalesOfficerName: this.user.EmpName
-              });
-  
-            let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
-            ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
-  
-            this.http.post<ResRefEmpObj>(URLConstant.GetRefEmpSpvByEmpNo, ReqGetRefEmpSpvByEmpNo).subscribe(
-              (response) => {
-                this.refEmpSpvObj = response;
-                if (this.refEmpSpvObj !== null) {
-                  this.SalesAppInfoForm.patchValue({
-                    SalesHeadNo: this.refEmpSpvObj.EmpNo,
-                    SalesHeadName: this.refEmpSpvObj.EmpName
-                  });
-                }
-              }
-            );
-          }
-        }
-      );
+
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json";
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -669,9 +664,11 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
           MrSlikSecEcoCode: response.SectorEconomySlikCode
         });
       });
+
+    this.isInputLookupObj = true;
   }
 
-  makeNewLookupCriteria() {
+  async makeNewLookupCriteria() {
     this.arrAddCrit = new Array<CriteriaObj>();
 
     const addCrit1 = new CriteriaObj();
@@ -688,13 +685,6 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     addCrit2.value = '1';
     this.arrAddCrit.push(addCrit2);
 
-    const addCrit3 = new CriteriaObj();
-    addCrit3.DataType = 'text';
-    addCrit3.propName = 'rbt.JOB_TITLE_CODE';
-    addCrit3.restriction = AdInsConstant.RestrictionIn;
-    addCrit3.listValue = [CommonConstant.SALES_JOB_CODE];
-    this.arrAddCrit.push(addCrit3);
-
     const addCrit4 = new CriteriaObj();
     addCrit4.DataType = 'text';
     addCrit4.propName = 'ro.OFFICE_CODE';
@@ -702,7 +692,33 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     addCrit4.listValue = [this.resultData.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
 
+    let addCrit5 = new CriteriaObj();
+    addCrit5.DataType = "bit";
+    addCrit5.propName = "RUR.IS_ACTIVE";
+    addCrit5.restriction = AdInsConstant.RestrictionEq;
+    addCrit5.value = "1";
+    this.arrAddCrit.push(addCrit5);
+
+    await this.GetGSValueSalesOfficer();
+
     this.makeLookUpObj();
+  }
+
+  async GetGSValueSalesOfficer() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
+      });
   }
 
   async loadData() {
@@ -768,20 +784,30 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
         MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode,
       });
 
-      if (this.resultData.MrWopCode == 'AD') {
-        this.GetBankAccCust();
-        this.setBankAcc(this.resultData.MrWopCode)
+      if (this.SalesAppInfoForm.controls['MrWopCode'].value == this.wopCodeAutoDebit) {
+        await this.GetBankAccCust();
+        await this.setBankAcc(this.SalesAppInfoForm.controls['MrWopCode'].value)
       }
     }
     await this.getDropDown();
     await this.setDropdown();
+
+    this.http.post(URLConstant.GetMouCustDlrFncngByAppId, { Id: this.AppId }).subscribe(
+      (responseMouCustDlrFncng) => {
+        if(this.isSingle){
+          if(responseMouCustDlrFncng["InterestCalcBased"] == "TOP"){
+            this.isInterestCalcBasedTOP = true;
+          }
+        }
+      }
+    );
   }
 
   Cancel() {
     this.outputCancel.emit();
   }
 
-  SaveForm(): void {
+  async SaveForm(): Promise<void> {
     this.salesAppInfoObj.MouCustId = this.SalesAppInfoForm.controls.MouCustId.value;
     if (this.salesAppInfoObj.MouCustId == 0 || this.salesAppInfoObj.MouCustId == null) {
       this.toastr.errorMessage(ExceptionConstant.NO_MOU);
@@ -800,6 +826,25 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       }
     }
 
+    await this.http.post(URLConstant.GetMouCustById, { Id: this.SalesAppInfoForm.controls.MouCustId.value }).toPromise().then(
+      async (result: MouCustObj) => {
+        const endDt = new Date(result.EndDt);
+        this.MaxEffDt = new Date(result.EndDt);
+        let Tenor = this.SalesAppInfoForm.controls.Tenor.value;
+        //DF selalu arrear
+        this.MaxEffDt.setMonth(endDt.getMonth() - Tenor)
+        if (this.MaxEffDt.getDate() != endDt.getDate()) { //untuk perhitungan bulan kabisat / tgl 31 ke tgl 30
+          this.MaxEffDt.setDate(0);
+        }
+
+      }
+    );
+    const businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    if (businessDt.getTime() > this.MaxEffDt.getTime()) {
+      this.toastr.warningMessage('Tenor Exceeded MOU Expired Date');
+      return;
+    }
+
     if (this.SalesAppInfoForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.SalesAppInfoForm.patchValue({
         PrevAgrNo: null,
@@ -815,7 +860,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     if (this.salesAppInfoObj.MrInstTypeCode == CommonConstant.InstTypeSingle) {
       this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       this.salesAppInfoObj.NumOfInst = 1;
-      this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
+      // this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
       this.isSingle = true;
     } else {
       this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
@@ -831,9 +876,9 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng['MouCustDlrFncngId'];
 
-        if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
-          this.SaveAppOtherInfo();
-        }
+        // if (this.SalesAppInfoForm.controls.MrWopCode.value == this.wopCodeAutoDebit) {
+        this.SaveAppOtherInfo();
+        // }
 
         let appXobj = {};
         if (this.isShowAppCustBankAcc == false) {
@@ -882,7 +927,11 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
 
 
         if (this.mode == 'add') {
-          this.http.post(URLConstant.SaveApplicationDataDF, this.salesAppInfoObj).subscribe(
+          let obj = {
+            RequestApplicationDataObj: this.salesAppInfoObj,
+            AppXObj: appXobj,
+          };
+          this.http.post(URLConstantX.SaveApplicationDataDF, obj).subscribe(
             (response) => {
               if (response['StatusCode'] == 200) {
                 this.toastr.successMessage(response['message']);
@@ -988,36 +1037,37 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
         this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
           (response) => {
             this.listCustBankAcc = response.ReturnObject["AppCustBankAccObjs"];
+
+            var currAppOthInfoBank = this.listCustBankAcc.find(x =>
+              x.BankCode == this.AppOthInfoBank.BankCode && x.BankBranch == this.AppOthInfoBank.BankBranch &&
+              x.BankAccNo == this.AppOthInfoBank.BankAccNo && x.BankAccName == this.AppOthInfoBank.BankAccName
+            );
+            if (currAppOthInfoBank && currAppOthInfoBank.AppCustBankAccId) {
+              this.SalesAppInfoForm.patchValue({
+                CustBankAcc: currAppOthInfoBank.AppCustBankAccId
+              });
+              this.selectedBank(currAppOthInfoBank.AppCustBankAccId);
+            }
           });
       });
   }
 
-  GetBankAccCust() {
-    this.http.post(URLConstant.GetAppOtherInfoByAppId, { AppId: this.AppId }).subscribe(
+  AppOthInfoBank: { BankCode: string, BankBranch: string, BankAccNo: string, BankAccName: string, AppCustId: number } = { BankCode: '', BankBranch: '', BankAccNo: '', BankAccName: '', AppCustId: 0 };
+  async GetBankAccCust() {
+    await this.http.post(URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).toPromise().then(
       (responseAoi) => {
-        const objectForAppCustBankAcc = {
+        this.AppOthInfoBank = {
           BankCode: responseAoi['BankCode'],
+          BankBranch: responseAoi['BankBranch'],
           BankAccNo: responseAoi['BankAccNo'],
+          BankAccName: responseAoi['BankAccName'],
           AppCustId: this.appCustId
         }
-        // this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
-        //   (response: any) => {
-        //     this.SalesAppInfoForm.patchValue({
-        //       CustBankAcc: response['AppCustBankAccId']
-        //     });
-        //     this.GetBankInfo = {
-        //       BankCode: response['BankCode'],
-        //       BankBranch: response['BankBranch'],
-        //       AppId: this.AppId,
-        //       BankAccNo: response['BankAccNo'],
-        //       BankAccName: response['BankAccName']
-        //     };
-        //   });
       });
   }
 
-  selectedBank(event) {
-    if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AD') {
+  async selectedBank(event) {
+    if (this.SalesAppInfoForm.controls.MrWopCode.value == this.wopCodeAutoDebit) {
       this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.SalesAppInfoForm.controls['CustBankAcc'].updateValueAndValidity()
       this.selectedBankAcc = this.listCustBankAcc.find(x => x.AppCustBankAccId == event);
@@ -1061,7 +1111,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   }
 
   setBankAcc(event) {
-    if (event == 'AD') {
+    if (event == this.wopCodeAutoDebit) {
       this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
     } else {
       this.SalesAppInfoForm.controls['CustBankAcc'].clearValidators();

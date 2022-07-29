@@ -10,6 +10,7 @@ import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
 import { CustHighlightCommentObj } from 'app/shared/model/cust-highlight-comment-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
@@ -94,6 +95,11 @@ export class CreditApprovalDetailDsfComponent implements OnInit {
     this.initInputApprovalObj();
   }
 
+  crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
+  getCrdRvwAppObj(ev: CrdRvwAppObj) {
+    this.crdRvwAppObj = ev;
+  }
+
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
   captureStat: string = "";
@@ -144,6 +150,7 @@ export class CreditApprovalDetailDsfComponent implements OnInit {
     this.InputApvObj.TaskId = this.inputObj.taskId;
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
+    this.InputApvObj.OfficeCodes.push(this.AppObj.OriOfficeCode);
     this.IsReady = true;
   }
 
