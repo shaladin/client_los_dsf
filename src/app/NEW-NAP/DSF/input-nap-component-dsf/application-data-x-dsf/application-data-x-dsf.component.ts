@@ -224,6 +224,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
   WayOfFinancing: string = "";
   ProductType: string = "";
   ApToSupplierDisburseDt: Date = new Date();
+  EffectiveDt: Date = new Date();
+  TotalAssetPrice: number = 0;
+  Tenor: number = 0;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -994,6 +997,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
     this.WayOfFinancing = this.agrParent.WayOfFinancing;
     this.ProductType = this.agrParent.ProductType;
     this.ApToSupplierDisburseDt = this.agrParent.ApToSupplierDisburseDt;
+    this.EffectiveDt = this.agrParent.EffectiveDt;
+    this.Tenor = this.agrParent.Tenor;
+    this.TotalAssetPrice = this.agrParent.TotalAssetPrice;
     
     const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
@@ -1005,6 +1011,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.AssetTypeCode = this.agrParent.AssetTypeCode;
     reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
     reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
+    reqCalculatePlafondAgrmntXObj.Tenor = this.agrParent.Tenor;
 
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
       this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
@@ -1257,10 +1264,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
               WayOfFinancing:this.WayOfFinancing,
               ProductType:this.ProductType,
               ApToSupplierDisburseDt: this.ApToSupplierDisburseDt,
-              EffectiveDt: this.agrParent.EffectiveDt,
-              GoLiveDt: this.agrParent.GoLiveDt,
-              Tenor: this.NapAppModelForm.controls.Tenor.value,
-              TotalAssetPrice: this.agrParent.TotalAssetPrice,
+              EffectiveDt: this.EffectiveDt,
+              GoLiveDt: this.goLiveDt,
+              Tenor: this.Tenor,
+              TotalAssetPrice: this.TotalAssetPrice,
               RowVersion: this.resultResponse.RowVersionAgrmntMasterX
             }
             let obj = {
@@ -1405,9 +1412,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }
     }
 
-    if (plafondUsed < financingAmt) {
-      this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
-      return false;
+    if(this.NapAppModelForm.controls.LobCode.value == 'FD')
+    {
+      if (plafondUsed < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+        return false;
+      }
     }
 
     if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
@@ -1600,6 +1610,11 @@ export class ApplicationDataXDsfComponent implements OnInit {
   readonly WopAutoDebit: string = CommonConstant.WopAutoDebit;
   setBankAcc(WOP: string) {
     if (WOP == this.WopAutoDebit) {
+      if (this.BizTemplateCode == CommonConstant.CFNA){
+        this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+        this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+      }
+
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
         this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
@@ -1619,6 +1634,11 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   setBankAccDDL(event: UcDropdownListCallbackObj) {
     if (event.selectedValue == this.WopAutoDebit) {
+      if (this.BizTemplateCode == CommonConstant.CFNA){
+        this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+        this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+        }
+
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
         this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
@@ -1712,7 +1732,17 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   selectedBank() {
     if (this.NapAppModelForm.controls.MrWopCode.value != this.WopAutoDebit) return;
-
+    
+    if(this.NapAppModelForm.get("CustBankAcc").value == "")
+    {
+      this.GetBankInfo.BankCode = "";
+      this.GetBankInfo.BankBranch = "";
+      this.GetBankInfo.AppId = 0;
+      this.GetBankInfo.BankAccNo = "";
+      this.GetBankInfo.BankAccName = "";
+      return;
+    }
+    
     let custBankAccId: number = this.NapAppModelForm.get("CustBankAcc").value;
     let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
     this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
