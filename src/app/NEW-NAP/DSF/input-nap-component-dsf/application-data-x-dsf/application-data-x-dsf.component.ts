@@ -1257,6 +1257,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
               WayOfFinancing:this.WayOfFinancing,
               ProductType:this.ProductType,
               ApToSupplierDisburseDt: this.ApToSupplierDisburseDt,
+              EffectiveDt: this.agrParent.EffectiveDt,
+              GoLiveDt: this.agrParent.GoLiveDt,
+              Tenor: this.NapAppModelForm.controls.Tenor.value,
+              TotalAssetPrice: this.agrParent.TotalAssetPrice,
               RowVersion: this.resultResponse.RowVersionAgrmntMasterX
             }
             let obj = {
