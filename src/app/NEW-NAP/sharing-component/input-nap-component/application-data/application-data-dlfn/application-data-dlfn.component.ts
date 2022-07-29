@@ -75,7 +75,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     CharaCredit: [''],
     PrevAgrNo: [''],
     WayRestructure: [''],
-    CustBankAcc: [''],
+    CustBankAcc: ['', Validators.required],
     IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]]
   })
@@ -771,7 +771,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   }
 
   GetBankAccCust() {
-    this.http.post(URLConstant.GetAppOtherInfoByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(this.URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).subscribe(
       (responseAoi) => {
         const objectForAppCustBankAcc = {
           BankCode: responseAoi['BankCode'],
