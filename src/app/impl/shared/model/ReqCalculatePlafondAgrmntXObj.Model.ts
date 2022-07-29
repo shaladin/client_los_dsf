@@ -1,15 +1,15 @@
 export class ReqCalculatePlafondAgrmntXObj {
     AppId: number;
-    AgrmntParentNo: string  ;
+    AgrmntParentNo: string;
     TotalAssetPrice: number;
     OsArAgrmntMasterAmt: number;
-    OsArMpfDtAmt : number;
+    OsArMpfDtAmt: number;
     LobCode: string;
     AssetTypeCode: string;
     EffectiveDt: Date;
     GoLiveDt: Date;
-    constructor()
-    {
+    Tenor: number;
+    constructor() {
         this.AppId = 0;
         this.AgrmntParentNo = "";
         this.TotalAssetPrice = 0;
@@ -19,5 +19,7 @@ export class ReqCalculatePlafondAgrmntXObj {
         this.AssetTypeCode = "";
         this.EffectiveDt = new Date();
         this.GoLiveDt = new Date();
+        this.Tenor = 0;
+        this.TotalAssetPrice = 0;
     }
 }  

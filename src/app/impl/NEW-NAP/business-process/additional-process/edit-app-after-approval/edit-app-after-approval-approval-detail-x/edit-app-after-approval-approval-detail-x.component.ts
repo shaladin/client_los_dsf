@@ -32,6 +32,7 @@ export class EditAppAfterApprovalApprovalDetailXComponent implements OnInit {
   arrValue = [];
   isViewReady: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+  RefMasterUsageCode = [];
 
   constructor(private router: Router, 
     private route: ActivatedRoute, 
@@ -54,6 +55,7 @@ export class EditAppAfterApprovalApprovalDetailXComponent implements OnInit {
     await this.HoldTask(ApvHoldObj);
 
     await this.getData();
+    this.setAssetUsage();
     this.IsReadySummary = true;
   }
 
@@ -72,7 +74,7 @@ export class EditAppAfterApprovalApprovalDetailXComponent implements OnInit {
   {
     let reqGetEditAppAftApv : GenericObj = new GenericObj();
     reqGetEditAppAftApv.Id = this.EditAppAftApvTrxHId;
-    await this.http.post(URLConstantX.GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId, reqGetEditAppAftApv).subscribe(
+    await this.http.post(URLConstantX.GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId, reqGetEditAppAftApv).toPromise().then(
       (response) => {
         this.ChangeSummaryObj = response["ReturnObject"];
         
@@ -80,6 +82,12 @@ export class EditAppAfterApprovalApprovalDetailXComponent implements OnInit {
         this.isViewReady = true;
         this.initInputApprovalObj();
       });
+      
+    await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, {Codes: [CommonConstant.RefMasterTypeCodeAssetUsage]}).toPromise().then(
+      (response) => {
+        this.RefMasterUsageCode = response["ReturnObject"];
+      }
+    );
   }
 
   initInputApprovalObj(){
@@ -98,6 +106,23 @@ export class EditAppAfterApprovalApprovalDetailXComponent implements OnInit {
 
     this.InputApvObj.TrxNo = this.ChangeSummaryObj.EditAppAftApvTrxHObj.EditAppAftApvTrxNo;
     this.IsReady = true;
+  }
+  
+  setAssetUsage()
+  {
+    for(let i = 0; i < this.ChangeSummaryObj.AssetDataObjs.length; i++)
+    {
+      var AssetDataObj = this.ChangeSummaryObj.AssetDataObjs[i];
+      for(let j = 0; j < AssetDataObj.EditAppAftApvTrxDObjs.length; j++)
+      {
+        var EditAppAftApvTrxDObj = AssetDataObj.EditAppAftApvTrxDObjs[j];
+        if(EditAppAftApvTrxDObj.ChangeItemCode == 'ASSET_DATA_MR_ASSET_USAGE_CODE')
+        {
+          EditAppAftApvTrxDObj.OldValue = this.RefMasterUsageCode.find(x => x.MasterCode === EditAppAftApvTrxDObj.OldValue).Descr
+          EditAppAftApvTrxDObj.NewValue = this.RefMasterUsageCode.find(x => x.MasterCode === EditAppAftApvTrxDObj.NewValue).Descr
+        }
+      }
+    }
   }
 
   onApprovalSubmited(event)
