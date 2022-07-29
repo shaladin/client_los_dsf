@@ -573,10 +573,22 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             }
           }
           outCollPrcnt -= currCollPrcnt;
-          var collPortionAmt = currCollValue * (currCollPrcnt / 100);
+          
+          if(outCollPrcnt < 0 || currCollPrcnt < 0){
+            this.AddCollForm.patchValue({
+              CollateralPrcnt: 0,
+              CollateralPortionAmt: 0
+            });
+            outCollPrcnt += currCollPrcnt
+          } else {
+            var collPortionAmt = currCollValue * (currCollPrcnt / 100);
+            this.AddCollForm.patchValue({
+              CollateralPortionAmt: collPortionAmt
+            })
+          }
+
           this.AddCollForm.patchValue({
             OutstandingCollPrcnt: outCollPrcnt,
-            CollateralPortionAmt: collPortionAmt
           });
         }
       ).catch(
