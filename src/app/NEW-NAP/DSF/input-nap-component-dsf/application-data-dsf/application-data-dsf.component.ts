@@ -3,40 +3,41 @@ import { FormArray, FormBuilder, ValidatorFn, Validators } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ActivatedRoute } from '@angular/router';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CookieService } from 'ngx-cookie';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { AddrObj } from 'app/shared/model/addr-obj.model';
-import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
-import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
-import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
-import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
-import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
-import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
-import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
-import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
-import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { UcDropdownListObj, UcDropdownListConstant, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
-import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
-import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
-import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
-import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
-import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
-import { NapAppModel } from 'app/shared/model/nap-app.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
+import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
+import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-application-data-dsf',
@@ -207,6 +208,7 @@ export class ApplicationDataDsfComponent implements OnInit {
     this.applicationDDLitems = [];
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
+    this.SetRefAttrSettingObj();
     this.initDdlMrWop();
     this.initDdlMrCustNotifyOpt();
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
@@ -214,7 +216,7 @@ export class ApplicationDataDsfComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCspUslAml);
     this.getAppSrcData();
-    setTimeout(() => { this.getAppModelInfo() }, 2000);
+    setTimeout(async() => { this.getAppModelInfo() }, 2000);
 
     this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).subscribe(
       (response: AppCustObj) => {
@@ -229,7 +231,7 @@ export class ApplicationDataDsfComponent implements OnInit {
       }
     );
     
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
         if(this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
@@ -357,8 +359,8 @@ export class ApplicationDataDsfComponent implements OnInit {
       RowVersion: ""
     };
 
-    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
-      async (response) => {
+    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).toPromise().then(
+       async (response) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -448,7 +450,7 @@ export class ApplicationDataDsfComponent implements OnInit {
         this.initDdlMrFirstInstType();
         this.initDdlPayFreq();
         this.getPayFregData();
-        this.GenerateAppAttrContent();
+        // this.GenerateAppAttrContent();
         this.spinner.hide();
       }
     );
@@ -545,6 +547,19 @@ export class ApplicationDataDsfComponent implements OnInit {
       });
   }
 
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  readonly identifierAppAttr: string = "AppAttrContentObjs";
+  SetRefAttrSettingObj() {
+    let GenObj =
+    {
+      AppId: this.appId,
+      AttrGroup: CommonConstant.AttrGroupApplicationData + "_" + this.BizTemplateCode,
+      IsRefresh: false
+    };
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
+    this.attrSettingObj.Title = "Application Attribute";
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAttrContentV2;
+  }
   GenerateAppAttrContentForm() {
     if (this.GenerateAppAttrContentObjs != null) {
       this.ListAttrAnswer = [];
@@ -704,7 +719,7 @@ export class ApplicationDataDsfComponent implements OnInit {
         });
     }
 
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
         if(this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
@@ -758,22 +773,33 @@ export class ApplicationDataDsfComponent implements OnInit {
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
 
+    let addCrit5 = new CriteriaObj();
+    addCrit5.DataType = "bit";
+    addCrit5.propName = "RUR.IS_ACTIVE";
+    addCrit5.restriction = AdInsConstant.RestrictionEq;
+    addCrit5.value = "1";
+    this.arrAddCrit.push(addCrit5);
+
     await this.GetGSValueSalesOfficer();
 
     await this.makeLookUpObj();
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
-      (response) => {
-        let addCrit3 = new CriteriaObj();
-        addCrit3.DataType = "text";
-        addCrit3.propName = "rbt.JOB_TITLE_CODE";
-        addCrit3.restriction = AdInsConstant.RestrictionIn;
-        addCrit3.listValue = [response.GsValue];
-        this.arrAddCrit.push(addCrit3);
-      }
-    );
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
+      });
   }
 
   ChangeNumOfInstallmentTenor() {
@@ -975,7 +1001,7 @@ export class ApplicationDataDsfComponent implements OnInit {
       for (let i = 0; i < this.NapAppModelForm.controls["AppAttrContentObjs"].value.length; i++) {
         var appAttrContentObj = new AppAttrContentObj();
         appAttrContentObj.AppId = this.appId;
-        appAttrContentObj.RefAttrCode = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].RefAttrCode;
+        appAttrContentObj.RefAttrCode = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].AttrCode;
         appAttrContentObj.AttrValue = this.NapAppModelForm.controls["AppAttrContentObjs"].value[i].AttrValue;
 
         appAttrContentObjs.push(appAttrContentObj);      

@@ -16,32 +16,30 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { DatePipe } from '@angular/common';
-import { AddrObj } from 'app/shared/model/addr-obj.model';
-import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
-import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
-import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
-import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
-import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
-import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
-import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
-import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { UcDropdownListObj, UcDropdownListConstant, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
-import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
-import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
-import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
-import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
 import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
-import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
-import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 
 @Component({
   selector: 'app-application-data-x-FL4W-dsf',
@@ -86,9 +84,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
   readonly AttrInputTypeList = CommonConstant.AttrInputTypeList;
   readonly AttrInputTypeTextArea = CommonConstant.AttrInputTypeTextArea;
   readonly AttrInputTypeRefMaster = CommonConstant.AttrInputTypeRefMaster;
-  user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-  salesOfficerCode: Array<string> = new Array();
-  refEmpSpvObj: ResRefEmpObj;
+
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -247,12 +243,13 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
     this.GetCrossInfoData();
     this.initMailingAddress();
 
-    await this.http.post(URLConstant.GetAppCustByAppId, {Id: this.AppId}).toPromise().then(
+    const user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
       async (response: AppCustObj) => {
         this.CustNo = response.CustNo;
         await this.GetListAppCustBankAcc(response.AppCustId);
 
-        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: this.user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, { CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL }).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
@@ -268,7 +265,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
 
 
   checkIdNoType() {
-    if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+    if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit && this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
       this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
     }
@@ -335,7 +332,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
     this.ddlMrWopObj.requestObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeWOP
     }
-    this.ddlMrWopObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlMrWopObj.ddlType = UcDropdownListConstant.DDL_TYPE_ONE;
     this.ddlMrWopObj.isSelectOutput = true;
   }
 
@@ -402,7 +399,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
   }
 
   GetCrossInfoData() {
-    this.http.post(URLConstant.GetListAppCross, {Id: this.AppId, RowVersion: ''}).subscribe(
+    this.http.post(URLConstant.GetListAppCross, { Id: this.AppId, RowVersion: '' }).subscribe(
       (response) => {
         this.resultCrossApp = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.resultCrossApp.length; i++) {
@@ -425,7 +422,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
   async getAppModelInfo() {
     await this.getAppXData();
 
-    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).toPromise().then(
+    await this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, { Id: this.AppId }).toPromise().then(
       async (response: AppObj) => {
         this.resultResponse = response;
 
@@ -454,13 +451,13 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
           Tenor: this.resultResponse.Tenor,
           NumOfInst: this.resultResponse.NumOfInst,
           PayFreqCode: this.resultResponse.PayFreqCode == null ? '' : this.resultResponse.PayFreqCode,
-          MrFirstInstTypeCode: this.resultResponse.MrFirstInstTypeCode,
+          MrFirstInstTypeCode: this.resultResponse.MrFirstInstTypeCode == null ? '' : this.resultResponse.MrFirstInstTypeCode,
           NumOfAsset: this.resultResponse.NumOfAsset,
           MrLcCalcMethodCode: this.resultResponse.MrLcCalcMethodCode,
           LcInstRatePrml: this.resultResponse.LcInstRatePrml,
           LcInsRatePrml: this.resultResponse.LcInsRatePrml,
-          MrAppSourceCode: this.resultResponse.MrAppSourceCode,
-          MrWopCode: this.resultResponse.MrWopCode,
+          MrAppSourceCode: this.resultResponse.MrAppSourceCode == null ? '' : this.resultResponse.MrAppSourceCode,
+          MrWopCode: this.resultResponse.MrWopCode == null ? '' : this.resultResponse.MrWopCode,
           SrvyOrderNo: this.resultResponse.SrvyOrderNo,
           ApvDt: this.resultResponse.ApvDt,
           SalesHeadNo: this.resultResponse.SalesHeadNo,
@@ -472,7 +469,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
           CreditAnalystNo: this.resultResponse.CreditAnalystNo,
           CreditRiskNo: this.resultResponse.CreditRiskNo,
           DataEntryNo: this.resultResponse.DataEntryNo,
-          MrCustNotifyOptCode: this.resultResponse.MrCustNotifyOptCode,
+          MrCustNotifyOptCode: this.resultResponse.MrCustNotifyOptCode == null ? '' : this.resultResponse.MrCustNotifyOptCode,
           PreviousAppId: this.resultResponse.PreviousAppId,
           IsAppInitDone: this.resultResponse.IsAppInitDone,
           MrOrderInfoCode: this.resultResponse.MrOrderInfoCode,
@@ -482,7 +479,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
           RsvField3: this.resultResponse.RsvField3,
           RsvField4: this.resultResponse.RsvField4,
           RsvField5: this.resultResponse.RsvField5,
-          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode,
+          MrInstSchemeCode: this.resultResponse.MrInstSchemeCode == null ? '' : this.resultResponse.MrInstSchemeCode,
           InterestType: this.resultResponse.InterestType,
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
@@ -513,6 +510,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
       const total = this.NapAppModelForm.controls.Tenor.value
       this.PatchNumOfInstallment(total)
     }
+    this.checkIdNoType();
   }
 
   GenerateAppAttrContent() {
@@ -644,7 +642,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
   }
 
   getPayFregData() {
-    this.http.post(URLConstant.GetListActiveRefPayFreq, {RowVersion: ''}).subscribe(
+    this.http.post(URLConstant.GetListActiveRefPayFreq, { RowVersion: '' }).subscribe(
       (response) => {
         const objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems['Pay_Freq'] = objTemp;
@@ -700,55 +698,24 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
   }
   getLookupEconomicSector(ev) {
     this.NapAppModelForm.patchValue({
-      MrSlikSecEcoCode: ev.MasterCode
+      MrSlikSecEcoCode: ev.RefSectorEconomySlikCode
     });
   }
 
   setLookupCommodityData(ev) {
     this.NapAppModelForm.patchValue({
-      CommodityCode: ev.RefSectorEconomySlikCode
+      CommodityCode: ev.MasterCode
     });
   }
 
   makeLookUpObj() {
     // Lookup obj
-    if (this.user.RoleCode == 'MKT - MAO' ||  this.user.RoleCode == 'SUPUSR')
-    {
-      this.isInputLookupObj = true;
-    }
-      this.inputLookupObj = new InputLookupObj();
-      this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
-      this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
-      this.inputLookupObj.pagingJson = './assets/uclookup/NAP/lookupEmp.json';
-      this.inputLookupObj.genericJson = './assets/uclookup/NAP/lookupEmp.json';
-      this.inputLookupObj.jsonSelect = this.resultResponse;
-    
-      this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
-        (response: GeneralSettingObj) => {
-          this.salesOfficerCode = response.GsValue.split(',');
-          if (this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-              this.NapAppModelForm.patchValue({
-                SalesOfficerNo: this.user.EmpNo,
-                SalesOfficerName: this.user.EmpName
-              });
-  
-            let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
-            ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
-  
-            this.http.post<ResRefEmpObj>(URLConstant.GetRefEmpSpvByEmpNo, ReqGetRefEmpSpvByEmpNo).subscribe(
-              (response) => {
-                this.refEmpSpvObj = response;
-                if (this.refEmpSpvObj !== null) {
-                  this.NapAppModelForm.patchValue({
-                    SalesHeadNo: this.refEmpSpvObj.EmpNo,
-                    SalesHeadName: this.refEmpSpvObj.EmpName
-                  });
-                }
-              }
-            );
-          }
-        }
-      );
+    this.inputLookupObj = new InputLookupObj();
+    this.inputLookupObj.urlJson = './assets/uclookup/NAP/lookupEmp.json';
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + '/v1';
+    this.inputLookupObj.pagingJson = './assets/uclookup/NAP/lookupEmp.json';
+    this.inputLookupObj.genericJson = './assets/uclookup/NAP/lookupEmp.json';
+    this.inputLookupObj.jsonSelect = this.resultResponse;
     // this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();
@@ -757,29 +724,37 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
     this.inputLookupEconomicSectorObj.pagingJson = './assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json';
     this.inputLookupEconomicSectorObj.genericJson = './assets/impl/uclookup/NAP/lookupEconomicSectorSlikX.json';
 
-    if (this.resultResponse['MrSlikSecEcoDescr'] != null && this.resultResponse['MrSlikSecEcoDescr'] != '') {
-      this.inputLookupEconomicSectorObj.nameSelect = this.resultResponse['MrSlikSecEcoDescr'];
-      this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: this.resultResponse['MrSlikSecEcoDescr'] };
-    } else {
-      this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, { Code: this.defaultSlikSecEcoCode }).subscribe(
-        (response) => {
-          this.slikSecDescr = response['SectorEconomySlikName'];
-          this.inputLookupEconomicSectorObj.nameSelect = response['SectorEconomySlikName'];
-          this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: response['SectorEconomySlikName'] };
-        });
+    let slikReqCode = {
+      Code: this.defaultSlikSecEcoCode
     }
 
-      // Lookup Commodity
-      this.inputLookupCommodityObj = new InputLookupObj();
-      this.inputLookupCommodityObj.urlJson = './assets/impl/uclookup/lookupCommodity.json';
-      this.inputLookupCommodityObj.pagingJson = './assets/impl/uclookup/lookupCommodity.json';
-      this.inputLookupCommodityObj.genericJson = './assets/impl/uclookup/lookupCommodity.json';
+    if (this.resultResponse["MrSlikSecEcoCode"] != null && this.resultResponse["MrSlikSecEcoCode"] != "") {
+      slikReqCode.Code = this.resultResponse["MrSlikSecEcoCode"];
+    }
 
-      if (this.NapAppModelForm.controls.CommodityCode.value != '' && this.NapAppModelForm.controls.CommodityCode.value != null) {
-        // this.inputLookupCommodityObj.idSelect = this.NapAppModelForm.controls.CommodityCode.value;
-        this.inputLookupCommodityObj.nameSelect = this.tempCommodityName;
-        this.inputLookupCommodityObj.jsonSelect = { Descr: this.tempCommodityName };
-      }
+    this.http.post(URLConstantX.GetRefSectorEconomySlikXByCode, slikReqCode).subscribe(
+      (response: any) => {
+        this.slikSecDescr = response.SectorEconomySlikName;
+        this.inputLookupEconomicSectorObj.nameSelect = response.SectorEconomySlikName;
+        this.inputLookupEconomicSectorObj.jsonSelect = { RefSectorEconomySlikName: response.SectorEconomySlikName };
+        this.NapAppModelForm.patchValue({
+          MrSlikSecEcoCode: response.SectorEconomySlikCode
+        });
+      });
+
+    // Lookup Commodity
+    this.inputLookupCommodityObj = new InputLookupObj();
+    this.inputLookupCommodityObj.urlJson = './assets/impl/uclookup/lookupCommodity.json';
+    this.inputLookupCommodityObj.pagingJson = './assets/impl/uclookup/lookupCommodity.json';
+    this.inputLookupCommodityObj.genericJson = './assets/impl/uclookup/lookupCommodity.json';
+
+    if (this.NapAppModelForm.controls.CommodityCode.value != '' && this.NapAppModelForm.controls.CommodityCode.value != null) {
+      // this.inputLookupCommodityObj.idSelect = this.NapAppModelForm.controls.CommodityCode.value;
+      this.inputLookupCommodityObj.nameSelect = this.tempCommodityName;
+      this.inputLookupCommodityObj.jsonSelect = { Descr: this.tempCommodityName };
+    }
+
+    this.isInputLookupObj = true;
   }
 
   async makeNewLookupCriteria() {
@@ -806,20 +781,32 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
 
+    let addCrit5 = new CriteriaObj();
+    addCrit5.DataType = "bit";
+    addCrit5.propName = "RUR.IS_ACTIVE";
+    addCrit5.restriction = AdInsConstant.RestrictionEq;
+    addCrit5.value = "1";
+    this.arrAddCrit.push(addCrit5);
+
     await this.GetGSValueSalesOfficer();
     // this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.makeLookUpObj();
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
-      (response) => {
-        const addCrit3 = new CriteriaObj();
-        addCrit3.DataType = 'text';
-        addCrit3.propName = 'rbt.JOB_TITLE_CODE';
-        addCrit3.restriction = AdInsConstant.RestrictionIn;
-        addCrit3.listValue = [response.GsValue];
-        this.arrAddCrit.push(addCrit3);
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeFilterAppDataSalesOfficerCode }).toPromise().then(
+      async (response) => {
+        let FilterBy = response.GsValue;
+        await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+          (response) => {
+            let addCrit3 = new CriteriaObj();
+            addCrit3.DataType = "text";
+            addCrit3.propName = FilterBy == "ROLE" ? "rr.ROLE_CODE" : "rbt.JOB_TITLE_CODE";
+            addCrit3.restriction = AdInsConstant.RestrictionIn;
+            addCrit3.listValue = response.GsValue.split(',');
+            this.arrAddCrit.push(addCrit3);
+          }
+        );
       });
   }
 
@@ -1112,6 +1099,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
   }
 
   copyToMailing(addrType: string = '') {
+
     if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
     if (!addrType) return;
 
@@ -1172,11 +1160,19 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
   setBankAcc(WOP: string) {
     if (WOP == this.WopAutoDebit) {
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+
+      if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
+      }
       this.isShowAppCustBankAcc = true;
     } else {
       this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].clearValidators();
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].updateValueAndValidity();
       this.isShowAppCustBankAcc = false;
     }
     this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
@@ -1186,10 +1182,19 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
     if (event.selectedValue == this.WopAutoDebit) {
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+
+      if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
+        this.NapAppModelForm.get('IdNoOwnerBankAcc').updateValueAndValidity();
+      }
+
       this.isShowAppCustBankAcc = true;
     } else {
       this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity()
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].clearValidators();
+      this.NapAppModelForm.controls['IdNoOwnerBankAcc'].updateValueAndValidity();
       this.isShowAppCustBankAcc = false;
     }
     this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
@@ -1205,6 +1210,7 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
             CustBankAcc: selectedBankAcc.AppCustBankAccId
           });
 
+          this.GetBankInfo.AppOtherInfoId = response.AppOtherInfoId;
           this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
           this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
           this.GetBankInfo.AppId = this.AppId;
@@ -1352,7 +1358,6 @@ export class ApplicationDataXFL4WDsfComponent implements OnInit {
           this.tempCommodityName = response['CommodityName'];
         }
         this.isCustomerTypeCompany();
-        this.checkIdNoType();
       }
     );
   }

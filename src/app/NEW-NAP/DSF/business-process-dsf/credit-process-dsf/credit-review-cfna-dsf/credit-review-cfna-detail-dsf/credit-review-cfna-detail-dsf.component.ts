@@ -441,7 +441,7 @@ export class CreditReviewCfnaDetailDsfComponent implements OnInit {
 
     var listTypeCode: Array<TypeResultObj> = new Array();
     var TypeCode: TypeResultObj = {
-      TypeCode: "CRD_APV_MPF_TYPE",
+      TypeCode: "CRD_APV_CF_TYPE",
       Attributes: Attributes,
     };
     listTypeCode.push(TypeCode);
@@ -457,8 +457,8 @@ export class CreditReviewCfnaDetailDsfComponent implements OnInit {
     this.InputObj.OfficeCode = this.OriOfficeCode;
     this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.InputObj.ApvTypecodes = listTypeCode;
-    this.InputObj.CategoryCode = CommonConstantDsf.CAT_CODE_CRD_APV;
-    this.InputObj.SchemeCode = CommonConstantDsf.SCHM_CODE_CRD_APV_MPF;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLRecommendation;
     this.InputObj.TrxNo = this.AppNo
     this.IsReady = true;
