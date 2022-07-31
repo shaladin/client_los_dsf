@@ -19,32 +19,32 @@ import { ResCalculatePlafondAgrmntXObj } from 'app/impl/shared/model/ResCalculat
 import { ReqCalculatePlafondAgrmntXObj } from 'app/impl/shared/model/ReqCalculatePlafondAgrmntXObj.Model';
 import { ReqAgrmntMasterDataObjX } from 'app/impl/shared/model/ReqAgrmntMasterDataObjX.model';
 import { AgrParentObjX } from 'app/impl/shared/model/Response/AgrParentObjX.model';
+import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { AddrObj } from 'app/shared/model/addr-obj.model';
-import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
-import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
-import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
-import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
-import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
-import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppOtherInfoObj } from 'app/shared/model/app-other-info.model';
+import { UcDropdownListObj, UcDropdownListConstant, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { GenerateAppAttrContentObj } from 'app/shared/model/app-attr-content/generate-app-attr-content-obj.model';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
+import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
+import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
-import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
-import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
-import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { UcDropdownListObj, UcDropdownListConstant, UcDropdownListCallbackObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
-import { MouCustClauseObj } from 'app/shared/model/mou-cust-clause-obj.model';
-import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
-import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
-import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
+import { AddrObj } from 'app/shared/model/addr-obj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { NapAppCrossObj } from 'app/shared/model/nap-app-cross-obj.model';
 import { NapAppModel } from 'app/shared/model/nap-app.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
-import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
-import { ResRefEmpObj } from 'app/shared/model/response/ref-emp/res-ref-emp-obj.model';
+import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
+import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
+import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
@@ -285,7 +285,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
         );
       }
     );
-    
+
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
@@ -840,7 +840,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
       MrSlikSecEcoCode: ev.RefSectorEconomySlikCode
     });
   }
-  
+
   setLookupCommodityData(ev) {
     this.NapAppModelForm.patchValue({
       CommodityCode: ev.MasterCode
@@ -872,13 +872,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
         }
       );
       this.agrmntParentNo = this.resultResponse.AgrmntParentNo;
-      
-      if(this.agrParentList.length)
-      {
+
+      if (this.agrParentList.length) {
         var idx = -1;
-        for(var i=0; i<this.agrParentList.length; i++) if(this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
+        for (var i = 0; i < this.agrParentList.length; i++) if (this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
         if (idx > -1) this.copyAgrmntParentEvent(idx);
-      }   
+      }
     }
 
     let slikReqCode = {
@@ -1000,7 +999,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     this.EffectiveDt = this.agrParent.EffectiveDt;
     this.Tenor = this.agrParent.Tenor;
     this.TotalAssetPrice = this.agrParent.TotalAssetPrice;
-    
+
     const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
     reqCalculatePlafondAgrmntXObj.AgrmntParentNo = this.agrParent.AgrmntNo;
@@ -1257,12 +1256,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
               MaxTenor: this.maxTenor,
               AgrmntDt: this.AgrmntDt,
               OsPrincipal: this.OsPrincipal,
-              OsInterest:this.OsInterest,
+              OsInterest: this.OsInterest,
               NumOfAsset: this.NumberOfAsset,
               EffRate: this.EffRate,
               PurposeOfFinancing: this.PurposeOfFinancing,
-              WayOfFinancing:this.WayOfFinancing,
-              ProductType:this.ProductType,
+              WayOfFinancing: this.WayOfFinancing,
+              ProductType: this.ProductType,
               ApToSupplierDisburseDt: this.ApToSupplierDisburseDt,
               EffectiveDt: this.EffectiveDt,
               GoLiveDt: this.goLiveDt,
