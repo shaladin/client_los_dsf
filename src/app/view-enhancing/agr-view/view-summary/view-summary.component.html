@@ -192,6 +192,13 @@
             *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PreGoLiveNotes}}</label>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Additional Interest Paid By</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.AdditionalInterestPaidBy}}</label>
+        </div>
+      </div>
       <div class="col-md-6" *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'">
         <div class="row">
           <label class="col-md-6 adInsLabel" translate>Term Of Payment</label>
