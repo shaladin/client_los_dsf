@@ -185,6 +185,13 @@
             *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrWopDescr}}</label>
         </div>
       </div>
+      <div class="col-md-6" *ngIf="SummaryObj?.Agrmnt.BankAccNo != null">
+        <div class="row">
+          <label class="col-md-6 adInsLabel" translate>Customer VA Bank Account</label>
+          <label class="col-md-6 adinslabel" translate
+            *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.BankName}} - {{this.SummaryObj.Agrmnt.BankAccNo}} - {{this.SummaryObj.Agrmnt.BankAccName}}</label>
+        </div>
+      </div>
       <div class="col-md-6" *ngIf="SummaryObj?.AppCustPersonal">
         <div class="row">
           <label class="col-md-6 adInsLabel" translate>Pre Go Live Notes</label>
