@@ -75,7 +75,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     CharaCredit: [''],
     PrevAgrNo: [''],
     WayRestructure: [''],
-    CustBankAcc: ['', Validators.required],
+    CustBankAcc: [''],
     IntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]],
     TopIntrstRatePrcnt: [0, [Validators.min(0.00), Validators.max(100.00)]]
   })
