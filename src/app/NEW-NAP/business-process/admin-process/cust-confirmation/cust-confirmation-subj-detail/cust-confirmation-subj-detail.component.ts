@@ -55,6 +55,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   SubjectResponse: KeyValueObj = new KeyValueObj();
   isFailed: boolean = false;
 
+  IsMandatoryArr: Array<Array<boolean>> = new Array<Array<boolean>>();
+
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder, private http: HttpClient,
@@ -208,6 +210,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   GenerateFormVerfQuestion(result) {
+    this.IsMandatoryArr = new Array<Array<boolean>>();
     this.verfQuestionAnswerObj.VerfQuestionAnswerListObj[0].VerfQuestionGrpName
     var grpListObj = this.verfQuestionAnswerObj.VerfQuestionAnswerListObj;
 
@@ -225,6 +228,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
       this.ListVerfAnswer.push([]);
       if (QuestionList.length != 0) {
+        let tempIsMandatoryArr = [];
         for (let j = 0; j < QuestionList.length; j++) {
           var QuestionResultGrp = this.fb.group({
             QuestionGrp: this.fb.group({
@@ -234,6 +238,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               VerfQuestionText: QuestionList[j].VerfQuestionText,
               VerfAnswer: QuestionList[j].VerfAnswer,
               IsActive: QuestionList[j].IsActive,
+              IsMandatory: QuestionList[j].IsMandatory,
               VerfSchemeHId: QuestionList[j].VerfSchemeHId,
               VerfQuestionGrpCode: QuestionList[j].VerfQuestionGrpCode,
               VerfQuestionGrpName: QuestionList[j].VerfQuestionGrpName,
@@ -245,7 +250,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               VerfResultHId: 0,
               VerfQuestionAnswerId: QuestionList[j].VerfQuestionAnswerId,
               VerfQuestionText: QuestionList[j].VerfQuestionText,
-              Answer: ["", result == CommonConstant.VerfResultStatSuccess ? Validators.required : []],
+              Answer: ["", result == CommonConstant.VerfResultStatSuccess && QuestionList[j].IsMandatory ? Validators.required : []],
               Notes: "",
               SeqNo: j + 1,
               Score: 0,
@@ -266,14 +271,44 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
           }
           else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
             if (result == CommonConstant.VerfResultStatSuccess) {
-              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
+              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.min(1.00)]);
             }
             this.ListVerfAnswer[i].push("");
           }
           else {
             this.ListVerfAnswer[i].push("");
           }
+
+          tempIsMandatoryArr.push(QuestionList[j].IsMandatory);
           ResultGrp.push(QuestionResultGrp);
+        }
+
+        this.IsMandatoryArr.push(tempIsMandatoryArr);
+      }
+    }
+    // this.ChangeAnswerValidity();
+  }
+
+  ChangeAnswerValidity() {
+    console.log(' -------- this.CustConfirm.controls[].value ----');
+    console.log(this.CustConfirm.controls['MrVerfResultHStatCode'].value);
+    if (this.CustConfirm.controls['MrVerfResultHStatCode'].value === 'SCS') {
+      for (let i = 0; i < this.CustConfirm.controls['VerfResultDForm']['controls'].length; i++) {
+        for (let j = 0; j < this.CustConfirm.controls['VerfResultDForm']['controls'][i]['controls']['VerfQuestionAnswerList']['controls'].length; j++) {
+          if (this.IsMandatoryArr.length > 0 && this.IsMandatoryArr[i].length > 0 && this.IsMandatoryArr[i][j]) {
+            console.log('ChangeAnswerValidity 1');
+            console.log(this.IsMandatoryArr);
+            this.CustConfirm.controls['VerfResultDForm']['controls'][i]['controls']['VerfQuestionAnswerList']['controls'][j]['controls']['ResultGrp']['controls']['Answer'].setValidators([Validators.required]);
+            this.CustConfirm.controls['VerfResultDForm']['controls'][i]['controls']['VerfQuestionAnswerList']['controls'][j]['controls']['ResultGrp']['controls']['Answer'].updateValueAndValidity();
+          }
+        }
+      }
+    } else {
+      for (let i = 0; i < this.CustConfirm.controls['VerfResultDForm']['controls'].length; i++) {
+        for (let j = 0; j < this.CustConfirm.controls['VerfResultDForm']['controls'][i]['controls']['VerfQuestionAnswerList']['controls'].length; j++) {
+          console.log('ChangeAnswerValidity 2');
+          this.CustConfirm.controls['VerfResultDForm']['controls'][i]['controls']['VerfQuestionAnswerList']['controls'][j]['controls']['ResultGrp']['controls']['Answer'].clearValidators();
+          this.CustConfirm.controls['VerfResultDForm']['controls'][i]['controls']['VerfQuestionAnswerList']['controls'][j]['controls']['ResultGrp']['controls']['Answer'].updateValueAndValidity();
         }
       }
     }
@@ -283,7 +318,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     var FormValue = this.CustConfirm.value.VerfResultDForm;
     var VerfResultDList = new Array<VerfResultDObj>();
 
-    if(this.CustConfirm.controls.MrVerfResultHStatCode.value == CommonConstant.VerfResultStatSuccess) {
+    if (this.CustConfirm.controls.MrVerfResultHStatCode.value == CommonConstant.VerfResultStatSuccess) {
       for (let i = 0; i < FormValue.length; i++) {
         var currGrp = FormValue[i].VerfQuestionAnswerList;
         for (let j = 0; j < currGrp.length; j++) {
@@ -296,7 +331,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
           VerfResultD.SeqNo = currAnswer.SeqNo;
           VerfResultD.Score = currAnswer.Score;
           VerfResultD.VerfQuestionGroupCode = currAnswer.VerfQuestionGroupCode;
-  
+
           VerfResultDList.push(VerfResultD);
         }
       }
@@ -304,7 +339,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     else {
       VerfResultDList = null;
     }
-    
+
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
@@ -327,18 +362,18 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-          this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
-          formDirective.resetForm();
-          this.clearform(this.newVerfResultHObj.MrVerfResultHStatCode, false);
+        this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
+        formDirective.resetForm();
+        this.clearform(this.newVerfResultHObj.MrVerfResultHStatCode, false);
       }
     );
   }
 
   Save() {
-    if(this.VerfResultHList.length < 1){
+    if (this.VerfResultHList.length < 1) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_HISTORY);
-    }else{
-      AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
+    } else {
+      AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
     }
   }
 
@@ -396,10 +431,10 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       this.CustNoObj.CustNo = this.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+          if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          if (response["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
             this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }

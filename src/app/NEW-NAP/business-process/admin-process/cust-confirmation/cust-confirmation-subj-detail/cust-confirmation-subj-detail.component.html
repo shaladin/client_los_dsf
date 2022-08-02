@@ -90,7 +90,8 @@
               <span formArrayName="VerfQuestionAnswerList">
                 <div class="form-group row" [formGroupName]="j"
                   *ngFor="let QRList of QuestionGrpList.controls.VerfQuestionAnswerList?.controls; let j = index">
-                  <label class="col-md-3 {{isFailed ? '' : 'adins-required-label'}}" translate>
+                  <label class="col-md-3 {{isFailed ? '' : 'adins-required-label'}}"
+                    [ngClass]="{'adins-required-label': !isFailed && IsMandatoryArr[i][j] }" translate>
                     {{QRList.value.QuestionGrp.VerfQuestionText}}
                   </label>
                   <div class="col-md-5" formGroupName="ResultGrp">
