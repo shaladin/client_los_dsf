@@ -368,6 +368,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
         IntrstRatePrcnt: this.mouCustDlrFinObj.InterestRatePrcnt,
         TopIntrstRatePrcnt: this.mouCustDlrFinObj.TopInterestRatePrcnt
       });
+      this.selectedBank(event);
     } else {
       this.SalesAppInfoForm.patchValue({
         MrInstSchemeCode: CommonConstant.InstSchmRegularFix,
