@@ -43,7 +43,7 @@
             "criteriaPropValue": ""
         },
         {
-            "type": "numeric",
+            "type": "currency",
             "name": "M.PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
             "value": "",
@@ -52,7 +52,7 @@
             "datatype": "numeric"
         },
         {
-            "type": "numeric",
+            "type": "currency",
             "name": "M.PLAFOND_AMT",
             "id": "LessPlafondAmt",
             "value": "",
