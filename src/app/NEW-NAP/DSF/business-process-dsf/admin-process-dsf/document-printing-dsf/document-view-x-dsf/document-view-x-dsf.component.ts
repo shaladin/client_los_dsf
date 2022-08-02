@@ -230,6 +230,15 @@ export class DocumentViewXDsfComponent implements OnInit {
             reportParameters: [reportParamObj],
             subReports: []
           }
+          ,
+          {
+            reportName: "Lampiran LB",
+            reportTemplateCode: "DSF_LB_Lampiran",
+            reportPath: "",
+            exportFormat: 0,
+            reportParameters: [reportParamObj],
+            subReports: []
+          }
         ]
 
         //if(environment.isCore){
@@ -253,6 +262,15 @@ export class DocumentViewXDsfComponent implements OnInit {
             {
               reportName: "Lampiran IF",
               reportTemplateCode: "DSF_IF_LAMPIRAN",
+              reportPath: "",
+              exportFormat: 0,
+              reportParameters: [reportParamObj],
+              subReports: []
+            }
+            ,
+            {
+              reportName: "Lampiran LB",
+              reportTemplateCode: "DSF_LB_Lampiran",
               reportPath: "",
               exportFormat: 0,
               reportParameters: [reportParamObj],
