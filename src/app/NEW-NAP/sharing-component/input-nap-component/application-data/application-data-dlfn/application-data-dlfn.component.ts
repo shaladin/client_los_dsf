@@ -368,7 +368,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
         IntrstRatePrcnt: this.mouCustDlrFinObj.InterestRatePrcnt,
         TopIntrstRatePrcnt: this.mouCustDlrFinObj.TopInterestRatePrcnt
       });
-      this.selectedBank(event);
     } else {
       this.SalesAppInfoForm.patchValue({
         MrInstSchemeCode: CommonConstant.InstSchmRegularFix,
@@ -377,6 +376,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
       });
     }
 
+    this.setBankAcc(this.SalesAppInfoForm.controls['MrWopCode'].value)
     this.changePaymentFreq();
     this.CheckInstType();
 
@@ -781,9 +781,11 @@ export class ApplicationDataDlfnComponent implements OnInit {
         }
         this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
           (response: any) => {
-            this.SalesAppInfoForm.patchValue({
-              CustBankAcc: response['AppCustBankAccId']
-            });
+            if(response['AppCustBankAccId'] != 0){
+              this.SalesAppInfoForm.patchValue({
+                CustBankAcc: response['AppCustBankAccId']
+              });
+            }
             this.GetBankInfo = {
               BankCode: response['BankCode'],
               BankBranch: response['BankBranch'],
