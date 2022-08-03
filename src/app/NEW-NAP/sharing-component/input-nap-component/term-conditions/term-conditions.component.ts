@@ -207,7 +207,7 @@ export class TermConditionsComponent implements OnInit {
 
     //logic PriorTo
     if (isMandatory && priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) {
-      this.SetWaivablePromisedDt(tempPromisedDt, isWaived, false);
+      this.SetWaivablePromisedDt(tempPromisedDt, isWaived, false, isChecked);
       return;
     }
 
@@ -217,7 +217,7 @@ export class TermConditionsComponent implements OnInit {
       return;
     }
 
-    this.SetWaivablePromisedDt(tempPromisedDt, isWaived, isMandatory);
+    this.SetWaivablePromisedDt(tempPromisedDt, isWaived, isMandatory, isChecked);
     this.ClearExpiredDt(tempExpiredDt);
     return;
   }
@@ -243,10 +243,10 @@ export class TermConditionsComponent implements OnInit {
     PromisedDt.updateValueAndValidity();
   }
 
-  private SetWaivablePromisedDt(PromisedDt: AbstractControl, isWaived: Boolean, isMandatory: Boolean) {
+  private SetWaivablePromisedDt(PromisedDt: AbstractControl, isWaived: Boolean, isMandatory: Boolean, isChecked:Boolean) {
     PromisedDt.enable();
     PromisedDt.clearValidators();
-    if (isWaived) {
+    if (isWaived || isChecked) {
       PromisedDt.disable();
     }
     if (isMandatory) {
