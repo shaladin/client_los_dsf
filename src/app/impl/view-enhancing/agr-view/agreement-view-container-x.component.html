@@ -30,8 +30,11 @@
             </mat-tab>
 
             <mat-tab *ngIf="IsAsset" label="Asset">
-              <ng-template matTabContent>
+              <!-- <ng-template matTabContent>
                 <view-asset-data-x [appId]="ResponseAppDetailData?.AppId" [agrmntId]="AgrmntId"></view-asset-data-x>
+              </ng-template> -->
+              <ng-template matTabContent>
+                <view-multiasset-data [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></view-multiasset-data>
               </ng-template>
             </mat-tab>
 
