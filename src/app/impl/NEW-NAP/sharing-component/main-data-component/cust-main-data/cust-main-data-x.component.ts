@@ -1639,6 +1639,15 @@ export class CustMainDataXComponent implements OnInit {
       //   return;
       // }
       this.setDataCustomerCompanyForSave();
+      if (this.custDataPersonalObj.AppCustObj.IsShareholder && this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.IsOwner && this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.SharePrcnt < 0.0001) {
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_OWNER_NEED_SHARE_PRCNT));
+        return false;
+      }
+
+      if (this.custDataPersonalObj.AppCustObj.IsShareholder && !this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.IsOwner && this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.SharePrcnt > 0.0000) {
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_NON_OWNER_NEED_NOT_HAVE_SHARE_PRCNT));
+        return false;
+      }
       if (this.appCustId == null || this.appCustId == 0) {
         this.http.post(URLConstant.AddCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
           (response) => {
