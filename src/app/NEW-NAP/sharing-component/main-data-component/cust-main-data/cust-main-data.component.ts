@@ -1137,9 +1137,13 @@ export class CustMainDataComponent implements OnInit {
       if (!IsCopyCust) this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
 
       if (this.inputMode == 'EDIT') {
-        this.CustMainDataForm.patchValue({
-          MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
-        })
+        this.isDdlMrCustRelationshipReady = false;
+        setTimeout (() => { 
+          this.CustMainDataForm.patchValue({
+            MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
+          })
+          this.isDdlMrCustRelationshipReady = true; 
+        }, 0);
       }
     }
 
