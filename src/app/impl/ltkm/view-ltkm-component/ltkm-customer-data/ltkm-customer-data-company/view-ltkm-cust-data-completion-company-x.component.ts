@@ -15,6 +15,8 @@ import { LtkmCustCompanyLegalDocObj } from 'app/shared/model/ltkm/ltkm-cust-comp
 import { LtkmCustCompanyFinDataObj } from 'app/shared/model/ltkm/ltkm-cust-company-fin-data-obj.model';
 import { ViewLtkmCustDetailComponent } from 'app/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail.component';
 import { ViewLtkmCustDetailXComponent } from '../view-ltkm-cust-detail/view-ltkm-cust-detail-x.component';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-view-ltkm-cust-data-completion-company-x',
@@ -40,6 +42,8 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
   detailLtkmCustId: number;
   detailMrCustTypeCode: string;
   detailCustomerTitle: string;
+  CustNoObj: GenericObj = new GenericObj();
+  CustId: number = 0;
 
   ltkmCustObj: LtkmCustObj;
   ltkmCustAddrForViewObjs: Array<LtkmCustAddrForViewObj>;
@@ -74,26 +78,32 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
   }
 
   async getCustData() {
-      await this.http.post(URLConstant.GetLtkmCustDataCompanyForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
-          (response) => {
-              this.ltkmCustObj = response["rLtkmCustObj"];
-              this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
-              this.ltkmCustCompanyMgmntShrholderObjs = response["rLtkmCustCompanyMgmntShrholderObjs"];
-              this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
-              this.ltkmCustCompanyLegalDocObjs = response["rLtkmCustCompanyLegalDocObjs"];
-              this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];
-              this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
+    await this.http.post(URLConstant.GetLtkmCustDataCompanyForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
+        (response) => {
+            this.ltkmCustObj = response["rLtkmCustObj"];
+            this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
+            this.ltkmCustCompanyMgmntShrholderObjs = response["rLtkmCustCompanyMgmntShrholderObjs"];
+            this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
+            this.ltkmCustCompanyLegalDocObjs = response["rLtkmCustCompanyLegalDocObjs"];
+            this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];
+            this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
 
-              if (this.ltkmCustObj.IsFamily) this.customerTitle = 'Family';
-              else if (this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';
-              else if (this.ltkmCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
-              else this.customerTitle = 'Customer';
+            if (this.ltkmCustObj.IsFamily) this.customerTitle = 'Family';
+            else if (this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';
+            else if (this.ltkmCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
+            else this.customerTitle = 'Customer';
 
-              // filter cust group yg punya cust no & applicant no
-              if (this.ltkmCustGrpObjs && this.ltkmCustGrpObjs.length > 0) {
-                  this.ltkmCustGrpObjs = this.ltkmCustGrpObjs.filter(item => item['CustNo'] || item['ApplicantNo'])
-              }
-          });
+            // filter cust group yg punya cust no & applicant no
+            if (this.ltkmCustGrpObjs && this.ltkmCustGrpObjs.length > 0) {
+                this.ltkmCustGrpObjs = this.ltkmCustGrpObjs.filter(item => item['CustNo'] || item['ApplicantNo'])
+            }
+        });
+    this.CustNoObj.CustNo = this.ltkmCustObj.CustNo;
+
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
+        (response) => {
+            this.CustId = response['CustId'];
+        });
   }
 
   viewDetailShareholderHandler(LtkmCustId, MrCustTypeCode) {
@@ -118,11 +128,10 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
   }
 
   async getListFinData() {
-      await this.http.post(URLConstant.GetLtkmCustCompanyFinDataByLtkmCustId, { Id: this.ltkmCustObj.LtkmCustId }).subscribe(
-          (response: { ReturnObject: Array<LtkmCustCompanyFinDataObj> }) => {
-              this.ListCustCoyFinData = response.ReturnObject;
-          }
-      );
+      await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
+        (response) => {
+            this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
+      });
   }
 
   showDetailCustFinData(index: number) {

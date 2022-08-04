@@ -230,7 +230,9 @@ export class PathConstantX {
   public static AGRMNT_CANCEL_DETAIL = PathConstant.AGRMNT_CANCEL + "/" + PathConstantX.DETAIL_X;
 
   //ltkm
+  public static LTKM = "Ltkm";
   public static VERIFY_DETAIL = PathConstant.VERIFY_DETAIL + PathConstantX.X;
+  public static LTKM_VIEW = PathConstantX.LTKM + "/" + PathConstant.VIEW + PathConstantX.X;
 }
 
 

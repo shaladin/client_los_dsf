@@ -146,10 +146,7 @@ export const customCurrencyMaskConfig = {
     LtkmReturnHandlingXComponent,
     LtkmCustJobDataXComponent,
     LtkmFinancialCompanyXComponent,
-    ViewLtkmCustDataCompletionCompanyXComponent,
-    ViewLtkmCustomerDataCompanyXComponent,
-    LtkmVerifyDetailXComponent,
-    ViewLtkmCustDetailXComponent
+    LtkmVerifyDetailXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,
