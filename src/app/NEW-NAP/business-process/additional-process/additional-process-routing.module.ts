@@ -61,6 +61,11 @@ import { EditNapCustDetailComponent } from './edit-nap-cust/edit-nap-cust-detail
 import { EditAppAfterApprovalViewXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-view-x/edit-app-after-approval-view-x.component';
 import { EditAppAfterApprovalApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-approval-detail-x/edit-app-after-approval-approval-detail-x.component';
 import { EditAppAfterApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-paging-x/edit-app-after-approval-paging-x.component';
+import { AutoDebitRegistrationPagingComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-registration-paging.component';
+import { AutoDebitRegistrationInquiryComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component';
+import { AutoDebitRegistrationCancelComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component';
+import { AutoDebitRegistrationViewComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-view/auto-debit-registration-view.component';
+
 
 
 const routes: Routes = [
@@ -450,6 +455,34 @@ const routes: Routes = [
           title: 'Edit Nap Cust'
         }
       },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION_PAGING,
+        component: AutoDebitRegistrationPagingComponent,
+        data: {
+          title: 'Auto Debit Registration Paging'
+        }
+      },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION_INQUIRY,
+        component: AutoDebitRegistrationInquiryComponent,
+        data: {
+          title: 'Auto Debit Registration Inquiry'
+        }
+      },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION_CANCEL,
+        component: AutoDebitRegistrationCancelComponent,
+        data: {
+          title: 'Auto Debit Registration Cancel'
+        }
+      },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION_VIEW,
+        component: AutoDebitRegistrationViewComponent,
+        data: {
+          title: 'Auto Debit Registration View'
+        }
+      }
     ]
   }
 ];

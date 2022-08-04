@@ -81,6 +81,10 @@ import { EditAppAfterApprovalBankAccComponent } from "app/impl/NEW-NAP/business-
 import { EditAppAfterApprovalViewXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-view-x/edit-app-after-approval-view-x.component";
 import { EditAppAfterApprovalApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-approval-detail-x/edit-app-after-approval-approval-detail-x.component";
 import { EditAppAfterApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-paging-x/edit-app-after-approval-paging-x.component";
+import { AutoDebitRegistrationPagingComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-registration-paging.component";
+import { AutoDebitRegistrationInquiryComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component";
+import { AutoDebitRegistrationCancelComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component";
+import { AutoDebitRegistrationViewComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-view/auto-debit-registration-view.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -182,7 +186,11 @@ export const customCurrencyMaskConfig = {
     EditAppAfterApprovalBankAccComponent,
     EditAppAfterApprovalViewXComponent,
     EditAppAfterApprovalApprovalDetailXComponent,
-    EditAppAfterApprovalPagingXComponent
+    EditAppAfterApprovalPagingXComponent,
+    AutoDebitRegistrationPagingComponent,
+    AutoDebitRegistrationInquiryComponent,
+    AutoDebitRegistrationCancelComponent,
+    AutoDebitRegistrationViewComponent
   ],
   providers: [
     NGXToastrService

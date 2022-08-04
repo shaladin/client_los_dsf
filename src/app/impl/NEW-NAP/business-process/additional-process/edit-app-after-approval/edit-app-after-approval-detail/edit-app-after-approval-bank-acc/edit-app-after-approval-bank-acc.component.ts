@@ -53,8 +53,8 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
     this.MaxDate = this.UserAccess.BusinessDt;
     this.initCustBankAccDetail();
     this.initAddressCustBankAcc();
-    await this.GetData();
     await this.getRefMaster();
+    await this.GetData();
   }
 
   inputAddressOwnerBankAccObj: InputAddressObj = new InputAddressObj();
@@ -114,13 +114,6 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
           this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.nameSelect = response["ZipcodeOwnerBankAcc"];
           this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["ZipcodeOwnerBankAcc"] };
           this.inputAddressOwnerBankAccObj.default = this.inputAddrObj;
-
-          if (response["MrCustTypeOwnerBnkAcc"] != null && response["MrIdTypeOwnerBnkAcc"] != null) {
-            this.EditBankAccForm.patchValue({
-              MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
-              MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
-            });
-          }
         }
         this.isCustomerTypeCompany();
       }
@@ -177,15 +170,18 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
       (response) => {
         this.GetBankInfo = response;
         if (this.GetBankInfo.AppOtherInfoId != 0) {
-          let selectedBankAcc: AppCustBankAccObj = this.CustBankAccList.find(x => x.BankAccNo == this.GetBankInfo.BankAccNo);
-          this.EditBankAccForm.patchValue({
-            CustBankAcc: selectedBankAcc.AppCustBankAccId
-          });
-
-          this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
-          this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
-          this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
-          this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName;
+          if(this.CustBankAccList.length > 0)
+          {
+            let selectedBankAcc: AppCustBankAccObj = this.CustBankAccList.find(x => x.BankAccNo == this.GetBankInfo.BankAccNo);
+            this.EditBankAccForm.patchValue({
+              CustBankAcc: selectedBankAcc.AppCustBankAccId
+            });
+  
+            this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
+            this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
+            this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
+            this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName;
+          }
         }
       }
     );

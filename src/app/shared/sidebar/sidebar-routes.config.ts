@@ -112,7 +112,14 @@ export const ROUTES: RouteInfo[] = [
               { Path: NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY, Title: 'Edit Agreement After Credit Approval Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
             ], Params: []
 
-          }
+          },
+          {
+            Path: '', Title: 'Auto Debit Registration', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+            Submenu: [
+              { Path: NavigationConstant.NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_PAGING, Title: 'Auto Debit Registration Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+              { Path: NavigationConstant.NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_INQUIRY, Title: 'Auto Debit Registration Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "CF4W" }] },
+            ], Params: []
+          },
         ], Params: []
       },
       {

@@ -1,0 +1,48 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title" style="margin-bottom: 10px;"> 
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> AUTO DEBIT REGISTRATION CANCEL
+              </h4>
+            </div>
+          </div>
+        </div> 
+        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)"></lib-ucviewgeneric>
+
+        <div class="px-3 pb-2" *ngIf="autoDebitRegistrationObj.Status == Cancel">
+          <lib-ucSubsection [id]="'CancelId'" [title]="'Cancellation'" [panel]="'Cancel'">
+          </lib-ucSubsection>
+          <div id="Cancel">
+            <div class="row">
+              <div class="col-md-3">
+                <label>Cancellation Date</label>
+              </div>
+              <div class="col-md-3">
+                {{cancelDt}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <label>Cancellation Reason</label>
+              </div>
+              <div class="col-md-3">
+                {{reason}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <label>Cancellation Notes</label>
+              </div>
+              <div class="col-md-3">
+                {{autoDebitRegistrationObj.CancellationNotes}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
