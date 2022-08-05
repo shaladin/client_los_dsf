@@ -54,7 +54,7 @@ export class ViewAssetDataXComponent implements OnInit {
 
   initUrl() {
     this.getAppUrl = URLConstant.GetAppById;
-    this.getAllAssetDataUrl = URLConstant.GetAllAssetDataByAppId;
+    this.getAllAssetDataUrl = this.agrmntId != 0 ? URLConstant.GetAllAssetDataByAgrmntId : URLConstant.GetAllAssetDataByAppId;
   }
 
   initSingleAssetUrl(){
@@ -72,11 +72,12 @@ export class ViewAssetDataXComponent implements OnInit {
     else {
       if (this.appAssetId != 0) {
         this.initSingleAssetUrl();
-        this.appAssetObj.Id = this.appAssetId;
+        this.appAssetObj.Id = this.agrmntId != 0 ? this.agrmntId : this.appAssetId;
         await this.GetAllAssetData(this.appAssetObj);
       }
       else {
         this.initUrl();
+        this.appObj.Id = this.agrmntId != 0 ? this.agrmntId : this.appId;
         await this.GetAllAssetData(this.appObj);
       }
 
