@@ -49,8 +49,9 @@ import { AddrObj } from 'app/shared/model/addr-obj.model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/response-job-data-personal-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 import { RefCoyObj } from 'app/shared/model/ref-coy-obj.model';
-import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
 
 @Component({
   selector: 'app-asset-data-add-edit-x',
@@ -973,24 +974,23 @@ export class AssetDataAddEditXComponent implements OnInit {
       }
     );
 
-    this.userRelationshipObj = new RefMasterObj();
-    this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    } else {
-      this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    }
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.userRelationshipObj).subscribe(
-      (response) => {
-        this.returnUserRelationshipObj = response[CommonConstant.ReturnObj];
-        this.OwnerRelationObj = response[CommonConstant.ReturnObj];
-        this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
+    await this.GetUserRelationship();
+    this.isAddressReady = true;
+    
+    //START RTHREE-349 - Mapping Purpose of Finance dengan asset usage
+    let appObj4: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj4.ProdOfferingCode = this.appData.ProdOfferingCode;
+    appObj4.RefProdCompntCode = CommonConstant.RefProdCompntCodePurposeOfFinancing;
+    appObj4.ProdOfferingVersion = this.appData.ProdOfferingVersion;
+    let refProdCmptPurposeOfFinancing: ProdOfferingDObj;
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj4).toPromise().then(
+      (response: any) => {
+        refProdCmptPurposeOfFinancing = response;
       }
     );
-
-    this.assetUsageObj = new RefMasterObj();
-    this.assetUsageObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetUsageObj).subscribe(
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = refProdCmptPurposeOfFinancing.CompntValue;
+    await this.http.post(URLConstant.GetListKeyValueAssetUsageByPurposeOfFinCode, reqByCode).toPromise().then(
       (response) => {
         this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
         if (this.mode != 'editAsset') {
@@ -1000,6 +1000,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         }
       }
     );
+    //END RTHREE-349 - Mapping Purpose of Finance dengan asset usage
     //URS-LOS-166
     if (this.appData.LobCode == CommonConstantX.SLB) {
       this.LobCode = CommonConstantX.SLB;
@@ -1041,7 +1042,6 @@ export class AssetDataAddEditXComponent implements OnInit {
           });
         });
     }
-    this.isAddressReady = true;
     this.GetEditData();
   }
 
@@ -2548,27 +2548,43 @@ export class AssetDataAddEditXComponent implements OnInit {
     );
   }
 
-  GetOwnerRelationship(userRelationshipObj : any)
+  GetOwnerRelationship()
   {
+    this.userRelationshipObj = new RefMasterObj();
+    this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+
+    if(this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal && this.AssetDataForm.get('MrOwnerTypeCode').value == CommonConstant.CustTypePersonal)
+    {
+      this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    }
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.userRelationshipObj).subscribe(
       (response) => {
+        this.OwnerRelationObj = new Array();
         this.OwnerRelationObj = response[CommonConstant.ReturnObj];
-        this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
+      }
+    );
+  }
+
+  async GetUserRelationship()
+  {
+    this.userRelationshipObj = new RefMasterObj();
+    this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+
+    if(this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal)
+    {
+      this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    }
+
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.userRelationshipObj).toPromise().then(
+      (response) => {
+        this.returnUserRelationshipObj = new Array();
+        this.returnUserRelationshipObj = response[CommonConstant.ReturnObj];
       }
     );
   }
 
   async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false) {
-    if(this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal && OwnerType == CommonConstant.CustTypePersonal)
-    {
-      this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-      this.GetOwnerRelationship(this.userRelationshipObj);
-    }
-    else
-    {
-      this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-      this.GetOwnerRelationship(this.userRelationshipObj);
-    }
+    await this.GetOwnerRelationship();
  
     let ownerCode: string = "";
     if (this.returnAppCollateralRegistrationObj) ownerCode = this.returnAppCollateralRegistrationObj.OwnerProfessionCode;
