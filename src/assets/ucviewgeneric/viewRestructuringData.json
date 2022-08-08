@@ -23,6 +23,11 @@
           "type": "text",
           "label": "Economic Sector (SLIK)",
           "property": "EconomicSectorSlik"
+        },
+        {
+          "type": "text",
+          "label": "Commodity",
+          "property": "Commodity"
         }
       ],
       "querystring": {

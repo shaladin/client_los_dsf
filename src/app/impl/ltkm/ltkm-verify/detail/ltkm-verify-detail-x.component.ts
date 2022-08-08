@@ -143,7 +143,7 @@ export class LtkmVerifyDetailXComponent implements OnInit {
 
   GetLtkmCust(isFromTabChange: boolean = false) {
       var reqObj = {
-          LtkmCustId: this.LtkmCustId,
+        Id: this.LtkmCustId,
       };
       this.http.post(URLConstant.GetLtkmCustById, reqObj).subscribe(
           (response) => {
@@ -153,10 +153,10 @@ export class LtkmVerifyDetailXComponent implements OnInit {
                   (response) => {
                       if (response["ReturnObject"] != undefined) {
                           this.LtkmNo = response["ReturnObject"]["LtkmNo"];
+                          this.AppId = response["ReturnObject"]["AppId"];
                           if (response["ReturnObject"]["LtkmSrc"] == 'APP') {
                               this.IsFromApp = true;
-                              this.AppId = response["ReturnObject"]["AppId"];
-                          }
+                            }
                       }
                   }
               );
