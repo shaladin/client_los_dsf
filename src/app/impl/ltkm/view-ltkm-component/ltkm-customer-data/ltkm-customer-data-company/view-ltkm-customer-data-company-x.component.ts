@@ -17,53 +17,53 @@ import { LtkmCustCompanyLegalDocObj } from 'app/shared/model/ltkm/ltkm-cust-comp
 })
 export class ViewLtkmCustomerDataCompanyXComponent implements OnInit {
 
-    @Input() LtkmCustId: number;
-    @Input() IsNAPVersionCompletion: boolean = true;
-    viewMainDataObj: UcViewGenericObj = new UcViewGenericObj();
-    viewJobDataProfObj: string;
-    viewJobDataEmpObj: string;
-    viewJobDataSmeObj: string;
-    viewJobDataNonProfObj: string;
-    viewFinDataObj: UcViewGenericObj = new UcViewGenericObj();
-  
-    arrValue = [];
-    isDataAlreadyLoaded: boolean = false;
-  
-    ltkmCustObj: LtkmCustObj;
-    ltkmCustAddrForViewObjs: Array<LtkmCustAddrForViewObj>;
-    ltkmCustBankAccObjs: Array<LtkmCustBankAccObj>;
-    ltkmCustSocmedObjs: Array<LtkmCustSocmedObj>;
-    ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
-    ltkmCustCompanyMgmntShrholderObjs: Array<LtkmCustCompanyMgmntShrholderObj>;
-    ltkmCustCompanyLegalDocObjs: Array<LtkmCustCompanyLegalDocObj>;
-  
-    constructor(private http: HttpClient) {
-    }
-  
-    async ngOnInit() : Promise<void>{
-      //jika pake NAP versi baru maka langsung arahkan semua ke view completion tanpa init data di view lama
-      if(this.IsNAPVersionCompletion) return;
-      await this.getCustData();
-      this.arrValue.push(this.ltkmCustObj.LtkmCustId);
-      this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustCompanyMainData.json";
-      this.viewMainDataObj.whereValue = this.arrValue;
-  
-      this.viewFinDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustCompanyFinData.json";
-      this.viewFinDataObj.whereValue = this.arrValue;
-  
-      this.isDataAlreadyLoaded = true;
-    }
-  
-    async getCustData(){
-      await this.http.post(URLConstant.GetLtkmCustDataCompanyForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId }).toPromise().then(
-        (response) => {
-          this.ltkmCustObj = response["rLtkmCustObj"];
-          this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
-          this.ltkmCustCompanyMgmntShrholderObjs = response["rLtkmCustCompanyMgmntShrholderObjs"];
-          this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
-          this.ltkmCustCompanyLegalDocObjs = response["rLtkmCustCompanyLegalDocObjs"];
-          this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];
-          this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
-        });
-    }
+  @Input() LtkmCustId: number;
+  @Input() IsNAPVersionCompletion: boolean = true;
+  viewMainDataObj: UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataProfObj: string;
+  viewJobDataEmpObj: string;
+  viewJobDataSmeObj: string;
+  viewJobDataNonProfObj: string;
+  viewFinDataObj: UcViewGenericObj = new UcViewGenericObj();
+
+  arrValue = [];
+  isDataAlreadyLoaded: boolean = false;
+
+  ltkmCustObj: LtkmCustObj;
+  ltkmCustAddrForViewObjs: Array<LtkmCustAddrForViewObj>;
+  ltkmCustBankAccObjs: Array<LtkmCustBankAccObj>;
+  ltkmCustSocmedObjs: Array<LtkmCustSocmedObj>;
+  ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
+  ltkmCustCompanyMgmntShrholderObjs: Array<LtkmCustCompanyMgmntShrholderObj>;
+  ltkmCustCompanyLegalDocObjs: Array<LtkmCustCompanyLegalDocObj>;
+
+  constructor(private http: HttpClient) {
   }
+
+  async ngOnInit() : Promise<void>{
+    //jika pake NAP versi baru maka langsung arahkan semua ke view completion tanpa init data di view lama
+    if(this.IsNAPVersionCompletion) return;
+    await this.getCustData();
+    this.arrValue.push(this.ltkmCustObj.LtkmCustId);
+    this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustCompanyMainData.json";
+    this.viewMainDataObj.whereValue = this.arrValue;
+
+    this.viewFinDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustCompanyFinData.json";
+    this.viewFinDataObj.whereValue = this.arrValue;
+
+    this.isDataAlreadyLoaded = true;
+  }
+
+  async getCustData(){
+    await this.http.post(URLConstant.GetLtkmCustDataCompanyForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId }).toPromise().then(
+      (response) => {
+        this.ltkmCustObj = response["rLtkmCustObj"];
+        this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
+        this.ltkmCustCompanyMgmntShrholderObjs = response["rLtkmCustCompanyMgmntShrholderObjs"];
+        this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
+        this.ltkmCustCompanyLegalDocObjs = response["rLtkmCustCompanyLegalDocObjs"];
+        this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];
+        this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
+      });
+  }
+}

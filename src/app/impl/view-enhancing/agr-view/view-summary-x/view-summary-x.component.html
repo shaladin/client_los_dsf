@@ -164,7 +164,7 @@
             Scheme</label>
           <label class="col-md-6 adinslabel" translate
             *ngIf="SummaryObj?.AgrmntFinData && SummaryObj?.Agrmnt?.BizTemplateCode != 'DLFN'">{{this.SummaryObj.AgrmntFinData.MrInstSchemeDescr}}</label>
-    
+
           <label class="col-md-6 adInsLabel" *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'" translate>Installment
             Type</label>
           <label class="col-md-6 adinslabel" translate
@@ -209,7 +209,7 @@
     </div>
   </div>
   <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'CF4W'">
-    <lib-ucSubsection [id]="'assetId'" [title]="'Asset'" [panel]="'asset'">
+    <!-- <lib-ucSubsection [id]="'assetId'" [title]="'Asset'" [panel]="'asset'">
     </lib-ucSubsection>
     <div id="asset">
       <div class="row">
@@ -286,7 +286,8 @@
         <label class="col-md-3 adinslabel" translate
           *ngIf="SummaryObj?.AppAssetEmpList">{{SummaryObj.AppAssetEmpList.BranchManager}}</label>
       </div>
-    </div>
+    </div> -->
+    <view-asset-collateral [agrmntId]="agrmntId"></view-asset-collateral>
   </div>
   <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'CFRFN4W' || SummaryObj?.Agrmnt?.BizTemplateCode == 'FCTR'">
 
@@ -346,7 +347,6 @@
   </div>
   <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'CFNA'">
     <app-view-app-collateral-multi [agrmntId]="agrmntId"></app-view-app-collateral-multi>
-
   </div>
   <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'FL4W'">
     <view-asset-collateral [agrmntId]="agrmntId"></view-asset-collateral>
