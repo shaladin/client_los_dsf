@@ -80,6 +80,7 @@ export class CommonConstant {
 
   //Apv Category
   public static ApvCategoryCreditApproval = "CRD_APV"
+  public static ApvCategoryCreditApprovalResultExtensionApproval = "CR_APV_RES_EXP_D_CAT";
   public static ApvCategoryPackageValidityChecking = "PCKG_VLDT_APV"
   public static ApvCategoryPreGoLive = "PRE_GPV_APV"
   public static ApvCategoryOfferingValidity = "OFF_VLD_APV"

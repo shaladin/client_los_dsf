@@ -19,6 +19,7 @@ export class ApprovalHistComponent implements OnInit {
   CrdApvObj: UcInputApprovalHistoryObj;
   PregoliveApvObj: UcInputApprovalHistoryObj;
   ApvHistObj: UcInputApprovalHistoryObj;
+  CrdApvRsltExtObj: UcInputApprovalHistoryObj;
   // ReturnHandlingApvObj: UcInputApprovalHistoryObj;
   DocChecklistApvObj: UcInputApprovalHistoryObj;
 
@@ -26,6 +27,7 @@ export class ApprovalHistComponent implements OnInit {
   IsPregoliveApvReady: boolean = false;
   IsOfferingReady: boolean = false;
   IsApvHistReady: boolean = false;
+  IsCrdApvRsltExtReady: boolean = false;
   // IsReturnHandlingApvReady: boolean = false;
   IsDocChecklistApvReady: boolean = false;
 
@@ -46,6 +48,10 @@ export class ApprovalHistComponent implements OnInit {
 
       this.PregoliveApvObj = new UcInputApprovalHistoryObj();
       this.PregoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
+
+      this.CrdApvRsltExtObj = new UcInputApprovalHistoryObj();
+      this.CrdApvRsltExtObj.PathUrl = "/Approval/GetTaskHistory";
+
       this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
         (response) => {
           for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
@@ -72,9 +78,13 @@ export class ApprovalHistComponent implements OnInit {
                 if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryOfferingValidity) {
                   this.OfferingObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
                 }
+                if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryCreditApprovalResultExtensionApproval) {
+                  this.CrdApvRsltExtObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+                }
               }
               this.IsPregoliveApvReady = true;
               this.IsOfferingReady = true;
+              this.IsCrdApvRsltExtReady = true;
             });
         },
         (error) => {
