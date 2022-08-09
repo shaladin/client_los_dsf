@@ -2243,7 +2243,7 @@ export class CustMainDataXComponent implements OnInit {
         this.CustMainDataForm.patchValue({
           IsOwner: true,
         });
-        this.CustMainDataForm.get("IsOwner").enable();
+        this.CustMainDataForm.get("IsOwner").disable();
       }
       else{
         this.CustMainDataForm.patchValue({
