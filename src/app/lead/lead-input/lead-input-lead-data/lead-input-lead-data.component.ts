@@ -1038,7 +1038,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
   checkRapindo() {
     if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
-      if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
+      if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No.toUpperCase() && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.setLeadAsset();
