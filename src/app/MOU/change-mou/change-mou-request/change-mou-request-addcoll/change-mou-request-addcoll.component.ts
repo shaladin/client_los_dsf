@@ -693,7 +693,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
               IsMandatory: [this.SerialNoList[i].IsMandatory],
             }) as FormGroup;
             this.items.push(eachDataDetail);
-            if (this.isUsed == true) {
+            if (this.SerialNoList[i].IsMandatory) {
               this.items.controls[i]["controls"]["SerialNoValue"].setValidators([Validators.required]);
               this.items.controls[i]["controls"]["SerialNoValue"].updateValueAndValidity();
             }

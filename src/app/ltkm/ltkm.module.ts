@@ -59,9 +59,10 @@ import { LtkmFamilyMainDataPagingComponent } from "./ltkm-request/additional-com
 import { ViewLtkmAppSummaryDataComponent } from "./view-ltkm-component/ltkm-app-summary-data/ltkm-app-summary-data.component";
 import { UcdropdownlistModule } from "@adins/ucdropdownlist";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { AdInsModule } from "app/components/adins-module/adins.module";
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,
@@ -78,6 +79,7 @@ export const customCurrencyMaskConfig = {
     CommonModule,
     FormsModule,
     HttpModule,
+    AdInsModule,
     UCSearchModule,
     UcgridfooterModule,
     UcpagingModule,

@@ -274,6 +274,9 @@ export class CommonConstant {
   public static ProductBehaviourLock = "LOCK";
   public static ProductBehaviourDefault = "DEFAULT";
 
+  // COMPONENT GROUP
+  public static PRODUCT_COMP_GRP_GEN = "GEN";
+
   //VERIFICATION
   public static VerificationNew = "NEW";
   public static VerificationFail = "FAIL";

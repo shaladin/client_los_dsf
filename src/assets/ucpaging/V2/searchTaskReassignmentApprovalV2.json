@@ -29,7 +29,7 @@
       {
         "type": "dropdown",
         "datatype": "text",
-        "name": "T.WF_ACTIVITY_CODE",
+        "name": "(T.WF_CODE + ';' + T.WF_ACTIVITY_CODE)",
         "id": "WfCodeId",
         "value": "",
         "placeholder": "Placeholder",

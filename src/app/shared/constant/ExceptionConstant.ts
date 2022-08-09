@@ -103,7 +103,8 @@ export class ExceptionConstant {
     public static ASSET_DATA_NOT_COMPLETE = "Asset data not completed, Please complete asset data first";
     public static UNIT_CANT_BE_ZERO = "Unit cannot be 0.";
     public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input";
-    public static INPUT_MIN_1_HISTORY = "Please Input At Least 1 History"; 
+    public static INPUT_MIN_1_HISTORY = "Please Input At Least 1 History";
+    public static TEMP_REG_LETT_DATE_CAN_NOT_BE_LESS_THAN_PO_DATE = "Temporary Registration Letter Date can not be less than Purchase Order Date"
 
     public static CANT_HAVE_THE_SAME_CUST_MEMBER = " cannot have the same customer group member as No ";
     public static CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER = " cannot have the same relationship as customer group member No ";
