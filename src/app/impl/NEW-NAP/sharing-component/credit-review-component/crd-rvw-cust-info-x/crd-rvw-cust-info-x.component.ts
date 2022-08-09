@@ -150,6 +150,21 @@ export class CrdRvwCustInfoXComponent implements OnInit {
   }
   //#endregion
 
+  //#region FinancialData
+  modalFinancialData: any;
+  ClickLinkFinancialData(FinancialDataContent) {
+    this.modalFinancialData = this.modalService.open(FinancialDataContent);
+    this.modalFinancialData.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.modalFinancialData.close();
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modalFinancialData.close();
+    })
+  }
+  //#endregion
+
+  //#region DismissReason
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

@@ -58,6 +58,9 @@ import { CollateralAddEditComponent } from 'app/NEW-NAP/sharing-component/input-
 import { CustSyncComponent } from './cust-sync/cust-sync.component';
 import { EditNapCustPagingComponent } from './edit-nap-cust/edit-nap-cust-paging/edit-nap-cust-paging.component';
 import { EditNapCustDetailComponent } from './edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component';
+import { EditAppAfterApprovalViewXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-view-x/edit-app-after-approval-view-x.component';
+import { EditAppAfterApprovalApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-approval-detail-x/edit-app-after-approval-approval-detail-x.component';
+import { EditAppAfterApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-paging-x/edit-app-after-approval-paging-x.component';
 
 
 const routes: Routes = [
@@ -343,7 +346,11 @@ const routes: Routes = [
         component: EditAppAfterApprovalPagingComponent,
         data: {title: 'Edit Application After Approval Request Paging'}
       },
-    
+      {
+        path: PathConstantX.EDIT_APP_AFT_APV_PAGING_X,
+        component: EditAppAfterApprovalPagingXComponent,
+        data: {title: 'Edit Application After Approval Request Paging'}
+      },
       {
         path: PathConstant.EDIT_APP_AFT_APV_INQUIRY,
         component: EditAppAfterApprovalInquiryComponent,
@@ -353,6 +360,11 @@ const routes: Routes = [
         path: PathConstant.EDIT_APP_AFT_APV_VIEW,
         component: EditAppAfterApprovalViewComponent,
         data: {title: 'Edit Application After Approval Request View'}
+      },
+      {
+        path: PathConstantX.EDIT_APP_AFT_APV_VIEW_X,
+        component: EditAppAfterApprovalViewXComponent,
+        data: {title: 'Edit Application After Approval Request View X'}
       },
       {
         path: PathConstant.EDIT_APP_AFT_APV_DETAIL,
@@ -368,6 +380,11 @@ const routes: Routes = [
         path: PathConstant.EDIT_APP_AFT_APV_APPRV_DETAIL,
         component: EditAppAfterApprovalApprovalDetailComponent,
         data: {title: 'Edit Application After Approval - Approval Detail'}
+      },
+      {
+        path: PathConstantX.EDIT_APP_AFT_APV_APPRV_DETAIL,
+        component: EditAppAfterApprovalApprovalDetailXComponent,
+        data: {title: 'Edit Application After Approval - Approval Detail X'}
       },
       {
         path: PathConstant.COPY_CANCEL_APP_CROSS_BL,

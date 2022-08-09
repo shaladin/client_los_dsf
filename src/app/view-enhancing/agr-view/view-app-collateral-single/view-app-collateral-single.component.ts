@@ -15,12 +15,13 @@ import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
   templateUrl: './view-app-collateral-single.component.html'
 })
 export class ViewAppCollateralSingleComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewUOLObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() agrmntId: number = 0;
   @Input() AppCollateralId: number = 0;
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
   AppCollateralDocs: Array<AppCollateralDocObj> = new Array<AppCollateralDocObj>();
+  AppCollateral: any;
+  SerialNoLabelCollateralList: Array<string> = [];
   arrValue = [];
   IsHidden: boolean = true;
   @Output() outputTab: EventEmitter<boolean> = new EventEmitter();
@@ -35,13 +36,11 @@ export class ViewAppCollateralSingleComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
     this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
     this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppCollateralAccessory.json";
 
     if (this.AppCollateralId != 0) {
       this.arrValue.push(this.AppCollateralId);
-      this.viewGenericObj.whereValue = this.arrValue;
       this.viewUOLObj.whereValue = this.arrValue;
       this.IsReady = true;
       await this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralId }).toPromise().then(
@@ -54,7 +53,6 @@ export class ViewAppCollateralSingleComponent implements OnInit {
         (response) => {
           this.AppCollateralObj = response;
           this.arrValue.push(this.AppCollateralObj.AppCollateralId);
-          this.viewGenericObj.whereValue = this.arrValue;
           this.viewUOLObj.whereValue = this.arrValue;
           this.IsReady = true;
           this.AppCollateralId = this.AppCollateralObj.AppCollateralId;
@@ -74,6 +72,14 @@ export class ViewAppCollateralSingleComponent implements OnInit {
 
   GetCollateralData(){
 
+    this.http.post<Array<AppCollateralAttrObj>>(URLConstant.GetAppCollateralByAppCollateralIdForView, {Id: this.AppCollateralId }).subscribe(
+      (response) => {
+        this.AppCollateral = response;
+
+        this.GetSerialNoList();
+      }
+    );
+
     this.http.post<Array<AppCollateralAttrObj>>(URLConstant.GetAppCollateralAttrByAppCollateralId, {Id: this.AppCollateralId }).subscribe(
       (response) => {
         this.AppCollateralAttrObjs = response["AppCollateralAttrObjs"];
@@ -91,5 +97,20 @@ export class ViewAppCollateralSingleComponent implements OnInit {
         this.inputGridObj.resultData.Data = this.AppCollateralAccessoryObjs;
       }
     );
+  }
+
+  async GetSerialNoList()
+  {
+    let temp = 0;
+    await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
+      Code: this.AppCollateral.AssetTypeCode
+    }).toPromise().then(
+      (response) => {
+        response[CommonConstant.ReturnObj].length <= 3 ? temp = response[CommonConstant.ReturnObj].length : temp = 3; 
+        for(let i = 0; i < temp; i++)
+        {
+          this.SerialNoLabelCollateralList.push(response[CommonConstant.ReturnObj][i].SerialNoLabel)
+        }
+      });
   }
 }

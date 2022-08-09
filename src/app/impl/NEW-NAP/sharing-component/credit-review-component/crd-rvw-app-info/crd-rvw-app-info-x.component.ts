@@ -9,6 +9,9 @@ import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.mod
 import { CrdRvwCustInfoIncomeAndExpenseDetailsObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-income-and-expense-details-obj.model';
 import { ScoringResultHObj } from 'app/shared/model/scoring-result-h-obj.model';
 import { ScoringResultDObj } from 'app/shared/model/scoring-result-d-obj.model';
+import { ResMouCustClauseObj } from 'app/shared/model/response/mou/mou-cust/res-mou-cust-clause-obj.model';
+import { AppFinDataObjX } from 'app/impl/shared/model/AppFinDataObjX.model';
+import { AppSubsidyProfitablityXObj } from 'app/impl/shared/model/AppSubsidyProfitablityXObj.model';
 
 @Component({
   selector: 'app-crd-rvw-app-info-x',
@@ -20,6 +23,7 @@ export class CrdRvwAppInfoXComponent implements OnInit {
   @Input() appId: number = 0;
   @Input() BizTemplateCode: string = "";
   @Output() callbackCrdRvwAppObj: EventEmitter<CrdRvwAppObj> = new EventEmitter();
+  @Output() callbackAppFinDataObj: EventEmitter<AppFinDataObjX> = new EventEmitter();
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
 
   constructor(
@@ -27,11 +31,19 @@ export class CrdRvwAppInfoXComponent implements OnInit {
     private modalService: NgbModal,
   ) { }
 
+  totalIncomeAmt: number = 0;
+  tacAmt: number = 0;
+  ListAppSubsidyProfitablityXObj : Array<AppSubsidyProfitablityXObj> = new  Array<AppSubsidyProfitablityXObj>();
   crdRvwAppObj: CrdRvwAppObjX = new CrdRvwAppObjX();
+  appFinDataObj: AppFinDataObjX = new AppFinDataObjX();
   async ngOnInit() {
     await this.GetCrdRvwAppByCrdRvwCustInfoId();
     await this.GetCrdRvwCustInfoIncomeAndExpenseDetails();
     await this.GetLatestListScoringResultHAndResultDByTrxSourceNo();
+    await this.GetInitAppFinDataByAppIdX();
+    await this.GetAppSubsidyProfitablityXObj();
+    await this.SetTotalIncome();
+    await this.SetTacAmt();
   }
 
   async GetCrdRvwAppByCrdRvwCustInfoId() {
@@ -41,6 +53,31 @@ export class CrdRvwAppInfoXComponent implements OnInit {
         this.callbackCrdRvwAppObj.emit(response);
       }
     );
+  }
+
+  async SetTotalIncome() {
+    this.totalIncomeAmt = 0;
+    this.totalIncomeAmt = this.crdRvwCustInfoIncomeAndExpenseDetailsObj.InsAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.LifeInsAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.SubsidyRateAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.TotalInterestAmt;
+    for (let index = 0; index < this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ListAppFeeObj.length; index++) {
+      const element = this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ListAppFeeObj[index];
+      this.totalIncomeAmt += element.AppFeeAmt;
+    }
+    for (let index = 0; index < this.ListAppSubsidyProfitablityXObj.length; index++) {
+      const element = this.ListAppSubsidyProfitablityXObj[index];
+      this.totalIncomeAmt += element.SubsidyAmt;
+    }
+  }
+
+  async GetAppSubsidyProfitablityXObj() {
+    await this.http.post<AppSubsidyProfitablityXObj>(URLConstantX.GetListAppSubsidyProfitabilityXForViewByAppId, { Id: this.appId }).toPromise().then(
+      (response) => {
+        this.ListAppSubsidyProfitablityXObj= response["ListObjs"];
+      }
+    );
+  }
+
+  async SetTacAmt() {
+    this.tacAmt = this.crdRvwCustInfoIncomeAndExpenseDetailsObj.CommissionAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ReserveFundAmt;
   }
 
   crdRvwCustInfoIncomeAndExpenseDetailsObj: CrdRvwCustInfoIncomeAndExpenseDetailsObj = new CrdRvwCustInfoIncomeAndExpenseDetailsObj();
@@ -60,6 +97,14 @@ export class CrdRvwAppInfoXComponent implements OnInit {
       (response) => {
         this.scoringResultHObj = response.ScoringResultHObj;
         this.ListScoringResultDObj = response.ListScoringResultDObj;
+      }
+    );
+  }
+  async GetInitAppFinDataByAppIdX() {
+    await this.http.post<AppFinDataObjX>(URLConstantX.GetInitAppFinDataByAppIdX, { Id: this.appId }).toPromise().then(
+      (response) => {
+        this.appFinDataObj = response;
+        this.callbackAppFinDataObj.emit(response);
       }
     );
   }

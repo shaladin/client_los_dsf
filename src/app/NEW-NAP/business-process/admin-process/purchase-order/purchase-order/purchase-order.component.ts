@@ -20,6 +20,7 @@ import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { environment } from 'environments/environment';
 import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
+import { ReturnHandlingEditNap4Component } from 'app/NEW-NAP/business-process/additional-process/return-handling/return-handling-edit-nap4/return-handling-edit-nap4.component';
 
 @Component({
   selector: 'app-purchase-order',
@@ -220,6 +221,15 @@ export class PurchaseOrderComponent implements OnInit {
 
     let listAgrmntTcObj: Array<AgrmntTcObj> = this.SetTcForm();
     if (IsSave) {
+      //RTHREE-322 : Penambahan validasi Purchase Order
+      var isPoAmtIsValid = false;
+      await this.http.post(URLConstant.ValidatePurchaseOrderAmountByAgrmntId, {Id: this.AgrmntId}).toPromise().then(
+        (response) => {
+          isPoAmtIsValid = response && response["StatusCode"] == 200;
+        }
+      );
+      if(!isPoAmtIsValid) return;     
+
       var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
       reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
       reqSubmitAgrmntTcObj.ListAgrmntTcObj = listAgrmntTcObj;

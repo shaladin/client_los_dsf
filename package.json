@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "5.4.0-1",
+  "version": "5.10.2-1",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -15,6 +15,7 @@
     "OPL": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=OPL --aot --base-href /ROS_FE/",
     "1_4_16": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=1_4_16_env --base-href /1.4.16/LOS/",
     "CR_BATCH_1": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=crbatch1 --base-href /LOS_DSF_IMPL_CR_BATCH_1/",
+    "CR_BATCH_2": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=crbatch2 --base-href /LOS_DSF_IMPL_CR_BATCH_2/",
     "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
     "test": "ng test",
     "lint": "ng lint",
@@ -30,7 +31,7 @@
     "@adins/ucaddtotemp": "^1.3.0",
     "@adins/ucapproval": "^1.0.12",
     "@adins/ucapproval-history": "^1.0.10",
-    "@adins/ucapproval-r3": "^1.2.2",
+    "@adins/ucapproval-r3": "^1.2.9",
     "@adins/ucapprovalcreate": "^1.2.3",
     "@adins/ucapprovalgeneralinfo": "^1.0.8",
     "@adins/ucapprovalhist": "^1.0.16",

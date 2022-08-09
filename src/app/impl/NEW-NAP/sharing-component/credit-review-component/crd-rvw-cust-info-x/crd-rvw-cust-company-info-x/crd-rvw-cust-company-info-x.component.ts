@@ -21,6 +21,8 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
   @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
   @Output() ngModelForCustHistDataX: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForSurveyDataX: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForFinancialData: EventEmitter<any> = new EventEmitter();
 
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
@@ -57,8 +59,8 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
         this.crdRvwCustCoyInfoObj = response;
       }
     );
-  }  
-  
+  }
+
   ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> = new Array<CrdRvwDiffAppToMasterCustObj>();
   async GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
@@ -67,7 +69,7 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
       }
     );
   }
-  
+
   responseCrdRvwDiffAppToInPrcAppCustObj: ResponseCrdRvwDiffAppToInPrcAppCustObj = new ResponseCrdRvwDiffAppToInPrcAppCustObj();
   async GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId() {
     let reqObj: ReqCrdRvwDiffAppToInPrcAppCustObj = { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true };
@@ -89,8 +91,16 @@ export class CrdRvwCustCompanyInfoXComponent implements OnInit {
     this.ngModelForNegCheckList.emit();
   }
 
+  ClickLinkSurvey() {
+    this.ngModelForSurveyDataX.emit();
+  }
+
   ClickLinkCustomerHistoryData() {
     this.ngModelForCustHistDataX.emit();
+  }
+  
+  ClickLinkFinancialData() {
+    this.ngModelForFinancialData.emit();
   }
   //#endregion
 

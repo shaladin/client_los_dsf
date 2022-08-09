@@ -875,6 +875,7 @@ export class URLConstant {
   public static GetAssetListForDOMultiAssetView = environment.losUrl + "/v1" + "/DeliveryOrder/GetAssetListForDOMultiAssetView";
 
   //PURCHASE ORDER
+  public static ValidatePurchaseOrderAmountByAgrmntId = environment.losUrl + "/v1" + "/PurchaseOrderH/ValidatePurchaseOrderAmountByAgrmntId";
   public static SubmitPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/SubmitPurchaseOrder";
   public static AddPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/AddPurchaseOrder";
   public static EditPurchaseOrder = environment.losUrl + "/v1" + "/PurchaseOrderH/EditPurchaseOrder";
@@ -1031,6 +1032,7 @@ export class URLConstant {
   public static GetAllAssetDataForPOMultiAsset = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataForPOMultiAsset";
   public static GetAppAssetByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAppAssetByAgrmntId";
   public static GetAllAssetDataByAppId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAppId";
+  public static GetAllAssetDataByAgrmntId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAgrmntId";
   public static GetListAllAssetDataByAppId = environment.losUrl + "/v1" + "/AppAsset/GetListAllAssetDataByAppId";
   public static GetAllAssetDataByAppAssetId = environment.losUrl + "/v1" + "/AppAsset/GetAllAssetDataByAppAssetId";
   public static GetListAppAssetByDOHId = environment.losUrl + "/v1" + "/AppAsset/GetListAppAssetByDOHId";
@@ -1066,6 +1068,7 @@ export class URLConstant {
   public static GetAppCollateralAndRegistrationByAppCollateralId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralAndRegistrationByAppCollateralId";
   public static AddEditAllCollateralDataFactoring = environment.losUrl + "/v1" + "/AppCollateral/AddEditAllCollateralDataFactoring"
   public static GetAppCollateralAttrByAppCollateralId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralAttrByAppCollateralId";
+  public static GetAppCollateralByAppCollateralIdForView = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralByAppCollateralIdForView";
   public static GetAppCollateralListForInsuranceByAppId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralListForInsuranceByAppId";
   public static GetAppCollateralAttrByAppAssetId = environment.losUrl + "/v1" + "/AppCollateral/GetAppCollateralAttrByAppAssetId";
   public static GetListAppCollateralByAgrmntId = environment.losUrl + "/v1" + "/AppCollateral/GetListAppCollateralByAgrmntId";
@@ -1155,6 +1158,7 @@ export class URLConstant {
   public static GetListInsuranceDataForCopyInsuranceByAppId = environment.losUrl + "/v1" + "/AppIns/GetListInsuranceDataForCopyInsuranceByAppId";
   public static CopyInsuranceData = environment.losUrl + "/v1" + "/AppIns/CopyInsuranceData";
   public static DeleteListInsuranceData = environment.losUrl + "/v1" + "/AppIns/DeleteListInsuranceData";
+  public static ValidateAppInsObjAmtByAppId = environment.losUrl + "/v1" + "/AppIns/ValidateAppInsObjAmtByAppId";
 
   //APP INSURANCE
   public static ExecuteInsRateRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateRule";
@@ -1597,6 +1601,7 @@ export class URLConstant {
   public static GetAgrmntDataForEditAppAfterApprovalByAgrmntId = environment.losUrl + "/v1" + "/EditAppAftApv/GetAgrmntDataForEditAppAfterApprovalByAgrmntId";
   public static SubmitEditAppAftApvReq = environment.losUrl + "/v1" + "/EditAppAftApv/SubmitEditAppAftApvReq";
   public static SubmitEditAppAftApvReqV2 = environment.losUrl + "/v2" + "/EditAppAftApv/SubmitEditAppAftApvReq";
+  public static SubmitEditAppAftApvReqX = environment.losUrl + "/v1" + "/EditAppAftApvX/SubmitEditAppAftApvReq";
 
   //LTKM
   public static GetCustCompanyLtkmForCopyByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyLtkmForCopyByCustId";
@@ -1704,23 +1709,25 @@ export class URLConstant {
   public static ResultExpiredDaysApproval = environment.losUrl + "/v1" + "/Approval/ResultExpiredDaysApproval";
 
   // New Approval R3
-  public static CreateNewRFA = "/Approval/CreateNewRFA";
-  public static CreateJumpRFA = "/Approval/CreateJumpRFA";
-  public static GetRefSingleCategoryByCategoryCode = "/Approval/GetRefSingleCategoryByCategoryCode";
-  public static GetSchemesBySchemeCode = "/Approval/GetSchemesBySchemeCode";
-  public static GetRefAdtQuestion = "/Approval/GetRefAdtQuestion";
-  public static GetPossibleMemberAndAttributeExType = "/Approval/GetPossibleMemberAndAttributeExType";
-  public static GetApprovalReturnHistory = "/Approval/GetApprovalReturnHistory";
+  public static CreateNewRFA = "/v1" + "/Approval/CreateNewRFA";
+  public static CreateJumpRFA = "/v1" + "/Approval/CreateJumpRFA";
+  public static GetRefSingleCategoryByCategoryCode = "/v1" + "/Approval/GetRefSingleCategoryByCategoryCode";
+  public static GetSchemesBySchemeCode = "/v1" + "/Approval/GetSchemesBySchemeCode";
+  public static GetRefAdtQuestion = "/v1" + "/Approval/GetRefAdtQuestion";
+  public static GetPossibleMemberAndAttributeExType = "/v1" + "/Approval/GetPossibleMemberAndAttributeExType";
+  public static GetPossibleMemberAndAttributeExTypeV2 = "/v2" + "/Approval/GetPossibleMemberAndAttributeExType";
+  public static GetApprovalReturnHistory = "/v1" + "/Approval/GetApprovalReturnHistory";
   public static GetSchemesByCategoryId = "/Approval/GetSchemesByCategoryId";
-  public static SubmitApproval = "/Approval/SubmitApproval";
-  public static GetLevelVoting = "/Approval/GetLevelVoting";
-  public static GetPossibleResult = "/Approval/GetPossibleResult";
-  public static GetNextNodeMember = "/Approval/GetNextNodeMember";
-  public static GetRefReasonActive = "/Approval/GetRefReasonActive";
-  public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
-  public static GetTaskHistory = "/Approval/GetTaskHistory";
-  public static ReturnLevel = "/Approval/ReturnLevel";
-  public static ContinueToLevel = "/Approval/ContinueToLevel";
+  public static SubmitApproval = "/v1" + "/Approval/SubmitApproval";
+  public static GetLevelVoting = "/v1" + "/Approval/GetLevelVoting";
+  public static GetPossibleResult = "/v1" + "/Approval/GetPossibleResult";
+  public static GetNextNodeMember = "/v1" + "/Approval/GetNextNodeMember";
+  public static GetNextNodeMemberV2 = "/v2" + "/Approval/GetNextNodeMember";
+  public static GetRefReasonActive = "/v1" + "/Approval/GetRefReasonActive";
+  public static GetCanChangeMinFinalLevel = "/v1" + "/Approval/GetCanChangeMinFinalLevel";
+  public static GetTaskHistory = "/v1" + "/Approval/GetTaskHistory";
+  public static ReturnLevel = "/v1" + "/Approval/ReturnLevel";
+  public static ContinueToLevel = "/v1" + "/Approval/ContinueToLevel";
   public static GetSingleTaskInfo = "/Approval/GetSingleTaskInfo";
 
   // Digitalization
@@ -1965,5 +1972,8 @@ export class URLConstant {
   public static SendOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/SendOtp";
   public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
   public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
+  
+  //Ref Fin Asset Usage Map
+  public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
 
 }

@@ -173,6 +173,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.AgrmntNo == null ? this.AppNo : this.AgrmntNo;
     this.InputObj.OfficeCode = this.OriOfficeCode;
+    this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.IsReady = true;
   }
 }

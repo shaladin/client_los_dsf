@@ -48,14 +48,14 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4"
-                    [ngClass]="{'adins-required-label': CcForm.controls.MrIdTypeCode.value == 'KITAS' || CcForm.controls.MrIdTypeCode.value == 'SIM'}"
+                    [ngClass]="{'adins-required-label': CcForm.controls.MrIdTypeCode.value == IdTypeKitas || CcForm.controls.MrIdTypeCode.value == IdTypeSim || CcForm.controls.MrIdTypeCode.value == IdTypeKtm}"
                     translate>Id Expired Date</label>
                   <div class="col-md-8">
-                    <input *ngIf="['NPWP','AKTA','EKTP'].includes(CcForm.controls.MrIdTypeCode.value)" readonly
+                    <input *ngIf="isIdExpiredDtReadonly" readonly
                       type="date" class="form-control" formControlName="IdExpiredDt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdExpiredDt.invalid}">
                     <input [attr.readonly]="isExisting ? 'true' : null"
-                      *ngIf="!['NPWP','AKTA','EKTP'].includes(CcForm.controls.MrIdTypeCode.value)"
+                      *ngIf="!isIdExpiredDtReadonly"
                       min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control"
                       formControlName="IdExpiredDt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CcForm.controls.IdExpiredDt.invalid}">

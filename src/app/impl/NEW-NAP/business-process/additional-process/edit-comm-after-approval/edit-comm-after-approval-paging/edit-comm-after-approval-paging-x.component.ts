@@ -10,6 +10,9 @@ import { environment } from 'environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-comm-app-after-approval-paging-x',
@@ -23,6 +26,7 @@ export class EditCommAfterApprovalPagingXComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
+    private toastr: NGXToastrService,
     private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -31,6 +35,8 @@ export class EditCommAfterApprovalPagingXComponent implements OnInit {
       }
     });
   }
+
+  IsApplicationExist: boolean = false;
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
@@ -60,6 +66,21 @@ export class EditCommAfterApprovalPagingXComponent implements OnInit {
             this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         });
+    }else if (ev.Key == "Edit") {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = ev.RowObj.AgrmntId;
+    this.http.post(URLConstantX.GetEditAppReqAndApvByAgrmntId, reqObj).toPromise().then(
+      (response) => {
+        if(response["ReturnObject"] == null){
+          this.IsApplicationExist = false;
+        }
+        else {this.IsApplicationExist = true;}
+        if (this.IsApplicationExist == false){
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.EDIT_COMM_AFT_APV_DETAIL], { "AppId": ev.RowObj.AppId, "BizTemplateCode": ev.RowObj.BizTemplateCode, "AgrmntId": ev.RowObj.AgrmntId });
+        }
+        else {this.toastr.errorMessage("Edit Application in progress");
+        return;}
+      });
     }
   }
 }

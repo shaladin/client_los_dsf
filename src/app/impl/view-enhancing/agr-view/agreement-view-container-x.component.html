@@ -16,29 +16,32 @@
           <mat-tab-group *ngIf="IsReady">
             <mat-tab *ngIf="IsSummary" label="Summary">
               <ng-template matTabContent>
-                <agrmnt-view-summary [agrmntId]="AgrmntId"></agrmnt-view-summary>
+                <agrmnt-view-summary-x [agrmntId]="AgrmntId"></agrmnt-view-summary-x>
               </ng-template>
             </mat-tab>
 
             <mat-tab label="Customer">
               <ng-template matTabContent>
-                <app-view-app-cust-data-company *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
-                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-company>
-                <app-view-app-cust-data-personal *ngIf="ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
-                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-personal>
+                <app-view-app-cust-data-company-x *ngIf="ResponseAppDetailData?.MrCustTypeCode=='COMPANY'"
+                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-company-x>
+                <app-view-app-cust-data-personal-x *ngIf="ResponseAppDetailData?.MrCustTypeCode=='PERSONAL'"
+                  [appId]="ResponseAppDetailData?.AppId"></app-view-app-cust-data-personal-x>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsAsset" label="Asset">
+              <!-- <ng-template matTabContent>
+                <view-asset-data-x [appId]="ResponseAppDetailData?.AppId" [agrmntId]="AgrmntId"></view-asset-data-x>
+              </ng-template> -->
               <ng-template matTabContent>
-                <view-asset-data [appId]="ResponseAppDetailData?.AppId" [agrmntId]="AgrmntId"></view-asset-data>
+                <view-multiasset-data [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></view-multiasset-data>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsMultiAsset">
               <ng-template mat-tab-label>{{ BizTemplateCode == 'CF4W' ? 'Asset' : 'Asset & Collateral Data' }}</ng-template>
               <ng-template matTabContent>
-                <view-asset-data-x [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></view-asset-data-x>
+                <view-multiasset-data [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></view-multiasset-data>
               </ng-template>
             </mat-tab>
 

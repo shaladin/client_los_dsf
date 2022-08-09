@@ -23,14 +23,14 @@
 <!-- Sidebar Content starts -->
 <div class="sidebar-content">
     <div class="nav-container">
-        <ul class="navigation">
+        <ul class="navigation" data-scroll-to-active="true">
             <!-- First level menu -->
             <li *ngFor="let menuItem of menuItems" [ngClass]="[menuItem.Class]"
                 [routerLinkActive]="menuItem.Submenu.length != 0 ? '' : 'active'"
                 [routerLinkActiveOptions]="{exact: true}">
                 <span *ngIf="menuItem.Class != 'has-sub'; then internalNoSubBlock else internalHasSubBlock"></span>
                 <ng-template #internalNoSubBlock>
-                    <a (click)="navigateSkipLocationChange(menuItem)" [routerLink]="menuItem.Class != 'has-sub' ? [menuItem.Path] : null"
+                    <a (click)="navigateSkipLocationChange(menuItem)" [routerLink]="menuItem.Path"
                         [queryParams]="genParam(menuItem.Params)"
                         *ngIf="!menuItem.IsExternalLink; else externalLinkBlock" [contextMenu]="basicMenu"
                         [contextMenuSubject]="menuItem">
@@ -58,10 +58,12 @@
                 <ul class="menu-content" *ngIf="menuItem.Submenu.length > 0">
                     <li *ngFor="let menuSubItem of menuItem.Submenu"
                         [routerLinkActive]="menuSubItem.Submenu.length > 0 ? '' : 'active'"
+                        [routerLinkActiveOptions]="{exact: true}"
                         [ngClass]="[menuSubItem.Class]">
                         <span *ngIf="menuSubItem.Class != 'has-sub'; then secondLevelNoSubBlock else secondLevelHasSubBlock"></span>
                         <ng-template #secondLevelNoSubBlock>
                             <a (click)="navigateSkipLocationChange(menuSubItem)"
+                                [routerLink]="menuSubItem.Path"
                                 *ngIf="!menuSubItem.IsExternalLink; else externalSubLinkBlock">
                                 <i [ngClass]="[menuSubItem.Icon]"></i>
                                 <span class="menu-title">{{menuSubItem.Title | translate }}</span>
@@ -91,6 +93,7 @@
                             <li *ngFor="let menuSubsubItem of menuSubItem.Submenu" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact: true}" [ngClass]="[menuSubsubItem.Class]">
                                 <a (click)="navigateSkipLocationChange(menuSubsubItem)"
+                                    [routerLink]="menuSubsubItem.Path"
                                     *ngIf="!menuSubsubItem.IsExternalLink; else externalSubSubLinkBlock">
                                     <i [ngClass]="[menuSubsubItem.Icon]"></i>
                                     <span class="menu-title">{{menuSubsubItem.Title | translate }}</span>

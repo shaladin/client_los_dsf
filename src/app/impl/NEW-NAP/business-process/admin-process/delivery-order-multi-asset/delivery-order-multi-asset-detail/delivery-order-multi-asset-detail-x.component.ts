@@ -78,6 +78,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   isHasPO: boolean = false;
   LobCode: string;
   DeliveryDt: Date = new Date();
+  appCustId: number;
 
   constructor(
     private httpClient: HttpClient,
@@ -106,7 +107,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.appId }).subscribe(
       (response) => {
         this.LobCode = response.LobCode;
       }
@@ -277,8 +278,8 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     let doNo: string = this.doList.find(x => x.DeliveryOrderHId == deliveryOrderHId).DeliveryNo;
     if (!doNo) doNo = "";
     let tempListData: Array<object> = formArray.value;
-    let filteredData = tempListData.find(x => x["DeliveryNo"] == doNo);
-    return [filteredData];
+    let filteredData = tempListData.filter(x => x["DeliveryNo"] == doNo);
+    return filteredData;
   }
 
   readonly modalDoModeAdd: string = CommonConstant.ADD;
@@ -486,7 +487,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
           AgrmntCreatedDt: this.DOAssetForm.controls.AgrmntCreatedDt.value,
           EffectiveDt: this.DOAssetForm.controls.EffectiveDt.value,
           AdditionalInterestPaidBy: this.DOAssetForm.controls.AdditionalInterestPaidBy.value,
-          GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value,
+          GoLiveDt : this.DOAssetForm.controls.GoLiveEstimated.value
         };
         let editTc = this.httpClient.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj);
         let updateAgrmntDt = this.httpClient.post(URLConstantX.UpdateEffectiveAndAgrmntCreatedDtX, agrmntObj);

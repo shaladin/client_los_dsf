@@ -38,6 +38,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   TrxNo : string;
+  AppObj: AppObj;
   IsReady: boolean = false;
   constructor(private router: Router, 
      private route: ActivatedRoute,
@@ -80,6 +81,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
     );
     await this.http.post<AppObj>(URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
       response => {
+        this.AppObj = response;
         this.TrxNo = response.AppNo
       }
     );
@@ -141,6 +143,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo =  this.TrxNo;
     this.InputApvObj.RequestId = this.ApvReqId;
+    this.InputApvObj.OfficeCodes.push(this.AppObj.OriOfficeCode);
     this.IsReady = true;
   }
 

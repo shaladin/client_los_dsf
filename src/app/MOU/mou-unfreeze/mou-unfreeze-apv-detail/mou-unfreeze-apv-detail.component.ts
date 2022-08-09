@@ -7,10 +7,12 @@ import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { ApprovalObj } from "app/shared/model/approval/approval-obj.model";
+import { CustObj } from "app/shared/model/cust-obj.model";
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
 import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
+import { AdInsHelperService } from "app/shared/services/AdInsHelper.service";
 import { ApprovalTaskService } from "app/shared/services/ApprovalTask.service";
 import { environment } from "environments/environment";
 
@@ -35,7 +37,8 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private adInsHelperService: AdInsHelperService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (params["TrxId"] != null) {
@@ -91,7 +94,19 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     this.router.navigate([NavigationConstant.MOU_FREEZE_APV_PAGING]);
   }
 
-  GetCallBack(e) {
+  GetCallBack(event) {
+    if (event.Key == "customer") {
+      var custObj = { CustNo: event.ViewObj["CustNo"] };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        (response: CustObj) => {
+          if(response.MrCustTypeCode == CommonConstant.CustTypePersonal){
+            this.adInsHelperService.OpenCustomerViewByCustId(response.CustId);
+          }
+          if(response.MrCustTypeCode == CommonConstant.CustTypeCompany){
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response.CustId);
+          }
+        });
+    }
   }
 
   initInputApprovalObj() {

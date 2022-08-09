@@ -765,6 +765,7 @@ export class CollateralAddEditComponent implements OnInit {
       this.AddCollForm.controls.OwnerProfessionCode.enable();
       this.AddCollForm.controls.MrOwnerTypeCode.enable();
       this.InputLookupProfessionObj.isDisable = false;
+      this.OwnerTypeChange(this.AddCollForm.get('MrOwnerTypeCode').value, true);
     }
   }
 
@@ -930,6 +931,7 @@ export class CollateralAddEditComponent implements OnInit {
           });
           
           await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
+          this.ChangeMrIdTypeCode(this.AddCollForm.controls.MrIdTypeCode.value);
 
           if (this.AddCollForm.controls.SelfOwner.value == true) {
             this.AddCollForm.controls.OwnerName.disable();
@@ -994,18 +996,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
       });
-
-    this.ownerRelationshipObj = new RefMasterObj();
-    this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.ownerRelationshipObj).subscribe(
-      (response) => {
-        this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
-        if(this.mode != CommonConstant.ModeEditColl){
-          this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
-        }
-      }
-    );
-
+    
     this.assetRegionObj = new RefMasterObj();
     this.assetRegionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetInsRegion;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetRegionObj).subscribe(
@@ -1382,9 +1373,11 @@ export class CollateralAddEditComponent implements OnInit {
     );
   }
 
-  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false) {
-    if (OwnerType == CommonConstant.CustTypePersonal) {
-      if (IsOwnerTypeChanged) {
+  async OwnerTypeChange(OwnerType: string, IsOwnerTypeChanged: boolean = false){
+    await this.GetOwnerRelationship();
+
+    if(OwnerType == CommonConstant.CustTypePersonal){
+      if(IsOwnerTypeChanged){
         this.AddCollForm.patchValue({
           OwnerProfessionCode: ""
         });
@@ -1416,4 +1409,39 @@ export class CollateralAddEditComponent implements OnInit {
       }
     }
   }
+
+  ChangeMrIdTypeCode(MrIdTypeCode: string){
+    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+      this.AddCollForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.AddCollForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+    else {
+      this.AddCollForm.controls.OwnerIdNo.setValidators(Validators.required);
+      this.AddCollForm.controls.OwnerIdNo.updateValueAndValidity();
+    }
+  }
+
+  async GetOwnerRelationship()
+  {
+    this.ownerRelationshipObj = new RefMasterObj();
+    this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+    var mrOwnerTypeCode = this.AddCollForm.get('MrOwnerTypeCode').value;
+    if(!mrOwnerTypeCode) mrOwnerTypeCode = this.custType;
+
+    if(this.custType == CommonConstant.CustTypePersonal && mrOwnerTypeCode == CommonConstant.CustTypePersonal)
+    {
+      this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    }
+
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.ownerRelationshipObj).toPromise().then(
+      (response) => {
+        this.returnOwnerRelationshipObj = new Array();
+        this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
+        if(this.mode != CommonConstant.ModeEditColl){
+          this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
+        }
+      }
+    );
+  }
+
 }

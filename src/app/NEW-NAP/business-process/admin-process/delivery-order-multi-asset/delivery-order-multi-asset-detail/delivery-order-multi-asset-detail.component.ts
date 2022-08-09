@@ -199,8 +199,8 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     let doNo: string = this.doList.find(x => x.DeliveryOrderHId == deliveryOrderHId).DeliveryNo;
     if (!doNo) doNo = "";
     let tempListData: Array<object> = formArray.value;
-    let filteredData = tempListData.find(x => x["DeliveryNo"] == doNo);
-    return [filteredData];
+    let filteredData = tempListData.filter(x => x["DeliveryNo"] == doNo);
+    return filteredData;
   }
 
   readonly modalDoModeAdd: string = CommonConstant.ADD;

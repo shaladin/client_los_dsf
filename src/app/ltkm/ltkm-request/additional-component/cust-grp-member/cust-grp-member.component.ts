@@ -58,21 +58,21 @@ export class LtkmCustGrpMemberComponent implements OnInit {
         await this.bindAppGrp();
     }
 
-    addCustGrp() {
-        var custSocmedObjs = this.parentForm.controls[this.identifier] as FormArray;
-        var length = this.parentForm.value[this.identifier].length;
-        var max: number = 0;
-        if (length > 0) {
-            max = this.parentForm.value[this.identifier][length - 1].No;
-        }
-        custSocmedObjs.push(this.addGroup(undefined, max + 1));
+    // addCustGrp() {
+    //     var custSocmedObjs = this.parentForm.controls[this.identifier] as FormArray;
+    //     var length = this.parentForm.value[this.identifier].length;
+    //     var max: number = 0;
+    //     if (length > 0) {
+    //         max = this.parentForm.value[this.identifier][length - 1].No;
+    //     }
+    //     custSocmedObjs.push(this.addGroup(undefined, max + 1));
 
-        var InputLookupCustomerObj = this.initLookup();
-        this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
-        this.dictLookup[max + 1] = InputLookupCustomerObj;
+    //     var InputLookupCustomerObj = this.initLookup();
+    //     this.InputLookupCustomerObjs.push(InputLookupCustomerObj);
+    //     this.dictLookup[max + 1] = InputLookupCustomerObj;
 
-        this.CustRelationshipObjs.push({ list: [] });
-    }
+    //     this.CustRelationshipObjs.push({ list: [] });
+    // }
 
     deleteCustGrp(i: number) {
         if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {

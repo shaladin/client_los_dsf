@@ -87,7 +87,7 @@ export class ViewAppCustDataCompletionCompanyXComponent implements OnInit {
     }
     else {
       reqObj ={AppId: this.appId, IsForNapCompletionVersion: true};
-      url = URLConstant.GetCustDataCompanyForViewByAppId;
+      url = URLConstantX.GetCustDataCompanyForViewXByAppId;
     }
 
     await this.http.post(url, reqObj).toPromise().then(
@@ -98,7 +98,7 @@ export class ViewAppCustDataCompletionCompanyXComponent implements OnInit {
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustCompanyLegalDocObjs = response.ListAppCustCompanyLegalDocObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
-        this.ListCustCoyFinData = response.ListAppCustCompanyFinData;
+        this.ListCustCoyFinData = response.ListAppCustCompanyFinDataX;
         this.responseCustAttr = response.ListCustFinDataAttrContent;
         this.appCustOtherInfoForViewObj = response.AppCustOtherInfoForViewObj;
         this.appCustAttrContentsObj = response.ListAppCustAttrContentObj;

@@ -214,6 +214,19 @@ export class ApplicationDataXComponent implements OnInit {
   MasterCustType: string = "";
   MasterIdNoType: string = "";
 
+  AgrmntDt: Date = new Date();
+  OsPrincipal: number = 0;
+  OsInterest: number = 0;
+  NumberOfAsset: number = 0;
+  EffRate: number = 0;
+  PurposeOfFinancing: string = "";
+  WayOfFinancing: string = "";
+  ProductType: string = "";
+  ApToSupplierDisburseDt: Date = new Date();
+  EffectiveDt: Date = new Date();
+  TotalAssetPrice: number = 0;
+  Tenor: number = 0;
+
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -252,7 +265,7 @@ export class ApplicationDataXComponent implements OnInit {
     this.getAppSrcData();
     await this.getRefMaster();
 
-    setTimeout(() => { this.getAppModelInfo() }, 2000);
+    setTimeout(async() => { this.getAppModelInfo() }, 2000);
 
     await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).toPromise().then(
       (response: AppCustObj) => {
@@ -271,7 +284,7 @@ export class ApplicationDataXComponent implements OnInit {
         );
       }
     );
-    
+
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response: GeneralSettingObj) => {
         this.salesOfficerCode = response.GsValue.split(',');
@@ -432,20 +445,24 @@ export class ApplicationDataXComponent implements OnInit {
     );
   }
 
-  getInterestTypeCode() {
+  async getInterestTypeCode(ProdOfferingCode: string, ProdOfferingVersion: string) {
     let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.ProdOfferingCode = ProdOfferingCode;
     obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
-    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+    obj.ProdOfferingVersion = ProdOfferingVersion;
+    let noValue: boolean = !this.NapAppModelForm.controls.InterestType.value;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
         if (response && response["StatusCode"] == "200") {
+          if(noValue){
           this.NapAppModelForm.patchValue({
             InterestType: response["CompntValue"],
             InterestTypeDesc: response["CompntValueDesc"],
           });
           this.ChangeInterestType();
+          if(response["MrProdBehaviourCode"] == CommonConstant.ProductBehaviourLock) this.NapAppModelForm.controls.InterestType.disable();
+          }
         }
         else {
           // throw new Error("Interest Type component not found, please use the latest product offering");
@@ -486,7 +503,7 @@ export class ApplicationDataXComponent implements OnInit {
     await this.getAppXData();
 
     await this.http.post(URLConstantX.GetAppDetailForTabAddEditAppByIdX, obj).toPromise().then(
-      (response) => {
+      async (response) => {
 
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
@@ -561,11 +578,10 @@ export class ApplicationDataXComponent implements OnInit {
 
         this.getAgrmntParent();
         this.makeNewLookupCriteria();
-        this.getInterestTypeCode();
         this.initMailingAddress();
 
         if (this.BizTemplateCode != CommonConstant.OPL) {
-          this.getInterestTypeCode();
+          await this.getInterestTypeCode(this.resultResponse.ProdOfferingCode, this.resultResponse.ProdOfferingVersion);
           this.GetCrossInfoData();
         } else {
           this.NapAppModelForm.controls.InterestType.clearValidators();
@@ -826,7 +842,7 @@ export class ApplicationDataXComponent implements OnInit {
       MrSlikSecEcoCode: ev.RefSectorEconomySlikCode
     });
   }
-  
+
   setLookupCommodityData(ev) {
     this.NapAppModelForm.patchValue({
       CommodityCode: ev.MasterCode
@@ -858,13 +874,12 @@ export class ApplicationDataXComponent implements OnInit {
         }
       );
       this.agrmntParentNo = this.resultResponse.AgrmntParentNo;
-      
-      if(this.agrParentList.length)
-      {
+
+      if (this.agrParentList.length) {
         var idx = -1;
-        for(var i=0; i<this.agrParentList.length; i++) if(this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
+        for (var i = 0; i < this.agrParentList.length; i++) if (this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
         if (idx > -1) this.copyAgrmntParentEvent(idx);
-      }   
+      }
     }
 
     let slikReqCode = {
@@ -974,6 +989,19 @@ export class ApplicationDataXComponent implements OnInit {
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
     this.goLiveDt = this.agrParent.GoLiveDt;
+    this.AgrmntDt = this.agrParent.AgrmntDt;
+    this.OsPrincipal = this.agrParent.OsPrincipal;
+    this.OsInterest = this.agrParent.OsInterest;
+    this.NumberOfAsset = this.agrParent.NumOfAsset;
+    this.EffRate = this.agrParent.EffRate;
+    this.PurposeOfFinancing = this.agrParent.PurposeOfFinancing;
+    this.WayOfFinancing = this.agrParent.WayOfFinancing;
+    this.ProductType = this.agrParent.ProductType;
+    this.ApToSupplierDisburseDt = this.agrParent.ApToSupplierDisburseDt;
+    this.EffectiveDt = this.agrParent.EffectiveDt;
+    this.Tenor = this.agrParent.Tenor;
+    this.TotalAssetPrice = this.agrParent.TotalAssetPrice;
+
     const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
     reqCalculatePlafondAgrmntXObj.AgrmntParentNo = this.agrParent.AgrmntNo;
@@ -984,6 +1012,7 @@ export class ApplicationDataXComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.AssetTypeCode = this.agrParent.AssetTypeCode;
     reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
     reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
+    reqCalculatePlafondAgrmntXObj.Tenor = this.agrParent.Tenor;
 
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
       this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
@@ -1227,6 +1256,19 @@ export class ApplicationDataXComponent implements OnInit {
               PlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt,
               MaxPlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt,
               MaxTenor: this.maxTenor,
+              AgrmntDt: this.AgrmntDt,
+              OsPrincipal: this.OsPrincipal,
+              OsInterest: this.OsInterest,
+              NumOfAsset: this.NumberOfAsset,
+              EffRate: this.EffRate,
+              PurposeOfFinancing: this.PurposeOfFinancing,
+              WayOfFinancing: this.WayOfFinancing,
+              ProductType: this.ProductType,
+              ApToSupplierDisburseDt: this.ApToSupplierDisburseDt,
+              EffectiveDt: this.EffectiveDt,
+              GoLiveDt: this.goLiveDt,
+              Tenor: this.Tenor,
+              TotalAssetPrice: this.TotalAssetPrice,
               RowVersion: this.resultResponse.RowVersionAgrmntMasterX
             }
             let obj = {
@@ -1371,9 +1413,12 @@ export class ApplicationDataXComponent implements OnInit {
       }
     }
 
-    if (plafondUsed < financingAmt) {
-      this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
-      return false;
+    if(this.NapAppModelForm.controls.LobCode.value == 'FD')
+    {
+      if (plafondUsed < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+        return false;
+      }
     }
 
     if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
@@ -1566,8 +1611,10 @@ export class ApplicationDataXComponent implements OnInit {
   readonly WopAutoDebit: string = CommonConstant.WopAutoDebit;
   setBankAcc(WOP: string) {
     if (WOP == this.WopAutoDebit) {
-      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+      if (this.BizTemplateCode == CommonConstant.CFNA){
+        this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+        this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+      }
 
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
@@ -1588,8 +1635,10 @@ export class ApplicationDataXComponent implements OnInit {
 
   setBankAccDDL(event: UcDropdownListCallbackObj) {
     if (event.selectedValue == this.WopAutoDebit) {
-      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+      if (this.BizTemplateCode == CommonConstant.CFNA){
+        this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+        this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity();
+        }
 
       if (this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
         this.NapAppModelForm.get('IdNoOwnerBankAcc').setValidators([Validators.pattern('^[0-9]+$'), Validators.minLength(16), Validators.maxLength(16)]);
@@ -1684,7 +1733,17 @@ export class ApplicationDataXComponent implements OnInit {
 
   selectedBank() {
     if (this.NapAppModelForm.controls.MrWopCode.value != this.WopAutoDebit) return;
-
+    
+    if(this.NapAppModelForm.get("CustBankAcc").value == "")
+    {
+      this.GetBankInfo.BankCode = "";
+      this.GetBankInfo.BankBranch = "";
+      this.GetBankInfo.AppId = 0;
+      this.GetBankInfo.BankAccNo = "";
+      this.GetBankInfo.BankAccName = "";
+      return;
+    }
+    
     let custBankAccId: number = this.NapAppModelForm.get("CustBankAcc").value;
     let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
     this.GetBankInfo.BankCode = selectedBankAcc.BankCode;

@@ -6,6 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { forkJoin } from 'rxjs';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { RefProfessionObj } from 'app/shared/model/ref-profession-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'view-asset-data-detail-x',
@@ -25,16 +26,17 @@ export class ViewAssetDataDetailXComponent implements OnInit {
   adminHeadName: string;
   inputGridObj: InputGridObj = new InputGridObj();
   OwnerProfessionName: string = '-';
+  isOtherEmpPosCode: boolean;
 
   constructor(private httpClient: HttpClient, public activeModal: NgbActiveModal) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryFL4W.json";
-
+    this.isOtherEmpPosCode = false;
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { Id: this.AppAssetId });
     let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { Id: this.AppAssetId });
     let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, { Id: this.AppCollateralId });
-    forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
+    await forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).toPromise().then(
       (response: any) => {
         this.appAsset = response[0];
         this.appAssetSupplEmp = response[1];
@@ -51,6 +53,27 @@ export class ViewAssetDataDetailXComponent implements OnInit {
           else if(item.MrSupplEmpPositionCode == CommonConstant.ADMIN_HEAD_JOB_CODE){
             this.adminHeadName = item.SupplEmpName;
           }
+          else
+          {
+            this.salesName = item.SupplEmpName;
+            this.isOtherEmpPosCode = true;
+            break;
+          }
+        }
+
+        if(this.salesName == null && this.adminHeadName !=null){
+          this.salesName = this.adminHeadName
+        }
+
+        if (this.salesName == null && this.adminHeadName ==null && this.branchManagerName !=null){
+          this.salesName = this.branchManagerName 
+          this.adminHeadName = this.branchManagerName 
+        }
+
+        if(this.isOtherEmpPosCode)
+        {
+          this.adminHeadName = null;
+          this.branchManagerName = null;
         }
 
         this.inputGridObj.resultData = {
@@ -61,7 +84,7 @@ export class ViewAssetDataDetailXComponent implements OnInit {
       }
     );
 
-    this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
+    await this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).toPromise().then(
       (response: any) => {
         this.AssetTypeObj = response;
       }

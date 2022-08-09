@@ -18,6 +18,9 @@ import { MatTabsModule } from "@angular/material";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewLtkmAppSummaryDataComponent } from "./ltkm-app-summary-data/ltkm-app-summary-data.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewLtkmCustDataCompletionCompanyXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-company/view-ltkm-cust-data-completion-company-x.component";
+import { ViewLtkmCustomerDataCompanyXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-company/view-ltkm-customer-data-company-x.component";
+import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail-x.component";
 
 @NgModule({
   exports: [
@@ -31,7 +34,10 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     ViewLtkmCustDataCompletionPersonalComponent,
     ViewLtkmCustDetailComponent,
     ViewLtkmAppSummaryDataComponent,
-    LtkmViewComponent
+    LtkmViewComponent,
+    ViewLtkmCustDataCompletionCompanyXComponent,
+    ViewLtkmCustomerDataCompanyXComponent,
+    ViewLtkmCustDetailXComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +60,10 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     ViewLtkmCustDataCompletionPersonalComponent,
     ViewLtkmCustDetailComponent,
     ViewLtkmAppSummaryDataComponent,
-    LtkmViewComponent
+    LtkmViewComponent,
+    ViewLtkmCustDataCompletionCompanyXComponent,
+    ViewLtkmCustomerDataCompanyXComponent,
+    ViewLtkmCustDetailXComponent
   ],
   providers: [
     NGXToastrService

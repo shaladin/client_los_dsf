@@ -130,22 +130,9 @@
       "position": "center",
       "action": [
         {
-          "type": "edit",
-          "path": "EDIT_COMM_AFT_APV_DETAIL",
-          "param": [
-            {
-              "type": "AppId",
-              "property": "AppId"
-            },
-            {
-              "type": "BizTemplateCode",
-              "property": "BizTemplateCode"
-            },
-            {
-              "type": "AgrmntId",
-              "property": "AgrmntId"
-            }
-          ]
+          "type": "callback",
+          "key": "Edit",
+          "icon": "ft-edit-2"
         }
       ]
     }

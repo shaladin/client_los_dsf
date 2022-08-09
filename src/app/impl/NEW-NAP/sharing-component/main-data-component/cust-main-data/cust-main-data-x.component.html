@@ -365,7 +365,7 @@
             </div>
           </div>
         </div>
-        <app-cust-attr-form [hidden]="(custMainDataMode != CustMainDataMgmntShrholder || custMainDataMode != CustMainDataFamily) && MrCustTypeCode != CustTypePersonal" [AppCustId]="appCustId" [AttrGroup]="AttrGroupCustPersonalOther" [AttrCodes]="listAttrCodes"  [parentForm]="CustMainDataForm" [enjiForm]="enjiForm" [identifier]="identifierCustAttr" #CustAttrForm></app-cust-attr-form>
+        <app-cust-attr-form [hidden]="!((custMainDataMode == CustMainDataMgmntShrholder && MrCustTypeCode == CustTypePersonal) || custMainDataMode == CustMainDataFamily)" [AppCustId]="appCustId" [AttrGroup]="AttrGroupCustPersonalOther" [AttrCodes]="listAttrCodes"  [parentForm]="CustMainDataForm" [enjiForm]="enjiForm" [identifier]="identifierCustAttr" #CustAttrForm></app-cust-attr-form>
         <lib-ucSubsection [id]="'AddressId'" [title]="'Legal Address'" [panel]="'Address'">
         </lib-ucSubsection>
         <div id="Address">
@@ -407,5 +407,5 @@
       </div>
     </form>
   </div>
-  <app-cust-public *ngIf="MrCustTypeCode == CustTypePublic" [tempTotalSharePrct]="tempTotalSharePrct" [AppId]="appId" [AppCustCompanyId]="ParentAppCustCompanyId" [AppCustCompanyMgmntShrholderId]="AppCustCompanyMgmntShrholderId" (outputCancel)="cancel()"></app-cust-public>
+  <app-cust-public-x *ngIf="MrCustTypeCode == CustTypePublic" [tempTotalSharePrct]="tempTotalSharePrct" [AppId]="appId" [AppCustCompanyId]="ParentAppCustCompanyId" [AppCustCompanyMgmntShrholderId]="AppCustCompanyMgmntShrholderId" (outputCancel)="cancel()"></app-cust-public-x>
 </div>
