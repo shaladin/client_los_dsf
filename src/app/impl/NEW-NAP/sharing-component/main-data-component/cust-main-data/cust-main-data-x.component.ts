@@ -1468,6 +1468,12 @@ export class CustMainDataXComponent implements OnInit {
       else{
         this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.value.lookupCustomerCoy.value;
       }
+      if(this.CustMainDataForm.controls.isForeigner.value == null || this.CustMainDataForm.controls.isForeigner.value == false){
+        this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsForeigner = false;
+      }
+      else{
+        this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsForeigner = this.CustMainDataForm.controls.isForeigner.value;
+      }
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.rowVersionMgmntShrholder;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
@@ -1635,7 +1641,7 @@ export class CustMainDataXComponent implements OnInit {
       // }
       this.setDataCustomerCompanyForSave();
       if (this.appCustId == null || this.appCustId == 0) {
-        this.http.post(URLConstant.AddCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
+        this.http.post(URLConstantX.AddCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
               this.outputAfterSave.emit(this.custDataCompanyObj.AppCustObj);
