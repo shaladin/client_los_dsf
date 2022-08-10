@@ -140,9 +140,9 @@
                 <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Join Income</label>
                     <label class="col-md-3 adInsLabel" >{{CustPersonalFinData.IsJoinIncome ? 'Yes' : 'No'}}</label>
-                    <label class="col-md-3 adInsLabel" translate>Other Monthly Installment</label>
+                    <label class="col-md-3 adInsLabel" translate>Monthly Installment Other</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt != 0">{{CustPersonalFinData.OtherMonthlyInstAmt | number:'.2':'en-US'}}</label>
-                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt == 0">-</label>  
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt == 0">-</label>
                     <label class="col-md-3"></label>
 <!--                    <label class="col-md-3 adInsLabel" translate>Other Monthly Installment</label>-->
 <!--                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt != 0">{{CustPersonalFinData.OtherMonthlyInstAmt | number:'.2':'en-US'}}</label>-->
@@ -152,6 +152,9 @@
                     <label class="col-md-3 adInsLabel" translate>Total Monthly Income</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalIncomeAmt != 0">{{CustPersonalFinData.TotalIncomeAmt | number:'.2':'en-US'}}</label>
                     <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalIncomeAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Other Monthly Installment</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MonthlyInstallmentAmt != 0">{{CustPersonalFinData.MonthlyInstallmentAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MonthlyInstallmentAmt == 0">-</label>  
                 </div>
                 <div class="form-group row ">
                     <label class="col-md-3 adInsLabel" translate>Nett Monthly Income</label>
