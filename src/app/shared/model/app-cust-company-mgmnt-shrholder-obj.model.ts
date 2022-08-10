@@ -5,6 +5,7 @@ export class AppCustCompanyMgmntShrholderObj {
   IsSigner: boolean;
   IsActive: boolean;
   IsOwner: boolean;
+  IsForeigner: boolean;
   AppCustCompanyId: number;
   MgmntShrholderName: string;
   JobPositionName: string;
@@ -40,6 +41,7 @@ export class AppCustCompanyMgmntShrholderObj {
     this.IsSigner = false;
     this.IsOwner = false;
     this.IsActive = false;
+    this.IsForeigner = false;
     this.MrIdTypeCode = "";
     this.IdNo = "";
     this.BirthPlace = "";
