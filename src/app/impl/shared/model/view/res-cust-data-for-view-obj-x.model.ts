@@ -1,4 +1,5 @@
 import { ResAppCustBankAccForViewObj } from "app/shared/model/response/view/res-app-cust-bank-acc-for-view-obj.model";
+import { ResAppCustBankAccForViewObjX } from "./res-app-cust-bank-acc-for-view-obj-x.model";
 
 export class ResCustDataPersonalForViewObj {
     AppCustObj: ResAppCustForViewObj;
@@ -27,7 +28,7 @@ export class ResCustDataPersonalForViewObj {
 export class ResCustDataPersonalForViewObjX {
     AppCustObj: ResAppCustForViewObj;
     ListAppCustAddrObj: Array<ResAppCustAddrForViewObj>;
-    ListAppCustBankAccObj: Array<ResAppCustBankAccForViewObj>;
+    ListAppCustBankAccObjX: Array<ResAppCustBankAccForViewObjX>;
     ListAppCustGrpObj: Array<ResAppCustGrpForViewObj>;
     ListAppCustFamilyObj: Array<ResAppCustCompletionObj>;
     ListAppCustPersonalFinDataObjs: Array<ResAppCustPersonalFinDataForViewObj>;
@@ -39,7 +40,7 @@ export class ResCustDataPersonalForViewObjX {
     constructor() {
         this.AppCustObj = new ResAppCustForViewObj();
         this.ListAppCustAddrObj = new Array<ResAppCustAddrForViewObj>();
-        this.ListAppCustBankAccObj = new Array<ResAppCustBankAccForViewObj>();
+        this.ListAppCustBankAccObjX = new Array<ResAppCustBankAccForViewObjX>();
         this.ListAppCustGrpObj = new Array<ResAppCustGrpForViewObj>();
         this.ListAppCustFamilyObj = new Array<ResAppCustCompletionObj>();
         this.ListAppCustPersonalFinDataObjs = new Array<ResAppCustPersonalFinDataForViewObj>();
@@ -52,7 +53,7 @@ export class ResCustDataPersonalForViewObjX {
 export class ResCustDataCompanyForViewObjX {
     AppCustObj: ResAppCustForViewObj;
     ListAppCustAddrObj: Array<ResAppCustAddrForViewObj>;
-    ListAppCustBankAccObj: Array<ResAppCustBankAccForViewObj>;
+    ListAppCustBankAccObjX: Array<ResAppCustBankAccForViewObjX>;
     ListAppCustGrpObj: Array<ResAppCustGrpForViewObj>;
     ListAppCustCompanyMgmntShrholderObjX: Array<ResAppCustCompanyMgmntShrholderForViewObjX>;
     ListAppCustCompanyLegalDocObj: Array<ResAppCustCompanyLegalDocForViewObj>;
@@ -65,7 +66,7 @@ export class ResCustDataCompanyForViewObjX {
     constructor() {
         this.AppCustObj = new ResAppCustForViewObj();
         this.ListAppCustAddrObj = new Array<ResAppCustAddrForViewObj>();
-        this.ListAppCustBankAccObj = new Array<ResAppCustBankAccForViewObj>();
+        this.ListAppCustBankAccObjX = new Array<ResAppCustBankAccForViewObjX>();
         this.ListAppCustGrpObj = new Array<ResAppCustGrpForViewObj>();
         this.ListAppCustCompanyMgmntShrholderObjX = new Array<ResAppCustCompanyMgmntShrholderForViewObjX>();
         this.ListAppCustCompanyLegalDocObj = new Array<ResAppCustCompanyLegalDocForViewObj>();

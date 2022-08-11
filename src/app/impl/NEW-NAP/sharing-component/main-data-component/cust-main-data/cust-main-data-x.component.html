@@ -400,6 +400,9 @@
           (click)="cancel()">
           <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
         </button>
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="findInvalidControls()">
+          <span>Test</span>
+        </button>
         <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm)
           class="btn btn-raised btn-primary">
           <i class="fa fa-check-square"></i>&nbsp;<span translate>Save</span>
