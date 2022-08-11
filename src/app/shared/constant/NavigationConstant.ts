@@ -101,7 +101,6 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.AUTO_DEBIT_REGISTRATION_PAGING;//"/Nap/AddProcess/AutoDebitRegistration/Paging"
   public static NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_INQUIRY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.AUTO_DEBIT_REGISTRATION_INQUIRY;//"Nap/AddProcess/AutoDebitRegistration/Inquiry"
   public static NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_CANCEL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.AUTO_DEBIT_REGISTRATION_CANCEL;//"Nap/AddProcess/AutoDebitRegistration/Cancel"
-  public static NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_VIEW = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.AUTO_DEBIT_REGISTRATION_VIEW;//"Nap/AddProcess/AutoDebitRegistration/View"
   //#endregion
 
   //#region AdminProcess
@@ -286,6 +285,7 @@ export class NavigationConstant {
   public static VIEW_CHANGE_MOU = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_CHANGE_MOU_X; //"/View/ChangeMouView/X"
   public static VIEW_PHN_VERIF = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PHN_VERIF; //"/View/PhoneVerifView"
   public static VIEW_SRVY = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_SRVY; //'/View/SurveyView'
+  public static VIEW_AUTO_DEBIT_REGIS = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_AUTO_DEBIT_REGIS; //'/View/AutoDebitRegisView'
   //#endregion
 
   //#region FOU-VIEW

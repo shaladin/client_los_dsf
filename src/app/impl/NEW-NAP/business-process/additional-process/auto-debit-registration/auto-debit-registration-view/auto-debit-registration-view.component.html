@@ -5,7 +5,7 @@
         <div class="card-header header-title" style="margin-bottom: 10px;"> 
           <div class="row">
             <div class="col-md-8">
-              <h4 class="card-title" id="horz-layout-colored-controls" translate> AUTO DEBIT REGISTRATION CANCEL
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> AUTO DEBIT REGISTRATION
               </h4>
             </div>
           </div>
@@ -40,6 +40,14 @@
                 {{autoDebitRegistrationObj.CancellationNotes}}
               </div>
             </div>
+          </div>
+        </div>
+        
+        <div class="px-3 pb-2">
+          <lib-ucSubsection [id]="'AutoDebitDataId'" [title]="'Auto Debit Data'" [panel]="'AutoDebitData'">
+          </lib-ucSubsection>
+          <div id="AutoDebitData">
+            
           </div>
         </div>
       </div>

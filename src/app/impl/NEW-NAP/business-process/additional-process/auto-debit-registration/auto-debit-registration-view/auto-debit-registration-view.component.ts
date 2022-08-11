@@ -40,7 +40,7 @@ export class AutoDebitRegistrationViewComponent implements OnInit {
     )
    }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewAutoDebitRegistration.json"
     
     await this.GetAutoDebitRegistrationById();

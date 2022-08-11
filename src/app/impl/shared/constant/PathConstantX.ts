@@ -38,7 +38,7 @@ export class PathConstantX {
   public static VIEW_CUST_EXPSR_X = "CustExposureView/X";
   public static VIEW_FOU_CUST_PERSONAL_DETAIL_X = "Customer/X/PersonalDetailX";
   public static VIEW_FOU_CUST_COY_DETAIL_X = "Customer/X/CoyDetail/X";
-
+  public static VIEW_AUTO_DEBIT_REGIS = "AutoDebitRegisView"
   //#endregion
 
   //#region Nap-Crd-Prcs
@@ -86,7 +86,6 @@ export class PathConstantX {
   public static AUTO_DEBIT_REGISTRATION_PAGING = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.PAGING;
   public static AUTO_DEBIT_REGISTRATION_INQUIRY = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.INQUIRY;
   public static AUTO_DEBIT_REGISTRATION_CANCEL = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.CANCEL;
-  public static AUTO_DEBIT_REGISTRATION_VIEW = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.VIEW;
 
   //#endregion
 

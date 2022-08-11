@@ -3,20 +3,21 @@
     "exportExcel": false,
     "component": [
       {
-        "type": "textbox",
-        "name": "adr.TRANSACTION_NO",
-        "id": "TransactionNoId",
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "a.OFFICE_CODE",
+        "id": "OfficeNameId",
         "value": "",
-        "label": "Transaction No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "adr.AGRMNT_NO",
-        "id": "AgreementNoId",
-        "value": "",
-        "label": "Agreement No",
-        "placeholder": "Placeholder"
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "isQueryIn": true,
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "label": "Office Name",
+        "items": [],
+        "itemsUrl": []
       },
       {
         "type": "textbox",
@@ -28,6 +29,14 @@
       },
       {
         "type": "textbox",
+        "name": "adr.TRANSACTION_NO",
+        "id": "TransactionNoId",
+        "value": "",
+        "label": "Transaction No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
         "name": "a.CUST_NAME",
         "id": "CustNameId",
         "value": "",
@@ -35,20 +44,12 @@
         "placeholder": "Placeholder"
       },
       {
-        "type": "dropdown",
-        "datatype": "text",
-        "name": "adr.BANK_CODE",
-        "id": "BankCodeId",
+        "type": "textbox",
+        "name": "adr.AGRMNT_NO",
+        "id": "AgreementNoId",
         "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "ddlType": "all",
-        "url": "",
-        "environment": "FOU",
-        "path": "/RefBankX/GetListRefBankIsAutoDebit",
-        "label": "Bank Name",
-        "items": [],
-        "itemsUrl": []
+        "label": "Agreement No",
+        "placeholder": "Placeholder"
       },
       {
         "type": "dropdown",
@@ -70,12 +71,34 @@
           }
         ],
         "itemsUrl": []
+      },
+      {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "adr.BANK_CODE",
+        "id": "BankCodeId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefBankX/GetListRefBankIsAutoDebit",
+        "label": "Bank Name",
+        "items": [],
+        "itemsUrl": []
       }
     ],
     "querystring": {
       "name": "searchAutoDebitRegistration"
     },
     "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "OFFICE",
+        "name": "a.OFFICE_NAME"
+      },
       {
         "type": "sort",
         "position": "center",
@@ -119,12 +142,19 @@
       }
     ],
   
-    "bodyList": [    
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "OfficeName"
+      },
       {
         "type": "link",
         "position": "center",
         "property": "TransactionNo",
-        "path": "NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_VIEW",
+        "name": "TransactionNo",
+        "environment": "LOSR3WEB",
+        "path": "VIEW_AUTO_DEBIT_REGIS",
         "target": "_blank",
         "param": [
           {
@@ -156,7 +186,7 @@
       },
       {
         "type": "text",
-        "position": "center",
+        "position": "left",
         "property": "CustName"
       },
       {
