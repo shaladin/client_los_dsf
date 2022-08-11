@@ -25,4 +25,11 @@
           </tbody>
       </table>
   </div>
+  
+  <lib-ucSubsection [id]="'CreditApprovalResultExtensionId'" [title]="'Credit Approval Extension History'" [panel]="'CreditApprovalResultExtension'">
+  </lib-ucSubsection>
+  <div id="CreditApprovalResultExtension">
+    <lib-ucapprovalHistory *ngIf="IsCrdApvRsltExtReady" [InputObj]="CrdApvRsltExtObj">
+    </lib-ucapprovalHistory>
+  </div>
 </div>

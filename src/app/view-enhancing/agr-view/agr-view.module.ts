@@ -46,6 +46,7 @@ import { ViewPurchaseOrderListComponent } from "./view-purchase-order-list/view-
 import { ViewPurchaseOrderDetailComponent } from "./view-purchase-order-detail/view-purchase-order-detail.component";
 import { ViewPurchaseOrderNewListComponent } from "./view-purchase-order-new-list/view-purchase-order-new-list.component";
 import { ViewPurchaseOrderNewDetailComponent } from "./view-purchase-order-new-detail/view-purchase-order-new-detail.component";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 
 @NgModule({
     imports: [
@@ -67,6 +68,7 @@ import { ViewPurchaseOrderNewDetailComponent } from "./view-purchase-order-new-d
         UcSubsectionModule,
         SharingComponentModule,
         UcapprovalhistModule,
+        UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
         AppViewComponentsModule,
