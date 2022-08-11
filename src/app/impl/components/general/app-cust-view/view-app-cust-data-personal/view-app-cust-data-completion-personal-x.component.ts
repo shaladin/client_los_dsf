@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { ViewAppCustDetailComponent } from 'app/components/general/app-cust-view/view-app-cust-detail/view-app-cust-detail.component';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ResCustDataPersonalForViewObjX } from 'app/impl/shared/model/view/res-cust-data-for-view-obj-x.model';
+import { ResAppCustBankAccForViewObjX } from 'app/impl/shared/model/view/res-app-cust-bank-acc-for-view-obj-x.model';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-personal-x',
@@ -40,7 +41,7 @@ export class ViewAppCustDataCompletionPersonalXComponent implements OnInit {
   appCustObj: ResAppCustForViewObj = new ResAppCustForViewObj();
   custModelCode: string;
   appCustAddrForViewObjs: Array<ResAppCustAddrForViewObj> = new Array<ResAppCustAddrForViewObj>();
-  appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
+  appCustBankAccObjs: Array<ResAppCustBankAccForViewObjX> = new Array<ResAppCustBankAccForViewObjX>();
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustFamilyObjs: Array<ResAppCustCompletionObj> = new Array<ResAppCustCompletionObj>();
 
@@ -97,7 +98,7 @@ export class ViewAppCustDataCompletionPersonalXComponent implements OnInit {
       (response : ResCustDataPersonalForViewObjX) => {
         this.appCustObj = response.AppCustObj;
         this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
-        this.appCustBankAccObjs = response.ListAppCustBankAccObj;
+        this.appCustBankAccObjs = response.ListAppCustBankAccObjX;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
         this.appCustFamilyObjs = response.ListAppCustFamilyObj;
         this.ListCustPersonalFinData = response.ListAppCustPersonalFinDataXObjs;
