@@ -82,7 +82,7 @@ export class CollateralDataCfnaComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
       }
       else {
-        this.http.post(this.UrlConstantNew.GetListAppLoanPurposeByAppId, { Id: this.AppId }).subscribe(
+        this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).subscribe(
           (response) => {
             let loadObj = response["listResponseAppLoanPurpose"];
 

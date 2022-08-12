@@ -771,7 +771,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   }
 
   GetBankAccCust() {
-    this.http.post(this.URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).subscribe(
       (responseAoi) => {
         const objectForAppCustBankAcc = {
           BankCode: responseAoi['BankCode'],

@@ -86,7 +86,7 @@ export class InvoiceDataComponent implements OnInit {
     var object = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeDisbToFctr
     }
-    await this.httpClient.post(this.UrlConstantNew.GetListActiveRefMaster, object).toPromise().then(
+    await this.httpClient.post(URLConstant.GetListActiveRefMaster, object).toPromise().then(
       async (response) => {
         this.disburseTos = response["ReturnObject"];
         this.InvoiceForm.patchValue({
@@ -131,7 +131,7 @@ export class InvoiceDataComponent implements OnInit {
       });
 
     await this.httpClient.post(URLConstant.GetDisbInfoByAppId, obj).toPromise().then(
-      (response) => {
+      async (response) => {
         if (response["DisbInfoId"] != 0) {
           console.log("Cek Response" + response);
           this.DisbInfoId = response["DisbInfoId"];

@@ -247,6 +247,14 @@ export class TrialCalculationComponent implements OnInit {
     }
   }
 
+  ChangeIsGenerateHandler() {
+    if(this.IsGenerate) {
+      this.toastr.warningMessage("Please Regenerate Financial Data");
+      this.UpdateForm();
+    }
+    this.IsGenerate = false;
+  }
+
   updateValueDownPaymentAmt() {
     var AssetPriceAmt = this.TrialForm.controls.AssetPriceAmt.value;
     var DownPaymentAmt = this.TrialForm.controls.AssetPriceAmt.value * this.TrialForm.controls.DownPaymentPrctg.value / 100;
@@ -475,6 +483,48 @@ export class TrialCalculationComponent implements OnInit {
       this.TrialForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
       this.TrialForm.controls.NumOfStep.updateValueAndValidity();
     }
+  }
+
+  UpdateForm() {
+    this.TrialForm.patchValue({
+      EffectiveRatePrcnt: 0,
+      StdEffectiveRatePrcnt: 0,
+      FlatRatePrcnt: 0,
+
+      RoundingAmt: 0,
+      EffectiveRateBhv: "",
+      SellSupplEffectiveRatePrcnt: 0,
+      AppSupplEffectiveRatePrcnt: 0,
+
+      DiffRateAmt: 0,
+
+      GrossYieldPrcnt: 0,
+      CummulativeTenor: 0,
+
+      ApvAmt: 0,
+
+      LcRate: 0,
+      MrLcCalcMethodCode: "",
+      GracePeriod: 0,
+      NumOfStep: 0,
+      LcGracePeriod: 0,
+      PrepaymentPenaltyRate: 0,
+      VendorAtpmCode: "",
+      BalloonValueAmt: 0,
+      ResidualValueAmt: 0,
+
+      MinEffectiveRatePrcnt: 0,
+      MaxEffectiveRatePrcnt: 0,
+      MinInterestIncomeAmt: 0,
+      MinGrossYieldPrcnt: 0,
+      MaxGrossYieldPrcnt: 0,
+      MinBalloonAmt: 0,
+      MaxBalloonAmt: 0,
+      BalloonBhv: "",
+      MinDownPaymentNettPrcnt: 0, 
+      MaxDownPaymentNettPrcnt: 0
+    });
+    this.setValidator(this.TrialForm.controls.MrInstSchemeCode.value);
   }
 
   Print() {

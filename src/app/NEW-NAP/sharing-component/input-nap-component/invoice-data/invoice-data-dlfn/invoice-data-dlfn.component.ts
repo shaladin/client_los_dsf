@@ -21,6 +21,7 @@ import { ReqAddAppInvoiceDlrFncngHObj } from 'app/shared/model/request/app-invoi
 import { ResDisbInfo } from 'app/shared/model/response/app-invoice/res-app-invoice-obj.model';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { environment } from 'environments/environment';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-invoice-data-dlfn',
