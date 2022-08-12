@@ -17,7 +17,7 @@ export class CommonConstantX {
 
     //WOP Descr
     public static WOPADDescr = "Auto Debit";
-    
+
     //General Setting Code
     public static GSVendorSlbCode = "VENDOR_SLB_CODE";
     public static GSVendorMpfFdCode = "VENDOR_MPFFD_CODE";
@@ -27,6 +27,7 @@ export class CommonConstantX {
     public static GsCodeIsDoDtValidation = "ISDODTVALIDATION";
     public static GsCodeIsAllowSkipSurvey = "IS_ALLOW_SKIP_SURVEY";
     public static GsCodeCustCompletionByPass = "CUST_COMPLETION_BY_PASS";
+    public static GsCodeMandatoryByCollType = "MANDATORY_BY_COLL_TYPE"
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
@@ -142,4 +143,5 @@ export class CommonConstantX {
     public static REF_STATUS_AUTO_DEBIT_REG = "AUTO_DEBIT_REGIS_STAT"
     public static AUTO_DEBIT_STATUS_CAN = "CAN";
     //#endregion
+
 }
