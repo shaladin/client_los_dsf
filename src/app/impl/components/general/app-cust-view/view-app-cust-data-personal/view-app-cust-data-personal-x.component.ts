@@ -3,8 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/app-cust-personal-contact-person-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
-import { ResAppCustAddrForViewObj, ResAppCustAttrForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResAppCustOtherInfoForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
-import { ResAppCustBankAccForViewObj } from 'app/shared/model/response/view/res-app-cust-bank-acc-for-view-obj.model';
+import { ResAppCustAddrForViewObj, ResAppCustAttrForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResAppCustOtherInfoForViewObj } from 'app/shared/model/response/view/res-cust-data-for-view-obj.model';
+import { ResAppCustBankAccForViewObjX } from 'app/impl/shared/model/view/res-app-cust-bank-acc-for-view-obj-x.model';
+import { ResCustDataPersonalForViewObjX } from 'app/impl/shared/model/view/res-cust-data-for-view-obj-x.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-view-app-cust-data-personal-x',
@@ -28,7 +30,7 @@ export class ViewAppCustDataPersonalXComponent implements OnInit {
   custModelCode: string;
   appCustObj: ResAppCustForViewObj = new ResAppCustForViewObj();
   appCustAddrForViewObjs: Array<ResAppCustAddrForViewObj> = new Array<ResAppCustAddrForViewObj>();
-  appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
+  appCustBankAccObjs: Array<ResAppCustBankAccForViewObjX> = new Array<ResAppCustBankAccForViewObjX>();
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
   appCustOtherInfoForViewObj: ResAppCustOtherInfoForViewObj = new ResAppCustOtherInfoForViewObj;
@@ -65,11 +67,11 @@ export class ViewAppCustDataPersonalXComponent implements OnInit {
 
   async getCustData() {
     var reqObj = { AppId: this.appId }
-    await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
-      (response : ResCustDataPersonalForViewObj) => {
+    await this.http.post(URLConstantX.GetCustDataPersonalXForViewByAppId, reqObj).toPromise().then(
+      (response : ResCustDataPersonalForViewObjX) => {
         this.appCustObj = response.AppCustObj;
         this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
-        this.appCustBankAccObjs = response.ListAppCustBankAccObj;
+        this.appCustBankAccObjs = response.ListAppCustBankAccObjX;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
         this.appCustOtherInfoForViewObj = response.AppCustOtherInfoForViewObj;
         this.appCustAttrContentsObj = response.ListAppCustAttrContentObj;

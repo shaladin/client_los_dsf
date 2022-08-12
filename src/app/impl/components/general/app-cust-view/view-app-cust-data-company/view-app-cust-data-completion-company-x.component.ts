@@ -11,6 +11,7 @@ import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ViewAppCustDetailComponent } from 'app/components/general/app-cust-view/view-app-cust-detail/view-app-cust-detail.component';
 import { ResAppCustCompanyMgmntShrholderForViewObjX, ResCustDataCompanyForViewObjX } from 'app/impl/shared/model/view/res-cust-data-for-view-obj-x.model';
+import { ResAppCustBankAccForViewObjX } from 'app/impl/shared/model/view/res-app-cust-bank-acc-for-view-obj-x.model';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-company-x',
@@ -49,7 +50,7 @@ export class ViewAppCustDataCompletionCompanyXComponent implements OnInit {
 
   appCustObj: ResAppCustForViewObj = new ResAppCustForViewObj();
   appCustAddrForViewObjs: Array<ResAppCustAddrForViewObj> = new Array<ResAppCustAddrForViewObj>();
-  appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
+  appCustBankAccObjs: Array<ResAppCustBankAccForViewObjX> = new Array<ResAppCustBankAccForViewObjX>();
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustCompanyMgmntShrholderObjXs: Array<ResAppCustCompanyMgmntShrholderForViewObjX> = new Array<ResAppCustCompanyMgmntShrholderForViewObjX>();
   appCustCompanyLegalDocObjs: Array<ResAppCustCompanyLegalDocForViewObj> = new Array<ResAppCustCompanyLegalDocForViewObj>();
@@ -95,7 +96,7 @@ export class ViewAppCustDataCompletionCompanyXComponent implements OnInit {
         this.appCustObj = response.AppCustObj;
         this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
         this.appCustCompanyMgmntShrholderObjXs = response.ListAppCustCompanyMgmntShrholderObjX;
-        this.appCustBankAccObjs = response.ListAppCustBankAccObj;
+        this.appCustBankAccObjs = response.ListAppCustBankAccObjX;
         this.appCustCompanyLegalDocObjs = response.ListAppCustCompanyLegalDocObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
         this.ListCustCoyFinData = response.ListAppCustCompanyFinDataX;
