@@ -189,7 +189,13 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
         this.IsSvcExist = true;
       }
 
-      this.IsUseAsliRi = true;
+      await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.SvcTypeAsliRi}).toPromise().then(
+        (response) => {
+          if(response.ConfigValue == "1")
+        {
+          this.IsUseAsliRi = true;
+        }
+      });
     }
   }
 }
