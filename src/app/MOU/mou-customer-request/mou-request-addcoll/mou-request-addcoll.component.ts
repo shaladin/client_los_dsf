@@ -873,7 +873,10 @@ export class MouRequestAddcollComponent implements OnInit {
             RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion,
             MrOwnerTypeCode: this.collateralRegistrationObj.MrOwnerTypeCode
           });
-          this.GetProvDistrict(this.collateralObj.TaxCityIssuer);
+
+          this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.collateralObj.TaxCityIssuer };
+          this.InputLookupCityIssuerObj.nameSelect = this.collateralObj.TaxCityIssuer;
+          
           if (this.collateralObj.AssetTaxDate) {
             this.AddCollForm.patchValue({
               TaxIssueDt: formatDate(this.collateralObj.AssetTaxDate, 'yyyy-MM-dd', 'en-US')
@@ -1205,7 +1208,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
   }
 
-  editData(MouCustCollId: number, isAddEdit: boolean) {
+  async editData(MouCustCollId: number, isAddEdit: boolean) {
 
     this.MouCustCollateralId = MouCustCollId;
     if (isAddEdit) {
@@ -1235,7 +1238,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.inputAddressObjForLegalAddr.isReadonly = true;
       this.inputAddressObjForLocAddr.isReadonly = true;
     }
-    this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, { Id: MouCustCollId }).subscribe(
+    await this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, { Id: MouCustCollId }).toPromise().then(
       (response) => {
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
@@ -1332,12 +1335,14 @@ export class MouRequestAddcollComponent implements OnInit {
           OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
-        this.GetProvDistrict(this.collateralObj.TaxCityIssuer);
         if (this.collateralObj.AssetTaxDate) {
           this.AddCollForm.patchValue({
             TaxIssueDt: formatDate(this.collateralObj.AssetTaxDate, 'yyyy-MM-dd', 'en-US')
           });
         }
+
+        this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.collateralObj.TaxCityIssuer };
+        this.InputLookupCityIssuerObj.nameSelect = this.collateralObj.TaxCityIssuer;
 
         this.AddCollForm.controls.MaxCollPrcnt.setValidators([Validators.required, Validators.min(this.AddCollForm.controls.CollateralPrcnt.value), Validators.max(this.maxPrcnt)])
         this.AddCollForm.controls.MaxCollPrcnt.updateValueAndValidity();
@@ -1386,18 +1391,6 @@ export class MouRequestAddcollComponent implements OnInit {
 
         this.inputAddressObjForLocAddr.default = this.locationAddrObj;
         this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
-      }
-    );
-  }
-
-  GetProvDistrict(ProvDistrictCode: string) {
-    this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, { Code: ProvDistrictCode }).subscribe(
-      (response: RefProvDistrictObj) => {
-        this.AddCollForm.patchValue({
-          TaxCityIssuer: response.ProvDistrictCode
-        });
-        this.InputLookupCityIssuerObj.jsonSelect = response;
-        this.InputLookupCityIssuerObj.nameSelect = response.ProvDistrictName;
       }
     );
   }
