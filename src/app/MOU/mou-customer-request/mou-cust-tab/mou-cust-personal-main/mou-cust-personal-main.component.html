@@ -109,10 +109,10 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-4" for="email1" translate>Email 1</label>
+            <label class="col-md-4 adins-required-label" for="email1" translate>Email 1</label>
             <div class="col-md-8">
-              <input type="text" class="form-control"
-                id="email1" formControlName="Email1">
+              <input type="text" class="form-control" id="email1" formControlName="Email1"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].Email1.invalid}">
               <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Email1"
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>

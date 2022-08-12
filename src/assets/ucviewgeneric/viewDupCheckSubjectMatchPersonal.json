@@ -54,7 +54,7 @@
           "property": "MobilePhoneNo1"
         },
         {
-          "type": "text",
+          "type": "date",
           "label": "Birth Date",
           "property": "BirthDt"
         },

@@ -676,7 +676,7 @@ export class CustMainDataComponent implements OnInit {
 
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
-        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
+        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == this.MrCustTypeCode);
       }
     }
   }
@@ -1137,9 +1137,13 @@ export class CustMainDataComponent implements OnInit {
       if (!IsCopyCust) this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
 
       if (this.inputMode == 'EDIT') {
-        this.CustMainDataForm.patchValue({
-          MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
-        })
+        this.isDdlMrCustRelationshipReady = false;
+        setTimeout (() => { 
+          this.CustMainDataForm.patchValue({
+            MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
+          })
+          this.isDdlMrCustRelationshipReady = true; 
+        }, 0);
       }
     }
 
@@ -1448,7 +1452,7 @@ export class CustMainDataComponent implements OnInit {
       this.setDataCustomerPersonalForSave();
 
       if(this.custMainDataMode != CommonConstant.CustMainDataModeCust && this.custMainDataMode != CommonConstant.CustMainDataModeGuarantor){
-        if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt != null){
+        if(this.custDataPersonalObj.AppCustPersonalJobDataObj != null && this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt != null){
           if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtEmpEstblshmntDtValidate){
             this.toastr.warningMessage(String.Format(ExceptionConstant.EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
             return false;
