@@ -144,16 +144,21 @@
           <form class="form form-horizontal" [formGroup]="GoLiveApvForm" #GoLiveApvReqForm="ngForm" #enjiForm="ngForm"
             (ngSubmit)="MainInfoForm.valid && GoLiveApvForm.valid &&SaveForm()">
             <div
-              *ngIf="IsCheckedAll && IsNeedApv && BizTemplateCode != 'DLFN' && isOk || (IsNeedApv && BizTemplateCode == 'DLFN' && isOk)">
+              *ngIf="IsNeedApv && BizTemplateCode != 'DLFN' && isOk || (IsNeedApv && BizTemplateCode == 'DLFN' && isOk)">
               <lib-ucapprovalcreate [parentForm]="GoLiveApvForm" [enjiForm]="GoLiveApvReqForm"
                 [InputObj]="InputGoLiveObj" *ngIf="IsReady"></lib-ucapprovalcreate>
             </div>
+          </form>
+
+          <form class="form form-horizontal" [formGroup]="PreGoLiveApvForm" #GoLiveApvReqForm="ngForm" #enjiForm="ngForm"
+          (ngSubmit)="MainInfoForm.valid && GoLiveApvForm.valid && PreGoLiveApvForm.valid &&SaveForm()">
+            <div
+              *ngIf="!IsCheckedAll && IsNeedApv && BizTemplateCode != 'DLFN' && isOk">
+              <lib-ucapprovalcreate [parentForm]="PreGoLiveApvForm" [enjiForm]="GoLiveApvReqForm"
+                [InputObj]="InputPreGoLiveObj" *ngIf="IsReady"></lib-ucapprovalcreate>
+            </div>
 
             <div class="form-actions right">
-              <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="button"
-                class="btn btn-raised btn-primary mr-1" (click)="RFA()">
-                <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Request For Approval</span>
-              </button>
               <button *ngIf="BizTemplateCode != 'DLFN' && isOktoBack" type="button" class="btn btn-raised btn-primary mr-1"
                 (click)="Return()">
                 <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Return to {{ReturnName}}</span>
@@ -162,11 +167,8 @@
                 [queryParams]="{BizTemplateCode: BizTemplateCode}">
                 <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
               </button>
-              <button *ngIf="IsCheckedAll && BizTemplateCode != 'DLFN'" type="submit"
+              <button type="submit"
                 class="btn btn-raised btn-primary mr-1">
-                <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
-              </button>
-              <button *ngIf="BizTemplateCode == 'DLFN'" type="submit" class="btn btn-raised btn-primary mr-1">
                 <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
               </button>
             </div>
