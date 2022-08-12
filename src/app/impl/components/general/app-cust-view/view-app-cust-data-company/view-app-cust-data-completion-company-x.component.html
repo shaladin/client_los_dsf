@@ -222,7 +222,7 @@
         </div> -->
         <div class="form-group row ">
           <label class="col-md-3 adInsLabel" translate>Net Income Amount</label>
-          <label class="col-md-3 adInsLabel">{{CustCoyFinData.GrossMonthlyIncomeAmt - CustCoyFinData.OthMonthlyInstAmt - CustCoyFinData.OprCost | number:'.2':'en-US'}}</label>
+          <label class="col-md-3 adInsLabel">{{CustCoyFinData.GrossMonthlyIncomeAmt - (CustCoyFinData.OthMonthlyInstAmt + CustCoyFinData.OtherMonthlyInstallmentDsf) - CustCoyFinData.OprCost | number:'.2':'en-US'}}</label>
           <!-- <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost == 0">-</label> -->
         </div>
 
@@ -286,7 +286,7 @@
                   <th class="text-right"><span name='balanceAmt' translate>Balance Amount</span></th>
                 </tr>
                 </thead>
-                <tbody *ngIf = "appCustBankAccObjs[i].ListAppCustBankAccStmntObj?.length == 0">
+                <tbody *ngIf = "appCustBankAccObjs[i].ListAppCustBankAccStmntObjX?.length == 0">
                 <tr>
                   <td colspan="100%">No Data Available</td>
                 </tr>
@@ -301,7 +301,7 @@
                   <td style="text-align: left;"></td>
                   <td style="text-align: right;">{{item.BegBalanceAmt | number:'.2':'en-US'}}</td>
                 </tr>
-                <ng-container *ngFor="let item of appCustBankAccObjs[i].ListAppCustBankAccStmntObj">
+                <ng-container *ngFor="let item of appCustBankAccObjs[i].ListAppCustBankAccStmntObjX">
                   <tr>
                     <td class="text-center">{{item.Month}}</td>
                     <td class="text-center">{{item.Year}}</td>
