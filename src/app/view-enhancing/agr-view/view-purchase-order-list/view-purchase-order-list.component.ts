@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ReqCreditApvResultExtObj } from 'app/shared/model/request/nap/business-process/req-credit-aproval-result-obj.model';
+import { ResCreditApvResultExtObj } from 'app/shared/model/response/nap/business-process/res-credit-aproval-result-obj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { ViewPurchaseOrderDetailComponent } from '../view-purchase-order-detail/view-purchase-order-detail.component';
 
@@ -19,6 +21,8 @@ export class ViewPurchaseOrderListComponent implements OnInit {
   }
   
   CrdApvRsltExtObj: UcInputApprovalHistoryObj;
+  CrdApvMainDataObj: ResCreditApvResultExtObj;
+
   AppAssetList = [];
   IsHidden: boolean = true;
   AppId: number;
@@ -48,6 +52,14 @@ export class ViewPurchaseOrderListComponent implements OnInit {
     this.CrdApvRsltExtObj = new UcInputApprovalHistoryObj();
     this.CrdApvRsltExtObj.PathUrl = "/Approval/GetTaskHistory";
 
+    this.getCrdApvExt();
+  }
+
+  getValue(event){
+    this.IsHidden = event;
+  }
+
+  getCrdApvExt(){
     this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).subscribe(
       (response) => {
         let agrmntNo = response['AgrmntNo'];
@@ -60,11 +72,16 @@ export class ViewPurchaseOrderListComponent implements OnInit {
             }
             this.IsCrdApvRsltExtReady = true;
           });
-      });
-  }
+        let requestMainDataObj : ReqCreditApvResultExtObj = new ReqCreditApvResultExtObj();
+        requestMainDataObj.AppId = response['AppId'];
+        requestMainDataObj.AgrmntId = response['AgrmntId'];
 
-  getValue(event){
-    this.IsHidden = event;
+        this.http.post<ResCreditApvResultExtObj>(URLConstant.GetCreditApvResultExtMainData, requestMainDataObj).subscribe(
+          response => {
+            this.CrdApvMainDataObj = response;
+          }
+        );
+      }
+    );
   }
-
 }
