@@ -133,7 +133,7 @@
                 </mat-tab>
               </mat-tab-group>
             </div>
-            <div *ngIf="(IsCheckedAll && IsNeedApv && BizTemplateCode != 'DLFN' && isOk)">
+            <div *ngIf="(IsNeedApv && BizTemplateCode != 'DLFN' && isOk)">
               <div *ngIf="isNeedEndDateApv">
                 <lib-ucapprovalcreate [parentForm]="MainInfoForm" [enjiForm]="GoLiveApvReqForm"
                   [InputObj]="InputEndDateProdObj" *ngIf="IsReady"></lib-ucapprovalcreate>
