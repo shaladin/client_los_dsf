@@ -8,6 +8,7 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
 import { CrdRvwCustInfoIncomeAndExpenseDetailsObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-income-and-expense-details-obj.model';
 import { AppFinDataObjX } from 'app/impl/shared/model/AppFinDataObjX.model';
+import { AppSubsidyProfitablityXObj } from 'app/impl/shared/model/AppSubsidyProfitablityXObj.model';
 
 @Component({
   selector: 'app-crd-rvw-app-fin-info-x',
@@ -27,12 +28,18 @@ export class CrdRvwAppFinInfoXComponent implements OnInit {
     private modalService: NgbModal,
   ) { }
 
+  totalIncomeAmt: number = 0;
+  tacAmt: number = 0;
+  ListAppSubsidyProfitablityXObj : Array<AppSubsidyProfitablityXObj> = new  Array<AppSubsidyProfitablityXObj>();
   crdRvwAppObj: CrdRvwAppObjX = new CrdRvwAppObjX();
   appFinDataObj: AppFinDataObjX = new AppFinDataObjX();
   async ngOnInit() {
     await this.GetCrdRvwAppByCrdRvwCustInfoId();
     await this.GetCrdRvwCustInfoIncomeAndExpenseDetails();
     await this.GetInitAppFinDataByAppIdX();
+    await this.GetAppSubsidyProfitablityXObj();
+    await this.SetTotalIncome();
+    await this.SetTacAmt();
   }
 
   async GetCrdRvwAppByCrdRvwCustInfoId() {
@@ -60,6 +67,31 @@ export class CrdRvwAppFinInfoXComponent implements OnInit {
         this.callbackAppFinDataObj.emit(response);
       }
     );
+  }
+
+  async GetAppSubsidyProfitablityXObj() {
+    await this.http.post<AppSubsidyProfitablityXObj>(URLConstantX.GetListAppSubsidyProfitabilityXForViewByAppId, { Id: this.appId }).toPromise().then(
+      (response) => {
+        this.ListAppSubsidyProfitablityXObj= response["ListObjs"];
+      }
+    );
+  }
+
+  async SetTotalIncome() {
+    this.totalIncomeAmt = 0;
+    this.totalIncomeAmt = this.crdRvwCustInfoIncomeAndExpenseDetailsObj.InsAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.LifeInsAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.SubsidyRateAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.TotalInterestAmt;
+    for (let index = 0; index < this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ListAppFeeObj.length; index++) {
+      const element = this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ListAppFeeObj[index];
+      this.totalIncomeAmt += element.AppFeeAmt;
+    }
+    for (let index = 0; index < this.ListAppSubsidyProfitablityXObj.length; index++) {
+      const element = this.ListAppSubsidyProfitablityXObj[index];
+      this.totalIncomeAmt += element.SubsidyAmt;
+    }
+  }
+
+  async SetTacAmt() {
+    this.tacAmt = this.crdRvwCustInfoIncomeAndExpenseDetailsObj.CommissionAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ReserveFundAmt;
   }
 
   //#region Link a href
