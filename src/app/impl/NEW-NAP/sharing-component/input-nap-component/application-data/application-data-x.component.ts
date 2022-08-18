@@ -452,7 +452,7 @@ export class ApplicationDataXComponent implements OnInit {
     obj.ProdOfferingVersion = ProdOfferingVersion;
     let noValue: boolean = !this.NapAppModelForm.controls.InterestType.value;
 
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
       (response) => {
         if (response && response["StatusCode"] == "200") {
           if(noValue){
@@ -460,10 +460,10 @@ export class ApplicationDataXComponent implements OnInit {
             InterestType: response["CompntValue"],
             InterestTypeDesc: response["CompntValueDesc"],
           });
-          this.ChangeInterestType();
-          if(response["MrProdBehaviourCode"] == CommonConstant.ProductBehaviourLock) this.NapAppModelForm.controls.InterestType.disable();
-          }
         }
+        this.ChangeInterestType();
+        if(response["MrProdBehaviourCode"] == CommonConstant.ProductBehaviourLock) this.NapAppModelForm.controls.InterestType.disable();
+      }
         else {
           // throw new Error("Interest Type component not found, please use the latest product offering");
           this.isProdOfrUpToDate = false;
