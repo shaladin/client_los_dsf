@@ -41,6 +41,7 @@ import { RefAttrGenerate } from 'app/components/sharing-components/ref-attr/ref-
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { RefProvDistrictObj } from 'app/shared/model/ref-prov-district-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -74,6 +75,7 @@ export class MouRequestAddcollComponent implements OnInit {
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   listCollTypeMandatoryManufacturingYear: Array<string> = new Array<string>();
   isMandatoryManufacturingYear: boolean = false;
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
 
   @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
     if (content) {
@@ -681,7 +683,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.maxPrcnt = 100;
     this.ResetForm();
     this.MouCustCollateralId = 0;
-    this.GenerateCollateralAttr(false, 0);
+    await this.GenerateCollateralAttr(false, 0);
 
     this.AddCollForm.controls.MrCollateralConditionCode.disable();
     this.type = pageType;
@@ -710,52 +712,25 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   isAttrReady: boolean = false;
-  refreshAttr() {
-    this.GenerateCollateralAttr(true, this.MouCustCollateralId);
+  async refreshAttr() {
+    await this.GenerateCollateralAttr(true, this.MouCustCollateralId);
   }
 
   readonly identifierAttr: string = "AttrContentObjs";
   ListAttrObjs: Array<RefAttrGenerateObj> = new Array();
   IsDisable: boolean = false;
   async GenerateCollateralAttr(isRefresh: boolean = false, MouCustCollId: number = 0, isCopy: boolean = false) {
+    this.isAttrReady = false;
     let GenObj = {
       MouCustCollateralId: MouCustCollId,
       AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value,
       IsRefresh: isRefresh
     };
-    this.isAttrReady = false;
-    this.IsDisable = isCopy;
-    this.ListAttrObjs = new Array();
-    this.http.post(URLConstant.GenerateMouCollateralAttr, GenObj).subscribe(
-      (response: ResMouCustCollateralAttrObj) => {
-        if (response.IsDiffWithRefAttr) {
-          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
-        }
-        for (let index = 0; index < response.MouCustCollateralAttrObjs.length; index++) {
-          const element = response.MouCustCollateralAttrObjs[index];
-          const tempObj: RefAttrGenerateObj = {
-            AttrCode: element.CollateralAttrCode,
-            AttrGroup: element.AttrGroup,
-            AttrInputType: element.AttrInputType,
-            AttrLength: element.AttrLength,
-            AttrName: element.CollateralAttrName,
-            AttrQuestionValue: RefAttrGenerate.BindListQuestionByListString(element.AttrQuestionValue),
-            AttrTypeCode: "",
-            AttrValue: element.AttrValue,
-            IsMandatory: element.IsMandatory,
-            MasterTypeCode: element.RefAttrValue,
-            PatternCode: element.PatternCode,
-            PatternValue: element.PatternValue,
-            RsvField1: "",
-            RsvField2: "",
-            RsvField3: "",
-            RsvField4: "",
-            RsvField5: "",
-          };
-          this.ListAttrObjs.push(tempObj);
-        }
-        this.isAttrReady = true;
-      });
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
+    this.attrSettingObj.Title = "Collateral Attribute";
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateMouCollateralAttrForUcAttr;
+    this.attrSettingObj.IsDisable = isCopy;
+    setTimeout(() => this.isAttrReady = true, 10)
   }
 
   BindExistingCollateralSavedData(listCollateralNo: any) {
@@ -884,7 +859,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.CopyUserForSelfOwner();
           this.OwnerTypeChange(this.collateralRegistrationObj.MrOwnerTypeCode);
           
-          this.GenerateCollateralAttr(true, this.collateralObj["MouCustCollateralId"], true);
+          await this.GenerateCollateralAttr(true, this.collateralObj["MouCustCollateralId"], true);
           this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
           this.legalAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
           this.legalAddrObj.City = this.collateralRegistrationObj.OwnerCity;
@@ -996,7 +971,7 @@ export class MouRequestAddcollComponent implements OnInit {
         }
       });
     this.updateUcLookup(value, UserChange ? false : true, this.type);
-    this.GenerateCollateralAttr(false, this.MouCustCollateralId);
+    await this.GenerateCollateralAttr(false, this.MouCustCollateralId);
     await this.CheckManufacturingYearMandatory();
   }
 
@@ -1205,7 +1180,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
   }
 
-  editData(MouCustCollId: number, isAddEdit: boolean) {
+  async editData(MouCustCollId: number, isAddEdit: boolean) {
 
     this.MouCustCollateralId = MouCustCollId;
     if (isAddEdit) {
@@ -1235,8 +1210,8 @@ export class MouRequestAddcollComponent implements OnInit {
       this.inputAddressObjForLegalAddr.isReadonly = true;
       this.inputAddressObjForLocAddr.isReadonly = true;
     }
-    this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, { Id: MouCustCollId }).subscribe(
-      (response) => {
+    await this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, { Id: MouCustCollId }).subscribe(
+      async (response) => {
         this.collateralObj = response['MouCustCollateral'];
         this.collateralRegistrationObj = response['MouCustCollateralRegistration'];
 
@@ -1343,7 +1318,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.AddCollForm.controls.MaxCollPrcnt.updateValueAndValidity();
 
         this.CollateralPortionTypeChange();
-        this.GenerateCollateralAttr(false, MouCustCollId, !isAddEdit);
+        await this.GenerateCollateralAttr(false, MouCustCollId, !isAddEdit);
 
         this.checkSelfOwnerColl();
         this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
