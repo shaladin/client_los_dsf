@@ -78,7 +78,7 @@ export class TrialCalculationComponent implements OnInit {
     TdpPaidCoyAmt: 0, // input layar
 
     NtfAmt: 0,
-    RateType: "EFCTV",
+    RateType: ["EFCTV", [Validators.required]],
     EffectiveRatePrcnt: 0, //eff rate to cust
     EffectiveRateBhv: "",
     StdEffectiveRatePrcnt: 0, //base eff rate to cust
@@ -247,6 +247,14 @@ export class TrialCalculationComponent implements OnInit {
     }
   }
 
+  ChangeIsGenerateHandler() {
+    if(this.IsGenerate) {
+      this.toastr.warningMessage("Please Regenerate Financial Data");
+      this.UpdateForm();
+    }
+    this.IsGenerate = false;
+  }
+
   updateValueDownPaymentAmt() {
     var AssetPriceAmt = this.TrialForm.controls.AssetPriceAmt.value;
     var DownPaymentAmt = this.TrialForm.controls.AssetPriceAmt.value * this.TrialForm.controls.DownPaymentPrctg.value / 100;
@@ -288,6 +296,16 @@ export class TrialCalculationComponent implements OnInit {
     this.TrialForm.patchValue({
       TotalInsCustAmt: TotalInsCustAmt,
       InsCptlzAmt: InsCptlzAmt
+    });
+  }
+
+  updateLifeInsuranceAmt() {
+    this.ChangeIsGenerateHandler();
+    var TotalLifeInsCustAmt = this.TrialForm.controls.TotalLifeInsCustAmt.value;
+    var LifeInsCptlzAmt = this.TrialForm.controls.LifeInsCptlzAmt.value;
+    this.TrialForm.patchValue({
+      TotalLifeInsCustAmt: TotalLifeInsCustAmt,
+      LifeInsCptlzAmt: LifeInsCptlzAmt
     });
   }
 
@@ -465,6 +483,48 @@ export class TrialCalculationComponent implements OnInit {
       this.TrialForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
       this.TrialForm.controls.NumOfStep.updateValueAndValidity();
     }
+  }
+
+  UpdateForm() {
+    this.TrialForm.patchValue({
+      EffectiveRatePrcnt: 0,
+      StdEffectiveRatePrcnt: 0,
+      FlatRatePrcnt: 0,
+
+      RoundingAmt: 0,
+      EffectiveRateBhv: "",
+      SellSupplEffectiveRatePrcnt: 0,
+      AppSupplEffectiveRatePrcnt: 0,
+
+      DiffRateAmt: 0,
+
+      GrossYieldPrcnt: 0,
+      CummulativeTenor: 0,
+
+      ApvAmt: 0,
+
+      LcRate: 0,
+      MrLcCalcMethodCode: "",
+      GracePeriod: 0,
+      NumOfStep: 0,
+      LcGracePeriod: 0,
+      PrepaymentPenaltyRate: 0,
+      VendorAtpmCode: "",
+      BalloonValueAmt: 0,
+      ResidualValueAmt: 0,
+
+      MinEffectiveRatePrcnt: 0,
+      MaxEffectiveRatePrcnt: 0,
+      MinInterestIncomeAmt: 0,
+      MinGrossYieldPrcnt: 0,
+      MaxGrossYieldPrcnt: 0,
+      MinBalloonAmt: 0,
+      MaxBalloonAmt: 0,
+      BalloonBhv: "",
+      MinDownPaymentNettPrcnt: 0, 
+      MaxDownPaymentNettPrcnt: 0
+    });
+    this.setValidator(this.TrialForm.controls.MrInstSchemeCode.value);
   }
 
   Print() {

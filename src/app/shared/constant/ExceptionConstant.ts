@@ -27,6 +27,7 @@ export class ExceptionConstant {
     public static INPUT_INST_AMOUNT_SUSD = "Installment No {0} and {1} must different.";
     public static INPUT_NUM_OF_INST = "Please Input # of Installment on Installment No ";
     public static TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN = "Total Commision Amount cannot more than ";
+    public static TOTAL_EXPENSE_AMOUNT_CANNOT_MORE_THAN = "Total Expense Amount cannot more than ";
     public static ID_EXPIRED_DATE_CANNOT_LESS_THAN = "Id Expired Date can not be less than ";
     public static INSURANCE_LENGTH_MUST_HIGHER_THAN = "Insurance Length must be higher than ";
     public static INSURANCE_LENGTH_MUST_LOWER_THAN = "Insurance Length must be lower than ";
@@ -42,7 +43,7 @@ export class ExceptionConstant {
     public static END_DATE_CANNOT_LOWER_THAN = "End Date can't be lower than ";
     public static TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN = "Total Reserved Fund Amount Must be Less Than ";
     public static EFF_RATE_CANNOT_LESS_THAN_STD_RATE = "Effective Rate cannot be less than Standard Rate.";
-    public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate.";
+    public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate ";
     public static COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT = "Collateral Value can not be less than Plafond Amount.";
     public static COLL_VALUE_CANNOT_LESS_THAN_EQUALS_PLAFOND_AMT = "Collateral Value can not be less than or equals Plafond Amount.";
     public static COLL_VALUE_MUST_EQUALS_PLAFOND_AMT = "Collateral Value must equals Plafond Amount.";
@@ -76,6 +77,7 @@ export class ExceptionConstant {
     public static CHOOSE_CUST_RELATIONSHIP= "Please Choose Cust Relationship.";
     public static INPUT_INSURANCE_LENGTH = "Please input Insurance Length.";
     public static CHOOSE_CALCULATE_BASE = "Please choose Calculate Base.";
+    public static CHOOSE_RATE_TYPE = "Please choose Rate Type.";
     public static SAVE_TC_DATA = "Please Save TC Data First!";
     public static SELECT_ONE_DATA_ON_LEAD = "Please select at least one Available Lead";
     public static DELETE_CONFIRMATION = 'Are you sure to delete this record?';
@@ -213,5 +215,6 @@ export class ExceptionConstant {
     public static CUST_AGE_MIN = "Customer age must be at least {0} year old";
 
     public static LEAD_INPUT_AGENCY_CMO_TELE = "Please input either Agency, CMO or Tele Sales";
+    public static FINANCING_AMT_MORE_THAN_COLL_PORTION_AMT = "Total Financing Amount is More Than Total Collateral Portion Amount";
 }
 

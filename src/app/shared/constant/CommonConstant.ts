@@ -951,6 +951,7 @@ export class CommonConstant {
   public static ConfigCodeIsUseDms = "IS_USE_DMS";
   public static ConfigCodeDigitalizationSvcType = "DIGITALIZATION_SVC_TYPE";
   public static SYS_CONFIG_USING_DMS_ADINS = "USING_DMS_ADINS"
+  public static SvcTypeAsliRi = "IS_USE_ASLIRI";
   
   //interest input type
   public static InterestInputTypeAmt = "AMT";

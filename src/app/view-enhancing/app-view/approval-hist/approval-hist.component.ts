@@ -4,6 +4,8 @@ import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
+import { ReqCreditApvResultExtObj } from 'app/shared/model/request/nap/business-process/req-credit-aproval-result-obj.model';
+import { ResCreditApvResultExtObj } from 'app/shared/model/response/nap/business-process/res-credit-aproval-result-obj.model';
 
 @Component({
   selector: 'app-approval-hist',
@@ -22,6 +24,7 @@ export class ApprovalHistComponent implements OnInit {
   CrdApvRsltExtObj: UcInputApprovalHistoryObj;
   // ReturnHandlingApvObj: UcInputApprovalHistoryObj;
   DocChecklistApvObj: UcInputApprovalHistoryObj;
+  CrdApvMainDataObj: ResCreditApvResultExtObj;
 
   IsCrdApvReady: boolean = false;
   IsPregoliveApvReady: boolean = false;
@@ -78,19 +81,16 @@ export class ApprovalHistComponent implements OnInit {
                 if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryOfferingValidity) {
                   this.OfferingObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
                 }
-                if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryCreditApprovalResultExtensionApproval) {
-                  this.CrdApvRsltExtObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
-                }
               }
               this.IsPregoliveApvReady = true;
               this.IsOfferingReady = true;
-              this.IsCrdApvRsltExtReady = true;
             });
         },
         (error) => {
           this.IsCrdApvReady = true;
         }
       );
+      this.getCrdApvExt();
     }
   }
 
@@ -123,5 +123,29 @@ export class ApprovalHistComponent implements OnInit {
         this.IsDocChecklistApvReady = false;
       }
     );
+  }
+
+  getCrdApvExt(){
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+      (response) => {
+        this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
+          (response) => {
+            for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+              if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryCreditApprovalResultExtensionApproval) {
+                this.CrdApvRsltExtObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+              }
+            }
+            this.IsCrdApvRsltExtReady = true;
+          });
+        let requestMainDataObj : ReqCreditApvResultExtObj = new ReqCreditApvResultExtObj();
+        requestMainDataObj.AppId = response['AppId'];
+        
+        this.http.post<ResCreditApvResultExtObj>(URLConstant.GetCreditApvResultExtMainData, requestMainDataObj).subscribe(
+          response => {
+            this.CrdApvMainDataObj = response;
+          }
+        );
+      }
+    ); 
   }
 }

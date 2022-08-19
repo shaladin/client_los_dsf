@@ -144,10 +144,17 @@ export class CustDetailPersonalComponent implements OnInit {
   }
 
   GetCustGrpData(event) {
-    this.ListAppCustGrpObj = new Array();
-    this.AppCustGrpObj.AppCustId = this.AppCustId;
-    this.AppCustGrpObj.CustNo = event.CustNo;
-    this.ListAppCustGrpObj.push(this.AppCustGrpObj);
+    if(event.CustNo == "")
+    {
+      this.ListAppCustGrpObj.pop()
+    }
+    else
+    {
+      this.ListAppCustGrpObj = new Array();
+      this.AppCustGrpObj.AppCustId = this.AppCustId;
+      this.AppCustGrpObj.CustNo = event.CustNo;
+      this.ListAppCustGrpObj.push(this.AppCustGrpObj);
+    }
   }
 
   GetCountryData(event) {

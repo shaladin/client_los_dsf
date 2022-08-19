@@ -272,7 +272,7 @@
       </div>
     </div>
 
-    <ref-attr-form-generate *ngIf="isAttrReady" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+    <uc-attribute-form *ngIf="isAttrReady" [parentForm]="AddCollForm" [identifier]="identifierAttr" [enjiForm]="enjiForm" [AttrSetting]="attrSettingObj"></uc-attribute-form>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
@@ -602,7 +602,7 @@
       </div>
     </div>
 
-    <ref-attr-form-generate *ngIf="isAttrReady" [IsDisable]="IsDisable" [IsShowBtnRefresh]="false" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+    <uc-attribute-form *ngIf="isAttrReady" [parentForm]="AddCollForm" [identifier]="identifierAttr" [enjiForm]="enjiForm" [AttrSetting]="attrSettingObj"></uc-attribute-form>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>

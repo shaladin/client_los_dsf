@@ -414,7 +414,7 @@ export class CollateralAddEditComponent implements OnInit {
     });
   }
 
-  clearForm(isOnInit: boolean = false){
+  async clearForm(isOnInit: boolean = false){
     this.AddCollForm.patchValue({
       CollateralSeqNo: 1,
       CollateralName: '',
@@ -438,7 +438,7 @@ export class CollateralAddEditComponent implements OnInit {
 
     this.collateralTypeHandler(false);
     this.enabledForm();
-    this.bindDDLFromRefMaster();
+    await this.bindDDLFromRefMaster();
     this.SetInputLookupCollExisting();
 
     if(!isOnInit){
@@ -463,8 +463,8 @@ export class CollateralAddEditComponent implements OnInit {
     this.InputLookupProfessionObj.isDisable = false;
   }
 
-  CollChange(isOnInit: boolean = false) {
-    this.clearForm(isOnInit);
+  async CollChange(isOnInit: boolean = false) {
+    await this.clearForm(isOnInit);
     this.collateral = this.AddCollForm.controls["Collateral"].value;
     this.IsDisable = false;
 
@@ -877,7 +877,7 @@ export class CollateralAddEditComponent implements OnInit {
             this.inputLookupExistColl.jsonSelect = this.returnAppCollateralObj;
           }
           this.collateral = this.returnAppCollateralObj.CollateralStat
-          this.CollChange(true);
+          await this.CollChange(true);
           this.AddCollForm.patchValue({
             CollateralValueAmt: this.returnAppCollateralObj.CollateralValueAmt,
             Notes: this.returnAppCollateralObj.CollateralNotes,
