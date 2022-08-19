@@ -14,6 +14,7 @@ import { PurchaseTrackingInquiryComponent } from './purchase-tracking-inquiry/pu
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { ProdHoInquiryComponent } from "./prod-ho-inquiry/prod-ho-inquiry.component";
 import { ProdOfferingInquiryComponent } from "./prod-offering-inquiry/prod-offering-inquiry.component";
+import { AppAgrCancellationInquiryComponent } from './app-agr-cancellation-inquiry/app-agr-cancellation-inquiry.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { ProdOfferingInquiryComponent } from "./prod-offering-inquiry/prod-offer
     AppInquiryPagingComponent,
     ProdHoInquiryComponent,
     ProdOfferingInquiryComponent,
-    PurchaseTrackingInquiryComponent
+    PurchaseTrackingInquiryComponent,
+    AppAgrCancellationInquiryComponent
   ]
 })
 export class InquiryModule { }

@@ -26,6 +26,7 @@ export class NavigationConstant {
 
   //#region Inquiry
   public static APP_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_INQUIRY; //'/Inquiry/AppInquiry'
+  public static APP_AGR_CANCELLATION_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_AGR_CANCELLATION_INQUIRY; //'/Inquiry/AppAgrCancellationInquiry'
   public static PURCHASE_TRACKING_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.PURCHASE_TRACKING_INQUIRY; //'/Inquiry/PurchaseTrackingInquiry'
   //#endregion
 
