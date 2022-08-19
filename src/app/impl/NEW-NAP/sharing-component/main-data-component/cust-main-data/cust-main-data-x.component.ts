@@ -100,7 +100,7 @@ export class CustMainDataXComponent implements OnInit {
   @Input() critCustCompany: Array<string> = new Array<string>();
   @Input() isNonMandatory: boolean = false;
   @Input() isFamily: boolean = false;
-  @Input() isEditNap1: boolean = false;	
+  @Input() isEditNap1: boolean = false;
 
   LeadId: number;
   LeadNo: string;
@@ -487,7 +487,7 @@ export class CustMainDataXComponent implements OnInit {
   jobPositionLookupObj: InputLookupObj = new InputLookupObj();
   BindLookupJobPosition() {
     this.jobPositionLookupObj = new InputLookupObj();
-    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal? true : false ;
+    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal ? true : false;
     this.jobPositionLookupObj.urlJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.pagingJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.genericJson = "./assets/uclookup/customer/lookupJobPosition.json";
@@ -819,7 +819,7 @@ export class CustMainDataXComponent implements OnInit {
         if (response.AppCustObj) {
           this.CustMainDataForm.patchValue({
             CustName: response.AppCustObj.CustName,
-          });	
+          });
           if (!this.appCustId) this.appCustId = response.AppCustObj.AppCustId
           this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
           await this.custTypeChange(this.MrCustTypeCode, true);
@@ -905,9 +905,9 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-      // region IMPORTANT ! email di DSF X tidak mandatory 
+      // region IMPORTANT ! email di DSF X tidak mandatory
       this.CustMainDataForm.controls.Email1.setValidators([Validators.pattern(CommonConstant.regexEmail)]);
-      // endregion 
+      // endregion
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
@@ -1004,7 +1004,7 @@ export class CustMainDataXComponent implements OnInit {
 
   async copyCustomerEvent(event) {
     if (this.MrCustTypeCode === CommonConstant.CustTypePersonal) {
-      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
+      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
 
@@ -1025,7 +1025,7 @@ export class CustMainDataXComponent implements OnInit {
           }
         });
     } else {
-      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
+      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
@@ -1468,6 +1468,12 @@ export class CustMainDataXComponent implements OnInit {
       else{
         this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.value.lookupCustomerCoy.value;
       }
+      if(this.CustMainDataForm.controls.isForeigner.value == null || this.CustMainDataForm.controls.isForeigner.value == false){
+        this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsForeigner = false;
+      }
+      else{
+        this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsForeigner = this.CustMainDataForm.controls.isForeigner.value;
+      }
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.rowVersionMgmntShrholder;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
@@ -1580,7 +1586,7 @@ export class CustMainDataXComponent implements OnInit {
       this.toastr.warningMessage(String.Format(ExceptionConstant.DUPLICATE_SHRHLDR_ID_NO));
       return false;
     }
-    
+
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.setDataCustomerPersonalForSave();
 
@@ -1594,6 +1600,11 @@ export class CustMainDataXComponent implements OnInit {
       }
       if (this.custDataPersonalObj.AppCustObj.IsShareholder && this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.IsOwner && this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.SharePrcnt < 0.0001) {
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_OWNER_NEED_SHARE_PRCNT));
+        return false;
+      }
+
+      if (this.custDataPersonalObj.AppCustObj.IsShareholder && !this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.IsOwner && this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.SharePrcnt > 0.0000) {
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_NON_OWNER_NEED_NOT_HAVE_SHARE_PRCNT));
         return false;
       }
 
@@ -1634,8 +1645,17 @@ export class CustMainDataXComponent implements OnInit {
       //   return;
       // }
       this.setDataCustomerCompanyForSave();
+      if (this.custDataCompanyObj.AppCustObj.IsShareholder && this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsOwner && this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt < 0.0001) {
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_OWNER_NEED_SHARE_PRCNT));
+        return false;
+      }
+
+      if (this.custDataCompanyObj.AppCustObj.IsShareholder && !this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsOwner && this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt > 0.0000) {
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_NON_OWNER_NEED_NOT_HAVE_SHARE_PRCNT));
+        return false;
+      }
       if (this.appCustId == null || this.appCustId == 0) {
-        this.http.post(URLConstant.AddCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
+        this.http.post(URLConstantX.AddCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
               this.outputAfterSave.emit(this.custDataCompanyObj.AppCustObj);
@@ -2229,7 +2249,7 @@ export class CustMainDataXComponent implements OnInit {
         this.CustMainDataForm.patchValue({
           IsOwner: true,
         });
-        this.CustMainDataForm.get("IsOwner").enable();
+        this.CustMainDataForm.get("IsOwner").disable();
       }
       else{
         this.CustMainDataForm.patchValue({
@@ -2245,7 +2265,7 @@ export class CustMainDataXComponent implements OnInit {
     var businessDt:Date = new Date(this.UserAccess[CommonConstant.BUSINESS_DT]);
     // jika bukan personal atau (family & bukan spouse) maka skip
     if(this.MrCustTypeCode != CommonConstant.CustTypePersonal ||
-      (this.custMainDataMode == CommonConstant.CustMainDataModeFamily && this.CustMainDataForm.get('MrCustRelationshipCode').value != CommonConstant.MasteCodeRelationshipSpouse)) 
+      (this.custMainDataMode == CommonConstant.CustMainDataModeFamily && this.CustMainDataForm.get('MrCustRelationshipCode').value != CommonConstant.MasteCodeRelationshipSpouse))
     {
       this.minCustPerAge = 0;
       this.minCustPerAgeDt = new Date(businessDt);
@@ -2276,7 +2296,7 @@ export class CustMainDataXComponent implements OnInit {
       this.MrCustTypeCode != CommonConstant.CustTypePersonal ||
       (this.custMainDataMode == CommonConstant.CustMainDataModeFamily && this.CustMainDataForm.get('MrCustRelationshipCode').value != CommonConstant.MasteCodeRelationshipSpouse)
     ) return true;
-  
+
     var birthDt:Date = new Date(this.CustMainDataForm.get('BirthDt').value);
 
     if(this.maxCustPerAge > 0 && (birthDt > this.minCustPerAgeDt || birthDt < this.maxCustPerAgeDt))

@@ -63,29 +63,6 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-10">
-          <label class="label-control" translate> ROI </label>
-        </div>
-        <div class="col-md-2">
-          <span id="RoiIndicator" style="float: right;">
-            <i [ngClass]="crdRvwCustCoyInfoObj.RoiIndicator == null ? 'far fa-circle' : crdRvwCustCoyInfoObj.RoiIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
-              [ngStyle]="{'color': crdRvwCustCoyInfoObj.RoiIndicator == null ? '' : crdRvwCustCoyInfoObj.RoiIndicator != whiteIndicator ? crdRvwCustCoyInfoObj.RoiIndicator : ''}" class="font-medium-3 tooltips">
-              <span class="tooltipstext">
-                <span *ngIf="crdRvwCustCoyInfoObj.RoiIndicatorDescr != null && crdRvwCustCoyInfoObj.RoiIndicatorDescr != ''"> {{crdRvwCustCoyInfoObj.RoiIndicatorDescr}} </span>
-                <span *ngIf="crdRvwCustCoyInfoObj.RoiIndicatorDescr == null || crdRvwCustCoyInfoObj.RoiIndicatorDescr == ''"> No Data </span>
-              </span>
-            </i>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 ">
-      <label class="label-control"> {{crdRvwCustCoyInfoObj.Roi}} </label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
       <label class="label-control" translate> Phone </label>
     </div>
     <div class="col-md-6 ">

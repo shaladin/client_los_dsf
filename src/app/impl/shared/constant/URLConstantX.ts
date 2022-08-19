@@ -31,6 +31,7 @@ export class URLConstantX {
 
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
+  public static GetListCustCompanyFinDataXForCustViewByCustId = environment.FoundationR3Url + "/v1" + "/CustomerCompanyFinDataX/GetListCustCompanyFinDataXForCustViewByCustId";
 
   // APP Application
   public static EditAppAddAppCrossX = environment.losUrl + '/v1' + '/AppX/EditAppAddAppCross';
@@ -259,6 +260,7 @@ export class URLConstantX {
   public static GetAppCustAndAppCustCompanyDataByAppCustId = environment.losUrl + "/v1" + "/AppCustX/GetAppCustAndAppCustCompanyDataByAppCustId";
   public static UpdateAppCustCompletionCompany = environment.losUrl + "/v1" + "/AppCustX/UpdateAppCustCompletionCompany";
   public static SaveAppCustCompletion = environment.losUrl + "/v1" + "/AppCustX/SaveAppCustCompletion";
+  public static AddCustMainDataCompanyData = environment.losUrl + "/v1" + "/AppCustX/AddCustMainDataCompanyDataX";
 
   //APP CUST PERSONAL JOB DATA X
   public static AddAppCustPersonalJobData = environment.losUrl + "/v1" + "/AppCustPersonalJobDataX/AddAppCustPersonalJobData";

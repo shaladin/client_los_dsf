@@ -26,6 +26,7 @@ export class LtkmCustCompanyFinDataObj {
     LongTermLiablts: number;
     ShareholderEquity: number;
     CurrRatio: number;
+    OtherMonthlyInstallmentDsf: number;
     RowVersion: string[];
 
     constructor() {
@@ -55,6 +56,7 @@ export class LtkmCustCompanyFinDataObj {
         this.LongTermLiablts = 0;
         this.ShareholderEquity = 0;
         this.CurrRatio = 0;
+        this.OtherMonthlyInstallmentDsf = 0;
         this.RowVersion = [];
     }
 }

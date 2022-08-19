@@ -286,6 +286,7 @@ export class AssetDataXComponent implements OnInit {
   RefProdCmptAssetCond: ProdOfferingDObj;
   RefProdCmptSupplSchm: ProdOfferingDObj;
   RefProdCmptAssetSchm: ProdOfferingDObj;
+  RefProdCmptPurposeOfFinancing: ProdOfferingDObj;
   AppCustCoyObj: AppCustCompanyObj;
   CheckValidationObj: ResAssetValidationRuleObj;
   SetManuYearObj: ResAssetValidationRuleObj;
@@ -2004,8 +2005,9 @@ export class AssetDataXComponent implements OnInit {
   }
 
   async bindAssetUsageObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = this.RefProdCmptPurposeOfFinancing.CompntValue;
+    await this.http.post(URLConstant.GetListKeyValueAssetUsageByPurposeOfFinCode, reqByCode).subscribe(
       (response) => {
         this.AssetUsageObj = response[CommonConstant.ReturnObj];
       }
@@ -2710,6 +2712,17 @@ export class AssetDataXComponent implements OnInit {
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj3).toPromise().then(
       (response: any) => {
         this.RefProdCmptAssetSchm = response;
+      }
+    );
+
+    let appObj4: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj4.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj4.RefProdCompntCode = CommonConstant.RefProdCompntCodePurposeOfFinancing;
+    appObj4.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj4).toPromise().then(
+      (response: any) => {
+        this.RefProdCmptPurposeOfFinancing = response;
       }
     );
   }
