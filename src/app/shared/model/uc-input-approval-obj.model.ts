@@ -16,6 +16,8 @@ export class UcInputApprovalObj {
     PathUrlContinueToLevel: string;
     PathUrlGetHistory : string;
     OfficeCodes: Array<string>;
+    EnableRequiredNotes: boolean;
+    DisableRequiredNotesList: Array<string>;
     
     constructor() { 
         this.TaskId = 0;
