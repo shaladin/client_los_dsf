@@ -164,7 +164,6 @@ export class MouCustTabComponent implements OnInit {
   defCustModelCode: string;
   MrCustTypeCode: string;
   isMarried: boolean = true;
-  spouseGender: string = "";
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
   appId: number;
@@ -1107,6 +1106,7 @@ export class MouCustTabComponent implements OnInit {
       this.residenceAddrObj.PhnExt1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt1.value;
       this.residenceAddrObj.PhnExt2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt2.value;
       this.residenceAddrObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
+      this.residenceAddrObj.MrHouseOwnershipCode = this.CustDataForm.controls["legalAddr"]["controls"].MrHouseOwnershipCode.value;
 
       this.inputFieldResidenceObj.inputLookupObj.nameSelect = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
       this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
@@ -1132,7 +1132,8 @@ export class MouCustTabComponent implements OnInit {
       this.mailingAddrObj.PhnExt1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt1.value;
       this.mailingAddrObj.PhnExt2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt2.value;
       this.mailingAddrObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
-
+      this.mailingAddrObj.MrHouseOwnershipCode = this.CustDataForm.controls["legalAddr"]["controls"].MrHouseOwnershipCode.value;
+      
       this.inputFieldMailingObj.inputLookupObj.nameSelect = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value };
       this.inputAddressObjForMailing.default = this.mailingAddrObj;
@@ -1155,6 +1156,7 @@ export class MouCustTabComponent implements OnInit {
       this.mailingAddrObj.PhnExt1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt1.value;
       this.mailingAddrObj.PhnExt2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt2.value;
       this.mailingAddrObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
+      this.mailingAddrObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
 
       this.inputFieldMailingObj.inputLookupObj.nameSelect = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value };
@@ -1180,6 +1182,7 @@ export class MouCustTabComponent implements OnInit {
       this.mailingAddrCompanyObj.PhnExt1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt1.value;
       this.mailingAddrCompanyObj.PhnExt2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt2.value;
       this.mailingAddrCompanyObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
+      this.mailingAddrCompanyObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].MrHouseOwnershipCode.value;
 
       this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
       this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value };
@@ -1202,6 +1205,7 @@ export class MouCustTabComponent implements OnInit {
       this.mailingAddrCompanyObj.PhnExt1 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnExt1.value;
       this.mailingAddrCompanyObj.PhnExt2 = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].PhnExt2.value;
       this.mailingAddrCompanyObj.SubZipcode = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].SubZipcode.value;
+      this.mailingAddrCompanyObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["businessAddrCompany"]["controls"].MrHouseOwnershipCode.value;
 
       this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["businessAddrCompanyZipcode"]["controls"].value.value;
       this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["businessAddrCompanyZipcode"]["controls"].value.value };
@@ -1227,6 +1231,7 @@ export class MouCustTabComponent implements OnInit {
       this.businessAddrCompanyObj.PhnExt1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt1.value;
       this.businessAddrCompanyObj.PhnExt2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt2.value;
       this.businessAddrCompanyObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
+      this.businessAddrCompanyObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].MrHouseOwnershipCode.value;
 
       this.inputFieldBusinessCompanyObj.inputLookupObj.nameSelect = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
       this.inputFieldBusinessCompanyObj.inputLookupObj.jsonSelect = { Zipcode: this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value };
@@ -1718,6 +1723,7 @@ export class MouCustTabComponent implements OnInit {
       this.legalAddrObj.PhnExt1 = custAddrLegalObj.PhnExt1;
       this.legalAddrObj.PhnExt2 = custAddrLegalObj.PhnExt2;
       this.legalAddrObj.SubZipcode = custAddrLegalObj.SubZipcode;
+      this.legalAddrObj.MrHouseOwnershipCode = custAddrLegalObj.MrHouseOwnershipCode;
 
       this.inputFieldLegalObj.inputLookupObj.nameSelect = custAddrLegalObj.Zipcode;
       this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: custAddrLegalObj.Zipcode };
@@ -1812,6 +1818,7 @@ export class MouCustTabComponent implements OnInit {
       this.mailingAddrObj.PhnExt1 = custAddrMailingObj.PhnExt1;
       this.mailingAddrObj.PhnExt2 = custAddrMailingObj.PhnExt2;
       this.mailingAddrObj.SubZipcode = custAddrMailingObj.SubZipcode;
+      this.mailingAddrObj.MrHouseOwnershipCode = custAddrMailingObj.MrHouseOwnershipCode;
 
       this.inputFieldMailingObj.inputLookupObj.nameSelect = custAddrMailingObj.Zipcode;
       this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: custAddrMailingObj.Zipcode };
@@ -1864,6 +1871,7 @@ export class MouCustTabComponent implements OnInit {
       this.legalAddrCompanyObj.PhnExt1 = custAddrLegalObj.PhnExt1;
       this.legalAddrCompanyObj.PhnExt2 = custAddrLegalObj.PhnExt2;
       this.legalAddrCompanyObj.SubZipcode = custAddrLegalObj.SubZipcode;
+      this.legalAddrCompanyObj.MrHouseOwnershipCode = custAddrLegalObj.MrHouseOwnershipCode;
 
       this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = custAddrLegalObj.Zipcode;
       this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: custAddrLegalObj.Zipcode };
@@ -1913,6 +1921,7 @@ export class MouCustTabComponent implements OnInit {
       this.mailingAddrCompanyObj.PhnExt1 = custAddrMailingObj.PhnExt1;
       this.mailingAddrCompanyObj.PhnExt2 = custAddrMailingObj.PhnExt2;
       this.mailingAddrCompanyObj.SubZipcode = custAddrMailingObj.SubZipcode;
+      this.mailingAddrCompanyObj.MrHouseOwnershipCode = custAddrMailingObj.MrHouseOwnershipCode;
 
       this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = custAddrMailingObj.Zipcode;
       this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: custAddrMailingObj.Zipcode };
@@ -1964,7 +1973,6 @@ export class MouCustTabComponent implements OnInit {
         this.IsSpouseExist = false;
       }
     }
-    this.spouseGender = event.SpouseGender;
   }
   MaritalChanged(event) {
     this.isMarried = event;
@@ -2199,5 +2207,10 @@ export class MouCustTabComponent implements OnInit {
         this.IsSvcExist = true;
       }
     }
+  }
+
+  private readonly identifierPersonalMain = 'PersonalMain'
+  get CustPersonalMainDataGenderType(){
+    return this.CustDataForm.controls[this.identifierPersonalMain]['controls'].MrGenderCode.value;
   }
 }

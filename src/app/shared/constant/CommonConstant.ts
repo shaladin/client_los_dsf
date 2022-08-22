@@ -80,6 +80,7 @@ export class CommonConstant {
 
   //Apv Category
   public static ApvCategoryCreditApproval = "CRD_APV"
+  public static ApvCategoryCreditApprovalResultExtensionApproval = "CR_APV_RES_EXP_D_CAT";
   public static ApvCategoryPackageValidityChecking = "PCKG_VLDT_APV"
   public static ApvCategoryPreGoLive = "PRE_GPV_APV"
   public static ApvCategoryOfferingValidity = "OFF_VLD_APV"
@@ -273,6 +274,9 @@ export class CommonConstant {
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
   public static ProductBehaviourDefault = "DEFAULT";
+
+  // COMPONENT GROUP
+  public static PRODUCT_COMP_GRP_GEN = "GEN";
 
   //VERIFICATION
   public static VerificationNew = "NEW";
@@ -948,7 +952,8 @@ export class CommonConstant {
   public static ConfigCodeIsUseDms = "IS_USE_DMS";
   public static ConfigCodeDigitalizationSvcType = "DIGITALIZATION_SVC_TYPE";
   public static SYS_CONFIG_USING_DMS_ADINS = "USING_DMS_ADINS"
-
+  public static SvcTypeAsliRi = "IS_USE_ASLIRI";
+  
   //interest input type
   public static InterestInputTypeAmt = "AMT";
   public static InterestInputTypePrcnt = "PRCNT"

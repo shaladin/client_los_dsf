@@ -67,7 +67,7 @@
                       </td> -->
                       <td class="text-center">
                         <input type="date" class="form-control adInsInput width-100-per" formControlName="PromisedDt"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm['controls']['AppTcs']['controls'][i]['controls'].PromisedDt.invalid }">
+                        [min]="maxPromisedDt | date: 'yyyy-MM-dd'" [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm['controls']['AppTcs']['controls'][i]['controls'].PromisedDt.invalid }">
                         <lib-uc-show-errors [control]="ReturnHandlingForm['controls']['AppTcs']['controls'][i]['controls'].PromisedDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
                       </td>
                       <td class="text-center">

@@ -22,6 +22,7 @@ export class CrdRvwIncomeExpenseComponent implements OnInit {
   async ngOnInit() {
     this.SetTotalIncome();
     this.SetTacAmt();
+    this.SetTotalForAllocation();
   }
 
   //#region Set Data
@@ -37,6 +38,17 @@ export class CrdRvwIncomeExpenseComponent implements OnInit {
   tacAmt: number = 0;
   SetTacAmt() {
     this.tacAmt = this.crdRvwCustInfoIncomeAndExpenseDetailsObj.CommissionAmt + this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ReserveFundAmt;
+  }
+
+  totalAllocation: Array<number> = [0, 0, 0];
+  SetTotalForAllocation()
+  {
+    for(let index = 0; index < this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ListCrdRvwAllocObj.length; index++)
+    {
+      this.totalAllocation[0] += this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ListCrdRvwAllocObj[index].MaxAllocAmt;
+      this.totalAllocation[1] += this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ListCrdRvwAllocObj[index].CommissionAmt;
+      this.totalAllocation[2] += this.crdRvwCustInfoIncomeAndExpenseDetailsObj.ListCrdRvwAllocObj[index].ReservedFundAmt;
+    }
   }
   //#endregion
 }

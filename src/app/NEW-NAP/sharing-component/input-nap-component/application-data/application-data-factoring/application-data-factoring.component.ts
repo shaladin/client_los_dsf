@@ -436,7 +436,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   CalculateNumOfInst() {
     var numOfInst;
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
-      numOfInst = this.SalesAppInfoForm.controls.Tenor.value / this.allPayFreq.PayFreqVal;
+      numOfInst = Math.ceil((this.SalesAppInfoForm.controls.Tenor.value / 12) * (this.allPayFreq.TimeOfYear / this.allPayFreq.PayFreqVal));
       this.SalesAppInfoForm.controls.NumOfInst.patchValue(numOfInst);
       this.salesAppInfoObj.NumOfInst = numOfInst;
     } else {

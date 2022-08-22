@@ -501,20 +501,15 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     if (this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value == CommonConstant.MasteCodeRelationshipSpouse) {
       this.ContactInfoPersonalForm.controls.BirthDt.setValidators([Validators.required]);
       this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
-      if (this.isMarried == true && this.spouseGender == CommonConstant.MasteCodeGenderMale) {
+      if (this.isMarried == true) {
+        let SpouseGender = CommonConstant.MasterCodeGenderFemale;
+        if (this.spouseGender == CommonConstant.MasterCodeGenderFemale){
+          SpouseGender = CommonConstant.MasteCodeGenderMale;
+        }
         this.ContactInfoPersonalForm.patchValue({
-          MrGenderCode: CommonConstant.MasteCodeGenderMale
+          MrGenderCode: SpouseGender
         });
         this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
-      }
-      else if (this.isMarried == true && this.spouseGender == CommonConstant.MasterCodeGenderFemale) {
-        this.ContactInfoPersonalForm.patchValue({
-          MrGenderCode: CommonConstant.MasterCodeGenderFemale
-        });
-        this.ContactInfoPersonalForm.controls["MrGenderCode"].disable();
-      }
-      else {
-        this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
       }
     }
     else {

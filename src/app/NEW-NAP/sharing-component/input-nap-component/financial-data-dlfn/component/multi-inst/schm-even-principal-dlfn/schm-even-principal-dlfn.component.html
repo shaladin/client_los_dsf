@@ -43,6 +43,18 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
+              <label>Installment Scheme</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.MrInstSchemeName.value}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
               <label>Num Of Inst</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -147,7 +159,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Effective Rate</label>
+              <label>Effective/Flat Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <div class="row">
@@ -188,6 +200,12 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.GrossYieldPrcnt.value | number:'.6':'en-US'}} %</label>
             </div>
+            <!-- <div class="col-md-3 form-inline">
+              <label>Top Interest Rate</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TopInterestRatePrcnt.value | number:'.6':'en-US'}} %</label>
+            </div> -->
           </div>
         </div>
       </div>
@@ -213,38 +231,19 @@
               <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
-              <label>Top Interest Rate</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.TopInterestRatePrcnt.value | number:'.6':'en-US'}} %</label>
-            </div>
-            <div class="col-md-3 form-inline">
-              <label>Total Top Amount</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.TotalTopAmount.value | number : '1.2-2'}}</label>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
             <!-- <div class="col-md-3 form-inline">
               <label>Term of Payment (Days)</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TopDays.value}}</label>
             </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
             <div class="col-md-3 form-inline">
               <label>Total Disburse</label>
             </div>
