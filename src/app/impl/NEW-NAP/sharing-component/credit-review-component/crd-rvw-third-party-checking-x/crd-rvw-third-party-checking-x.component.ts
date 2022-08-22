@@ -36,6 +36,7 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
   IsUseDukcapil: boolean = false;
   IsUseProfind: boolean = false;
   IsUseSlik: boolean = false;
+  IsUseAsliRi: boolean = false;
   sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
@@ -129,6 +130,20 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
     });
   }
   
+  asliRiHandler(model)
+  {
+    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo;
+    // window.open(this.urlLink);
+    this.modalContainer = this.modalService.open(model);
+    this.modalContainer.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.modalContainer.close();
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modalContainer.close();
+    });
+  }
+  
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -189,9 +204,17 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
         this.IsUseSlik = true;
         this.IsSvcExist = true;
       }
-
+      
+      await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.SvcTypeAsliRi}).toPromise().then(
+        (response) => {
+          if(response.ConfigValue == "1")
+        {
+          this.IsUseAsliRi = true;
+        }
+      });
       //tidak digunakan
       this.IsUseSlik = this.IsUseRapindo = this.IsUseProfind = this.IsUseDukcapil = false;
     }
   }
+  
 }
