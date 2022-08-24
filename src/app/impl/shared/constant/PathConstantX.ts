@@ -224,6 +224,8 @@ export class PathConstantX {
 
   //region LEAD
   public static SIMPLE_LEAD_DETAIL = PathConstant.SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
+  public static POTENTIAL_ROX = "PotentialRoX";
+  public static POTENTIAL_ROX_PAGING = PathConstantX.POTENTIAL_ROX + "/" + PathConstantX.PAGING;
   //endregion
 
   //#region Cust Sync
