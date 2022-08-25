@@ -118,6 +118,7 @@ export class CommonConstantX {
 
     //GS
     public static GSCodeShareholderJobPostIsOnwer = "SHAREHOLDER_JOB_POST_IS_OWNER";
+    public static GSCodeDisableRequiredNotesApvAct = "DISABLE_REQUIRED_NOTES_APV_ACT";
 
     //NAP 4
     public static SubjRelationLessee = "LESSEE";
