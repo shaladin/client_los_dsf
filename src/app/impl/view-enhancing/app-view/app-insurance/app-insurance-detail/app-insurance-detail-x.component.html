@@ -11,13 +11,13 @@
         <label class="col-md-3 adInsLabel" translate>Insured By</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoveredBy}}</label>
       </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Payment Type</label>
+        <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
+      </div>
       <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
         <label class="col-md-3 adInsLabel" translate>Policy No</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsPolicyNo}}</label>
-      </div>
-      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-        <label class="col-md-3 adInsLabel" translate>Insurance Payment Type</label>
-        <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
       </div>
     </div>
     <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
@@ -79,15 +79,21 @@
         <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
       </div>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-        <label class="col-md-3 adInsLabel" translate>Insurance Payment Type</label>
-        <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
+        <label class="col-md-3 adInsLabel" translate>Asset Region</label>
+        <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetRegion}}</label>
       </div>
     </div>
     <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <label class="col-md-3 adInsLabel" translate>Insurance Company</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoBranchName}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Payment Type</label>
+        <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
       </div>
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <label class="col-md-3 adInsLabel" translate>Cover Period</label>
@@ -106,11 +112,11 @@
     </div>
     <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-        <label class="col-md-3 adInsLabel" translate>Insurance Admin Fee Amount</label>
+        <label class="col-md-3 adInsLabel" translate>Insurance Company Admin Fee Amount</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
       </div>
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-        <label class="col-md-3 adInsLabel" translate>Insurance Stamp Duty Fee Amount</label>
+        <label class="col-md-3 adInsLabel" translate>Insurance Company Stamp Duty Fee Amount</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoStampDutyFee | number:'.2':'en-US'}}</label>
       </div>
     </div>
@@ -139,7 +145,7 @@
       <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
     </div>
     <lib-ucSubsection [id]="'CoverageCompanyId'" [title]="'Coverage'" [panel]="'CoverageCompanySection'"></lib-ucSubsection>
-    <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+    <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px; overflow-x: auto;">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
@@ -163,6 +169,12 @@
             </th>
             <th style="text-align: right;">
               <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='paidBy' translate>Paid By</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='isCapitalized' translate>Capitalized</span>
             </th>
           </tr>
         </thead>
@@ -188,6 +200,15 @@
             </td>
             <td style="text-align: right;">
               {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.PaidBy}}
+            </td>
+            <td *ngIf="item.IsCapitalized == true">
+              Yes
+            </td>
+            <td *ngIf="item.IsCapitalized == false">
+              No
             </td>
           </tr>
         </tbody>
@@ -263,12 +284,12 @@
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoveredBy}}</label>
         </div>
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
-          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
+          <label class="col-md-3 adInsLabel" translate>Payment Type</label>
+          <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
         </div>
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>Insurance Payment Type</label>
-          <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
+          <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
         </div>
         <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Policy No</label>
@@ -334,15 +355,21 @@
           <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
         </div>
-        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>Insurance Payment Type</label>
-          <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Asset Region</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetRegion}}</label>
         </div>
       </div>
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Insurance Company</label>
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoBranchName}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Payment Type</label>
+          <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
         </div>
         <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Cover Period</label>
@@ -361,11 +388,11 @@
       </div>
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>Insurance Admin Fee Amount</label>
+          <label class="col-md-3 adInsLabel" translate>Insurance Company Admin Fee Amount</label>
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
         </div>
-        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>Insurance Stamp Duty Fee Amount</label>
+        <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Company Stamp Duty Fee Amount</label>
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InscoStampDutyFee | number:'.2':'en-US'}}</label>
         </div>
       </div>
@@ -394,7 +421,7 @@
         <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
       </div>
       <lib-ucSubsection [id]="'CoverageCompanyId'" [title]="'Coverage'" [panel]="'CoverageCompanySection'"></lib-ucSubsection>
-      <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px; overflow-x: auto;">
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">

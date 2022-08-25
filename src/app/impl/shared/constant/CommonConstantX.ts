@@ -10,6 +10,7 @@ export class CommonConstantX {
     //Ref Master Type Code
     public static RefMasterTypeCodeOrdStatus = "ORD_STATUS";
     public static RefMasterTypeCodeStatusBpkb = "STATUS_BPKB";
+    public static RefMasterTypeCodePayPeriodToInsco = "PAY_PERIOD_TO_INSCO"
 
     //LOB
     public static SLB = "SLB";
