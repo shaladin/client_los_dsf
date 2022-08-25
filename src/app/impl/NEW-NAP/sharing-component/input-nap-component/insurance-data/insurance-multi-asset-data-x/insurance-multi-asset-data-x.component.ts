@@ -2142,7 +2142,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     if (insuredBy == CommonConstant.InsuredByCustomer) {
       if (isNotFromDB) {
         this.InsuranceDataForm.patchValue({
-          CustCvgAmt: 0,
+          CustCvgAmt: this.totalAssetInclAccessoryPriceAmt,
           CustInscoBranchName: '-',
           InsPolicyNo: '-',
           InsPolicyName: '-',
