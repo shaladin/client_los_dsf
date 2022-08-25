@@ -24,6 +24,26 @@
     },
     {
       "type": "datepicker",
+      "name": "s.GO_LIVE_DT",
+      "id": "GoLiveDtG",
+      "value": "",
+      "restriction" : "gte",
+      "label": "Go Live Date >=",
+      "placeholder": "",
+      "datatype" : "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "s.GO_LIVE_DT",
+      "id": "GoLiveDtL",
+      "value": "",
+      "restriction" : "lte",
+      "label": "Go Live Date <=",
+      "placeholder": "",
+      "datatype" : "date"
+    },
+    {
+      "type": "datepicker",
       "name": "s.MATURITY_DT",
       "id": "MaturityDtG",
       "value": "",
@@ -177,8 +197,20 @@
     {
         "type": "label",
         "position": "center",
+        "label": "Go Live Date",
+        "name": "s.GO_LIVE_DT"
+    },
+    {
+        "type": "label",
+        "position": "center",
         "label": "Maturity Date",
         "name": "s.MATURITY_DT"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Effective Date",
+      "name": "s.EFFECTIVE_DT"
     },
     {
         "type": "label",
@@ -235,7 +267,17 @@
   {
       "type": "date",
       "position": "center",
+      "property": "GO_LIVE_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
       "property": "MATURITY_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "EFFECTIVE_DT"
   },
   {
       "type": "decimal",
@@ -292,8 +334,20 @@
     {
         "type": "label",
         "position": "center",
+        "label": "Go Live Date",
+        "name": "s.GO_LIVE_DT"
+    },
+    {
+        "type": "label",
+        "position": "center",
         "label": "Maturity Date",
         "name": "s.MATURITY_DT"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Effective Date",
+      "name": "s.EFFECTIVE_DT"
     },
     {
         "type": "label",
@@ -350,7 +404,17 @@
   {
       "type": "date",
       "position": "center",
+      "property": "GO_LIVE_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
       "property": "MATURITY_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "EFFECTIVE_DT"
   },
   {
       "type": "decimal",
