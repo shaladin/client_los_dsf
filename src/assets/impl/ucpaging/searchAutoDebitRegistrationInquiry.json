@@ -79,8 +79,8 @@
         "isFromURL": true,
         "ddlType": "all",
         "url": "",
-        "environment": "FOU",
-        "path": "/RefBankX/GetListRefBankIsAutoDebit",
+        "environment": "LOS",
+        "path": "/AutoDebitRegistration/GetListRefBankIsAutoDebit",
         "label": "Bank Name",
         "items": [],
         "itemsUrl": []
