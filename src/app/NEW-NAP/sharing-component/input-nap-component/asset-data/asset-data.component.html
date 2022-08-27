@@ -486,7 +486,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2" translate>Owner Profession</label>
+                  <label class="col-md-2" [ngClass]="{'adins-required-label': AssetDataForm.controls.MrOwnerTypeCode.value == 'COMPANY'}" translate>Owner Profession</label>
                   <div class="col-md-4" *ngIf="AssetDataForm.controls.MrOwnerTypeCode.value == 'PERSONAL'">
                     <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
                       [lookupInput]="InputLookupProfessionObj" [parentForm]="AssetDataForm"
