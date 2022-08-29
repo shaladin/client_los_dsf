@@ -230,6 +230,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
   TotalAssetPrice: number = 0;
   Tenor: number = 0;
 
+  //Self Custom CR MPF Validation
+  listAgrmntPrtDsf: Array<string> = new Array();
+  listAgrmntPrtUsedDsf: Array<string> = new Array();
+  resultResponseDsf;
+  //End Self Custom CR MPF Validation
+
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -315,6 +321,33 @@ export class ApplicationDataXDsfComponent implements OnInit {
         }
       }
     );
+
+    // Self Custom CR MPF Validation
+    const obj = {
+      Id: this.appId,
+      RowVersion: ""
+    };
+    await this.http.post(URLConstantX.GetAppDetailForTabAddEditAppByIdX, obj).toPromise().then(
+      async (response) => {
+
+        this.resultResponseDsf = response;
+      }
+    );
+    let objMPF = {
+      CustNo: this.CustNo,
+      AppNo: this.resultResponseDsf.AppNo,
+      BizTemplateCode: this.BizTemplateCode,
+      Lob: this.resultResponseDsf.LobCode
+    };
+
+    // GET LIST AGR PARENT HAD APP ON GOING
+    await this.http.post<Array<string>>(URLConstantDsf.GetListAgrmntParentUsedDsf, objMPF).toPromise().then(
+      (response) => {
+        
+        this.listAgrmntPrtUsedDsf = response[CommonConstant.ReturnObj];
+      }
+    );
+    // End Self Custom CR MPF Validation
   }
 
 
@@ -1018,6 +1051,47 @@ export class ApplicationDataXDsfComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
     reqCalculatePlafondAgrmntXObj.Tenor = this.agrParent.Tenor;
 
+    // Self Custom CR MPF Validation
+    const index = Array.from(this.listAgrmntPrtUsedDsf).indexOf(this.agrParent.AgrmntNo);
+    if(index > -1)
+    {
+      //lookup Agreement Parent
+
+      this.agrParentList = new Array<AgrParentObjX>();
+      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
+        (response) => {
+          this.agrParentList = response;
+        }
+      );
+
+      this.agrParent = new AgrParentObjX();
+
+      this.totalAgrmntMpfDt = 0;
+      this.maxTenor = 0;
+      this.goLiveDt = null
+      this.AgrmntDt = null;
+      this.OsPrincipal = null;
+      this.OsInterest = null;
+      this.NumberOfAsset = null;
+      this.EffRate = null;
+      this.PurposeOfFinancing = null;
+      this.WayOfFinancing = null;
+      this.ProductType = null;
+      this.ApToSupplierDisburseDt = null;
+      this.EffectiveDt = null;
+      this.Tenor = null;
+      this.TotalAssetPrice = null;
+      
+      this.agrmntParentNo = undefined;
+
+      this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = 0;
+      this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = 0;
+
+      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+      return
+    }  
+    // End Self Custom CR MPF Validation
+
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
       this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
         (response) => {
@@ -1195,7 +1269,26 @@ export class ApplicationDataXDsfComponent implements OnInit {
         WayRestructure: null
       });
     }
+    // Self Custom CR MPF Validation
     if (this.BizTemplateCode == CommonConstant.CFNA) {
+      let objMPF = {
+        AgrParentNo: this.agrParent.AgrmntNo,
+        CustNo: this.CustNo,
+        AppNo: this.resultResponseDsf.AppNo,
+        BizTemplateCode: this.BizTemplateCode,
+        Lob: this.resultResponseDsf.LobCode
+      };
+      this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPF).subscribe(
+        (response) => {
+          let ResponseObj = response[CommonConstant.ReturnObj];
+          if (ResponseObj.IsAvailable != true)
+            {
+              this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+              return;
+            }
+        }
+      );
+      // End Self Custom CR MPF Validation
 
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
