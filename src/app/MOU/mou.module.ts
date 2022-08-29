@@ -152,8 +152,8 @@ import {ChangeMouApprovalPagingXComponent} from 'app/impl/MOU/change-mou/change-
 import { UcpagingComponent } from '@adins/ucpaging';
 
 export const customCurrencyMaskConfig = {
-  align: 'left',
-  allowNegative: true,
+  align: "left",
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

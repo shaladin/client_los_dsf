@@ -7,7 +7,7 @@
     <app-app-main-info-cr-x [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-cr-x>
     <div class="card-body">
       <div class="px-3" *ngIf="isShow">
-        <app-asset-accessory-info *ngIf="isShow" [AppId]="appId">
+        <app-asset-accessory-info *ngIf="isShow  && BizTemplateCode != 'CFNA'" [AppId]="appId">
         </app-asset-accessory-info>
         <app-crd-rvw-additional-coll [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-additional-coll>
@@ -29,7 +29,7 @@
         </app-crd-rvw-app-info-x> -->
         <app-crd-rvw-cmo-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-cmo-info>
-        <app-crd-rvw-dealer-info *ngIf="!IsFD" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        <app-crd-rvw-dealer-info *ngIf="!IsFD && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
         <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>
       </div>

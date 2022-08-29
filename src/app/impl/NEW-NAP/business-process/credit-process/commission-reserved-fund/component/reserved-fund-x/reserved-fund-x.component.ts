@@ -205,8 +205,12 @@ export class ReservedFundXComponent implements OnInit {
 
   calculatedRemainingAmt() {
     this.remainingAllocatedAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
-    if (0 > this.remainingAllocatedAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
+    if (0 > this.remainingAllocatedAmt) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
+      return false;
+    } 
     this.outputUpdateRemainingAlloc.emit(this.totalRsvFundAmt);
+    return true;
   }
 
   //GET
@@ -293,6 +297,7 @@ export class ReservedFundXComponent implements OnInit {
       AppId: this.AppId,
       TotalReserveFundAmt: this.totalRsvFundAmt
     };
+   if(this.calculatedRemainingAmt()){
     await this.http.post(URLConstantX.CalculateGrossYieldRsvFundX, grossyieldObj).toPromise().then(
       (response) => {
         this.calcGrossYieldObj = response;
@@ -300,11 +305,11 @@ export class ReservedFundXComponent implements OnInit {
 
       }
     );
-    this.calculatedRemainingAmt();
     await this.setAppRsvFundData();
     this.isCalculated = true;
     console.log('IS CALCULATED');
     console.log(this.isCalculated);
+    }
   }
 
   calculating() {

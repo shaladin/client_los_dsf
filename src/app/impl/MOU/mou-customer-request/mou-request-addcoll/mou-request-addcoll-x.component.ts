@@ -1665,7 +1665,14 @@ export class MouRequestAddcollXComponent implements OnInit {
         return;
       }
     }
-
+    
+    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR) {
+      if(this.listCollateralData.length == 0){
+        this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
+        return;
+      }
+      
+    }
     // if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
     //   if (!this.IsCalledIntegrator) {
     //     if (confirm("Continue without integrator ?")) {

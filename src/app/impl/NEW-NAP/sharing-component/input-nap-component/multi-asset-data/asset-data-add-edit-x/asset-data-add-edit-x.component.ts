@@ -2356,6 +2356,7 @@ export class AssetDataAddEditXComponent implements OnInit {
           OwnerAddrType: !isEdit ? CommonConstant.AddrTypeLegal : "",
           MrOwnerTypeCode: OwnerType
         });
+        await this.OwnerTypeChange(OwnerType, true);
       }
 
       if (!isEdit) {

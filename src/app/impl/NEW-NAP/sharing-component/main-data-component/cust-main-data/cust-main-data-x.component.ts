@@ -109,6 +109,7 @@ export class CustMainDataXComponent implements OnInit {
   AppNo: string;
 
   agrmntParentNo: string = "";
+  IsCustAllowedContinue: boolean = true;
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
@@ -756,7 +757,7 @@ export class CustMainDataXComponent implements OnInit {
 
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
-        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
+        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == this.MrCustTypeCode);
       }
     }
   }
@@ -1033,6 +1034,21 @@ export class CustMainDataXComponent implements OnInit {
     await this.disableInput();
   }
 
+  async checkIsCustAllowedContinue()
+  {
+    if(this.CustMainDataForm.controls.CustNo.value == null)
+    {
+      this.IsCustAllowedContinue = true;
+      return;
+    }
+    
+    await this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByCustNo, { Code: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+      (res) => {
+        res == undefined? this.IsCustAllowedContinue = false : this.IsCustAllowedContinue = true;
+      }
+    );
+  }
+
   ChangeIdType(IdType: string) {
     this.setValidatorPattern();
   }
@@ -1198,9 +1214,13 @@ export class CustMainDataXComponent implements OnInit {
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
 
       if (this.inputMode == 'EDIT') {
+        this.isDdlMrCustRelationshipReady = false;
+        setTimeout (() => { 
         this.CustMainDataForm.patchValue({
           MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
         })
+        this.isDdlMrCustRelationshipReady = true; 
+        }, 0);
       }
     }
 
@@ -1687,12 +1707,17 @@ export class CustMainDataXComponent implements OnInit {
   }
 
   async SaveForm() {
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust)
+    {
+      await this.checkIsCustAllowedContinue();
+      if(!this.IsCustAllowedContinue) return;
+    }
+
     let obj = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
       AppNo: this.AppNo,
       BizTemplateCode: this.bizTemplateCode
     };
-
 
     if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
     {

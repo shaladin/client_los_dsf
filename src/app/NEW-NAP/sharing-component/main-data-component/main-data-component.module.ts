@@ -20,7 +20,7 @@ import { CustPublicXComponent } from "app/impl/NEW-NAP/sharing-component/main-da
 
 export const customCurrencyMaskConfig = {
     align: "right",
-    allowNegative: true,
+    allowNegative: false,
     allowZero: true,
     decimal: ".",
     precision: 0,

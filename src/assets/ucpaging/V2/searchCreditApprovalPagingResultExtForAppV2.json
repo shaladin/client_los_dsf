@@ -22,34 +22,29 @@
             "name": "AppNo"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
-            "label": "Apv No",
-            "name": "RequestNo"
+            "label": "Apv No"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
-            "label": "Request By",
-            "name": "RequestBy"
+            "label": "Request By"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
-            "label": "Request Date",
-            "name": "RequestDate"
+            "label": "Request Date"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
-            "label": "Main User Id",
-            "name": "MainUser"
+            "label": "Main User Id"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
-            "label": "Current User Id",
-            "name": "CurrentUser"
+            "label": "Current User Id"
         },
         {
             "type": "label",

@@ -2418,6 +2418,7 @@ export class LtkmRequestXComponent implements OnInit {
                 this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
                 this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
                 this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
+                this.listFamily = new Array();
 
                 this.CustDataForm.controls['personalMainData']['controls']["MrIdTypeCode"].enable();
                 this.CustDataForm.controls['personalMainData']['controls']["IdNo"].enable();
