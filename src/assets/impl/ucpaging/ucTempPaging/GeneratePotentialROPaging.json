@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "datepicker",
-      "name": "s.GO_LIVE_DT",
+      "name": "s.AGRMNT_DTT",
       "id": "AgrmntDtG",
       "value": "",
       "restriction" : "gte",
@@ -14,7 +14,7 @@
     },
     {
       "type": "datepicker",
-      "name": "s.GO_LIVE_DT",
+      "name": "s.AGRMNT_DT",
       "id": "AgrmntDtL",
       "value": "",
       "restriction" : "lte",
@@ -192,7 +192,7 @@
         "type": "label",
         "position": "center",
         "label": "Agreement Date",
-        "name": "s.GO_LIVE_DT"
+        "name": "s.AGRMNT_DT"
     },
     {
         "type": "label",
@@ -329,7 +329,7 @@
         "type": "label",
         "position": "center",
         "label": "Agreement Date",
-        "name": "s.GO_LIVE_DT"
+        "name": "s.AGRMNT_DT"
     },
     {
         "type": "label",
