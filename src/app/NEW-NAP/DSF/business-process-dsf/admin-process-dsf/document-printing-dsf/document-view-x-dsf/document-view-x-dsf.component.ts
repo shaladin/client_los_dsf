@@ -164,7 +164,7 @@ export class DocumentViewXDsfComponent implements OnInit {
 
   GetListAgrmntDocByAgrmntId() {
     var obj = { Id: this.AgrmntId }
-    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB) 
+    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB || this.WOF == CommonConstantDsf.WOF_SP) 
     {
       this.http.post(URLConstantDsf.GetListAgrmntDocByAgrmntIdDsf, obj).subscribe(
         (response) => {
@@ -188,7 +188,7 @@ export class DocumentViewXDsfComponent implements OnInit {
     this.agrmntDocPrintObj.RowVersion = "";
     this.agrmntDocPrintObj.AgrmntDocId = agrmntDocId;
 
-    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB)
+    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB || this.WOF == CommonConstantDsf.WOF_SP)
     {
       this.http.post(URLConstantDsf.AddAgrmntDocPrintDsf, this.agrmntDocPrintObj).subscribe(
         () => {
@@ -239,6 +239,15 @@ export class DocumentViewXDsfComponent implements OnInit {
             reportParameters: [reportParamObj],
             subReports: []
           }
+          ,
+          {
+            reportName: "Lampiran SP",
+            reportTemplateCode: "DSF_SP_Lampiran",
+            reportPath: "",
+            exportFormat: 0,
+            reportParameters: [reportParamObj],
+            subReports: []
+          }
         ]
 
         //if(environment.isCore){
@@ -276,6 +285,15 @@ export class DocumentViewXDsfComponent implements OnInit {
               reportParameters: [reportParamObj],
               subReports: []
             }
+            ,
+          {
+            reportName: "Lampiran SP",
+            reportTemplateCode: "DSF_SP_Lampiran",
+            reportPath: "",
+            exportFormat: 0,
+            reportParameters: [reportParamObj],
+            subReports: []
+          }
           ]
           if(this.RdlcReport.ReportInfo.ReportTemplateCode == "INSPREMIUMSLIP"){
             this.RdlcReport.ReportInfo.SubReports = [
