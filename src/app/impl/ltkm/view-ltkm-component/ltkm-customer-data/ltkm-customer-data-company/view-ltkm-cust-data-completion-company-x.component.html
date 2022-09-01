@@ -48,7 +48,7 @@
                     <th class="text-left"><span name='No' translate>No</span> </th>
                     <th class="text-left"><span name='ShareholderName' translate>Shareholder Name</span> </th>
                     <th class="text-left"><span name='ShareholderType' translate>Shareholder Type</span></th>
-                    <!-- <th class="text-left"><span name='ShareholderRelationship' translate>Shareholder Relationship</span></th> -->
+                    <th class="text-left"><span name='ShareholderRelationship' translate>Shareholder Relationship</span></th>
                     <th class="text-center"><span name='EstablishmentDate' translate>Establishment Date</span></th>
                     <th class="text-right"><span name='SharePercent' translate>Share Percent</span></th>
                     <th class="text-center"><span name='IsSigner' translate>Is Signer</span></th>
@@ -68,8 +68,8 @@
                     <td class="text-center">{{i + 1}}</td>
                     <td class="text-left">{{item.MgmntShrholderName}}</td>
                     <td class="text-left">{{item.CustTypeName}}</td>
-                    <!-- <td class="text-left">{{item.MrCustRelationshipDescr}}</td> -->
-                    <td class="text-center">{{ (item.MrCustTypeCode == 'COMPANY' ? item.EstablishmentDt : item.BirthDt) | date: 'dd-MMMM-yyyy'}}</td>
+                    <td class="text-left">{{item.MrCustRelationshipDescr}}</td>
+                    <td class="text-center">{{ (item.MrCustTypeCode == 'COMPANY' ? item.EstablishmentDt : item.BizPeriodAml) | date: 'dd-MMMM-yyyy'}}</td>
                     <td class="text-right">{{item.SharePrcnt | number:'.6':'en-US'}} %</td>
                     <td class="text-center">{{item.IsSigner ? 'Yes' : 'No'}}</td>
                     <td class="text-center">{{item.IsOwner ? 'Yes' : 'No'}}</td>
@@ -340,10 +340,10 @@
             <table class="table table-responsive-md text-center table-hover">
                 <thead>
                 <tr class="table-header">
-                    <!-- <th class="text-center"><span name='no' translate>No</span> </th> -->
+                    <th class="text-center"><span name='no' translate>No</span> </th>
                     <th class="text-left"><span name='custName' translate>Customer Name</span></th>
-                    <!-- <th class="text-center"><span name='relationship' translate>Customer Relationship</span></th>
-                    <th class="text-center"><span name='notes' translate>Notes</span></th> -->
+                    <th class="text-center"><span name='relationship' translate>Customer Relationship</span></th>
+                    <th class="text-center"><span name='notes' translate>Notes</span></th>
                 </tr>
                 </thead>
                 <tbody *ngIf = "ltkmCustGrpObjs?.length == 0">
@@ -354,10 +354,10 @@
                 <tbody>
                 <ng-container *ngFor="let item of ltkmCustGrpObjs; let i=index">
                     <tr>
-                        <!-- <td class="text-center">{{i + 1}}</td> -->
+                        <td class="text-center">{{i + 1}}</td>
                         <td class="text-left">{{item.CustName}}</td>
-                        <!-- <td class="text-center">{{item.RelationshipName}}</td>
-                        <td class="text-center">{{item.CustGrpNotes}}</td> -->
+                        <td class="text-center">{{item.RelationshipName}}</td>
+                        <td class="text-center">{{item.CustGrpNotes}}</td>
                     </tr>
                 </ng-container>
                 </tbody>
