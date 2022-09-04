@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "5.11.0-41",
+  "version": "5.11.0-42",
   "license": "",
   "scripts": {
     "ng": "ng",
