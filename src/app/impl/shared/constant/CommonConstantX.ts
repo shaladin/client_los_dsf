@@ -131,6 +131,7 @@ export class CommonConstantX {
     
     //#region Auto Debit Registration
     public static REF_REASON_AUTO_DEBIT_REG = "AUTO_DEBIT_REG";
+    public static REF_STATUS_AUTO_DEBIT_REG = "AUTO_DEBIT_REGIS_STAT"
     public static AUTO_DEBIT_STATUS_CAN = "CAN";
     //#endregion
 }

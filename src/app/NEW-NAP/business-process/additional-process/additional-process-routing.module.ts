@@ -64,6 +64,7 @@ import { EditAppAfterApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-
 import { AutoDebitRegistrationPagingComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-registration-paging.component';
 import { AutoDebitRegistrationInquiryComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component';
 import { AutoDebitRegistrationCancelComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component';
+import { AutoDebitTestComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component';
 
 
 const routes: Routes = [
@@ -472,6 +473,13 @@ const routes: Routes = [
         component: AutoDebitRegistrationCancelComponent,
         data: {
           title: 'Auto Debit Registration Cancel'
+        }
+      },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION + "/Test",
+        component: AutoDebitTestComponent,
+        data: {
+          title: 'Auto Debit Test'
         }
       }
     ]

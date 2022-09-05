@@ -313,5 +313,6 @@ export class URLConstantX {
   public static InsertIntoAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/InsertIntoAutoDebitRegistration";
   public static AutoDebitRegistrationCancellation = environment.losUrl + "/v1" + "/AutoDebitRegistration/AutoDebitRegistrationCancellation";
   public static ProcessAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/ProcessAutoDebitRegistration";
+  public static GetListStgAutoDebitRegisLog = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetListStgAutoDebitRegisLog";
   //#endregion
 }

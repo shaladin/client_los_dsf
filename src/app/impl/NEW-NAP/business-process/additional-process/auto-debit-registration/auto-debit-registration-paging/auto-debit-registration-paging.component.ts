@@ -9,6 +9,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
+import { environment } from 'environments/environment';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-auto-debit-registration-paging',
@@ -17,6 +19,7 @@ import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 export class AutoDebitRegistrationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   bizTemplateCode: string;
+  isJqueryWork: string
 
   constructor(
     private route: ActivatedRoute,
@@ -63,8 +66,11 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
             }
             else
             {
-              this.toastr.successMessage(response["message"]);
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_PAGING]);
+              window.open(environment.losR3Web + "/Nap/AddProcess/AutoDebitRegistration/Test").postMessage("a", environment.losR3Web + "/Nap/AddProcess/AutoDebitRegistration/Test");
+              this.toastr.successMessage(response["Message"]);
+              $(document).ready(function () {
+                window.addEventListener("message", receiveMessage, false)
+                })
             }
           }
         )
@@ -83,4 +89,21 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
       );
     }
   }
+
 }
+
+function receiveMessage(event) {
+  try {
+  if (event.data === 'Success') {
+  //do something when Success
+  }
+  else {
+  //do something when Failed
+  console.log(event);
+  }
+  } catch (e) {
+  console.log(e);
+  }
+  //console.log('receive')
+  console.log(event);
+  }

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AutoDebitRegistrationObj } from 'app/impl/shared/model/auto-debit-registration/AutoDebitRegistrationObj.model';
+import { StgAutoDebitRegisLogObj } from 'app/impl/shared/model/auto-debit-registration/StgAutoDebitRegisLogObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
@@ -23,6 +24,8 @@ export class AutoDebitRegistrationViewComponent implements OnInit {
   cancelDt: string = "";
   listReason: Array<KeyValueObj> = new Array();
   reason: string = "";
+  listStgAutoDebitRegisLog: Array<StgAutoDebitRegisLogObj> = new Array();
+  RefStats: Array<KeyValueObj> = new Array();
 
   readonly Cancel = CommonConstantX.AUTO_DEBIT_STATUS_CAN;
   constructor(
@@ -43,7 +46,17 @@ export class AutoDebitRegistrationViewComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewAutoDebitRegistration.json"
     
+    await this.GetRefStatusByStatusGrpCode();
     await this.GetAutoDebitRegistrationById();
+  }
+
+  async GetRefStatusByStatusGrpCode()
+  {
+    await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, {Code : CommonConstantX.REF_STATUS_AUTO_DEBIT_REG}).toPromise().then(
+      (response) => {
+        this.RefStats = response[CommonConstant.ReturnObj];
+      }
+    )
   }
 
   async GetAutoDebitRegistrationById()
@@ -58,9 +71,23 @@ export class AutoDebitRegistrationViewComponent implements OnInit {
         this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstantX.REF_REASON_AUTO_DEBIT_REG }).toPromise().then(
           (response) => {
             this.listReason = response[CommonConstant.ReturnObj];
-            this.reason = this.listReason.find(x => x.Key == this.autoDebitRegistrationObj.CancellationReason).Value;
+            if(this.autoDebitRegistrationObj.CancellationReason != null)
+            {
+              this.reason = this.listReason.find(x => x.Key == this.autoDebitRegistrationObj.CancellationReason).Value;
+            }
           }
         );
+
+        this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, {Code : this.autoDebitRegistrationObj.TransactionNo}).toPromise().then(
+          (response: Array<StgAutoDebitRegisLogObj>) => {
+            this.listStgAutoDebitRegisLog = response;
+
+            for(let i = 0; i < this.listStgAutoDebitRegisLog.length; i++)
+            {
+              this.listStgAutoDebitRegisLog[i].Status = this.RefStats.find(x => x.Key == this.listStgAutoDebitRegisLog[i].Status).Value;
+            }
+          }
+        )
       }
     )
   }

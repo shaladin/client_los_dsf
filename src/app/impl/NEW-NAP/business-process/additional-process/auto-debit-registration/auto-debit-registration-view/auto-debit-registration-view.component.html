@@ -47,7 +47,29 @@
           <lib-ucSubsection [id]="'AutoDebitDataId'" [title]="'Auto Debit Data'" [panel]="'AutoDebitData'">
           </lib-ucSubsection>
           <div id="AutoDebitData">
-            
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-center"><span class="thead-header">Transaction Date</span></th>
+                  <th class="text-center"><span class="thead-header">Status</span></th>
+                </tr>
+              </thead>
+
+              <tbody *ngIf="listStgAutoDebitRegisLog.length == 0">
+                <tr>
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+              </tbody>
+
+              <tbody>
+                <ng-container *ngFor="let item of listStgAutoDebitRegisLog">
+                  <tr>
+                    <td class="text-center">{{item.TrxDt | date:'dd-MMM-yyyy'}}</td>
+                    <td class="text-center">{{item.Status}}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
