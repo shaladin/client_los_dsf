@@ -82,7 +82,24 @@ export class CollateralDataCfnaXComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
       }
       else {
-        this.outputTab.emit();
+        this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).subscribe(
+          (response) => {
+            let loadObj = response["listResponseAppLoanPurpose"];
+
+            const totalPortionAmt = this.AppCollateral.reduce((collateral, obj) => {
+              return collateral + (obj.CollateralValueAmt * obj.CollateralPrcnt / 100);
+            }, 0);
+
+            const totalFinancingAmt = loadObj.reduce((loan, obj) => {
+              return loan + obj.FinancingAmt;
+            }, 0);
+
+            if(totalFinancingAmt > totalPortionAmt){
+              this.toastr.warningMessage(ExceptionConstant.FINANCING_AMT_MORE_THAN_COLL_PORTION_AMT);
+              return;
+            }
+            this.outputTab.emit();
+          });
       }
     }
     else {

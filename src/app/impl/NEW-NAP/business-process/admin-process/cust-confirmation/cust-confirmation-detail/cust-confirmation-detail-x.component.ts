@@ -394,10 +394,7 @@ export class CustConfirmationDetailXComponent implements OnInit {
       (response) => {
         this.ListRmAddInterestPaidByCode = response[CommonConstant.ReturnObj];
         if (this.BizTemplateCode === CommonConstant.CFNA) {
-          this.CustConfirmForm.patchValue({
-            AdditionalInterestPaidBy: CommonConstantX.AdditionalInterestPaidByCustomer
-          });
-          this.CustConfirmForm.controls['AdditionalInterestPaidBy'].disable();
+          this.ListRmAddInterestPaidByCode = this.ListRmAddInterestPaidByCode.filter(x => x.Key == CommonConstantX.AdditionalInterestPaidByCustomer || x.Key == CommonConstantX.REF_MASTER_CODE_NO_ADD_INTEREST)
         }
       }
     );

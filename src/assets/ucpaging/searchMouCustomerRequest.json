@@ -94,6 +94,12 @@
             "name": "M.MR_MOU_TYPE_CODE"
         },
         {
+            "type": "sort",
+            "position": "center",
+            "label": "REVOLVING",
+            "name": "M.IS_REVOLVING"
+        },
+        {
             "type": "label",
             "position": "center",
             "label": "ACTION"
@@ -127,6 +133,11 @@
             "type": "text",
             "position": "left",
             "property": "MouTypeName"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsRevolving"
         },
         {
             "type": "action",

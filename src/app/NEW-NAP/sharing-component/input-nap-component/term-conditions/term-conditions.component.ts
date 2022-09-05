@@ -17,8 +17,6 @@ import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
 })
 export class TermConditionsComponent implements OnInit {
   AppTcList: Array<AppTCObj> = [];
-  totalCheckAll: number = 0;
-  totalMandatory: number = 0;
   @Output() OutputValueIsCheckAll: EventEmitter<any> = new EventEmitter();
   @Output() OutputMode: EventEmitter<any> = new EventEmitter();
   @Input() IsCheckedAll: boolean = true;
@@ -185,84 +183,76 @@ export class TermConditionsComponent implements OnInit {
     this.ReconstructForm();
   }
 
-  ReconstructForm() {
-    this.totalCheckAll = 0;
-    this.totalMandatory = 0;
+  private ReconstructForm() {
     this.IsCheckedAll = true;
     let listTC = this.parentForm.get(this.identifier) as FormArray
     for (let i = 0; i < listTC.length; i++) {
       let item = listTC.at(i);
-      let isMandatory: Boolean = item.get("IsMandatory").value;
-      let isChecked: Boolean = item.get("IsChecked").value;
-      let isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
-      let isWaived: Boolean = item.get("IsWaived").value;
-      let priorTo: string = item.get("PriorTo").value;
-      let tempExpiredDt: AbstractControl = item.get("ExpiredDt") as AbstractControl;
-      let tempPromisedDt: AbstractControl = item.get("PromisedDt") as AbstractControl;
-
-      if (isMandatory) {
-        //logic PriorTo
-        if (priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) continue;
-        if (isChecked) {
-          tempExpiredDt.enable();
-          if (isExpDtMandatory) {
-            tempExpiredDt.setValidators([Validators.required]);
-          }
-          else {
-            tempExpiredDt.clearValidators();
-          }
-          tempExpiredDt.updateValueAndValidity();
-          tempPromisedDt.disable();
-          tempPromisedDt.clearValidators();
-          tempPromisedDt.updateValueAndValidity();
-          this.totalCheckAll++;
-        }
-        else {
-          if (isWaived) {
-            tempPromisedDt.disable();
-            tempPromisedDt.clearValidators();
-          }
-          else {
-            tempPromisedDt.enable();
-            tempPromisedDt.setValidators([Validators.required]);
-            this.IsCheckedAll = false;
-          }
-          tempPromisedDt.updateValueAndValidity();
-          tempExpiredDt.disable();
-          tempExpiredDt.clearValidators();
-          tempExpiredDt.updateValueAndValidity();
-        }
-      }
-      else {
-        if (isChecked) {
-          tempExpiredDt.enable();
-          if (isExpDtMandatory) {
-            tempExpiredDt.setValidators([Validators.required]);
-          }
-          else {
-            tempExpiredDt.clearValidators();
-          }
-          tempExpiredDt.updateValueAndValidity();
-          tempPromisedDt.disable();
-          tempPromisedDt.clearValidators();
-          tempPromisedDt.updateValueAndValidity();
-        }
-        else {
-          if (isWaived) {
-            tempPromisedDt.disable();
-          }
-          else {
-            tempPromisedDt.enable();
-          }
-          tempPromisedDt.clearValidators();
-          tempPromisedDt.updateValueAndValidity();
-          tempExpiredDt.disable();
-          tempExpiredDt.clearValidators();
-          tempExpiredDt.updateValueAndValidity();
-        }
-      }
+      this.CheckValidityTC(item);
     }
     this.OutputValueIsCheckAll.emit(this.IsCheckedAll);
     listTC.updateValueAndValidity();
+  }
+
+  private CheckValidityTC(item: AbstractControl): void {
+    //#region Init
+    let isMandatory: Boolean = item.get("IsMandatory").value;
+    let isChecked: Boolean = item.get("IsChecked").value;
+    let isExpDtMandatory: Boolean = item.get("IsExpDtMandatory").value;
+    let isWaived: Boolean = item.get("IsWaived").value;
+    let priorTo: string = item.get("PriorTo").value;
+    let tempExpiredDt: AbstractControl = item.get("ExpiredDt") as AbstractControl;
+    let tempPromisedDt: AbstractControl = item.get("PromisedDt") as AbstractControl;
+    //#endregion
+
+    //logic PriorTo
+    if (isMandatory && priorTo != this.currStep && this.currStep != CommonConstant.AppStepPGLV) {
+      this.SetWaivablePromisedDt(tempPromisedDt, isWaived, false, isChecked);
+      return;
+    }
+
+    if (isChecked) {
+      this.SetCheckedExpiredDt(tempExpiredDt, isExpDtMandatory);
+      this.ClearPromisedDt(tempPromisedDt);
+      return;
+    }
+
+    this.SetWaivablePromisedDt(tempPromisedDt, isWaived, isMandatory, isChecked);
+    this.ClearExpiredDt(tempExpiredDt);
+    return;
+  }
+
+  private ClearExpiredDt(ExpiredDt: AbstractControl) {
+    ExpiredDt.disable();
+    ExpiredDt.clearValidators();
+    ExpiredDt.updateValueAndValidity();
+  }
+
+  private SetCheckedExpiredDt(ExpiredDt: AbstractControl, isExpDtMandatory: Boolean) {
+    ExpiredDt.enable();
+    ExpiredDt.clearValidators();
+    if (isExpDtMandatory) {
+      ExpiredDt.setValidators([Validators.required]);
+    }
+    ExpiredDt.updateValueAndValidity();
+  }
+
+  private ClearPromisedDt(PromisedDt: AbstractControl) {
+    PromisedDt.disable();
+    PromisedDt.clearValidators();
+    PromisedDt.updateValueAndValidity();
+  }
+
+  private SetWaivablePromisedDt(PromisedDt: AbstractControl, isWaived: Boolean, isMandatory: Boolean, isChecked:Boolean) {
+    PromisedDt.enable();
+    PromisedDt.clearValidators();
+    if (isWaived || isChecked) {
+      PromisedDt.disable();
+    }
+    if (isMandatory) {
+      PromisedDt.setValidators([Validators.required]);
+      this.IsCheckedAll = false;
+    }
+    PromisedDt.updateValueAndValidity();
   }
 }

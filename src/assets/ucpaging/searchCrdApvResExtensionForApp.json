@@ -59,10 +59,9 @@
   },
   "headerList": [
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
-      "label": "SLA",
-      "name": "SlaColor"
+      "label": "SLA"
     },
     {
       "type": "sort",
@@ -92,13 +91,13 @@
       "type": "sort",
       "position": "center",
       "label": "Remaining Days",
-      "name": "RemainingDays"
+      "name": "(CASE WHEN DATEDIFF(DAY,CONVERT(DATETIME, SCC.SYS_VALUE), A.CRD_APV_RESULT_EXP_DT) < 0 THEN 0 ELSE DATEDIFF(DAY,CONVERT(DATETIME, SCC.SYS_VALUE), A.CRD_APV_RESULT_EXP_DT) END)"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "PO # OF EXTENSION",
-      "name": "ACRD.NUM_OF_EXTENDED"
+      "name": "ISNULL(ACRD.NUM_OF_EXTENDED,0)"
     },
     {
       "type": "label",
