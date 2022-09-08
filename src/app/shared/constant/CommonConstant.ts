@@ -638,7 +638,9 @@ export class CommonConstant {
   public static PurchaseOrderItemTypeNonFee = "NON_FEE";
   public static PurchaseOrderItemTypeFee = "FEE";
   public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
+  public static RefProdCompIntrstType = "INTRSTTYPE";
   public static RefProdCompAssetCond = "ASSETCOND";
+  public static RefProdCompInstScheme = "INST_SCHM";
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
   public static RefMasterTypeCodeProvisionType = "PROVISION_TYPE";
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
