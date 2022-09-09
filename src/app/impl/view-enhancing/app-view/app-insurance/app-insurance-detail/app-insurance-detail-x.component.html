@@ -162,13 +162,25 @@
               <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer</span>
             </th>
             <th style="text-align: right;">
+              <span class="thead-header" name='custMainPremiRate' translate>Main Premi to Customer Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
               <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custAddPremiRate' translate>Additional Premi to Customer Rate (%)</span>
             </th>
             <th style="text-align: right;">
               <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco</span>
             </th>
             <th style="text-align: right;">
+              <span class="thead-header" name='inscoMainPremiRate' translate>Main Premi from Insco Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
               <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoAddPremiRate' translate>Additional Premi from Insco Rate (%)</span>
             </th>
             <th style="text-align: left;">
               <span class="thead-header" name='paidBy' translate>Paid By</span>
@@ -189,17 +201,29 @@
             <td style="text-align: left;">
               {{item.MrAddCvgTypeCode}}
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
               {{item.CustMainPremiAmt | number:'.2':'en-US'}}
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
+              {{item.CustMainPremiRate * 100 | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
               {{item.CustAddPremiAmt | number:'.2':'en-US'}}
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
+              {{item.CustAddPremiRate}}
+            </td>
+            <td style="text-align: left;">
               {{item.InscoMainPremiAmt | number:'.2':'en-US'}}
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
+              {{item.InscoMainPremiRate * 100 | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
               {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InscoAddPremiRate}}
             </td>
             <td style="text-align: left;">
               {{item.PaidBy}}
@@ -424,55 +448,94 @@
       <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px; overflow-x: auto;">
         <table class="table table-responsive-md text-center table-hover">
           <thead>
-            <tr class="table-header">
-              <th style="text-align: center;">
-                <span class="thead-header" name='yearNo' translate>Year No</span>
-              </th>
-              <th style="text-align: left;">
-                <span class="thead-header" name='mainCoverage' translate>Main Coverage</span>
-              </th>
-              <th style="text-align: left;">
-                <span class="thead-header" name='addCoverage' translate>Additional Coverage</span>
-              </th>
-              <th style="text-align: right;">
-                <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer</span>
-              </th>
-              <th style="text-align: right;">
-                <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer</span>
-              </th>
-              <th style="text-align: right;">
-                <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco</span>
-              </th>
-              <th style="text-align: right;">
-                <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of appInsCvgsFinal;">
-              <td style="text-align: center;">
-                {{item.YearNo}}
-              </td>
-              <td style="text-align: left;">
-                {{item.MrMainCvgTypeCode}}
-              </td>
-              <td style="text-align: left;">
-                {{item.MrAddCvgTypeCode}}
-              </td>
-              <td style="text-align: left;">
-                {{item.CustMainPremiAmt | number:'.2':'en-US'}}
-              </td>
-              <td style="text-align: left;">
-                {{item.CustAddPremiAmt | number:'.2':'en-US'}}
-              </td>
-              <td style="text-align: left;">
-                {{item.InscoMainPremiAmt | number:'.2':'en-US'}}
-              </td>
-              <td style="text-align: left;">
-                {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
-              </td>
-            </tr>
-          </tbody>
+          <tr class="table-header">
+            <th style="text-align: center;">
+              <span class="thead-header" name='yearNo' translate>Year No</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='mainCoverage' translate>Main Coverage</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='addCoverage' translate>Additional Coverage</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custMainPremiRate' translate>Main Premi to Customer Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custAddPremiRate' translate>Additional Premi to Customer Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoMainPremiRate' translate>Main Premi from Insco Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoAddPremiRate' translate>Additional Premi from Insco Rate (%)</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='paidBy' translate>Paid By</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='isCapitalized' translate>Capitalized</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of appInsCvgsFinal;">
+            <td style="text-align: center;">
+              {{item.YearNo}}
+            </td>
+            <td style="text-align: left;">
+              {{item.MrMainCvgTypeCode}}
+            </td>
+            <td style="text-align: left;">
+              {{item.MrAddCvgTypeCode}}
+            </td>
+            <td style="text-align: left;">
+              {{item.CustMainPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.CustMainPremiRate * 100 | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.CustAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.CustAddPremiRate * 100 | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InscoMainPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InscoMainPremiRate * 100 | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InscoAddPremiRate * 100 | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.PaidBy}}
+            </td>
+            <td *ngIf="item.IsCapitalized == true">
+              Yes
+            </td>
+            <td *ngIf="item.IsCapitalized == false">
+              No
+            </td>
+          </tr>
+        </tbody>
         </table>
       </div>
       <lib-ucSubsection [id]="'SummaryCompanyId'" [title]="'Summary'" [panel]="'SummaryCompanySection'"></lib-ucSubsection>
