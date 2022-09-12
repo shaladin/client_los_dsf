@@ -9,6 +9,12 @@
           <label *ngIf="IsUseRapindo" class="col-md-3" translate>Rapindo</label>
           <label *ngIf="IsUseRapindo" class="col-md-3" translate>Data Exist: {{RapindoDataObj.DataExist}}, Active: {{RapindoDataObj.DataActive}}, Not Active: {{RapindoDataObj.DataNoActive}}</label>
         </div>
+        <div *ngIf="IsUseAsliRi" class="form-group row">
+          <label class="col-md-3" translate></label>
+          <label class="col-md-3" translate></label>
+          <label *ngIf="IsUseAsliRi" class="col-md-3" translate>Asli Ri</label>
+          <label *ngIf="IsUseAsliRi" class="col-md-3" translate><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="asliRiHandler(TrustingSocialView)"> Click Here to View </a></label>
+        </div>
         <div *ngIf="IsUseProfind || IsUseSlik" class="form-group row">
           <label *ngIf="IsUseProfind" class="col-md-3" translate>Profind</label>
           <label *ngIf="IsUseProfind" class="col-md-3" translate></label>

@@ -63,7 +63,7 @@ import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-
 
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

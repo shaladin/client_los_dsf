@@ -133,6 +133,10 @@ export class SchmBalloonComponent implements OnInit {
   }
 
   Calculate() {
+    if (this.ParentForm.getRawValue().RateType == '') {
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_RATE_TYPE);
+      return;
+    }
     if (this.ParentForm.getRawValue().CalcBase == '') {
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
       return;

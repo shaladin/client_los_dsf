@@ -24,6 +24,7 @@ export class TabApplicationXComponent implements OnInit {
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
   isReady: boolean = false;
+  isViewReady: boolean = false;
   isLoanObjectNeeded: boolean = false;
   ListCrossAppData: any;
   isDF: boolean = false;
@@ -72,9 +73,11 @@ export class TabApplicationXComponent implements OnInit {
       (response) => {
         if(response["MrInstTypeCode"] == CommonConstant.SINGLE_INST_TYPE){
           this.viewProdMainInfoObj.viewInput = "./assets/impl/ucviewgeneric/viewTabApplicationFactoringSingleInfoX.json";
+          this.isViewReady = true;
         }
         else if(response["MrInstTypeCode"] == CommonConstant.MULTIPLE_INST_TYPE){
           this.viewProdMainInfoObj.viewInput = "./assets/impl/ucviewgeneric/viewTabApplicationFactoringMulInfoX.json";
+          this.isViewReady = true;
         }
       });
     }
@@ -85,6 +88,10 @@ export class TabApplicationXComponent implements OnInit {
       else {
         this.viewProdMainInfoObj.viewInput = "./assets/impl/ucviewgeneric/viewTabApplicationOPLInfoX.json";
       }
+    }
+    else if (this.BizTemplateCode == CommonConstant.DF)
+    {
+      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfoDlfn.json";
     }
     else {
       this.viewProdMainInfoObj.viewInput = "./assets/impl/ucviewgeneric/viewTabApplicationInfoX.json";
@@ -103,7 +110,18 @@ export class TabApplicationXComponent implements OnInit {
 
     this.getRestructuringData();
     await this.getAppAttrContent();
-    this.isReady = true;
+    
+    if(this.BizTemplateCode == CommonConstant.FCTR)
+    {
+      if(this.isViewReady)
+      {
+        this.isReady = true;
+      }
+    }
+    else
+    {
+      this.isReady = true;
+    }
   }
 
   async GetCrossAppData() {

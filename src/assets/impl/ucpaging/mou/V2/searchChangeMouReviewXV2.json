@@ -114,7 +114,8 @@
         "id": "AssigneeId",
         "value": null,
         "label": "Claim By",
-        "placeholder": "Placeholder"
+        "placeholder": "Placeholder",
+        "isCriteriaDataTable" : true
       }
     ],
     "querystring": {

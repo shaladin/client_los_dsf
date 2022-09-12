@@ -56,8 +56,8 @@ export class MouDetailFactoringComponent implements OnInit {
     MrInstTypeCode: [''],
     SingleInstCalcMthd: [''],
     TopDays: ['', [Validators.required, Validators.min(1)]],
-    TenorFrom: ['', [Validators.min(0)]],
-    TenorTo: ['', [Validators.min(0)]],
+    TenorFrom: [''],
+    TenorTo: [''],
     PayFreqCode: [''],
     MrInstSchmCode: [''],
     InterestRatePrcnt: [0, [Validators.min(0), Validators.max(100)]],
@@ -228,6 +228,33 @@ export class MouDetailFactoringComponent implements OnInit {
         TopDays: ''
       });
     }
+    this.SetTenorValidator(this.IsSingleIns);
+  }
+
+  private SetTenorValidator(IsSingleIns: boolean){
+    let TenorFrom = this.MouDetailFactoringForm.get("TenorFrom");
+    let TenorTo = this.MouDetailFactoringForm.get("TenorTo");
+    TenorFrom.clearValidators();
+    TenorTo.clearValidators();
+    if(!IsSingleIns){
+      TenorFrom.setValidators([Validators.required, Validators.min(1)]);
+      let TenorToMin = 1;
+      if (TenorFrom.value && TenorFrom.value != 0) TenorToMin = TenorFrom.value;
+      TenorTo.setValidators([Validators.required, Validators.min(TenorToMin)]);
+    }
+    TenorFrom.updateValueAndValidity();
+    TenorTo.updateValueAndValidity();
+  }
+
+  ChangeMinTenorTo() {
+    let TenorFrom = this.MouDetailFactoringForm.get("TenorFrom");
+    let TenorTo = this.MouDetailFactoringForm.get("TenorTo");
+    let valueMin = TenorFrom.value;
+    if (!valueMin || valueMin == 0) {
+      valueMin = 1;
+    }
+    TenorTo.setValidators([Validators.required, Validators.min(valueMin)]);
+    TenorTo.updateValueAndValidity();
   }
 
   Save(){
@@ -369,7 +396,6 @@ export class MouDetailFactoringComponent implements OnInit {
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
-    this.inputLookupObj.isReadonly = false;
     this.inputLookupObj.isRequired = true;
     this.inputLookupObj.addCritInput = suppCrit;
     this.inputLookupObj.isReady = true;

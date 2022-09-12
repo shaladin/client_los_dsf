@@ -21,7 +21,7 @@ import { CustMainDataXDsfComponent } from "app/NEW-NAP/DSF/sharing-component-dsf
 
 export const customCurrencyMaskConfig = {
     align: "right",
-    allowNegative: true,
+    allowNegative: false,
     allowZero: true,
     decimal: ".",
     precision: 0,

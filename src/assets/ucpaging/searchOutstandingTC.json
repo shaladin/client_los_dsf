@@ -40,7 +40,7 @@
             "id" : "GoLiveId",
             "value" : "",
             "restriction": "gte",
-            "label" : "Go Live Date <=",
+            "label" : "Go Live Date From",
             "placeholder": "Placeholder"
         },
         {
@@ -68,7 +68,7 @@
             "id" : "GoLiveGTId",
             "value" : "",
             "restriction": "lte",
-            "label" : "Go Live Date >=",
+            "label" : "Go Live Date To",
             "placeholder": "Placeholder"
         }
     ],
