@@ -991,6 +991,8 @@ export class URLConstant {
   // APP NEGATIVE CUST
   public static GetNegCustIndicatorByAppId = environment.losUrl + "/v1" + "/AppNegativeCust/GetNegCustIndicatorByAppId";
   public static CheckIsNegCustAllowedCreateAppByAppId = environment.losUrl + "/v1" + "/AppNegativeCust/CheckIsNegCustAllowedCreateAppByAppId";
+  public static CheckIsNegCustAllowedCreateAppByCustNo = environment.losUrl + "/v1" + "/AppNegativeCust/CheckIsNegCustAllowedCreateAppByCustNo";
+
 
   // APP CUST ATTR CONTENT
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/v1" + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"

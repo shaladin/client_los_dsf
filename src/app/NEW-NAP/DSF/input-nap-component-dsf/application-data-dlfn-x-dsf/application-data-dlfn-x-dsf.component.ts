@@ -559,6 +559,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       TopIntrstRatePrcnt: this.mouCustDlrFinObj.TopInterestRatePrcnt
     });
 
+    this.setBankAcc(this.SalesAppInfoForm.controls['MrWopCode'].value)
     this.changePaymentFreq();
     this.CheckInstType();
 
@@ -603,10 +604,11 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       }
     } else {
       this.isSingle = true;
+      this.SalesAppInfoForm.controls.Tenor.disable();
       this.SalesAppInfoForm.controls['TopDays'].setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
 
-      if (this.mode != 'edit') {
+      if (this.mode != 'edit' || this.mode == 'edit') {
         this.SalesAppInfoForm.controls.Tenor.setValue(0);
       }
     }
@@ -1054,14 +1056,27 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   async GetBankAccCust() {
     await this.http.post(URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).toPromise().then(
       (responseAoi) => {
-        this.AppOthInfoBank = {
+        const objectForAppCustBankAcc = {
           BankCode: responseAoi['BankCode'],
-          BankBranch: responseAoi['BankBranch'],
           BankAccNo: responseAoi['BankAccNo'],
-          BankAccName: responseAoi['BankAccName'],
           AppCustId: this.appCustId
         }
+        this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
+          (response: any) => {
+            if(response['AppCustBankAccId'] != 0){
+              this.SalesAppInfoForm.patchValue({
+                CustBankAcc: response['AppCustBankAccId']
+              });
+            }
+            this.AppOthInfoBank = {
+              BankCode: response['BankCode'],
+              BankBranch: response['BankBranch'],
+              BankAccNo: response['BankAccNo'],
+              BankAccName: response['BankAccName'],
+              AppCustId: this.appCustId
+            }
       });
+    });
   }
 
   async selectedBank(event) {

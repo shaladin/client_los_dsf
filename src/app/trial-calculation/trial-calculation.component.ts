@@ -51,6 +51,8 @@ export class TrialCalculationComponent implements OnInit {
     PayFreqCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrInstSchemeCode: ['', [Validators.required, Validators.maxLength(50)]],
     MrFirstInstTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+    MrInstSchemeName: [''],
+    MrFirstInstTypeName: [''],
     PayFreqValue: [''],
     MrInstSchemeValue: [''],
     MrFirstInstTypeValue: [''],
@@ -59,6 +61,11 @@ export class TrialCalculationComponent implements OnInit {
     LobCode: [''],
     BizTemplateCode: [''],
 
+    PrcntDp: 0,
+    PrcntDpNett: 0,
+    DownPaymentGrossAmt: 0,
+    TotalAccessoryPriceAmt: 0,
+    TotalAssetPriceAmtOnly: 0,
     TotalAssetPriceAmt: 0,
     TotalFeeAmt: 0,
     TotalFeeCptlzAmt: 0,
@@ -67,7 +74,6 @@ export class TrialCalculationComponent implements OnInit {
     TotalInsInscoAmt: 0,
     TotalLifeInsCustAmt: 0,
     LifeInsCptlzAmt: 0,
-    DownPaymentGrossAmt: 0,
     DownPaymentNettAmt: 0,
 
     TotalDownPaymentNettAmt: 0, //muncul di layar
@@ -75,7 +81,7 @@ export class TrialCalculationComponent implements OnInit {
     TdpPaidCoyAmt: 0, // input layar
 
     NtfAmt: 0,
-    RateType: "EFCTV",
+    RateType: ["EFCTV", [Validators.required]],
     EffectiveRatePrcnt: 0, //eff rate to cust
     EffectiveRateBhv: "",
     StdEffectiveRatePrcnt: 0, //base eff rate to cust
@@ -195,7 +201,9 @@ export class TrialCalculationComponent implements OnInit {
       MrFirstInstTypeCode: '',
       PayFreqValue: '',
       MrInstSchemeValue: '',
-      MrFirstInstTypeValue: ''
+      MrFirstInstTypeValue: '',
+      MrInstSchemeName: '',
+      MrFirstInstTypeName: ''
     });
   }
 
@@ -293,6 +301,14 @@ export class TrialCalculationComponent implements OnInit {
     }
   }
 
+  ChangeIsGenerateHandler() {
+    if(this.IsGenerate) {
+      this.toastr.warningMessage("Please Regenerate Financial Data");
+      this.UpdateForm();
+    }
+    this.IsGenerate = false;
+  }
+
   updateValueDownPaymentAmt() {
     var AssetPriceAmt = this.TrialForm.controls.AssetPriceAmt.value;
     var DownPaymentAmt = this.TrialForm.controls.AssetPriceAmt.value * this.TrialForm.controls.DownPaymentPrctg.value / 100;
@@ -334,6 +350,16 @@ export class TrialCalculationComponent implements OnInit {
     this.TrialForm.patchValue({
       TotalInsCustAmt: TotalInsCustAmt,
       InsCptlzAmt: InsCptlzAmt
+    });
+  }
+
+  updateLifeInsuranceAmt() {
+    this.ChangeIsGenerateHandler();
+    var TotalLifeInsCustAmt = this.TrialForm.controls.TotalLifeInsCustAmt.value;
+    var LifeInsCptlzAmt = this.TrialForm.controls.LifeInsCptlzAmt.value;
+    this.TrialForm.patchValue({
+      TotalLifeInsCustAmt: TotalLifeInsCustAmt,
+      LifeInsCptlzAmt: LifeInsCptlzAmt
     });
   }
 
@@ -397,6 +423,25 @@ export class TrialCalculationComponent implements OnInit {
           listAppFee.removeAt(0);
         }
       }
+
+      var mrFirstInstTypeName = this.TrialForm.controls.MrFirstInstTypeCode.value;
+      if(this.applicationDDLitems['FIRSTINSTTYPE'])
+      {
+        var itemFirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'].find((obj) => {
+          return obj["Key"] === this.TrialForm.controls.MrFirstInstTypeCode.value;
+        });
+        if (itemFirstInstType) mrFirstInstTypeName = itemFirstInstType["Value"];
+      }
+
+      var mrInstSchemeName = this.TrialForm.controls.MrInstSchemeCode.value;
+      if(this.applicationDDLitems['INST_SCHM'])
+      {
+        var itemInstSchemeName = this.applicationDDLitems['INST_SCHM'].find((obj) => {
+          return obj["Key"] === this.TrialForm.controls.MrInstSchemeCode.value;
+        });
+        if (itemInstSchemeName) mrInstSchemeName = itemInstSchemeName["Value"];
+      }
+
       this.IsGenerate = true;
       this.LoadFinData();
       this.TrialForm.patchValue({
@@ -405,11 +450,17 @@ export class TrialCalculationComponent implements OnInit {
         MrInstSchemeCode: this.TrialForm.controls.MrInstSchemeCode.value,
         MrFirstInstTypeCode: this.TrialForm.controls.MrFirstInstTypeCode.value,
         BizTemplateCode: this.BizTmpltCode,
+        MrFirstInstTypeName: mrFirstInstTypeName,
+        MrInstSchemeName: mrInstSchemeName,
+        TotalAssetPriceAmtOnly: this.TrialForm.controls.TotalAssetPriceAmt.value,
+        PrcntDp: this.TrialForm.controls.DownPaymentPrctg.value,
+        PrcntDpNett: this.TrialForm.controls.DownPaymentPrctg.value,
         TotalAssetPriceAmt: this.TrialForm.controls.AssetPriceAmt.value,
         DownPaymentGrossAmt: this.TrialForm.controls.DownPaymentAmt.value,
         DownPaymentNettAmt: this.TrialForm.controls.DownPaymentAmt.value,
         TotalDownPaymentNettAmt: this.TrialForm.controls.DownPaymentAmt.value,
         TotalDownPaymentGrossAmt: this.TrialForm.controls.DownPaymentAmt.value,
+        TotalDpAmt: this.TrialForm.controls.DownPaymentAmt.value,
         TotalInsCustAmt: this.TrialForm.controls.TotalInsCustAmt.value,
         InsCptlzAmt: this.TrialForm.controls.InsCptlzAmt.value,
       });
@@ -456,7 +507,6 @@ export class TrialCalculationComponent implements OnInit {
           MrLcCalcMethodCode: this.appFinDataObj.MrLcCalcMethodCode,
           LcGracePeriod: this.appFinDataObj.LcGracePeriod,
           PrepaymentPenaltyRate: this.appFinDataObj.PrepaymentPenaltyRate,
-          TotalDpAmt: this.appFinDataObj.TotalDpAmt,
           VendorAtpmCode: this.appFinDataObj.VendorAtpmCode,
           BalloonValueAmt: this.appFinDataObj.BalloonValueAmt,
           ResidualValueAmt: this.appFinDataObj.ResidualValueAmt && this.appFinDataObj.ResidualValueAmt > 0 ? this.appFinDataObj.ResidualValueAmt : 0,
@@ -488,6 +538,48 @@ export class TrialCalculationComponent implements OnInit {
       this.TrialForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
       this.TrialForm.controls.NumOfStep.updateValueAndValidity();
     }
+  }
+
+  UpdateForm() {
+    this.TrialForm.patchValue({
+      EffectiveRatePrcnt: 0,
+      StdEffectiveRatePrcnt: 0,
+      FlatRatePrcnt: 0,
+
+      RoundingAmt: 0,
+      EffectiveRateBhv: "",
+      SellSupplEffectiveRatePrcnt: 0,
+      AppSupplEffectiveRatePrcnt: 0,
+
+      DiffRateAmt: 0,
+
+      GrossYieldPrcnt: 0,
+      CummulativeTenor: 0,
+
+      ApvAmt: 0,
+
+      LcRate: 0,
+      MrLcCalcMethodCode: "",
+      GracePeriod: 0,
+      NumOfStep: 0,
+      LcGracePeriod: 0,
+      PrepaymentPenaltyRate: 0,
+      VendorAtpmCode: "",
+      BalloonValueAmt: 0,
+      ResidualValueAmt: 0,
+
+      MinEffectiveRatePrcnt: 0,
+      MaxEffectiveRatePrcnt: 0,
+      MinInterestIncomeAmt: 0,
+      MinGrossYieldPrcnt: 0,
+      MaxGrossYieldPrcnt: 0,
+      MinBalloonAmt: 0,
+      MaxBalloonAmt: 0,
+      BalloonBhv: "",
+      MinDownPaymentNettPrcnt: 0, 
+      MaxDownPaymentNettPrcnt: 0
+    });
+    this.setValidator(this.TrialForm.controls.MrInstSchemeCode.value);
   }
 
   Print() {

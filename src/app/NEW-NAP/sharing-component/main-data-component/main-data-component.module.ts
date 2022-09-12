@@ -17,10 +17,11 @@ import { FamilyMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-compone
 import { MngmntShrhldrMainDataPagingXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/mngmnt-shrhldr-main-data-paging-x/mngmnt-shrhldr-main-data-paging-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { CustPublicXComponent } from "app/impl/NEW-NAP/sharing-component/main-data-component/component/cust-public/cust-public-x.component";
+import { CustMainDataXDsfComponent } from "app/NEW-NAP/DSF/sharing-component-dsf/main-data-component-dsf/cust-main-data-x-dsf/cust-main-data-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
-    allowNegative: true,
+    allowNegative: false,
     allowZero: true,
     decimal: ".",
     precision: 0,
@@ -43,7 +44,8 @@ export const customCurrencyMaskConfig = {
         GuarantorMainDataPagingXComponent,
         FamilyMainDataPagingXComponent,
         MngmntShrhldrMainDataPagingXComponent,
-        CustPublicXComponent
+        CustPublicXComponent,
+        CustMainDataXDsfComponent
     ],
     imports: [
         CommonModule,
@@ -64,7 +66,8 @@ export const customCurrencyMaskConfig = {
         GuarantorMainDataPagingXComponent,
         FamilyMainDataPagingXComponent,
         MngmntShrhldrMainDataPagingXComponent,
-        CustPublicXComponent
+        CustPublicXComponent,
+        CustMainDataXDsfComponent
     ],
     providers: [
         NGXToastrService

@@ -44,7 +44,7 @@ export class CcContactInformationTabComponent implements OnInit {
   readonly MasterIdTypeCode: string = CommonConstant.RefMasterTypeCodeIdType;
   readonly MasterGenderCode: string = CommonConstant.RefMasterTypeCodeGender;
   readonly MasterJobPosCode: string = CommonConstant.RefMasterTypeCodeJobPosition;
-  readonly MasterCustRelationCode: string = CommonConstant.RefMasterTypeCodeCustRelationship;
+  readonly MasterCustRelationCode: string = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
   readonly IdTypeNpwp: string = CommonConstant.MrIdTypeCodeNPWP;
   readonly IdTypeAkta: string = CommonConstant.MrIdTypeCodeAKTA;
   readonly IdTypeEktp: string = CommonConstant.MrIdTypeCodeEKTP;

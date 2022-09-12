@@ -26,7 +26,7 @@
         </ng-template>
       </mat-tab>
 
-      <mat-tab label="App Summary">
+      <mat-tab label="App Summary" *ngIf="IsFromApp">
         <ng-template matTabContent>
           <view-ltkm-app-summary-data [AppId]="AppId"></view-ltkm-app-summary-data>
         </ng-template>

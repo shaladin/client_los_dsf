@@ -104,6 +104,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   inscoBranchObj: Array<KeyValueObj>;
   InsAssetCoveredBy: string = "";
   appInsObjObj: AppInsObjObj;
+  RefProdCmptPurposeOfFinancing: ProdOfferingDObj;
 
   AppAssetRelatedOutput: any;
   tempColor:boolean = false;
@@ -157,6 +158,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.getInsuranceData();
     await this.bindAppInsObj();
     await this.bindAssetUsageObj();
+    await this.GetRefProdCmptPurposeOfFinancing();
 
     await this.setFormValidators();
 
@@ -318,6 +320,18 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     );
   }
 
+  async GetRefProdCmptPurposeOfFinancing() {
+    let tempAppObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    tempAppObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    tempAppObj.RefProdCompntCode = CommonConstant.RefProdCompntCodePurposeOfFinancing;
+    tempAppObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, tempAppObj).toPromise().then(
+      (response: any) => {
+        this.RefProdCmptPurposeOfFinancing = response;
+      }
+    );
+  }
+  
   bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -872,8 +886,9 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   }
 
   async bindAssetUsageObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = this.RefProdCmptPurposeOfFinancing.CompntValue;
+    await this.http.post(URLConstant.GetListKeyValueAssetUsageByPurposeOfFinCode, reqByCode).subscribe(
       (response) => {
         this.AssetUsageObj = response[CommonConstant.ReturnObj];
       }

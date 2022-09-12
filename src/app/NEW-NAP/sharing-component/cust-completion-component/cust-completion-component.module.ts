@@ -33,7 +33,7 @@ import { MgmntShrholderXComponent } from "app/impl/NEW-NAP/sharing-component/cus
 
 export const customCurrencyMaskConfig = {
     align: "right",
-    allowNegative: true,
+    allowNegative: false,
     allowZero: true,
     decimal: ".",
     precision: 0,

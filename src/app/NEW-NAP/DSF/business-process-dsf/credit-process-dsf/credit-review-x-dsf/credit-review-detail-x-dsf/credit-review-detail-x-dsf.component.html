@@ -7,7 +7,7 @@
     <app-app-main-info-cr-x [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-cr-x>
     <div class="card-body">
       <div class="px-3">
-        <app-asset-accessory-info *ngIf="isShow" [AppId]="appId">
+        <app-asset-accessory-info *ngIf="isShow  && BizTemplateCode != 'CFNA'" [AppId]="appId">
         </app-asset-accessory-info>
         <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-additional-coll>
@@ -19,15 +19,17 @@
         </app-crd-rvw-fam-guar>
         <app-crd-rvw-app-fin-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
         </app-crd-rvw-app-fin-info-x>
+        <!-- Self Custom Change -->
         <app-crd-rvw-third-party-checking-x-dsf *ngIf="appNo != ''" [AppNo]="appNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-third-party-checking-x-dsf>
+        <!-- Self Custom Change -->
         <app-crd-rvw-app-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
         </app-crd-rvw-app-app-info-x>
         <!-- <app-crd-rvw-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
         </app-crd-rvw-app-info-x> -->
         <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-cmo-info>
-        <app-crd-rvw-dealer-info *ngIf="isShow && !IsFD" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        <app-crd-rvw-dealer-info *ngIf="isShow && !IsFD  && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
         <app-tab-deviation [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
 

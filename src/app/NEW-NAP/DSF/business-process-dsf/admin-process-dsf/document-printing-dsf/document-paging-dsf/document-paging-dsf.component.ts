@@ -52,7 +52,7 @@ export class DocumentPagingDsfComponent implements OnInit {
       this.agrmntDoc.AgrmntId = ev.RowObj.AgrmntId;
       this.agrmntDoc.WOF = ev.RowObj.WOF;
 
-      if (ev.RowObj.WOF == "LB" || ev.RowObj.WOF == "IF")
+      if (ev.RowObj.WOF == "LB" || ev.RowObj.WOF == "IF"  || ev.RowObj.WOF == "SP")
       {
       this.http.post(URLConstantDsf.AddListDocumentPrintingLBByAgrmntIdDsf, this.agrmntDoc).subscribe(
         (response) => {

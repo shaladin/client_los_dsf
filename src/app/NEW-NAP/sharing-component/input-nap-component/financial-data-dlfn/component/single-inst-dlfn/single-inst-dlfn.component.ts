@@ -227,8 +227,10 @@ export class SingleInstDlfnComponent implements OnInit {
                 }
                 if (interestType == "PRCNT") {
                   interestAmt = (Days / DaysInYear) * ntfAmt * (interestPrcnt / 100);
+                  if(Days == 0) interestAmt = 0; //SITUFCFRTHREE-417 - Fix jika selisih hari = 0, maka ratenya tidak infinite lagi
                 } else {
                   interestPrcnt = interestAmt / ((Days / DaysInYear) * ntfAmt) * 100;
+                  if(Days == 0) interestPrcnt = 0; //SITUFCFRTHREE-417 - Fix jika selisih hari = 0, maka ratenya tidak infinite lagi
                 }
 
                 this.ParentForm.patchValue({

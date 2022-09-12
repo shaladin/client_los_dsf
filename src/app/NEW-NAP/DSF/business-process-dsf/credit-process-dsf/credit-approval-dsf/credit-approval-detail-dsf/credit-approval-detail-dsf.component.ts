@@ -127,7 +127,9 @@ export class CreditApprovalDetailDsfComponent implements OnInit {
       (response) => {
       },
       (error) => {
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        // End Self Custom Change
       }
     )
   }
@@ -186,7 +188,9 @@ export class CreditApprovalDetailDsfComponent implements OnInit {
     forkJoin(postList).subscribe(
       (response) => {
         this.toastr.successMessage(response[0]["Message"]);
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        // End Self Custom Change
       });
   }
 
@@ -199,7 +203,9 @@ export class CreditApprovalDetailDsfComponent implements OnInit {
   }
 
   onCancelClick() {
+    // Self Custom Change
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+    // End Self Custom Change
   }
   //#endregion
 }

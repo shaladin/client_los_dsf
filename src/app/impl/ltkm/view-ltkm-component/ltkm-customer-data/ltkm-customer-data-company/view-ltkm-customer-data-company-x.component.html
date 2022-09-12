@@ -164,10 +164,10 @@
             <table class="table table-responsive-md text-center table-hover">
                 <thead>
                 <tr class="table-header">
-                    <!-- <th class="text-center"><span class="thead-header" name='no' translate>No</span> </th> -->
+                    <th class="text-center"><span class="thead-header" name='no' translate>No</span> </th>
                     <th class="text-left"><span class="thead-header" name='custName' translate>Customer Name</span></th>
-                    <!-- <th class="text-center"><span class="thead-header" name='relationship' translate>Customer Relationship</span></th>
-                    <th class="text-center"><span class="thead-header" name='notes' translate>Notes</span></th> -->
+                    <th class="text-center"><span class="thead-header" name='relationship' translate>Customer Relationship</span></th>
+                    <th class="text-center"><span class="thead-header" name='notes' translate>Notes</span></th>
                 </tr>
                 </thead>
                 <tbody *ngIf = "ltkmCustGrpObjs?.length == 0">
@@ -178,10 +178,10 @@
                 <tbody>
                 <ng-container *ngFor="let item of ltkmCustGrpObjs; let i=index">
                     <tr>
-                        <!-- <td class="text-center">{{i + 1}}</td> -->
+                        <td class="text-center">{{i + 1}}</td>
                         <td class="text-left">{{item.CustName}}</td>
-                        <!-- <td class="text-center">{{item.RelationshipName}}</td>
-                        <td class="text-center">{{item.CustGrpNotes}}</td> -->
+                        <td class="text-center">{{item.RelationshipName}}</td>
+                        <td class="text-center">{{item.CustGrpNotes}}</td>
                     </tr>
                 </ng-container>
                 </tbody>

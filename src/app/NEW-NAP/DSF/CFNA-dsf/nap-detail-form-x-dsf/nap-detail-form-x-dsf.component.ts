@@ -15,16 +15,17 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
-import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
-import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
-import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 @Component({
   selector: 'app-nap-detail-form-x-dsf',
   templateUrl: './nap-detail-form-x-dsf.component.html',
@@ -51,7 +52,9 @@ export class NapDetailFormXDsfComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.CFNA;
+  IsShowMultiReferantor: number = 0;
   @ViewChild("CFNAMainInfoContainer", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "NAPD": 1,
@@ -102,12 +105,12 @@ export class NapDetailFormXDsfComponent implements OnInit {
     });
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     //check DMS
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
-    });
+      });
 
     this.claimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
@@ -145,8 +148,15 @@ export class NapDetailFormXDsfComponent implements OnInit {
     this.MakeViewReturnInfoObj();
   }
 
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+      (response) => {
+        this.IsShowMultiReferantor = parseInt(response.GsValue);
+      });
+  }
+
   async initDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -158,36 +168,36 @@ export class NapDetailFormXDsfComponent implements OnInit {
         response => {
           if (response != null && ((response["CustNo"] != null && response["CustNo"] != "") || (response["ApplicantNo"] != null && response["ApplicantNo"] != ""))) {
             let trxNo;
-          this.appNo = this.NapObj.AppNo;
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-          let isExisting = response['IsExistingCust'];
-          if (isExisting) {
-            trxNo = response['CustNo'];
-          }
-          else {
-            trxNo = response['ApplicantNo'];
-          }
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
+            this.appNo = this.NapObj.AppNo;
+            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
+            let isExisting = response['IsExistingCust'];
+            if (isExisting) {
+              trxNo = response['CustNo'];
+            }
+            else {
+              trxNo = response['ApplicantNo'];
+            }
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
 
-          let mouId = this.NapObj.MouCustId;
-          if (mouId != null && mouId != 0) {
-            let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                let mouCustNo = result['MouCustNo'];
-                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-                this.isDmsReady = true;
-              }
-            )
+            let mouId = this.NapObj.MouCustId;
+            if (mouId != null && mouId != 0) {
+              let mouObj = { Id: mouId };
+              this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+                result => {
+                  let mouCustNo = result['MouCustNo'];
+                  this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                  this.isDmsReady = true;
+                }
+              )
+            }
+            else {
+              this.isDmsReady = true;
+            }
+          } else {
+            this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
           }
-          else {
-            this.isDmsReady = true;
-          }
-        } else {
-          this.toastr.warningMessage(ExceptionConstant.DUP_CHECK_NOT_COMPLETE);
         }
-      }
       );
     }
   }
@@ -249,7 +259,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
       this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
@@ -281,7 +291,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
       this.UpdateAppStep(AppStep);
     }
     const step = this.AppStep[AppStep];
-    if(step!=undefined){
+    if (step != undefined) {
       this.AppStepIndex = step;
     }
 
@@ -292,6 +302,16 @@ export class NapDetailFormXDsfComponent implements OnInit {
   }
 
   NextStep(Step) {
+    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
+      const appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+          }
+        }
+      );
+    }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
@@ -314,10 +334,10 @@ export class NapDetailFormXDsfComponent implements OnInit {
     )
   }
 
-  CheckIsUseDms(){
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+  CheckIsUseDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.NextStep(CommonConstant.AppStepUplDoc);
-    }else{
+    } else {
       this.LastStepHandler();
     }
   }
@@ -329,7 +349,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
       let reqObj: SubmitNapObj = new SubmitNapObj();
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
-      let SubmitNapUrl = environment.isCore? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
+      let SubmitNapUrl = environment.isCore ? URLConstantX.SubmitNAPXV2 : URLConstantX.SubmitNAPX;
       this.http.post(SubmitNapUrl, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -339,7 +359,9 @@ export class NapDetailFormXDsfComponent implements OnInit {
   }
 
   Cancel() {
+    // Self Custom CR MPF Validation
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.CFNA });
+    // End Self Custom CR MPF Validation
   }
 
   Submit() {
@@ -374,12 +396,12 @@ export class NapDetailFormXDsfComponent implements OnInit {
     AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
-  claimTask(){
-    if(environment.isCore){
-        if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
-            this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
-          }
-        }
+  claimTask() {
+    if (environment.isCore) {
+      if (this.wfTaskListId != "" && this.wfTaskListId != undefined) {
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+      }
+    }
     else if (this.wfTaskListId > 0) {
       this.claimTaskService.ClaimTask(this.wfTaskListId);
     }

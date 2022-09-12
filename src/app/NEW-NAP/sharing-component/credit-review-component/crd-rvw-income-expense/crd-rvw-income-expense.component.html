@@ -156,6 +156,14 @@
               <td style="text-align: right;">{{item.ReservedFundAmt | number:'.2':'en-US'}}</td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr class="font-weight-bold">
+              <td class="text-left" translate>Total</td>
+              <td class="text-right">{{totalAllocation[0] | number:'.2':'en-US'}}</td>
+              <td class="text-right">{{totalAllocation[1] | number:'.2':'en-US'}}</td>
+              <td class="text-right">{{totalAllocation[2] | number:'.2':'en-US'}}</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
