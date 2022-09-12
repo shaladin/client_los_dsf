@@ -58,8 +58,6 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   RFAInfo: Object = new Object();
   readonly apvBaseUrl = environment.ApprovalR3Url;
   lobCode: string;
-  NapObj: AppObj = new AppObj();
-  bizTemplateCode: string;
   apvSchmCode: string = "";
   OriOfficeCode: string;
   
@@ -354,22 +352,6 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
 
   PlafondAmt: number = 0;
   async initInputApprovalObj(manualDevList = null) {
-    // this.NapObj.AppId = this.appId;
-    // var appObj = { Id: this.appId };
-    // this.http.post(URLConstant.GetAppById, appObj).subscribe(
-    //   (response: AppObj) => {
-    //     if (response) {
-    //       this.NapObj = response;
-    //       this.bizTemplateCode = this.NapObj.BizTemplateCode;
-    //       this.lobCode = this.NapObj.LobCode;          
-    //       // if(this.lobCode == CommonConstantX.CFNA_LOB_CODE_FD ||
-    //       //    this.lobCode == CommonConstantX.CFNA_LOB_CODE_MPF)
-    //       // {      
-            
-    //       // }
-    //     }
-    //   }
-    // )
     let Attributes: Array<ResultAttrObj> = new Array();
     const attribute1: ResultAttrObj = {
       AttributeName: "Approval Amount",
@@ -390,18 +372,6 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     if (manualDevList != null) {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
-
-    // const obj = {
-    //   ProdOfferingCode: this.ProdOfferingCode,
-    //   RefProdCompntCode: 'CRD_APV',
-    //   ProdOfferingVersion: this.ProdOfferingVersion
-    // };
-    // await this.http.post<ProdOfferingDObj>(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
-    //   (resp)=>{
-    //     this.InputObj.CategoryCode = resp.RefProdCompntCode;
-    //     this.InputObj.SchemeCode = resp.CompntValue;
-    //   }
-    // )
 
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
@@ -447,7 +417,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING_X], { "BizTemplateCode": this.BizTemplateCode });
+        // End Self Custom Change
       });
   }
 
@@ -465,7 +437,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstantX.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING_X], { "BizTemplateCode": this.BizTemplateCode, });
+        // End Self Custom Change
       });
   }
 
@@ -475,7 +449,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     let CrdRvwDataReCaptureUrl = environment.isCore ? URLConstant.CrdRvwDataReCaptureV2 : URLConstant.CrdRvwDataReCapture;
     this.http.post(CrdRvwDataReCaptureUrl, workflowApiObj).subscribe(
       (response) => {
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING_X], { "BizTemplateCode": this.BizTemplateCode });
+        // End Self Custom Change
       });
   }
 
@@ -483,7 +459,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     let ReCaptureDataR2Url = environment.isCore ? URLConstant.ReCaptureDataR2V2 : URLConstant.ReCaptureDataR2;
     this.http.post(ReCaptureDataR2Url, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       () => {
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING_X], { "BizTemplateCode": this.BizTemplateCode });
+        // End Self Custom Change
       });
   }
 
