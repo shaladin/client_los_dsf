@@ -31,6 +31,7 @@ export class OfferingGeneralDataComponent implements OnInit {
   ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   ListGeneralDataObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
   ReqCopyProductOffObj: ReqCopyProductOfferingObj = new ReqCopyProductOfferingObj();
+  isReady: boolean = false;
 
   FormCopyProdOffering = this.fb.group(
     {
@@ -54,6 +55,7 @@ export class OfferingGeneralDataComponent implements OnInit {
 
   ngOnInit() {
     this.initLookup();
+    this.isReady = true;
   }
 
   initLookup() {
@@ -108,7 +110,12 @@ export class OfferingGeneralDataComponent implements OnInit {
     );
   }
 
+  GetLookup(e){
+    this.ProdOfferingHId = e.ProdOfferingHId;
+  }
+
   reload() {
+    this.isReady = false;
     if (this.InputLookUpObj.jsonSelect["ProdOfferingId"] == undefined) {
       this.toastr.warningMessage(ExceptionConstant.SELECT_PROD_OFF_TO_COPY);
     }
@@ -124,6 +131,9 @@ export class OfferingGeneralDataComponent implements OnInit {
         );
       }
     }
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
   }
 
   NextDetail(event) {

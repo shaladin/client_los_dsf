@@ -213,6 +213,34 @@
             </div>
             <!--END INSURANCE DATA-->
 
+
+            <!--LIFE INSURANCE DATA-->
+            <lib-ucSubsection [id]="'LifeInsSectionId'" [title]="'Life Insurance Data'" [panel]="'LifeInsData'">
+            </lib-ucSubsection>
+            <div id="InsData">
+              <div class="form-group row">
+                <label class="col-md-3" translate>Life Insurance</label>
+                <div class="col-md-3">
+                  <input type="" currencyMask id="totalLifeInsCustAmt" class="form-control" formControlName="TotalLifeInsCustAmt"
+                    (focusout)="updateLifeInsuranceAmt()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.TotalLifeInsCustAmt.invalid}">
+                  <lib-uc-show-errors [control]="TrialForm.controls.TotalLifeInsCustAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3" translate>LifeInsurance Capitalized</label>
+                <div class="col-md-3">
+                  <input type="" currencyMask id="LifeInsCptlzAmt" class="form-control" formControlName="LifeInsCptlzAmt"
+                    (focusout)="updateLifeInsuranceAmt()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && TrialForm.controls.LifeInsCptlzAmt.invalid}">
+                  <lib-uc-show-errors [control]="TrialForm.controls.LifeInsCptlzAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+            <!--END LIFE INSURANCE DATA-->
+
             <div class="form-inline-right">
               <button class="btn btn-raised btn-primary margin-r-5" translate type="button" (click)="Generate()">
                 Generate Financial

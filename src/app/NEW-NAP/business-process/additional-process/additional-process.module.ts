@@ -85,7 +85,7 @@ import { EditAppAfterApprovalPagingXComponent } from "app/impl/NEW-NAP/business-
 
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

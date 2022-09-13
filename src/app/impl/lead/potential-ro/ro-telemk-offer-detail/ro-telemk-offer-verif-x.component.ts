@@ -48,6 +48,9 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
   verfResultData: object;
   isQuestionLoaded: boolean = false;
   UserAccess: Object;
+
+  IsMandatoryArr: Array<Array<boolean>> = new Array<Array<boolean>>();
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -144,11 +147,13 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
     if (this.PhoneDataForm.controls["MrVerfResultHStatCode"].value == CommonConstant.VerfResultStatSuccess) {
       for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {
         for (let j = 0; j < this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"].length; j++) {
+          if (this.IsMandatoryArr.length > 0 && this.IsMandatoryArr[i].length > 0 && this.IsMandatoryArr[i][j]) {
           this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
           this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
         }
       }
     }
+  }
     else {
       for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {
         for (let j = 0; j < this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"].length; j++) {
@@ -209,6 +214,7 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
 
       this.ListVerfAnswer.push([]);
       if (QuestionList.length != 0) {
+        let tempIsMandatoryArr = [];
         for (let j = 0; j < QuestionList.length; j++) {
           let QuestionResultGrp = this.fb.group({
             QuestionGrp: this.fb.group({
@@ -218,6 +224,7 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
               VerfQuestionText: QuestionList[j].VerfQuestionText,
               VerfAnswer: QuestionList[j].VerfAnswer,
               IsActive: QuestionList[j].IsActive,
+              IsMandatory: QuestionList[j].IsMandatory,
               VerfSchemeHId: QuestionList[j].VerfSchemeHId,
               VerfQuestionGrpCode: QuestionList[j].VerfQuestionGrpCode,
               VerfQuestionGrpName: QuestionList[j].VerfQuestionGrpName,
@@ -246,16 +253,18 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+            //QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
           } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
+            //QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
             this.ListVerfAnswer[i].push("");
           } else {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+            //QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
             this.ListVerfAnswer[i].push("");
           }
+          tempIsMandatoryArr.push(QuestionList[j].IsMandatory);
           ResultGrp.push(QuestionResultGrp);
         }
+        this.IsMandatoryArr.push(tempIsMandatoryArr);
         this.onChangeRmVerfResultStat();
       }
     }

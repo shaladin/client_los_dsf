@@ -7,7 +7,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
@@ -30,15 +30,33 @@ export class CustMainDataPagingDsfComponent implements OnInit {
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  isReady: boolean = false;
+  navigationSubscription;
   
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
     private router: Router,
     private route: ActivatedRoute, private cookieService: CookieService) {
+      this.SubscribeParam();
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.RefetchData();
+        }
+      });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   makeCriteria() {
@@ -64,12 +82,25 @@ export class CustMainDataPagingDsfComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj.title = "Applicant Data Paging";
+    this.inputPagingObj.title = "Customer Main Data";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.addCritInput = this.arrCrit;
@@ -98,7 +129,9 @@ export class CustMainDataPagingDsfComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
+          // Self Custom Change
           AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode });
+          // End Self Custom Change
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -111,6 +144,7 @@ export class CustMainDataPagingDsfComponent implements OnInit {
     }
     if (ev.Key == "Edit") {
       switch (this.bizTemplateCode) {
+        // Self Custom Change
         case CommonConstant.CF4W:
           AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });
           break;
@@ -132,6 +166,7 @@ export class CustMainDataPagingDsfComponent implements OnInit {
         case CommonConstant.DF :
           AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_DLFN_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId});
         break;
+        // End Self Custom Change
       }
     }
   }

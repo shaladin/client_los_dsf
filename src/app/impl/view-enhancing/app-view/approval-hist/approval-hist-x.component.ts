@@ -4,6 +4,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import {CommonConstantX} from 'app/impl/shared/constant/CommonConstantX';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ReqCreditApvResultExtObj } from 'app/shared/model/request/nap/business-process/req-credit-aproval-result-obj.model';
+import { ResCreditApvResultExtObj } from 'app/shared/model/response/nap/business-process/res-credit-aproval-result-obj.model';
 
 @Component({
   selector: 'app-approval-hist-x',
@@ -20,14 +22,17 @@ export class ApprovalHistXComponent implements OnInit {
   PregoliveApvObj: UcInputApprovalHistoryObj;
   GoliveApvObj: UcInputApprovalHistoryObj;
   ApvHistObj: UcInputApprovalHistoryObj;
+  CrdApvRsltExtObj: UcInputApprovalHistoryObj;
   // ReturnHandlingApvObj: UcInputApprovalHistoryObj;
   DocChecklistApvObj: UcInputApprovalHistoryObj;
+  CrdApvMainDataObj: ResCreditApvResultExtObj;
 
   IsCrdApvReady: boolean = false;
   IsPregoliveApvReady: boolean = false;
   IsGoliveApvReady: boolean = false;
   IsOfferingReady: boolean = false;
   IsApvHistReady: boolean = false;
+  IsCrdApvRsltExtReady: boolean = false;
   // IsReturnHandlingApvReady: boolean = false;
   IsDocChecklistApvReady: boolean = false;
 
@@ -48,6 +53,9 @@ export class ApprovalHistXComponent implements OnInit {
 
       this.PregoliveApvObj = new UcInputApprovalHistoryObj();
       this.PregoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
+
+      this.CrdApvRsltExtObj = new UcInputApprovalHistoryObj();
+      this.CrdApvRsltExtObj.PathUrl = "/Approval/GetTaskHistory";
 
       this.GoliveApvObj = new UcInputApprovalHistoryObj();
       this.GoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
@@ -91,6 +99,7 @@ export class ApprovalHistXComponent implements OnInit {
           this.IsCrdApvReady = true;
         }
       );
+      this.getCrdApvExt();
     }
   }
 
@@ -123,5 +132,29 @@ export class ApprovalHistXComponent implements OnInit {
         this.IsDocChecklistApvReady = false;
       }
     );
+  }
+  
+  getCrdApvExt(){
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+      (response) => {
+        this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
+          (response) => {
+            for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+              if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryCreditApprovalResultExtensionApproval) {
+                this.CrdApvRsltExtObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+              }
+            }
+            this.IsCrdApvRsltExtReady = true;
+          });
+        let requestMainDataObj : ReqCreditApvResultExtObj = new ReqCreditApvResultExtObj();
+        requestMainDataObj.AppId = response['AppId'];
+        
+        this.http.post<ResCreditApvResultExtObj>(URLConstant.GetCreditApvResultExtMainData, requestMainDataObj).subscribe(
+          response => {
+            this.CrdApvMainDataObj = response;
+          }
+        );
+      }
+    ); 
   }
 }

@@ -190,7 +190,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.isEndOfTab == '0' ? this.textButton = 'Save' : this.textButton = 'Save and Continue'
     this.items = this.LeadDataForm.get('items') as FormArray;
 
@@ -277,7 +277,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetConditionObj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetConditionObj).toPromise().then(
       (response) => {
         this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
         this.LeadDataForm.patchValue({ MrAssetConditionCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -1038,7 +1038,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
   checkRapindo() {
     if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && this.IsSvcExist) {
-      if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
+      if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No.toUpperCase() && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.setLeadAsset();

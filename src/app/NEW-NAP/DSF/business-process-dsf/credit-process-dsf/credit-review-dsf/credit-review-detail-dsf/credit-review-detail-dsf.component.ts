@@ -398,7 +398,9 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        // End Self Custom Change
       });
   }
 
@@ -426,7 +428,9 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     let CrdRvwDataReCaptureUrl = environment.isCore ? URLConstant.CrdRvwDataReCaptureV2 : URLConstant.CrdRvwDataReCapture;
     this.http.post(CrdRvwDataReCaptureUrl, workflowApiObj).subscribe(
       (response) => {
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        // End Self Custom Change
       });
   }
 
@@ -434,7 +438,9 @@ export class CreditReviewDetailDsfComponent implements OnInit {
     let ReCaptureDataR2Url = environment.isCore ? URLConstant.ReCaptureDataR2V2 : URLConstant.ReCaptureDataR2;
     this.http.post(ReCaptureDataR2Url, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       () => {
+        // Self Custom Change
         AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        // End Self Custom Change
       });
   }
 

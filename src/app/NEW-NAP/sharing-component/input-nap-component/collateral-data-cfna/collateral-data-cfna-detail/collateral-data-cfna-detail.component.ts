@@ -93,7 +93,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     AssetTaxCode: [''],
     CollateralNotes: [''],
     OwnerProfessionCode: [''],
-    CollateralPrcnt: [0, [Validators.required, Validators.max(100)]],
+    CollateralPrcnt: [0, [Validators.required, Validators.max(100), Validators.min(0)]],
     IsMainCollateral: true,
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     CollateralNo: [''],
@@ -573,6 +573,14 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
             }
           }
           outCollPrcnt -= currCollPrcnt;
+          
+          if(outCollPrcnt < 0 || currCollPrcnt < 0){
+            if(outCollPrcnt != 100){
+              this.AddCollForm.controls['CollateralPrcnt'].setValidators([Validators.required, Validators.max(100 - response["CollateralPrcnt"]), Validators.min(0)]);
+              this.AddCollForm.controls.CollateralPrcnt.updateValueAndValidity(); 
+            } 
+          } 
+
           var collPortionAmt = currCollValue * (currCollPrcnt / 100);
           this.AddCollForm.patchValue({
             OutstandingCollPrcnt: outCollPrcnt,

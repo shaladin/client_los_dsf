@@ -63,6 +63,7 @@ import { ListDataCommissionAgrmntXComponent } from "app/impl/view-enhancing/agr-
 import { ViewInvoiceDataXComponent } from "app/impl/view-enhancing/agr-view/view-invoice-data/view-invoice-data-x.component";
 import { InvoiceMainInfoXComponent } from "app/impl/view-enhancing/invoice-main-info/invoice-main-info-x.component";
 import { ViewSummaryXComponent } from "app/impl/view-enhancing/agr-view/view-summary-x/view-summary-x.component";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 
 @NgModule({
     imports: [
@@ -84,6 +85,7 @@ import { ViewSummaryXComponent } from "app/impl/view-enhancing/agr-view/view-sum
         UcSubsectionModule,
         SharingComponentModule,
         UcapprovalhistModule,
+        UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
         AppViewComponentsModule,

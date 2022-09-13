@@ -35,20 +35,13 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   isReady: boolean = false;
   navigationSubscription;
+
+  // Self Custom Change
   SpvDPCDsfObj: SpvDPCDsfObj = new SpvDPCDsfObj();
   ReqSpvDPCDsfObj: SpvDPCDsfObj = new SpvDPCDsfObj();
   isSpvDPC: boolean = false;
   isDPC: boolean = false;
-  
-  // constructor(
-  //   private http: HttpClient,
-  //   private toastr: NGXToastrService,
-  //   private router: Router,
-  //   private route: ActivatedRoute, private cookieService: CookieService) {
-  //   this.route.queryParams.subscribe(params => {
-  //     if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
-  //   });
-  // }
+  // End Self Custom Change
 
   constructor(
     private http: HttpClient,
@@ -117,7 +110,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj.title = "Applicant Data Paging";
+    this.inputPagingObj.title = "Customer Main Data";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.addCritInput = this.arrCrit;
@@ -140,6 +133,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
       this.inputPagingObj.integrationObj = this.IntegrationObj;
     }
 
+    // Self Custom Change
     if (this.userAccess[CommonConstant.ROLE_CODE] == 'DPC')
     {
       this.isDPC = true;
@@ -154,6 +148,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
         }
       )
     }
+    // End Self Custom Change
   }
 
   AddApp(addType = '') {
@@ -162,6 +157,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
 
+          // Self Custom Change
           if (this.isDPC)
           {
             if (this.isSpvDPC)
@@ -191,6 +187,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
               AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode });
             }
           }
+          // End Self Custom Change
 
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
@@ -204,6 +201,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
     }
     if (ev.Key == "Edit") {
       switch (this.bizTemplateCode) {
+        // Self Custom Change
         case CommonConstant.CF4W:
           AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });
           break;
@@ -225,6 +223,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
         case CommonConstant.DF :
           AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_DLFN_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId});
         break;
+        // End Self Custom Change
       }
     }
   }

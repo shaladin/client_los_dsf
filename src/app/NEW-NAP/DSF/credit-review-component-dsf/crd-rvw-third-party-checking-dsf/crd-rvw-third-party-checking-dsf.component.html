@@ -15,6 +15,12 @@
           <label *ngIf="IsUseTs" class="col-md-3" translate>Trusting Social</label>
           <label *ngIf="IsUseTs" class="col-md-3" translate><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="trustingSocialHandler(TrustingSocialView)"> Click Here to View </a></label>
         </div>
+        <div *ngIf="IsUseAsliRi" class="form-group row">
+          <label class="col-md-3" translate></label>
+          <label class="col-md-3" translate></label>
+          <label *ngIf="IsUseAsliRi" class="col-md-3" translate>Asli Ri</label>
+          <label *ngIf="IsUseAsliRi" class="col-md-3" translate><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="asliRiHandler(TrustingSocialView)"> Click Here to View </a></label>
+        </div>
         <div *ngIf="IsUseProfind || IsUseSlik" class="form-group row">
           <label *ngIf="IsUseProfind" class="col-md-3" translate>Profind</label>
           <label *ngIf="IsUseProfind" class="col-md-3" translate></label>
@@ -27,10 +33,12 @@
           <label class="col-md-3" translate></label>
           <label class="col-md-3" translate>Dalam Perhatian Khusus: {{ThirdPartySlikRsltObj?.SpecialMentionCount}}</label>
         </div>
+        <!-- Self Custom Change -->
         <div class="form-group-row">
           <label class="col-md-3" translate>Data Robot</label>
           <label class="col-md-3" translate>{{dataRobotInfoObj.DataRobotIndicatorValue}} / {{dataRobotInfoObj.DataRobotIndicatorDescr}}</label>
         </div>
+        <!-- End Self Custom Change -->
     </div>
   </div>
 </div>

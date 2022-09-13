@@ -151,7 +151,7 @@ import { UcInsurancePagingComponent } from "./insurance-data/uc-insurance/uc-ins
 
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,
