@@ -144,11 +144,9 @@ export class NapDetailPagingDsfComponent implements OnInit, OnDestroy {
         case CommonConstant.FL4W:
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
           break;
-        // Self Custom CR MPF Validation
         case CommonConstant.CFNA:
           AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CFNA_NAP2_X], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
           break;
-        // End Self Custom CR MPF Validation
         case CommonConstant.OPL:
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
           break;

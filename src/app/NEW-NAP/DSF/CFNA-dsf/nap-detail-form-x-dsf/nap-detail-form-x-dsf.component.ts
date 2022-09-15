@@ -359,9 +359,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
   }
 
   Cancel() {
-    // Self Custom CR MPF Validation
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.CFNA });
-    // End Self Custom CR MPF Validation
   }
 
   Submit() {
