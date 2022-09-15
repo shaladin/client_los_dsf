@@ -48,6 +48,7 @@ import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model'
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
+import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 
 @Component({
   selector: 'app-application-data-x-dsf',
@@ -1052,44 +1053,44 @@ export class ApplicationDataXDsfComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.Tenor = this.agrParent.Tenor;
 
     // Self Custom CR MPF Validation
-    const index = Array.from(this.listAgrmntPrtUsedDsf).indexOf(this.agrParent.AgrmntNo);
-    if(index > -1)
-    {
-      //lookup Agreement Parent
+    // const index = Array.from(this.listAgrmntPrtUsedDsf).indexOf(this.agrParent.AgrmntNo);
+    // if(index > -1)
+    // {
+    //   //lookup Agreement Parent
 
-      this.agrParentList = new Array<AgrParentObjX>();
-      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
-        (response) => {
-          this.agrParentList = response;
-        }
-      );
+    //   this.agrParentList = new Array<AgrParentObjX>();
+    //   await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
+    //     (response) => {
+    //       this.agrParentList = response;
+    //     }
+    //   );
 
-      this.agrParent = new AgrParentObjX();
+    //   this.agrParent = new AgrParentObjX();
 
-      this.totalAgrmntMpfDt = 0;
-      this.maxTenor = 0;
-      this.goLiveDt = null
-      this.AgrmntDt = null;
-      this.OsPrincipal = null;
-      this.OsInterest = null;
-      this.NumberOfAsset = null;
-      this.EffRate = null;
-      this.PurposeOfFinancing = null;
-      this.WayOfFinancing = null;
-      this.ProductType = null;
-      this.ApToSupplierDisburseDt = null;
-      this.EffectiveDt = null;
-      this.Tenor = null;
-      this.TotalAssetPrice = null;
+    //   this.totalAgrmntMpfDt = 0;
+    //   this.maxTenor = 0;
+    //   this.goLiveDt = null
+    //   this.AgrmntDt = null;
+    //   this.OsPrincipal = null;
+    //   this.OsInterest = null;
+    //   this.NumberOfAsset = null;
+    //   this.EffRate = null;
+    //   this.PurposeOfFinancing = null;
+    //   this.WayOfFinancing = null;
+    //   this.ProductType = null;
+    //   this.ApToSupplierDisburseDt = null;
+    //   this.EffectiveDt = null;
+    //   this.Tenor = null;
+    //   this.TotalAssetPrice = null;
       
-      this.agrmntParentNo = undefined;
+    //   this.agrmntParentNo = undefined;
 
-      this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = 0;
-      this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = 0;
+    //   this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = 0;
+    //   this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = 0;
 
-      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
-      return
-    }  
+    //   this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+    //   return
+    // }  
     // End Self Custom CR MPF Validation
 
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
@@ -1258,38 +1259,45 @@ export class ApplicationDataXDsfComponent implements OnInit {
     }
   }
 
-  ClickSave() {
+  async ClickSave() {
     if (!this.isProdOfrUpToDate) {
       this.toastr.warningMessage("Prod Offering Component \"" + this.missingProdOfrComp + "\" Is Missing, Please Update Product Offering");
       return false;
     }
+    // Self Custom CR MPF Validation
+    let IsAvailable = 1;
+    let objMPF = {
+      AgrParentNo: this.agrParent.AgrmntNo,
+      CustNo: this.CustNo,
+      AppNo: this.resultResponseDsf.AppNo,
+      BizTemplateCode: this.BizTemplateCode,
+      Lob: this.resultResponseDsf.LobCode
+    };
+    await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPF).toPromise().then(
+      (response) => {
+        let ResponseObj = response[CommonConstant.ReturnObj];
+        if (ResponseObj.IsAvailable != true)
+          {
+            IsAvailable = 0;
+          }
+      }
+    );
+    
+    if (IsAvailable != 1 && this.resultResponseDsf.LobCode == CommonConstantDsf.MPF)
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+      return false;
+    }
+    // End Self Custom CR MPF Validation
+
     if (this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.NapAppModelForm.patchValue({
         PrevAgrNo: null,
         WayRestructure: null
       });
     }
-    // Self Custom CR MPF Validation
+    
     if (this.BizTemplateCode == CommonConstant.CFNA) {
-      let objMPF = {
-        AgrParentNo: this.agrParent.AgrmntNo,
-        CustNo: this.CustNo,
-        AppNo: this.resultResponseDsf.AppNo,
-        BizTemplateCode: this.BizTemplateCode,
-        Lob: this.resultResponseDsf.LobCode
-      };
-      this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPF).subscribe(
-        (response) => {
-          let ResponseObj = response[CommonConstant.ReturnObj];
-          if (ResponseObj.IsAvailable != true)
-            {
-              this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
-              return;
-            }
-        }
-      );
-      // End Self Custom CR MPF Validation
-
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
           if (response['listResponseAppLoanPurpose'] && response['listResponseAppLoanPurpose'].length > 0) {
