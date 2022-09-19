@@ -143,7 +143,7 @@ export class LtkmVerifyDetailXComponent implements OnInit {
 
   GetLtkmCust(isFromTabChange: boolean = false) {
     var reqObj = {
-        LtkmCustId: this.LtkmCustId,
+        Id: this.LtkmCustId,
     };
     this.http.post(URLConstant.GetLtkmCustById, reqObj).subscribe(
         (response) => {
