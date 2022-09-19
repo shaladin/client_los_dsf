@@ -28,11 +28,9 @@
           <label class="col-md-3" translate>Dalam Perhatian Khusus: {{ThirdPartySlikRsltObj?.SpecialMentionCount}}</label>
         </div>
         <div *ngIf="IsUsePefindo || IsUseTs" class="form-group row">
-          <!-- <label *ngIf="IsUsePefindo" class="col-md-3" translate>PEFINDO</label> -->
-          <label *ngIf="IsUsePefindo" class="col-md-3" translate>Credit Bureau Checking</label>
+          <label *ngIf="IsUsePefindo" class="col-md-3" translate>Pefindo</label>
           <label *ngIf="IsUsePefindo" class="col-md-3" translate><a href="javascript:void(0);" (click)="pefindoHandler()"> Click Here to View </a></label>
-          <!-- <label *ngIf="IsUseTs" class="col-md-3" translate>Trusting Social</label> -->
-          <label *ngIf="IsUseTs" class="col-md-3" translate>Social Score</label>
+          <label *ngIf="IsUseTs" class="col-md-3" translate>Trusting Social</label>
           <label *ngIf="IsUseTs" class="col-md-3" translate><a href="javascript:void(0);" [class.disabled]="CrdRvwCustInfoObj.CustNo != ''" (click)="trustingSocialHandler(TrustingSocialView)"> Click Here to View </a></label>
         </div>
     </div>
