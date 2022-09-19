@@ -69,6 +69,7 @@ import { ViewLtkmCustDataCompletionCompanyXComponent } from "app/impl/ltkm/view-
 import { ViewLtkmCustomerDataCompanyXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-company/view-ltkm-customer-data-company-x.component";
 import { LtkmVerifyDetailXComponent } from "app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component";
 import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail-x.component";
+import { LtkmApprovalDetailComponent } from "./ltkm-approval/detail/ltkm-approval-detail.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: false,
@@ -125,6 +126,7 @@ export const customCurrencyMaskConfig = {
     LtkmVerifyPagingComponent,
     LtkmVerifyDetailComponent,
     LtkmApprovalPagingComponent,
+    LtkmApprovalDetailComponent,
     LtkmApprovalDetailXComponent,
     LtkMainInfoComponent,
     LtkmOtherInfoComponent,
