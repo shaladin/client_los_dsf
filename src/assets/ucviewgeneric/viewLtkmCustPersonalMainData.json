@@ -85,6 +85,11 @@
             "type": "boolean",
             "label": "VIP",
             "property": "IsVip"
+          },
+          {
+            "type": "boolean",
+            "label": "Affiliation MF",
+            "property": "IsAffiliated"
           }
         ],
         "querystring": {
