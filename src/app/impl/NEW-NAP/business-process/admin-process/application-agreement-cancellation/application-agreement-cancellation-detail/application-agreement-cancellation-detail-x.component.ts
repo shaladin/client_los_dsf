@@ -24,7 +24,7 @@ export class ApplicationAgreementCancellationDetailXComponent implements OnInit 
   AppId: number;
   AgrmntId: number;
   AppAgrmntCancelObj: AppAgrmntCancelObj;
-  BizTemplateCode : string;
+  BizTemplateCode: string;
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required]
@@ -35,7 +35,7 @@ export class ApplicationAgreementCancellationDetailXComponent implements OnInit 
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
-      if (params["AppId"] != null) {        
+      if (params["AppId"] != null) {
         this.AppId = params["AppId"];
       }
       if (params["AgrmntId"] != null) {
@@ -73,9 +73,9 @@ export class ApplicationAgreementCancellationDetailXComponent implements OnInit 
     this.AppAgrmntCancelObj.CancelByRefNo = "null";
     this.AppAgrmntCancelObj.RowVersion = "";
 
-    this.http.post(URLConstantX.AddAppAgrmntCancelV2_1X, this.AppAgrmntCancelObj).subscribe((response) => {
+    this.http.post(URLConstantX.AddAppAgrmntCancelV3X, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING], { BizTemplateCode: this.BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING], { BizTemplateCode: this.BizTemplateCode });
     });
   }
 

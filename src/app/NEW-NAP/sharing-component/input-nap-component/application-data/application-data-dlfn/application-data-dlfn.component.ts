@@ -376,6 +376,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
       });
     }
 
+    this.setBankAcc(this.SalesAppInfoForm.controls['MrWopCode'].value)
     this.changePaymentFreq();
     this.CheckInstType();
 
@@ -420,11 +421,12 @@ export class ApplicationDataDlfnComponent implements OnInit {
       }
     } else {
       this.isSingle = true;
+      this.SalesAppInfoForm.controls.Tenor.disable();
       this.SalesAppInfoForm.controls['TopDays'].setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
       this.SalesAppInfoForm.controls['TopDays'].updateValueAndValidity();
 
-      if (this.mode != 'edit') {
-        this.SalesAppInfoForm.controls.Tenor.setValue(1);
+      if (this.mode != 'edit' || this.mode == 'edit') {
+        this.SalesAppInfoForm.controls.Tenor.setValue(0);
       }
     }
 
@@ -770,7 +772,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   }
 
   GetBankAccCust() {
-    this.http.post(URLConstant.GetAppOtherInfoByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).subscribe(
       (responseAoi) => {
         const objectForAppCustBankAcc = {
           BankCode: responseAoi['BankCode'],
@@ -779,9 +781,11 @@ export class ApplicationDataDlfnComponent implements OnInit {
         }
         this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
           (response: any) => {
-            this.SalesAppInfoForm.patchValue({
-              CustBankAcc: response['AppCustBankAccId']
-            });
+            if(response['AppCustBankAccId'] != 0){
+              this.SalesAppInfoForm.patchValue({
+                CustBankAcc: response['AppCustBankAccId']
+              });
+            }
             this.GetBankInfo = {
               BankCode: response['BankCode'],
               BankBranch: response['BankBranch'],

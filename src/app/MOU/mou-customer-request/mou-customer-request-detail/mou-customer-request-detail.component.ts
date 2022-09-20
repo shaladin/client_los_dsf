@@ -37,6 +37,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   mouCustId: number;
   refOfficeId: number;
   businessDt: Date;
+  businessDtForEndDt: Date;
   mouCustUrl: string;
   custId: number;
   custUrl: string;
@@ -116,7 +117,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     if (currentUserContext != null && currentUserContext != undefined) {
       this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
-      this.businessDt.setDate(this.businessDt.getDate() - 1);
+      this.businessDtForEndDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+      this.businessDt.setDate(this.businessDtForEndDt.getDate() - 1)
+      this.businessDtForEndDt.setDate(this.businessDtForEndDt.getDate())
     }
 
     this.inputLookupCust = new InputLookupObj();
@@ -199,7 +202,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y') );
      return
    }
-   if(this.MOUMainInfoForm.controls.EndDt.value< this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+   if(this.MOUMainInfoForm.controls.EndDt.value <= this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y')  );
     return;
    }
@@ -322,7 +325,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   checkEndDate(ev){
-    if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+    if(this.datePipe.transform(ev.target.value, "yyyy-MM-dd") < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
        this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
     }
   }

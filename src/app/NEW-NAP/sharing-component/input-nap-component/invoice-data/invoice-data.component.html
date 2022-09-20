@@ -104,14 +104,14 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-label">Disburse To</label>
                 <div class="col-md-9">
-                  <select class="form-control full-width adInsInput" formControlName="DisburseTo"
-                          (change)="ChangeDisburseTo($event)">
+                  <select class="form-control full-width adInsInput" formControlName="DisbTo"
+                          (change)="ChangeDisburseTo()">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of disburseTos" value="{{item.MasterCode}}">
                       {{item.Descr}}
                     </option>
                   </select>
-                  <lib-uc-show-errors [control]="InvoiceForm.controls.DisburseTo" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.DisbTo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>

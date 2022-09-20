@@ -34,6 +34,7 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
   IsUseDukcapil: boolean = false;
   IsUseProfind: boolean = false;
   IsUseSlik: boolean = false;
+  IsUseAsliRi: boolean = false;
   sysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   constructor(
@@ -112,6 +113,20 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
       this.modalContainer.close();
     });
   }
+
+  asliRiHandler(model)
+  {
+    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo;
+    // window.open(this.urlLink);
+    this.modalContainer = this.modalService.open(model);
+    this.modalContainer.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.modalContainer.close();
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modalContainer.close();
+    });
+  }
   
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -173,6 +188,14 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
         this.IsUseSlik = true;
         this.IsSvcExist = true;
       }
+
+      await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.SvcTypeAsliRi}).toPromise().then(
+        (response) => {
+          if(response.ConfigValue == "1")
+        {
+          this.IsUseAsliRi = true;
+        }
+      });
     }
   }
 }

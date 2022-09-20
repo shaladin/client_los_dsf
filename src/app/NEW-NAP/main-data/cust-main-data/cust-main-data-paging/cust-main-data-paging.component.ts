@@ -97,7 +97,7 @@ export class CustMainDataPagingComponent implements OnInit, OnDestroy {
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj.title = "Applicant Data Paging";
+    this.inputPagingObj.title = "Customer Main Data";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.addCritInput = this.arrCrit;

@@ -78,13 +78,13 @@
                   No
                 </td>
                 <td>
-                  {{item.DocNo}}
+                  {{item.DocNo != ""? item.DocNo : "-"}}
                 </td>
                 <td>
-                  {{item.ExpiredDt | date: 'yyyy-MM-dd'}}
+                  {{item.ExpiredDt != null? (item.ExpiredDt | date: 'yyyy-MM-dd') : "-"}}
                 </td>
                 <td>
-                  {{item.DocNotes}}
+                  {{item.DocNotes != ""? item.DocNotes : "-"}}
                 </td>
               </tr>
             </tbody>
@@ -100,7 +100,7 @@
             <div class="col-md-12" *ngFor="let item of this.AppCollateralAttrObjs;">
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel"> {{item.CollateralAttrName}} </label>
-                <label class="col-md-9 adInsLabel"> {{item.AttrValue}} </label>
+                <label class="col-md-9 adInsLabel"> {{item.AttrValue != ""? item.AttrValue : "-"}} </label>
               </div>
             </div>
           </div> 
