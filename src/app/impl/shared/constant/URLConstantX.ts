@@ -32,6 +32,7 @@ export class URLConstantX {
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
   public static GetListCustCompanyFinDataXForCustViewByCustId = environment.FoundationR3Url + "/v1" + "/CustomerCompanyFinDataX/GetListCustCompanyFinDataXForCustViewByCustId";
+  public static GetRefAttrListByListAttrCode = environment.FoundationR3Url + "/v1" + "/RefAttr/GetRefAttrListByListAttrCode";
 
   // APP Application
   public static EditAppAddAppCrossX = environment.losUrl + '/v1' + '/AppX/EditAppAddAppCross';
@@ -272,6 +273,8 @@ export class URLConstantX {
 
   //R2 API
   public static R2ApiAgrmntGetListCustNoHaveAgrmntMaster = environment.r2Url + "/api/Agrmnt/GetListCustNoHaveAgrmntMaster";
+  public static GetListAssetMasterByCustNoAndAssetSchemeCodeFromR2 = environment.FoundationR3Url + "/v1" + "/AssetMasterX/GetListAssetMasterByCustNoAndAssetSchemeCodeFromR2";
+  public static GetAssetMasterDetailFromR2 = environment.FoundationR3Url + "/v1" + "/AssetMasterX/GetAssetMasterDetailFromR2";
 
   //Dealer Financing
   public static CalcGrossYieldSingleInstDF = environment.losUrl + "/v1" + "/AppFinDataX/CalcGrossYieldSingleInstDF";
