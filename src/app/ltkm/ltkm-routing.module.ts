@@ -5,7 +5,7 @@ import { LtkmReturnHandlingXComponent } from 'app/impl/ltkm/ltkm-return-handling
 import { LtkmVerifyDetailXComponent } from 'app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { PathConstant } from 'app/shared/constant/PathConstant';
-import { LtkmApprovalDetailComponent } from './ltkm-approval/detail/ltkm-approval-detail.component';
+import { LtkmApprovalDetailXComponent } from 'app/impl/ltkm/ltkm-approval/detail/ltkm-approval-detail-x.component';
 import { LtkmApprovalPagingComponent } from './ltkm-approval/paging/ltkm-approval-paging.component';
 import { LtkmInquiryComponent } from './ltkm-inquiry/ltkm-inquiry.component';
 import { LtkmRequestComponent } from './ltkm-request/ltkm-request.component';
@@ -63,8 +63,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.VERIFY_APV_DETAIL,
-        component: LtkmApprovalDetailComponent,
+        path: PathConstantX.VERIFY_APV_DETAIL,
+        component: LtkmApprovalDetailXComponent,
         data: {
           title: 'LTKM Verify Approval Detail'
         }
