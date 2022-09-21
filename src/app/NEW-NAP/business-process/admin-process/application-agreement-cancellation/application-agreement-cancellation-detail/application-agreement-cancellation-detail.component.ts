@@ -48,6 +48,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
   ngOnInit() {
     this.arrValue.push(this.AppId);
+    this.arrValue.push(this.AgrmntId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewApplicationAgreementCancellation.json";
     this.viewGenericObj.whereValue = this.arrValue;
 
