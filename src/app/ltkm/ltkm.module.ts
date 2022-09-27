@@ -29,7 +29,6 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { LtkmVerifyDetailComponent } from "./ltkm-verify/detail/ltkm-verify-detail.component";
 import { LtkmVerifyPagingComponent } from "./ltkm-verify/paging/ltkm-verify-paging.component";
 import { LtkmApprovalPagingComponent } from "./ltkm-approval/paging/ltkm-approval-paging.component";
-import { LtkmApprovalDetailXComponent } from "app/impl/ltkm/ltkm-approval/detail/ltkm-approval-detail-x.component";
 import { LtkMainInfoComponent } from "./ltkm-mi/ltkm-mi.component";
 import { ViewLtkmComponentModule } from "app/ltkm/view-ltkm-component/view-ltkm-component.module";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
@@ -127,7 +126,6 @@ export const customCurrencyMaskConfig = {
     LtkmVerifyDetailComponent,
     LtkmApprovalPagingComponent,
     LtkmApprovalDetailComponent,
-    LtkmApprovalDetailXComponent,
     LtkMainInfoComponent,
     LtkmOtherInfoComponent,
     LtkmEmergencyContactComponent,
