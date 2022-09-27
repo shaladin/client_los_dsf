@@ -22,11 +22,11 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of CustGrpPlfndObj">
-                          <td *ngIf="item.Category == 'AGR'">{{item.SeqNo}}</td>
-                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrNo}}</td>
-                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.CustomerName}}</td>
-                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.OSARAmt | number }}</td>
-                          <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'">{{item.SeqNo}}</td>
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.AppOrAgrNo}}</td>
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.CustomerName}}</td>
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.OSARAmt | number }}</td>
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                       </tr>
                     </tbody>
                   </table>
