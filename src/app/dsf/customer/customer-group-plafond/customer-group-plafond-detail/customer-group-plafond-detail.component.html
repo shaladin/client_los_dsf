@@ -21,8 +21,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of CustGrpPlfndObj">
-                          <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'">{{item.SeqNo}}</td>
+                      <tr *ngFor="let item of CustGrpPlfndAGRObj; let i=index">
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'">{{i + 1}}</td>
                           <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.AppOrAgrNo}}</td>
                           <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.CustomerName}}</td>
                           <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.OSARAmt | number }}</td>
@@ -45,8 +45,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of CustGrpPlfndObj">
-                        <td *ngIf="item.Category == 'OPL'">{{item.SeqNo}}</td>
+                      <tr *ngFor="let item of CustGrpPlfndOPLObj; let i=index">
+                        <td *ngIf="item.Category == 'OPL'">{{i + 1}}</td>
                         <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrNo}}</td>
                         <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.CustomerName}}</td>
                         <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.OSARAmt | number }}</td>
@@ -69,12 +69,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of CustGrpPlfndObj">
-                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'">{{item.SeqNo}}</td>
-                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'" class="text-center">{{item.AppOrAgrNo}}</td>
-                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'" class="text-center">{{item.CustomerName}}</td>
-                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'" class="text-center">{{item.OSARAmt | number }}</td>
-                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                      <tr *ngFor="let item of CustGrpPlfndFACTObj; let i=index">
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'">{{i + 1}}</td>
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.AppOrAgrNo}}</td>
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.CustomerName}}</td>
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.OSARAmt | number }}</td>
+                          <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                       </tr>
                     </tbody>
                   </table>
@@ -93,8 +93,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of CustGrpPlfndObj">
-                        <td *ngIf="item.Category == 'APP'">{{item.SeqNo}}</td>
+                      <tr *ngFor="let item of CustGrpPlfndAPPObj; let i=index">
+                        <td *ngIf="item.Category == 'APP'">{{i + 1}}</td>
                         <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrNo}}</td>
                         <td *ngIf="item.Category == 'APP'" class="text-center">{{item.CustomerName}}</td>
                         <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSARAmt | number }}</td>
