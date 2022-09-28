@@ -24,13 +24,16 @@
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonId.invalid }">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of listSalesObj" [value]="it.VendorEmpId">
-                        {{it.VendorEmpName}}
+                        <span *ngIf="it.MrVendorEmpPositionCode === 'SALES_PERSON'">{{it.VendorEmpName}} - SALES PERSON</span>
+                        <span *ngIf="it.MrVendorEmpPositionCode === 'ADMIN_HEAD'">{{it.VendorEmpName}} - ADMIN HEAD</span>
+                        <span *ngIf="it.MrVendorEmpPositionCode === 'BRANCH_MANAGER'">{{it.VendorEmpName}} - BRANCH MANAGER</span>
+                        <span *ngIf="!(it.MrVendorEmpPositionCode === 'BRANCH_MANAGER' || it.MrVendorEmpPositionCode === 'ADMIN_HEAD' || it.MrVendorEmpPositionCode === 'SALES_PERSON')">{{it.VendorEmpName}} - {{it.MrVendorEmpPositionCode}}</span>
                       </option>
                     </select>
                     <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonId" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
-
                   </div>
+                </div>
                   <!-- <div class="form-group row"> -->
                   <!-- <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
                   <div class="col-md-4">
@@ -42,9 +45,10 @@
                       </option>
                     </select>
                   </div> -->
+                <div class="form-group row">
                   <label class="col-md-2 adInsLabel" translate>Admin Head</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="AdminHeadId"
+                    <select *ngIf="IsSales" class="form-control adInsInput" style="width: auto" formControlName="AdminHeadId"
                       (change)="AdminChanged($event)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadId.invalid }">
                       <option value="">-Select One-</option>
@@ -52,6 +56,7 @@
                         {{it.VendorEmpName}}
                       </option>
                     </select>
+                    <label *ngIf="!IsSales">{{AdminHeadName}}</label>
                   </div>
                 </div>
               </div>

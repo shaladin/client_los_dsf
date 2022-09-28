@@ -111,7 +111,6 @@ export class AssetDataAddEditXComponent implements OnInit {
   returnAppCollateralRegistObj: any;
   appAssetSupplEmpObj: any;
   returnAppAssetSupplEmpObj: any;
-  vendorObj: any;
   returnVendorObj: any;
   salesAppAssetSupplEmpObj: any;
   headAppAssetSupplEmpObj: any;
@@ -139,6 +138,17 @@ export class AssetDataAddEditXComponent implements OnInit {
   RoundedAmt: number = 2;
   prevAssetCategoryCode: string = "";
   DownPaymentName : string = "Down Payment";
+
+  IsSales: boolean = true;
+  AdminHeadName: string;
+  ListVendorEmpPositionCodes : Array<String> = new Array();
+  empNo: string;
+  
+  vendorObj = {
+    VendorId: 0,
+    VendorCode: "",
+    MrVendorEmpPositionCodes: [],
+  };
 
   InputLookupAccObj: any;
   InputLookupAccSupObj: any;
@@ -509,12 +519,10 @@ export class AssetDataAddEditXComponent implements OnInit {
   GetSalesList() {
     let ReqGetListActiveVendorSales: ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
     ReqGetListActiveVendorSales.VendorId = this.salesObj.VendorId;
-    ReqGetListActiveVendorSales.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
+    ReqGetListActiveVendorSales.MrVendorEmpPositionCodes = this.vendorObj.MrVendorEmpPositionCodes;
     this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSales).subscribe(
       (response) => {
-        this.EmpObj = response[CommonConstant.ReturnObj];
-        this.listSalesObj = this.EmpObj.filter(
-          emp => emp.MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE);
+        this.listSalesObj = response[CommonConstant.ReturnObj];
       }
     );
   }
@@ -610,6 +618,53 @@ export class AssetDataAddEditXComponent implements OnInit {
         SalesPersonName: temp[0].VendorEmpName,
         SalesPersonNo: temp[0].VendorEmpNo,
         SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+      if(temp[0].MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE){
+        this.IsSales = true;
+      }
+      else{
+        this.IsSales = false;
+        this.AdminHeadName = temp[0].VendorEmpName;
+      }
+      this.AssetDataForm.patchValue({
+        AdminHeadId: "",
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        SalesPersonId: "",
+        SalesPersonName: "",
+        SalesPersonNo: "",
+        SalesPersonPositionCode: "",
+      });
+    }
+  }
+  
+  async SalesPersonChangedx(No: string)  {
+    if (No) {
+      var temp: any;
+      temp = this.listSalesObj.filter(emp => emp.VendorEmpNo == No);
+      this.AssetDataForm.patchValue({
+        SalesPersonId: temp[0].VendorEmpId,
+        SalesPersonName: temp[0].VendorEmpName,
+        SalesPersonNo: temp[0].VendorEmpNo,
+        SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+      });
+      if(temp[0].MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE){
+        this.IsSales = true;
+      }
+      else{
+        this.IsSales = false;
+        this.AdminHeadName = temp[0].VendorEmpName;   
+      }
+      this.AssetDataForm.patchValue({
+        AdminHeadId: "",
+        AdminHeadName: "",
+        AdminHeadNo: "",
+        AdminHeadPositionCode: "",
       });
     }
     else {
@@ -825,6 +880,7 @@ export class AssetDataAddEditXComponent implements OnInit {
     await this.GetAppCustPhone();
     await this.bindIdTypeObj();
     await this.bindAssetConditionObj();
+    await this.SetMrVendorEmpPositionCodes();
     if (this.custType == CommonConstant.CustTypePersonal) {
       await this.GetAppCustPersonalJobData();
     } else {
@@ -1030,7 +1086,7 @@ export class AssetDataAddEditXComponent implements OnInit {
 
       let ReqGetListActiveVendorSalesSlb: ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
       ReqGetListActiveVendorSalesSlb.VendorId = this.vendorSLBId;
-      ReqGetListActiveVendorSalesSlb.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
+      ReqGetListActiveVendorSalesSlb.MrVendorEmpPositionCodes = this.vendorObj.MrVendorEmpPositionCodes;
       await this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSalesSlb).toPromise().then(
         (response) => {
           this.listSalesObj = response[CommonConstant.ReturnObj];
@@ -1156,7 +1212,7 @@ export class AssetDataAddEditXComponent implements OnInit {
               this.salesAppAssetSupplEmpObj = response;
               let ReqGetListActiveVendorSales: ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
               ReqGetListActiveVendorSales.VendorId = this.returnVendorObj.VendorId;
-              ReqGetListActiveVendorSales.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
+              ReqGetListActiveVendorSales.MrVendorEmpPositionCodes = this.vendorObj.MrVendorEmpPositionCodes;
               this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSales).subscribe(
                 (response) => {
                   this.listSalesObj = response[CommonConstant.ReturnObj];
@@ -1169,6 +1225,8 @@ export class AssetDataAddEditXComponent implements OnInit {
                     SalesPersonNo: temp[0].VendorEmpNo,
                     SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
                   });
+                  this.empNo = this.AssetDataForm.controls.SalesPersonNo.value;
+                  this.SalesPersonChangedx(this.empNo);
                 });
             });
         });
@@ -2653,5 +2711,15 @@ export class AssetDataAddEditXComponent implements OnInit {
         }
       }
     );
+  }
+  
+  async SetMrVendorEmpPositionCodes() {
+    var generalSettingObj: GenericObj = new GenericObj();
+    generalSettingObj.Code = "LIST_VENDOR_EMP_POS_CODES";
+    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
+        (response) => {
+          this.ListVendorEmpPositionCodes = response["GsValue"].split(';');
+          this.vendorObj.MrVendorEmpPositionCodes = this.ListVendorEmpPositionCodes;
+        });
   }
 }
