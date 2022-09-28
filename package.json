@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "5.11.4-1",
+  "version": "5.11.5-1",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -16,6 +16,7 @@
     "1_4_16": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=1_4_16_env --base-href /1.4.16/LOS/",
     "CR_BATCH_1": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=crbatch1 --base-href /LOS_DSF_IMPL_CR_BATCH_1/",
     "CR_BATCH_2": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=crbatch2 --base-href /LOS_DSF_IMPL_CR_BATCH_2/",
+    "CR_BATCH_2_X": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=crbatch2X --base-href /LOS_DSF_IMPL_CR_BATCH_2_X/",
     "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
     "test": "ng test",
     "lint": "ng lint",
