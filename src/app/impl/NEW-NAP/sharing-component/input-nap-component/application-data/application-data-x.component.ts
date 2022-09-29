@@ -1421,6 +1421,14 @@ export class ApplicationDataXComponent implements OnInit {
       }
     }
 
+    if(this.NapAppModelForm.controls.LobCode.value == 'MPF')
+    {
+      if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+        return false;
+      }
+    }
+
     if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
       this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
       return false;

@@ -279,11 +279,14 @@ export class DoAssetDetailComponent implements OnInit {
     this.reqAssetDataObj = new ReqAssetDataObj();
     var formData = this.DOAssetDetail.value;
 
-    let d1 = new Date(formData.TempRegisLettDt);
-    let d2 = new Date(this.minTempRegLettDt);
-    if (d1 < d2) {
-      this.toastr.warningMessage(ExceptionConstant.TEMP_REG_LETT_DATE_CAN_NOT_BE_LESS_THAN_PO_DATE);
-      return
+    if(formData.TempRegisLettDt)
+    {
+      let d1 = new Date(formData.TempRegisLettDt);
+      let d2 = new Date(this.minTempRegLettDt);
+      if (d1 < d2) {
+        this.toastr.warningMessage(ExceptionConstant.TEMP_REG_LETT_DATE_CAN_NOT_BE_LESS_THAN_PO_DATE);
+        return
+      }
     }
 
     this.setAsset(formData);

@@ -153,7 +153,7 @@
 
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>Down Payment Type</label>
+                    <label class="col-md-4 adins-required-label" translate>{{BizTemplateCode == CF4W ? DPType : SDType}}</label>
                     <div class="col-md-8">
                       <select class="form-control" id="selectedDpTypeId" formControlName="selectedDpType"
                               (change)="DpTypeChange()" style="width:50%">
@@ -185,7 +185,7 @@
 
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4  adins-required-label" translate>Down Payment (%/Amt)</label>
+                    <label class="col-md-4  adins-required-label" translate>{{BizTemplateCode == CF4W ? DP : SD}} (%/Amt)</label>
                     <div class="col-md-4" style="border-right: 1px solid grey">
                       <input type="" currencyMask id="downPaymentPrctg" class="form-control"
                              formControlName="DownPaymentPrctg" (focusout)="updateValueDownPaymentAmt($event)"
