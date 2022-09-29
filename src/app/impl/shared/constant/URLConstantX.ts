@@ -309,4 +309,7 @@ export class URLConstantX {
   //subsidyProfitability
   public static GetListAppSubsidyProfitabilityXForViewByAppId = environment.losUrl + "/v1" +"/AppSubsidyProfitabilityX/GetAppSubsidyProfitabilityXByAppId";
   public static GetAppCollateralListAndInvoiceXForView = environment.losUrl + '/v1' + "/InvoiceX/GetAppCollateralListAndInvoiceXForView";
+
+  //app fin data
+  public static SaveAppFinDataDF = environment.losUrl + "/v1" + "/AppFinDataX/SaveAppFinDataDF";
 }
