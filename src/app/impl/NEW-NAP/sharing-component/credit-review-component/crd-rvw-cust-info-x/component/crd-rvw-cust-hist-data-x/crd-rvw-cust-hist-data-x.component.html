@@ -189,6 +189,9 @@
           <th>
             <span style="float: center;" translate class="thead-header" name='Period'>Period</span>
           </th>
+          <th>
+            <span style="float: center;" translate class="thead-header" name=" AppStat"> Application Status</span>
+          </th>
         </tr>
       </thead>
       <!-- <thead>
@@ -230,6 +233,8 @@
           <td *ngIf="item.InstAmount==null"> - </td>
           <td *ngIf="item.NumOfInst!=null">{{item.NumOfInst}}</td>  <!-- belum clear. sementaran menggunakan NumOfInst -->
           <td *ngIf="item.NumOfInst==null"> - </td>
+          <td *ngIf="item.AppStat!=null">{{item.AppStat}}</td>  <!-- belum clear. sementaran menggunakan NumOfInst -->
+          <td *ngIf="item.AppStat==null"> - </td>
         </tr>
       </tbody>
     </table>

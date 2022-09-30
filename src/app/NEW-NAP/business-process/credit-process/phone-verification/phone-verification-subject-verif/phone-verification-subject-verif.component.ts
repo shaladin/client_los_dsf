@@ -83,19 +83,21 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   isQuestionLoaded: boolean = true;
   subjectRelation: string = "";
 
+  IsMandatoryArr: Array<Array<boolean>> = new Array<Array<boolean>>();
+
   constructor(
-    private route: ActivatedRoute, 
-    private http: HttpClient, 
-    private toastr: NGXToastrService, 
-    private fb: FormBuilder, 
-    private router: Router, 
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
+    private fb: FormBuilder,
+    private router: Router,
     private cookieService: CookieService,
     private adInsHelperService: AdInsHelperService) {
 
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
-      if(params["VerfResultHId"] != 0){
-      this.verfResultHId = params["VerfResultHId"];
+      if (params["VerfResultHId"] != 0) {
+        this.verfResultHId = params["VerfResultHId"];
       }
       this.subjectName = params["Name"];
       this.subjectType = params["Type"];
@@ -147,21 +149,21 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, this.PhoneDataObj).subscribe(
         async (response) => {
           this.toastr.successMessage(response["message"]);
-          if(this.verfResultHId == 0 || this.verfResultHId == undefined){
+          if (this.verfResultHId == 0 || this.verfResultHId == undefined) {
             this.verfResultHId = response["Id"];
           }
-            await this.GetVerfResultHData();
-            await this.GetListVerfResulHtData(this.verfResHObj);
-            formDirective.resetForm();
-            this.clearform();
+          await this.GetVerfResultHData();
+          await this.GetListVerfResulHtData(this.verfResHObj);
+          formDirective.resetForm();
+          this.clearform();
         });
     }
   }
 
-  Save(){
-    if(this.listVerifResultHObj.length < 1){
+  Save() {
+    if (this.listVerifResultHObj.length < 1) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_HISTORY);
-    }else{
+    } else {
       if (this.isReturnHandling == false) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
       }
@@ -279,6 +281,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
       this.ListVerfAnswer.push([]);
       if (QuestionList.length != 0) {
+        let tempIsMandatoryArr = [];
         for (let j = 0; j < QuestionList.length; j++) {
           var QuestionResultGrp = this.fb.group({
             QuestionGrp: this.fb.group({
@@ -288,6 +291,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
               VerfQuestionText: QuestionList[j].VerfQuestionText,
               VerfAnswer: QuestionList[j].VerfAnswer,
               IsActive: QuestionList[j].IsActive,
+              IsMandatory: QuestionList[j].IsMandatory,
               VerfSchemeHId: QuestionList[j].VerfSchemeHId,
               VerfQuestionGrpCode: QuestionList[j].VerfQuestionGrpCode,
               VerfQuestionGrpName: QuestionList[j].VerfQuestionGrpName,
@@ -316,16 +320,19 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+            // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
           } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
+            // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
             this.ListVerfAnswer[i].push("");
           } else {
-            QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+            // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
             this.ListVerfAnswer[i].push("");
           }
+
+          tempIsMandatoryArr.push(QuestionList[j].IsMandatory);
           ResultGrp.push(QuestionResultGrp);
         }
+        this.IsMandatoryArr.push(tempIsMandatoryArr);
         this.ChangeResult();
       }
     }
@@ -362,7 +369,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     );
   }
 
- async GetListVerfResulHtData(verfResHObj: ReqGetVerfResult4Obj) {
+  async GetListVerfResulHtData(verfResHObj: ReqGetVerfResult4Obj) {
     await this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode, verfResHObj).toPromise().then(
       (response) => {
         this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
@@ -468,8 +475,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     if (this.PhoneDataForm.controls["MrVerfResultHStatCode"].value == CommonConstant.VerfResultStatSuccess) {
       for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {
         for (let j = 0; j < this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"].length; j++) {
-          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
-          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
+          if (this.IsMandatoryArr.length > 0 && this.IsMandatoryArr[i].length > 0 && this.IsMandatoryArr[i][j]) {
+            this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
+            this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
+          }
         }
       }
     }

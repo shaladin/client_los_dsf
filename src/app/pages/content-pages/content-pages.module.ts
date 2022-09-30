@@ -32,7 +32,7 @@ import { UcmoduleselectionModule } from '@adins/ucmoduleselection';
 
 export const customCurrencyMaskConfig = {     
     align: "right",
-    allowNegative: true,     
+    allowNegative: false,     
     allowZero: true,     
     decimal: ".",     
     precision: 0,     

@@ -307,6 +307,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
         }
       );
     } else {
+      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.getRawValue();
       this.calcStepUpStepDownObjForTrialCalc["IsRecalculate"] = false;
       this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
       this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;

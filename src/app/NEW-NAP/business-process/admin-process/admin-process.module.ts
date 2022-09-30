@@ -105,7 +105,7 @@ import { PreGoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-pro
 
 export const customCurrencyMaskConfig = {
   align: "left",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

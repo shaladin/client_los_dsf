@@ -188,7 +188,7 @@
             "property": "BirthPlace"
         },
         {
-            "type": "text",
+            "type": "date",
             "position": "left",
             "property": "BirthDt"
         },

@@ -171,8 +171,12 @@ export class ReservedFundComponent implements OnInit {
 
   calculatedRemainingAmt() {
     this.remainingAllocatedAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
-    if (0 > this.remainingAllocatedAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
+    if (0 > this.remainingAllocatedAmt) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
+      return false;
+    } 
     this.outputUpdateRemainingAlloc.emit(this.totalRsvFundAmt);
+    return true;
   }
 
   DictRemainingIncomeForm: object = {};
@@ -298,15 +302,16 @@ export class ReservedFundComponent implements OnInit {
       TotalReserveFundAmt: this.totalRsvFundAmt
     };
 
-    this.calculatedRemainingAmt();
-    this.http.post(URLConstant.CalculateGrossYieldRsvFund, grossyieldObj).subscribe(
-      (response) => {
-        this.calcGrossYieldObj = response;
-        this.grossYield = this.calcGrossYieldObj.GrossYieldPrcnt;
-
-      }
-    );
-    this.isCalculated = true;
+    if(this.calculatedRemainingAmt()){
+      this.http.post(URLConstant.CalculateGrossYieldRsvFund, grossyieldObj).subscribe(
+        (response) => {
+          this.calcGrossYieldObj = response;
+          this.grossYield = this.calcGrossYieldObj.GrossYieldPrcnt;
+  
+        }
+      );
+      this.isCalculated = true;
+    }
   }
 
   calculating() {

@@ -130,4 +130,9 @@ export class CommonConstantX {
     public static CustSubjShareholder = "SHR";
     public static CustSubjGuarantor = "GUAR";
     
+    //Const Asset Tab
+    public static DPType = "Down Payment Type";
+    public static DP = "Down Payment";
+    public static SDType = "Security Deposit Type";
+    public static SD = "Security Deposit";
 }

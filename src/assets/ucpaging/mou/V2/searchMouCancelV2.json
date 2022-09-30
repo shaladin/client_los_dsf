@@ -22,7 +22,7 @@
             "type": "currency",
             "name": "MC.PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
-            "value": "",
+            "value": "0",
             "label": "Plafond Amount From",
             "restriction": "gte",
             "datatype": "numeric"
@@ -134,7 +134,7 @@
             "type": "sort",
             "position": "center",
             "label": "MOU STATUS",
-            "name": "MC.MOU_STAT"
+            "name": "MouStatDesc.DESCR"
         },
         {
             "type": "sort",

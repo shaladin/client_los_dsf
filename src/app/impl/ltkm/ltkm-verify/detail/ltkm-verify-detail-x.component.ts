@@ -142,26 +142,26 @@ export class LtkmVerifyDetailXComponent implements OnInit {
   }
 
   GetLtkmCust(isFromTabChange: boolean = false) {
-      var reqObj = {
+    var reqObj = {
         Id: this.LtkmCustId,
-      };
-      this.http.post(URLConstant.GetLtkmCustById, reqObj).subscribe(
-          (response) => {
-              this.CustTypeCode = response["MrCustTypeCode"];
+    };
+    this.http.post(URLConstant.GetLtkmCustById, reqObj).subscribe(
+        (response) => {
+            this.CustTypeCode = response["MrCustTypeCode"];
 
-              this.http.post(URLConstant.getLtkmReqByLtkmCustId, reqObj).subscribe(
-                  (response) => {
-                      if (response["ReturnObject"] != undefined) {
-                          this.LtkmNo = response["ReturnObject"]["LtkmNo"];
-                          this.AppId = response["ReturnObject"]["AppId"];
-                          if (response["ReturnObject"]["LtkmSrc"] == 'APP') {
-                              this.IsFromApp = true;
-                            }
-                      }
-                  }
-              );
-          }
-      );
+            this.http.post(URLConstant.getLtkmReqByLtkmCustId, reqObj).subscribe(
+                (response) => {
+                    if (response["ReturnObject"] != undefined) {
+                        this.LtkmNo = response["ReturnObject"]["LtkmNo"];
+                        if (response["ReturnObject"]["LtkmSrc"] == 'APP') {
+                            this.IsFromApp = true;
+                            this.AppId = response["ReturnObject"]["AppId"];
+                        }
+                    }
+                }
+            );
+        }
+    );
   }
 
   //start develop urs los 057

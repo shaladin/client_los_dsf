@@ -466,7 +466,7 @@ export class CommissionV3Component implements OnInit {
         idxStart = this.BindTaxData(this.identifierReferantor, response, idxStart, totalReferantorData);
         this.Summary.GrossYield = response.GrossYield;
         this.RemainingAllocAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
-        if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
+        if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_EXPENSE_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
         this.IsCalculated = true;
         this.outputUpdateRemainingAlloc.emit(this.totalExpenseAmt);
       },
