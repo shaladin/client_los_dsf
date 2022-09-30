@@ -18,6 +18,8 @@ import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/response/nap/cust-main-data/res-get-app-cust-addr-by-app-id-and-addr-type-code-obj.model';
 import { UcAddressObj } from 'app/shared/model/uc-address-obj.model';
 import { CustSetData } from 'app/NEW-NAP/sharing-component/main-data-component/components/CustSetData.Service';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-cust-public-x',
@@ -44,6 +46,7 @@ export class CustPublicXComponent implements OnInit {
     this.initDdlRefMaster(this.RefMasterTypeCodePublicType, null, true);
     await this.GetExisting();
     this.IsReady = true;
+    await this.getGsJobPostIsOwner();
   }
 
   positionSlikLookUpObj: InputLookupObj = new InputLookupObj();
@@ -96,6 +99,16 @@ export class CustPublicXComponent implements OnInit {
     this.ClearForm();
     this.inputAddressObj = CustSetData.BindSetLegalAddr();
     this.positionSlikLookUpObj = CustSetData.BindLookupPositionSlik();
+  }
+
+  ListJobPostIsOwner : Array<string> = new Array<string>();
+  async getGsJobPostIsOwner(){
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstantX.GSCodeShareholderJobPostIsOnwer }).toPromise().then(
+      (response: GeneralSettingObj) => {
+        let x = response.GsValue;
+        this.ListJobPostIsOwner = x.split(';');
+      }
+    )
   }
 
   //#region UcDDL
@@ -151,11 +164,11 @@ export class CustPublicXComponent implements OnInit {
         return;
       }
     }
-    if ((reqSubmitObj.MrPositionSlikCode == "01" || reqSubmitObj.MrPositionSlikCode == "02" || reqSubmitObj.MrPositionSlikCode == "03" || reqSubmitObj.MrPositionSlikCode == "04") && tempForm["SharePrcnt"] < 0.0001) {
+    if (this.ListJobPostIsOwner.includes(reqSubmitObj.MrPositionSlikCode) && tempForm["SharePrcnt"] < 0.0001){
       this.toastr.warningMessage("Owner Need to Input Share Prcnt");
       return;
     }
-    else if ((reqSubmitObj.MrPositionSlikCode != "01" && reqSubmitObj.MrPositionSlikCode != "02" && reqSubmitObj.MrPositionSlikCode != "03" && reqSubmitObj.MrPositionSlikCode != "04") && tempForm["SharePrcnt"] > 0.0000) {
+    else if (!this.ListJobPostIsOwner.includes(reqSubmitObj.MrPositionSlikCode) && tempForm["SharePrcnt"] > 0.0000){
       this.toastr.warningMessage("Non Owner Need to Input 0% Share");
       return;
     }

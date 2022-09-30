@@ -153,5 +153,9 @@
   "Other Monthly Installment Amount": "Total Monthly Installment (DSF + Other)",
   "Other Monthly Installment": "Total Monthly Installment (DSF + Other)",
   "Operational Cost" : "Total Monthly Expense",
-  "Operation Cost": "Total Monthly Expense"
+  "Operation Cost": "Total Monthly Expense",
+  "Monthly Installment Other": "Other Monthly Installment",
+  "Pefindo": "Credit Bureau Checking",
+  "Trusting Social": "Social Score",
+  "Asli Ri": "Personal Verification"
 }

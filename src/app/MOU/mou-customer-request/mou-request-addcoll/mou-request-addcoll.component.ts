@@ -1614,6 +1614,14 @@ export class MouRequestAddcollComponent implements OnInit {
         return;
       }
     }
+
+    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR) {
+      if(this.listCollateralData.length == 0){
+        this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
+        return;
+      }
+      
+    }
     this.UpdatePlafondAmt(sumCollateralValue);
   }
 

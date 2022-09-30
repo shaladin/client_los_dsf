@@ -223,130 +223,28 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       }
     );
 
-
-
-    if (this.CopyFrom != null) {
-      this.reqLeadAssetObj = new LeadAssetObj();
-      this.reqLeadAssetObj.LeadId = this.CopyFrom;
-      let obj = {
-        Id: this.reqLeadAssetObj.LeadId
-      }
-      this.http.post(URLConstant.GetLeadAssetByLeadId, obj).subscribe(
-        (response: LeadAssetObj) => {
-          this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
-            this.isUsed = true;
-          } else {
-            this.isUsed = false;
-          }
-          if (this.resLeadAssetObj.LeadAssetId != 0) {
-            this.LeadDataForm.patchValue({
-              MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
-              MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
-              ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
-              AssetPrice: this.resLeadAssetObj.AssetPriceAmt == null ? '' : this.resLeadAssetObj.AssetPriceAmt,
-              DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt == null ? '' : this.resLeadAssetObj.DownPaymentAmt,
-              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt == null ? '' : this.resLeadAssetObj.DownPaymentPrcnt
-            });
-          }
-          this.DownPaymentChange();
-
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-          let obj = {
-            Code: this.reqAssetMasterObj.FullAssetCode
-          }
-          this.http.post(URLConstant.GetAssetMasterForLookup, obj).subscribe(
-            (response: AssetMasterObj) => {
-              this.resAssetMasterObj = response;
-
-              this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
-              this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
-              this.LeadDataForm.patchValue({
-                FullAssetCode: this.resAssetMasterObj.FullAssetCode,
-                FullAssetName: this.resAssetMasterObj.FullAssetName,
-              });
-              this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
-              let obj = {
-                Id: this.resAssetMasterObj.AssetTypeId
-              }
-              this.http.post(URLConstant.GetAssetTypeById, obj).subscribe(
-                (response: AssetTypeObj) => {
-
-                  let AssetTypeCode = { Code: response.AssetTypeCode };
-                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
-                    (response: GenericListObj) => {
-                      while (this.items.length) {
-                        this.items.removeAt(0);
-                      }
-                      let SerialNoList = response[CommonConstant.ReturnObj];
-                      for (let i = 0; i < SerialNoList.length; i++) {
-                        let eachDataDetail = this.fb.group({
-                          SerialNoLabel: [SerialNoList[i].SerialNoLabel],
-                          SerialNoValue: [''],
-                          IsMandatory: [SerialNoList[i].IsMandatory]
-                        }) as FormGroup;
-                        this.items.push(eachDataDetail);
-                        if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
-                          // this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-                          this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-                        }
-                        if (this.items.controls[0] != null) {
-                          this.items['controls'][0].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo1,
-                          });
-                        }
-                        if (this.items.controls[1] != null) {
-                          this.items['controls'][1].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo2,
-                          });
-                        }
-                        if (this.items.controls[2] != null) {
-                          this.items['controls'][2].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo3,
-                          });
-                        }
-                        if (this.items.controls[3] != null) {
-                          this.items['controls'][3].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo4,
-                          });
-                        }
-                        if (this.items.controls[4] != null) {
-                          this.items['controls'][4].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo4,
-                          });
-                        }
-                      }
-                      this.isAssetReady = true;
-                    });
-                });
-            });
-        });
-
-      this.reqLeadAppObj = new LeadAppObj();
-      this.reqLeadAppObj.LeadId = this.CopyFrom;
-      obj = {
-        Id: this.reqLeadAppObj.LeadId
-      }
-      this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
-        (response: LeadAppObj) => {
-          this.resLeadAppObj = response;
-          if (this.resLeadAppObj.LeadAppId != 0) {
-            this.LeadDataForm.patchValue({
-              Tenor: this.resLeadAppObj.Tenor,
-              MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
-              NTFAmt: this.resLeadAppObj.NtfAmt,
-              TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
-              InstallmentAmt: this.resLeadAppObj.InstAmt,
-            });
-          }
-        });
-    }
-
     this.reqLeadAssetObj = new LeadAssetObj();
     this.reqLeadAssetObj.LeadId = this.LeadId;
-    let reqLeadAssetObj = { Id: this.LeadId.toString() };
-    this.http.post(URLConstant.GetLeadAssetByLeadId, reqLeadAssetObj).subscribe(
+    this.reqLeadAppObj = new LeadAppObj();
+    this.reqLeadAppObj.LeadId = this.LeadId;
+    let obj = {
+      Id: this.LeadId
+    }
+    let isCopyFrom: boolean = false;
+    
+    if (this.CopyFrom != null) {
+      this.reqLeadAssetObj.LeadId = this.LeadId;
+      this.reqLeadAppObj.LeadId = this.CopyFrom;
+      obj.Id = this.CopyFrom;
+      isCopyFrom = true;
+    }
+
+    this.GetLeadAppByLeadId(obj, isCopyFrom);
+    this.GetLeadAssetByLeadId(obj, isCopyFrom);
+  }
+
+  GetLeadAssetByLeadId(getObj, isCopyFrom: boolean){
+    this.http.post(URLConstant.GetLeadAssetByLeadId, getObj).subscribe(
       (response: LeadAssetObj) => {
         this.resLeadAssetObj = response;
         if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
@@ -363,104 +261,97 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt == null ? '' : this.resLeadAssetObj.DownPaymentAmt,
             DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt == null ? '' : this.resLeadAssetObj.DownPaymentPrcnt
           });
-          if (this.resLeadAssetObj.MrDownPaymentTypeCode == CommonConstant.DownPaymentTypeAmt) {
-            this.LeadDataForm.controls.DownPaymentPercent.disable();
-            this.LeadDataForm.controls.DownPaymentAmount.enable();
-          }
-          else {
-            this.LeadDataForm.controls.DownPaymentPercent.enable();
-            this.LeadDataForm.controls.DownPaymentAmount.disable();
-          }
-
-          // this.AssetSelected = true;
-
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-          let codeObj = {
-            Code: this.reqAssetMasterObj.FullAssetCode
-          }
-          this.http.post(URLConstant.GetAssetMasterForLookup, codeObj).subscribe(
-            (response: AssetMasterObj) => {
-              this.resAssetMasterObj = response;
-
-              this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
-              this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
-              this.LeadDataForm.patchValue({
-                FullAssetCode: this.resAssetMasterObj.FullAssetCode,
-                FullAssetName: this.resAssetMasterObj.FullAssetName,
-              });
-              this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
-              let assetType = new AssetTypeObj();
-              assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(URLConstant.GetAssetTypeById, { Id: this.resAssetMasterObj.AssetTypeId }).subscribe(
-                (response: AssetTypeObj) => {
-
-                  let AssetTypeCode = { Code: response.AssetTypeCode };
-                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
-                    (response: GenericListObj) => {
-                      while (this.items.length) {
-                        this.items.removeAt(0);
-                      }
-                      let SerialNoList = response[CommonConstant.ReturnObj];
-                      for (let i = 0; i < SerialNoList.length; i++) {
-                        let eachDataDetail = this.fb.group({
-                          SerialNoLabel: [SerialNoList[i].SerialNoLabel],
-                          SerialNoValue: [''],
-                          IsMandatory: [SerialNoList[i].IsMandatory]
-                        }) as FormGroup;
-                        this.items.push(eachDataDetail);
-                        if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
-                          // this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
-                          this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
-                        }
-                        if (this.items.controls[0] != null) {
-                          this.items['controls'][0].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo1,
-                          });
-                        }
-                        if (this.items.controls[1] != null) {
-                          this.items['controls'][1].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo2,
-                          });
-                        }
-                        if (this.items.controls[2] != null) {
-                          this.items['controls'][2].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo3,
-                          });
-                        }
-                        if (this.items.controls[3] != null) {
-                          this.items['controls'][3].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo4,
-                          });
-                        }
-                        if (this.items.controls[4] != null) {
-                          this.items['controls'][4].patchValue({
-                            SerialNoValue: this.resLeadAssetObj.SerialNo4,
-                          });
-                        }
-                      }
-                    });
-                });
-            });
-          this.reqLeadAppObj = new LeadAppObj();
-          this.reqLeadAppObj.LeadId = this.LeadId;
-          let obj = {
-            Id: this.reqLeadAppObj.LeadId
-          }
-          this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
-            (response: LeadAppObj) => {
-              this.resLeadAppObj = response;
-              this.LeadDataForm.patchValue({
-                Tenor: this.resLeadAppObj.Tenor,
-                MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
-                NTFAmt: this.resLeadAppObj.NtfAmt,
-                TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
-                InstallmentAmt: this.resLeadAppObj.InstAmt,
-              });
-            });
         }
-      });
+        this.DownPaymentChange(isCopyFrom);
 
+        this.reqAssetMasterObj = new AssetMasterObj();
+        this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
+        let codeObj = {
+          Code: this.reqAssetMasterObj.FullAssetCode
+        }
+        this.http.post(URLConstant.GetAssetMasterForLookup, codeObj).subscribe(
+          (response: AssetMasterObj) => {
+            this.resAssetMasterObj = response;
+
+            this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
+            this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
+            this.LeadDataForm.patchValue({
+              FullAssetCode: this.resAssetMasterObj.FullAssetCode,
+              FullAssetName: this.resAssetMasterObj.FullAssetName,
+            });
+            this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
+            let obj = {
+              Id: this.resAssetMasterObj.AssetTypeId
+            }
+            this.http.post(URLConstant.GetAssetTypeById, obj).subscribe(
+              (response: AssetTypeObj) => {
+
+                let AssetTypeCode = { Code: response.AssetTypeCode };
+                this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                  (response: GenericListObj) => {
+                    while (this.items.length) {
+                      this.items.removeAt(0);
+                    }
+                    let SerialNoList = response[CommonConstant.ReturnObj];
+                    for (let i = 0; i < SerialNoList.length; i++) {
+                      let eachDataDetail = this.fb.group({
+                        SerialNoLabel: [SerialNoList[i].SerialNoLabel],
+                        SerialNoValue: [''],
+                        IsMandatory: [SerialNoList[i].IsMandatory]
+                      }) as FormGroup;
+                      this.items.push(eachDataDetail);
+                      if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
+                        // this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                        this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+                      }
+                      if (this.items.controls[0] != null) {
+                        this.items['controls'][0].patchValue({
+                          SerialNoValue: this.resLeadAssetObj.SerialNo1,
+                        });
+                      }
+                      if (this.items.controls[1] != null) {
+                        this.items['controls'][1].patchValue({
+                          SerialNoValue: this.resLeadAssetObj.SerialNo2,
+                        });
+                      }
+                      if (this.items.controls[2] != null) {
+                        this.items['controls'][2].patchValue({
+                          SerialNoValue: this.resLeadAssetObj.SerialNo3,
+                        });
+                      }
+                      if (this.items.controls[3] != null) {
+                        this.items['controls'][3].patchValue({
+                          SerialNoValue: this.resLeadAssetObj.SerialNo4,
+                        });
+                      }
+                      if (this.items.controls[4] != null) {
+                        this.items['controls'][4].patchValue({
+                          SerialNoValue: this.resLeadAssetObj.SerialNo4,
+                        });
+                      }
+                    }
+                    if(isCopyFrom) this.isAssetReady = true;
+                  });
+              });
+          });
+      });
+  }
+
+  GetLeadAppByLeadId(obj, isCopyFrom: boolean){
+    this.http.post(URLConstant.GetLeadAppByLeadId, obj).subscribe(
+      (response: LeadAppObj) => {
+        this.resLeadAppObj = response;
+        if(isCopyFrom){
+          if(this.resLeadAppObj.LeadAppId == 0) return;
+        }
+        this.LeadDataForm.patchValue({
+          Tenor: this.resLeadAppObj.Tenor,
+          MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode != null ? this.resLeadAppObj.MrFirstInstTypeCode : this.returnFirstInstObj[0]['Key'],
+          NTFAmt: this.resLeadAppObj.NtfAmt,
+          TotalDownPayment: this.resLeadAppObj.TotalDownPaymentAmt,
+          InstallmentAmt: this.resLeadAppObj.InstAmt,
+        });
+      });
   }
 
   SetAsset(event) {
@@ -509,11 +400,12 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     }
   }
 
-  DownPaymentChange() {
-    if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
+  DownPaymentChange(isCopyFrom: boolean) {
+    let valueToCheck = this.resLeadAssetObj.MrDownPaymentTypeCode;
+    if (isCopyFrom) valueToCheck = this.LeadDataForm.controls["MrDownPaymentTypeCode"].value;
+    if (valueToCheck == CommonConstant.DownPaymentTypeAmt) {
       this.LeadDataForm.controls.DownPaymentPercent.disable();
       this.LeadDataForm.controls.DownPaymentAmount.enable();
-
     }
     else {
       this.LeadDataForm.controls.DownPaymentPercent.enable();

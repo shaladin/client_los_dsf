@@ -66,7 +66,7 @@ export class PathConstantX {
   public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X;
   public static DO_MULTI_ASSET_PAGING_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.PAGING;
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
-  public static CUST_CONFIRM_PAGING_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
+  public static CUST_CONFIRM_PAGING_X = PathConstant.CUST_CONFIRM + '/' + PathConstant.PAGING;
   public static CUST_CONFIRM_DETAIL_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
 
   //#endregion
@@ -235,7 +235,9 @@ export class PathConstantX {
   public static AGRMNT_CANCEL_DETAIL = PathConstant.AGRMNT_CANCEL + "/" + PathConstantX.DETAIL_X;
 
   //ltkm
+  public static LTKM = "Ltkm";
   public static VERIFY_DETAIL = PathConstant.VERIFY_DETAIL + PathConstantX.X;
+  public static LTKM_VIEW = PathConstantX.LTKM + "/" + PathConstant.VIEW + PathConstantX.X;
 }
 
 

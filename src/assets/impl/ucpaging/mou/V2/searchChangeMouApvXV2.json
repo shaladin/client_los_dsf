@@ -93,7 +93,7 @@
             "name": "CMT.CHANGE_MOU_TRX_NO"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "APPROVAL NO",
             "name": "RequestNo"
@@ -111,25 +111,25 @@
             "name": "A.MOU_CUST_NO"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "left",
             "label": "REQUEST BY",
             "name": "RequestBy"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "left",
             "label": "TASK OWNER",
             "name": "MainUser"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "left",
             "label": "CURRENT USER",
             "name": "CurrentUser"
         },
         {
-            "type": "sort",
+            "type": "label",
             "position": "center",
             "label": "REQUEST DATE",
             "name": "RequestDate"

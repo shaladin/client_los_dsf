@@ -98,6 +98,12 @@ export class AssetDataXComponent implements OnInit {
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   UcDDLAssetCond: UcDropdownListObj = new UcDropdownListObj();
   IsSales: boolean = true;
+  readonly DPType = CommonConstantX.DPType;
+  readonly DP = CommonConstantX.DP;
+  readonly SDType = CommonConstantX.SDType;
+  readonly SD = CommonConstantX.SD;
+  readonly CF4W = CommonConstant.CF4W;
+  readonly FL4W = CommonConstant.FL4W;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -286,6 +292,7 @@ export class AssetDataXComponent implements OnInit {
   RefProdCmptAssetCond: ProdOfferingDObj;
   RefProdCmptSupplSchm: ProdOfferingDObj;
   RefProdCmptAssetSchm: ProdOfferingDObj;
+  RefProdCmptPurposeOfFinancing: ProdOfferingDObj;
   AppCustCoyObj: AppCustCompanyObj;
   CheckValidationObj: ResAssetValidationRuleObj;
   SetManuYearObj: ResAssetValidationRuleObj;
@@ -735,7 +742,7 @@ export class AssetDataXComponent implements OnInit {
     this.allAssetDataObj = new AllAssetDataObj();
     await this.setAllAssetObj();
     this.allAssetDataObj.BizTemplateCode = this.BizTemplateCode;
-    this.allAssetDataObj.LOBCode = CommonConstant.FL4W; // penjagaan supplier tidak boleh berbeda (sama seperti FL4W) - CF4W fleet
+    this.allAssetDataObj.LOBCode = this.FL4W; // penjagaan supplier tidak boleh berbeda (sama seperti FL4W) - CF4W fleet
     if (this.allAssetDataObj.AppAssetAccessoryObjs && this.allAssetDataObj.AppAssetAccessoryObjs.length > 0) {
       if (this.originalAppAssetAccessory && this.originalAppAssetAccessory.length > 0) {
         for (const newAcc of this.allAssetDataObj.AppAssetAccessoryObjs) {
@@ -2004,8 +2011,9 @@ export class AssetDataXComponent implements OnInit {
   }
 
   async bindAssetUsageObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    let reqByCode: GenericObj = new GenericObj();
+    reqByCode.Code = this.RefProdCmptPurposeOfFinancing.CompntValue;
+    await this.http.post(URLConstant.GetListKeyValueAssetUsageByPurposeOfFinCode, reqByCode).subscribe(
       (response) => {
         this.AssetUsageObj = response[CommonConstant.ReturnObj];
       }
@@ -2710,6 +2718,17 @@ export class AssetDataXComponent implements OnInit {
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj3).toPromise().then(
       (response: any) => {
         this.RefProdCmptAssetSchm = response;
+      }
+    );
+
+    let appObj4: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj4.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj4.RefProdCompntCode = CommonConstant.RefProdCompntCodePurposeOfFinancing;
+    appObj4.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj4).toPromise().then(
+      (response: any) => {
+        this.RefProdCmptPurposeOfFinancing = response;
       }
     );
   }

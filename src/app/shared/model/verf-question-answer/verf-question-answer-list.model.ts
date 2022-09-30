@@ -5,6 +5,7 @@ export class VerfQuestionAnswerListObj {
     VerfQuestionText: string;
     VerfAnswer: string;
     IsActive: boolean;
+    IsMandatory: boolean;
     VerfSchemeHId: number;
     VerfQuestionGrpCode: string;
     VerfQuestionGrpName: string;
@@ -18,6 +19,7 @@ export class VerfQuestionAnswerListObj {
         this.VerfQuestionText = "";
         this.VerfAnswer = "";
         this.IsActive = false;
+        this.IsMandatory = false;
         this.VerfSchemeHId = 0;
         this.VerfQuestionGrpCode = "";
         this.VerfQuestionGrpName = "";

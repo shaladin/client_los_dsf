@@ -265,7 +265,7 @@ export class ApplicationDataXComponent implements OnInit {
     this.getAppSrcData();
     await this.getRefMaster();
 
-    setTimeout(() => { this.getAppModelInfo() }, 2000);
+    setTimeout(async() => { this.getAppModelInfo() }, 2000);
 
     await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).toPromise().then(
       (response: AppCustObj) => {
@@ -445,21 +445,25 @@ export class ApplicationDataXComponent implements OnInit {
     );
   }
 
-  getInterestTypeCode() {
+  async getInterestTypeCode(ProdOfferingCode: string, ProdOfferingVersion: string) {
     let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.ProdOfferingCode = ProdOfferingCode;
     obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
-    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+    obj.ProdOfferingVersion = ProdOfferingVersion;
+    let noValue: boolean = !this.NapAppModelForm.controls.InterestType.value;
 
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
       (response) => {
         if (response && response["StatusCode"] == "200") {
+          if(noValue){
           this.NapAppModelForm.patchValue({
             InterestType: response["CompntValue"],
             InterestTypeDesc: response["CompntValueDesc"],
           });
-          this.ChangeInterestType();
         }
+        this.ChangeInterestType();
+        if(response["MrProdBehaviourCode"] == CommonConstant.ProductBehaviourLock) this.NapAppModelForm.controls.InterestType.disable();
+      }
         else {
           // throw new Error("Interest Type component not found, please use the latest product offering");
           this.isProdOfrUpToDate = false;
@@ -499,7 +503,7 @@ export class ApplicationDataXComponent implements OnInit {
     await this.getAppXData();
 
     await this.http.post(URLConstantX.GetAppDetailForTabAddEditAppByIdX, obj).toPromise().then(
-      (response) => {
+      async (response) => {
 
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
@@ -574,11 +578,10 @@ export class ApplicationDataXComponent implements OnInit {
 
         this.getAgrmntParent();
         this.makeNewLookupCriteria();
-        this.getInterestTypeCode();
         this.initMailingAddress();
 
         if (this.BizTemplateCode != CommonConstant.OPL) {
-          this.getInterestTypeCode();
+          await this.getInterestTypeCode(this.resultResponse.ProdOfferingCode, this.resultResponse.ProdOfferingVersion);
           this.GetCrossInfoData();
         } else {
           this.NapAppModelForm.controls.InterestType.clearValidators();
@@ -1413,6 +1416,14 @@ export class ApplicationDataXComponent implements OnInit {
     if(this.NapAppModelForm.controls.LobCode.value == 'FD')
     {
       if (plafondUsed < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+        return false;
+      }
+    }
+
+    if(this.NapAppModelForm.controls.LobCode.value == 'MPF')
+    {
+      if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt < financingAmt) {
         this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
         return false;
       }

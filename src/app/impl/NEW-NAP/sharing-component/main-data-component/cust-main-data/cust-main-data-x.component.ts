@@ -109,6 +109,7 @@ export class CustMainDataXComponent implements OnInit {
   AppNo: string;
 
   agrmntParentNo: string = "";
+  IsCustAllowedContinue: boolean = true;
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
@@ -487,7 +488,7 @@ export class CustMainDataXComponent implements OnInit {
   jobPositionLookupObj: InputLookupObj = new InputLookupObj();
   BindLookupJobPosition() {
     this.jobPositionLookupObj = new InputLookupObj();
-    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal? true : false ;
+    this.jobPositionLookupObj.isRequired = this.custMainDataMode == this.CustMainDataMgmntShrholder && this.MrCustTypeCode == this.CustTypePersonal ? true : false;
     this.jobPositionLookupObj.urlJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.pagingJson = "./assets/uclookup/customer/lookupJobPosition.json";
     this.jobPositionLookupObj.genericJson = "./assets/uclookup/customer/lookupJobPosition.json";
@@ -756,7 +757,7 @@ export class CustMainDataXComponent implements OnInit {
 
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
-        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
+        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == this.MrCustTypeCode);
       }
     }
   }
@@ -1004,7 +1005,7 @@ export class CustMainDataXComponent implements OnInit {
 
   async copyCustomerEvent(event) {
     if (this.MrCustTypeCode === CommonConstant.CustTypePersonal) {
-      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
+      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
 
@@ -1025,12 +1026,27 @@ export class CustMainDataXComponent implements OnInit {
           }
         });
     } else {
-      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
+      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
     }
     await this.disableInput();
+  }
+
+  async checkIsCustAllowedContinue()
+  {
+    if(this.CustMainDataForm.controls.CustNo.value == null)
+    {
+      this.IsCustAllowedContinue = true;
+      return;
+    }
+    
+    await this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByCustNo, { Code: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+      (res) => {
+        res == undefined? this.IsCustAllowedContinue = false : this.IsCustAllowedContinue = true;
+      }
+    );
   }
 
   ChangeIdType(IdType: string) {
@@ -1198,9 +1214,13 @@ export class CustMainDataXComponent implements OnInit {
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
 
       if (this.inputMode == 'EDIT') {
+        this.isDdlMrCustRelationshipReady = false;
+        setTimeout (() => { 
         this.CustMainDataForm.patchValue({
           MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
         })
+        this.isDdlMrCustRelationshipReady = true; 
+        }, 0);
       }
     }
 
@@ -1468,6 +1488,12 @@ export class CustMainDataXComponent implements OnInit {
       else{
         this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustMainDataForm.value.lookupCustomerCoy.value;
       }
+      if(this.CustMainDataForm.controls.isForeigner.value == null || this.CustMainDataForm.controls.isForeigner.value == false){
+        this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsForeigner = false;
+      }
+      else{
+        this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsForeigner = this.CustMainDataForm.controls.isForeigner.value;
+      }
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.MrCustTypeCode = this.MrCustTypeCode;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.rowVersionMgmntShrholder;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
@@ -1639,8 +1665,17 @@ export class CustMainDataXComponent implements OnInit {
       //   return;
       // }
       this.setDataCustomerCompanyForSave();
+      if (this.custDataCompanyObj.AppCustObj.IsShareholder && this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsOwner && this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt < 0.0001) {
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_OWNER_NEED_SHARE_PRCNT));
+        return false;
+      }
+
+      if (this.custDataCompanyObj.AppCustObj.IsShareholder && !this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsOwner && this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt > 0.0000) {
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_NON_OWNER_NEED_NOT_HAVE_SHARE_PRCNT));
+        return false;
+      }
       if (this.appCustId == null || this.appCustId == 0) {
-        this.http.post(URLConstant.AddCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
+        this.http.post(URLConstantX.AddCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
           (response) => {
             if (response["StatusCode"] == 200) {
               this.outputAfterSave.emit(this.custDataCompanyObj.AppCustObj);
@@ -1672,12 +1707,17 @@ export class CustMainDataXComponent implements OnInit {
   }
 
   async SaveForm() {
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust)
+    {
+      await this.checkIsCustAllowedContinue();
+      if(!this.IsCustAllowedContinue) return;
+    }
+
     let obj = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
       AppNo: this.AppNo,
       BizTemplateCode: this.bizTemplateCode
     };
-
 
     if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
     {
@@ -2234,7 +2274,7 @@ export class CustMainDataXComponent implements OnInit {
         this.CustMainDataForm.patchValue({
           IsOwner: true,
         });
-        this.CustMainDataForm.get("IsOwner").enable();
+        this.CustMainDataForm.get("IsOwner").disable();
       }
       else{
         this.CustMainDataForm.patchValue({

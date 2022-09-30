@@ -29,7 +29,6 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { LtkmVerifyDetailComponent } from "./ltkm-verify/detail/ltkm-verify-detail.component";
 import { LtkmVerifyPagingComponent } from "./ltkm-verify/paging/ltkm-verify-paging.component";
 import { LtkmApprovalPagingComponent } from "./ltkm-approval/paging/ltkm-approval-paging.component";
-import { LtkmApprovalDetailComponent } from "./ltkm-approval/detail/ltkm-approval-detail.component";
 import { LtkMainInfoComponent } from "./ltkm-mi/ltkm-mi.component";
 import { ViewLtkmComponentModule } from "app/ltkm/view-ltkm-component/view-ltkm-component.module";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
@@ -63,14 +62,16 @@ import { LtkmCustJobDataXComponent } from "app/impl/ltkm/ltkm-request/additional
 import { LtkmRequestXComponent } from "app/impl/ltkm/ltkm-request/ltkm-request-x.component";
 import { LtkmCustPersonalMainDataXComponent } from "app/impl/ltkm/ltkm-request/additional-component/cust-personal-main-data/cust-personal-main-data-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { AdInsModule } from "app/components/adins-module/adins.module";
 import { LtkmFinancialCompanyXComponent } from "app/impl/ltkm/ltkm-request/additional-component/company/financial-company-x/financial-company-x.component";
 import { ViewLtkmCustDataCompletionCompanyXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-company/view-ltkm-cust-data-completion-company-x.component";
 import { ViewLtkmCustomerDataCompanyXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-company/view-ltkm-customer-data-company-x.component";
 import { LtkmVerifyDetailXComponent } from "app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component";
 import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail-x.component";
+import { LtkmApprovalDetailComponent } from "./ltkm-approval/detail/ltkm-approval-detail.component";
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,
@@ -87,6 +88,7 @@ export const customCurrencyMaskConfig = {
     CommonModule,
     FormsModule,
     HttpModule,
+    AdInsModule,
     UCSearchModule,
     UcgridfooterModule,
     UcpagingModule,
@@ -146,10 +148,7 @@ export const customCurrencyMaskConfig = {
     LtkmReturnHandlingXComponent,
     LtkmCustJobDataXComponent,
     LtkmFinancialCompanyXComponent,
-    ViewLtkmCustDataCompletionCompanyXComponent,
-    ViewLtkmCustomerDataCompanyXComponent,
-    LtkmVerifyDetailXComponent,
-    ViewLtkmCustDetailXComponent
+    LtkmVerifyDetailXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

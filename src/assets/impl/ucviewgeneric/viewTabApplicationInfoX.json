@@ -145,7 +145,7 @@
         {
           "type": "text",
           "label": "Order Status",
-          "property": "Descr"
+          "property": "OrderStatus"
         }
       ],
       "querystring": {

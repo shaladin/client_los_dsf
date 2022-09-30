@@ -89,7 +89,7 @@ import { AutoDebitTestComponent } from "app/impl/NEW-NAP/business-process/additi
 
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,
