@@ -418,7 +418,7 @@ export class PreGoLiveXComponent implements OnInit {
 
       });
 
-    let AddPreGoLiveXUrl = environment.isCore ? URLConstantX.AddPreGoLiveXV2 : URLConstantX.AddPreGoLiveX;
+    let AddPreGoLiveXUrl = environment.isCore ? URLConstantX.AddPreGoLiveXV3 : URLConstantX.AddPreGoLiveX;
 
     this.http.post(AddPreGoLiveXUrl, this.PreGoLiveObj).subscribe(
       (response) => {

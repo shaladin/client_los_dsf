@@ -10,6 +10,7 @@ export class URLConstantX {
   public static AddCustCnfrmX = environment.losUrl+ "/v1" + "/CustCnfrmX/AddCustCnfrm";
   public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
   public static AddPreGoLiveXV2 = environment.losUrl+ "/v2" + "/PreGoLiveX/AddPreGoLive";
+  public static AddPreGoLiveXV3 = environment.losUrl+ "/v3" + "/PreGoLiveX/AddPreGoLive";
   public static BackToDeliveryOrderCustConfirm = environment.losUrl+ "/v1" + "/PreGoLiveX/BackToDeliveryOrderCustConfirm";
   public static BackToDeliveryOrderCustConfirmV2 = environment.losUrl+ "/v2" + "/PreGoLiveX/BackToDeliveryOrderCustConfirm";
 
