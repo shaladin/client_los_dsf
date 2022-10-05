@@ -95,6 +95,18 @@
                   <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingCompntValue" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+                <div class="col-md-2" *ngIf="type.controls['components'].value[l].ProdCompntType == 'MULTI_DDL' && type.controls['components'].value[l].IsProdOffering">
+                  <ng-multiselect-dropdown 
+                    *ngIf="dictMultiOptions[type.controls['components'].value[l].RefProdCompntCode].length != 0" 
+                    [placeholder]="'Search'" [settings]="dropdownSettings" 
+                    [data]="dictMultiOptions[type.controls['components'].value[l].RefProdCompntCode]"
+                    [(ngModel)]="selectedMultiDDLItems[type.controls['components'].value[l].RefProdCompntCode]" 
+                    [ngModelOptions]="{standalone: true}" 
+                    (onDropDownClose)="onMultiDDLChangeEvent(type.controls['components'].value[l].RefProdCompntCode,l,j)">
+                  </ng-multiselect-dropdown>
+                  <lib-uc-show-errors [control]="node.controls.OfferingCompntValue" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
                 <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="(FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE') && type.controls['components'].value[l].IsProdOffering" (click)="DownloadRule(type.controls['components'].getRawValue()[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
                   <img src="assets/img/download.png" style="width: 25px;"/>
                 </span>

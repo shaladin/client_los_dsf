@@ -8,7 +8,7 @@
                     </div>
                     <div class="col-md-4">
                       <lib-uclookupgeneric *ngIf="InputLookUpObj.isReady" width-75-per [lookupInput]="InputLookUpObj" [parentForm]='FormCopyProdOffering'
-                        [enjiForm]="enjiForm" [identifier]="'indentifierTemp'" >
+                        [enjiForm]="enjiForm" [identifier]="'indentifierTemp'" (lookup)="GetLookup($event)">
                       </lib-uclookupgeneric>
                     </div>
                     <div class="col-md-4">
@@ -21,5 +21,5 @@
       </div>
     </div>
   </form>
-  <uc-prod-offering-comp [CompGroups]="'GEN'" [ProdOfferingHId]="ProdOfferingHId" [ShowComparison]="false" [ShowBehaviour]="false" [IsFilterBizTmpltCode]="false" (Save)="SaveForm($event)" (OnCancel)="Cancel()" (Next)="NextDetail($event)"></uc-prod-offering-comp>
+  <uc-prod-offering-comp *ngIf="isReady" [CompGroups]="'GEN'" [ProdOfferingHId]="ProdOfferingHId" [ShowComparison]="false" [ShowBehaviour]="false" [IsFilterBizTmpltCode]="false" (Save)="SaveForm($event)" (OnCancel)="Cancel()" (Next)="NextDetail($event)"></uc-prod-offering-comp>
   

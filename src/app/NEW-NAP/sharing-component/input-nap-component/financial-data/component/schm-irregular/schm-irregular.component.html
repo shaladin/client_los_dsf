@@ -177,13 +177,13 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline adins-required">
               <label translate>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)"
                 [attr.disabled]="ParentForm.controls.EffectiveRateBhv.value == BhvLock">
-                <option value="">--Select--</option>
+                <option value="">-Select One-</option>
                 <option *ngFor="let m of RateTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.RateType" [submit]="enjiForm.submitted">
@@ -309,7 +309,7 @@
             <div class="col-md-2 form-inline">
               <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
                 (change)="SetNeedReCalculate(true)">
-                <option value="">--Select--</option>
+                <option value="">-Select One-</option>
                 <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
               </select>
               <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">

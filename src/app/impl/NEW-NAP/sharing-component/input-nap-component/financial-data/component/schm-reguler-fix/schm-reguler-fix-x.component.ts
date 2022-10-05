@@ -288,6 +288,10 @@ export class SchmRegulerFixXComponent implements OnInit {
   }
 
   Calculate() {
+    if (this.ParentForm.getRawValue().RateType == '') {
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_RATE_TYPE);
+      return;
+    }
     if (this.ParentForm.controls.TotalFeeAmt.value > this.ParentForm.controls.TotalAssetPriceAmt.value) {
       this.toastr.warningMessage(ExceptionConstantX.FEE_MUST_LOWER_THAN_TOTAL_AMT + this.PriceLabel);
       return;

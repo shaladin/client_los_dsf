@@ -1,4 +1,5 @@
 export class ResCreditApvResultExtObj{
+    CrdApvResultExtId: number;
     AppNo: string;
     AgrmntNo: string;
     CustName : string;
@@ -6,8 +7,11 @@ export class ResCreditApvResultExtObj{
     NumberOfExtension : number;
     CrdApvResultExpDt : Date;
     ExtendedCrdApvResultExpDt : Date;
+    ExtendBy : string;
+    ApprovalDate : Date;
 
     constructor() {
+        this.CrdApvResultExtId = 0;
         this.AppNo = "";
         this.AgrmntNo = "";
         this.CustName = "";
@@ -15,5 +19,7 @@ export class ResCreditApvResultExtObj{
         this.NumberOfExtension = 0;
         this.CrdApvResultExpDt = new Date();
         this.ExtendedCrdApvResultExpDt = new Date();
+        this.ExtendBy = "";
+        this.ApprovalDate = new Date();
     }
 }

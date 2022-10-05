@@ -101,6 +101,7 @@ export class CustMainDataComponent implements OnInit {
   CountryName: string = "";
 
   agrmntParentNo: string = "";
+  IsCustAllowedContinue: boolean = true;
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
@@ -675,7 +676,7 @@ export class CustMainDataComponent implements OnInit {
 
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
-        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
+        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == this.MrCustTypeCode);
       }
     }
   }
@@ -919,17 +920,32 @@ export class CustMainDataComponent implements OnInit {
 
   async copyCustomerEvent(event) {
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
+      await this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
     } else {
-      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
+      await this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
     }
     await this.disableInput();
+  }
+
+  async checkIsCustAllowedContinue()
+  {
+    if(this.CustMainDataForm.controls.CustNo.value == null)
+    {
+      this.IsCustAllowedContinue = true;
+      return;
+    }
+    
+    await this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByCustNo, { Code: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+      (res) => {
+        res == undefined? this.IsCustAllowedContinue = false : this.IsCustAllowedContinue = true;
+      }
+    );
   }
 
   ChangeIdType(IdType: string) {
@@ -1121,9 +1137,13 @@ export class CustMainDataComponent implements OnInit {
       if (!IsCopyCust) this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
 
       if (this.inputMode == 'EDIT') {
-        this.CustMainDataForm.patchValue({
-          MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
-        })
+        this.isDdlMrCustRelationshipReady = false;
+        setTimeout (() => { 
+          this.CustMainDataForm.patchValue({
+            MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
+          })
+          this.isDdlMrCustRelationshipReady = true; 
+        }, 0);
       }
     }
 
@@ -1419,6 +1439,12 @@ export class CustMainDataComponent implements OnInit {
   async SaveForm() {
     if (this.CekIsCustomer()) return;
 
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust)
+    {
+      await this.checkIsCustAllowedContinue();
+      if(!this.IsCustAllowedContinue) return;
+    }
+
     var isCustAgeValid = await this.validateCustPersonalAge();
     if(!isCustAgeValid) return;
 
@@ -1426,7 +1452,7 @@ export class CustMainDataComponent implements OnInit {
       this.setDataCustomerPersonalForSave();
 
       if(this.custMainDataMode != CommonConstant.CustMainDataModeCust && this.custMainDataMode != CommonConstant.CustMainDataModeGuarantor){
-        if(this.custDataPersonalObj.AppCustPersonalJobDataObj != null){
+        if(this.custDataPersonalObj.AppCustPersonalJobDataObj != null && this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt != null){
           if(this.custDataPersonalObj.AppCustPersonalJobDataObj.EmploymentEstablishmentDt.toString() > this.MaxDtEmpEstblshmntDtValidate){
             this.toastr.warningMessage(String.Format(ExceptionConstant.EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE));
             return false;

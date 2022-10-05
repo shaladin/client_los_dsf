@@ -73,7 +73,7 @@ import { EditAppAfterApprovalDetailXComponent } from "app/impl/NEW-NAP/business-
 import { EditAppAfterApprovalPurchaseOrderDataXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-purchase-order-data/edit-app-after-approval-purchase-order-data-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/input-nap-component.module";
-import { CustSyncComponent } from './cust-sync/cust-sync.component';
+import { CustSyncComponent } from '../../../impl/NEW-NAP/business-process/additional-process/cust-sync/cust-sync.component';
 import { EditNapCustPagingComponent } from "./edit-nap-cust/edit-nap-cust-paging/edit-nap-cust-paging.component";
 import { EditNapCustDetailComponent } from "./edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component";
 import { MainDataComponentModule } from "app/NEW-NAP/sharing-component/main-data-component/main-data-component.module";
@@ -85,7 +85,7 @@ import { EditAppAfterApprovalPagingXComponent } from "app/impl/NEW-NAP/business-
 
 export const customCurrencyMaskConfig = {
   align: "right",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,

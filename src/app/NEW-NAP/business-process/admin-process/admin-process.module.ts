@@ -104,7 +104,7 @@ import { InvoiceDataDetailXComponent } from "app/impl/NEW-NAP/business-process/a
 
 export const customCurrencyMaskConfig = {
   align: "left",
-  allowNegative: true,
+  allowNegative: false,
   allowZero: true,
   decimal: ".",
   precision: 0,
