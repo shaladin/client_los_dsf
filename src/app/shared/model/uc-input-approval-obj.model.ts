@@ -34,5 +34,7 @@ export class UcInputApprovalObj {
         this.PathUrlContinueToLevel= URLConstant.ContinueToLevel;
         this.PathUrlGetHistory = URLConstant.GetTaskHistory;
         this.OfficeCodes = new Array<string>();
+        this.EnableRequiredNotes = true;
+        this.DisableRequiredNotesList = new Array<string>();
     }
 }  
