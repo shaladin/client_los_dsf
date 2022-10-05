@@ -317,4 +317,12 @@ export class URLConstantX {
 
   //app fin data
   public static SaveAppFinDataDF = environment.losUrl + "/v1" + "/AppFinDataX/SaveAppFinDataDF";
+
+  //#region Auto Debit Registration
+  public static GetAutoDebitRegistrationById = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetAutoDebitRegistrationById";
+  public static InsertIntoAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/InsertIntoAutoDebitRegistration";
+  public static AutoDebitRegistrationCancellation = environment.losUrl + "/v1" + "/AutoDebitRegistration/AutoDebitRegistrationCancellation";
+  public static ProcessAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/ProcessAutoDebitRegistration";
+  public static GetListStgAutoDebitRegisLog = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetListStgAutoDebitRegisLog";
+  //#endregion
 }
