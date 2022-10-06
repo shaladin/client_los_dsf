@@ -157,8 +157,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.bindInscoBranchObj();
     await this.getInsuranceData();
     await this.bindAppInsObj();
+    await this.GetRefProdCmptPurposeOfFinancing();    
     await this.bindAssetUsageObj();
-    await this.GetRefProdCmptPurposeOfFinancing();
 
     await this.setFormValidators();
 
