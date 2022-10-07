@@ -50,6 +50,11 @@
             "type": "text",
             "label": "OPL Agreement Outstanding AR",
             "property": "Opl"
+          },
+          {
+            "type": "text",
+            "label": "Factoring Agreement OS AR",
+            "property": "Factoring"
           }
         ],
         "querystring": {

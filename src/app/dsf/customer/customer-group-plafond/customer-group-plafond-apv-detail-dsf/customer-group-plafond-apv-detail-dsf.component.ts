@@ -36,6 +36,10 @@ export class CustomerGroupPlafondApvDetailDsfComponent implements OnInit {
   CustGrpPlfnReqDsfObj: any;
   CustGrpPlafondId: any;
   CustGrpPlfndObj: any;
+  CustGrpPlfndAGRObj: any;
+  CustGrpPlfndOPLObj: any;
+  CustGrpPlfndFACTObj: any;
+  CustGrpPlfndAPPObj: any;
   resultData: any;
   listReason: any;
 
@@ -81,6 +85,18 @@ export class CustomerGroupPlafondApvDetailDsfComponent implements OnInit {
     this.http.post(URLConstantDsf.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId, obj).subscribe(
       (response) => {
         this.CustGrpPlfndObj = response;
+        this.CustGrpPlfndAGRObj = this.CustGrpPlfndObj.filter((obj) => {
+          return obj.Category == 'AGR' && (obj.LobCode != 'FACTORING' || obj.LobCode == null);
+        });;
+        this.CustGrpPlfndOPLObj = this.CustGrpPlfndObj.filter((obj) => {
+          return obj.Category == 'OPL';
+        });;
+        this.CustGrpPlfndFACTObj = this.CustGrpPlfndObj.filter((obj) => {
+          return obj.Category == 'AGR' && obj.LobCode == 'FACTORING' && obj.AppOrAgrStatus != 'ICP';
+        });;
+        this.CustGrpPlfndAPPObj = this.CustGrpPlfndObj.filter((obj) => {
+          return obj.Category == 'APP';
+        });;
       }
     );
   }
