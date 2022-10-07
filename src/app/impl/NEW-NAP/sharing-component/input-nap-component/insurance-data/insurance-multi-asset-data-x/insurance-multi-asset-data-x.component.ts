@@ -2142,11 +2142,17 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     if (insuredBy == CommonConstant.InsuredByCustomer) {
       if (isNotFromDB) {
         this.InsuranceDataForm.patchValue({
-          CustCvgAmt: this.totalAssetInclAccessoryPriceAmt
+          CustCvgAmt: this.totalAssetInclAccessoryPriceAmt,
+          CustInscoBranchName: '-',
+          InsPolicyNo: '-',
+          InsPolicyName: '-',
+          CustCoverStartDt: formatDate(this.businessDt,'yyyy-MM-dd', 'en-US'),
+          EndDt: formatDate(this.businessDt,'yyyy-MM-dd', 'en-US'),
+          CustNotes: '-'
         });
       }
-      this.InsuranceDataForm.controls.CustInscoBranchName.setValidators([Validators.required, Validators.maxLength(100)]);
-      this.InsuranceDataForm.controls.CustInscoBranchName.updateValueAndValidity();
+      this.InsuranceDataForm.controls.CustInscoBranchName.clearValidators();
+      this.InsuranceDataForm.controls.CustInscoBranchName.updateValueAndValidity()
       this.InsuranceDataForm.controls.InsPolicyNo.setValidators(Validators.maxLength(50));
       this.InsuranceDataForm.controls.InsPolicyNo.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsPolicyName.setValidators(Validators.maxLength(100));

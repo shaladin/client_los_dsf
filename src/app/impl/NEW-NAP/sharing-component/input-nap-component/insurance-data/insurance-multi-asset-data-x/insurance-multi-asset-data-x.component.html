@@ -108,7 +108,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
+                    <label class="col-md-2" 
+                    [ngClass]="{ 'adins-required-label': InsuranceDataForm.controls.InsAssetCoveredBy.value != 'CU'}" 
+                    for="insuredBy" translate>Insco Branch Name</label>
                     <div class="col-md-4">
                       <input type="text" id="policyNo" class="form-control" formControlName="CustInscoBranchName"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustInscoBranchName.invalid }">
@@ -124,7 +126,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2 adins-required-label" for="custCvgAmt" translate>Coverage Amount</label>
+                    <label class="col-md-2"
+                    [ngClass]="{ 'adins-required-label': InsuranceDataForm.controls.InsAssetCoveredBy.value != 'CU'}"
+                    for="custCvgAmt" translate>Coverage Amount</label>
                     <div class="col-md-4">
                       <input type="" currencyMask id="custCvgAmt" class="form-control" formControlName="CustCvgAmt"
                              [options]="{ allowNegative: false }"
@@ -141,14 +145,18 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2 adins-required-label" for="startDt" translate>Start Date</label>
+                    <label class="col-md-2" 
+                    [ngClass]="{ 'adins-required-label': InsuranceDataForm.controls.InsAssetCoveredBy.value != 'CU'}"
+                    for="startDt" translate>Start Date</label>
                     <div class="col-md-4">
                       <input type="date" class="form-control" formControlName="CustCoverStartDt" id="startDt"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustCoverStartDt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustCoverStartDt"
                                           [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
-                    <label class="col-md-2 adins-required-label" for="endDt" translate>End Date</label>
+                    <label class="col-md-2"
+                    [ngClass]="{ 'adins-required-label': InsuranceDataForm.controls.InsAssetCoveredBy.value != 'CU'}" 
+                    for="endDt" translate>End Date</label>
                     <div class="col-md-4">
                       <input type="date" class="form-control" formControlName="EndDt" id="endDt"
                              (focusout)="EndDt_FocusOut()"
