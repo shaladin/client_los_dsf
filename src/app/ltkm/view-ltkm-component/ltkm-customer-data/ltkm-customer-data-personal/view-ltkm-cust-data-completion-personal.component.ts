@@ -11,6 +11,7 @@ import { LtkmCustBankAccObj } from 'app/shared/model/ltkm/ltkm-cust-bank-acc-obj
 import { LtkmCustGrpObj } from 'app/shared/model/ltkm/ltkm-cust-grp-obj.model';
 import { LtkmCustPersonalContactPersonObj } from 'app/shared/model/ltkm/ltkm-cust-personal-contact-person-obj.model';
 import { ViewLtkmCustDetailComponent } from '../view-ltkm-cust-detail/view-ltkm-cust-detail.component';
+import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
 
 @Component({
   selector: 'app-view-ltkm-cust-data-completion-personal',
@@ -45,6 +46,8 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
   ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
   ltkmCustPersonalContactPersonObjs: Array<LtkmCustPersonalContactPersonObj>;
   ltkmCustFamilyObjs: Array<LtkmCustObj>;
+  ltkmCustGrpParentObjs: CustParentChildObj;
+  ltkmCustGrpChildObjs: Array<CustParentChildObj>;
 
   TitleCustFinDataSuffix:string = '';
   IsShowCustFinDataDetail:boolean = false;
@@ -89,7 +92,9 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
         this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
         this.ltkmCustPersonalContactPersonObjs = response["rLtkmCustPersonalContactPersonObjs"] == null ? new Array<LtkmCustPersonalContactPersonObj>() : response["rLtkmCustPersonalContactPersonObjs"];
         this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];             
-        this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"];  
+        this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"];
+        this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"];
+        this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];  
 
         // filter family yg punya relationship
         if(this.ltkmCustFamilyObjs && this.ltkmCustFamilyObjs.length > 0) {

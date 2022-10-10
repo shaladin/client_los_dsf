@@ -37,6 +37,8 @@ export class ViewLtkmSummaryDataComponent implements OnInit {
     UrlAgrmntView: string = environment.losR3Web + NavigationConstant.VIEW_AGRMNT;
     Job: string = "";
     Age: number = 0;
+    MrCustTypeCode: string = '';
+    RefMaster: any = '';
 
     constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     }
