@@ -47,7 +47,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
   ltkmCustPersonalContactPersonObjs: Array<LtkmCustPersonalContactPersonObj>;
   ltkmCustFamilyObjs: Array<LtkmCustObj>;
   ltkmCustGrpParentObjs: CustParentChildObj;
-  ltkmCustGrpChildObjs: Array<CustParentChildObj>;
+  ltkmCustGrpChildObjs: Array<CustParentChildObj> = new Array<CustParentChildObj>();
 
   TitleCustFinDataSuffix:string = '';
   IsShowCustFinDataDetail:boolean = false;
@@ -99,7 +99,7 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
         // filter family yg punya relationship
         if(this.ltkmCustFamilyObjs && this.ltkmCustFamilyObjs.length > 0) {
           this.ltkmCustFamilyObjs = this.ltkmCustFamilyObjs.filter(item => item['MrCustRelationshipCode'])
-        }        
+        }
 
         // filter cust group yg punya cust no & applicant no
         if(this.ltkmCustGrpObjs && this.ltkmCustGrpObjs.length > 0) {
