@@ -74,9 +74,10 @@
             <label class="adInsLabel"> Negative Customer </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryLtkmObj?.NegCustTypeName}} <i class="fa fa-circle"
-                *ngIf="SummaryLtkmObj?.NegCustColor != ''" aria-hidden="true"
-                [ngStyle]="{'color': SummaryLtkmObj?.MrNegCustTypeCode == 'BAD' ? 'red' : (SummaryLtkmObj?.MrNegCustTypeCode == 'WARNING' ? 'yellow' : (SummaryLtkmObj?.MrNegCustTypeCode == 'NORMAL' ? 'green' : 'black'))}"></i></label>
+            <label class="adInsLabel"> {{SummaryLtkmObj?.NegCustTypeName}} 
+              <i class="fa fa-circle" aria-hidden="true"
+              [ngStyle]="{'color': SummaryLtkmObj?.MrNegCustTypeCode == 'BAD' ? 'red' : (SummaryLtkmObj?.MrNegCustTypeCode == 'WARNING' ? 'yellow' : (SummaryLtkmObj?.MrNegCustTypeCode == 'NORMAL' ? 'green' : 'black'))}"></i>
+              </label>
           </div>
         </div>
 
