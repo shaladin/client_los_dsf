@@ -207,9 +207,9 @@
         <label class="col-md-4  adinslabel" translate>{{this.BranchManager}}</label>
       </div>
     </div>
-    <lib-ucSubsection [id]="'insuranceId'" [title]="'Insurance'" [panel]="'insurance'">
+    <lib-ucSubsection [id]="'insuranceId'" [title]="'Insurance'" [panel]="'insurance'" *ngIf="SummaryObj.AppIns != null">
     </lib-ucSubsection>
-    <div id="insurance">
+    <div id="insurance" *ngIf="SummaryObj.AppIns != null">
       <div *ngIf="SummaryObj?.AppIns?.InsAssetCoveredBy == 'CU'">
         <div>
           <label class="col-md-2  adInsLabel" translate>Insured By</label>
@@ -345,9 +345,9 @@
         </div>
       </div>
     </div>
-    <lib-ucSubsection [id]="'lifeinsId'" [title]="'Life Insurance'" [panel]="'lifeins'">
+    <lib-ucSubsection [id]="'lifeinsId'" [title]="'Life Insurance'" [panel]="'lifeins'" *ngIf="SummaryObj.AppLifeIns != null && SummaryObj.AppCust != null && SummaryObj.AppCust.MrCustTypeCode == 'PERSONAL'">
     </lib-ucSubsection>
-    <div id="lifeins">
+    <div id="lifeins" *ngIf="SummaryObj.AppLifeIns != null && SummaryObj.AppCust != null && SummaryObj.AppCust.MrCustTypeCode == 'PERSONAL'">
       <div>
         <label class="col-md-4  adInsLabel" translate>Life Insurance Cover</label>
         <label class="col-md-2  adinslabel" translate *ngIf="SummaryObj?.AppLifeIns?.IsCustCover == 1">Yes</label>
