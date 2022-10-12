@@ -34,6 +34,7 @@ export class URLConstantX {
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
   public static GetListCustCompanyFinDataXForCustViewByCustId = environment.FoundationR3Url + "/v1" + "/CustomerCompanyFinDataX/GetListCustCompanyFinDataXForCustViewByCustId";
   public static GetRefAttrListByListAttrCode = environment.FoundationR3Url + "/v1" + "/RefAttr/GetRefAttrListByListAttrCode";
+  public static GetListCustPersonalFinDataXForCustViewByCustId = environment.FoundationR3Url + "/v1" + "/CustPersonalFinDataX/GetListCustPersonalFinDataXForCustViewByCustId";
 
   // APP Application
   public static EditAppAddAppCrossX = environment.losUrl + '/v1' + '/AppX/EditAppAddAppCross';
