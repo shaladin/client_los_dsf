@@ -43,6 +43,7 @@ import { ResMouCustCollateralAttrObj, MouCustCollateralAttrObj } from 'app/share
 import { MouCustObjForAddTrxData } from 'app/shared/model/mou-cust-obj-for-add-trx-data.model';
 import { RefProvDistrictObj } from 'app/shared/model/ref-prov-district-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-mou-request-addcoll-x',
@@ -75,7 +76,9 @@ export class MouRequestAddcollXComponent implements OnInit {
   customPattern: CustomPatternObj[];
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   listCollTypeMandatoryManufacturingYear: Array<string> = new Array<string>();
+  listCollTypeMandatory: Array<string> = new Array<string>();
   isMandatoryManufacturingYear: boolean = false;
+  isMandatoryObj: boolean = false;
 
   @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
     if (content) {
@@ -164,16 +167,16 @@ export class MouRequestAddcollXComponent implements OnInit {
     MaxCollPrcnt: [100, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
     FullAssetCode: [''],
     AssetCategoryCode: [''],
-    OwnerName: ['', [Validators.required]],
-    OwnerRelationship: ['', [Validators.required]],
-    OwnerIdNo: ['', [Validators.required]],
-    MrIdType: ['', [Validators.required]],
+    OwnerName: [''],
+    OwnerRelationship: [''],
+    OwnerIdNo: [''],
+    MrIdType: [''],
     Notes: [''],
     MrOwnerTypeCode: [''],
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
     OwnerProfessionCode: [''],
-    OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.required]],
+    OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     SelfOwner: [false],
     RowVersionCollateral: [''],
     RowVersionCollateralRegistration: [''],
@@ -221,6 +224,7 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.tempPagingObj.isReady = true;
     this.GetGS();
     await this.SetManufacturingYearMandatory();
+    await this.SetMandatoryObj();
     this.validateIfAddExisting();
 
     this.InputLookupProfessionObj = new InputLookupObj();
@@ -1003,6 +1007,7 @@ export class MouRequestAddcollXComponent implements OnInit {
           this.InputLookupProfessionObj.isReady = true;
           this.UpdateValueCollateralPortionAmt();
           await this.CheckManufacturingYearMandatory();
+          await this.CheckMandatoryObj();
         })
     }
   }
@@ -1031,9 +1036,11 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.updateUcLookup(value, UserChange ? false : true, this.type);
     this.GenerateCollateralAttr(false, this.MouCustCollateralId);
     await this.CheckManufacturingYearMandatory();
+    await this.CheckMandatoryObj();
   }
 
   async SaveForm() {
+    console.log(this.AddCollForm.invalid);
     this.setCollateralObjForSave();
     this.listMouCustCollateralDocObj.MouCustCollateralDocObj = new Array();
 
@@ -1492,7 +1499,7 @@ export class MouRequestAddcollXComponent implements OnInit {
       MrIdType: ['', [Validators.required]],
       Notes: [''],
       OwnerProfessionCode: [''],
-      OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.required]],
+      OwnerMobilePhnNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       SerialNo1: [''],
       SerialNo2: [''],
       SerialNo3: [''],
@@ -1910,7 +1917,18 @@ export class MouRequestAddcollXComponent implements OnInit {
     );
   }
 
-  CheckManufacturingYearMandatory(){
+  async SetMandatoryObj(){
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstantX.GsCodeMandatoryByCollType }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          this.listCollTypeMandatory  = result.GsValue.split(';');
+          console.log(this.listCollTypeMandatory);
+        }
+      }
+    );
+  }
+
+  async CheckManufacturingYearMandatory(){
     let temp = this.AddCollForm.controls.AssetTypeCode.value;
     this.isMandatoryManufacturingYear = this.listCollTypeMandatoryManufacturingYear.includes(temp);
 
@@ -1921,6 +1939,43 @@ export class MouRequestAddcollXComponent implements OnInit {
     else{
       this.AddCollForm.controls.ManufacturingYear.clearValidators();
       this.AddCollForm.controls.ManufacturingYear.updateValueAndValidity();
+    }
+  }
+
+  async CheckMandatoryObj(){
+    let temp = this.AddCollForm.controls.AssetTypeCode.value;
+    this.isMandatoryObj = this.listCollTypeMandatory.includes(temp);
+
+    if (this.isMandatoryObj) {
+      this.AddCollForm.controls.OwnerName.setValidators([Validators.required]);
+      this.AddCollForm.controls.OwnerName.updateValueAndValidity();
+      this.AddCollForm.controls.OwnerRelationship.setValidators([Validators.required]);
+      this.AddCollForm.controls.OwnerRelationship.updateValueAndValidity();
+      this.AddCollForm.controls.MrIdType.setValidators([Validators.required]);
+      this.AddCollForm.controls.MrIdType.updateValueAndValidity();
+      this.AddCollForm.controls.OwnerIdNo.setValidators([Validators.required]);
+      this.AddCollForm.controls.OwnerIdNo.updateValueAndValidity();
+      this.AddCollForm.controls.OwnerMobilePhnNo.setValidators([Validators.required]);
+      this.AddCollForm.controls.OwnerMobilePhnNo.updateValueAndValidity();
+      this.inputAddressObjForLocAddr.inputField.inputLookupObj.isRequired = true;
+      this.inputAddressObjForLocAddr.isRequired = true;
+      this.inputAddressObjForLegalAddr.isRequired = true;
+    }
+    else{
+      this.AddCollForm.controls.OwnerName.clearValidators();
+      this.AddCollForm.controls.OwnerName.updateValueAndValidity();
+      this.AddCollForm.controls.OwnerRelationship.clearValidators();
+      this.AddCollForm.controls.OwnerRelationship.updateValueAndValidity();
+      this.AddCollForm.controls.MrIdType.clearValidators();
+      this.AddCollForm.controls.MrIdType.updateValueAndValidity();
+      this.AddCollForm.controls.OwnerIdNo.clearValidators();
+      this.AddCollForm.controls.OwnerIdNo.updateValueAndValidity();
+      this.AddCollForm.controls.OwnerMobilePhnNo.clearValidators();
+      this.AddCollForm.controls.OwnerMobilePhnNo.updateValueAndValidity();
+      this.inputAddressObjForLocAddr.inputField.inputLookupObj.isRequired = false;
+      this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isRequired = false;
+      this.inputAddressObjForLocAddr.isRequired = false;
+      this.inputAddressObjForLegalAddr.isRequired = false;
     }
   }
 

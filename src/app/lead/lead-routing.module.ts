@@ -39,6 +39,7 @@ import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { RoTelemkOfferDetailXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail-x.component';
 import { RoTelemkOfferVerifXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component';
 import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-page/new-lead-input-page-x.component';
+import { GeneratePotentialRoXComponent } from 'app/impl/lead/potential-ro/generate-potential-ro/generate-potential-ro-x.component';
 
 
 const routes: Routes = [
@@ -295,6 +296,13 @@ const routes: Routes = [
         component: LeadCancelComponent,
         data: {
           title: 'Simple Lead Cancel'
+        }
+      },
+      {
+        path: PathConstantX.POTENTIAL_ROX_PAGING,
+        component: GeneratePotentialRoXComponent,
+        data: {
+          title: 'Potential RO Paging'
         }
       }
     ]
