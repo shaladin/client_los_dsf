@@ -92,13 +92,15 @@
 
             <mat-tab *ngIf="IsInsurance" label="Insurance">
               <ng-template matTabContent>
-                <view-insurance [AppId]="AppId"></view-insurance>
+                <!-- <view-insurance [AppId]="AppId"></view-insurance> -->
+                <app-app-insurance-x [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance-x>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsMultiInsurance" label="Insurance">
               <ng-template matTabContent>
-                <app-app-insurance [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance>
+                <!-- <app-app-insurance [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance> -->
+                <app-app-insurance-x [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance-x>
               </ng-template>
             </mat-tab>
 

@@ -633,12 +633,12 @@ export class EditAppAfterApprovalDetailXComponent implements OnInit {
         EditedAppXObj: new Object,
         IsEditedBank: false
       };
-
+    
     if(this.editedBankAccData)
     {
       EditAppAftApvObj.EditedAgrmntOtherInfoObj = this.editedBankAccData.AgrmntOtherInfoObj;
       EditAppAftApvObj.EditedAppXObj = this.editedBankAccData.AppXObj;
-      EditAppAftApvObj.IsEditedBank = true;
+      EditAppAftApvObj.IsEditedBank = true
     }
 
     let urlPost = environment.isCore ? URLConstant.SubmitEditAppAftApvReqX : URLConstant.SubmitEditAppAftApvReq;

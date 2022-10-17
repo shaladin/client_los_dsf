@@ -20,6 +20,7 @@ import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrmnt-tc-obj.model';
 import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
 import { environment } from 'environments/environment';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-purchase-order-x',
@@ -48,6 +49,7 @@ export class PurchaseOrderXComponent implements OnInit {
   AppObj: AppObj = new AppObj();
   toastRef: any;
   BizTemplateCode: any;
+  wop: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService, private toastrSvc: ToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -106,6 +108,7 @@ export class PurchaseOrderXComponent implements OnInit {
       forkJoin([getAgr, getAppCust, getApp]).subscribe(
         (response) => {
           this.agrNo = response[0]['AgrmntNo'];
+          this.wop = response[0]['MrWopCode'];
           this.custNo = response[1]['CustNo'];
           this.appNo = response[2]['AppNo'];
           let mouId = response[2]['MouCustId'];
@@ -232,6 +235,17 @@ export class PurchaseOrderXComponent implements OnInit {
       var workflowModel: WorkflowApiObj = new WorkflowApiObj();
       workflowModel.TaskListId = this.TaskListId;
       workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
+
+      if(this.wop == CommonConstant.WopAutoDebit)
+      {
+        this.http.post(URLConstantX.InsertIntoAutoDebitRegistration, {Code: this.agrNo}).subscribe(
+          (response) => {
+            if(response["StatusCode"] != 200){
+              throw this.toastr.errorMessage(response["Message"]);
+            }
+          }
+        )
+      }
 
       let resumeWorkflowPurcharOrderUrl = environment.isCore? URLConstant.ResumeWorkflowPurchaseOrderV2 : URLConstant.ResumeWorkflowPurchaseOrder;
       this.http.post(resumeWorkflowPurcharOrderUrl, workflowModel).subscribe(

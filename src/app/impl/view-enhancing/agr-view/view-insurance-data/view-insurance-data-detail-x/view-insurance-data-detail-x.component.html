@@ -15,6 +15,10 @@
         <label class="col-md-3 adInsLabel" translate>Policy No</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsPolicyNo}}</label>
       </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insurance Payment Type</label>
+        <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
+      </div>
     </div>
     <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
       <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
@@ -46,6 +50,24 @@
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.EndDt}}</label>
       </div>
     </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <label class="col-md-3 adInsLabel" translate>Asset Name</label>
+      <label class="col-md-9 adInsLabel">{{appAsset?.FullAssetName}}</label>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <label class="col-md-3 adInsLabel" translate>Asset Category</label>
+      <label class="col-md-9 adInsLabel">{{appAsset?.AssetCategoryName}}</label>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <label class="col-md-3 adInsLabel" translate>Color</label>
+      <label class="col-md-9 adInsLabel">{{appAsset?.Color}}</label>
+    </div>
+    <lib-ucSubsection [id]="'assetAccId'"
+      [title]="'Asset Accessory'" [panel]="'assetAcc'">
+    </lib-ucSubsection>
+    <div id="assetAcc">
+      <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
+    </div>
   </div>
   <div class="col-md-12" *ngIf="appInsObj?.InsAssetCoveredByCode == 'CO'">
     <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
@@ -56,6 +78,10 @@
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Insurance Payment Type</label>
+        <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
       </div>
     </div>
     <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
@@ -93,6 +119,24 @@
         <label class="col-md-3 adInsLabel" translate>Insurance Notes</label>
         <label class="col-md-9 adInsLabel" translate>{{appInsObj?.Notes}}</label>
       </div>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <label class="col-md-3 adInsLabel" translate>Asset Name</label>
+      <label class="col-md-9 adInsLabel">{{appAsset?.FullAssetName}}</label>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <label class="col-md-3 adInsLabel" translate>Asset Category</label>
+      <label class="col-md-9 adInsLabel">{{appAsset?.AssetCategoryName}}</label>
+    </div>
+    <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+      <label class="col-md-3 adInsLabel" translate>Color</label>
+      <label class="col-md-9 adInsLabel">{{appAsset?.Color}}</label>
+    </div>
+    <lib-ucSubsection [id]="'assetAccId'"
+      [title]="'Asset Accessory'" [panel]="'assetAcc'">
+    </lib-ucSubsection>
+    <div id="assetAcc">
+      <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
     </div>
     <lib-ucSubsection [id]="'CoverageCompanyId'" [title]="'Coverage'" [panel]="'CoverageCompanySection'"></lib-ucSubsection>
     <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px;">
@@ -218,6 +262,14 @@
           <label class="col-md-3 adInsLabel" translate>Insured By</label>
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetCoveredBy}}</label>
         </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
+          <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Payment Type</label>
+          <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
+        </div>
         <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Policy No</label>
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsPolicyNo}}</label>
@@ -253,6 +305,24 @@
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.EndDt}}</label>
         </div>
       </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Asset Name</label>
+        <label class="col-md-9 adInsLabel">{{appAsset?.FullAssetName}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Asset Category</label>
+        <label class="col-md-9 adInsLabel">{{appAsset?.AssetCategoryName}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Color</label>
+        <label class="col-md-9 adInsLabel">{{appAsset?.Color}}</label>
+      </div>
+      <lib-ucSubsection [id]="'assetAccId'"
+        [title]="'Asset Accessory'" [panel]="'assetAcc'">
+      </lib-ucSubsection>
+      <div id="assetAcc">
+        <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
+      </div>
     </div>
     <div id="CUCO_Company" style="margin-top: 20px;">
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
@@ -263,6 +333,10 @@
         <div class="col-md-6" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Insurance Paid By</label>
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.InsAssetPaidBy}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Insurance Payment Type</label>
+          <label class="col-md-9 adInsLabel" translate>{{payName}}</label>
         </div>
       </div>
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
@@ -300,6 +374,24 @@
           <label class="col-md-3 adInsLabel" translate>Insurance Notes</label>
           <label class="col-md-9 adInsLabel" translate>{{appInsObj?.Notes}}</label>
         </div>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Asset Name</label>
+        <label class="col-md-9 adInsLabel">{{appAsset?.FullAssetName}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Asset Category</label>
+        <label class="col-md-9 adInsLabel">{{appAsset?.AssetCategoryName}}</label>
+      </div>
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <label class="col-md-3 adInsLabel" translate>Color</label>
+        <label class="col-md-9 adInsLabel">{{appAsset?.Color}}</label>
+      </div>
+      <lib-ucSubsection [id]="'assetAccId'"
+        [title]="'Asset Accessory'" [panel]="'assetAcc'">
+      </lib-ucSubsection>
+      <div id="assetAcc">
+        <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
       </div>
       <lib-ucSubsection [id]="'CoverageCompanyId'" [title]="'Coverage'" [panel]="'CoverageCompanySection'"></lib-ucSubsection>
       <div id="CoverageCompanySection" class="col-md-12" style="padding: 0; margin-bottom: 5px;">
