@@ -40,6 +40,7 @@ import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { InsuranceDataInsRateCvgRuleObj } from 'app/shared/model/insurance-data-ins-rate-cvg-rule-obj.model';
 import { AdditionalCoverageObj, InsRateCoverageObj, ResExecRuleInsRateCvgV2_1obj, ResInsuranceDataInsRateCvgRuleObj } from 'app/shared/model/Response/app-insurance/res-insurance-data-ins-rate-cvg-rule-obj.model';
 import { String } from 'typescript-string-operations';
+import { indexOf } from 'core-js/library/fn/array';
 
 @Component({
   selector: 'app-insurance-multi-asset-data-x',
@@ -124,6 +125,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     Notes: ['', Validators.maxLength(4000)],
     CustNotes: ['', Validators.maxLength(4000)],
     InsMainCvgType: [''],
+    SumInsuredAmount: new FormArray([]),
     InsAddCvgTypes: new FormArray([]),
     InsLength: ['', [Validators.required, Validators.min(0), Validators.max(99)]],
     InsAssetRegion: ['', [Validators.required, Validators.maxLength(50)]],
@@ -1830,18 +1832,19 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
               this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
                 Value: false
               });
-            }
-            else {
+            } else {
               this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
                 Value: true
               });
             }
-          }
-          else {
+          } else {
             this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
-              Value: check.value.Value
+              Value: check.value.Value,
+              SumInsuredAmt: check.value.ValueOption
             });
           };
+
+
         } else {
           this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
             Value: false
@@ -2426,6 +2429,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
     );
   }
 
+  formSumInsuredAmount = new FormArray([]);
   addCheckbox() {
     this.insAddCvgTypeRuleObj.forEach((o) => {
 
@@ -2437,9 +2441,15 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
 
       const control = this.fb.group({
         Key: o.Value,
-        Value: checkboxValue
+        Value: checkboxValue,
+        ValueOption: null,
       });
       (this.InsuranceDataForm.controls.InsAddCvgTypes as FormArray).push(control);
+
+      // const sumInsuredAmountOptions = this.fb.group({
+      //   Value: [""],
+      // });
+      // (this.InsuranceDataForm.controls.SumInsuredAmount as FormArray).push(sumInsuredAmountOptions);
     });
   }
 
