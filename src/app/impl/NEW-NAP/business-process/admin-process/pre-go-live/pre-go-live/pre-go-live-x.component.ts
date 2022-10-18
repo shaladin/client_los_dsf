@@ -70,6 +70,7 @@ export class PreGoLiveXComponent implements OnInit {
   listAgrmntTcObj: Array<AgrmntTcObj>;
 
   GoLiveApvForm = this.fb.group({})
+  PreGoLiveApvForm = this.fb.group({})
 
   ListRfaLogObj: Array<RfaObj>;
   hasApproveFinal: boolean = false;
@@ -325,17 +326,6 @@ export class PreGoLiveXComponent implements OnInit {
       this.listAgrmntTcObj.push(this.agrmntTcObj);
     }
 
-    var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
-    reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
-    reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.listAgrmntTcObj;
-
-    this.http.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).subscribe(
-      (response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_REQ_APPRVL], { "AgrmntId": this.AgrmntId, "AppId": this.AppId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId });
-        this.toastr.successMessage(response['message']);
-
-      });
-
   }
 
   SaveForm(flag = true) {
@@ -404,18 +394,31 @@ export class PreGoLiveXComponent implements OnInit {
     this.PreGoLiveObj.TaskListId = this.TaskListId;
     this.PreGoLiveObj.FlagResume = flag;
     if (this.IsNeedApv) {
-      this.PreGoLiveObj.IsNeedApv = true;
       this.PreGoLiveObj.FlagResume = flag;
       this.PreGoLiveObj.RequestRFAGoLiveObj = { RFAInfo: this.GoLiveApvForm.controls.RFAInfo.value };
       if (this.isNeedEndDateApv) {
         this.PreGoLiveObj.RequestRFAEndDateObj = { RFAInfo: this.MainInfoForm.controls.RFAInfo.value };
         this.PreGoLiveObj.IsNeedEndDateApv = true;
       }
+      if(!this.IsCheckedAll) {
+        this.PreGoLiveObj.RequestRFAPreGoLiveObj = { RFAInfo: this.PreGoLiveApvForm.controls.RFAInfo.value };
+        this.PreGoLiveObj.IsNeedApv = true;
+      }
     }
 
     console.log(this.PreGoLiveObj);
 
-    let AddPreGoLiveXUrl = environment.isCore ? URLConstantX.AddPreGoLiveXV2 : URLConstantX.AddPreGoLiveX;
+    var reqSubmitAgrmntTcObj = new ReqSubmitAgrmntTcObj();
+    reqSubmitAgrmntTcObj.AgrmntId = this.AgrmntId;
+    reqSubmitAgrmntTcObj.ListAgrmntTcObj = this.listAgrmntTcObj;
+
+    this.http.post(URLConstant.SubmitAgrmntTc, reqSubmitAgrmntTcObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response['message']);
+
+      });
+
+    let AddPreGoLiveXUrl = environment.isCore ? URLConstantX.AddPreGoLiveXV3 : URLConstantX.AddPreGoLiveX;
 
     this.http.post(AddPreGoLiveXUrl, this.PreGoLiveObj).subscribe(
       (response) => {
@@ -489,9 +492,11 @@ export class PreGoLiveXComponent implements OnInit {
   //JD-LMS-001
   InputEndDateProdObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   InputGoLiveObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
+  InputPreGoLiveObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   itemReasonEndDate: Array<KeyValueObj>;
   itemReasonGoLive: Array<KeyValueObj>;
+  itemReasonPreGoLive: Array<KeyValueObj>;
   isOk: boolean = true;
   isNeedEndDateApv: boolean = false;
 
@@ -603,6 +608,40 @@ export class PreGoLiveXComponent implements OnInit {
       }
     );
 
+    obj.RefProdCompntCode = CommonConstant.ApvCategoryPreGoLive;
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+      (response) => {
+        if (response && response['StatusCode'] == '200') {
+
+          let Attributes: Array<ResultAttrObj> = new Array();
+          let Attribute1: ResultAttrObj = {
+            AttributeName: "Approval Amount",
+            AttributeValue: this.ApvAmt.toString()
+          };
+          Attributes.push(Attribute1);
+          let TypeCode = {
+            "TypeCode": "PRE_GLV_APV_TYPE",
+            "Attributes": Attributes,
+          };
+          let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+          this.InputPreGoLiveObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+          this.InputPreGoLiveObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+          this.InputPreGoLiveObj.ApvTypecodes = [TypeCode];
+          this.InputPreGoLiveObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
+          this.InputPreGoLiveObj.SchemeCode = response['CompntValue'];
+          this.InputPreGoLiveObj.Reason = this.itemReasonPreGoLive;
+          this.InputPreGoLiveObj.TrxNo = this.AgrmntNo;
+        } else {
+          this.toastr.warningMessage('No Setting for Prod Offering Component PRE_GPV_APV');
+          this.isOk = false;
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
     this.IsReady = true;
   }
 
@@ -620,6 +659,13 @@ export class PreGoLiveXComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(
       (response) => {
         this.itemReasonGoLive = response[CommonConstant.ReturnObj];
+      }
+    );
+    refReasonObj.RefReasonTypeCode = CommonConstant.RefReasonTypeCodePreGlvApv
+
+    await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(
+      (response) => {
+        this.itemReasonPreGoLive = response[CommonConstant.ReturnObj];
       }
     );
   }
