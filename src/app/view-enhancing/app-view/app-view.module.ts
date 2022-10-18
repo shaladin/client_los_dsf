@@ -65,6 +65,8 @@ import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referant
 import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail/tab-referantor-multi-detail.component";
 import { ListDataCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/list-data-commission/list-data-commission-x.component";
 import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-x.component";
+import { AppInsuranceXComponent } from "app/impl/view-enhancing/app-view/app-insurance/app-insurance-x.component";
+import { AppViewInsuranceDetailXComponent } from "app/impl/view-enhancing/app-view/app-insurance/app-insurance-detail/app-insurance-detail-x.component";
 
 
 @NgModule({
@@ -137,6 +139,8 @@ import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-a
         TabReferantorMultiComponent,
         TabReferantorMultiDetailComponent,
         ListDataCommissionXComponent,
+        AppInsuranceXComponent,
+        AppViewInsuranceDetailXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -147,7 +151,8 @@ import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-a
         AppAssetDataDetailComponent,
         TabReferantorMultiDetailComponent,
         AppMainInfoXComponent,
-        AppAssetDataDetailComponent
+        AppAssetDataDetailComponent,
+        AppViewInsuranceDetailXComponent
     ]
 })
 export class AppViewModule { }

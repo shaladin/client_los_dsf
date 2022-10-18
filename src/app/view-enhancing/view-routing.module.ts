@@ -86,6 +86,10 @@ const routes: Routes = [
             {
                 path: PathConstantX.VIEW_CESSIE,
                 loadChildren: 'app/impl/view-enhancing/cessie-view/cessie-view.module#CessieViewModule'
+            },
+            {
+                path: PathConstantX.VIEW_AUTO_DEBIT_REGIS,
+                loadChildren: 'app/impl/view-enhancing/auto-debit-regis-view/auto-debit-regis-view.module#AutoDebitRegisViewModule'
             }
 
         ]

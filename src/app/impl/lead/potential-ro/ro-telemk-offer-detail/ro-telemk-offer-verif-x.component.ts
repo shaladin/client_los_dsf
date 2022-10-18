@@ -148,13 +148,12 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
       for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {
         for (let j = 0; j < this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"].length; j++) {
           if (this.IsMandatoryArr.length > 0 && this.IsMandatoryArr[i].length > 0 && this.IsMandatoryArr[i][j]) {
-          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
-          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
+            this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
+            this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
+          }
         }
       }
-    }
-  }
-    else {
+    }else {
       for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {
         for (let j = 0; j < this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"].length; j++) {
           this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].clearValidators();
@@ -195,7 +194,7 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
         PhnType: this.TelemkOfferSubj.ListPhoneNo[0].PhoneType
       });
     }
-    
+
   }
 
   generateFormVerfQuestion() {
@@ -253,17 +252,19 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
             } else {
               this.ListVerfAnswer[i].push("");
             }
-            //QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+            // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
           } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
-            //QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
+            // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
             this.ListVerfAnswer[i].push("");
           } else {
-            //QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+            // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
             this.ListVerfAnswer[i].push("");
           }
+
           tempIsMandatoryArr.push(QuestionList[j].IsMandatory);
           ResultGrp.push(QuestionResultGrp);
         }
+
         this.IsMandatoryArr.push(tempIsMandatoryArr);
         this.onChangeRmVerfResultStat();
       }
@@ -327,8 +328,8 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
       });
   }
 
-  Save(){
-    if(this.ListVerifResultHObj.length < 1){
+  Save() {
+    if (this.ListVerifResultHObj.length < 1) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_HISTORY);
       return;
     }
@@ -339,12 +340,12 @@ export class RoTelemkOfferVerifXComponent implements OnInit {
     if (key == 'agr') {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.TelemkOfferSubj.AgrmntId);
     } else if (key == 'cust') {
-      this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.TelemkOfferSubj.CustNo}).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.TelemkOfferSubj.CustNo }).subscribe(
         response => {
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+          if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
             this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
-          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          if (response["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
             this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }

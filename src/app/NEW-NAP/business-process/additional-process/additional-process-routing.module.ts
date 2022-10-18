@@ -55,12 +55,16 @@ import { ReturnHandlingPagingXComponent } from 'app/impl/NEW-NAP/business-proces
 import { ReturnHandlingDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-detail-x/return-handling-detail-x.component';
 import { EditAppAfterApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail-x.component';
 import { CollateralAddEditComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit.component';
-import { CustSyncComponent } from './cust-sync/cust-sync.component';
+import { CustSyncComponent } from '../../../impl/NEW-NAP/business-process/additional-process/cust-sync/cust-sync.component';
 import { EditNapCustPagingComponent } from './edit-nap-cust/edit-nap-cust-paging/edit-nap-cust-paging.component';
 import { EditNapCustDetailComponent } from './edit-nap-cust/edit-nap-cust-detail/edit-nap-cust-detail.component';
 import { EditAppAfterApprovalViewXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-view-x/edit-app-after-approval-view-x.component';
 import { EditAppAfterApprovalApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-approval-detail-x/edit-app-after-approval-approval-detail-x.component';
 import { EditAppAfterApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-paging-x/edit-app-after-approval-paging-x.component';
+import { AutoDebitRegistrationPagingComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-registration-paging.component';
+import { AutoDebitRegistrationInquiryComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component';
+import { AutoDebitRegistrationCancelComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component';
+import { AutoDebitTestComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component';
 
 
 const routes: Routes = [
@@ -450,6 +454,34 @@ const routes: Routes = [
           title: 'Edit Nap Cust'
         }
       },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION_PAGING,
+        component: AutoDebitRegistrationPagingComponent,
+        data: {
+          title: 'Auto Debit Registration Paging'
+        }
+      },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION_INQUIRY,
+        component: AutoDebitRegistrationInquiryComponent,
+        data: {
+          title: 'Auto Debit Registration Inquiry'
+        }
+      },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION_CANCEL,
+        component: AutoDebitRegistrationCancelComponent,
+        data: {
+          title: 'Auto Debit Registration Cancel'
+        }
+      },
+      {
+        path: PathConstantX.AUTO_DEBIT_REGISTRATION + "/Test",
+        component: AutoDebitTestComponent,
+        data: {
+          title: 'Auto Debit Test'
+        }
+      }
     ]
   }
 ];

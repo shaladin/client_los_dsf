@@ -19,7 +19,6 @@ import { OfferingValidityCheckingApprovalDetailComponent } from './offering-vali
 import { DocSignerPagingComponent } from './doc-signer/doc-signer-paging/doc-signer-paging.component';
 import { DocSignerDetailComponent } from './doc-signer/doc-signer-detail/doc-signer-detail.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
-import { PreGoLiveApprovalPagingComponent } from './pre-go-live/pre-go-live-approval-paging/pre-go-live-approval-paging.component';
 import { PreGoLiveApprovalDetailComponent } from './pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail.component';
 import { DocumentPagingComponent } from './document-printing/document-paging/document-paging.component';
 import { DocumentViewComponent } from './document-printing/document-view/document-view.component';
@@ -79,6 +78,7 @@ import { ApplicationAgreementCancellationDetailXComponent } from 'app/impl/NEW-N
 import { InvoiceDataPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-paging/invoice-data-paging-x.component';
 import { InvoiceDataDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-detail/invoice-data-detail-x.component';
 import { InvoiceDataXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data/invoice-data-x.component';
+import { PreGoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-paging-x/pre-go-live-approval-paging-x.component';
 
 const routes: Routes = [
   {
@@ -198,7 +198,7 @@ const routes: Routes = [
       },
       {
         path: PathConstant.PGL_APPRVL_PAGING,
-        component: PreGoLiveApprovalPagingComponent,
+        component: PreGoLiveApprovalPagingXComponent,
         data: {
           title: 'PreGoLive Paging For Approval'
         }
