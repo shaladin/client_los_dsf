@@ -19,37 +19,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of CustGrpPlfndObj">
-                    <td *ngIf="item.Category == 'AGR'">{{item.SeqNo}}</td>
-                    <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrNo}}</td>
-                    <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.CustomerName}}</td>
-                    <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.OSARAmt | number }}</td>
-                    <td *ngIf="item.Category == 'AGR'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                <tr *ngFor="let item of CustGrpPlfndAGRObj; let i=index">
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'">{{i + 1}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.AppOrAgrNo}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.CustomerName}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.OSARAmt | number }}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                 </tr>
-              </tbody>
-            </table>
-          </div>
-          <lib-ucSubsection [id]="'applicationinProcessId'" [title]="'APPLICATION IN PROCESS'" [panel]="'applicationinProcess'">
-          </lib-ucSubsection>
-          <div id="applicationinProcess">
-            <table class="table table-responsive-md text-center table-hover">
-              <thead>
-                <tr class="table-header">
-                  <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
-                  <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Application No</span></th>
-                  <th class="text-center"><span translate class="thead-header" name='CustomerName'>Customer Name</span></th>
-                  <th class="text-center"><span translate class="thead-header" name='TotalNIAR'>Total NI/AR</span></th>
-                  <th class="text-center"><span translate class="thead-header" name='ApplicationStep'>Application Step</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of CustGrpPlfndObj">
-                  <td *ngIf="item.Category == 'APP'">{{item.SeqNo}}</td>
-                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrNo}}</td>
-                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.CustomerName}}</td>
-                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSARAmt | number }}</td>
-                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
-              </tr>
               </tbody>
             </table>
           </div>
@@ -67,12 +43,60 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of CustGrpPlfndObj">
-                  <td *ngIf="item.Category == 'OPL'">{{item.SeqNo}}</td>
+                <tr *ngFor="let item of CustGrpPlfndOPLObj; let i=index">
+                  <td *ngIf="item.Category == 'OPL'">{{i + 1}}</td>
                   <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrNo}}</td>
                   <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.CustomerName}}</td>
                   <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.OSARAmt | number }}</td>
                   <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <lib-ucSubsection [id]="'factoringagrmntId'" [title]="'FACTORING AGREEMENT'" [panel]="'factoringagrmnt'">
+          </lib-ucSubsection>
+          <div id="factoringagrmnt">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Agreement No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='CsutomerName'>Customer Name</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='OutstandingAR'>Outstanding AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='Status'>Status</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of CustGrpPlfndFACTObj; let i=index">
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'">{{i + 1}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.AppOrAgrNo}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.CustomerName}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.OSARAmt | number }}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <lib-ucSubsection [id]="'applicationinProcessId'" [title]="'APPLICATION IN PROCESS'" [panel]="'applicationinProcess'">
+          </lib-ucSubsection>
+          <div id="applicationinProcess">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Application No</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='CustomerName'>Customer Name</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='TotalNIAR'>Total NI/AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='ApplicationStatus'>Application Status</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of CustGrpPlfndAPPObj; let i=index">
+                  <td *ngIf="item.Category == 'APP'">{{i + 1}}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrNo}}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.CustomerName}}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSARAmt | number }}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
               </tr>
               </tbody>
             </table>
