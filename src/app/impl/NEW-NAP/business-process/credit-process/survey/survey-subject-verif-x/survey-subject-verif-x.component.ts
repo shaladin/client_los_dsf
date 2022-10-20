@@ -108,11 +108,13 @@ export class SurveySubjectVerifXComponent implements OnInit {
   PhoneNumberObj: any;
   QuestionObj: any;
   isQuestionLoaded: boolean = true;
-  mode:string;
-  SurveyMethod:string;
+  mode: string;
+  SurveyMethod: string;
   arrValue = [];
   MaxDate: Date;
   UserAccess: any;
+
+  IsMandatoryArr: Array<Array<boolean>> = Array<Array<boolean>>();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -169,18 +171,18 @@ export class SurveySubjectVerifXComponent implements OnInit {
       await this.GetListVerfResultHData(this.verfResHObj);
     };
 
-    if(this.mode == 'edit'){
+    if (this.mode == 'edit') {
       await this.setData();
       this.saveVerfResultHDetailUrl = URLConstantX.EditVerfResultHeaderAndVerfResultDetailForSurveyVerif;
-    }else{
+    } else {
       this.saveVerfResultHDetailUrl = URLConstantX.AddVerfResultHeaderAndVerfResultDetailForSurveyVerif;
       await this.GetQuestionList(VerfQAObj);
     }
   }
 
-  async setData(){
+  async setData() {
     var VerfQAObj = {
-      id : this.verfResultHId
+      id: this.verfResultHId
     };
 
     this.PhoneDataForm.patchValue({
@@ -234,7 +236,7 @@ export class SurveySubjectVerifXComponent implements OnInit {
 
     this.PhoneDataObj = new VerifResulHDetailObj();
 
-    if(this.mode == 'edit'){
+    if (this.mode == 'edit') {
       this.PhoneDataObj.VerfResultHObj.VerfResultHId = this.verfResultHId;
     }
 
@@ -308,6 +310,7 @@ export class SurveySubjectVerifXComponent implements OnInit {
 
       this.ListVerfAnswer.push([]);
       if (QuestionList.length != 0) {
+        let tempIsMandatoryArr = [];
         for (let j = 0; j < QuestionList.length; j++) {
           var QuestionResultGrp = this.fb.group({
             QuestionGrp: this.fb.group({
@@ -317,6 +320,7 @@ export class SurveySubjectVerifXComponent implements OnInit {
               VerfQuestionText: QuestionList[j].VerfQuestionText,
               VerfAnswer: QuestionList[j].VerfAnswer,
               IsActive: QuestionList[j].IsActive,
+              IsMandatory: QuestionList[j].IsMandatory,
               VerfSchemeHId: QuestionList[j].VerfSchemeHId,
               VerfQuestionGrpCode: QuestionList[j].VerfQuestionGrpCode,
               VerfQuestionGrpName: QuestionList[j].VerfQuestionGrpName,
@@ -347,15 +351,15 @@ export class SurveySubjectVerifXComponent implements OnInit {
               } else {
                 this.ListVerfAnswer[i].push("");
               }
-              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+              // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
             } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
-              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
+              // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
               this.ListVerfAnswer[i].push("");
             } else {
-              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+              // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
               this.ListVerfAnswer[i].push("");
             }
-          }else{
+          } else {
             if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeDdl) {
               if (QuestionList[j].VerfAnswer != "") {
                 var ddlList = QuestionList[j].VerfAnswer.split(";");
@@ -366,19 +370,19 @@ export class SurveySubjectVerifXComponent implements OnInit {
               } else {
                 this.ListVerfAnswer[i].push("");
               }
-              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+              // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
             } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
-              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
+              // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required]);
               this.ListVerfAnswer[i].push("");
-              if(QuestionList[j].PastAnswer != undefined && QuestionList[j].PastAnswer != null){
+              if (QuestionList[j].PastAnswer != undefined && QuestionList[j].PastAnswer != null) {
                 QuestionResultGrp.controls.ResultGrp.patchValue({
                   Answer: QuestionList[j].PastAnswer
                 })
               }
             } else {
-              QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
+              // QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required])
               this.ListVerfAnswer[i].push("");
-              if(QuestionList[j].PastAnswer != undefined && QuestionList[j].PastAnswer != null){
+              if (QuestionList[j].PastAnswer != undefined && QuestionList[j].PastAnswer != null) {
                 QuestionResultGrp.controls.ResultGrp.patchValue({
                   Answer: QuestionList[j].PastAnswer
                 })
@@ -388,8 +392,10 @@ export class SurveySubjectVerifXComponent implements OnInit {
               Notes: QuestionList[j].Notes
             })
           }
+          tempIsMandatoryArr.push(QuestionList[j].IsMandatory);
           ResultGrp.push(QuestionResultGrp);
         }
+        this.IsMandatoryArr.push(tempIsMandatoryArr);
         this.ChangeResult();
       }
     }
@@ -409,7 +415,7 @@ export class SurveySubjectVerifXComponent implements OnInit {
       (response) => {
         this.verifResultHObj = response;
         this.verfResHObj.mrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
-        if(this.mode == 'edit'){
+        if (this.mode == 'edit') {
           this.SurveyMethod = this.verifResultHObj.PhnType;
         }
       }
@@ -434,11 +440,13 @@ export class SurveySubjectVerifXComponent implements OnInit {
   }
 
   ChangeResult() {
-    if (this.PhoneDataForm.controls["MrVerfResultHStatCode"].value == CommonConstant.VerfResultStatSuccess) {
+    if (this.PhoneDataForm.controls["MrVerfResultHStatCode"].value == CommonConstant.VerfResultStatSuccess || this.PhoneDataForm.controls["MrVerfResultHStatCode"].value == CommonConstant.VerfResultStatDash || this.PhoneDataForm.controls["MrVerfResultHStatCode"].value == CommonConstant.VerfResultStatEmpty) {
       for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {
         for (let j = 0; j < this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"].length; j++) {
-          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
-          this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
+          if (this.IsMandatoryArr.length > 0 && this.IsMandatoryArr[i].length > 0 && this.IsMandatoryArr[i][j]) {
+            this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
+            this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
+          }
         }
       }
     }

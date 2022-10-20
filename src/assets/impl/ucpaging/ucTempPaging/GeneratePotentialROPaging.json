@@ -290,7 +290,7 @@
       "property": "PLAFOND_CUST_AMT"
   },
   {
-      "type": "text",
+      "type": "numeric",
       "position": "center",
       "property": "MAX_TENOR"
   },
