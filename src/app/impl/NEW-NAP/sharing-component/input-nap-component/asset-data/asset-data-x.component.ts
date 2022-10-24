@@ -491,9 +491,9 @@ export class AssetDataXComponent implements OnInit {
     await this.GetGS();
     console.log("ini")
     console.log(this.BizTemplateCode);
-    if (this.BizTemplateCode == "CF4W") {
-      this.GetAssetFromR2();
-    }
+    // if (this.BizTemplateCode == "CF4W") {
+    //   this.GetAssetFromR2();
+    // }
   }
 
   AddAsset() {
