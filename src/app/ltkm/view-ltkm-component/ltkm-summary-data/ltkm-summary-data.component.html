@@ -74,9 +74,10 @@
             <label class="adInsLabel"> Negative Customer </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{SummaryLtkmObj?.NegCustTypeName}} <i class="fa fa-circle"
-                *ngIf="SummaryLtkmObj?.NegCustColor != ''" aria-hidden="true"
-                [ngStyle]="{'color': SummaryLtkmObj?.NegCustColor}"></i></label>
+            <label class="adInsLabel"> {{SummaryLtkmObj?.NegCustTypeName}} 
+              <i class="fa fa-circle" aria-hidden="true"
+              [ngStyle]="{'color': SummaryLtkmObj?.MrNegCustTypeCode == 'BAD' ? 'red' : (SummaryLtkmObj?.MrNegCustTypeCode == 'WARNING' ? 'yellow' : (SummaryLtkmObj?.MrNegCustTypeCode == 'NORMAL' || SummaryLtkmObj?.MrNegCustTypeCode == 'No' ? 'green' : 'black'))}"></i>
+              </label>
           </div>
         </div>
 
@@ -287,7 +288,10 @@
         </div>
         <div class="row">
           <div class="col-md-6"><label class="adInsLabel">BPKB Occupancy</label></div>
-          <div class="col-md-3"><label class="adInsLabel">{{SummaryRefProfesionObj['ProfessionName'] == undefined ? "-": SummaryRefProfesionObj['ProfessionName']}}</label></div>
+          <div class="col-md-3">
+            <label class="adInsLabel" *ngIf="MrCustTypeCode == 'PERSONAL'">{{SummaryRefProfesionObj['ProfessionName'] == undefined ? "-": SummaryRefProfesionObj['ProfessionName']}}</label>
+            <label class="adInsLabel" *ngIf="MrCustTypeCode == 'COMPANY'">{{RefMaster['Descr'] == undefined ? "-": RefMaster['Descr']}}</label>
+          </div>
         </div>      
         <div class="row">
           <div class="col-md-6"><label class="adInsLabel">Installment Source Payment</label></div>
