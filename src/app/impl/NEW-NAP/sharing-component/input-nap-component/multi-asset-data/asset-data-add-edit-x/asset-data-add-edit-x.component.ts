@@ -185,6 +185,12 @@ export class AssetDataAddEditXComponent implements OnInit {
     AdminHeadNo: [''],
     AdminHeadPositionCode: [''],
 
+    FullAssetCodeMaster: [''],
+    FullAssetNameMaster: [''],
+    ManufacturingYearMaster: [''],
+    SerialNo1Master: [''],
+    SerialNo2Master: [''],
+
     FullAssetCode: [''],
     FullAssetName: [''],
     AssetCategoryCode: [''],
@@ -234,6 +240,9 @@ export class AssetDataAddEditXComponent implements OnInit {
     ListDoc: this.fb.array([])
   });
 
+  refMasterObj: RefMasterObj = new RefMasterObj();
+  RefProdCmptAssetSchmCmpntValue: any;
+
   appObj = {
     Id: 0,
   };
@@ -266,6 +275,19 @@ export class AssetDataAddEditXComponent implements OnInit {
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
   AppCustCoyObj: AppCustCompanyObj;
   RMAssetCondObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+
+  // URS-LOS-097
+  custNo: string;
+  listAssetMasterObj: any;
+  listAssetMasterFinalObj: any;
+  listAssetMasterDetailFromR2Obj: any;
+  listManufacturingYearMasterObj: any;
+  listSerialNo1AndSerialNo2MasterObj: any;
+  InputLookupAssetMasterObj: any;
+  assetSchemeCode: string;
+  ListDocTemp: FormArray
+  assetAttrObj: GenericListByCodeObj = new GenericListByCodeObj();
+  UserRelationObj: Array<KeyValueObj>;
 
   //URS-LOS-166
   generalSettingVendorSLBObj: GenericObj;
@@ -382,8 +404,8 @@ export class AssetDataAddEditXComponent implements OnInit {
     );
   }
 
-  GetRefAssetDocList(isInit: boolean) {
-    this.http.post(URLConstantX.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).subscribe(
+  async GetRefAssetDocList(isInit: boolean) {
+    await this.http.post(URLConstantX.GetRefAssetDocList, { Code: this.AssetDataForm.get("AssetTypeCode").value }).toPromise().then(
       (response) => {
         let ListDoc = this.AssetDataForm.get('ListDoc') as FormArray;
         ListDoc.reset();
@@ -548,6 +570,7 @@ export class AssetDataAddEditXComponent implements OnInit {
       (response) => {
         this.appCustObj = response;
         this.custType = this.appCustObj.MrCustTypeCode;
+        this.custNo = this.appCustObj.CustNo;
         this.AssetDataForm.patchValue({
           Username: this.appCustObj.CustName,
           UserRelationship: "SELF",
@@ -716,7 +739,6 @@ export class AssetDataAddEditXComponent implements OnInit {
       }
     ).catch(
       (error) => {
-        console.log(error);
       }
     );
   }
@@ -930,6 +952,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         this.returnAssetConditionObj = response[1]['DDLRefProdComptCode'];
         let assetType = response[2];
         let assetSchm = response[3];
+        this.RefProdCmptAssetSchmCmpntValue = assetSchm['CompntValue'];
         this.SerialNoRegex = response[4]["GsValue"];
         this.assetTypeCompntValue = assetType["CompntValue"];
 
@@ -1099,6 +1122,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         });
     }
     this.GetEditData();
+    this.GetAssetFromR2();
   }
 
   async GetEditData() {
@@ -1347,8 +1371,10 @@ export class AssetDataAddEditXComponent implements OnInit {
           this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
 
           this.OwnerTypeChange(CommonConstant.CustTypeCompany, true);
+          console.log(this.OwnerProfessionObj);
+          let companyType = this.OwnerProfessionObj.find(x => x.Key == CommonConstant.CompanyTypePT)
           this.AssetDataForm.patchValue({
-            OwnerProfessionCode: this.OwnerProfessionObj.find(x => x.Key == CommonConstant.CompanyTypePT).Key
+            OwnerProfessionCode: companyType != null && companyType != undefined ? companyType.Key : "",
           });
         }
       );
@@ -2648,6 +2674,7 @@ export class AssetDataAddEditXComponent implements OnInit {
     let ownerCode: string = "";
     if (this.returnAppCollateralRegistrationObj) ownerCode = this.returnAppCollateralRegistrationObj.OwnerProfessionCode;
     if (OwnerType == CommonConstant.CustTypePersonal) {
+      this.refMasterObj.RefMasterTypeCode = this.custType == CommonConstant.CustTypeCompany ? CommonConstant.RefMasterTypeCodeCustCompanyRelationship : CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
       if (IsOwnerTypeChanged) {
         this.AssetDataForm.patchValue({
           OwnerProfessionCode: ""
@@ -2721,5 +2748,317 @@ export class AssetDataAddEditXComponent implements OnInit {
           this.ListVendorEmpPositionCodes = response["GsValue"].split(';');
           this.vendorObj.MrVendorEmpPositionCodes = this.ListVendorEmpPositionCodes;
         });
+  }
+
+  GetAssetFromR2() {
+    var requestObj = {
+      CustNo: this.custNo,
+      AssetSchemeCode: this.RefProdCmptAssetSchmCmpntValue
+    };
+    this.http.post(URLConstantX.GetListAssetMasterByCustNoAndAssetSchemeCodeFromR2, requestObj).subscribe(
+      (response) => {
+
+        this.listAssetMasterObj = response;
+        this.listAssetMasterFinalObj = response;
+        this.listAssetMasterObj = this.unique(this.listAssetMasterObj, ['FullAssetCode', 'FullAssetName'])
+      }
+    );
+  }
+
+  unique(arr, keyProps) {
+    const kvArray = arr.map(entry => {
+      const key = keyProps.map(k => entry[k]).join('|');
+      return [key, entry];
+    });
+    const map = new Map(kvArray);
+    return Array.from(map.values());
+  }
+
+  AssetMasterChanged(event) {
+    if (event.target.value != "") {
+      let temp: any;
+      temp = this.listAssetMasterFinalObj.filter(
+        x => x.FullAssetCode == this.listAssetMasterObj[event.target.value].FullAssetCode
+          && x.FullAssetName == this.listAssetMasterObj[event.target.value].FullAssetName
+      );
+      this.AssetDataForm.patchValue({
+        FullAssetCodeMaster: temp[0].FullAssetCode,
+        FullAssetNameMaster: temp[0].FullAssetName,
+        ManufacturingYearMaster: '',
+        SerialNo1Master: '',
+        SerialNo2Master: '',
+      });
+      this.listManufacturingYearMasterObj = this.unique(temp, ['ManufacturingYear']);
+      this.listSerialNo1AndSerialNo2MasterObj = null;
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        FullAssetCodeMaster: '',
+        ManufacturingYearMaster: '',
+        SerialNo1Master: '',
+        SerialNo2Master: '',
+      });
+      this.listManufacturingYearMasterObj = null;
+    }
+  }
+
+  ManufacturingYearMasterChanged(event) {
+    if (event.target.value != "") {
+      let temp: any;
+      temp = this.listAssetMasterFinalObj.filter(
+        x => x.ManufacturingYear == event.target.value &&
+          x.FullAssetCode == this.AssetDataForm.controls['FullAssetCodeMaster'].value &&
+          x.FullAssetName == this.AssetDataForm.controls['FullAssetNameMaster'].value
+      );
+      this.AssetDataForm.patchValue({
+        ManufacturingYearMaster: temp[0].ManufacturingYear,
+        SerialNo1Master: '',
+        SerialNo2Master: '',
+      });
+      this.listSerialNo1AndSerialNo2MasterObj = this.unique(temp, ['SerialNo1', 'SerialNo2'])
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        ManufacturingYearMaster: '',
+        SerialNo1Master: '',
+        SerialNo2Master: '',
+      });
+    }
+  }
+
+  SerialNo1AndSerialNo2Changed(event) {
+    if (event.target.value != "") {
+      let temp: any;
+      temp = this.listAssetMasterFinalObj.filter(
+        x => x.SerialNo1 == this.listSerialNo1AndSerialNo2MasterObj[event.target.value].SerialNo1 &&
+          x.SerialNo2 == this.listSerialNo1AndSerialNo2MasterObj[event.target.value].SerialNo2 &&
+          x.FullAssetCode == this.AssetDataForm.controls['FullAssetCodeMaster'].value &&
+          x.FullAssetName == this.AssetDataForm.controls['FullAssetNameMaster'].value &&
+          x.ManufacturingYear == this.AssetDataForm.controls['ManufacturingYearMaster'].value
+      );
+      this.AssetDataForm.patchValue({
+        SerialNo1Master: temp[0].SerialNo1,
+        SerialNo2Master: temp[0].SerialNo2,
+      });
+    }
+    else {
+      this.AssetDataForm.patchValue({
+        SerialNo1Master: '',
+        SerialNo2Master: '',
+      });
+    }
+  }
+
+  async copyAssetMaster() {
+    if (this.AssetDataForm.controls['SerialNo1Master'].value != "" && this.AssetDataForm.controls['SerialNo1Master'].value != null) {
+      let datePipe = new DatePipe("en-US");
+      let temp: any;
+      temp = this.listAssetMasterFinalObj.filter(
+        x => x.SerialNo1 == this.AssetDataForm.controls['SerialNo1Master'].value &&
+          x.SerialNo2 == this.AssetDataForm.controls['SerialNo2Master'].value &&
+          x.FullAssetCode == this.AssetDataForm.controls['FullAssetCodeMaster'].value &&
+          x.FullAssetName == this.AssetDataForm.controls['FullAssetNameMaster'].value &&
+          x.ManufacturingYear == this.AssetDataForm.controls['ManufacturingYearMaster'].value
+      );
+
+      var requestObj = {
+        CustNo: this.custNo,
+        AssetCode: temp[0].AssetCode,
+        AssetHierarchyL1Code: temp[0].AssetHierarchyL1Code,
+        AssetHierarchyL2Code: temp[0].AssetHierarchyL2Code,
+        AssetName: temp[0].AssetName,
+        AssetHierarchyL1Name: temp[0].AssetHierarchyL1Name,
+        AssetHierarchyL2Name: temp[0].AssetHierarchyL2Name,
+        ManufacturingYear: temp[0].ManufacturingYear,
+        SerialNo1: temp[0].SerialNo1,
+        SerialNo2: temp[0].SerialNo2,
+      };
+      await this.http.post(URLConstantX.GetAssetMasterDetailFromR2, requestObj).toPromise().then(
+        async (response) => {
+          this.listAssetMasterDetailFromR2Obj = response;
+          this.AssetDataForm.patchValue({
+            FullAssetCode: this.listAssetMasterDetailFromR2Obj.AssetInfo.FullAssetCode,
+            FullAssetName: this.listAssetMasterDetailFromR2Obj.AssetInfo.FullAssetName,
+            ManufacturingYear: this.listAssetMasterDetailFromR2Obj.AssetInfo.ManufacturingYear,
+            MrAssetConditionCode: this.listAssetMasterDetailFromR2Obj.AssetInfo.MrAssetConditionCode,
+            AssetPrice: this.listAssetMasterDetailFromR2Obj.AssetInfo.AssetPriceAmt,
+            DownPaymentAmt: this.listAssetMasterDetailFromR2Obj.AssetInfo.DownPaymentAmt,
+            DownPayment: this.listAssetMasterDetailFromR2Obj.AssetInfo.DownPaymentAmt,
+            DownPaymentPrctg: this.listAssetMasterDetailFromR2Obj.AssetInfo.DownPaymentPrcnt,
+            MrAssetUsageCode: this.listAssetMasterDetailFromR2Obj.AssetInfo.MrAssetUsageCode,
+            Color: this.listAssetMasterDetailFromR2Obj.AssetInfo.Color,
+            TaxIssueDt: this.listAssetMasterDetailFromR2Obj.AssetInfo.TaxIssueDate == null ? "" : formatDate(this.listAssetMasterDetailFromR2Obj.AssetInfo.TaxIssueDate, 'yyyy-MM-dd', 'en-US'),
+            TaxCityIssuer: this.listAssetMasterDetailFromR2Obj.AssetInfo.TaxCityIssuer != null ? this.listAssetMasterDetailFromR2Obj.AssetInfo.TaxCityIssuer : "something",
+            Notes: this.listAssetMasterDetailFromR2Obj.AssetInfo.AssetNotes != null ? this.listAssetMasterDetailFromR2Obj.AssetInfo.AssetNotes : "",
+          });
+          if (this.items.controls[0] != null) {
+            this.items['controls'][0].patchValue({
+              SerialNoValue: this.listAssetMasterDetailFromR2Obj.AssetInfo.SerialNo1,
+            });
+          }
+          if (this.items.controls[1] != null) {
+            this.items['controls'][1].patchValue({
+              SerialNoValue: this.listAssetMasterDetailFromR2Obj.AssetInfo.SerialNo2,
+            });
+          }
+          if (this.items.controls[2] != null) {
+            this.items['controls'][2].patchValue({
+              SerialNoValue: this.listAssetMasterDetailFromR2Obj.AssetInfo.SerialNo3,
+            });
+          }
+          await this.GetAssetMaster(this.listAssetMasterDetailFromR2Obj.AssetInfo.FullAssetCode);
+          this.GenerataAppAssetAttrMaster(this.listAssetMasterDetailFromR2Obj.AssetAttr);
+          await this.GetRefAssetDocList(false);
+          await this.GetRefAssetDocListMaster(false, this.listAssetMasterDetailFromR2Obj.AssetDocument);
+          await this.GetAssetAccessoryMaster();
+          await this.GetAssetRegistrationMaster();
+        }
+      );
+    }
+  }
+
+  GenerataAppAssetAttrMaster(AssetAttrR2) {
+    for (let i = 0; i < AssetAttrR2.length; i++) {
+      this.assetAttrObj.Codes.push(AssetAttrR2[i].AssetAttrCode);
+    }
+    this.http.post(URLConstantX.GetRefAttrListByListAttrCode, this.assetAttrObj).subscribe(
+      (response) => {
+        this.AppAssetAttrObj = response['ReturnObject'];
+        if (response['IsDiffWithRefAttr']) {
+          this.isDiffWithRefAttr = true;
+          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
+        }
+        for (let j = 0; j < this.AppAssetAttrObj.length; j++) {
+          let attrQuestionValue = this.AppAssetAttrObj[j].AttrValue.split(';').map(text => {
+            let obj = null;
+            obj = text;
+            return obj;
+          });
+          this.AppAssetAttrObj[j].AttrQuestionValue = attrQuestionValue;
+          for (let k = 0; k < AssetAttrR2.length; k++) {
+            if (AssetAttrR2[k].AssetAttrCode == this.AppAssetAttrObj[j].AttrCode)
+              this.AppAssetAttrObj[j].AttrValue = AssetAttrR2[k].AssetAttrValue
+          }
+        }
+        this.GenerateAppAssetAttrForm();
+      });
+  }
+
+
+  async GetRefAssetDocListMaster(isInit: boolean, assetDocumentR2) {
+    for (let i = 0; i < this.AssetDataForm.controls.ListDoc["controls"].length; i++) {
+      let index = assetDocumentR2.findIndex(x => x.DocCode === this.AssetDataForm.controls.ListDoc["controls"][i]["controls"].DocCode.value);
+      if (index >= 0) {
+        this.AssetDataForm.controls.ListDoc["controls"][i].patchValue({
+          DocNo: assetDocumentR2[index].DocNo,
+          DocNotes: assetDocumentR2[index].DocNotes,
+          ACDExpiredDt: assetDocumentR2[index].ExpiredDt = "",
+          IsReceived: assetDocumentR2[index].IsReceived,
+          RowVersion: assetDocumentR2[index].RowVersion,
+        })
+      }
+    }
+  }
+
+  async GetAssetAccessoryMaster() {
+    let appAccessoryObjs = this.AssetDataForm.get('AssetAccessoriesObjs') as FormArray;
+    appAccessoryObjs.reset();
+    while (appAccessoryObjs.length) {
+      appAccessoryObjs.removeAt(0);
+    }
+    this.appAssetAccessoriesObjs = new Array<AppAssetAccessoryObj>()
+    for (let i = 0; i < this.listAssetMasterDetailFromR2Obj.AssetAccessories.length; i++) {
+      let appAssetAccessoriesObj = new AppAssetAccessoryObj();
+      appAssetAccessoriesObj.AssetAccessoryCode = this.listAssetMasterDetailFromR2Obj.AssetAccessories[i].AssetAccessoryCode,
+        appAssetAccessoriesObj.AssetAccessoryName = this.listAssetMasterDetailFromR2Obj.AssetAccessories[i].AssetAccessoryName,
+        appAssetAccessoriesObj.SupplCode = this.listAssetMasterDetailFromR2Obj.AssetAccessories[i].SupplCode,
+        appAssetAccessoriesObj.SupplName = this.listAssetMasterDetailFromR2Obj.AssetAccessories[i].SupplName,
+        appAssetAccessoriesObj.AccessoryPriceAmt = this.listAssetMasterDetailFromR2Obj.AssetAccessories[i].AccessoryPriceAmt,
+        appAssetAccessoriesObj.DownPaymentPrcnt = this.listAssetMasterDetailFromR2Obj.AssetAccessories[i].DownPaymentPrcnt,
+        appAssetAccessoriesObj.DownPaymentAmt = this.listAssetMasterDetailFromR2Obj.AssetAccessories[i].DownPaymentAmt,
+        appAssetAccessoriesObj.AccessoryNotes = this.listAssetMasterDetailFromR2Obj.AssetAccessories[i].AccessoryNotes,
+        this.appAssetAccessoriesObjs.push(appAssetAccessoriesObj)
+    }
+    await this.bindAccessories();
+  }
+
+  async GetAssetRegistrationMaster() {
+    let MrOwnerTypeCode = this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrOwnerTypeCode;
+    let isFromDB = true;
+    if (MrOwnerTypeCode == null) {
+      MrOwnerTypeCode = this.custType;
+      isFromDB = false;
+    }
+
+    this.AssetDataForm.patchValue({
+      UserName: this.listAssetMasterDetailFromR2Obj.AssetRegistration.UserName,
+      OwnerName: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerName,
+      MrIdTypeCode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrIdTypeCode,
+      OwnerIdNo: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerIdNo,
+      OwnerAddr: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAddr,
+      OwnerAreaCode1: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAreaCode1,
+      OwnerAreaCode2: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAreaCode2,
+      OwnerAreaCode3: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAreaCode3,
+      OwnerAreaCode4: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAreaCode4,
+      OwnerCity: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerCity,
+      OwnerZipcode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerZipcode,
+      OwnerMobilePhnNo: "",
+      LocationAddr: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAddr,
+      LocationAreaCode1: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAreaCode1,
+      LocationAreaCode2: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAreaCode2,
+      LocationAreaCode3: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAreaCode3,
+      LocationAreaCode4: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAreaCode4,
+      LocationCity: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationCity,
+      LocationZipcode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationZipcode,
+      SelfUsage: (this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrUserRelationshipCode == CommonConstant.SelfCustomer),
+      SelfOwner: (this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrOwnerRelationshipCode == CommonConstant.SelfCustomer),
+      OwnerProfessionCode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerProfessionCode,
+      MrOwnerTypeCode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrOwnerTypeCode
+    });
+    this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value);
+    await this.SelfUsageChange({ checked: (this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrUserRelationshipCode == CommonConstant.SelfCustomer) });
+    await this.SelfOwnerChange(true, MrOwnerTypeCode, true);
+    await this.OwnerTypeChange(MrOwnerTypeCode, !isFromDB);
+
+    let mrOwnerRelationshipCode = this.OwnerRelationObj.find(x => x.Key === this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrOwnerRelationshipCode);
+    if (mrOwnerRelationshipCode != null) {
+      this.AssetDataForm.patchValue({ MrOwnerRelationshipCode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrOwnerRelationshipCode })
+    } else {
+      this.AssetDataForm.patchValue({ MrOwnerRelationshipCode: "" })
+    }
+
+    let mrUserRelationshipCode = this.returnUserRelationshipObj.find(x => x.Key === this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrUserRelationshipCode);
+    if (mrUserRelationshipCode != null) {
+      this.AssetDataForm.patchValue({ MrUserRelationshipCode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.MrUserRelationshipCode })
+    } else {
+      this.AssetDataForm.patchValue({ MrUserRelationshipCode: "" })
+    }
+    this.inputFieldOwnerAddrObj = new InputFieldObj();
+    this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
+    let ownerAddrObj = new AddrObj();
+    ownerAddrObj.Addr = this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAddr;
+    ownerAddrObj.AreaCode1 = this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAreaCode1;
+    ownerAddrObj.AreaCode2 = this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAreaCode2;
+    ownerAddrObj.AreaCode3 = this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAreaCode3;
+    ownerAddrObj.AreaCode4 = this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerAreaCode4;
+    ownerAddrObj.City = this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerCity;
+    this.inputFieldOwnerAddrObj.inputLookupObj.nameSelect = this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerZipcode;
+    this.inputFieldOwnerAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.OwnerZipcode };
+    this.inputAddressObjForOwner.default = ownerAddrObj;
+    this.inputAddressObjForOwner.inputField = this.inputFieldOwnerAddrObj;
+
+    let templocationAddrObj = new AddrObj();
+    templocationAddrObj.Addr = this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAddr;
+    templocationAddrObj.AreaCode3 = this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAreaCode3;
+    templocationAddrObj.AreaCode4 = this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAreaCode4;
+    templocationAddrObj.AreaCode1 = this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAreaCode1;
+    templocationAddrObj.AreaCode2 = this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationAreaCode2;
+    templocationAddrObj.City = this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationCity;
+
+    this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
+    this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationZipcode;
+    this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationZipcode };
+    this.inputAddressObjForLoc.default = templocationAddrObj;
+    this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
   }
 }
