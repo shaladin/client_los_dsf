@@ -63,7 +63,7 @@
         <tbody>
           <ng-container *ngFor="let item of ltkmCustFamilyObjs; let i=index">
             <tr>
-              <td class="text-center">{{ i + 1}}</td>        
+              <td class="text-center">{{ i + 1}}</td>
               <td class="text-left">{{item.CustName}}</td>
               <td class="text-left">{{item.MrCustRelationshipDescr}}</td>
               <td class="text-left">{{item.BirthPlace}}</td>
@@ -135,8 +135,8 @@
         <div class="form-group row ">
           <label class="col-md-3 adInsLabel" translate>Source of Income</label>
           <label class="col-md-3 adInsLabel"
-            *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeDescr != null">{{CustPersonalFinData.MrSourceOfIncomeTypeDescr}}</label>
-          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeDescr == null">-</label>
+            *ngIf="CustPersonalFinData.SourceOfOtherIncome != null">{{CustPersonalFinData.SourceOfOtherIncome}}</label>
+          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.SourceOfOtherIncome == null">-</label>
           <label class="col-md-3 adInsLabel" translate>Monthly Installment</label>
           <label class="col-md-3 adInsLabel"
             *ngIf="CustPersonalFinData.MonthlyInstallmentAmt != 0">{{CustPersonalFinData.MonthlyInstallmentAmt | number:'.2':'en-US'}}</label>

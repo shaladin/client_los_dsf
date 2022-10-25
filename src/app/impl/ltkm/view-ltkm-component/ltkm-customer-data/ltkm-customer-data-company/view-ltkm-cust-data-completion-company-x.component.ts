@@ -17,6 +17,7 @@ import { ViewLtkmCustDetailComponent } from 'app/ltkm/view-ltkm-component/ltkm-c
 import { ViewLtkmCustDetailXComponent } from '../view-ltkm-cust-detail/view-ltkm-cust-detail-x.component';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
 
 @Component({
   selector: 'app-view-ltkm-cust-data-completion-company-x',
@@ -52,6 +53,8 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
   ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
   ltkmCustCompanyMgmntShrholderObjs: Array<LtkmCustCompanyMgmntShrholderObj>;
   ltkmCustCompanyLegalDocObjs: Array<LtkmCustCompanyLegalDocObj>;
+  ltkmCustGrpParentObjs: CustParentChildObj;
+  ltkmCustGrpChildObjs: Array<CustParentChildObj>;
 
   TitleCustFinSuffix: string = '';
   IsShowDetailCustFin: boolean = false;
@@ -87,6 +90,8 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
             this.ltkmCustCompanyLegalDocObjs = response["rLtkmCustCompanyLegalDocObjs"];
             this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];
             this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
+            this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"];
+            this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];
 
             if (this.ltkmCustObj.IsFamily) this.customerTitle = 'Family';
             else if (this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';
