@@ -327,4 +327,7 @@ export class URLConstantX {
   public static ProcessAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/ProcessAutoDebitRegistration";
   public static GetListStgAutoDebitRegisLog = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetListStgAutoDebitRegisLog";
   //#endregion
+
+  public static GetInsuranceDataByAppAssetIdXForView = environment.losUrl + "/v1" + "/AppInsX/GetInsDataByAppAssetIdForView";
+  public static GetAssetCategoryNameByAssetCategoryCode = environment.losUrl + "/v1" + "/AppInsX/GetAssetCategoryNameByAssetCategoryCode";
 }
