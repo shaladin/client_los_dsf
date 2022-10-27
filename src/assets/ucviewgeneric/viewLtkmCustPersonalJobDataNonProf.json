@@ -12,19 +12,9 @@
             "property": "CustModelName"
           },
           {
-            "type": "",
-            "label": "",
-            "property": ""
-          },
-          {
             "type": "text",
             "label": "Profession",
             "property": "ProfessionName"
-          },
-          {
-            "type": "",
-            "label": "",
-            "property": ""
           },
           {
             "type": "text",

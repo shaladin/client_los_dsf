@@ -17,6 +17,8 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-hi
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/request/nap/pre-go-live/req-get-rfa-log-by-trx-no-and-apv-category-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-go-live-approval-detail-x',
@@ -64,7 +66,7 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.bizTemplateCode != CommonConstant.DF) {
       this.viewAgrmnt.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntDataAfterPreGoLiveX.json";
     } else {
@@ -89,7 +91,7 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
         this.IsApvReady = true;
       });
 
-
+    await this.getGsDisableRequiredNotes();
 
     this.initInputApprovalObj();
   }
@@ -138,6 +140,18 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo = this.TrxNo;
     this.InputApvObj.RequestId = this.ApvReqId;
+    this.InputApvObj.EnableRequiredNotes = false;
+    this.InputApvObj.DisableRequiredNotesList = this.ListGsDisableRequiredNotes;
     this.IsReady = true;
+  }
+
+  ListGsDisableRequiredNotes : Array<string> = new Array<string>();
+  async getGsDisableRequiredNotes(){
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstantX.GSCodeDisableRequiredNotesApvAct }).toPromise().then(
+      (response: GeneralSettingObj) => {
+        let x = response.GsValue;
+        this.ListGsDisableRequiredNotes = x.split(';');
+      }
+    )
   }
 }

@@ -1,0 +1,63 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title" style="margin-bottom: 10px;"> 
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> AUTO DEBIT REGISTRATION CANCEL
+              </h4>
+            </div>
+          </div>
+        </div> 
+        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)"></lib-ucviewgeneric>
+
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="FormCancel" (ngSubmit)="FormCancel.valid && SaveCancelForm()"
+            #enjiForm="ngForm">
+            <div class="form-body">
+              <lib-ucSubsection [id]="'AutoDebitRegisCancelId'" [title]="'Auto Debit Registration Cancellation'" [panel]="'AutoDebitRegisCancel'">
+              </lib-ucSubsection>
+              <div id="AutoDebitRegisCancel">
+                <div class="form-group row adins-required">
+                  <div class="col-md-3">
+                    <label class="label-control mx-1">Reason</label>
+                  </div>
+                  <div class="col-md-3">
+                    <select class="form-control adInsInput" formControlName="Reason"
+                        (change)="onChangeReason($event)"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && FormCancel.controls.Reason.invalid}">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of listReason" value="{{it.Key}}">
+                          {{it.Value}}
+                        </option>
+                      </select>
+                      <lib-uc-show-errors [control]="FormCancel.controls.Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row adins-required">
+                  <div class="form-group col-md-3">
+                    <label class="label-control mx-1">Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormCancel.controls.Notes.invalid}"></textarea>
+                    <lib-uc-show-errors [control]="FormCancel.controls.Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-danger mr-1" [routerLink]="['/Nap/AddProcess/AutoDebitRegistration/Paging']">
+                <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
