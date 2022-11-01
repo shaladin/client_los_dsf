@@ -51,11 +51,11 @@ export class ViewMultiassetDataComponent implements OnInit {
   async GetAssetByAgrmntId() {
     let request = { Id: this.AgrmntId };
     let getAppAsset = this.http.post<Array<AppAssetObj>>(URLConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, request);
-    let getAppCollateral = this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAgrmntId, request);
+    let getAppCollateral = this.http.post<Array<AppCollateralObj>>(URLConstant.GetViewAppCollateralObjByAgrmntId, request);
     await forkJoin([getAppAsset, getAppCollateral]).toPromise().then(
       (response) => {
         this.appAssetList = response[0][CommonConstant.ReturnObj];
-        this.appCollateralList = response[1][CommonConstant.ReturnObj];
+        this.appCollateralList = response[1]["AppCollateralObjs"];
 
         if(this.appAssetList.length > 0) {
           this.AppId = this.appAssetList[0]['AppId'];
@@ -72,7 +72,7 @@ export class ViewMultiassetDataComponent implements OnInit {
     this.appCollateralList.forEach(x => {
       reqByListCodes.Codes.push(x.AssetTypeCode);
     });
-    
+
     let x = [];
     let temp = 0;
     for(let i = 0; i < reqByListCodes.Codes.length; i++)
