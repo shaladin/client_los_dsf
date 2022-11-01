@@ -34,6 +34,7 @@ export class URLConstantX {
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
   public static GetListCustCompanyFinDataXForCustViewByCustId = environment.FoundationR3Url + "/v1" + "/CustomerCompanyFinDataX/GetListCustCompanyFinDataXForCustViewByCustId";
   public static GetRefAttrListByListAttrCode = environment.FoundationR3Url + "/v1" + "/RefAttr/GetRefAttrListByListAttrCode";
+  public static GetListCustPersonalFinDataXForCustViewByCustId = environment.FoundationR3Url + "/v1" + "/CustPersonalFinDataX/GetListCustPersonalFinDataXForCustViewByCustId";
 
   // APP Application
   public static EditAppAddAppCrossX = environment.losUrl + '/v1' + '/AppX/EditAppAddAppCross';
@@ -326,4 +327,7 @@ export class URLConstantX {
   public static ProcessAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/ProcessAutoDebitRegistration";
   public static GetListStgAutoDebitRegisLog = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetListStgAutoDebitRegisLog";
   //#endregion
+
+  public static GetInsuranceDataByAppAssetIdXForView = environment.losUrl + "/v1" + "/AppInsX/GetInsDataByAppAssetIdForView";
+  public static GetAssetCategoryNameByAssetCategoryCode = environment.losUrl + "/v1" + "/AppInsX/GetAssetCategoryNameByAssetCategoryCode";
 }
