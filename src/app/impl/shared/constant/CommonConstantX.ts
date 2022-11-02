@@ -28,6 +28,7 @@ export class CommonConstantX {
     public static GsCodeIsAllowSkipSurvey = "IS_ALLOW_SKIP_SURVEY";
     public static GsCodeCustCompletionByPass = "CUST_COMPLETION_BY_PASS";
     public static GsCodeMandatoryByCollType = "MANDATORY_BY_COLL_TYPE"
+    public static GsCodeAutoDebitBca = "AUTO_DEBIT_BCA";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
