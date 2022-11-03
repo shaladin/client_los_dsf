@@ -21,6 +21,7 @@ import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/FL4W/nap-cust-main-d
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { NapCustMainDataXDsfComponent } from '../DSF/FL4W-dsf/nap-cust-main-data-x-dsf/nap-cust-main-data-x-dsf.component';
 import { NapDetailFormXDsfComponent } from '../DSF/FL4W-dsf/nap-detail-form-x-dsf/nap-detail-form-x-dsf.component';
+import { ViewInsuranceDetailXComponent } from 'app/impl/NEW-NAP/sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail-x.component';
 
 const routes: Routes = [
   {
@@ -143,6 +144,13 @@ const routes: Routes = [
         component: NapCustMainDataXDsfComponent,
         data: {
           title: 'NAP Cust Main Data dsf'
+        }
+      },
+      {
+        path: PathConstantX.FL4W_VIEW_INS_X,
+        component: ViewInsuranceDetailXComponent,
+        data: {
+          title: 'Insurance Detail'
         }
       },
     ]

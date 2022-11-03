@@ -238,7 +238,7 @@ export class PurchaseOrderXComponent implements OnInit {
 
       if(this.wop == CommonConstant.WopAutoDebit)
       {
-        this.http.post(URLConstantX.InsertIntoAutoDebitRegistration, {Code: this.agrNo}).subscribe(
+        this.http.post(URLConstantX.InsertIntoAutoDebitRegistration, {TrxNo: this.agrNo}).subscribe(
           (response) => {
             if(response["StatusCode"] != 200){
               throw this.toastr.errorMessage(response["Message"]);

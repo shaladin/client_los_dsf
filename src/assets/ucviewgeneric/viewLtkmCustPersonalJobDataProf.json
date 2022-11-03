@@ -12,11 +12,6 @@
             "property": "CustModelName"
           },
           {
-            "type": "",
-            "label": "",
-            "property": ""
-          },
-          {
             "type": "text",
             "label": "Profession",
             "property": "ProfessionName"
@@ -40,11 +35,6 @@
             "type": "text",
             "label": "Job Address",
             "property": "JobAddr"
-          },
-          {
-            "type": "",
-            "label": "",
-            "property": ""
           },
           {
             "type": "text",
