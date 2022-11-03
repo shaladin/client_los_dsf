@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 import { environment } from 'environments/environment';
@@ -20,6 +22,7 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   bizTemplateCode: string;
   isJqueryWork: string
+  bankBCA: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +42,7 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
     });
    }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.inputPagingObj._url = './assets/impl/ucpaging/searchAutoDebitRegistration.json';
     this.inputPagingObj.pagingJson = './assets/impl/ucpaging/searchAutoDebitRegistration.json';
 
@@ -47,6 +50,19 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
     WVBizTemplateCodeObj.value = this.bizTemplateCode;
 
     this.inputPagingObj.whereValue.push(WVBizTemplateCodeObj);
+
+    await this.bindAllBankCode();
+  }
+
+  async bindAllBankCode()
+  {
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstantX.GsCodeAutoDebitBca }).toPromise().then(
+      (result: GeneralSettingObj) => {
+        if (result.GsValue) {
+          this.bankBCA = result.GsValue;
+        }
+      }
+    );
   }
 
   GetCallBack(e: any) {
@@ -66,11 +82,18 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
             }
             else
             {
-              window.open(environment.losR3Web + "/Nap/AddProcess/AutoDebitRegistration/Test").postMessage("a", environment.losR3Web + "/Nap/AddProcess/AutoDebitRegistration/Test");
-              this.toastr.successMessage(response["Message"]);
-              $(document).ready(function () {
-                window.addEventListener("message", receiveMessage, false)
-                })
+              this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, {TrxNo: e.RowObj.TransactionNo}).subscribe(
+                (response1) => {
+                  if(response1["BankCode"] == this.bankBCA)
+                  {
+                    window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response1["RequestId"] + "&verification=" + response1["RequestId"] + e.RowObj.CustNo + response1["RandomString"]);
+                    this.toastr.successMessage(response["Message"]);
+                    $(document).ready(function () {
+                      window.addEventListener("message", receiveMessage, false)
+                      })
+                  }
+                }
+              )
             }
           }
         )

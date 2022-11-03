@@ -10,29 +10,32 @@ import { LtkmCustAddrForViewObj } from 'app/shared/model/ltkm/ltkm-cust-addr-for
 import { LtkmCustBankAccObj } from 'app/shared/model/ltkm/ltkm-cust-bank-acc-obj.model';
 import { LtkmCustGrpObj } from 'app/shared/model/ltkm/ltkm-cust-grp-obj.model';
 import { LtkmCustPersonalContactPersonObj } from 'app/shared/model/ltkm/ltkm-cust-personal-contact-person-obj.model';
-import { ViewLtkmCustDetailComponent } from '../view-ltkm-cust-detail/view-ltkm-cust-detail.component';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { LtkmCustPersonalFinDataObjX } from 'app/impl/shared/model/ltkm/ltkm-cust-personal-fin-data-objX.model';
+import { ViewLtkmCustDetailComponent } from 'app/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail.component';
 import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
 
 @Component({
-  selector: 'app-view-ltkm-cust-data-completion-personal',
-  templateUrl: './view-ltkm-cust-data-completion-personal.component.html',
+  selector: 'app-view-ltkm-cust-data-completion-personal-x',
+  templateUrl: './view-ltkm-cust-data-completion-personal-x.component.html',
   styleUrls: []
 })
-export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
+export class ViewLtkmCustDataCompletionPersonalXComponent implements OnInit {
 
   @Input() LtkmCustId: number;
   @Input() isDetail: boolean = false;
-  viewMainDataObj:  UcViewGenericObj = new UcViewGenericObj();
-  viewJobDataProfObj:  UcViewGenericObj = new UcViewGenericObj();
-  viewJobDataEmpObj:  UcViewGenericObj = new UcViewGenericObj();
-  viewJobDataSmeObj:  UcViewGenericObj = new UcViewGenericObj();
-  viewJobDataNonProfObj:  UcViewGenericObj = new UcViewGenericObj();
-  viewEmergencyContactObj:  UcViewGenericObj = new UcViewGenericObj();
+  viewMainDataObj: UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataProfObj: UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataEmpObj: UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataSmeObj: UcViewGenericObj = new UcViewGenericObj();
+  viewJobDataNonProfObj: UcViewGenericObj = new UcViewGenericObj();
+  viewEmergencyContactObj: UcViewGenericObj = new UcViewGenericObj();
 
   customerTitle: string;
   arrValue = [];
   isDataAlreadyLoaded: boolean = false;
-  
+
   isPopupDetail: boolean = false;
   isShowDetail: boolean = false;
   detailLtkmCustId: number;
@@ -49,17 +52,22 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
   ltkmCustGrpParentObjs: CustParentChildObj;
   ltkmCustGrpChildObjs: Array<CustParentChildObj> = new Array<CustParentChildObj>();
 
-  TitleCustFinDataSuffix:string = '';
-  IsShowCustFinDataDetail:boolean = false;
-  ListCustPersonalFinData : Array<object> = [];
-  CustPersonalFinData : object;
-  currentCustFinDataIndex: number;  
+  TitleCustFinDataSuffix: string = '';
+  IsShowCustFinDataDetail: boolean = false;
+  ListCustPersonalFinData: Array<LtkmCustPersonalFinDataObjX>;
+  countFinDataRows: number = 0;
+  CustPersonalFinData: LtkmCustPersonalFinDataObjX;
+  currentCustFinDataIndex: number;
+  CustNoObj: GenericObj = new GenericObj();
+  CustId: number = 0;
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
 
-  async ngOnInit(): Promise<void> {    
+  async ngOnInit(): Promise<void> {
     await this.getCustData();
+    await this.getListFinData();
+    this.countFinDataRows = this.ListCustPersonalFinData.length;
     this.arrValue.push(this.ltkmCustObj.LtkmCustId);
     this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewLtkmCustPersonalMainData.json";
     this.viewMainDataObj.whereValue = this.arrValue;
@@ -82,40 +90,58 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
     this.isDataAlreadyLoaded = true;
   }
 
+  async getListFinData() {
+    await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
+      (response) => {
+        this.ListCustPersonalFinData = response['ListCustPersonalFinDataForCustViewX'];
+      });
+  }
+
   async getCustData() {
-      await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
-      (response) => {        
+    await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
+      (response) => {
         this.ltkmCustObj = response["rLtkmCustObj"];
         this.custModelCode = response["MrCustModelCode"];
         this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
         this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
         this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
         this.ltkmCustPersonalContactPersonObjs = response["rLtkmCustPersonalContactPersonObjs"] == null ? new Array<LtkmCustPersonalContactPersonObj>() : response["rLtkmCustPersonalContactPersonObjs"];
-        this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];             
+        this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];
         this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"];
-        this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"];
-        this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];  
+
+        if(response["rLtkmCustGrpParent"] != null){
+          this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"]
+        }
+        if(response["rLtkmCustGrpChild"] != null){
+          this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"]
+        }
 
         // filter family yg punya relationship
-        if(this.ltkmCustFamilyObjs && this.ltkmCustFamilyObjs.length > 0) {
+        if (this.ltkmCustFamilyObjs && this.ltkmCustFamilyObjs.length > 0) {
           this.ltkmCustFamilyObjs = this.ltkmCustFamilyObjs.filter(item => item['MrCustRelationshipCode'])
         }
 
         // filter cust group yg punya cust no & applicant no
-        if(this.ltkmCustGrpObjs && this.ltkmCustGrpObjs.length > 0) {
+        if (this.ltkmCustGrpObjs && this.ltkmCustGrpObjs.length > 0) {
           this.ltkmCustGrpObjs = this.ltkmCustGrpObjs.filter(item => item['CustNo'] || item['ApplicantNo'])
         }
 
-        if(this.ltkmCustObj.IsFamily) this.customerTitle = 'Family';
-        else if(this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';
-        else if(this.ltkmCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
+        if (this.ltkmCustObj.IsFamily) this.customerTitle = 'Family';
+        else if (this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';
+        else if (this.ltkmCustObj.IsGuarantor) this.customerTitle = 'Guarantor';
         else this.customerTitle = 'Customer';
+      });
+
+    this.CustNoObj.CustNo = this.ltkmCustObj.CustNo;
+
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
+      (response) => {
+        this.CustId = response['CustId'];
       });
   }
 
-  viewDetailFamilyHandler(LtkmCustId, MrCustTypeCode){
-    if(this.isPopupDetail)
-    {
+  viewDetailFamilyHandler(LtkmCustId, MrCustTypeCode) {
+    if (this.isPopupDetail) {
       const modalInsDetail = this.modalService.open(ViewLtkmCustDetailComponent);
       modalInsDetail.componentInstance.LtkmCustId = LtkmCustId;
       modalInsDetail.componentInstance.MrCustTypeCode = MrCustTypeCode;
@@ -123,31 +149,28 @@ export class ViewLtkmCustDataCompletionPersonalComponent implements OnInit {
       modalInsDetail.result.then().catch((error) => {
       });
     }
-    else
-    {
+    else {
       this.detailLtkmCustId = LtkmCustId;
       this.detailMrCustTypeCode = MrCustTypeCode;
       this.detailCustomerTitle = 'Family';
-      this.isShowDetail = true;      
+      this.isShowDetail = true;
     }
   }
 
-  closeDetailHandler()
-  {
+  closeDetailHandler() {
     this.isShowDetail = false;
   }
 
 
-  showDetailCustFinData(index:number){
+  showDetailCustFinData(index: number) {
     let datePipe = new DatePipe("en-US");
     this.currentCustFinDataIndex = index;
     this.CustPersonalFinData = this.ListCustPersonalFinData[this.currentCustFinDataIndex];
-    this.TitleCustFinDataSuffix = 'Date as of '+datePipe.transform(this.CustPersonalFinData['DateAsOf'], 'dd-MMM-yyyy')
+    this.TitleCustFinDataSuffix = 'Date as of ' + datePipe.transform(this.CustPersonalFinData['DateAsOf'], 'dd-MMM-yyyy')
     this.IsShowCustFinDataDetail = true;
   }
-  
-  hideDetailCustFinData()
-  {
+
+  hideDetailCustFinData() {
     this.TitleCustFinDataSuffix = '';
     this.IsShowCustFinDataDetail = false;
     this.CustPersonalFinData = null;

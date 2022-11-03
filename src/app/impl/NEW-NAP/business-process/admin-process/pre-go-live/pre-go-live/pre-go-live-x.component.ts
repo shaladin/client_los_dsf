@@ -330,6 +330,7 @@ export class PreGoLiveXComponent implements OnInit {
 
   SaveForm(flag = true) {
     if (this.BizTemplateCode == CommonConstant.DF) {
+      this.IsCheckedAll = true;
       const effDate = new Date(this.MainInfoForm.controls.EffectiveDt.value);
       if (effDate.getTime() > this.MaxEffDt.getTime()) {
         this.toastr.warningMessage('Maturity Date must be lower than MOU Expired Date');

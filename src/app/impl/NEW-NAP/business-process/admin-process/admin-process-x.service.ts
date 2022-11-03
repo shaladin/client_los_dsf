@@ -27,14 +27,14 @@ export class AdminProcessXService {
         return this.http.post(URLConstant.SubmitAgrmntActivationByHumanV2_1, Obj);
     }
 
-  SubmitAgrmntActivationByHumanV2_2(Obj: any): Observable<Object> {
-    return this.http.post(URLConstant.SubmitAgrmntActivationByHumanV2_2, Obj);
-  }
+    SubmitAgrmntActivationByHumanV2_2(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.SubmitAgrmntActivationByHumanV2_2, Obj);
+    }
 
-  GetListAppAssetByListAppAssetId(Obj: any): Observable<Object> {
-    return this.http.post(URLConstant.GetListAppAssetByListAppAssetId, Obj);
-  }
-
+    GetListAppAssetByListAppAssetId(Obj: any): Observable<Object> {
+        return this.http.post(URLConstant.GetListAppAssetByListAppAssetId, Obj);
+    }
+    
     SubmitAgrmntActivationXByHumanV2(Obj: any): Observable<Object> {
         return this.http.post(URLConstantX.SubmitAgrmntActivationByHumanV2, Obj);
     }
