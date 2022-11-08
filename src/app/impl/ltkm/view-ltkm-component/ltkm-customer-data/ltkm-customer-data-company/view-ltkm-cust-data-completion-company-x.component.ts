@@ -54,7 +54,7 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
   ltkmCustCompanyMgmntShrholderObjs: Array<LtkmCustCompanyMgmntShrholderObj>;
   ltkmCustCompanyLegalDocObjs: Array<LtkmCustCompanyLegalDocObj>;
   ltkmCustGrpParentObjs: CustParentChildObj;
-  ltkmCustGrpChildObjs: Array<CustParentChildObj>;
+  ltkmCustGrpChildObjs: Array<CustParentChildObj> = new Array<CustParentChildObj>();
 
   TitleCustFinSuffix: string = '';
   IsShowDetailCustFin: boolean = false;
@@ -90,8 +90,13 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
             this.ltkmCustCompanyLegalDocObjs = response["rLtkmCustCompanyLegalDocObjs"];
             this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];
             this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
-            this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"];
-            this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];
+
+            if(response["rLtkmCustGrpParent"] != null){
+                this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"];
+            }
+            if(response["rLtkmCustGrpChild"] != null){
+                this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];
+            }
 
             if (this.ltkmCustObj.IsFamily) this.customerTitle = 'Family';
             else if (this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';

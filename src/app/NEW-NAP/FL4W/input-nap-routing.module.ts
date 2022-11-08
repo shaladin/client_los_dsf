@@ -16,6 +16,7 @@ import { PathConstant } from 'app/shared/constant/PathConstant';
 import { NapDetailFormXComponent } from 'app/impl/NEW-NAP/FL4W/nap-detail-form/nap-detail-form-x.component';
 import { NapCustMainDataXComponent } from 'app/impl/NEW-NAP/FL4W/nap-cust-main-data/nap-cust-main-data-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { ViewInsuranceDetailXComponent } from 'app/impl/NEW-NAP/sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail-x.component';
 
 const routes: Routes = [
   {
@@ -110,6 +111,13 @@ const routes: Routes = [
         component: NapCustMainDataXComponent,
         data: {
             title: 'NAP Cust Main Data'
+        }
+      },
+      {
+        path: PathConstantX.FL4W_VIEW_INS_X,
+        component: ViewInsuranceDetailXComponent,
+        data: {
+          title: 'Insurance Detail'
         }
       },
     ]
