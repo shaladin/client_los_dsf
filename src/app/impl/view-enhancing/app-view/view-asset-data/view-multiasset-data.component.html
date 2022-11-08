@@ -21,12 +21,6 @@
               <span class="thead-header" name='serialNo2' translate>Chassis No</span>
             </th>
             <th style="text-align: left;">
-              <span class="thead-header" name='serialNo3' translate>Asset Price</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='serialNo3' translate>Accessory Price</span>
-            </th>
-            <th style="text-align: left;">
               <span class="thead-header" name='serialNo3' translate>Total Asset + Accessory Price</span>
             </th>
             <th style="text-align: left;">
@@ -56,12 +50,6 @@
             </td>
             <td style="text-align: left;">
               {{item.SerialNo2}}
-            </td>
-            <td style="text-align: left;">
-              {{item.AssetPriceAmt | number:'.2':'en-US'}}
-            </td>
-            <td style="text-align: left;">
-              {{item.TotalAccessoryPriceAmt | number:'.2':'en-US'}}
             </td>
             <td style="text-align: left;">
               {{item.AssetPriceAmt + item.TotalAccessoryPriceAmt | number:'.2':'en-US'}}
