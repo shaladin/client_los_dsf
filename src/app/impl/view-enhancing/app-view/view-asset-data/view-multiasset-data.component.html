@@ -21,6 +21,12 @@
               <span class="thead-header" name='serialNo2' translate>Chassis No</span>
             </th>
             <th style="text-align: left;">
+              <span class="thead-header" name='serialNo3' translate>Asset Price</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='serialNo3' translate>Accessory Price</span>
+            </th>
+            <th style="text-align: left;">
               <span class="thead-header" name='serialNo3' translate>Total Asset + Accessory Price</span>
             </th>
             <th style="text-align: left;">
@@ -28,12 +34,6 @@
             </th>
             <th style="text-align: left;">
               <span class="thead-header" name='serialNo5' translate>Manufacturing Year</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='serialNo3' translate>Total Asset Price</span>
-            </th>
-            <th style="text-align: left;">
-              <span class="thead-header" name='serialNo3' translate>Total Accessory Price</span>
             </th>
             <th style="text-align: center;">
               <span class="thead-header" name='viewDetail' translate>View Detail</span>
@@ -58,6 +58,12 @@
               {{item.SerialNo2}}
             </td>
             <td style="text-align: left;">
+              {{item.AssetPriceAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.TotalAccessoryPriceAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
               {{item.AssetPriceAmt + item.TotalAccessoryPriceAmt | number:'.2':'en-US'}}
             </td>
             <td style="text-align: left;">
@@ -65,12 +71,6 @@
             </td>
             <td style="text-align: left;">
               {{item.ManufacturingYear}}
-            </td>
-            <td style="text-align: left;">
-              {{item.AssetPriceAmt | number:'.2':'en-US'}}
-            </td>
-            <td style="text-align: left;">
-              {{item.TotalAccessoryPriceAmt | number:'.2':'en-US'}}
             </td>
             <td style="text-align: center;">
               <a (click)="viewDetailHandler(item.AppAssetId, i)"><i class="fas fa-pencil-alt"></i></a>
