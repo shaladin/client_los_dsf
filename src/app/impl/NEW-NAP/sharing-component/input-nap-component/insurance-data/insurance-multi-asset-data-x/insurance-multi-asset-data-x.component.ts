@@ -1578,12 +1578,29 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
         let premiumType = AddCvg[AddCvgIndex].PremiumType;
         let custAddPremiRate = 0;
         let inscoAddPremiRate = 0;
+        let stdAddPremiRate = 0;
 
         if (premiumType == CommonConstant.PremiumTypeAmt) {
           if (this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key]) {
             defaultSumInsuredAmt = this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key][0].SumInsuredAmt;
             custAddPremiRate = this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key][0].PremiToCust;
             inscoAddPremiRate = this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key][0].PremiToInsco;
+
+            this.InsuranceDataForm.controls.InsAddCvgTypes['controls'].forEach((element) => {
+              if(element['controls']['KeyCode'].value === o.Key){
+                if(typeof (element['controls']['ValueOption'].value) !== 'undefined' && element['controls']['ValueOption'].value)
+                {
+                  this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key].forEach(AddCvgItem =>{
+                    if(AddCvgItem.SumInsuredAmt === Number(element['controls']['ValueOption'].value))
+                    {
+                      custAddPremiRate = AddCvgItem.PremiToCust;//richard, 20221028, sudah merangkap sbg BaseCustAddPremiRate (acuan method SumInsuredAmtAddCvgChanged)
+                      inscoAddPremiRate = AddCvgItem.PremiToInsco;//richard, 20221028, sudah merangkap sbg BaseInscoAddPremiRate (acuan method SumInsuredAmtAddCvgChanged)
+                      stdAddPremiRate = AddCvgItem.BaseRate;//richard, 20221028, penambahan baru mengikut acuan logic event on change sum insured (acuan method SumInsuredAmtAddCvgChanged)
+                    }
+                  });
+                }
+              }
+            });
           } else {
             custAddPremiRate = AddCvg[AddCvgIndex].PremiToCust;
             inscoAddPremiRate = AddCvg[AddCvgIndex].PremiToInsco;
@@ -1647,7 +1664,8 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
             BaseInscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiAmt: 0,
-            SeatCount: 0
+            SeatCount: 0,
+            StdAddPremiRate : stdAddPremiRate //richard, 20221028
           });
         }
       } else {
@@ -2440,6 +2458,7 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
         checkboxValue = false;
 
       const control = this.fb.group({
+        KeyCode: o.Key,
         Key: o.Value,
         Value: checkboxValue,
         ValueOption: null,
