@@ -64,6 +64,7 @@ import { ViewInvoiceDataXComponent } from "app/impl/view-enhancing/agr-view/view
 import { InvoiceMainInfoXComponent } from "app/impl/view-enhancing/invoice-main-info/invoice-main-info-x.component";
 import { ViewSummaryXComponent } from "app/impl/view-enhancing/agr-view/view-summary-x/view-summary-x.component";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { ViewAgrmntInsuranceXComponent } from "app/impl/view-enhancing/agr-view/view-insurance/view-insurance-x.component";
 
 @NgModule({
     imports: [
@@ -130,7 +131,8 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
         ViewCommissionXComponent,
         ListDataCommissionAgrmntXComponent,
         ViewInvoiceDataXComponent,
-        ViewSummaryXComponent
+        ViewSummaryXComponent,
+        ViewAgrmntInsuranceXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
