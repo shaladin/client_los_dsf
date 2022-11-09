@@ -2880,7 +2880,7 @@ export class AssetDataAddEditXComponent implements OnInit {
             FullAssetCode: this.listAssetMasterDetailFromR2Obj.AssetInfo.FullAssetCode,
             FullAssetName: this.listAssetMasterDetailFromR2Obj.AssetInfo.FullAssetName,
             ManufacturingYear: this.listAssetMasterDetailFromR2Obj.AssetInfo.ManufacturingYear,
-            MrAssetConditionCode: "USED",
+            // MrAssetConditionCode: "USED",
             // MrAssetConditionCode: this.listAssetMasterDetailFromR2Obj.AssetInfo.MrAssetConditionCode,
             AssetPrice: this.listAssetMasterDetailFromR2Obj.AssetInfo.AssetPriceAmt,
             DownPaymentAmt: this.listAssetMasterDetailFromR2Obj.AssetInfo.DownPaymentAmt,
