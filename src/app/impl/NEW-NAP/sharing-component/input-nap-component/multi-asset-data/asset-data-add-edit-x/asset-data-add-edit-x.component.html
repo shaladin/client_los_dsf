@@ -68,9 +68,9 @@
                     <div class="form-group row">
                       <label class="col-md-4 adInsLabel" translate>Asset Name</label>
                       <div class="col-md-8">
-                        <select class="form-control adInsInput selectpicker" style="width: 100%" 
+                        <select class="form-control adInsInput selectpicker" style="width: 100%"
                           (change)="AssetMasterChanged($event)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted  }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.FullAssetNameMaster.invalid }">
                           <option value="">-Select One-</option>
                           <option *ngFor="let it of listAssetMasterObj; let i = index" [value]="i">
                             {{it.FullAssetCode}} - {{it.FullAssetName}}
@@ -99,9 +99,9 @@
                   <label class="col-md-2" translate>Asset To Be Copy</label>
                   <div class="col-md-4">
                     <div class="input-group">
-                      <select class="form-control adInsInput selectpicker" 
+                      <select class="form-control adInsInput selectpicker"
                       (change)="SerialNo1AndSerialNo2Changed($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted}">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SerialNo1Master.invalid && AssetDataForm.controls.SerialNo2Master.invalid }">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of listSerialNo1AndSerialNo2MasterObj; let i = index" [value]="i" >
                         {{it.SerialNo1}} - {{it.SerialNo2}}
