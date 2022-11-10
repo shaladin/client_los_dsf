@@ -108,7 +108,9 @@ export class PathConstantDsf {
 
     //#region 
     public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "ReportSuratKonfirmasiPersetujuan"
+    public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN_V2 = "ReportSuratKonfirmasiPersetujuanV2"
     public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN;
+    public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN_V2 = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN_V2;
     //#endregion
 
     //#region

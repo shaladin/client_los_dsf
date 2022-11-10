@@ -30,6 +30,7 @@ import { VirtualaccountPaymentAllocationunitComponent } from './report/factoring
 import { RawDataFactoringComponent } from './report/factoring/raw-data-factoring/raw-data-factoring.component';
 import { ReportAppApprovalDsfComponent } from './report/report-app-approval-dsf/report-app-approval-dsf.component';
 import { ReportAgrProcessDsfComponent } from './report/report-agr-process-dsf/report-agr-process-dsf.component';
+import { SuratkonfirmasipersetujuanV2Component } from './report/suratkonfirmasipersetujuan-v2/suratkonfirmasipersetujuan-v2.component';
 
 const routes: Routes = [
   {
@@ -232,6 +233,18 @@ const routes: Routes = [
         component: SuratkonfirmasipersetujuanComponent,
         data: {
           title: "Report Surat Konfirmasi Persetujuan"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN_V2,
+        component: SuratkonfirmasipersetujuanV2Component,
+        data: {
+          title: "Report Surat Konfirmasi Persetujuan v2"
         }
       }
     ]

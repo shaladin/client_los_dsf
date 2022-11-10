@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "datepicker",
-      "name": "s.AGRMNT_DTT",
+      "name": "s.AGRMNT_DT",
       "id": "AgrmntDtG",
       "value": "",
       "restriction" : "gte",
