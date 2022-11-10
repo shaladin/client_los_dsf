@@ -640,7 +640,9 @@ export class CommonConstant {
   public static PurchaseOrderItemTypeNonFee = "NON_FEE";
   public static PurchaseOrderItemTypeFee = "FEE";
   public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
+  public static RefProdCompIntrstType = "INTRSTTYPE";
   public static RefProdCompAssetCond = "ASSETCOND";
+  public static RefProdCompInstScheme = "INST_SCHM";
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
   public static RefMasterTypeCodeProvisionType = "PROVISION_TYPE";
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
@@ -715,6 +717,7 @@ export class CommonConstant {
   public static ReferantorCategorySupplierEmployee = "SUPPLIER EMPLOYEE";
   public static ReferantorCategoryMultifinanceEmployee = "MULTIFINANCE EMPLOYEE";
   public static ReferantorTypeSupplierEmployee = "SUPPL_EMP";
+  public static ReferantorTypeCustomerCompany = "CUSTOMER_COMPANY";
 
   //Martial Status
   public static MasteCodeMartialStatsMarried = "MARRIED";

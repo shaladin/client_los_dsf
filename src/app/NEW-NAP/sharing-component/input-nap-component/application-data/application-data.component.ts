@@ -85,11 +85,15 @@ export class ApplicationDataComponent implements OnInit {
   isDdlMrAppSourceReady: boolean = false;
   ddlMrAppSourceObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMrFirstInstTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInterestTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInstallmentSchemeObj: UcDropdownListObj = new UcDropdownListObj();
   ddlPayFreqObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMrWopObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMrCustNotifyOptObj: UcDropdownListObj = new UcDropdownListObj();
   isDdlMrFirstInstTypeReady: boolean = false;
   isDdlPayFreqReady: boolean = false;
+  isDdlInterestTypeReady: boolean = false;
+  isDdlInstallmentSchemeReady: boolean = false;
   isAppAttrContentReady: boolean = false;
   GenerateAppAttrContentObjs: Array<GenerateAppAttrContentObj> = new Array<GenerateAppAttrContentObj>();
   ListAttrAnswer = [];
@@ -270,6 +274,32 @@ export class ApplicationDataComponent implements OnInit {
     this.isDdlMrFirstInstTypeReady = true;
   }
 
+  initDdlInterestType()
+  {
+    this.ddlInterestTypeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlInterestTypeObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefProdCompIntrstType,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlInterestTypeObj.customObjName = "DDLRefProdComptCode";
+    this.ddlInterestTypeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlInterestTypeReady = true;
+  }
+
+  initDdlInstallmentScheme()
+  {
+    this.ddlInstallmentSchemeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlInstallmentSchemeObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefProdCompInstScheme,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlInstallmentSchemeObj.customObjName = "DDLRefProdComptCode";
+    this.ddlInstallmentSchemeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlInstallmentSchemeReady = true;
+  }
+
   initDdlPayFreq() {
     this.ddlPayFreqObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
     this.ddlPayFreqObj.requestObj = {
@@ -281,25 +311,6 @@ export class ApplicationDataComponent implements OnInit {
     this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_ONE;
     this.ddlPayFreqObj.isSelectOutput = true;
     this.isDdlPayFreqReady = true;
-  }
-
-  getDDLFromProdOffering(refProdCompntCode: string) {
-    let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
-    obj.RefProdCompntCode = refProdCompntCode;
-    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
-      (response) => {
-        let listDDL = response["DDLRefProdComptCode"];
-        this.applicationDDLitems[refProdCompntCode] = listDDL;
-        if (refProdCompntCode == CommonConstant.RefProdCompFirstInstType && !this.NapAppModelForm.controls.MrFirstInstTypeCode.value) {
-          this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
-          this.NapAppModelForm.patchValue({
-            MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
-          });
-        }
-      }
-    );
   }
 
   async getInterestTypeCode(ProdOfferringCode: string, ProdOfferingVersion: string) {
@@ -433,6 +444,7 @@ export class ApplicationDataComponent implements OnInit {
         this.initMailingAddress();
 
         if (this.BizTemplateCode != CommonConstant.OPL) {
+          this.initDdlInterestType();
           await this.getInterestTypeCode(this.resultResponse.ProdOfferingCode, this.resultResponse.ProdOfferingVersion);
           this.GetCrossInfoData();
         }
@@ -444,8 +456,8 @@ export class ApplicationDataComponent implements OnInit {
           this.NapAppModelForm.controls.MrInstSchemeCode.clearValidators();
           this.NapAppModelForm.controls.MrInstSchemeCode.updateValueAndValidity();
         }
-        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
         this.initDdlMrFirstInstType();
+        this.initDdlInstallmentScheme();
         this.initDdlPayFreq();
         this.getPayFregData();
         // this.GenerateAppAttrContent();

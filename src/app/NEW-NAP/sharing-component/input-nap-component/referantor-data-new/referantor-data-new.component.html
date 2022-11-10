@@ -37,6 +37,7 @@
                           <th class="text-left"><span translate class="thead-header">Referantor Type</span></th>
                           <th class="text-left"><span translate class="thead-header">Bank Account</span></th>
                           <th class="text-center"><span translate class="thead-header">Tax Calculation Method</span></th>
+                          <th class="text-center"><span translate class="thead-header">VAT</span></th>
                           <th class="text-center"><span translate class="thead-header">View Detail</span></th>
                           <th class="text-center"><span translate class="thead-header">Delete</span></th>
                         </tr>
@@ -102,6 +103,9 @@
                               [control]="NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].MrTaxCalcMethod"
                               [submit]="enjiForm.submitted">
                             </lib-uc-show-errors>
+                          </td>
+                          <td class="text-center">
+                            <input [attr.disabled]="NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].IsVatReady.value == true ? null : true" class="border-primary" type="checkbox" formControlName="IsUseVat"/>
                           </td>
                           <td class="text-center">
                             <a (click)="viewDetailReferantor(i)" class="success p-0">

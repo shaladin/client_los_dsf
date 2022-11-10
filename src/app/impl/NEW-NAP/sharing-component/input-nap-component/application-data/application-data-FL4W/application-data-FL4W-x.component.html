@@ -83,16 +83,9 @@
                 <!-- First Installment Type -->
                 <label class="col-md-2 adins-required-label" translate> First Installment Type </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
-                      {{it.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="NapAppModelForm.controls.MrFirstInstTypeCode"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDdlMrFirstInstTypeReady" [dropdownListObj]="ddlMrFirstInstTypeObj"
+                  [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'MrFirstInstTypeCode'">
+                  </lib-ucdropdownlist>
                 </div>
               </div>
 
@@ -100,20 +93,16 @@
                 <!-- Payment Frequency -->
                 <label class="col-md-2 adins-required-label" translate> Payment Frequency</label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }"
-                    (change)="ChangeNumOfInstallmentPayFreq($event)">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['Pay_Freq']" value="{{it.PayFreqCode}}">
-                      {{it.Descr}} </option>
-                  </select>
-                  <lib-uc-show-errors [control]="NapAppModelForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDdlPayFreqReady" [dropdownListObj]="ddlPayFreqObj"
+                  [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'PayFreqCode'" (callback)="ChangeNumOfInstallmentPayFreq($event)">
+                  </lib-ucdropdownlist>
                 </div>
                 <!-- Interest Type -->
                 <label class="col-md-2 adins-required-label" translate> Interest Type </label>
                 <div class="col-md-4">
-                  <label class="adInsLabel"> {{NapAppModelForm.controls.InterestTypeDesc.value}} </label>
+                  <lib-ucdropdownlist *ngIf="isDdlInterestTypeReady" [dropdownListObj]="ddlInterestTypeObj"
+                  [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'InterestType'">
+                  </lib-ucdropdownlist>
                 </div>
               </div>
 
@@ -127,14 +116,9 @@
                   <label class="adInsLabel" translate>Installment Scheme</label>
                 </div>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: 50%" formControlName="MrInstSchemeCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors [control]="NapAppModelForm.controls.MrInstSchemeCode"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDdlInstallmentSchemeReady" [dropdownListObj]="ddlInstallmentSchemeObj"
+                  [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'MrInstSchemeCode'">
+                  </lib-ucdropdownlist>
                 </div>
               </div>
 
