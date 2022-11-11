@@ -8,7 +8,7 @@ import { ViewPurchaseOrderComponent } from './view-purchase-order/view-purchase-
 import { ViewAgrmntDocumentComponent } from "./view-document/view-document.component";
 import { ViewDeliveryOrderComponent } from "./view-delivery-order/view-delivery-order.component";
 import { AgrmntFinancialComponent } from './agrmnt-financial/agrmnt-financial.component';
- 
+
 import { ViewAgrmntSummaryComponent } from "./view-summary/view-summary.component";
 import { ViewCommissionComponent } from './view-commission/view-commission.component';
 import { ViewDeviationComponent } from './view-deviation/view-deviation.component';
@@ -20,6 +20,7 @@ import { ViewAppCollateralMultiComponent } from './view-app-collateral-multi/vie
 // import { AgrmntCardComponent } from './agrmnt-card/agrmnt-card.component';
 import { ListDataCommissionAgrmntComponent } from "./view-commission/list-data-commission/list-data-commission.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewInsuranceDetailXComponent } from "app/impl/NEW-NAP/sharing-component/view-agrmnt-component/view-insurance-detail/view-insurance-detail-x.component";
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     ViewAgrmntReservedFundComponent,
     AgrmntLifeInsuranceComponent,
     ViewAgrmntDocumentComponent,
-    ViewDeliveryOrderComponent,  
+    ViewDeliveryOrderComponent,
     ViewPurchaseOrderComponent,
     ViewAgrmntSummaryComponent,
     ViewCommissionComponent,
@@ -52,7 +53,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     AgrmntLifeInsuranceComponent,
     ViewPurchaseOrderComponent,
     ViewAgrmntDocumentComponent,
-    ViewDeliveryOrderComponent, 
+    ViewDeliveryOrderComponent,
     AgrmntFinancialComponent,
     ViewAgrmntSummaryComponent,
     ViewCommissionComponent,
@@ -63,6 +64,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     ViewAppCollateralSingleComponent,
     ViewAppCollateralMultiComponent,
     ListDataCommissionAgrmntComponent,
+    ViewInsuranceDetailXComponent
     // AgrmntCardComponent
   ],
   providers: [

@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title" translate>GENERATE POTENTIAL RO CFNA</h4>
+  </div>
+  <div class="card-body">
+    <lib-ucaddtotemp *ngIf="TempPagingObj.isReady" [tempPagingObj]="TempPagingObj" (callback)="getListTemp($event)">
+    </lib-ucaddtotemp>
+    <div class="card-header">
+      <div class="text-right">
+        <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickGenerate()">
+          <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Generate Potential RO</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

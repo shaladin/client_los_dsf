@@ -316,7 +316,7 @@
       </div>
     </div>
 
-    <ref-attr-form-generate *ngIf="isAttrReady" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+    <uc-attribute-form *ngIf="isAttrReady" [parentForm]="AddCollForm" [identifier]="identifierAttr" [enjiForm]="enjiForm" [AttrSetting]="attrSettingObj"></uc-attribute-form>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
@@ -338,7 +338,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-2 adins-required-label" translate>Owner Name</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}" translate>Owner Name</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerName"
                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerName.invalid }">
@@ -346,7 +346,7 @@
           </lib-uc-show-errors>
         </div>
         <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Owner ID Type</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}" translate>Owner ID Type</label>
         <div class="col-md-2">
           <select class="form-control" formControlName="MrIdType"
                   (change)="ChangeIdType($event.target.value)"
@@ -358,7 +358,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}" translate>Owner Relationship</label>
         <div class="col-md-3">
           <select class="form-control" formControlName="OwnerRelationship"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
@@ -368,7 +368,8 @@
           </lib-uc-show-errors>
         </div>
         <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Owner ID No</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}"
+        translate>Owner ID No</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerIdNo"
                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
@@ -395,7 +396,7 @@
           <lib-uc-show-errors [control]="AddCollForm.controls.OwnerProfessionCode" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
         </div>
-        <label class="col-md-2 adins-required-label" translate>Owner Mobile Phone No</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}" translate>Owner Mobile Phone No</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
@@ -688,7 +689,7 @@
       </div>
     </div>
 
-    <ref-attr-form-generate *ngIf="isAttrReady" [IsDisable]="IsDisable" [IsShowBtnRefresh]="false" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+    <uc-attribute-form *ngIf="isAttrReady" [parentForm]="AddCollForm" [identifier]="identifierAttr" [enjiForm]="enjiForm" [AttrSetting]="attrSettingObj"></uc-attribute-form>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
@@ -710,7 +711,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-2 adins-required-label" translate>Owner Name</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}" translate>Owner Name</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerName"
                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerName.invalid }">
@@ -718,7 +719,7 @@
           </lib-uc-show-errors>
         </div>
         <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Owner ID Type</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}" translate>Owner ID Type</label>
         <div class="col-md-2">
           <select class="form-control" formControlName="MrIdType"
                   (change)="ChangeIdType($event.target.value)"
@@ -730,7 +731,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}" translate>Owner Relationship</label>
         <div class="col-md-3">
           <select class="form-control" formControlName="OwnerRelationship"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
@@ -740,7 +741,7 @@
           </lib-uc-show-errors>
         </div>
         <label class="col-md-1"></label>
-        <label class="col-md-2 adins-required-label" translate>Owner ID No</label>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label' : isMandatoryObj == true}" translate>Owner ID No</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerIdNo"
                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">

@@ -1,0 +1,61 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "AutoDebitRegistrationMainInfoId",
+        "subSectionTitle": "Main Info",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Transaction No",
+            "property": "TransactionNo"
+          },
+          {
+            "type": "callback",
+            "key": "Customer",
+            "label": "Cust Name",
+            "property": "CustName"
+          },
+          {
+            "type": "link",
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "name": "AgrmntNo",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_AGRMNT",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "label": "Bank Name",
+            "property": "BankName"
+          },
+          {
+            "type": "text",
+            "label": "Request Date",
+            "property": "RequestDate"
+          },
+          {
+            "type": "text",
+            "label": "Transaction Date",
+            "property": "TransactionDate"
+          },
+          {
+            "type": "text",
+            "label": "Status",
+            "property": "StatusDescr"
+          }
+        ],
+        "querystring": {
+          "name": "viewAutoDebitRegistration"
+        }
+      }
+    ]
+  }
