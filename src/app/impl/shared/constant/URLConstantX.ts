@@ -54,7 +54,8 @@ export class URLConstantX {
   // App Invoice
   public static UpdateAppInvoiceDlfnX = environment.losUrl + '/v1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
   public static UpdateAppInvoiceDlfnV2X = environment.losUrl + '/v2' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
-
+  public static UpdateAppInvoiceDlfnV2_1X = environment.losUrl + '/v2.1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
+  
   //App Reserved Fund
   public static GetRsvFundSingleRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetRsvFundSingleRule";
   public static GetAppRsvFundPriorityRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetAppRsvFundPriorityRule";
