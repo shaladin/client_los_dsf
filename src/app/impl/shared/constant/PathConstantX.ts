@@ -38,7 +38,7 @@ export class PathConstantX {
   public static VIEW_CUST_EXPSR_X = "CustExposureView/X";
   public static VIEW_FOU_CUST_PERSONAL_DETAIL_X = "Customer/X/PersonalDetailX";
   public static VIEW_FOU_CUST_COY_DETAIL_X = "Customer/X/CoyDetail/X";
-
+  public static VIEW_AUTO_DEBIT_REGIS = "AutoDebitRegisView"
   //#endregion
 
   //#region Nap-Crd-Prcs
@@ -66,7 +66,7 @@ export class PathConstantX {
   public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X;
   public static DO_MULTI_ASSET_PAGING_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.PAGING;
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
-  public static CUST_CONFIRM_PAGING_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
+  public static CUST_CONFIRM_PAGING_X = PathConstant.CUST_CONFIRM + '/' + PathConstant.PAGING;
   public static CUST_CONFIRM_DETAIL_X = PathConstant.CUST_CONFIRM + '/' + PathConstantX.DETAIL_X;
 
   //#endregion
@@ -82,6 +82,11 @@ export class PathConstantX {
   public static INVOICE_PAGING_X = PathConstant.INVOICE + '/' + PathConstantX.PAGING;
   public static INVOICE_DETAIL_X = PathConstant.INVOICE + '/' + PathConstantX.DETAIL_X;
   public static INVOICE_X = 'InvoiceX';
+  public static AUTO_DEBIT_REGISTRATION = 'AutoDebitRegistration';
+  public static AUTO_DEBIT_REGISTRATION_PAGING = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.PAGING;
+  public static AUTO_DEBIT_REGISTRATION_INQUIRY = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.INQUIRY;
+  public static AUTO_DEBIT_REGISTRATION_CANCEL = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.CANCEL;
+
   //#endregion
 
   //#region Nap-Cust-Compl
@@ -219,6 +224,8 @@ export class PathConstantX {
 
   //region LEAD
   public static SIMPLE_LEAD_DETAIL = PathConstant.SIMPLE_LEAD + "/" + PathConstantX.DETAIL_X;
+  public static POTENTIAL_ROX = "PotentialRoX";
+  public static POTENTIAL_ROX_PAGING = PathConstantX.POTENTIAL_ROX + "/" + PathConstantX.PAGING;
   //endregion
 
   //#region Cust Sync
@@ -233,6 +240,8 @@ export class PathConstantX {
   public static LTKM = "Ltkm";
   public static VERIFY_DETAIL = PathConstant.VERIFY_DETAIL + PathConstantX.X;
   public static LTKM_VIEW = PathConstantX.LTKM + "/" + PathConstant.VIEW + PathConstantX.X;
+
+  public static FL4W_VIEW_INS_X = "ViewInsuranceX";
 }
 
 

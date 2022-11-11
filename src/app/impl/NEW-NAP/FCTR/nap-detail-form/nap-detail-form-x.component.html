@@ -134,7 +134,7 @@
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 7 && isDmsReady && SysConfigResultObj?.ConfigValue == 1"
-                (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'"
+                (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="ReturnHandlingHId > 0? false : true"
                 [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>

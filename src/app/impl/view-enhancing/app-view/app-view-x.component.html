@@ -90,15 +90,17 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsInsurance" label="Insurance">
+            <mat-tab *ngIf="IsInsurance && bizTemplateCode != 'CFNA'" label="Insurance">
               <ng-template matTabContent>
-                <view-insurance [AppId]="AppId"></view-insurance>
+                <!-- <view-insurance [AppId]="AppId"></view-insurance> -->
+                <app-app-insurance-x [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance-x>
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsMultiInsurance" label="Insurance">
+            <mat-tab *ngIf="IsMultiInsurance && bizTemplateCode != 'CFNA'" label="Insurance">
               <ng-template matTabContent>
-                <app-app-insurance [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance>
+                <!-- <app-app-insurance [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance> -->
+                <app-app-insurance-x [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-insurance-x>
               </ng-template>
             </mat-tab>
 
@@ -168,7 +170,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsPefindoResult" label="Pefindo Result">
+            <mat-tab *ngIf="IsPefindoResult" label="Credit Bureau Checking Result">
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>

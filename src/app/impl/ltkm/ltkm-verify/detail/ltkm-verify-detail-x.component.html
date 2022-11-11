@@ -15,14 +15,20 @@
         <ng-template matTabContent>            
           <app-view-ltkm-cust-data-company-x *ngIf="isCustTypePersonal == false" [LtkmCustId]="LtkmCustId">
           </app-view-ltkm-cust-data-company-x>
-          <app-view-ltkm-cust-data-personal *ngIf="isCustTypePersonal" [LtkmCustId]="LtkmCustId">
-          </app-view-ltkm-cust-data-personal>
+          <app-view-ltkm-cust-data-personal-x *ngIf="isCustTypePersonal" [LtkmCustId]="LtkmCustId">
+          </app-view-ltkm-cust-data-personal-x>
         </ng-template>
       </mat-tab>
 
       <mat-tab label="Customer History">
         <ng-template matTabContent>
           <view-ltkm-cust-history [LtkmCustId]="LtkmCustId"></view-ltkm-cust-history>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Approval History">
+        <ng-template matTabContent>
+          <app-ltkm-approval-hist [LtkmNo]="LtkmNo"></app-ltkm-approval-hist>
         </ng-template>
       </mat-tab>
 

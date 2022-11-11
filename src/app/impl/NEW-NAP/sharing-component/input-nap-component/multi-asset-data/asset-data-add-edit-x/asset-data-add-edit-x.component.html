@@ -24,13 +24,16 @@
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonId.invalid }">
                       <option value="">-Select One-</option>
                       <option *ngFor="let it of listSalesObj" [value]="it.VendorEmpId">
-                        {{it.VendorEmpName}}
+                        <span *ngIf="it.MrVendorEmpPositionCode === 'SALES_PERSON'">{{it.VendorEmpName}} - SALES PERSON</span>
+                        <span *ngIf="it.MrVendorEmpPositionCode === 'ADMIN_HEAD'">{{it.VendorEmpName}} - ADMIN HEAD</span>
+                        <span *ngIf="it.MrVendorEmpPositionCode === 'BRANCH_MANAGER'">{{it.VendorEmpName}} - BRANCH MANAGER</span>
+                        <span *ngIf="!(it.MrVendorEmpPositionCode === 'BRANCH_MANAGER' || it.MrVendorEmpPositionCode === 'ADMIN_HEAD' || it.MrVendorEmpPositionCode === 'SALES_PERSON')">{{it.VendorEmpName}} - {{it.MrVendorEmpPositionCode}}</span>
                       </option>
                     </select>
                     <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonId" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
-
                   </div>
+                </div>
                   <!-- <div class="form-group row"> -->
                   <!-- <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
                   <div class="col-md-4">
@@ -42,9 +45,10 @@
                       </option>
                     </select>
                   </div> -->
+                <div class="form-group row">
                   <label class="col-md-2 adInsLabel" translate>Admin Head</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="AdminHeadId"
+                    <select *ngIf="IsSales" class="form-control adInsInput" style="width: auto" formControlName="AdminHeadId"
                       (change)="AdminChanged($event)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadId.invalid }">
                       <option value="">-Select One-</option>
@@ -52,6 +56,65 @@
                         {{it.VendorEmpName}}
                       </option>
                     </select>
+                    <label *ngIf="!IsSales">{{AdminHeadName}}</label>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'assetMasterId'" [title]="'Asset Master'" [panel]="'assetMaster'" *ngIf="BizTemplateCode === 'FL4W' && LobCode === 'SLB'">
+              </lib-ucSubsection>
+              <div id="assetMaster" *ngIf="BizTemplateCode === 'FL4W' && LobCode === 'SLB'">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4 adInsLabel" translate>Asset Name</label>
+                      <div class="col-md-8">
+                        <select class="form-control adInsInput selectpicker" style="width: 100%"
+                          (change)="AssetMasterChanged($event)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.FullAssetNameMaster.invalid }">
+                          <option value="">-Select One-</option>
+                          <option *ngFor="let it of listAssetMasterObj; let i = index" [value]="i">
+                            {{it.FullAssetCode}} - {{it.FullAssetName}}
+                          </option>
+                        </select>                  
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4" translate>Manufacturing Year</label>
+                      <div class="col-md-8">
+                        <select class="form-control adInsInput" style="width: auto" formControlName="ManufacturingYearMaster"
+                        (change)="ManufacturingYearMasterChanged($event)"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.ManufacturingYearMaster.invalid }">
+                        <option value="">-Select One-</option>
+                        <option *ngFor="let it of listManufacturingYearMasterObj" [value]="it.ManufacturingYear">
+                          {{it.ManufacturingYear}}
+                        </option>
+                      </select>                
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Asset To Be Copy</label>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <select class="form-control adInsInput selectpicker"
+                      (change)="SerialNo1AndSerialNo2Changed($event)"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SerialNo1Master.invalid && AssetDataForm.controls.SerialNo2Master.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of listSerialNo1AndSerialNo2MasterObj; let i = index" [value]="i" >
+                        {{it.SerialNo1}} - {{it.SerialNo2}}
+                      </option>
+                    </select>
+                      <div class="input-group-append">
+                        <span class="input-group-btn">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyAssetMaster()">
+                            <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Copy</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

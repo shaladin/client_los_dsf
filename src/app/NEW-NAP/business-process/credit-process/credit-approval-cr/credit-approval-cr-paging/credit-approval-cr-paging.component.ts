@@ -63,6 +63,7 @@ export class CreditApprovalCrPagingComponent implements OnInit, OnDestroy {
   }
 
   RefetchData(){
+    this.inputPagingObj.isSearched = true;
     this.isReady = false;
     this.SubscribeParam();
     this.SetUcPaging();
@@ -125,6 +126,7 @@ export class CreditApprovalCrPagingComponent implements OnInit, OnDestroy {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
         this.apvTaskService.HoldApvTask(ev.RowObj.TaskId);
+        this.RefetchData();
       }
     }
     else if (ev.Key == "TakeBack") {
@@ -132,6 +134,7 @@ export class CreditApprovalCrPagingComponent implements OnInit, OnDestroy {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         this.apvTaskService.TakeBackApvTask(ev.RowObj.TaskId, ev.RowObj.MainUser);
+        this.RefetchData();
       }
     }
     else if (ev.Key == "UnClaim") {
@@ -139,6 +142,7 @@ export class CreditApprovalCrPagingComponent implements OnInit, OnDestroy {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_UNCLAIM);
       } else {
         this.apvTaskService.UnclaimApvTask(ev.RowObj.TaskId);
+        this.RefetchData();
       }
     }
     else {

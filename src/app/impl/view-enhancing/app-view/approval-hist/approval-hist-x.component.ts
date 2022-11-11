@@ -47,18 +47,20 @@ export class ApprovalHistXComponent implements OnInit {
     else {
       this.OfferingObj = new UcInputApprovalHistoryObj();
       this.OfferingObj.PathUrl = "/Approval/GetTaskHistory";
+      this.OfferingObj.Identifier = "OfferingObj";
 
       this.CrdApvObj = new UcInputApprovalHistoryObj();
       this.CrdApvObj.PathUrl = "/Approval/GetTaskHistory";
+      this.CrdApvObj.Identifier = "CrdApvObj";
 
       this.PregoliveApvObj = new UcInputApprovalHistoryObj();
       this.PregoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
+      this.PregoliveApvObj.Identifier = "PregoliveApvObj";
 
       this.CrdApvRsltExtObj = new UcInputApprovalHistoryObj();
       this.CrdApvRsltExtObj.PathUrl = "/Approval/GetTaskHistory";
-
-      this.GoliveApvObj = new UcInputApprovalHistoryObj();
-      this.GoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
+      this.CrdApvRsltExtObj.Identifier = "CrdApvRsltExtObj";
+      
       this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
         (response) => {
           for (let i = 0; i < response['ListRfaLogObj'].length; i++) {

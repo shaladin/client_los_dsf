@@ -109,7 +109,16 @@ export class CreditApvResultExtDetailComponent implements OnInit {
       async (response: CreditApvResultExtObj) => {
         console.log(response);
         this.CrdApvMainDataObj = response;
-        this.AgrmntNo = this.CrdApvMainDataObj.AgrmntNo;
+        if(this.CrdApvMainDataObj.NumberOfExtension == 0 && this.AgrmntId != null){
+          var agrObj = { Id: this.AgrmntId };
+          await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj).toPromise().then(
+            (response) => {
+              this.AgrmntNo = response["AgrmntNo"];
+            });
+        }
+        else{
+          this.AgrmntNo = this.CrdApvMainDataObj.AgrmntNo;
+        }
 
         let ExpDt = this.AppCrdApvResultExpDt;
         if (this.AgrmntNo != null) {
