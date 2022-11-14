@@ -76,7 +76,9 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-2 adins-required-label" for="inscoBranchName" translate>Insco Branch Name</label>
+            <label class="col-md-2" 
+                    [ngClass]="{ 'adins-required-label': InsuranceDataForm.controls.InsAssetCoveredBy.value != 'CU'}" 
+                    for="insuredBy" translate>Insco Branch Name</label>
             <div class="col-md-4">
               <input type="text" id="inscoBranchName" class="form-control" formControlName="CustInscoBranchName"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustInscoBranchName.invalid }">
@@ -92,7 +94,9 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-2 adins-required-label" for="custCvgAmt" translate>Coverage Amount</label>
+            <label class="col-md-2"
+            [ngClass]="{ 'adins-required-label': InsuranceDataForm.controls.InsAssetCoveredBy.value != 'CU'}"
+            for="custCvgAmt" translate>Coverage Amount</label>
             <div class="col-md-4">
               <input type="" currencyMask id="custCvgAmt" class="form-control" formControlName="CustCvgAmt"
                 [options]="{ allowNegative: false }"
@@ -109,14 +113,18 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-md-2 adins-required-label" for="startDt" translate>Start Date</label>
+            <label class="col-md-2" 
+            [ngClass]="{ 'adins-required-label': InsuranceDataForm.controls.InsAssetCoveredBy.value != 'CU'}"
+            for="startDt" translate>Start Date</label>
             <div class="col-md-4">
               <input type="date" class="form-control" formControlName="CustCoverStartDt" id="startDt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustCoverStartDt.invalid }">
               <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustCoverStartDt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <label class="col-md-2 adins-required-label" for="endDt" translate>End Date</label>
+            <label class="col-md-2"
+            [ngClass]="{ 'adins-required-label': InsuranceDataForm.controls.InsAssetCoveredBy.value != 'CU'}" 
+            for="endDt" translate>End Date</label>
             <div class="col-md-4">
               <input type="date" class="form-control" formControlName="EndDt" id="endDt" (focusout)="endDt_FocusOut()"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.EndDt.invalid }">
@@ -269,7 +277,8 @@
             <div class="form-group row">
               <label class="col-md-2" for="mainCvg" translate>Main Coverage</label>
               <div class="col-md-4">
-                <select class="form-control width-75-per" id="mainCvg" formControlName="InsMainCvgType">
+                <select class="form-control width-75-per" id="mainCvg" formControlName="InsMainCvgType"
+                  (change)="loadOptionsAdditionalCoverage($event, true, 0)">
                   <option *ngFor="let item of insMainCvgTypeObj" [value]="item.Key">
                     {{item.Value}}
                   </option>
@@ -289,13 +298,35 @@
                   class="custom-control display-inline-block">
                   <div [formGroupName]="i">
                     <label [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'">
-                      <input type="checkbox" class="checkboxLabel" formControlName="Value">
+                      <input type="checkbox" class="checkboxLabel" formControlName="Value"
+                        (change)="loadOptionsAdditionalCoverage($event, false, i)">
                       {{insAddCvgTypeRuleObj[i].Value}}
                     </label>
                     <!-- <mat-checkbox [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'" formControlName="Value">
                     {{insAddCvgTypeRuleObj[i].Value}}</mat-checkbox> -->
                   </div>
                 </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row"
+                *ngFor="let itemControl of InsuranceDataForm.controls.InsAddCvgTypes['controls']; let x=index"
+                [hidden]="insAddCvgTypeRuleObj[x].Value == 'Loading' || !InsuranceDataForm.controls.InsAddCvgTypes['controls'][x]['controls']['Value'].value">
+                <label class="col-md-2" for="mainCvg"
+                  *ngIf="isAdditionalCoverageChecked[x] && checkIsOptionUndefined(x)" translate>Sum Insured Amount
+                  -
+                  {{InsuranceDataForm.controls.InsAddCvgTypes['controls'][x]['controls']['Key'].value}}</label>
+                <div class="col-md-4" formArrayName="InsAddCvgTypes">
+                  <div [formGroupName]="x">
+                    <select class="form-control width-75-per" id="sumInsuredAmount" formControlName="ValueOption"
+                      *ngIf="isAdditionalCoverageChecked[x] && checkIsOptionUndefined(x)">
+                      <option
+                        *ngFor="let option of optionsAdditionalCoverage[0][InsuranceDataForm.controls.AppInsMainCvgs['controls'][0]['controls']['AppInsAddCvgs']['controls'][x]['controls']['MrAddCvgTypeCode'].value]; let z=index"
+                        [value]="option['SumInsuredAmt']">
+                        {{option['SumInsuredAmt']}}</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-group row" [hidden]="!isOffTheRoadOrHE">
