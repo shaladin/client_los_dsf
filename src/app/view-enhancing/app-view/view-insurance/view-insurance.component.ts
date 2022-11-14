@@ -11,6 +11,8 @@ import { AppInsMainCvgObj } from 'app/shared/model/app-ins-main-cvg-obj.model';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppViewInsuranceDetailComponent } from '../app-insurance/app-insurance-detail/app-insurance-detail.component';
 
 @Component({
   selector: "view-insurance",
@@ -26,59 +28,31 @@ export class ViewInsuranceComponent implements OnInit {
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
   appInsMainCvgObjs: Array<AppInsMainCvgObj> = new Array<AppInsMainCvgObj>();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
+  appCollObjs: any;
+  custTotalPremi: number;
+  totalCapitalizedAmt: number;
+  totalCustPaidAmt: number;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private modalService: NgbModal) {
   }
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppInsMainCvg.json";
-    this.getInsuranceData();
+
+    this.http.post(URLConstant.GetListAppInsObjByAppIdForView, { Id: this.AppId }).subscribe(
+      (response: any) => {
+        this.appCollObjs = response.CollateralAppInsObjects;
+        this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
+        this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
+        this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
+      });
   }
 
-  getInsuranceData() {
-    if (this.AppId != 0 && this.AppId != null && this.AppId != undefined) {
-      var reqObj = { Id: this.AppId };
-      this.http.post(URLConstant.GetInsuranceDataByAppIdForView, reqObj).subscribe(
-        (response) => {
-          this.appInsuranceObj = response["AppInsuranceObj"];
-          this.appInsObjObj = response["AppInsObjObj"];
-          if (response["AppAssetObj"] != null) {
-            this.appAssetObj = response["AppAssetObj"];
-          }
-          if (response["AppCollateralObj"] != null) {
-            this.appCollateralObj = response["AppCollateralObj"];
-          }
-          this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
-
-          var detailForGridCoverage = {
-            Data: this.appInsMainCvgObjs,
-            Count: "0"
-          }
-
-          this.inputGridObj.resultData = detailForGridCoverage;
-        });
-    }
-    else {
-      var reqAssetObj = { Id: this.AppAssetId };
-      this.http.post(URLConstant.GetInsuranceDataByAppAssetIdForView, reqAssetObj).subscribe(
-        (response) => {
-          this.appInsuranceObj = response["AppInsuranceObj"];
-          this.appInsObjObj = response["AppInsObjObj"];
-          if (response["AppAssetObj"] != null) {
-            this.appAssetObj = response["AppAssetObj"];
-          }
-          if (response["AppCollateralObj"] != null) {
-            this.appCollateralObj = response["AppCollateralObj"];
-          }
-          this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
-
-          var detailForGridCoverage = {
-            Data: this.appInsMainCvgObjs,
-            Count: "0"
-          }
-
-          this.inputGridObj.resultData = detailForGridCoverage;
-        });
-    }
+  viewDetailCollateralHandler(appInsObjId){
+    const modalInsDetail = this.modalService.open(AppViewInsuranceDetailComponent);
+    modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
+    modalInsDetail.result.then().catch((error) => {
+    });
   }
 }
