@@ -33,6 +33,7 @@ import { AgrmntTcObj } from 'app/shared/model/agrmnt-tc/agrmnt-tc-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail-x',
@@ -79,6 +80,10 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   LobCode: string;
   DeliveryDt: Date = new Date();
   appCustId: number;
+
+  maxDiff: number = null;
+  ReqByCodeObj: GenericObj = new GenericObj();
+  diffDays: number = 0;
 
   constructor(
     private httpClient: HttpClient,
@@ -472,7 +477,18 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING], { BizTemplateCode: this.bizTemplateCode });
   }
 
-  SaveForm() {
+  async SaveForm() {
+    await this.getMaxDiffDays();
+    let diffDays = 0;
+    const diffTimes = new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime() - new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime();
+    if (diffTimes > 0) {
+      diffDays = diffTimes / (1000 * 3600 * 24)
+      console.log(diffDays);
+    }
+    if(this.diffDays > this.maxDiff){
+      this.toastr.warningMessage('Difference date between effective date and go live date is too long');
+      return;
+    }
     if (this.AppTcForm.valid && this.DOAssetForm.valid) {
       if (this.doList.length > 0) {
         if (new Date(this.DOAssetForm.controls.EffectiveDt.value) < this.DeliveryDt) {
@@ -666,5 +682,15 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
         GoLiveEstimated: this.DOAssetForm.controls.EffectiveDt.value
       });
     }
+  }
+
+  async getMaxDiffDays(){
+    this.ReqByCodeObj.Code = CommonConstantX.GS_CODE_MAX_DIFF_DAYS;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, this.ReqByCodeObj).toPromise().then(
+      (response) => {
+        if(response["GsValue"] != null){
+          this.maxDiff = parseInt(response["GsValue"]);
+        }
+      });
   }
 }
