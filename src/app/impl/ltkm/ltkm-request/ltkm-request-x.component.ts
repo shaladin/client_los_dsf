@@ -84,7 +84,7 @@ export class LtkmRequestXComponent implements OnInit {
     @ViewChild(LtkmCustCompanyMainDataComponent) LtkmCustCompanyMainDataComponent;
     @ViewChild(LtkmEmergencyContactComponent) LtkmEmergencyContactComponent;
     @ViewChild(LtkmFamilyMainDataPagingComponent) LtkmFamilyMainDataPagingComponent;
-    
+
 
     @ViewChild("attrlistcustcomponent") public attrlistcustcomponent: LtkmAttrContentComponentComponent;
     @ViewChild("attrlistfindatacomponent") public attrlistfindatacomponent: LtkmAttrContentComponentComponent;
@@ -220,7 +220,7 @@ export class LtkmRequestXComponent implements OnInit {
     BankFormIsDetail: boolean = false;
     LtkmCustId: number;
     isLockLookupCust: boolean = false;
-    listFamily: Array<CustPersonalFamilyLtkmObj> = new Array();    
+    listFamily: Array<CustPersonalFamilyLtkmObj> = new Array();
 
     readonly modeReqConst: string = CommonConstant.REQ;
     readonly modeRtnConst: string = CommonConstant.RTN;
@@ -247,10 +247,10 @@ export class LtkmRequestXComponent implements OnInit {
         this.route.queryParams.subscribe(params => {
             if (params["AppId"] != undefined && params["AppId"] != null) {
                 this.appId = params["AppId"];
-            }            
+            }
             if (params["LtkmCustId"] != undefined && params["LtkmCustId"] != null) {
                 this.LtkmCustId = params["LtkmCustId"];
-            }            
+            }
             if (params["WfTaskListId"] != undefined && params["WfTaskListId"] != null) {
                 this.WfTaskListId = params["WfTaskListId"];
                 if (this.WfTaskListId != undefined) {
@@ -298,25 +298,25 @@ export class LtkmRequestXComponent implements OnInit {
         this.inputAddressObjForMailingCoy.showPhn3 = false;
         this.inputAddressObjForMailingCoy.showOwnership = true;
         this.inputAddressObjForMailingCoy.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeMailing);
-        
+
         this.isCcAddrOwnershipMandatory = this.setOwnership(CommonConstant.AddrTypeCompany);
 
         this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
         this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
-        this.inputLookupApplicationObj.isRequired = true;   
+        this.inputLookupApplicationObj.isRequired = true;
         this.inputLookupApplicationObj.addCritInput = new Array();
-        // this.inputLookupApplicationObj.isDisable = true;            
+        // this.inputLookupApplicationObj.isDisable = true;
 
         this.inputLookupApplicationCompanyObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationCompanyObj.urlEnviPaging = environment.losUrl + "/v1";
         this.inputLookupApplicationCompanyObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
         this.inputLookupApplicationCompanyObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
-        this.inputLookupApplicationCompanyObj.isRequired = true;   
+        this.inputLookupApplicationCompanyObj.isRequired = true;
         this.inputLookupApplicationCompanyObj.addCritInput = new Array();
-        // this.inputLookupApplicationCompanyObj.isDisable = true;            
-            
+        // this.inputLookupApplicationCompanyObj.isDisable = true;
+
 
         await this.bindCustTypeObj();
         this.initAddrObj();
@@ -336,9 +336,9 @@ export class LtkmRequestXComponent implements OnInit {
                 this.appData = response;
             }
         ).catch(
-            (error) => {                
+            (error) => {
             }
-        );        
+        );
     }
 
     claimTask() {
@@ -928,7 +928,7 @@ export class LtkmRequestXComponent implements OnInit {
         var appCustAddrObj = new Array<LtkmCustAddrObj>();
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal)
         {
-            for (let i = 0; i < this.addrPersonalObjs.length; i++) 
+            for (let i = 0; i < this.addrPersonalObjs.length; i++)
             {
                 let addrVar = new LtkmCustAddrObj();
                 addrVar.MrCustAddrTypeCode = this.addrPersonalObjs[i].MrCustAddrTypeCode;
@@ -955,7 +955,7 @@ export class LtkmRequestXComponent implements OnInit {
         }
         else
         {
-            for (let i = 0; i < this.addrCompanyObjs.length; i++) 
+            for (let i = 0; i < this.addrCompanyObjs.length; i++)
             {
                 let addrVar = new LtkmCustAddrObj();
                 addrVar.MrCustAddrTypeCode = this.addrCompanyObjs[i].MrCustAddrTypeCode;
@@ -1012,7 +1012,7 @@ export class LtkmRequestXComponent implements OnInit {
         else{
 
         }
-        
+
 
         return appCustAddrJobObj;
     }
@@ -1219,7 +1219,7 @@ export class LtkmRequestXComponent implements OnInit {
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob(custModelCode);
         }
 
@@ -1228,7 +1228,7 @@ export class LtkmRequestXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
@@ -1243,7 +1243,7 @@ export class LtkmRequestXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
             appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
@@ -1258,14 +1258,14 @@ export class LtkmRequestXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
             appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
             appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
             appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
             appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
-            appCustPersonalJobDataObj.LtkmCustAddrJobObj = null; 
+            appCustPersonalJobDataObj.LtkmCustAddrJobObj = null;
         } else {
             this.CekDt(appCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
         }
@@ -1948,9 +1948,9 @@ export class LtkmRequestXComponent implements OnInit {
         }
     }
 
-    CopyCustomer(event) {      
-        this.copyAddrFromLookup(event);   
-        // this.selectCustNo = event.             
+    CopyCustomer(event) {
+        this.copyAddrFromLookup(event);
+        // this.selectCustNo = event.
 
         //perlu diganti cara bacanya (gak perlu), liat dri SELECT * FROM FOUNDATION_DSF.dbo.CUST_PERSONAL_FAMILY
         // if (event["CustPersonalContactPersonObjs"] != undefined) {
@@ -2030,10 +2030,10 @@ export class LtkmRequestXComponent implements OnInit {
             this.LtkmFamilyMainDataPagingComponent.listFamily = event["custPersonalFamilyForLtkmObjs"];
             this.LtkmFamilyMainDataPagingComponent.loadFamilyListData();
         }
-        if (event["CustObj"] != undefined) {            
-            this.selectedCustNo = event["CustObj"]["CustNo"];                 
-            this.isCustomerSelected = true;                            
-            this.isCustomerCompanySelected = false;                 
+        if (event["CustObj"] != undefined) {
+            this.selectedCustNo = event["CustObj"]["CustNo"];
+            this.isCustomerSelected = true;
+            this.isCustomerCompanySelected = false;
             var critLookupApplicationObj = new CriteriaObj();
             critLookupApplicationObj.DataType = "text";
             critLookupApplicationObj.restriction = AdInsConstant.RestrictionEq;
@@ -2042,14 +2042,14 @@ export class LtkmRequestXComponent implements OnInit {
             this.inputLookupApplicationObj.addCritInput = [];
             this.inputLookupApplicationObj.addCritInput.push(critLookupApplicationObj);
             if (this.ucLookupApplicationData != undefined)
-                this.ucLookupApplicationData.setAddCritInput();              
-            this.inputLookupApplicationObj.isDisable = false;      
-            this.inputLookupApplicationCompanyObj.isDisable = true;                  
-        }        
+                this.ucLookupApplicationData.setAddCritInput();
+            this.inputLookupApplicationObj.isDisable = false;
+            this.inputLookupApplicationCompanyObj.isDisable = true;
+        }
     }
 
-    CopyCustomerCompany(event) {        
-        this.copyAddrCompanyFromLookup(event);        
+    CopyCustomerCompany(event) {
+        this.copyAddrCompanyFromLookup(event);
         if (event["CustCompanyContactPersonObjs"] != undefined) {
             // this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
             this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj = event["CustCompanyContactPersonObjs"][0];
@@ -2105,10 +2105,10 @@ export class LtkmRequestXComponent implements OnInit {
             this.custOtherInfoComponent.CustOtherInfo = event["CustOtherInfoObj"];
             this.custOtherInfoComponent.copyOtherInfo();
         }
-        //end tambahan        
-        if (event["CustObj"] != undefined) {                        
-            this.selectedCustNo = event["CustObj"]["CustNo"];                                       
-            this.isCustomerCompanySelected = true;     
+        //end tambahan
+        if (event["CustObj"] != undefined) {
+            this.selectedCustNo = event["CustObj"]["CustNo"];
+            this.isCustomerCompanySelected = true;
             this.isCustomerSelected = false;
             var critLookupApplicationObj = new CriteriaObj();
             critLookupApplicationObj.DataType = "text";
@@ -2118,10 +2118,10 @@ export class LtkmRequestXComponent implements OnInit {
             this.inputLookupApplicationCompanyObj.addCritInput = [];
             this.inputLookupApplicationCompanyObj.addCritInput.push(critLookupApplicationObj);
             if (this.ucLookupApplicationCompanyData != undefined)
-                this.ucLookupApplicationCompanyData.setAddCritInput();                                                    
-            this.inputLookupApplicationCompanyObj.isDisable = false;     
+                this.ucLookupApplicationCompanyData.setAddCritInput();
+            this.inputLookupApplicationCompanyObj.isDisable = false;
             this.inputLookupApplicationObj.isDisable = true;
-        }    
+        }
     }
 
     copyAddrFromLookup(event) {
@@ -2203,7 +2203,7 @@ export class LtkmRequestXComponent implements OnInit {
         if(event["CustAddrObjs"] != undefined)
         {
             this.addrPersonalObjs.splice(0);
-            for (let i = 0; i < event["CustAddrObjs"].length; i++) 
+            for (let i = 0; i < event["CustAddrObjs"].length; i++)
             {
                 let addrVar = new AddrObj();
                 addrVar.MrCustAddrTypeCode = event["CustAddrObjs"][i].MrCustAddrTypeCode;
@@ -2224,7 +2224,7 @@ export class LtkmRequestXComponent implements OnInit {
                 addrVar.PhnExt2 = event["CustAddrObjs"][i].PhnExt2;
                 addrVar.FaxArea = event["CustAddrObjs"][i].FaxArea;
                 addrVar.Fax = event["CustAddrObjs"][i].Fax;
-                addrVar.StayLength = event["CustAddrObjs"][i].StayLength; 
+                addrVar.StayLength = event["CustAddrObjs"][i].StayLength;
                 this.addrPersonalObjs.push(addrVar);
             }
         }
@@ -2289,7 +2289,7 @@ export class LtkmRequestXComponent implements OnInit {
         if(event["CustAddrObjs"] != undefined)
         {
             this.addrCompanyObjs.splice(0);
-            for (let i = 0; i < event["CustAddrObjs"].length; i++) 
+            for (let i = 0; i < event["CustAddrObjs"].length; i++)
             {
                 let addrVar = new AddrObj();
                 addrVar.MrCustAddrTypeCode = event["CustAddrObjs"][i].MrCustAddrTypeCode;
@@ -2310,11 +2310,11 @@ export class LtkmRequestXComponent implements OnInit {
                 addrVar.PhnExt2 = event["CustAddrObjs"][i].PhnExt2;
                 addrVar.FaxArea = event["CustAddrObjs"][i].FaxArea;
                 addrVar.Fax = event["CustAddrObjs"][i].Fax;
-                addrVar.StayLength = event["CustAddrObjs"][i].StayLength; 
+                addrVar.StayLength = event["CustAddrObjs"][i].StayLength;
                 this.addrCompanyObjs.push(addrVar);
             }
         }
-        
+
         if (this.isLockMode) {
             this.disableInput();
         }
@@ -2534,7 +2534,7 @@ export class LtkmRequestXComponent implements OnInit {
         return temp;
     }
 
-    getLookupAppNo(event){                     
+    getLookupAppNo(event){
         this.appNo = event["AppNo"];
     }
 }

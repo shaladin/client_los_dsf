@@ -156,13 +156,25 @@
               <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer</span>
             </th>
             <th style="text-align: right;">
+              <span class="thead-header" name='custMainPremiRate' translate>Main Premi to Customer Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
               <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custAddPremiRate' translate>Additional Premi to Customer Rate (%)</span>
             </th>
             <th style="text-align: right;">
               <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco</span>
             </th>
             <th style="text-align: right;">
+              <span class="thead-header" name='inscoMainPremiRate' translate>Main Premi from Insco Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
               <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoAddPremiRate' translate>Additional Premi from Insco Rate (%)</span>
             </th>
           </tr>
         </thead>
@@ -177,17 +189,29 @@
             <td style="text-align: left;">
               {{item.MrAddCvgTypeCode}}
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
               {{item.CustMainPremiAmt | number:'.2':'en-US'}}
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
+              {{item.CustMainPremiRate * 100 | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
               {{item.CustAddPremiAmt | number:'.2':'en-US'}}
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
+              {{item.CustAddPremiRate}}
+            </td>
+            <td style="text-align: left;">
               {{item.InscoMainPremiAmt | number:'.2':'en-US'}}
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
+              {{item.InscoMainPremiRate * 100 | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
               {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: left;">
+              {{item.InscoAddPremiRate}}
             </td>
           </tr>
         </tbody>
@@ -411,13 +435,25 @@
                 <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer</span>
               </th>
               <th style="text-align: right;">
+                <span class="thead-header" name='custMainPremiRate' translate>Main Premi to Customer Rate (%)</span>
+              </th>
+              <th style="text-align: right;">
                 <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer</span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name='custAddPremiRate' translate>Additional Premi to Customer Rate (%)</span>
               </th>
               <th style="text-align: right;">
                 <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco</span>
               </th>
               <th style="text-align: right;">
+                <span class="thead-header" name='inscoMainPremiRate' translate>Main Premi from Insco Rate (%)</span>
+              </th>
+              <th style="text-align: right;">
                 <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
+              </th>
+              <th style="text-align: right;">
+                <span class="thead-header" name='inscoAddPremiRate' translate>Additional Premi from Insco Rate (%)</span>
               </th>
             </tr>
           </thead>
@@ -436,13 +472,25 @@
                 {{item.CustMainPremiAmt | number:'.2':'en-US'}}
               </td>
               <td style="text-align: left;">
+                {{item.CustMainPremiRate * 100  | number:'.2':'en-US'}}
+              </td>
+              <td style="text-align: left;">
                 {{item.CustAddPremiAmt | number:'.2':'en-US'}}
+              </td>
+              <td style="text-align: left;">
+                {{item.CustAddPremiRate}}
               </td>
               <td style="text-align: left;">
                 {{item.InscoMainPremiAmt | number:'.2':'en-US'}}
               </td>
               <td style="text-align: left;">
+                {{item.InscoMainPremiRate * 100 | number:'.2':'en-US'}}
+              </td>
+              <td style="text-align: left;">
                 {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+              </td>
+              <td style="text-align: left;">
+                {{item.InscoAddPremiRate}}
               </td>
             </tr>
           </tbody>

@@ -784,6 +784,9 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       if(ArraySerial[i] == ""){
         continue;
       }
+      else if(ArraySerial[i] == null){
+        continue;
+      }
       let x = ArraySerial.filter(f=>f == ArraySerial[i])
 
       if(x.length > 1){

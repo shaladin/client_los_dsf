@@ -22,6 +22,8 @@ export class NapAppReferantorModel{
     TaxIdCity: string;
     TaxIdZipcode: string;
     MrTaxCalcMethod: string;
+    IsUseVat: boolean;
+    IsVat: boolean;
     RowVersion: string;
     constructor () {
         this.RowVersion = "";

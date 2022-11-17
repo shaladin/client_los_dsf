@@ -47,7 +47,7 @@
 
             <mat-tab *ngIf="IsCollateral" label="Asset & Collateral">
               <ng-template matTabContent>
-                <view-asset-collateral [agrmntId]="AgrmntId"></view-asset-collateral>
+                <view-multiasset-data [AgrmntId]="AgrmntId"></view-multiasset-data>
               </ng-template>
             </mat-tab>
 
@@ -59,14 +59,14 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsInsurance" label="Insurance">
+            <mat-tab *ngIf="IsInsurance && BizTemplateCode != 'CFNA'" label="Insurance">
               <ng-template matTabContent>
                 <!-- <view-insurance [AppId]="ResponseAppDetailData?.AppId"></view-insurance> -->
                 <view-Insurance-data-x [BizTemplateCode]="BizTemplateCode" [AgrmntId]="AgrmntId"></view-Insurance-data-x>
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsMultiInsurance" label="Insurance">
+            <mat-tab *ngIf="IsMultiInsurance && BizTemplateCode != 'CFNA'" label="Insurance">
               <ng-template matTabContent>
                 <view-Insurance-data-x [BizTemplateCode]="BizTemplateCode" [AgrmntId]="AgrmntId"></view-Insurance-data-x>
               </ng-template>
@@ -74,7 +74,7 @@
 
             <mat-tab *ngIf="IsInsuranceFL4W" label="Insurance">
               <ng-template matTabContent>
-                <agrmnt-view-insurance [agrmntId]="AgrmntId"></agrmnt-view-insurance>
+                <agrmnt-view-insurance-x [agrmntId]="AgrmntId"></agrmnt-view-insurance-x>
               </ng-template>
             </mat-tab>
 

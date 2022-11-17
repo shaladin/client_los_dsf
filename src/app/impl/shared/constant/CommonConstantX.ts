@@ -28,6 +28,7 @@ export class CommonConstantX {
     public static GsCodeIsAllowSkipSurvey = "IS_ALLOW_SKIP_SURVEY";
     public static GsCodeCustCompletionByPass = "CUST_COMPLETION_BY_PASS";
     public static GsCodeMandatoryByCollType = "MANDATORY_BY_COLL_TYPE"
+    public static GsCodeAutoDebitBca = "AUTO_DEBIT_BCA";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
@@ -142,6 +143,8 @@ export class CommonConstantX {
     public static REF_REASON_AUTO_DEBIT_REG = "AUTO_DEBIT_REG";
     public static REF_STATUS_AUTO_DEBIT_REG = "AUTO_DEBIT_REGIS_STAT"
     public static AUTO_DEBIT_STATUS_CAN = "CAN";
+    public static AUTO_DEBIT_STATUS_INPAUTH = "INPAUTH";
+    public static AUTO_DEBIT_STATUS_FLD = "FLD";
     //#endregion
 
 }

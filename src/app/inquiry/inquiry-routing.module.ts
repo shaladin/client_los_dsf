@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppInquiryPagingXComponent } from 'app/impl/inquiry/app-inquiry/app-inquiry-paging-x/app-inquiry-paging-x.component';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { AppAgrCancellationInquiryComponent } from './app-agr-cancellation-inquiry/app-agr-cancellation-inquiry.component';
 import { AppInquiryPagingComponent } from './app-inquiry/app-inquiry-paging.component';
 import { ProdHoInquiryComponent } from './prod-ho-inquiry/prod-ho-inquiry.component';
 import { ProdOfferingInquiryComponent } from './prod-offering-inquiry/prod-offering-inquiry.component';
@@ -24,6 +25,13 @@ const routes: Routes = [
         component: AppInquiryPagingXComponent,
         data: {
           title: 'App Inquiry Impl'
+        }
+      },
+      {
+        path: PathConstant.APP_AGR_CANCELLATION_INQUIRY,
+        component: AppAgrCancellationInquiryComponent,
+        data: {
+          title: 'Application Agreement Cancellation Inquiry'
         }
       },
       {

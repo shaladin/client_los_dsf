@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "datepicker",
-      "name": "s.AGRMNT_DTT",
+      "name": "s.AGRMNT_DT",
       "id": "AgrmntDtG",
       "value": "",
       "restriction" : "gte",
@@ -290,7 +290,7 @@
       "property": "PLAFOND_CUST_AMT"
   },
   {
-      "type": "numeric",
+      "type": "text",
       "position": "center",
       "property": "MAX_TENOR"
   },
@@ -427,7 +427,7 @@
       "property": "PLAFOND_CUST_AMT"
   },
   {
-      "type": "numeric",
+      "type": "text",
       "position": "center",
       "property": "MAX_TENOR"
   },
