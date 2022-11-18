@@ -9,4 +9,5 @@ export class ExceptionConstantX {
   public static IS_NON_OWNER_NEED_NOT_HAVE_SHARE_PRCNT = "Non Owner Need to Input 0% Share";
   public static IS_AGRMNT_PARENT_GO_LIVE_DT_VALID = "Difference Between Agrmnt Parent Go Live Date And Bussiness Date Should Be More Than {0} Month ";
   public static IS_AGRMNT_PARENT_MATURITY_DT_VALID = "Difference Between Bussiness Date and Agrmnt Parent Maturity Date Should Be More {0} Month ";
+  public static AGRMNT_PARENT_OVERDUE_EXIST = "There are Agreement Parent Overdue for this customer";
 }
