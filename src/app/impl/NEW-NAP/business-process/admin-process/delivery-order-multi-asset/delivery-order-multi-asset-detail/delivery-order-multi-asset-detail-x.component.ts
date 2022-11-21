@@ -482,11 +482,10 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     let diffDays = 0;
     const diffTimes = new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime() - new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime();
     if (diffTimes > 0) {
-      diffDays = diffTimes / (1000 * 3600 * 24)
-      console.log(diffDays);
+      diffDays = diffTimes / (1000 * 3600 * 24);
     }
     if(this.diffDays > this.maxDiff){
-      this.toastr.warningMessage('Difference date between effective date and go live date is too long');
+      this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
       return;
     }
     if (this.AppTcForm.valid && this.DOAssetForm.valid) {
