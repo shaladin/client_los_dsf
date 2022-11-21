@@ -970,9 +970,17 @@ export class UcInsuranceDetailXComponent implements OnInit {
       if (element.get("MrInsPaidByCode").value == CommonConstant.InsPaidByAtCost) {
         totalDiscAmt += (element.get("CustMainPremiAmt").value + element.get("TotalCustAddPremiAmt").value);
         this.isAllPaidByCust = false;
+        this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
+      }
+      else
+      {
+        let currDisc = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
+        this.InsuranceDataForm.patchValue({
+          TotalCustDiscAmt: currDisc + totalDiscAmt
+        })
       }
     }
-    this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
+
   }
 
   bindCapitalize() {
@@ -1846,12 +1854,16 @@ export class UcInsuranceDetailXComponent implements OnInit {
             }
           }
           reqObj.InsCoverage.push(insCoverage);
+
+          if(this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["MrInsPaidByCode"].value == CommonConstant.InsPaidByCustomer)
+          {
+            let currDisc = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
+            this.InsuranceDataForm.patchValue({
+              TotalCustDiscAmt: currDisc + addCvgDisc
+            })
+          }
         }
 
-        let currDisc = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
-        this.InsuranceDataForm.patchValue({
-          TotalCustDiscAmt: currDisc + addCvgDisc
-        })
 
         console.log(this.InsuranceDataForm.controls.TotalCustDiscAmt.value);
 
