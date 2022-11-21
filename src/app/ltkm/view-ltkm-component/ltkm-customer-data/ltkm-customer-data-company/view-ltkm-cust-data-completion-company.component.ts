@@ -14,6 +14,7 @@ import { LtkmCustCompanyMgmntShrholderObj } from 'app/shared/model/ltkm/ltkm-cus
 import { LtkmCustCompanyLegalDocObj } from 'app/shared/model/ltkm/ltkm-cust-company-legal-doc-obj.model';
 import { LtkmCustCompanyFinDataObj } from 'app/shared/model/ltkm/ltkm-cust-company-fin-data-obj.model';
 import { ViewLtkmCustDetailComponent } from '../view-ltkm-cust-detail/view-ltkm-cust-detail.component';
+import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
 
 @Component({
     selector: 'app-view-ltkm-cust-data-completion-company',
@@ -48,6 +49,8 @@ export class ViewLtkmCustDataCompletionCompanyComponent implements OnInit {
     ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
     ltkmCustCompanyMgmntShrholderObjs: Array<LtkmCustCompanyMgmntShrholderObj>;
     ltkmCustCompanyLegalDocObjs: Array<LtkmCustCompanyLegalDocObj>;
+    ltkmCustGrpParentObjs: CustParentChildObj;
+    ltkmCustGrpChildObjs: Array<CustParentChildObj>;
 
     TitleCustFinSuffix: string = '';
     IsShowDetailCustFin: boolean = false;
@@ -82,6 +85,8 @@ export class ViewLtkmCustDataCompletionCompanyComponent implements OnInit {
                 this.ltkmCustCompanyLegalDocObjs = response["rLtkmCustCompanyLegalDocObjs"];
                 this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];
                 this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
+                this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"];
+                this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];
 
                 if (this.ltkmCustObj.IsFamily) this.customerTitle = 'Family';
                 else if (this.ltkmCustObj.IsShareholder) this.customerTitle = 'Shareholder';

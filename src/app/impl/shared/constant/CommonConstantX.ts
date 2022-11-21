@@ -10,13 +10,14 @@ export class CommonConstantX {
     //Ref Master Type Code
     public static RefMasterTypeCodeOrdStatus = "ORD_STATUS";
     public static RefMasterTypeCodeStatusBpkb = "STATUS_BPKB";
+    public static RefMasterTypeCodePayPeriodToInsco = "PAY_PERIOD_TO_INSCO"
 
     //LOB
     public static SLB = "SLB";
 
     //WOP Descr
     public static WOPADDescr = "Auto Debit";
-    
+
     //General Setting Code
     public static GSVendorSlbCode = "VENDOR_SLB_CODE";
     public static GSVendorMpfFdCode = "VENDOR_MPFFD_CODE";
@@ -26,6 +27,8 @@ export class CommonConstantX {
     public static GsCodeIsDoDtValidation = "ISDODTVALIDATION";
     public static GsCodeIsAllowSkipSurvey = "IS_ALLOW_SKIP_SURVEY";
     public static GsCodeCustCompletionByPass = "CUST_COMPLETION_BY_PASS";
+    public static GsCodeMandatoryByCollType = "MANDATORY_BY_COLL_TYPE"
+    public static GsCodeAutoDebitBca = "AUTO_DEBIT_BCA";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
@@ -118,6 +121,7 @@ export class CommonConstantX {
 
     //GS
     public static GSCodeShareholderJobPostIsOnwer = "SHAREHOLDER_JOB_POST_IS_OWNER";
+    public static GSCodeDisableRequiredNotesApvAct = "DISABLE_REQUIRED_NOTES_APV_ACT";
 
     //NAP 4
     public static SubjRelationLessee = "LESSEE";
@@ -134,4 +138,13 @@ export class CommonConstantX {
     public static DP = "Down Payment";
     public static SDType = "Security Deposit Type";
     public static SD = "Security Deposit";
+    
+    //#region Auto Debit Registration
+    public static REF_REASON_AUTO_DEBIT_REG = "AUTO_DEBIT_REG";
+    public static REF_STATUS_AUTO_DEBIT_REG = "AUTO_DEBIT_REGIS_STAT"
+    public static AUTO_DEBIT_STATUS_CAN = "CAN";
+    public static AUTO_DEBIT_STATUS_INPAUTH = "INPAUTH";
+    public static AUTO_DEBIT_STATUS_FLD = "FLD";
+    //#endregion
+
 }

@@ -1,0 +1,18 @@
+{
+    "isSeq" : true,
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Accessory Name",
+            "name": "AssetAccessoryName"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "AssetAccessoryName"
+        }
+    ]
+}

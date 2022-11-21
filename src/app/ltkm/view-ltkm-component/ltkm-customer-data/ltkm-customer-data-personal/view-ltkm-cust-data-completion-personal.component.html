@@ -135,8 +135,8 @@
         <div class="form-group row ">
           <label class="col-md-3 adInsLabel" translate>Source of Income</label>
           <label class="col-md-3 adInsLabel"
-            *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeDescr != null">{{CustPersonalFinData.MrSourceOfIncomeTypeDescr}}</label>
-          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeDescr == null">-</label>
+            *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeCode != null">{{CustPersonalFinData.MrSourceOfIncomeTypeCode}}</label>
+          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeCode == null">-</label>
           <label class="col-md-3 adInsLabel" translate>Monthly Installment</label>
           <label class="col-md-3 adInsLabel"
             *ngIf="CustPersonalFinData.MonthlyInstallmentAmt != 0">{{CustPersonalFinData.MonthlyInstallmentAmt | number:'.2':'en-US'}}</label>
@@ -235,7 +235,7 @@
                 </tr>
                 <ng-container *ngFor="let item of ltkmCustBankAccObjs[i].LtkmCustBankStmntObjs">
                   <tr>
-                    <td class="text-center">{{item.MonthName}}</td>
+                    <td class="text-center">{{item.Month}}</td>
                     <td class="text-center">{{item.Year}}</td>
                     <td class="text-center">{{item.DebitTrxCount}}</td>
                     <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
@@ -253,34 +253,73 @@
   </div>
   <!--Section Cust Group-->
   <div class="px-3">
-    <lib-ucSubsection [id]="'CustGrpId'" [title]="'Customer Group Member'" [panel]="'CustGrp'">
+    <lib-ucSubsection [id]="'CustGrpId'" [title]="'Customer Group'" [panel]="'CustGrp'">
     </lib-ucSubsection>
     <div id="CustGrp" style="overflow-x: auto;">
-      <table class="table table-responsive-md text-center table-hover">
-        <thead>
-          <tr class="table-header">
-            <th class="text-center"><span name='no' translate>No</span> </th>
-            <th class="text-left"><span name='custName' translate>Customer Name</span></th>
-            <th class="text-center"><span name='relationship' translate>Customer Relationship</span></th>
-            <th class="text-left"><span name='notes' translate>Notes</span></th>
-          </tr>
-        </thead>
-        <tbody *ngIf="ltkmCustGrpObjs?.length == 0">
-          <tr>
-            <td colspan="100%">No Data Available</td>
-          </tr>
-        </tbody>
-        <tbody>
-          <ng-container *ngFor="let item of ltkmCustGrpObjs; let i=index">
-            <tr>
-              <td class="text-center">{{i + 1}}</td>
-              <td class="text-left">{{item.CustName}}</td>
-              <td class="text-center">{{item.RelationshipName}}</td>
-              <td class="text-left">{{item.CustGrpNotes}}</td>
+        <table class="table table-responsive-md text-center table-hover">
+            <thead>
+            <tr class="table-header">
+                <th class="text-center"><span name='no' translate>No</span> </th>
+                <th class="text-left"><span name='custNo' translate>Customer No</span></th>
+                <th class="text-left"><span name='custName' translate>Customer Name</span></th>
+                <th class="text-center"><span name='relationship' translate>Customer Relationship</span></th>
+                <th class="text-center"><span name='notes' translate>Notes</span></th>
+                <th class="text-center"><span name='activeStatus' translate>Active Status</span></th>
             </tr>
-          </ng-container>
-        </tbody>
-      </table>
+            </thead>
+            <tbody *ngIf="ltkmCustGrpParentObjs == null">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody>
+            <ng-container>
+                <tr>
+                    <td class="text-center">1</td>
+                    <td class="text-left">{{ltkmCustGrpParentObjs?.CustNo}}</td>
+                    <td class="text-left">{{ltkmCustGrpParentObjs?.CustName}}</td>
+                    <td class="text-center">{{ltkmCustGrpParentObjs?.RelationshipName}}</td>
+                    <td class="text-center">{{ltkmCustGrpParentObjs?.CustGrpNotes}}</td>
+                    <td class="text-center">{{ltkmCustGrpParentObjs?.IsActive ? 'Yes' : 'No'}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
     </div>
-  </div>
+</div>
+<div class="px-3">
+    <lib-ucSubsection [id]="'CustGrpMbrId'" [title]="'Customer Group Member'" [panel]="'CustGrpMbr'">
+    </lib-ucSubsection>
+    <div id="CustGrpMbr" style="overflow-x: auto;">
+        <table class="table table-responsive-md text-center table-hover">
+            <thead>
+            <tr class="table-header">
+                <th class="text-center"><span name='no' translate>No</span> </th>
+                <th class="text-left"><span name='custNo' translate>Customer No</span></th>
+                <th class="text-left"><span name='custName' translate>Customer Name</span></th>
+                <th class="text-center"><span name='relationship' translate>Customer Relationship</span></th>
+                <th class="text-center"><span name='notes' translate>Notes</span></th>
+                <th class="text-center"><span name='activeStatus' translate>Active Status</span></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="ltkmCustGrpChildObjs.length == 0">
+                <tr>
+                    <td colspan="100%">No Data Available</td>
+                </tr>
+            </tbody>
+            <tbody>
+            <ng-container *ngFor="let item of ltkmCustGrpChildObjs; let i=index">
+                <tr>
+                    <td class="text-center">{{i + 1}}</td>
+                    <td class="text-left">{{item?.CustNo}}</td>
+                    <td class="text-left">{{item?.CustName}}</td>
+                    <td class="text-center">{{item?.RelationshipName}}</td>
+                    <td class="text-center">{{item?.CustGrpNotes}}</td>
+                    <td class="text-center">{{item?.IsActive ? 'Yes' : 'No'}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
 </div>
