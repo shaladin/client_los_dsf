@@ -129,6 +129,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
     Notes: ['', Validators.maxLength(4000)],
     CustNotes: ['', Validators.maxLength(4000)],
     InsMainCvgType: [''],
+    SumInsuredAmount: new FormArray([]),
     InsAddCvgTypes: new FormArray([]),
     InsLength: ['', [Validators.required, Validators.min(0), Validators.max(99)]],
     InsAssetRegion: ['', [Validators.required, Validators.maxLength(50)]],
@@ -403,8 +404,17 @@ export class UcInsuranceDetailXComponent implements OnInit {
         this.InsuranceDataForm.controls.PayPeriodToInsco.updateValueAndValidity();
         break;
       case CommonConstant.InsuredByCustomer:
-        this.InsuranceDataForm.controls.CustInscoBranchName.setValidators([Validators.required, Validators.maxLength(100)]);
-        this.InsuranceDataForm.controls.CustInscoBranchName.updateValueAndValidity();
+        this.InsuranceDataForm.patchValue({
+          CustCvgAmt: this.totalAssetInclAccessoryPriceAmt,
+          CustInscoBranchName: '-',
+          InsPolicyNo: '-',
+          InsPolicyName: '-',
+          CustCoverStartDt: formatDate(this.businessDt,'yyyy-MM-dd', 'en-US'),
+          EndDt: formatDate(this.businessDt,'yyyy-MM-dd', 'en-US'),
+          CustNotes: '-'
+        });
+        this.InsuranceDataForm.controls.CustInscoBranchName.clearValidators();
+        this.InsuranceDataForm.controls.CustInscoBranchName.updateValueAndValidity()
         this.InsuranceDataForm.controls.InsPolicyNo.setValidators(Validators.maxLength(50));
         this.InsuranceDataForm.controls.InsPolicyNo.updateValueAndValidity();
         this.InsuranceDataForm.controls.InsPolicyName.setValidators(Validators.maxLength(100));
@@ -854,14 +864,17 @@ export class UcInsuranceDetailXComponent implements OnInit {
     this.addCheckbox();
   }
   
+  formSumInsuredAmount = new FormArray([]);
   addCheckbox() {
     this.insAddCvgTypeRuleObj.forEach((o) => {
       let checkboxValue = false;
       if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) checkboxValue = true;        
 
       const control = this.fb.group({
+        KeyCode: o.Key,
         Key: o.Value,
-        Value: checkboxValue
+        Value: checkboxValue,
+        ValueOption: null,
       });
 
       (this.InsuranceDataForm.controls.InsAddCvgTypes as FormArray).push(control);
@@ -1424,12 +1437,29 @@ export class UcInsuranceDetailXComponent implements OnInit {
         let premiumType = AddCvg[AddCvgIndex].PremiumType;
         let custAddPremiRate = 0;
         let inscoAddPremiRate = 0;
+        let stdAddPremiRate = 0;
 
         if (premiumType == CommonConstant.PremiumTypeAmt) {
           if (this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key]) {
             defaultSumInsuredAmt = this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key][0].SumInsuredAmt;
             custAddPremiRate = this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key][0].PremiToCust;
             inscoAddPremiRate = this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key][0].PremiToInsco;
+            
+            this.InsuranceDataForm.controls.InsAddCvgTypes['controls'].forEach((element) => {
+              if(element['controls']['KeyCode'].value === o.Key){
+                if(typeof (element['controls']['ValueOption'].value) !== 'undefined' && element['controls']['ValueOption'].value)
+                {
+                  this.groupAddCvrSumInsuredDropDown[MainCvgIndex][o.Key].forEach(AddCvgItem =>{
+                    if(AddCvgItem.SumInsuredAmt === Number(element['controls']['ValueOption'].value))
+                    {
+                      custAddPremiRate = AddCvgItem.PremiToCust;//richard, 20221028, sudah merangkap sbg BaseCustAddPremiRate (acuan method SumInsuredAmtAddCvgChanged)
+                      inscoAddPremiRate = AddCvgItem.PremiToInsco;//richard, 20221028, sudah merangkap sbg BaseInscoAddPremiRate (acuan method SumInsuredAmtAddCvgChanged)
+                      stdAddPremiRate = AddCvgItem.BaseRate;//richard, 20221028, penambahan baru mengikut acuan logic event on change sum insured (acuan method SumInsuredAmtAddCvgChanged)
+                    }
+                  });
+                }
+              }
+            });
           } else {
             custAddPremiRate = AddCvg[AddCvgIndex].PremiToCust;
             inscoAddPremiRate = AddCvg[AddCvgIndex].PremiToInsco;
@@ -1486,7 +1516,8 @@ export class UcInsuranceDetailXComponent implements OnInit {
             BaseInscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiAmt: 0,
-            SeatCount: 0
+            SeatCount: 0,
+            StdAddPremiRate : stdAddPremiRate //richard, 20221028
           });
         }
       } else {
@@ -1688,7 +1719,8 @@ export class UcInsuranceDetailXComponent implements OnInit {
           }
           else {
             this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
-              Value: check.value.Value
+              Value: check.value.Value,
+              SumInsuredAmt: check.value.ValueOption
             });
           };
         } else {
@@ -2012,16 +2044,20 @@ export class UcInsuranceDetailXComponent implements OnInit {
 
         insCoverage.StartDt = startDt;
         let tenorAdded: number = 12;
-        if (totalTenor < 12) tenorAdded = totalTenor;
-        mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
-        insCoverage.EndDt = mainCvgEndDt;
+        if (totalTenor <= 12){
+          tenorAdded = totalTenor;
+          mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
+          insCoverage.EndDt = mainCvgEndDt;
+        } 
+        else{
+          mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + tenorAdded);
+          insCoverage.EndDt = mainCvgEndDt;
+        } 
 
         totalTenor -= 12;
-        if (totalTenor > 12) {
-          startDt = new Date(mainCvgEndDt);
-          startDt.setDate(startDt.getDate() + 1);
-          mainCvgEndDt = new Date(startDt);
-        }
+        startDt = new Date(mainCvgEndDt);
+        startDt.setDate(startDt.getDate() + 0);
+        mainCvgEndDt = new Date(startDt);
 
         insCoverage.IsMainIns = true;
         insCoverage.SumInsuredPrcnt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
@@ -2130,16 +2166,20 @@ export class UcInsuranceDetailXComponent implements OnInit {
 
         insCoverage.StartDt = startDt;
         let tenorAdded: number = 12;
-        if (totalTenor < 12) tenorAdded = totalTenor;
-        mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
-        insCoverage.EndDt = mainCvgEndDt;
+        if (totalTenor <= 12){
+          tenorAdded = totalTenor;
+          mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
+          insCoverage.EndDt = mainCvgEndDt;
+        } 
+        else{
+          mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + tenorAdded);
+          insCoverage.EndDt = mainCvgEndDt;
+        } 
 
         totalTenor -= 12;
-        if (totalTenor > 12) {
-          startDt = new Date(mainCvgEndDt);
-          startDt.setDate(startDt.getDate() + 1);
-          mainCvgEndDt = new Date(startDt);
-        }
+        startDt = new Date(mainCvgEndDt);
+        startDt.setDate(startDt.getDate() + 0);
+        mainCvgEndDt = new Date(startDt);
 
         insCoverage.IsMainIns = true;
         insCoverage.SumInsuredPrcnt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
@@ -2272,5 +2312,72 @@ export class UcInsuranceDetailXComponent implements OnInit {
       }
     );
     return generalSetting;
+  }
+
+  
+  optionsAdditionalCoverage = [];
+  isAdditionalCoverageChecked = [];
+  selectedOptions = [];
+  async loadOptionsAdditionalCoverage(event, isMainCvg, idx) {
+    if (isMainCvg) {
+      this.isAdditionalCoverageChecked = [];
+      for (let i = 0; i < this.InsuranceDataForm.controls.InsAddCvgTypes['controls'].length; i++) {
+        const item = this.InsuranceDataForm.controls.InsAddCvgTypes['controls'][i]['controls'];
+        item['Value'].patchValue(false);
+      }
+    } else {
+      const index = 0;
+      let isChecked = event.target.value;
+      const mainCoverage = this.InsuranceDataForm.controls.InsMainCvgType.value;
+
+      let response: ResExecRuleInsRateCvgV2_1obj;
+      response = await this.executeInstRateCvgRule(mainCoverage, index);
+
+      this.optionsAdditionalCoverage[index] = new Object();
+      let AddCvg = response.ReturnObject[0].AdditionalCoverage;
+
+      let tempAdditionalCoverageType = [];
+      AddCvg.forEach(currAddCvrItem => {
+        if (currAddCvrItem.PremiumType == CommonConstant.PremiumTypeAmt) {
+          if (typeof (this.optionsAdditionalCoverage[index][currAddCvrItem.AdditionalCoverageType]) == 'undefined')
+            this.optionsAdditionalCoverage[index][currAddCvrItem.AdditionalCoverageType] = new Array<InsRateAddCvgRuleObj>();
+          this.optionsAdditionalCoverage[index][currAddCvrItem.AdditionalCoverageType].push(currAddCvrItem);
+        }
+
+        if (!tempAdditionalCoverageType.find(x => x === currAddCvrItem.AdditionalCoverageType)) {
+          tempAdditionalCoverageType.push(currAddCvrItem.AdditionalCoverageType);
+        }
+      });
+
+      this.InsuranceDataForm.controls.InsAddCvgTypes['controls'].forEach((element, elementIndex) => {
+        const additionalCoverageType = this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][0].controls.AppInsAddCvgs.controls[elementIndex].controls.MrAddCvgTypeCode.value;
+        if (additionalCoverageType !== 'LOADING' && idx === elementIndex) {
+          if (isChecked && element['controls']['ValueOption'].value === null) {
+            if (typeof this.optionsAdditionalCoverage[0][additionalCoverageType] !== 'undefined') {
+              element['controls']['ValueOption'].patchValue(this.optionsAdditionalCoverage[0][additionalCoverageType][0]['SumInsuredAmt']);
+            } else {
+              element['controls']['ValueOption'].patchValue(null);
+            }
+          } else if (isChecked && element['controls']['ValueOption'].value !== null) {
+            if (typeof this.optionsAdditionalCoverage[0][additionalCoverageType] !== 'undefined') {
+              element['controls']['ValueOption'].patchValue(this.optionsAdditionalCoverage[0][additionalCoverageType][0]['SumInsuredAmt']);
+            } else {
+              element['controls']['ValueOption'].patchValue(null);
+            }
+          } else {
+            element['controls']['ValueOption'].patchValue(null);
+          }
+        }
+      });
+
+      this.isAdditionalCoverageChecked[idx] = isChecked;
+    }
+  }
+
+  checkIsOptionUndefined(x) {
+    if (typeof this.optionsAdditionalCoverage[0][this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][0]['controls']['AppInsAddCvgs']['controls'][x]['controls']['MrAddCvgTypeCode'].value] === 'undefined') {
+      return false;
+    }
+    return true;
   }
 }

@@ -5,6 +5,7 @@ export class URLConstantX {
   public static CalculateAdditionalInterestX = environment.losUrl + "/v1" + "/AgrmntX/CalculateAdditionalInterest";
   public static UpdateEffectiveAndAgrmntCreatedDtX = environment.losUrl + "/v1" + "/AgrmntX/UpdateEffectiveAndAgrmntCreatedDt";
   public static GetListAgrmntParentByCustNoX = environment.losUrl + '/v1' + '/AgrmntX/GetListAgrmntParentByCustNo';
+  public static CheckAgrmntParentOverdueByCustNo = environment.losUrl + '/v1' + '/AgrmntX/CheckAgrmntParentOverdueByCustNo';
 
   public static SubmitDeliveryOrderDataX = environment.losUrl+ "/v1" + "/DeliveryOrderX/SubmitDeliveryOrderData";
   public static AddCustCnfrmX = environment.losUrl+ "/v1" + "/CustCnfrmX/AddCustCnfrm";
