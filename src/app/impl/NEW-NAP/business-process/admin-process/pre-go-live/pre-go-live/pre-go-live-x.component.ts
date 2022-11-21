@@ -34,7 +34,6 @@ import { ReqSubmitAgrmntTcObj } from 'app/shared/model/agrmnt-tc/req-submit-agrm
 import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
-import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-sharing-pre-go-live-x',
