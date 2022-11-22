@@ -288,7 +288,12 @@ export class PreGoLiveXComponent implements OnInit {
       return;
     } else {
       this.IsCheckedAll = ev;
+      if(this.IsCheckedAll == true)
+      {
+        this.PreGoLiveApvForm = this.fb.group({})
+      }
     }
+
   }
 
   RFA() {
@@ -571,6 +576,40 @@ export class PreGoLiveXComponent implements OnInit {
           console.log(error);
         }
       );
+
+      obj.RefProdCompntCode = CommonConstant.ApvCategoryPreGoLive;
+
+      await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
+        (response) => {
+          if (response && response['StatusCode'] == '200') {
+
+            let Attributes: Array<ResultAttrObj> = new Array();
+            let Attribute1: ResultAttrObj = {
+              AttributeName: "Approval Amount",
+              AttributeValue: this.ApvAmt.toString()
+            };
+            Attributes.push(Attribute1);
+            let TypeCode = {
+              "TypeCode": "PRE_GLV_APV_TYPE",
+              "Attributes": Attributes,
+            };
+            let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+            this.InputPreGoLiveObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+            this.InputPreGoLiveObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+            this.InputPreGoLiveObj.ApvTypecodes = [TypeCode];
+            this.InputPreGoLiveObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
+            this.InputPreGoLiveObj.SchemeCode = response['CompntValue'];
+            this.InputPreGoLiveObj.Reason = this.itemReasonPreGoLive;
+            this.InputPreGoLiveObj.TrxNo = this.AgrmntNo;
+          } else {
+            this.toastr.warningMessage('No Setting for Prod Offering Component PRE_GPV_APV');
+            this.isOk = false;
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
 
 
@@ -601,40 +640,6 @@ export class PreGoLiveXComponent implements OnInit {
           this.InputGoLiveObj.TrxNo = this.AgrmntNo
         } else {
           this.toastr.warningMessage('No Setting for Prod Offering Component GO_LIVE_APV');
-          this.isOk = false;
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-    obj.RefProdCompntCode = CommonConstant.ApvCategoryPreGoLive;
-
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
-      (response) => {
-        if (response && response['StatusCode'] == '200') {
-
-          let Attributes: Array<ResultAttrObj> = new Array();
-          let Attribute1: ResultAttrObj = {
-            AttributeName: "Approval Amount",
-            AttributeValue: this.ApvAmt.toString()
-          };
-          Attributes.push(Attribute1);
-          let TypeCode = {
-            "TypeCode": "PRE_GLV_APV_TYPE",
-            "Attributes": Attributes,
-          };
-          let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-          this.InputPreGoLiveObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-          this.InputPreGoLiveObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
-          this.InputPreGoLiveObj.ApvTypecodes = [TypeCode];
-          this.InputPreGoLiveObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
-          this.InputPreGoLiveObj.SchemeCode = response['CompntValue'];
-          this.InputPreGoLiveObj.Reason = this.itemReasonPreGoLive;
-          this.InputPreGoLiveObj.TrxNo = this.AgrmntNo;
-        } else {
-          this.toastr.warningMessage('No Setting for Prod Offering Component PRE_GPV_APV');
           this.isOk = false;
         }
       },
