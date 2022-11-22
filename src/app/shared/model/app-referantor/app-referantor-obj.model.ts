@@ -23,6 +23,8 @@ export class AppReferantorObj {
     VendorId: number;
     IsNpwpExist: boolean;
     MrTaxCalcMethodCode: string;
+    IsUseVat: boolean;
+    IsVat: boolean;
     RowVersion: string;
   
     constructor() {
@@ -50,6 +52,8 @@ export class AppReferantorObj {
       this.VendorId = 0;
       this.IsNpwpExist = false;
       this.MrTaxCalcMethodCode = "";
+      this.IsUseVat = false;
+      this.IsVat = false;
       this.RowVersion = "";
     }
 }

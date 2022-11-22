@@ -98,6 +98,9 @@ export class PreGoLiveXComponent implements OnInit {
   DiffDay: number = 0;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
 
+  ReqByCodeObj: GenericObj = new GenericObj();
+  maxDiff: number = null;
+
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AgrmntId = params['AgrmntId'];
@@ -333,7 +336,17 @@ export class PreGoLiveXComponent implements OnInit {
 
   }
 
-  SaveForm(flag = true) {
+  async SaveForm(flag = true) {
+    await this.getMaxDiffDays();
+    let DiffDay = 0;
+    const diffTimes = new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime() - new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime();
+    if (diffTimes > 0) {
+      DiffDay = diffTimes / (1000 * 3600 * 24);
+    }
+    if(this.DiffDay > this.maxDiff){
+      this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
+      return;
+    }
     if (this.BizTemplateCode == CommonConstant.DF) {
       this.IsCheckedAll = true;
       const effDate = new Date(this.MainInfoForm.controls.EffectiveDt.value);
@@ -365,7 +378,7 @@ export class PreGoLiveXComponent implements OnInit {
         this.agrmntTcObj.IsAdditional = this.MainInfoForm.value.TCList[i].IsAdditional;
         this.agrmntTcObj.IsExpDtMandatory = this.MainInfoForm.value.TCList[i].IsExpDtMandatory;
         this.agrmntTcObj.IsWaivable = this.MainInfoForm.value.TCList[i].IsWaivable;
-  
+
         var prmsDt = new Date(this.agrmntTcObj.PromisedDt);
         var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
 
@@ -433,6 +446,16 @@ export class PreGoLiveXComponent implements OnInit {
 
       });
 
+  }
+
+  async getMaxDiffDays(){
+    this.ReqByCodeObj.Code = CommonConstantX.GS_CODE_MAX_DIFF_DAYS;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, this.ReqByCodeObj).toPromise().then(
+      (response) => {
+        if(response["GsValue"] != null){
+          this.maxDiff = parseInt(response["GsValue"]);
+        }
+      });
   }
 
   async getAddInterestPaidBy() {
@@ -578,11 +601,9 @@ export class PreGoLiveXComponent implements OnInit {
       );
 
       obj.RefProdCompntCode = CommonConstant.ApvCategoryPreGoLive;
-
       await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
         (response) => {
           if (response && response['StatusCode'] == '200') {
-
             let Attributes: Array<ResultAttrObj> = new Array();
             let Attribute1: ResultAttrObj = {
               AttributeName: "Approval Amount",

@@ -624,6 +624,7 @@ export class URLConstant {
   public static GetMouCustCollateralForUpdateByMouCustCollateralId = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralForUpdateByMouCustCollateralId";
   public static GetMouCustCollateralRegistrationByMouCustCollateralId = environment.losUrl + "/v1" + "/MouCustCollateral/GetMouCustCollateralRegistrationByMouCustCollateralId";
   public static GenerateMouCollateralAttr = environment.losUrl + "/v1" + "/MouCustCollateral/GenerateMouCollateralAttr";
+  public static GenerateMouCollateralAttrForUcAttr = environment.losUrl + "/v1" + "/MouCustCollateral/GenerateMouCollateralAttrForUcAttr";
 
   // MOU CUST SCORING
   public static GetMouCustScoreByMouCustId = environment.losUrl + "/v1" + "/MouCustScoring/GetMouCustScoreByMouCustId";

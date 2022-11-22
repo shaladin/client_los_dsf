@@ -46,6 +46,8 @@ import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-application-data-x',
@@ -96,11 +98,15 @@ export class ApplicationDataXComponent implements OnInit {
   isDdlMrAppSourceReady: boolean = false;
   ddlMrAppSourceObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMrFirstInstTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInterestTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInstallmentSchemeObj: UcDropdownListObj = new UcDropdownListObj();
   ddlPayFreqObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMrWopObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMrCustNotifyOptObj: UcDropdownListObj = new UcDropdownListObj();
   isDdlMrFirstInstTypeReady: boolean = false;
   isDdlPayFreqReady: boolean = false;
+  isDdlInterestTypeReady: boolean = false;
+  isDdlInstallmentSchemeReady: boolean = false;
   tempCommodityName: string = '';
   agrmntParentNo: string;
   resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
@@ -226,6 +232,9 @@ export class ApplicationDataXComponent implements OnInit {
   EffectiveDt: Date = new Date();
   TotalAssetPrice: number = 0;
   Tenor: number = 0;
+
+  isAgrmntParentGoLiveDtValid: boolean = false;
+  isAgrmntParentMaturityDtValid: boolean = false;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -413,6 +422,32 @@ export class ApplicationDataXComponent implements OnInit {
     this.isDdlMrFirstInstTypeReady = true;
   }
 
+  initDdlInterestType()
+  {
+    this.ddlInterestTypeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlInterestTypeObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefProdCompIntrstType,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlInterestTypeObj.customObjName = "DDLRefProdComptCode";
+    this.ddlInterestTypeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlInterestTypeReady = true;
+  }
+
+  initDdlInstallmentScheme()
+  {
+    this.ddlInstallmentSchemeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlInstallmentSchemeObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefProdCompInstScheme,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlInstallmentSchemeObj.customObjName = "DDLRefProdComptCode";
+    this.ddlInstallmentSchemeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlInstallmentSchemeReady = true;
+  }
+
   initDdlPayFreq() {
     this.ddlPayFreqObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
     this.ddlPayFreqObj.requestObj = {
@@ -424,25 +459,6 @@ export class ApplicationDataXComponent implements OnInit {
     this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_ONE;
     this.ddlPayFreqObj.isSelectOutput = true;
     this.isDdlPayFreqReady = true;
-  }
-
-  getDDLFromProdOffering(refProdCompntCode: string) {
-    let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
-    obj.RefProdCompntCode = refProdCompntCode;
-    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
-      (response) => {
-        let listDDL = response["DDLRefProdComptCode"];
-        this.applicationDDLitems[refProdCompntCode] = listDDL;
-        if (refProdCompntCode == CommonConstant.RefProdCompFirstInstType && !this.NapAppModelForm.controls.MrFirstInstTypeCode.value) {
-          this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
-          this.NapAppModelForm.patchValue({
-            MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
-          });
-        }
-      }
-    );
   }
 
   async getInterestTypeCode(ProdOfferingCode: string, ProdOfferingVersion: string) {
@@ -581,6 +597,7 @@ export class ApplicationDataXComponent implements OnInit {
         this.initMailingAddress();
 
         if (this.BizTemplateCode != CommonConstant.OPL) {
+          this.initDdlInterestType();
           await this.getInterestTypeCode(this.resultResponse.ProdOfferingCode, this.resultResponse.ProdOfferingVersion);
           this.GetCrossInfoData();
         } else {
@@ -591,8 +608,8 @@ export class ApplicationDataXComponent implements OnInit {
           this.NapAppModelForm.controls.MrInstSchemeCode.clearValidators();
           this.NapAppModelForm.controls.MrInstSchemeCode.updateValueAndValidity();
         }
-        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
         this.initDdlMrFirstInstType();
+        this.initDdlInstallmentScheme();
         this.initDdlPayFreq();
         this.getPayFregData();
         // this.GenerateAppAttrContent();
@@ -985,7 +1002,16 @@ export class ApplicationDataXComponent implements OnInit {
     if (idx == null) return;
 
     this.agrParent = this.agrParentList[idx];
-
+    await this.validateGoLiveDtAgrmntParent();
+    await this.validateMaturityDtAgrmntParent();
+    if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
+      if(!this.isAgrmntParentMaturityDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, 6));
+      }
+      if(!this.isAgrmntParentGoLiveDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, 2));
+      }
+    }
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
     this.goLiveDt = this.agrParent.GoLiveDt;
@@ -1050,6 +1076,7 @@ export class ApplicationDataXComponent implements OnInit {
       this.resultCrossApp = [tempCrossApp];
       this.agrmntParentNo = this.agrParent.AgrmntNo;
     }
+ 
   }
 
   async GetGSValueSalesOfficer() {
@@ -1192,6 +1219,16 @@ export class ApplicationDataXComponent implements OnInit {
       });
     }
     if (this.BizTemplateCode == CommonConstant.CFNA) {
+
+      if(!this.isAgrmntParentMaturityDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, 6));
+      }
+      if(!this.isAgrmntParentGoLiveDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, 2));
+        return false;
+      }
+
+      if(this.isAgrmntParentMaturityDtValid || this.isAgrmntParentGoLiveDtValid){
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
           if (response['listResponseAppLoanPurpose'] && response['listResponseAppLoanPurpose'].length > 0) {
@@ -1294,6 +1331,7 @@ export class ApplicationDataXComponent implements OnInit {
             return false;
           }
         });
+      }
     } else {
       let tempAppObj = this.GetAppObjValue();
       let tempListAppCrossObj = this.GetListAppCrossValue();
@@ -1806,5 +1844,33 @@ export class ApplicationDataXComponent implements OnInit {
         this.isCustomerTypeCompany();
       }
     );
+  }
+
+  getMonthDifference(startDate, endDate) {
+    return (
+      endDate.getMonth() -
+      startDate.getMonth() +
+      12 * (endDate.getFullYear() - startDate.getFullYear())
+    );
+  }
+  
+  validateGoLiveDtAgrmntParent(){
+    const monthFromGoLiveDt = 6;
+    const monthDifference =  this.getMonthDifference(new Date(this.agrParent.GoLiveDt),new Date(this.user.BusinessDt));
+      if( monthFromGoLiveDt < monthDifference){
+        this.isAgrmntParentGoLiveDtValid = true
+      } else {
+        this.isAgrmntParentGoLiveDtValid = false
+      }
+  }
+
+  validateMaturityDtAgrmntParent(){
+    const monthFromMaturyityDateDt = 3;
+    const monthDifference =  this.getMonthDifference(new Date(this.user.BusinessDt),new Date(this.agrParent.MaturityDt));
+      if(monthFromMaturyityDateDt <= monthDifference){
+        this.isAgrmntParentMaturityDtValid  = true;
+      } else {
+        this.isAgrmntParentMaturityDtValid  = false;
+      }
   }
 }
