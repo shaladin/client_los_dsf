@@ -46,6 +46,8 @@ import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-application-data-x',
@@ -230,6 +232,9 @@ export class ApplicationDataXComponent implements OnInit {
   EffectiveDt: Date = new Date();
   TotalAssetPrice: number = 0;
   Tenor: number = 0;
+
+  isAgrmntParentGoLiveDtValid: boolean = false;
+  isAgrmntParentMaturityDtValid: boolean = false;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -997,7 +1002,16 @@ export class ApplicationDataXComponent implements OnInit {
     if (idx == null) return;
 
     this.agrParent = this.agrParentList[idx];
-
+    await this.validateGoLiveDtAgrmntParent();
+    await this.validateMaturityDtAgrmntParent();
+    if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
+      if(!this.isAgrmntParentMaturityDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, 6));
+      }
+      if(!this.isAgrmntParentGoLiveDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, 2));
+      }
+    }
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
     this.goLiveDt = this.agrParent.GoLiveDt;
@@ -1062,6 +1076,7 @@ export class ApplicationDataXComponent implements OnInit {
       this.resultCrossApp = [tempCrossApp];
       this.agrmntParentNo = this.agrParent.AgrmntNo;
     }
+ 
   }
 
   async GetGSValueSalesOfficer() {
@@ -1204,6 +1219,16 @@ export class ApplicationDataXComponent implements OnInit {
       });
     }
     if (this.BizTemplateCode == CommonConstant.CFNA) {
+
+      if(!this.isAgrmntParentMaturityDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, 6));
+      }
+      if(!this.isAgrmntParentGoLiveDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, 2));
+        return false;
+      }
+
+      if(this.isAgrmntParentMaturityDtValid || this.isAgrmntParentGoLiveDtValid){
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
           if (response['listResponseAppLoanPurpose'] && response['listResponseAppLoanPurpose'].length > 0) {
@@ -1306,6 +1331,7 @@ export class ApplicationDataXComponent implements OnInit {
             return false;
           }
         });
+      }
     } else {
       let tempAppObj = this.GetAppObjValue();
       let tempListAppCrossObj = this.GetListAppCrossValue();
@@ -1818,5 +1844,33 @@ export class ApplicationDataXComponent implements OnInit {
         this.isCustomerTypeCompany();
       }
     );
+  }
+
+  getMonthDifference(startDate, endDate) {
+    return (
+      endDate.getMonth() -
+      startDate.getMonth() +
+      12 * (endDate.getFullYear() - startDate.getFullYear())
+    );
+  }
+  
+  validateGoLiveDtAgrmntParent(){
+    const monthFromGoLiveDt = 6;
+    const monthDifference =  this.getMonthDifference(new Date(this.agrParent.GoLiveDt),new Date(this.user.BusinessDt));
+      if( monthFromGoLiveDt < monthDifference){
+        this.isAgrmntParentGoLiveDtValid = true
+      } else {
+        this.isAgrmntParentGoLiveDtValid = false
+      }
+  }
+
+  validateMaturityDtAgrmntParent(){
+    const monthFromMaturyityDateDt = 3;
+    const monthDifference =  this.getMonthDifference(new Date(this.user.BusinessDt),new Date(this.agrParent.MaturityDt));
+      if(monthFromMaturyityDateDt <= monthDifference){
+        this.isAgrmntParentMaturityDtValid  = true;
+      } else {
+        this.isAgrmntParentMaturityDtValid  = false;
+      }
   }
 }
