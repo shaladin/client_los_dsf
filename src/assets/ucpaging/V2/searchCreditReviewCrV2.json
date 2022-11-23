@@ -58,6 +58,27 @@
             "label": "Task Claim By",
             "placeholder": "Placeholder",
             "isCriteriaDataTable" : true
+          },
+          {
+            "type" : "dropdown",
+            "name" : "crci.CAPTURE_STAT",
+            "label": "Capture Data",
+            "id": "CaptureDataId",
+            "ddlType" : "all",
+            "items" : [
+                {
+                    "key" : "FAIL",
+                    "value" : "Failed"
+                },
+                {
+                    "key" : " ",
+                    "value" : "In Progress"
+                },
+                {
+                    "key" : "SCS",
+                    "value" : "Success"
+                } 
+            ]
           }
     ],
     "headerList": [
@@ -96,6 +117,12 @@
             "position": "left",
             "label": "Product Offering Name",
             "name": "a.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Capture Data",
+            "name": "rss.DESCR"
         },
         {
             "type": "label",
@@ -149,6 +176,11 @@
             "key": "ViewProdOffering",
             "position": "left",
             "property": "ProdOfferingName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CaptureStatDescr"
         },
         {
             "type": "action",
