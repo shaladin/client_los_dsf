@@ -205,15 +205,9 @@
                     <label class="adInsLabel" translate>Interest Type</label>
                   </div>
                   <div class="col-md-8">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
-                            (change)="ChangeInterestType()"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
-                        {{it.Value}} </option>
-                    </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-ucdropdownlist *ngIf="isDdlInterestTypeReady" [dropdownListObj]="ddlInterestTypeObj"
+                    [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'InterestType'">
+                    </lib-ucdropdownlist>
                   </div>
                 </div>
 
@@ -239,15 +233,9 @@
                     <label class="adInsLabel" translate>Installment Scheme</label>
                   </div>
                   <div class="col-md-8">
-                    <select class="form-control adInsInput" style="width: 50%" formControlName="MrInstSchemeCode"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrInstSchemeCode.invalid }">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
-                        {{it.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrInstSchemeCode"
-                                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-ucdropdownlist *ngIf="isDdlInstallmentSchemeReady" [dropdownListObj]="ddlInstallmentSchemeObj"
+                    [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'MrInstSchemeCode'">
+                    </lib-ucdropdownlist>
                   </div>
                 </div>
 
