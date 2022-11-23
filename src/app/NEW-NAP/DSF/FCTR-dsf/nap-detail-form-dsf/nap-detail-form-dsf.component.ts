@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import Stepper from 'bs-stepper';
@@ -8,22 +8,22 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { environment } from 'environments/environment';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
-import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
-import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
-import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
-import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
-import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
-import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
-import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-nap-detail-form-dsf',
@@ -46,6 +46,7 @@ export class NapDetailFormDsfComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   IsLastStep: boolean = false;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -67,7 +68,7 @@ export class NapDetailFormDsfComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   MouCustId: number;
 
-  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private toastr: NGXToastrService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
@@ -146,7 +147,7 @@ export class NapDetailFormDsfComponent implements OnInit {
             let trxNo;
             this.appNo = this.NapObj.AppNo;
             this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
             let isExisting = response['IsExistingCust'];
             if (isExisting) {
               trxNo = response['CustNo'];
@@ -155,6 +156,7 @@ export class NapDetailFormDsfComponent implements OnInit {
               trxNo = response['ApplicantNo'];
             }
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, trxNo));
+
             let mouId = this.NapObj.MouCustId;
             this.MouCustId = this.NapObj.MouCustId;
             console.log(this.NapObj.MouCustId);
@@ -180,7 +182,9 @@ export class NapDetailFormDsfComponent implements OnInit {
   }
 
   Cancel() {
+    // Self Custom CR Change Backlink
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.FCTR });
+    // End Self Custom CR Change Backlink
   }
 
   MakeViewReturnInfoObj() {
@@ -215,7 +219,10 @@ export class NapDetailFormDsfComponent implements OnInit {
       })
   }
 
-  ChangeTab(AppStep) {
+  async ChangeTab(AppStep) {
+    if (this.ReturnHandlingHId == 0) {
+      await this.UpdateAppStep(AppStep);
+    }
     switch (AppStep) {
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
@@ -248,21 +255,22 @@ export class NapDetailFormDsfComponent implements OnInit {
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
-  NextStep(Step) {
+  async NextStep(Step) {
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
-    this.ChangeTab(Step);
+    
+    await this.ChangeTab(Step);
     this.stepper.next();
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
-  UpdateAppStep(Step: string) {
+  async UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) => {			
+    await this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).toPromise().then(
+      (response) => {
       }
-    )									   
+    )
   }
 
   CheckIsUseDms() {
@@ -293,7 +301,7 @@ export class NapDetailFormDsfComponent implements OnInit {
 
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
-    let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+    let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV21 : URLConstant.SubmitNAP;
       this.http.post(SubmitNAPUrl, reqObj).subscribe(
       () => {
         this.Cancel();
@@ -331,4 +339,5 @@ export class NapDetailFormDsfComponent implements OnInit {
         this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
   }
+
 }

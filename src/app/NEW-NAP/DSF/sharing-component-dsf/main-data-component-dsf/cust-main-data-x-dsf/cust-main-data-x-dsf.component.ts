@@ -112,6 +112,7 @@ export class CustMainDataXDsfComponent implements OnInit {
   AppNo: string;
 
   agrmntParentNo: string = "";
+  IsCustAllowedContinue: boolean = true;
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
@@ -759,7 +760,7 @@ export class CustMainDataXDsfComponent implements OnInit {
 
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
-        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
+        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == this.MrCustTypeCode);
       }
     }
   }
@@ -1036,6 +1037,21 @@ export class CustMainDataXDsfComponent implements OnInit {
     await this.disableInput();
   }
 
+  async checkIsCustAllowedContinue()
+  {
+    if(this.CustMainDataForm.controls.CustNo.value == null)
+    {
+      this.IsCustAllowedContinue = true;
+      return;
+    }
+    
+    await this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByCustNo, { Code: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+      (res) => {
+        res == undefined? this.IsCustAllowedContinue = false : this.IsCustAllowedContinue = true;
+      }
+    );
+  }
+
   ChangeIdType(IdType: string) {
     this.setValidatorPattern();
   }
@@ -1201,9 +1217,13 @@ export class CustMainDataXDsfComponent implements OnInit {
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
 
       if (this.inputMode == 'EDIT') {
+        this.isDdlMrCustRelationshipReady = false;
+        setTimeout (() => { 
         this.CustMainDataForm.patchValue({
           MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
         })
+        this.isDdlMrCustRelationshipReady = true; 
+        }, 0);
       }
     }
 
@@ -1690,18 +1710,25 @@ export class CustMainDataXDsfComponent implements OnInit {
   }
 
   async SaveForm() {
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust)
+    {
+      await this.checkIsCustAllowedContinue();
+      if(!this.IsCustAllowedContinue) return;
+    }
     let obj = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
       AppNo: this.AppNo,
       BizTemplateCode: this.bizTemplateCode
     };
 
+    //Self Custom Changes CR MPF Validation
     let objMPF = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
       AppNo: this.AppNo,
       BizTemplateCode: this.bizTemplateCode,
       Lob: this.LobCode
     };
+    //End Self Custom Changes CR MPF Validation
 
 
     if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
@@ -1718,6 +1745,17 @@ export class CustMainDataXDsfComponent implements OnInit {
         if(!isHaveAgrmntParent)
         {
           this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
+          return;
+        }
+
+        let isOverdue: boolean = false;
+        await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+          (response: any) => {
+            if (response.IsOverdue) isOverdue = true;
+          }
+        );
+        if(isOverdue){
+          this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
           return;
         }
 
@@ -1749,6 +1787,17 @@ export class CustMainDataXDsfComponent implements OnInit {
         if(!isHaveAgrmntParent)
         {
           this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
+          return;
+        }
+
+        let isOverdue: boolean = false;
+        await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+          (response: any) => {
+            if (response.IsOverdue) isOverdue = true;
+          }
+        );
+        if(isOverdue){
+          this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
           return;
         }
 
@@ -2367,5 +2416,4 @@ export class CustMainDataXDsfComponent implements OnInit {
       this.isDisableCustType = false;
     }
   }
-
 }

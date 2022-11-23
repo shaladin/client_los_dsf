@@ -39,6 +39,7 @@ import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/app-collateral-registration-obj.model';
+import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -102,6 +103,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
   AppCustAddrObj: Array<AppCustAddrObj> = new Array();
   AddrLegalObj: Array<AppCustAddrObj> = new Array();
   isOwnerReady: boolean = false;
+  attrSettingObj: RefAttrSettingObj = new RefAttrSettingObj();
+  readonly identifierAssetAttr: string = "AppAssetAttrObjs";
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DO_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
@@ -243,8 +246,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
               }
             }
         });
-        this.GenerataAppAssetAttr(false);
         await this.GetAppData();
+        await this.SetRefAttrSettingObj();
       }
     );
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
@@ -265,6 +268,19 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.DeliveryOrderForm.controls['TempRegisLettDt'].updateValueAndValidity();
     }
     this.isOwnerReady = true;
+  }
+
+  SetRefAttrSettingObj() {
+    let GenObj =
+    {
+      AppAssetId: this.AppAssetId,
+      AssetTypeCode: this.AssetTypeCode,
+      IsRefresh: false
+    };
+    this.attrSettingObj.ReqGetListAttrObj = GenObj;
+    this.attrSettingObj.Title = "Asset Attribute";
+    this.attrSettingObj.UrlGetListAttr = URLConstant.GenerateAppAssetAttrV2;
+    this.isAssetAttrReady = true;
   }
 
   async InitDms() {
@@ -422,21 +438,19 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.deliveryOrderObj.AppCollateralDocObj = [...this.DeliveryOrderForm.value.DOAssetDocList];
 
     this.deliveryOrderObj.AppAssetAttrObj = new Array<ReqAppAssetAttrObj>();
-    if (this.AppAssetAttrObj != null) {
-      for (let i = 0; i < this.DeliveryOrderForm.controls["AppAssetAttrObjs"].value.length; i++) {
-        let appAssetAttrObj = new ReqAppAssetAttrObj();
-        let appCollAttrcObj = new ReqAppCollateralAttrObj();
-        appAssetAttrObj.AssetAttrName = this.DeliveryOrderForm.controls["AppAssetAttrObjs"].value[i].AssetAttrName;
-        appAssetAttrObj.AssetAttrCode = this.DeliveryOrderForm.controls["AppAssetAttrObjs"].value[i].AssetAttrCode;
-        appAssetAttrObj.AttrValue = this.DeliveryOrderForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
+    for (let i = 0; i < this.DeliveryOrderForm.controls["AppAssetAttrObjs"].value.length; i++) {
+      let appAssetAttrObj = new ReqAppAssetAttrObj();
+      let appCollAttrcObj = new ReqAppCollateralAttrObj();
+      appAssetAttrObj.AssetAttrName = this.DeliveryOrderForm.controls["AppAssetAttrObjs"].value[i].AttrName;
+      appAssetAttrObj.AssetAttrCode = this.DeliveryOrderForm.controls["AppAssetAttrObjs"].value[i].AttrCode;
+      appAssetAttrObj.AttrValue = this.DeliveryOrderForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
 
-        appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
-        appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
-        appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
+      appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
+      appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
+      appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
 
-        this.deliveryOrderObj.AppAssetAttrObj.push(appAssetAttrObj);
-        this.deliveryOrderObj.AppCollateralAttrObj.push(appCollAttrcObj);
-      }
+      this.deliveryOrderObj.AppAssetAttrObj.push(appAssetAttrObj);
+      this.deliveryOrderObj.AppCollateralAttrObj.push(appCollAttrcObj);
     }
 
   }
@@ -656,95 +670,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.toastr.successMessage("Submit with Integrator");
       this.IsIntegrator = true;
     }
-  }
-
-  GenerataAppAssetAttr(isRefresh: boolean) {
-    let GenObj =
-    {
-      AppAssetId: this.AppAssetId,
-      AssetTypeCode: this.AssetTypeCode,
-      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
-      IsRefresh: isRefresh
-    };
-    this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
-      (response) => {
-        this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
-        if (response['IsDiffWithRefAttr']) {
-          this.isDiffWithRefAttr = true;
-          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
-        }
-
-        this.GenerateAppAssetAttrForm();
-      });
-  }
-
-  GenerateAppAssetAttrForm() {
-    if (this.AppAssetAttrObj != null) {
-      this.appAssetAttrObjs = new Array<AppAssetAttrCustomObj>();
-      for (let i = 0; i < this.AppAssetAttrObj.length; i++) {
-        this.ListAttrAnswer.push([]);
-        let appAssetAttrObj = new AppAssetAttrCustomObj();
-        appAssetAttrObj.AssetAttrCode = this.AppAssetAttrObj[i].AttrCode;
-        appAssetAttrObj.AssetAttrName = this.AppAssetAttrObj[i].AttrName;
-        appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrValue;
-        appAssetAttrObj.AttrInputType = this.AppAssetAttrObj[i].AttrInputType;
-        appAssetAttrObj.AttrLength = this.AppAssetAttrObj[i].AttrLength;
-        if (this.AppAssetAttrObj[i].AttrQuestionValue != null) {
-          this.ListAttrAnswer[i].push(this.AppAssetAttrObj[i].AttrQuestionValue);
-          if (appAssetAttrObj.AttrValue == null) {
-            appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrQuestionValue[0]
-          }
-        }
-        else {
-          this.ListAttrAnswer[i].push("");
-        }
-        this.appAssetAttrObjs.push(appAssetAttrObj);
-
-      }
-      let listAppAssetAttrs = this.DeliveryOrderForm.controls["AppAssetAttrObjs"] as FormArray;
-      while (listAppAssetAttrs.length !== 0) {
-        listAppAssetAttrs.removeAt(0);
-      }
-      for (let j = 0; j < this.appAssetAttrObjs.length; j++) {
-        listAppAssetAttrs.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
-      }
-      this.isAssetAttrReady = true;
-    }
-  }
-
-  addGroupAppAssetAttr(appAssetAttrObj: AppAssetAttrCustomObj, i: number) {
-    let ListValidator: Array<ValidatorFn> = this.setValidators(appAssetAttrObj);
-
-    return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
-  }
-  
-  private setFbGroupAssetAttribute(appAssetAttrObj: AppAssetAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>) {
-    let tempFB = this.fb.group({
-      No: [i],
-      AssetAttrCode: [appAssetAttrObj.AssetAttrCode],
-      AssetAttrName: [appAssetAttrObj.AssetAttrName],
-      AttrInputType: [appAssetAttrObj.AttrInputType],
-      AttrValue: [appAssetAttrObj.AttrValue]
-    });
-    if (ListValidator.length > 0) {
-      tempFB.get("AttrValue").setValidators(ListValidator);
-    }
-    return tempFB;
-  }
-
-  private setValidators(appAssetAttrObjs: AppAssetAttrCustomObj) {
-    let ListValidator: Array<ValidatorFn> = new Array<ValidatorFn>();
-
-    if (appAssetAttrObjs.AttrLength != null && appAssetAttrObjs.AttrLength != 0) {
-      ListValidator.push(Validators.maxLength(appAssetAttrObjs.AttrLength));
-    }
-
-    return ListValidator;
-  }
-
-  refreshAttr() {
-    this.isAssetAttrReady = false;
-    this.GenerataAppAssetAttr(true);
   }
 
   SetBpkbCity(event) {

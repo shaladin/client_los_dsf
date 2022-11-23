@@ -73,6 +73,14 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   MrInstSchmCode: string;
   mouCust: MouCustObj;
   isAppAttrContentReady = false;
+  isDdlMrFirstInstTypeReady: boolean = false;
+  isDdlPayFreqReady: boolean = false;
+  isDdlInterestTypeReady: boolean = false;
+  isDdlInstallmentSchemeReady: boolean = false;
+  ddlMrFirstInstTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInterestTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInstallmentSchemeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlPayFreqObj: UcDropdownListObj = new UcDropdownListObj();
   GenerateAppAttrContentObjs: Array<GenerateAppAttrContentObj> = new Array<GenerateAppAttrContentObj>();
   ListAttrAnswer = [];
   ListInputLookUpObj = new Array();
@@ -336,26 +344,55 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     this.ddlMrWopObj.isSelectOutput = true;
   }
 
-  async getDDLFromProdOffering(refProdCompntCode: string) {
-    const obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
-    obj.RefProdCompntCode = refProdCompntCode;
-    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+  initDdlMrFirstInstType() {
+    this.ddlMrFirstInstTypeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlMrFirstInstTypeObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefProdCompFirstInstType,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlMrFirstInstTypeObj.customObjName = "DDLRefProdComptCode";
+    this.ddlMrFirstInstTypeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlMrFirstInstTypeReady = true;
+  }
 
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).toPromise().then(
-      (response) => {
+  initDdlInterestType()
+  {
+    this.ddlInterestTypeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlInterestTypeObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefProdCompIntrstType,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlInterestTypeObj.customObjName = "DDLRefProdComptCode";
+    this.ddlInterestTypeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlInterestTypeReady = true;
+  }
 
-        const listDDL = response['DDLRefProdComptCode'];
-        this.applicationDDLitems[refProdCompntCode] = listDDL;
-        if (refProdCompntCode == CommonConstant.RefProdCompFirstInstType) {
-          this.FirstInstType = this.applicationDDLitems['FIRSTINSTTYPE'][0].Value;
-          if (!this.NapAppModelForm.get("MrFirstInstTypeCode").value) {
-            this.NapAppModelForm.patchValue({
-              MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
-            });
-          }
-        }
-      });
+  initDdlInstallmentScheme()
+  {
+    this.ddlInstallmentSchemeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlInstallmentSchemeObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefProdCompInstScheme,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlInstallmentSchemeObj.customObjName = "DDLRefProdComptCode";
+    this.ddlInstallmentSchemeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlInstallmentSchemeReady = true;
+  }
+  
+  initDdlPayFreq() {
+    this.ddlPayFreqObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlPayFreqObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodePayFreq,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlPayFreqObj.customObjName = "DDLRefProdComptCode";
+    this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_ONE;
+    this.ddlPayFreqObj.isSelectOutput = true;
+    this.isDdlPayFreqReady = true;
   }
 
   getInterestTypeCode() {
@@ -425,9 +462,10 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       async (response: AppObj) => {
         this.resultResponse = response;
 
-        await this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
-        await this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
-        await this.getDDLFromProdOffering(CommonConstant.RefProdCompFirstInstType);
+        this.initDdlMrFirstInstType();
+        this.initDdlInterestType();
+        this.initDdlInstallmentScheme();
+        this.initDdlPayFreq();
 
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -645,13 +683,25 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       });
   }
 
+  DictRefPayFreq: object = {};
   getPayFregData() {
-    this.http.post(URLConstant.GetListActiveRefPayFreq, { RowVersion: '' }).subscribe(
-      (response) => {
-        const objTemp = response[CommonConstant.ReturnObj];
-        this.applicationDDLitems['Pay_Freq'] = objTemp;
+    let obj = { RowVersion: "" };
 
-      });
+    this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
+      (response) => {
+        let objTemp = response[CommonConstant.ReturnObj];
+        for (let i = 0; i < objTemp.length; i++) {
+          this.DictRefPayFreq[objTemp[i].PayFreqCode] = objTemp[i];
+        }
+        this.applicationDDLitems["Floating_Period"] = objTemp;
+
+        if (this.resultResponse.PayFreqCode != null) {
+          this.PayFreqVal = this.DictRefPayFreq[this.resultResponse.PayFreqCode].PayFreqVal;
+          this.PayFreqTimeOfYear = this.DictRefPayFreq[this.resultResponse.PayFreqCode].TimeOfYear;
+        }
+        this.ChangeNumOfInstallmentTenor();
+      }
+    );
   }
 
   getRefMasterTypeCode(code) {
@@ -827,13 +877,11 @@ export class ApplicationDataFL4WXComponent implements OnInit {
   }
 
   ChangeNumOfInstallmentPayFreq(ev) {
-    if (ev.target.selectedIndex == 0) { return; }
-    const idx = ev.target.selectedIndex - 1;
-    const temp = this.NapAppModelForm.controls.Tenor.value;
+    let temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
-      this.PayFreqVal = this.applicationDDLitems['Pay_Freq'][idx].PayFreqVal;
-      this.PayFreqTimeOfYear = this.applicationDDLitems['Pay_Freq'][idx].TimeOfYear;
-      const total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
+      this.PayFreqVal = this.DictRefPayFreq[ev.selectedValue].PayFreqVal;
+      this.PayFreqTimeOfYear = this.DictRefPayFreq[ev.selectedValue].TimeOfYear;
+      let total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }
   }

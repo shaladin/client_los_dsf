@@ -43,6 +43,7 @@ export class ReferantorDataNewComponent implements OnInit {
 
   ReferantorOn = false;
   IsReady: boolean = false;
+  IsVatReady: boolean = false;
   ExistedData: boolean = false;
   OfficeCode: String;
   arrAddCrit;
@@ -101,6 +102,15 @@ export class ReferantorDataNewComponent implements OnInit {
             CheckBoxAppReferantor: true
           });
           this.setEditForm();
+          
+          for(let i = 0; i < this.ListAppReferantors.length; i++){
+            if(this.ListAppReferantors[i].ReferantorCategory == CommonConstant.ReferantorCategoryCustomer && this.ListAppReferantors[i].MrReferantorType == CommonConstant.ReferantorTypeCustomerCompany){
+              this.NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].IsVatReady.value = true
+            }
+            else {
+              this.NapAppReferantorForm.controls['AppReferantorObjs']['controls'][i]['controls'].IsVatReady.value = false
+            }
+          }
         }
     });
   }
@@ -161,12 +171,14 @@ export class ReferantorDataNewComponent implements OnInit {
         TaxIdCity: [''],
         TaxIdZipcode: [''],
         MrTaxCalcMethod: ['', [Validators.required]],
+        IsUseVat: [''],
         RefBankCode: ['', [Validators.maxLength(50)]],
         BankAccNo: ['', [Validators.required]],
         BankAccName: [''],
         BankBranch: [''],
         BankName: [''],
         IsDisabledCalcMethod: [''],
+        IsVatReady: [''],
         VendorId: [''],
         IsNpwpExist: ['']
       });
@@ -193,12 +205,14 @@ export class ReferantorDataNewComponent implements OnInit {
         TaxIdCity: [AppReferantorObjs.TaxIdCity],
         TaxIdZipcode: [AppReferantorObjs.TaxIdZipcode],
         MrTaxCalcMethod: [AppReferantorObjs.MrTaxCalcMethod, [Validators.required]],
+        IsUseVat: [AppReferantorObjs.IsUseVat],
         RefBankCode: [AppReferantorObjs.RefBankCode, [Validators.maxLength(50)]],
         BankAccNo: [AppReferantorObjs.BankAccNo, [Validators.required]],
         BankAccName: [AppReferantorObjs.BankAccName],
         BankBranch: [AppReferantorObjs.BankBranch],
         BankName: [AppReferantorObjs.BankName],
         IsDisabledCalcMethod: AppReferantorObjs.MrTaxCalcMethod == ""? false : true,
+        IsVatReady: AppReferantorObjs.ReferantorCategory == CommonConstant.ReferantorCategoryCustomer && AppReferantorObjs.ReferantorType == CommonConstant.ReferantorTypeCustomerCompany ? true : false,
         VendorId: [''],
         IsNpwpExist: AppReferantorObjs.TaxIdNo != null && AppReferantorObjs.TaxIdNo != ""? true : false
       });
@@ -373,12 +387,14 @@ export class ReferantorDataNewComponent implements OnInit {
       TaxIdCity: "",
       TaxIdZipcode: "",
       MrTaxCalcMethod: "",
+      IsUseVat: false,
       RefBankCode: "",
       BankAccNo: "",
       BankAccName: "",
       BankBranch: "",
       BankName: "",
       IsDisabledCalcMethod: false,
+      IsVatReady: false,
       VendorId: "",
       IsNpwpExist: ""
     });
@@ -467,10 +483,18 @@ export class ReferantorDataNewComponent implements OnInit {
       TaxIdZipcode : event.ZipCode,
       MrTaxCalcMethod : event.MrTaxCalcMethod,
       IsDisabledCalcMethod: event.MrTaxCalcMethod != "" ? true : false,
+      IsVatReady: event.ReferantorCategory == CommonConstant.ReferantorCategoryCustomer && event.ReferantorType == CommonConstant.ReferantorTypeCustomerCompany ? true : false,
       VendorId: event.VendorId,
       IsNpwpExist: event.IsNPWPExist,
+      IsUseVat: event.IsVat,
     });
     
+    if(this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i]["controls"].ReferantorCategory.value == CommonConstant.ReferantorCategoryCustomer && this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i]["controls"].ReferantorType.value == CommonConstant.ReferantorTypeCustomerCompany){
+      this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i]["controls"].IsVatReady.value = true
+    } else {
+      this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i]["controls"].IsVatReady.value = false
+    }
+
     if(this.NapAppReferantorForm.controls["AppReferantorObjs"]["controls"][i]["controls"].ReferantorCategory.value == CommonConstant.ReferantorCategoryAgency){
       let vendorBankAccList : Array<VendorBankAccObj> = new Array<VendorBankAccObj>();
       await this.http.post<VendorBankAccObj>(URLConstant.GetListActiveVendorBankAccByVendorCode, { Code: event.ReferantorCode }).toPromise().then(
@@ -668,8 +692,8 @@ export class ReferantorDataNewComponent implements OnInit {
       appReferantorObj.MrTaxCalcMethodCode = this.NapAppReferantorForm.controls["AppReferantorObjs"].value[i].MrTaxCalcMethod;
       appReferantorObj.IsNpwpExist = this.NapAppReferantorForm.controls["AppReferantorObjs"].value[i].IsNpwpExist;
       appReferantorObj.ReferantorCategory = this.NapAppReferantorForm.controls["AppReferantorObjs"].value[i].ReferantorCategory;
+      appReferantorObj.IsUseVat = this.NapAppReferantorForm.controls["AppReferantorObjs"].value[i].IsUseVat;
       appReferantorObj.RowVersion = this.NapAppReferantorForm.controls["AppReferantorObjs"].value[i].RowVersion;
-
       this.appReferantorListObj.ReqListAddEditAppReferantorObjs.push(appReferantorObj);
     }
   }
