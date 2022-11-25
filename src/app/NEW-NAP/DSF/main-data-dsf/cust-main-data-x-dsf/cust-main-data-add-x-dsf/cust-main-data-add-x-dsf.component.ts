@@ -330,16 +330,20 @@ export class CustMainDataAddXDsfComponent implements OnInit {
       (response) => {
         setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
-        let requestAddAppRoleObj: ReqAddAppRoleObj = new ReqAddAppRoleObj();
 
-        requestAddAppRoleObj.AppId = response.Id;
-        requestAddAppRoleObj.AppRoleCode = this.user.RoleCode;
+        //Self Custom Changes CR PIC Credit Review - Deactivated with S0298313
+        // let requestAddAppRoleObj: ReqAddAppRoleObj = new ReqAddAppRoleObj();
+
+        // requestAddAppRoleObj.AppId = response.Id;
+        // requestAddAppRoleObj.AppRoleCode = this.user.RoleCode;
         
-        this.http.post<ReqAddAppRoleObj>(URLConstantDsf.AddNapRole, requestAddAppRoleObj).subscribe(
-          (response) => {
+        // this.http.post<ReqAddAppRoleObj>(URLConstantDsf.AddNapRole, requestAddAppRoleObj).subscribe(
+        //   (response) => {
             
-          }
-        )
+        //   }
+        // )
+        //End Self Custom Changes CR PIC Credit Review - Deactivated with S0298313
+        
         switch (this.bizTemplateCode) {
           case CommonConstant.CF4W:
             AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP1], { "AppId": response.Id, "CopyAppId": response.CopyId });

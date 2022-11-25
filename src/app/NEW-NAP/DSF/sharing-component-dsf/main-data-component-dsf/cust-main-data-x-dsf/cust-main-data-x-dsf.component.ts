@@ -57,6 +57,8 @@ import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/new-application/ReqAddAppRoleObj.Model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-cust-main-data-x-dsf',
@@ -181,6 +183,9 @@ export class CustMainDataXDsfComponent implements OnInit {
   checkIsAddressKnown: boolean = false;
   isDisableCustType: boolean = false;
   existShrHolder: boolean = false;
+  //Self Custom Changes CR PIC Credit Review
+  user: CurrentUserContext;
+  //End Self Custom Changes CR PIC Credit Review
 
   constructor(
     private regexService: RegexService,
@@ -263,6 +268,9 @@ export class CustMainDataXDsfComponent implements OnInit {
     this.ddlIdTypeObj.customKey = "MasterCode";
     this.ddlIdTypeObj.customValue = "Descr";
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    //Self Custom Changes CR PIC Credit Review
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    //End Self Custom Changes CR PIC Credit Review
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
     var datePipe = new DatePipe("en-US");
     this.MaxDateEmpEstblshmntDt = new Date(this.UserAccess[CommonConstant.BUSINESS_DT]);
@@ -1810,6 +1818,18 @@ export class CustMainDataXDsfComponent implements OnInit {
     } else {
       this.SaveCustomer();
     }
+    //Self Custom Changes CR PIC Credit Review
+    let requestAddAppRoleObj: ReqAddAppRoleObj = new ReqAddAppRoleObj();
+
+    requestAddAppRoleObj.AppId = this.appId;
+    requestAddAppRoleObj.AppRoleCode = this.user.RoleCode;
+    
+    this.http.post<ReqAddAppRoleObj>(URLConstantDsf.AddNapRole, requestAddAppRoleObj).subscribe(
+      (response) => {
+        
+      }
+    )
+    //End Self Custom Changes CR PIC Credit Review
   }
 
   cancel() {
