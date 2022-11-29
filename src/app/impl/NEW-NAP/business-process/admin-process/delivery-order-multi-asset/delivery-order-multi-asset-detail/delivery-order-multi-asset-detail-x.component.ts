@@ -84,6 +84,7 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   maxDiff: number = null;
   ReqByCodeObj: GenericObj = new GenericObj();
   diffDays: number = 0;
+  DiffDay: number = 0;
 
   constructor(
     private httpClient: HttpClient,
@@ -479,12 +480,12 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
 
   async SaveForm() {
     await this.getMaxDiffDays();
-    let diffDays = 0;
+    let DiffDay = 0;
     const diffTimes = new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime() - new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime();
     if (diffTimes > 0) {
-      diffDays = diffTimes / (1000 * 3600 * 24);
+      this.DiffDay = diffTimes / (1000 * 3600 * 24);
     }
-    if(this.diffDays > this.maxDiff){
+    if(this.DiffDay > this.maxDiff){
       this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
       return;
     }
