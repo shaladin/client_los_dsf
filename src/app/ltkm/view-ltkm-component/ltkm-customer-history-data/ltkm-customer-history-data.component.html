@@ -78,9 +78,6 @@
                     <th>
                       <span style="float: right;" translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
                     </th>
-                    <th>
-                      <span translate class="thead-header" name='OSAR'>View Approval</span>
-                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -97,7 +94,6 @@
                     <td *ngIf="item.SalesName==null"> - </td>
                     <td style="text-align: right;"*ngIf="item.TotalNTF!=null">{{item.TotalNTF | number:'.2':'en-US' }}</td>
                     <td style="text-align: right;" *ngIf="item.TotalNTF==null"> - </td>
-                    <td>View</td>
                   </tr>
                 </tbody>
               </table>
