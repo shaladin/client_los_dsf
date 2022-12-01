@@ -124,6 +124,7 @@ export class CommonConstantX {
     public static GSCodeDisableRequiredNotesApvAct = "DISABLE_REQUIRED_NOTES_APV_ACT";
     public static GSCodeDistanceGoLiveDtToSystemDt = "DISTANCE_GOLIVE_DT";
     public static GSCodeDistanceMaturityDtToSystemDt = "DISTANCE_MATURITY_DT";
+    public static GSCodeConfigPayloadRptSubrpt = "CONFIG_PAYLOAD_RPT_SUBRPT";
 
     //NAP 4
     public static SubjRelationLessee = "LESSEE";
