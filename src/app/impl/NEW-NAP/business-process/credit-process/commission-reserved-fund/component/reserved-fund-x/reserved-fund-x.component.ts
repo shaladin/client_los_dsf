@@ -67,6 +67,8 @@ export class ReservedFundXComponent implements OnInit {
   readonly DDLTask: string = CommonConstant.ReturnTask;
   DictRemainingIncomeForm: object = {};
   lockAppCommTab: boolean=false;
+  isSurvey : boolean = true;
+  SurveyList: any;
 
 
   FormReturnObj  =this.fb.group({
@@ -84,6 +86,7 @@ export class ReservedFundXComponent implements OnInit {
     var appObj = {
       Id: this.AppId
     };
+    await this.GetSurvey();
     await this.GetAppCommissionData(appObj);
     this.checkAppRsvFundExisting(appObj);
     await this.GetAppRsvFundRule(appObj);
@@ -150,7 +153,7 @@ export class ReservedFundXComponent implements OnInit {
       this.DictTempRemainingIncomeForm[listPriority[j]] = TempObj;
     }
 
-    for (let i=0; i<this.RsvForm.controls["ReservedFundObjs"].value.length; i++) 
+    for (let i=0; i<this.RsvForm.controls["ReservedFundObjs"].value.length; i++)
     {
       var rsvAmt = this.RsvForm.controls["ReservedFundObjs"].value[i].ReservedFundAmt;
       for(let j=0;j<listPriority.length;j++)
@@ -208,7 +211,7 @@ export class ReservedFundXComponent implements OnInit {
     if (0 > this.remainingAllocatedAmt) {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Remaining Allocated Amount");
       return false;
-    } 
+    }
     this.outputUpdateRemainingAlloc.emit(this.totalRsvFundAmt);
     return true;
   }
@@ -389,10 +392,10 @@ export class ReservedFundXComponent implements OnInit {
       (response) => {
         this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
 
-        if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W) {
+        if ((this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W) && this.isSurvey) {
           this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstant.ReturnHandlingAddSurvey);
         } else {
-          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);     
+          this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
         }
       }
     );
@@ -412,5 +415,18 @@ export class ReservedFundXComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
       });
+  }
+
+  async GetSurvey(){
+    if (this.AppId != 0 && this.AppId != null && this.AppId != undefined) {
+      await this.http.post(URLConstant.GetAppSurveyVerifSubjectListByAppId, { Id: this.AppId}).toPromise().then(
+        (response) => {
+          this.SurveyList = response['ReturnObject'];
+          if(this.SurveyList.length == 0){
+            this.isSurvey = false;
+          }
+        }
+      );
+    }
   }
 }

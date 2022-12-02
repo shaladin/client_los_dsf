@@ -62,7 +62,7 @@ export class CustDetailCompanyComponent implements OnInit {
     }
 
   CustDetailForm = this.fb.group({
-    NoOfEmployee: ['', Validators.required],
+    NoOfEmployee: ['', [Validators.required, Validators.max(2147483647)]],
     IsAffiliateWithMF: [false],
     IsSkt: [false],
     IsVip: [false],

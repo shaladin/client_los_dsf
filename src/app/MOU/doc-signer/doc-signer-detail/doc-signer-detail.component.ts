@@ -199,10 +199,17 @@ export class DocSignerDetailComponent implements OnInit {
           custCompanyCrit2.propName = "CC.MR_CUST_TYPE_CODE";
           custCompanyCrit2.restriction = AdInsConstant.RestrictionEq;
           custCompanyCrit2.value = CommonConstant.CustTypePersonal;
+          var custCompanyCrit3: CriteriaObj = new CriteriaObj();
+          custCompanyCrit3.DataType = "text";
+          custCompanyCrit3.propName = "CC.IS_SIGNER";
+          custCompanyCrit3.restriction = AdInsConstant.RestrictionEq;
+          custCompanyCrit3.value = '1';
           this.custShareholderLookUpObj1.addCritInput.push(this.custCompanyCrit);
           this.custShareholderLookUpObj1.addCritInput.push(custCompanyCrit2);
+          this.custShareholderLookUpObj1.addCritInput.push(custCompanyCrit3);
           this.custShareholderLookUpObj2.addCritInput.push(this.custCompanyCrit);
           this.custShareholderLookUpObj2.addCritInput.push(custCompanyCrit2);
+          this.custShareholderLookUpObj2.addCritInput.push(custCompanyCrit3);
           this.ucLookupShareHolder1.setAddCritInput();
           this.ucLookupShareHolder2.setAddCritInput();
         }
