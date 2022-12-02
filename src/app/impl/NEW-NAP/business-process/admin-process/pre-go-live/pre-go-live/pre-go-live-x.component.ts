@@ -338,7 +338,6 @@ export class PreGoLiveXComponent implements OnInit {
 
   async SaveForm(flag = true) {
     await this.getMaxDiffDays();
-    let DiffDay = 0;
     const diffTimes = new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime() - new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime();
     if (diffTimes > 0) {
       this.DiffDay = diffTimes / (1000 * 3600 * 24);
