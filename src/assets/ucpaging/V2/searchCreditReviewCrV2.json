@@ -75,6 +75,10 @@
                     "value" : "In Progress"
                 },
                 {
+                    "key" : "REQ",
+                    "value" : "Request"
+                },
+                {
                     "key" : "SCS",
                     "value" : "Success"
                 } 
