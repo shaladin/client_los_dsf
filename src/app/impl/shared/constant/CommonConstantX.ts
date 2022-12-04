@@ -122,6 +122,9 @@ export class CommonConstantX {
     //GS
     public static GSCodeShareholderJobPostIsOnwer = "SHAREHOLDER_JOB_POST_IS_OWNER";
     public static GSCodeDisableRequiredNotesApvAct = "DISABLE_REQUIRED_NOTES_APV_ACT";
+    public static GSCodeDistanceGoLiveDtToSystemDt = "DISTANCE_GOLIVE_DT";
+    public static GSCodeDistanceMaturityDtToSystemDt = "DISTANCE_MATURITY_DT";
+    public static GSCodeConfigPayloadRptSubrpt = "CONFIG_PAYLOAD_RPT_SUBRPT";
 
     //NAP 4
     public static SubjRelationLessee = "LESSEE";

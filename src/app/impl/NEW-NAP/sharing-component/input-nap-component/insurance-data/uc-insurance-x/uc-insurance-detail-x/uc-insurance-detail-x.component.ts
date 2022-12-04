@@ -1602,10 +1602,10 @@ export class UcInsuranceDetailXComponent implements OnInit {
       this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][MainCvgIndex].controls.AppInsAddCvgs["controls"][AddCvgIndex].patchValue({
         SumInsuredAmt: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypeAmt ? this.groupAddCvrSumInsuredDropDown[MainCvgIndex][AddCvgToPatch.AdditionalCoverageType][0].SumInsuredAmt : null,
         PremiumType: AddCvgToPatch.PremiumType,
-        BaseCustAddPremiRate: AddCvgToPatch.PremiToCust,
+        BaseCustAddPremiRate: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypePrcnt ? AddCvgToPatch.RateToCust : AddCvgToPatch.PremiToCust,
         CustAddPremiRate: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypePrcnt ? AddCvgToPatch.RateToCust : AddCvgToPatch.PremiToCust,
         BaseCalculation: AddCvgToPatch.BaseCalc,
-        BaseInscoAddPremiRate: AddCvgToPatch.PremiToInsco,
+        BaseInscoAddPremiRate: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypePrcnt ? AddCvgToPatch.RateToInsco :AddCvgToPatch.PremiToInsco,
         InscoAddPremiRate: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypePrcnt ? AddCvgToPatch.RateToInsco :AddCvgToPatch.PremiToInsco,
         SeatCount: 0,
         Value: checked

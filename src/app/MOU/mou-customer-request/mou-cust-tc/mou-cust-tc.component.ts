@@ -215,6 +215,10 @@ export class MouCustTcComponent implements OnInit {
   }
 
   Save() {
+    if (this.MouCustTcForm.value.MouCustTcList["length"] <= 0) {
+      this.toastr.warningMessage("Term & Conditions not found");
+      return;
+    }
     this.formSubmitted = true;
     if (this.MouCustTcForm.valid) {
       var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;

@@ -23,6 +23,7 @@ import { ViewLtkmCustomerDataCompanyXComponent } from "app/impl/ltkm/view-ltkm-c
 import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail-x.component";
 import { ViewLtkmCustDataCompletionPersonalXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-personal/view-ltkm-cust-data-completion-personal-x.component";
 import { ViewLtkmCustDataPersonalDataXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-personal/view-ltkm-customer-data-personal-x.component";
+import { LtkmViewComponentX } from "app/impl/ltkm/view-ltkm-component/ltkm-view-component-x";
 
 @NgModule({
   exports: [
@@ -41,7 +42,8 @@ import { ViewLtkmCustDataPersonalDataXComponent } from "app/impl/ltkm/view-ltkm-
     LtkmViewComponent,
     ViewLtkmCustDataCompletionCompanyXComponent,
     ViewLtkmCustomerDataCompanyXComponent,
-    ViewLtkmCustDetailXComponent
+    ViewLtkmCustDetailXComponent,
+    LtkmViewComponentX
   ],
   imports: [
     CommonModule,
@@ -69,13 +71,14 @@ import { ViewLtkmCustDataPersonalDataXComponent } from "app/impl/ltkm/view-ltkm-
     LtkmViewComponent,
     ViewLtkmCustDataCompletionCompanyXComponent,
     ViewLtkmCustomerDataCompanyXComponent,
-    ViewLtkmCustDetailXComponent
+    ViewLtkmCustDetailXComponent,
+    LtkmViewComponentX
   ],
   providers: [
     NGXToastrService
   ],
   entryComponents: [
-    
+
   ]
 })
 export class ViewLtkmComponentModule { }

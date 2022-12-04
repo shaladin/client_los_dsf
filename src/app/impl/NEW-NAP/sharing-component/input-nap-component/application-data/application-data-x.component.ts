@@ -1854,8 +1854,19 @@ export class ApplicationDataXComponent implements OnInit {
     );
   }
   
-  validateGoLiveDtAgrmntParent(){
-    const monthFromGoLiveDt = 6;
+  async validateGoLiveDtAgrmntParent(){
+    let monthFromGoLiveDt: number = 1;
+    let reqObj = {
+        code: CommonConstantX.GSCodeDistanceGoLiveDtToSystemDt
+    }
+    await this.http.post(URLConstant.GetGeneralSettingByCode, reqObj).toPromise().then(
+      (response: {GsCode: string, GsName: string, GsValue: string, GsDescr: string}) => {
+        if(response.GsValue !== undefined && response.GsValue !== null && response.GsValue !== ""){
+          let gsvalue = parseInt(response.GsValue)
+          monthFromGoLiveDt = gsvalue
+        }
+      });
+
     const monthDifference =  this.getMonthDifference(new Date(this.agrParent.GoLiveDt),new Date(this.user.BusinessDt));
       if( monthFromGoLiveDt < monthDifference){
         this.isAgrmntParentGoLiveDtValid = true
@@ -1864,8 +1875,20 @@ export class ApplicationDataXComponent implements OnInit {
       }
   }
 
-  validateMaturityDtAgrmntParent(){
-    const monthFromMaturyityDateDt = 3;
+  async validateMaturityDtAgrmntParent(){
+    let monthFromMaturyityDateDt: number = 0;
+    let reqObj = {
+        code: CommonConstantX.GSCodeDistanceMaturityDtToSystemDt
+    }
+    await this.http.post(URLConstant.GetGeneralSettingByCode, reqObj).toPromise().then(
+      (response: {GsCode: string, GsName: string, GsValue: string, GsDescr: string}) => {
+        if(response.GsValue !== undefined && response.GsValue !== null && response.GsValue !== ""){
+          console.log(typeof response.GsValue);
+          let gsvalue = parseInt(response.GsValue)
+          console.log(typeof gsvalue);
+          monthFromMaturyityDateDt = gsvalue
+        }
+      });
     const monthDifference =  this.getMonthDifference(new Date(this.user.BusinessDt),new Date(this.agrParent.MaturityDt));
       if(monthFromMaturyityDateDt <= monthDifference){
         this.isAgrmntParentMaturityDtValid  = true;

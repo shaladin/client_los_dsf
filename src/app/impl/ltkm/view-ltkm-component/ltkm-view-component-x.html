@@ -24,10 +24,10 @@
               </mat-tab>
               <mat-tab label="Customer Data">
                 <ng-template matTabContent>
-                  <app-view-ltkm-cust-data-company *ngIf="CustTypeCode == 'COMPANY'" [LtkmCustId]="LtkmCustId">
-                  </app-view-ltkm-cust-data-company>
-                  <app-view-ltkm-cust-data-personal *ngIf="CustTypeCode == 'PERSONAL'" [LtkmCustId]="LtkmCustId">
-                  </app-view-ltkm-cust-data-personal>
+                  <app-view-ltkm-cust-data-company-x *ngIf="CustTypeCode == 'COMPANY'" [LtkmCustId]="LtkmCustId">
+                  </app-view-ltkm-cust-data-company-x>
+                  <app-view-ltkm-cust-data-personal-x *ngIf="CustTypeCode == 'PERSONAL'" [LtkmCustId]="LtkmCustId">
+                  </app-view-ltkm-cust-data-personal-x>
                 </ng-template>
               </mat-tab>
               <mat-tab label="Customer History">
