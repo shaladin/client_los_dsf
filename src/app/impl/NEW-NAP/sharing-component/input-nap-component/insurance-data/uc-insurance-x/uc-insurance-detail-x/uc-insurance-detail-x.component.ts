@@ -1869,9 +1869,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
                   addCvgDisc += this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["CustAddPremiAmt"].value;
                 }
               });
-
-              console.log(this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["MrAddCvgTypeCode"].value);
-              
             } else {
               let sumInsuredAmt = null;
               if (this.groupAddCvrSumInsuredDropDown[i][currAddCvgType]) {
@@ -1895,10 +1892,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
             })
           }
         }
-
-
-        console.log(this.InsuranceDataForm.controls.TotalCustDiscAmt.value);
-
         this.isCalculate = true;
         this.checkPaidBy();
       }
