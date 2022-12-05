@@ -1533,9 +1533,18 @@ export class MouRequestAddcollXComponent implements OnInit {
     this.InputLookupCityIssuerObj.addCritInput = disCrit;
   }
   setValidatorBpkb() {
-    this.AddCollForm.controls.TaxCityIssuer.setValidators(Validators.required);
-    this.AddCollForm.controls.TaxIssueDt.setValidators(Validators.required);
-    this.InputLookupCityIssuerObj.isRequired = true;
+    if(this.returnMouCust.MrMouTypeCode == 'GENERAL')
+    {
+      this.AddCollForm.controls.TaxCityIssuer.setValidators(Validators.required);
+      this.AddCollForm.controls.TaxIssueDt.setValidators(Validators.required);
+      this.InputLookupCityIssuerObj.isRequired = true;
+    }
+    else
+    {
+      this.AddCollForm.controls.TaxCityIssuer.clearValidators();
+      this.AddCollForm.controls.TaxIssueDt.clearValidators();
+      this.InputLookupCityIssuerObj.isRequired = false;
+    }
     this.AddCollForm.controls.TaxCityIssuer.updateValueAndValidity();
     this.AddCollForm.controls.TaxIssueDt.updateValueAndValidity();
   }

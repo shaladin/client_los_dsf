@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LtkmRequestXComponent } from 'app/impl/ltkm/ltkm-request/ltkm-request-x.component';
 import { LtkmReturnHandlingXComponent } from 'app/impl/ltkm/ltkm-return-handling/detail/ltkm-return-handling-x.component';
 import { LtkmVerifyDetailXComponent } from 'app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component';
+import { LtkmViewComponentX } from 'app/impl/ltkm/view-ltkm-component/ltkm-view-component-x';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { LtkmApprovalDetailComponent } from './ltkm-approval/detail/ltkm-approval-detail.component';
@@ -93,6 +94,13 @@ const routes: Routes = [
       {
         path: PathConstant.VIEW,
         component: LtkmViewComponent,
+        data: {
+          title: 'LTKM View'
+        }
+      },
+      {
+        path: PathConstantX.VIEW,
+        component: LtkmViewComponentX,
         data: {
           title: 'LTKM View'
         }
