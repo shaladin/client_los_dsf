@@ -857,6 +857,10 @@ export class UcInsuranceDetailXComponent implements OnInit {
       }
       else {
         var item = this.insAddCvgTypeObj.find(x => x.Key == o);
+        if(item == undefined)
+        {
+          return;
+        }
         this.insAddCvgTypeRuleObj.push(item);
       }
     });
