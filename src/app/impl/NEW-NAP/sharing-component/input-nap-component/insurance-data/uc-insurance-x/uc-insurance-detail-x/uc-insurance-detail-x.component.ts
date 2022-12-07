@@ -35,7 +35,8 @@ import { AppCollateralAccessoryObj } from 'app/shared/model/app-collateral-acces
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResponseAppCollateralAttrObj } from 'app/shared/model/app-collateral-attr/res-app-collateral-attr-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { indexOf } from 'core-js/library/fn/array';
+import { ResAddCvgDiscRuleObj } from 'app/shared/model/rule/res-add-cvg-disc-rule-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-uc-insurance-detail-x',
@@ -94,6 +95,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
   calcInsObj: ResultCalcInsObj = new ResultCalcInsObj();
   ruleObj: ResultInsRateRuleObj = new ResultInsRateRuleObj();
   subsidyRuleObj: ResultSubsidySchmRuleObj = new ResultSubsidySchmRuleObj();
+  discRuleObj: ResAddCvgDiscRuleObj = new ResAddCvgDiscRuleObj();
 
   listYear: Array<number> = new Array();
   groupedAddCvgType: Array<string> = new Array<string>();
@@ -828,9 +830,19 @@ export class UcInsuranceDetailXComponent implements OnInit {
         this.checkPaidBy();
       }
     );
+    this.GetAddCvgDiscRule(reqObj);
     this.bindCapitalize();
   }
 
+  GetAddCvgDiscRule(reqObj: object)
+  {
+    this.http.post<ResAddCvgDiscRuleObj>(URLConstantX.GetAddCvgDiscRule, reqObj).subscribe(
+      (response) => {
+        this.discRuleObj = response;
+      }
+    )
+  }
+  
   bindInsAddCvgTypeRuleObj() {
     (this.InsuranceDataForm.controls.InsAddCvgTypes as FormArray) = this.fb.array([]);
     this.insAddCvgTypeRuleObj = [{ Key: "", Value: "" }];
@@ -845,6 +857,10 @@ export class UcInsuranceDetailXComponent implements OnInit {
       }
       else {
         var item = this.insAddCvgTypeObj.find(x => x.Key == o);
+        if(item == undefined)
+        {
+          return;
+        }
         this.insAddCvgTypeRuleObj.push(item);
       }
     });
@@ -971,9 +987,17 @@ export class UcInsuranceDetailXComponent implements OnInit {
       if (element.get("MrInsPaidByCode").value == CommonConstant.InsPaidByAtCost) {
         totalDiscAmt += (element.get("CustMainPremiAmt").value + element.get("TotalCustAddPremiAmt").value);
         this.isAllPaidByCust = false;
+        this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
+      }
+      else
+      {
+        let currDisc = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
+        this.InsuranceDataForm.patchValue({
+          TotalCustDiscAmt: currDisc + totalDiscAmt
+        })
       }
     }
-    this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
+
   }
 
   bindCapitalize() {
@@ -1812,6 +1836,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
           InsCpltzAmt: capitalised,
         });
 
+        let addCvgDisc: number = 0;
         for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
           this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
             CustMainPremiRate: this.calcInsObj.InsCoverage[i].Rate,
@@ -1841,6 +1866,13 @@ export class UcInsuranceDetailXComponent implements OnInit {
                 CustAddPremiAmt: currAddCvg.AddPremiAmt,
                 InscoAddPremiAmt: currAddCvg.AddPremiToInscoAmt
               });
+
+              this.discRuleObj.AdditionalCoverageType.forEach((x) => {
+                if(x == this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["MrAddCvgTypeCode"].value)
+                {
+                  addCvgDisc += this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["CustAddPremiAmt"].value;
+                }
+              });
             } else {
               let sumInsuredAmt = null;
               if (this.groupAddCvrSumInsuredDropDown[i][currAddCvgType]) {
@@ -1855,6 +1887,14 @@ export class UcInsuranceDetailXComponent implements OnInit {
             }
           }
           reqObj.InsCoverage.push(insCoverage);
+
+          if(this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["MrInsPaidByCode"].value == CommonConstant.InsPaidByCustomer)
+          {
+            let currDisc = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
+            this.InsuranceDataForm.patchValue({
+              TotalCustDiscAmt: currDisc + addCvgDisc
+            })
+          }
         }
         this.isCalculate = true;
         this.checkPaidBy();
