@@ -21,6 +21,13 @@
         </app-crd-rvw-cmo-info>
         <app-crd-rvw-dealer-info *ngIf="isShow && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
+
+        <lib-ucSubsection [id]="'documentId'" [title]="'Document'" [panel]="'document'">
+        </lib-ucSubsection>
+        <div class="form-body" [id]="'document'">
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+        </div>
+
         <app-tab-deviation [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
         
       </div>
