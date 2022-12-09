@@ -1836,8 +1836,8 @@ export class UcInsuranceDetailXComponent implements OnInit {
           InsCpltzAmt: capitalised,
         });
 
-        let addCvgDisc: number = 0;
         for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
+          let addCvgDisc: number = 0;
           this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
             CustMainPremiRate: this.calcInsObj.InsCoverage[i].Rate,
             InscoMainPremiRate: this.calcInsObj.InsCoverage[i].RateToInsco,
