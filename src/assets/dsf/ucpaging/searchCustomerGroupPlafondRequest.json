@@ -15,7 +15,7 @@
             "name": "A.TOTAL_OS_NI",
             "id": "TotalOSNI",
             "value": "",
-            "label": "Outstanding AR/NI",
+            "label": "Outstanding NI",
             "placeholder": "Placeholder"
         },
         {

@@ -23,7 +23,7 @@
         "name": "CGP.TOTAL_OS_NI",
         "id": "TotalOSNIId",
         "value": "",
-        "label": "Outstanding AR/NI",
+        "label": "Outstanding NI",
         "placeholder": "Placeholder"
       },
     {
