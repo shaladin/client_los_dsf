@@ -478,14 +478,16 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
   }
 
   async SaveForm() {
-    await this.getMaxDiffDays();
-    const diffTimes = new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime() - new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime();
-    if (diffTimes > 0) {
-      this.diffDays = diffTimes / (1000 * 3600 * 24);
-    }
-    if(this.diffDays > this.maxDiff){
-      this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
-      return;
+    if (this.DOAssetForm.controls.AdditionalInterestPaidBy.value != null){
+      await this.getMaxDiffDays();
+      const diffTimes = new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime() - new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime();
+      if (diffTimes > 0) {
+        this.diffDays = diffTimes / (1000 * 3600 * 24);
+      }
+      if(this.diffDays > this.maxDiff){
+        this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
+        return;
+      }
     }
     if (this.AppTcForm.valid && this.DOAssetForm.valid) {
       if (this.doList.length > 0) {
@@ -518,7 +520,18 @@ export class DeliveryOrderMultiAssetDetailXComponent implements OnInit {
     }
   }
 
-  DOSubmitHandler() {
+  async DOSubmitHandler() {
+    if (this.DOAssetForm.controls.AdditionalInterestPaidBy.value != null){
+      await this.getMaxDiffDays();
+      const diffTimes = new Date(this.DOAssetForm.controls.EffectiveDt.value).getTime() - new Date(this.DOAssetForm.controls.GoLiveEstimated.value).getTime();
+      if (diffTimes > 0) {
+        this.diffDays = diffTimes / (1000 * 3600 * 24);
+      }
+      if(this.diffDays > this.maxDiff){
+        this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
+        return;
+      }
+    }
     if (this.AppTcForm.valid && this.DOAssetForm.valid) {
       if (!this.DOAssetForm.valid) {
         return;
