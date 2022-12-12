@@ -337,14 +337,16 @@ export class PreGoLiveXComponent implements OnInit {
   }
 
   async SaveForm(flag = true) {
-    await this.getMaxDiffDays();
-    const diffTimes = new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime() - new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime();
-    if (diffTimes > 0) {
-      this.DiffDay = diffTimes / (1000 * 3600 * 24);
-    }
-    if(this.DiffDay > this.maxDiff){
-      this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
-      return;
+    if (this.MainInfoForm.controls.AdditionalInterestPaidBy.value != null){
+      await this.getMaxDiffDays();
+      const diffTimes = new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime() - new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime();
+      if (diffTimes > 0) {
+        this.DiffDay = diffTimes / (1000 * 3600 * 24);
+      }
+      if(this.DiffDay > this.maxDiff){
+        this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
+        return;
+      }
     }
     if (this.BizTemplateCode == CommonConstant.DF) {
       this.IsCheckedAll = true;
