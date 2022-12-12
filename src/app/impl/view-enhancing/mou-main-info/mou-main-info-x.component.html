@@ -112,11 +112,11 @@
                 <div class="col-md-6" *ngIf="MouMainInfo.MouType != 'GENERAL'">
                   <div class="row">
                     <div class="col-md-6">
-                      <label class="label-control">Available (OS Plafond) Amount</label>
+                      <label class="label-control">Plafond Collateral Amount</label>
                     </div>
                     <div class="col-md-6">
                       <label class="label-control">
-                        {{MouMainInfo.OsPlafondAmt | number:'.2':'en-US'}}
+                        {{MouMainInfo.PlafondCollateralAmt | number:'.2':'en-US'}}
                       </label>
                     </div>
                   </div>
@@ -133,14 +133,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" *ngIf="MouMainInfo.MouType != 'GENERAL'">
                   <div class="row">
                     <div class="col-md-6">
-                      <label class="label-control">Mou Type</label>
+                      <label class="label-control">Plafond Used Amount</label>
                     </div>
                     <div class="col-md-6">
                       <label class="label-control">
-                        {{MouMainInfo.MouType}}
+                        {{MouMainInfo.UsedAmt | number:'.2':'en-US'}}
                       </label>
                     </div>
                   </div>
@@ -153,6 +153,30 @@
                     <div class="col-md-6">
                       <label class="label-control">
                         {{MouMainInfo.MouFctrType}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6" *ngIf="MouMainInfo.MouType != 'GENERAL'">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Available (OS Plafond) Amount</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.OsPlafondAmt | number:'.2':'en-US'}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="label-control">Mou Type</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="label-control">
+                        {{MouMainInfo.MouType}}
                       </label>
                     </div>
                   </div>
