@@ -57,13 +57,13 @@ export class AppViewInsuranceDetailXComponent implements OnInit {
           for (var i = 0; i < item.appInsAddCvgObjs.length; i++) {
             if (i == (item.appInsAddCvgObjs.length - 1)) {
               addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode;
-              CustPremi += (item.appInsAddCvgObjs[i].CustAddPremiRate * 100).toFixed(3);
-              InscoPremi +=  (item.appInsAddCvgObjs[i].InscoAddPremiRate * 100).toFixed(3);
+              CustPremi += (item.appInsAddCvgObjs[i].CustAddPremiRate).toFixed(3);
+              InscoPremi +=  (item.appInsAddCvgObjs[i].InscoAddPremiRate).toFixed(3);
             }
             else {
               addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode + ", ";
-              CustPremi += (item.appInsAddCvgObjs[i].CustAddPremiRate * 100).toFixed(3) + ", ";
-              InscoPremi +=  (item.appInsAddCvgObjs[i].InscoAddPremiRate * 100).toFixed(3) + ", ";
+              CustPremi += (item.appInsAddCvgObjs[i].CustAddPremiRate).toFixed(3) + ", ";
+              InscoPremi +=  (item.appInsAddCvgObjs[i].InscoAddPremiRate).toFixed(3) + ", ";
             }
           }
           var tempCustMainPremiRate: string = ""; 
