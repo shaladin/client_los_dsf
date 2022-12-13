@@ -806,8 +806,8 @@ export class UcInsuranceDetailXComponent implements OnInit {
           InsMainCvgType: this.insMainCvgTypeObj[0].Key
         });
         
-        await this.bindInsAddCvgTypeRuleObj();
-        await this.bindInsPaidByRuleObj();
+        this.bindInsAddCvgTypeRuleObj();
+        this.bindInsPaidByRuleObj();
 
         if (appInsMainCvgObj == undefined) {
           this.InsuranceDataForm.patchValue({
@@ -962,7 +962,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
     switch (this.ruleObj.CustStampdutyFeeToCustBhv) {
       case CommonConstant.InsFeeBhvDef:
         //set default jika pertama kali create
-        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.AdminFeeToCust });
+        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.CustStampdutyFeeToCust });
         break;
       case CommonConstant.InsFeeBhvMin:
         CustStampDutyFeeAmtValidator.push(Validators.min(this.ruleObj.CustStampdutyFeeToCust));
@@ -987,14 +987,10 @@ export class UcInsuranceDetailXComponent implements OnInit {
       if (element.get("MrInsPaidByCode").value == CommonConstant.InsPaidByAtCost) {
         totalDiscAmt += (element.get("CustMainPremiAmt").value + element.get("TotalCustAddPremiAmt").value);
         this.isAllPaidByCust = false;
-        this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
-      }
-      else
-      {
-        let currDisc = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
-        this.InsuranceDataForm.patchValue({
-          TotalCustDiscAmt: currDisc + totalDiscAmt
-        })
+        if(index == tempListAppInsMainCvgs.length - 1)
+        {
+          this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
+        }
       }
     }
 
