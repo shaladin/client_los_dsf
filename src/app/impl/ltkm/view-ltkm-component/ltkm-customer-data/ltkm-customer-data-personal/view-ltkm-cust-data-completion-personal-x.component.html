@@ -153,7 +153,7 @@
             number:'.2':'en-US'}}</label>
           <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.SpouseMonthlyIncomeAmt == 0">-</label>
           <label class="col-md-3 adInsLabel" translate>Join Income</label>
-          <label class="col-md-3 adInsLabel">{{CustPersonalFinData.IsJoinIncome ? 'Yes' : 'No'}}</label>
+          <label class="col-md-3 adInsLabel">{{CustPersonalFinData.IsJoinInc ? 'Yes' : 'No'}}</label>
         </div>
         <div class="form-group row ">
           <label class="col-md-3 adInsLabel" translate>Other Income</label>
@@ -177,11 +177,6 @@
             *ngIf="CustPersonalFinData.TotalIncomeAmt != 0">{{CustPersonalFinData.TotalIncomeAmt |
             number:'.2':'en-US'}}</label>
           <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalIncomeAmt == 0">-</label>
-          <label class="col-md-3 adInsLabel" translate>Total Monthly Expense</label>
-          <label class="col-md-3 adInsLabel"
-            *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt != 0">{{CustPersonalFinData.TotalMonthlyExpenseAmt |
-            number:'.2':'en-US'}}</label>
-          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt == 0">-</label>
         </div>
         <div class="form-group row ">
           <label class="col-md-3 adInsLabel" translate>Total Monthly Installment DSF Amount</label>
@@ -191,9 +186,9 @@
           <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstallmentDsf == 0">-</label>
           <label class="col-md-3 adInsLabel" translate>Total Monthly Installment Other Amount</label>
           <label class="col-md-3 adInsLabel"
-            *ngIf="CustPersonalFinData.OthMonthlyInstAmt != null">{{CustPersonalFinData.OthMonthlyInstAmt |
+            *ngIf="CustPersonalFinData.OtherMonthlyInstAmt != null">{{CustPersonalFinData.OtherMonthlyInstAmt |
             number:'.2':'en-US'}}</label>
-          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OthMonthlyInstAmt == null">-</label>
+          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt == null">-</label>
         </div>
       </div>
     </form>
