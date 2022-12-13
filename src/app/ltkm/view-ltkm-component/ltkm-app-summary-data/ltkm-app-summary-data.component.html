@@ -146,7 +146,7 @@
         <label class="col-md-2  adInsLabel" translate>Asset Name</label>
         <label class="col-md-4  adinslabel" translate>{{this.AssetName != "" ? this.AssetName : "-"}}</label>
         <label class="col-md-2  adInsLabel" translate>Asset Price</label>
-        <label class="col-md-4  adinslabel" translate>{{this.AssetPrice != 0 || this.AssetPrice != null ? this.AssetUsage : 0}}</label>
+        <label class="col-md-4  adinslabel" translate>{{(this.AssetPrice != 0 || this.AssetPrice != null ? this.AssetPrice : 0) | number:'.2':'en-US'}}</label>
       </div>
       <div>
         <label class="col-md-2  adInsLabel" translate>Asset Condition</label>
