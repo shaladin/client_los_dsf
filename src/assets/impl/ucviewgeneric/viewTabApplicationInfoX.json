@@ -149,6 +149,16 @@
         },
         {
           "type": "text",
+          "label": "DP Source Payment",
+          "property": "DPSource"
+        },
+        {
+          "type": "text",
+          "label": "Installment Source Payment",
+          "property": "InstSource"
+        },
+        {
+          "type": "text",
           "label": "BPKB Status",
           "property": "BpkbStatus"
         }

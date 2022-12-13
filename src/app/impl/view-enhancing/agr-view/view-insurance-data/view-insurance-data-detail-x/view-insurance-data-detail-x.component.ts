@@ -50,25 +50,31 @@ export class ViewInsuranceDataDetailXComponent implements OnInit {
           for (var i = 0; i < item.appInsAddCvgObjs.length; i++) {
             if (i == (item.appInsAddCvgObjs.length - 1)) {
               addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode;
-              CustPremi += (item.appInsAddCvgObjs[i].CustAddPremiRate * 100).toString();
-              InscoPremi +=  (item.appInsAddCvgObjs[i].InscoAddPremiRate * 100).toString();
+              CustPremi += parseFloat(item.appInsAddCvgObjs[i].CustAddPremiRate).toFixed(3);
+              InscoPremi += parseFloat(item.appInsAddCvgObjs[i].InscoAddPremiRate).toFixed(3);
             }
             else {
               addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode + ", ";
-              CustPremi += (item.appInsAddCvgObjs[i].CustAddPremiRate * 100).toString() + ", ";
-              InscoPremi +=  (item.appInsAddCvgObjs[i].InscoAddPremiRate * 100).toString() + ", ";
+              CustPremi += parseFloat(item.appInsAddCvgObjs[i].CustAddPremiRate).toFixed(3) + ", ";
+              InscoPremi += parseFloat(item.appInsAddCvgObjs[i].InscoAddPremiRate).toFixed(3) + ", ";
             }
           }
+
+          var tempCustMainPremiRate: string = ""; 
+          tempCustMainPremiRate += parseFloat(item.appInsMainCvgObj.CustMainPremiRate).toFixed(3);
+          var tempInscoMainPremiRate: string = "";
+          tempInscoMainPremiRate += parseFloat(item.appInsMainCvgObj.InscoMainPremiRate).toFixed(3);
+
           this.appInsCvgsFinal.push({
             YearNo: item.appInsMainCvgObj.YearNo,
             MrMainCvgTypeCode: item.appInsMainCvgObj.MrMainCvgTypeCode,
             MrAddCvgTypeCode: addCvg,
             CustMainPremiAmt: item.appInsMainCvgObj.CustMainPremiAmt,
-            CustMainPremiRate: item.appInsMainCvgObj.CustMainPremiRate,
+            CustMainPremiRate: tempCustMainPremiRate,
             CustAddPremiAmt: item.appInsMainCvgObj.TotalCustAddPremiAmt,
             CustAddPremiRate: CustPremi,
             InscoMainPremiAmt: item.appInsMainCvgObj.InscoMainPremiAmt,
-            InscoMainPremiRate: item.appInsMainCvgObj.InscoMainPremiRate,
+            InscoMainPremiRate: tempInscoMainPremiRate,
             InscoAddPremiAmt: item.appInsMainCvgObj.TotalInscoAddPremiAmt,
             InscoAddPremiRate: InscoPremi
           });

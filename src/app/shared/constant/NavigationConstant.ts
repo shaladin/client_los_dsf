@@ -400,7 +400,7 @@ export class NavigationConstant {
   //#region LTKM
   public static LTKM_REQ = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.REQ_X; //'/Ltkm/RequestX'
   public static LTKM_INQUIRY = "/" + PathConstant.LR_LTKM + "/" + PathConstant.INQUIRY; //'/Ltkm/Inquiry'
-  public static LTKM_VIEW = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VIEW; //'/Ltkm/View'
+  public static LTKM_VIEW = "/" + PathConstantX.LTKM_VIEW; //'/Ltkm/View'
   public static LTKM_VERIFY_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_PAGING; //'/Ltkm/Verify/Paging'
   public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_DETAIL; //'/Ltkm/Verify/DetailX'
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
