@@ -1729,20 +1729,20 @@ export class CustMainDataXDsfComponent implements OnInit {
       BizTemplateCode: this.bizTemplateCode
     };
 
-    //Self Custom Changes CR MPF Validation
-    let objMPF = {
+    //Self Custom Changes CR MPF & FD Validation
+    let objMPFFD = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
       AppNo: this.AppNo,
       BizTemplateCode: this.bizTemplateCode,
       Lob: this.LobCode
     };
-    //End Self Custom Changes CR MPF Validation
+    //End Self Custom Changes CR MPF & FD Validation
 
 
     if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
     {
-      //Self Custom Changes CR MPF Validation
-      if (this.LobCode == CommonConstantDsf.MPF)
+      //Self Custom Changes CR MPF & FD Validation
+      if (this.LobCode == CommonConstantDsf.MPF || this.LobCode == CommonConstantDsf.FD)
       {
         let isHaveAgrmntParent : boolean = false;
         await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
@@ -1767,12 +1767,20 @@ export class CustMainDataXDsfComponent implements OnInit {
           return;
         }
 
-        this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPF).subscribe(
+        await this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPFFD).toPromise().then(
           (response) => {
             let ResponseObj = response[CommonConstant.ReturnObj];
             if (ResponseObj.IsAvailable == true)
             {
-              this.SaveCustomer();
+              if (ResponseObj.IsAvailableLOB == true)
+              {
+                this.SaveCustomer();
+              }
+              else
+              {
+                this.toastr.warningMessage(ExceptionConstantDsf.AGR_PARENT_AVAILABLE_NOT_INLINE);
+                return;
+              }
             }
             else
             {
@@ -1782,7 +1790,7 @@ export class CustMainDataXDsfComponent implements OnInit {
           }
         );
       }
-      //End Self Custom Changes CR MPF Validation
+      //End Self Custom Changes CR MPF & FD Validation
 
       else
       {

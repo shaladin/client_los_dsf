@@ -51,6 +51,7 @@ import { String } from 'typescript-string-operations';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { AgrmntMasterXDsfObj } from 'app/shared/model/agrmnt-master-x-dsf-obj.model';
 
 @Component({
   selector: 'app-application-data-x-dsf',
@@ -210,6 +211,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
     IdNoOwnerBankAcc: [''],
     BirthPlaceOwnerBankAcc: [''],
     BirthDtOwnerBankAcc: [''],
+    MasterAgreementNo: [''],
+    MaxPlafondMasterAgreement: [''],
+    RequestedPlafond: [''],
+    RemainingPlafond: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -240,11 +245,16 @@ export class ApplicationDataXDsfComponent implements OnInit {
   isAgrmntParentGoLiveDtValid: boolean = false;
   isAgrmntParentMaturityDtValid: boolean = false;
 
-  //Self Custom CR MPF Validation
+  //Self Custom CR MPF & FD Validation
   listAgrmntPrtDsf: Array<string> = new Array();
   listAgrmntPrtUsedDsf: Array<string> = new Array();
   resultResponseDsf;
-  //End Self Custom CR MPF Validation
+  MasterAgreementNo;
+  RemainingPlafond: number = 0;
+  RequestedPlafond: number = 0;
+  MaxPlafondMasterAgreement: number = 0;
+  isRequestedPlafondAvailable: boolean = true;
+  //End Self Custom CR MPF & FD Validation
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -332,7 +342,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }
     );
 
-    // Self Custom CR MPF Validation
+    // Self Custom CR MPF & FD Validation
     const obj = {
       Id: this.appId,
       RowVersion: ""
@@ -343,7 +353,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
         this.resultResponseDsf = response;
       }
     );
-    let objMPF = {
+    let objMPFFD = {
       CustNo: this.CustNo,
       AppNo: this.resultResponseDsf.AppNo,
       BizTemplateCode: this.BizTemplateCode,
@@ -351,13 +361,35 @@ export class ApplicationDataXDsfComponent implements OnInit {
     };
 
     // GET LIST AGR PARENT HAD APP ON GOING
-    await this.http.post<Array<string>>(URLConstantDsf.GetListAgrmntParentUsedDsf, objMPF).toPromise().then(
+    await this.http.post<Array<string>>(URLConstantDsf.GetListAgrmntParentUsedDsf, objMPFFD).toPromise().then(
       (response) => {
         
         this.listAgrmntPrtUsedDsf = response[CommonConstant.ReturnObj];
       }
     );
-    // End Self Custom CR MPF Validation
+
+    // GET AGRMNT MASTER X DSF
+    if (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD)
+    {
+      let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
+      obj.MasterAgreementNo = this.MasterAgreementNo;
+
+      await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
+        (response) => {
+          if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
+            this.MasterAgreementNo = response["MasterAgreementNo"],
+            // MaxPlafondMasterAgreement: response["MaxPlafondMasterAgreement"],
+            this.RequestedPlafond = response["RequestedPlafond"]
+            // RemainingPlafond: response["RemainingPlafond"],
+            // Status: response["Status"],
+          }
+          else
+          {
+            this.isRequestedPlafondAvailable = false;
+          }
+        })
+    }
+    // End Self Custom CR MPF & FD Validation
   }
 
 
@@ -1064,6 +1096,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     this.EffectiveDt = this.agrParent.EffectiveDt;
     this.Tenor = this.agrParent.Tenor;
     this.TotalAssetPrice = this.agrParent.TotalAssetPrice;
+    this.MasterAgreementNo = 'MA'+this.agrParent.AgrmntId;
 
     const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
@@ -1077,7 +1110,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
     reqCalculatePlafondAgrmntXObj.Tenor = this.agrParent.Tenor;
 
-    // Self Custom CR MPF Validation
+    // Self Custom CR MPF & FD Validation
     // const index = Array.from(this.listAgrmntPrtUsedDsf).indexOf(this.agrParent.AgrmntNo);
     // if(index > -1)
     // {
@@ -1116,10 +1149,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
     //   this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
     //   return
     // }  
-    // End Self Custom CR MPF Validation
+    // End Self Custom CR MPF & FD Validation
 
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
-      this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
+      this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantDsf.CalculatePlafondAgrmntXDsf, reqCalculatePlafondAgrmntXObj).subscribe(
         (response) => {
           this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
           this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
@@ -1284,38 +1317,48 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.missingProdOfrComp += e.missingProdOfrComp;
     }
   }
-  // Self Custom CR MPF Validation
+  // Self Custom CR MPF & FD Validation
   async ClickSave() {
-  // End Self Custom CR MPF Validation
+  // End Self Custom CR MPF & FD Validation
     if (!this.isProdOfrUpToDate) {
       this.toastr.warningMessage("Prod Offering Component \"" + this.missingProdOfrComp + "\" Is Missing, Please Update Product Offering");
       return false;
     }
-    // Self Custom CR MPF Validation
+    // Self Custom CR MPF & FD Validation
     let IsAvailable = 1;
-    let objMPF = {
+    let IsAvailableLOB = 1;
+    let objMPFFD = {
       AgrParentNo: this.agrParent.AgrmntNo,
       CustNo: this.CustNo,
       AppNo: this.resultResponseDsf.AppNo,
       BizTemplateCode: this.BizTemplateCode,
       Lob: this.resultResponseDsf.LobCode
     };
-    await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPF).toPromise().then(
+    await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPFFD).toPromise().then(
       (response) => {
         let ResponseObj = response[CommonConstant.ReturnObj];
         if (ResponseObj.IsAvailable != true)
           {
             IsAvailable = 0;
           }
+        if (ResponseObj.IsAvailableLob != true)
+          {
+            IsAvailableLOB = 0;
+          }
       }
     );
     
-    if (IsAvailable != 1 && this.resultResponseDsf.LobCode == CommonConstantDsf.MPF)
+    if (IsAvailable != 1 && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
     {
+      if (IsAvailableLOB != 1)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
+        return false;
+      }
       this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
       return false;
     }
-    // End Self Custom CR MPF Validation
+    // End Self Custom CR MPF & FD Validation
 
     if (this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.NapAppModelForm.patchValue({

@@ -36,4 +36,7 @@ export class URLConstantDsf {
     public static CheckIfAgrmntParentHasOngoingAppDsf = environment.losUrl + "/AppDsf/CheckIfAgrmntParentHasOngoingAppDsf";
     public static GetListAgrmntParentDsf = environment.losUrl + "/AppDsf/ListAgrmntParentDsf";
     public static GetListAgrmntParentUsedDsf = environment.losUrl + "/AppDsf/ListAgrmntParentUsedDsf";
+
+    public static GetAgrmntMasterXDsf = environment.losUrl + "/AppDsf/GetAgrmntMasterXDsf";
+    public static CalculatePlafondAgrmntXDsf = environment.losUrl + "/v1" + "/AppDsf/CalculatePlafondAgrmntDsf";
 }
