@@ -14,7 +14,7 @@
       "url": "",
       "isQueryIn": true,
       "environment": "FOU",
-      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForInquiryPaging",
       "label": "Original Office Name",
       "items": [],
       "itemsUrl": []
