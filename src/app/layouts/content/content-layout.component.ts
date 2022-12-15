@@ -20,12 +20,16 @@ export class ContentLayoutComponent {
     
     unsubscribe: any;
     token: string = null;
+    isEmbedded: boolean = false;
     constructor(public translate: TranslateService, private strService: StorageService, private route: ActivatedRoute, private cookieService: CookieService, private http: HttpClient) {
         const browserLang: string = translate.getBrowserLang();
         this.route.queryParams.subscribe(params => {
             if (params['Token'] != null && params['Token'] != "null") {
                 this.token = params['Token'];
                 AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, this.token);
+            }
+            if (params['IsEmbedded'] != null) {
+                this.isEmbedded = params['IsEmbedded'];
             }
         });
 
@@ -43,7 +47,7 @@ export class ContentLayoutComponent {
     }
 
     async ngOnInit() {
-        if (AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS) == null && this.token != null) {
+        if (!this.isEmbedded && AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS) == null && this.token != null) {
             await this.LoginWithToken();
         }
 
