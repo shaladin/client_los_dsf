@@ -4,6 +4,8 @@ export class AgrmntMasterXDsfObj {
     RequestedPlafond : number;
     RemainingPlafond : number;
     Status : string;
+    AppNo: string;
+    AgrmntParentNo: string;
     RowVersion: string;
     constructor()
     {}

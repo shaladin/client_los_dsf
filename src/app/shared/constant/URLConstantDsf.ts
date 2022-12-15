@@ -37,6 +37,8 @@ export class URLConstantDsf {
     public static GetListAgrmntParentDsf = environment.losUrl + "/AppDsf/ListAgrmntParentDsf";
     public static GetListAgrmntParentUsedDsf = environment.losUrl + "/AppDsf/ListAgrmntParentUsedDsf";
 
-    public static GetAgrmntMasterXDsf = environment.losUrl + "/AppDsf/GetAgrmntMasterXDsf";
-    public static CalculatePlafondAgrmntXDsf = environment.losUrl + "/v1" + "/AppDsf/CalculatePlafondAgrmntDsf";
+    public static GetAgrmntMasterXDsf = environment.losUrl + "/v1" + "/AppDsf/GetAgrmntMasterXDsf";
+    public static CalculatePlafondAgrmntXDsf = environment.losUrl + "/v1" + "/AppDsf/CalculatePlafondAgrmntXDsf";
+    public static AddAgrmntMasterXDsf = environment.losUrl + "/v1" + "/AppDsf/AddAgrmntMasterXDsf";
+    public static GetListAgrmntChildOsNiDsf = environment.losUrl + "/v1" + "/AppDsf/GetListAgrmntChildOsNiDsf";
 }

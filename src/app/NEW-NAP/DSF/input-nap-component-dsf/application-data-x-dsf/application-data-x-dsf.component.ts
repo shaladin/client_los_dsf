@@ -52,6 +52,7 @@ import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AgrmntMasterXDsfObj } from 'app/shared/model/agrmnt-master-x-dsf-obj.model';
+import { AgrmntChildOsNiDsfObj } from 'app/shared/model/agrmnt-child-os-ni-dsf-obj.model';
 
 @Component({
   selector: 'app-application-data-x-dsf',
@@ -254,6 +255,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
   RequestedPlafond: number = 0;
   MaxPlafondMasterAgreement: number = 0;
   isRequestedPlafondAvailable: boolean = true;
+  isAddMode: boolean = true;
+  AgrmntMasterXDsf: AgrmntMasterXDsfObj;
+  AgrmntChildOsNiDsfListObj: Array<AgrmntChildOsNiDsfObj>;
+  TotalOsNiChild: number = 0;
   //End Self Custom CR MPF & FD Validation
 
   constructor(private fb: FormBuilder,
@@ -378,10 +383,11 @@ export class ApplicationDataXDsfComponent implements OnInit {
         (response) => {
           if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
             this.MasterAgreementNo = response["MasterAgreementNo"],
-            // MaxPlafondMasterAgreement: response["MaxPlafondMasterAgreement"],
-            this.RequestedPlafond = response["RequestedPlafond"]
-            // RemainingPlafond: response["RemainingPlafond"],
-            // Status: response["Status"],
+            // this.MaxPlafondMasterAgreement = response["MaxPlafondMasterAgreement"],
+            this.RequestedPlafond = response["RequestedPlafond"],
+            // this.RemainingPlafond = response["RemainingPlafond"]
+
+            this.isAddMode = false;
           }
           else
           {
@@ -1151,22 +1157,41 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // }  
     // End Self Custom CR MPF & FD Validation
 
+    // Self Custom CR MPF & FD Validation
     if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
-      this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantDsf.CalculatePlafondAgrmntXDsf, reqCalculatePlafondAgrmntXObj).subscribe(
+      await this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantDsf.CalculatePlafondAgrmntXDsf, reqCalculatePlafondAgrmntXObj).toPromise().then(
         (response) => {
           this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
           this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
           this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = response.MaxPlafondAgrmntAmt;
           this.resCalculatePlafondAgrmntXObj.IsAppInProgress = response.IsAppInProgress;
 
+          this.MaxPlafondMasterAgreement = response.PlafondAgrmntAmt;
+
           if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
             this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
           }
           this.plafondDict[this.agrParent.AgrmntId] = this.resCalculatePlafondAgrmntXObj;
         });
+      
+      await this.http.post<Array<AgrmntChildOsNiDsfObj>>(URLConstantDsf.GetListAgrmntChildOsNiDsf, reqCalculatePlafondAgrmntXObj).toPromise().then(
+        (response) =>
+        {
+          this.TotalOsNiChild = 0;
+          this.AgrmntChildOsNiDsfListObj = new Array<AgrmntChildOsNiDsfObj>();
+          this.AgrmntChildOsNiDsfListObj = response;
+          for(let i = 0; i < this.AgrmntChildOsNiDsfListObj.length; i++)
+          {
+            this.TotalOsNiChild += this.AgrmntChildOsNiDsfListObj[i].OsNiAmt;
+          }
+
+          this.RemainingPlafond = this.RequestedPlafond - this.TotalOsNiChild
+        }
+      )
     } else {
       this.resCalculatePlafondAgrmntXObj = this.plafondDict[this.agrParent.AgrmntId]
     }
+    // End Self Custom CR MPF & FD Validation
 
 
 
@@ -1377,7 +1402,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }
 
       if(this.isAgrmntParentMaturityDtValid || this.isAgrmntParentGoLiveDtValid){
-      this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
+      await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).toPromise().then(
         (response) => {
           if (response['listResponseAppLoanPurpose'] && response['listResponseAppLoanPurpose'].length > 0) {
             if (!this.checkPlafondAndTenorAgrmnt(response['listResponseAppLoanPurpose'])) {
@@ -1471,6 +1496,24 @@ export class ApplicationDataXDsfComponent implements OnInit {
             };
             this.http.post(URLConstantX.EditAppAddAppCrossX, obj).subscribe(
               (response) => {
+
+                if (this.isAddMode)
+                {
+                  this.AgrmntMasterXDsf = new AgrmntMasterXDsfObj();
+                  this.AgrmntMasterXDsf.MasterAgreementNo = this.MasterAgreementNo;
+                  this.AgrmntMasterXDsf.MaxPlafondMasterAgreement = this.MaxPlafondMasterAgreement;
+                  this.AgrmntMasterXDsf.RequestedPlafond = this.NapAppModelForm.controls.RequestedPlafond.value;
+                  this.AgrmntMasterXDsf.RemainingPlafond = this.RemainingPlafond;
+                  this.AgrmntMasterXDsf.Status = "ACT";
+                  this.AgrmntMasterXDsf.AppNo = this.NapAppModelForm.value.AppNo.value;
+                  this.AgrmntMasterXDsf.AgrmntParentNo = this.agrmntParentNo;
+
+                  this.http.post(URLConstantDsf.AddAgrmntMasterXDsf, this.AgrmntMasterXDsf).subscribe(
+                    (response) => {
+                    }
+                  );
+                }
+
                 this.toastr.successMessage('Save Application Data');
                 this.outputTab.emit();
               });
