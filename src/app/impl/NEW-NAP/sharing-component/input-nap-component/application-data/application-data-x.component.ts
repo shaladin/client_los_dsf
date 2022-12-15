@@ -1009,9 +1009,11 @@ export class ApplicationDataXComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
       if(!this.isAgrmntParentMaturityDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
+        return;
       }
       if(!this.isAgrmntParentGoLiveDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
+        return;
       }
     }
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
