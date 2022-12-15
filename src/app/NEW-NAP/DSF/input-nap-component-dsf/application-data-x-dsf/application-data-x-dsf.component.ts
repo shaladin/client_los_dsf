@@ -245,6 +245,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   isAgrmntParentGoLiveDtValid: boolean = false;
   isAgrmntParentMaturityDtValid: boolean = false;
+  monthFromGoLiveDt: number = 6;  // 6 as default value
+  monthFromMaturyityDateDt: number = 3;  // 3 as default value
 
   //Self Custom CR MPF & FD Validation
   listAgrmntPrtDsf: Array<string> = new Array();
@@ -1081,10 +1083,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
     await this.validateMaturityDtAgrmntParent();
     if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
       if(!this.isAgrmntParentMaturityDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, 6));
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
+        return false;
       }
       if(!this.isAgrmntParentGoLiveDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, 2));
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
+        return false;
       }
     }
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
@@ -1394,14 +1398,15 @@ export class ApplicationDataXDsfComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.CFNA) {
 
       if(!this.isAgrmntParentMaturityDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, 6));
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
+        return false;
       }
       if(!this.isAgrmntParentGoLiveDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, 2));
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
         return false;
       }
 
-      if(this.isAgrmntParentMaturityDtValid || this.isAgrmntParentGoLiveDtValid){
+      if(this.isAgrmntParentMaturityDtValid && this.isAgrmntParentGoLiveDtValid){
       await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).toPromise().then(
         (response) => {
           if (response['listResponseAppLoanPurpose'] && response['listResponseAppLoanPurpose'].length > 0) {
@@ -2046,45 +2051,45 @@ export class ApplicationDataXDsfComponent implements OnInit {
   }
   
   async validateGoLiveDtAgrmntParent(){
-    let monthFromGoLiveDt: number = 1;
+									  
     let reqObj = {
         code: CommonConstantX.GSCodeDistanceGoLiveDtToSystemDt
     }
     await this.http.post(URLConstant.GetGeneralSettingByCode, reqObj).toPromise().then(
       (response: {GsCode: string, GsName: string, GsValue: string, GsDescr: string}) => {
         if(response.GsValue !== undefined && response.GsValue !== null && response.GsValue !== ""){
-          let gsvalue = parseInt(response.GsValue)
-          monthFromGoLiveDt = gsvalue
+          this.monthFromGoLiveDt = parseInt(response.GsValue)
+									 
         }
       });
 
     const monthDifference =  this.getMonthDifference(new Date(this.agrParent.GoLiveDt),new Date(this.user.BusinessDt));
-      if( monthFromGoLiveDt < monthDifference){
-        this.isAgrmntParentGoLiveDtValid = true
-      } else {
-        this.isAgrmntParentGoLiveDtValid = false
-      }
+    if( this.monthFromGoLiveDt < monthDifference){
+      this.isAgrmntParentGoLiveDtValid = true
+    } else {
+      this.isAgrmntParentGoLiveDtValid = false
+    }
   }
 
   async validateMaturityDtAgrmntParent(){
-    let monthFromMaturyityDateDt: number = 0;
+											 
     let reqObj = {
         code: CommonConstantX.GSCodeDistanceMaturityDtToSystemDt
     }
     await this.http.post(URLConstant.GetGeneralSettingByCode, reqObj).toPromise().then(
       (response: {GsCode: string, GsName: string, GsValue: string, GsDescr: string}) => {
         if(response.GsValue !== undefined && response.GsValue !== null && response.GsValue !== ""){
-          console.log(typeof response.GsValue);
-          let gsvalue = parseInt(response.GsValue)
-          console.log(typeof gsvalue);
-          monthFromMaturyityDateDt = gsvalue
+											   
+          this.monthFromMaturyityDateDt = parseInt(response.GsValue)
+									  
+											
         }
       });
     const monthDifference =  this.getMonthDifference(new Date(this.user.BusinessDt),new Date(this.agrParent.MaturityDt));
-      if(monthFromMaturyityDateDt <= monthDifference){
-        this.isAgrmntParentMaturityDtValid  = true;
-      } else {
-        this.isAgrmntParentMaturityDtValid  = false;
-      }
+    if(this.monthFromMaturyityDateDt <= monthDifference){
+      this.isAgrmntParentMaturityDtValid  = true;
+    } else {
+      this.isAgrmntParentMaturityDtValid  = false;
+    }
   }
 }
