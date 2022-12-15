@@ -1009,11 +1009,11 @@ export class ApplicationDataXComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
       if(!this.isAgrmntParentMaturityDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
-        return;
+        return false;
       }
       if(!this.isAgrmntParentGoLiveDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
-        return;
+        return false;
       }
     }
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
@@ -1225,14 +1225,15 @@ export class ApplicationDataXComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.CFNA) {
 
       if(!this.isAgrmntParentMaturityDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, 6));
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
+        return false;
       }
       if(!this.isAgrmntParentGoLiveDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, 2));
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
         return false;
       }
 
-      if(this.isAgrmntParentMaturityDtValid || this.isAgrmntParentGoLiveDtValid){
+      if(this.isAgrmntParentMaturityDtValid && this.isAgrmntParentGoLiveDtValid){
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
           if (response['listResponseAppLoanPurpose'] && response['listResponseAppLoanPurpose'].length > 0) {
