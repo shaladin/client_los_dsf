@@ -345,7 +345,7 @@ export class CommonConstant {
   public static VerfTrxTypeCodeCustConfirm = "CUST_CONFIRM";
 
   // AGRMNT STAT
-  public static AgrmntStatCancel = "CANCEL";
+  public static AgrmntStatCancel = "CAN";
   public static AgrmntStatReject = "RJC";
   public static AgrmntStatExpired = "EXP";
   public static AgrmntStatPaid = "RRD";
