@@ -1744,28 +1744,28 @@ export class CustMainDataXDsfComponent implements OnInit {
       //Self Custom Changes CR MPF & FD Validation
       if (this.LobCode == CommonConstantDsf.MPF || this.LobCode == CommonConstantDsf.FD)
       {
-        let isHaveAgrmntParent : boolean = false;
-        await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
-          (response) => {
-            if (response && response.length > 0) isHaveAgrmntParent = true;
-          }
-        );
-        if(!isHaveAgrmntParent)
-        {
-          this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
-          return;
-        }
+        // let isHaveAgrmntParent : boolean = false;
+        // await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+        //   (response) => {
+        //     if (response && response.length > 0) isHaveAgrmntParent = true;
+        //   }
+        // );
+        // if(!isHaveAgrmntParent)
+        // {
+        //   this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
+        //   return;
+        // }
 
-        let isOverdue: boolean = false;
-        await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
-          (response: any) => {
-            if (response.IsOverdue) isOverdue = true;
-          }
-        );
-        if(isOverdue){
-          this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
-          return;
-        }
+        // let isOverdue: boolean = false;
+        // await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+        //   (response: any) => {
+        //     if (response.IsOverdue) isOverdue = true;
+        //   }
+        // );
+        // if(isOverdue){
+        //   this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
+        //   return;
+        // }
 
         await this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPFFD).toPromise().then(
           (response) => {
