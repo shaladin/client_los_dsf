@@ -5,6 +5,7 @@ export class URLConstantX {
   public static CalculateAdditionalInterestX = environment.losUrl + "/v1" + "/AgrmntX/CalculateAdditionalInterest";
   public static UpdateEffectiveAndAgrmntCreatedDtX = environment.losUrl + "/v1" + "/AgrmntX/UpdateEffectiveAndAgrmntCreatedDt";
   public static GetListAgrmntParentByCustNoX = environment.losUrl + '/v1' + '/AgrmntX/GetListAgrmntParentByCustNo';
+  public static CheckAgrmntParentOverdueByCustNo = environment.losUrl + '/v1' + '/AgrmntX/CheckAgrmntParentOverdueByCustNo';
 
   public static SubmitDeliveryOrderDataX = environment.losUrl+ "/v1" + "/DeliveryOrderX/SubmitDeliveryOrderData";
   public static AddCustCnfrmX = environment.losUrl+ "/v1" + "/CustCnfrmX/AddCustCnfrm";
@@ -54,7 +55,8 @@ export class URLConstantX {
   // App Invoice
   public static UpdateAppInvoiceDlfnX = environment.losUrl + '/v1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
   public static UpdateAppInvoiceDlfnV2X = environment.losUrl + '/v2' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
-
+  public static UpdateAppInvoiceDlfnV2_1X = environment.losUrl + '/v2.1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
+  
   //App Reserved Fund
   public static GetRsvFundSingleRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetRsvFundSingleRule";
   public static GetAppRsvFundPriorityRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetAppRsvFundPriorityRule";
@@ -182,6 +184,7 @@ export class URLConstantX {
 
   //APP INSURANCE X
   public static GetListAppInsObjByAgrmntIdForViewX = environment.losUrl + '/v1' + '/AppInsX/GetListAppInsObjByAgrmntIdForView';
+  public static GetAddCvgDiscRule = environment.losUrl + '/v1' + '/AppInsX/GetAddCvgDiscRule';
 
   //PO
   public static GetAppCustBankAccsByAppIdX = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";

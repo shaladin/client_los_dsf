@@ -1,0 +1,141 @@
+{
+  "title": "Application / Agreement Cancellation Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "A.AGRMNT_NO",
+      "id": "agrmntNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AP.APP_NO",
+      "id": "appNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
+    },
+    {
+        "type": "datepicker",
+        "name": "AAC.CANCEL_DT",
+        "id": "cancelDtGteId",
+        "value": "",
+        "label": "Cancel Date From",
+        "restriction": "gte",
+        "datatype": "date"
+    },
+    {
+        "type": "datepicker",
+        "name": "AAC.CANCEL_DT",
+        "id": "cancelDtLteId",
+        "value": "",
+        "label": "Cancel Date To",
+        "restriction": "lte",
+        "datatype": "date"
+    },
+    {
+      "type": "textbox",
+      "name": "AAC.CANCEL_BY_REF_NO",
+      "id": "cancelByRefNoId",
+      "value": "",
+      "label": "Cancel By",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "RRL.REF_REASON_CODE",
+      "id": "refReasonNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefReason/GetListActiveRefReason",
+      "label": "Cancel Reason",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "RefReasonTypeCode",
+      "criteriaPropValue": "APP_AGR_CNCL"
+    }
+  ],
+  "querystring": {
+    "name": "searchAppAgrCancellationInquiry"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Agreement No",
+      "name": "AgrmntNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application No",
+      "name": "AppNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Cancel Date",
+      "name": "CancelDt"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Cancel By",
+      "name": "CancelBy"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Cancel Reason",
+      "name": "CancelReason"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Cancel Notes",
+      "name": "CancelNotes"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "AgrmntNo",
+      "key": "agreement"
+    },
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "AppNo",
+      "key": "application"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "CancelDt"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CancelBy"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CancelReason"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CancelNotes"
+    }
+  ]
+}

@@ -122,6 +122,9 @@ export class CommonConstantX {
     //GS
     public static GSCodeShareholderJobPostIsOnwer = "SHAREHOLDER_JOB_POST_IS_OWNER";
     public static GSCodeDisableRequiredNotesApvAct = "DISABLE_REQUIRED_NOTES_APV_ACT";
+    public static GSCodeDistanceGoLiveDtToSystemDt = "DISTANCE_GOLIVE_DT";
+    public static GSCodeDistanceMaturityDtToSystemDt = "DISTANCE_MATURITY_DT";
+    public static GSCodeConfigPayloadRptSubrpt = "CONFIG_PAYLOAD_RPT_SUBRPT";
 
     //NAP 4
     public static SubjRelationLessee = "LESSEE";
@@ -132,19 +135,21 @@ export class CommonConstantX {
     public static CustSubjFamily = "FAM";
     public static CustSubjShareholder = "SHR";
     public static CustSubjGuarantor = "GUAR";
-    
+
     //Const Asset Tab
     public static DPType = "Down Payment Type";
     public static DP = "Down Payment";
     public static SDType = "Security Deposit Type";
     public static SD = "Security Deposit";
-    
+
     //#region Auto Debit Registration
     public static REF_REASON_AUTO_DEBIT_REG = "AUTO_DEBIT_REG";
     public static REF_STATUS_AUTO_DEBIT_REG = "AUTO_DEBIT_REGIS_STAT"
     public static AUTO_DEBIT_STATUS_CAN = "CAN";
     public static AUTO_DEBIT_STATUS_INPAUTH = "INPAUTH";
     public static AUTO_DEBIT_STATUS_FLD = "FLD";
+
+    public static GS_CODE_MAX_DIFF_DAYS = "MAX_DIFF_DAYS";
     //#endregion
 
 }

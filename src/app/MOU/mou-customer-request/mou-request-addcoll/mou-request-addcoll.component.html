@@ -101,7 +101,7 @@
             <label class="col-md-4 adins-required-label" translate>Collateral Price</label>
             <div class="col-md-8">
               <input type="text" currencyMask class="form-control adInsInput text-right"
-                formControlName="CollateralValueAmt" (keyup)="CollateralPortionTypeChange()"
+                formControlName="CollateralValueAmt" (keyup)="UpdateValueCollateralPortionAmt()"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
@@ -272,7 +272,7 @@
       </div>
     </div>
 
-    <ref-attr-form-generate *ngIf="isAttrReady" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+    <uc-attribute-form *ngIf="isAttrReady" [parentForm]="AddCollForm" [identifier]="identifierAttr" [enjiForm]="enjiForm" [AttrSetting]="attrSettingObj"></uc-attribute-form>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
@@ -446,7 +446,7 @@
             <label class="col-md-4 adins-required-label" translate>Collateral Price</label>
             <div class="col-md-8">
               <input type="text" currencyMask class="form-control adInsInput text-right"
-                formControlName="CollateralValueAmt" (keyup)="CollateralPortionTypeChange()"
+                formControlName="CollateralValueAmt" (keyup)="UpdateValueCollateralPortionAmt()"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CollateralValueAmt.invalid }">
               <lib-uc-show-errors [control]="AddCollForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
@@ -602,7 +602,7 @@
       </div>
     </div>
 
-    <ref-attr-form-generate *ngIf="isAttrReady" [IsDisable]="IsDisable" [IsShowBtnRefresh]="false" [Title]="'Collateral Attribute'" [IsVertical]="false" [ListAttrObjs]="ListAttrObjs" [parentForm]="AddCollForm" [enjiForm]="enjiForm" [identifier]="identifierAttr" (Callback)="refreshAttr()"></ref-attr-form-generate>
+    <uc-attribute-form *ngIf="isAttrReady" [parentForm]="AddCollForm" [identifier]="identifierAttr" [enjiForm]="enjiForm" [AttrSetting]="attrSettingObj"></uc-attribute-form>
 
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>

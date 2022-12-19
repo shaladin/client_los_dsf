@@ -66,9 +66,9 @@ export class SurveyPagingXComponent implements OnInit {
       this.inputPagingObj.integrationObj = this.IntegrationObj;
 
       critObj = new CriteriaObj();
-      critObj.restriction = AdInsConstant.RestrictionEq;
+      critObj.restriction = AdInsConstant.RestrictionIn;
       critObj.propName = 'A.APP_CURR_STEP';
-      critObj.value = CommonConstantX.APP_STEP_SURVEY_VERIF;
+      critObj.listValue = this.initListValueCurrStep();
       arrCrit.push(critObj);
       this.inputPagingObj.addCritInput = arrCrit
     } else {
@@ -105,4 +105,9 @@ export class SurveyPagingXComponent implements OnInit {
     }
   }
 
+  initListValueCurrStep(){
+    let tempList: Array<string> = new Array();
+    tempList = [CommonConstant.AppStepNapd, CommonConstant.AppStepRef, CommonConstant.AppStepApp, CommonConstant.AppStepAsset, CommonConstant.AppStepColl, CommonConstant.AppStepIns, CommonConstant.AppStepLIns, CommonConstant.AppStepFin, CommonConstant.AppStepTC, CommonConstant.AppStepUplDoc, CommonConstant.AppStepInvoice, CommonConstant.AppStepRSVFund, CommonConstant.AppStepComm, CommonConstant.ACT_CODE_CDC];
+    return tempList;
+  }
 }

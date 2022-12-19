@@ -67,6 +67,8 @@ export class CommissionV2XComponent implements OnInit {
   @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
   @Output() outputCommCondition: EventEmitter<boolean> = new EventEmitter();
   AppId: number = 0;
+  isSurvey : boolean = true;
+  SurveyList: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -180,6 +182,7 @@ export class CommissionV2XComponent implements OnInit {
     this.GetCalcMethod();
     this.ActRemainingAlloc = this.maxAllocAmt - this.totalRsvFundAmt;
 
+    await this.GetSurvey();
     await this.GetListAppReservedFundByAppId();
     await this.GetListAllocatePriority();
     await this.GetAppCust();
@@ -970,7 +973,7 @@ export class CommissionV2XComponent implements OnInit {
       (response) => {
         this.DDLData[this.DDLTask] = response[CommonConstant.ReturnObj];
 
-        if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W) {
+        if ((this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W) && this.isSurvey) {
           this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp || x.Key == CommonConstant.ReturnHandlingAddSurvey);
         } else {
           this.DDLData[this.DDLTask] = this.DDLData[this.DDLTask].filter(x => x.Key == CommonConstant.ReturnHandlingEditApp);
@@ -1031,6 +1034,19 @@ export class CommissionV2XComponent implements OnInit {
 
         }
       }
+    }
+  }
+
+  async GetSurvey(){
+    if (this.AppId != 0 && this.AppId != null && this.AppId != undefined) {
+      await this.http.post(URLConstant.GetAppSurveyVerifSubjectListByAppId, { Id: this.AppId}).toPromise().then(
+        (response) => {
+          this.SurveyList = response['ReturnObject'];
+          if(this.SurveyList.length == 0){
+            this.isSurvey = false;
+          }
+        }
+      );
     }
   }
 

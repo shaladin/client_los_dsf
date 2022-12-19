@@ -108,7 +108,7 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
 
         this.httpClient.post(URLConstantX.EditAppTcX, this.RlistAppTCObj).subscribe(
             (response) => {
-                this.toastr.successMessage(response["message"]);
+                //this.toastr.successMessage(response["message"]);
                 this.SaveInvoice();
                 // AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
             });
@@ -255,9 +255,10 @@ export class InvoiceVerifDetailDFXComponent implements OnInit {
             ReturnHandlingHObj: this.ReturnHandlingHData
         };
 
-        let UpdateAppInvoiceDlfnUrl = environment.isCore ? URLConstant.UpdateAppInvoiceDlfnV2_1 : URLConstant.UpdateAppInvoiceDlfn;
+        let UpdateAppInvoiceDlfnUrl = URLConstantX.UpdateAppInvoiceDlfnV2_1X;
         this.httpClient.post(UpdateAppInvoiceDlfnUrl, request).subscribe((response) => {
             if (response["StatusCode"] != "200") return;
+            if (response["StatusCode"] = "200") this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { "BizTemplateCode": this.bizTemplateCode });
         });
     }

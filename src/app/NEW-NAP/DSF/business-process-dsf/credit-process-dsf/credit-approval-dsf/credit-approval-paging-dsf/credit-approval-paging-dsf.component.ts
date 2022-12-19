@@ -9,14 +9,15 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { String } from 'typescript-string-operations';
-import { environment } from 'environments/environment';
-import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
-import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { String } from 'typescript-string-operations';
+import { environment } from 'environments/environment';
 import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
-import { UcPagingObj, ApprovalReqObj } from 'app/shared/model/uc-paging-obj.model';
+import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-credit-approval-paging-dsf',
@@ -65,6 +66,7 @@ export class CreditApprovalPagingDsfComponent implements OnInit, OnDestroy {
   }
 
   RefetchData(){
+    this.inputPagingObj.isSearched = true;
     this.isReady = false;
     this.SubscribeParam();
     this.SetUcPaging();
@@ -119,14 +121,17 @@ export class CreditApprovalPagingDsfComponent implements OnInit, OnDestroy {
       else if (ev.RowObj.CurrentUser == "-") {
         await this.apvTaskService.ClaimApvTask(ev.RowObj.TaskId);
       }
-        
+      
+      //Self Custom CR PIC Credit Review
       AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_APPRV_DETAIL_X], { "AppId": ev.RowObj.AppId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": environment.isCore ? ev.RowObj.RequestId : ev.RowObj.ApvReqId });
+      //End Self Custom CR PIC Credit Review
     }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
         this.apvTaskService.HoldApvTask(ev.RowObj.TaskId);
+        this.RefetchData();
       }
     }
     else if (ev.Key == "TakeBack") {
@@ -134,6 +139,7 @@ export class CreditApprovalPagingDsfComponent implements OnInit, OnDestroy {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         this.apvTaskService.TakeBackApvTask(ev.RowObj.TaskId, ev.RowObj.MainUser);
+        this.RefetchData();
       }
     }
     else if (ev.Key == "UnClaim") {
@@ -141,6 +147,7 @@ export class CreditApprovalPagingDsfComponent implements OnInit, OnDestroy {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_UNCLAIM);
       } else {
         this.apvTaskService.UnclaimApvTask(ev.RowObj.TaskId);
+        this.RefetchData();
       }
     }
     else {

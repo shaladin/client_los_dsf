@@ -189,7 +189,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               this.returnVendorObj = response;
               this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
               this.agencyLookUpObj.jsonSelect = this.returnVendorObj;
-              this.tempAgencyCode = this.returnVendorObj.VendorCode;
+              this.tempAgencyCode = this.returnVendorObj.VendorCode == null ? "" : this.returnVendorObj.VendorCode;
             });
 
           // this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoUsername;
@@ -295,7 +295,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             this.returnVendorExistObj = response;
             this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
             this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
-            this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
+            this.tempAgencyCode = this.returnVendorExistObj.VendorCode == null ? "" : this.returnVendorObj.VendorCode;
           });
         // this.cmoNameLookUpObj.nameSelect = this.returnExistLead.CmoUsername;
         // this.cmoNameLookUpObj.jsonSelect = this.returnExistLead;
