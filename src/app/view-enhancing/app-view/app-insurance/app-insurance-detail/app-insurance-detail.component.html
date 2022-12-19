@@ -122,13 +122,25 @@
               <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer</span>
             </th>
             <th style="text-align: right;">
+              <span class="thead-header" name='custMainPremi' translate>Main Premi to Customer Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
               <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='custAddPremi' translate>Additional Premi to Customer Rate (%)</span>
             </th>
             <th style="text-align: right;">
               <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco</span>
             </th>
             <th style="text-align: right;">
+              <span class="thead-header" name='inscoMainPremi' translate>Main Premi from Insco Rate (%)</span>
+            </th>
+            <th style="text-align: right;">
               <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco</span>
+            </th>
+            <th style="text-align: right;">
+              <span class="thead-header" name='inscoAddPremi' translate>Additional Premi from Insco Rate (%)</span>
             </th>
             <th style="text-align: left;">
               <span class="thead-header" name='paidBy' translate>Paid By</span>
@@ -153,13 +165,25 @@
               {{item.CustMainPremiAmt | number:'.2':'en-US'}}
             </td>
             <td style="text-align: right;">
+              {{item.CustMainPremiRate}}
+            </td>
+            <td style="text-align: right;">
               {{item.CustAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: right;">
+              {{item.CustAddPremiRate}}
             </td>
             <td style="text-align: right;">
               {{item.InscoMainPremiAmt | number:'.2':'en-US'}}
             </td>
             <td style="text-align: right;">
+              {{item.InscoMainPremiRate}}
+            </td>
+            <td style="text-align: right;">
               {{item.InscoAddPremiAmt | number:'.2':'en-US'}}
+            </td>
+            <td style="text-align: right;">
+              {{item.InscoAddPremiRate}}
             </td>
             <td style="text-align: left;">
               {{item.PaidBy}}
