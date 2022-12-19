@@ -380,7 +380,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     {
       let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
       obj.MasterAgreementNo = this.MasterAgreementNo;
-      obj.AppNo = this.resultResponse.AppNo;
+      obj.AppNo = this.resultResponseDsf.AppNo;
 
       await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
         (response) => {
