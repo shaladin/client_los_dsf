@@ -20,18 +20,10 @@
       },
       {
         "type": "textbox",
-        "name": "CGP.TOTAL_OS_AR",
-        "id": "TotalOSARId",
+        "name": "CGP.TOTAL_OS_NI",
+        "id": "TotalOSNIId",
         "value": "",
-        "label": "Outstanding AR/NI",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "CGP.TOTAL_OS_AR",
-        "id": "TotalOSARId",
-        "value": "",
-        "label": "Outstanding AR/NI",
+        "label": "Outstanding NI",
         "placeholder": "Placeholder"
       },
     {
@@ -109,8 +101,8 @@
       {
         "type": "sort",
         "position": "center",
-        "label": "Outstanding AR",
-        "name": "TotalOSAR"
+        "label": "Outstanding NI",
+        "name": "TotalOSNI"
       },
       {
           "type": "sort",
@@ -161,7 +153,7 @@
     {
         "type": "text",
         "position": "center",
-        "property": "TotalOSAR"
+        "property": "TotalOSNI"
     },
     {
         "type": "text",
