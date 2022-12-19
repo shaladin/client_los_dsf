@@ -14,7 +14,7 @@
                   <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
                   <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Agreement No</span></th>
                   <th class="text-center"><span translate class="thead-header" name='CsutomerName'>Customer Name</span></th>
-                  <th class="text-center"><span translate class="thead-header" name='OutstandingAR'>Outstanding AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='OutstandingNI'>Outstanding NI</span></th>
                   <th class="text-center"><span translate class="thead-header" name='Status'>Status</span></th>
                 </tr>
               </thead>
@@ -23,7 +23,7 @@
                     <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'">{{i + 1}}</td>
                     <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.AppOrAgrNo}}</td>
                     <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.CustomerName}}</td>
-                    <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.OSARAmt | number }}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.OSNIAmt | number }}</td>
                     <td *ngIf="item.Category == 'AGR' && item.LobCode != 'FACTORING'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                 </tr>
               </tbody>
@@ -38,7 +38,7 @@
                   <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
                   <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Agreement No</span></th>
                   <th class="text-center"><span translate class="thead-header" name='CsutomerName'>Customer Name</span></th>
-                  <th class="text-center"><span translate class="thead-header" name='OutstandingAR'>Outstanding AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='OutstandingNI'>Outstanding NI</span></th>
                   <th class="text-center"><span translate class="thead-header" name='Status'>Status</span></th>
                 </tr>
               </thead>
@@ -47,7 +47,7 @@
                   <td *ngIf="item.Category == 'OPL'">{{i + 1}}</td>
                   <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrNo}}</td>
                   <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.CustomerName}}</td>
-                  <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.OSARAmt | number }}</td>
+                  <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.OSNIAmt | number }}</td>
                   <td *ngIf="item.Category == 'OPL'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
               </tr>
               </tbody>
@@ -62,7 +62,7 @@
                   <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
                   <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Agreement No</span></th>
                   <th class="text-center"><span translate class="thead-header" name='CsutomerName'>Customer Name</span></th>
-                  <th class="text-center"><span translate class="thead-header" name='OutstandingAR'>Outstanding AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='OutstandingNI'>Outstanding NI</span></th>
                   <th class="text-center"><span translate class="thead-header" name='Status'>Status</span></th>
                 </tr>
               </thead>
@@ -71,7 +71,7 @@
                     <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'">{{i + 1}}</td>
                     <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.AppOrAgrNo}}</td>
                     <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.CustomerName}}</td>
-                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.OSARAmt | number }}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.OSNIAmt | number }}</td>
                     <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                 </tr>
               </tbody>
@@ -86,7 +86,7 @@
                   <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
                   <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Application No</span></th>
                   <th class="text-center"><span translate class="thead-header" name='CustomerName'>Customer Name</span></th>
-                  <th class="text-center"><span translate class="thead-header" name='TotalNIAR'>Total NI/AR</span></th>
+                  <th class="text-center"><span translate class="thead-header" name='TotalNIAR'>Outstanding NI</span></th>
                   <th class="text-center"><span translate class="thead-header" name='ApplicationStatus'>Application Status</span></th>
                 </tr>
               </thead>
@@ -95,7 +95,7 @@
                   <td *ngIf="item.Category == 'APP'">{{i + 1}}</td>
                   <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrNo}}</td>
                   <td *ngIf="item.Category == 'APP'" class="text-center">{{item.CustomerName}}</td>
-                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSARAmt | number }}</td>
+                  <td *ngIf="item.Category == 'APP'" class="text-center">{{item.OSNIAmt | number }}</td>
                   <td *ngIf="item.Category == 'APP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
               </tr>
               </tbody>
