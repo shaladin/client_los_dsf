@@ -100,5 +100,11 @@ export class NavigationConstantDsf {
      public static REPORT_APP_APPROVAL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_APP_APPROVAL;
 
      public static REPORT_AGR_PROCESS = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_AGR_PROCESS;
+
+     public static GO_LIVE_APV_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.GO_LIVE_APV_DETAIL_X; //'/AdminProcess/GoLiveX/DetailX'
+     public static GO_LIVE_APV_PAGING_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.GO_LIVE_APV_PAGING_X; //'/AdminProcess/GoLiveX/PagingX'
+     public static NAP_ADM_PRCS_PGL_APPRVL_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.PGL_APPRVL_DETAIL; //"/Nap/AdminProcess/PreGoLive/Approval/Detail"
+     public static NAP_ADM_PRCS_PGL_APPRVL_PAGING_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.PGL_APPRVL_PAGING; //"/Nap/AdminProcess/PreGoLive/Approval/Paging"
+     public static NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.AGRMNT_CANCEL_PAGING; //'/Nap/AdminProcess/AgreementCancellation/Paging'
 }
  

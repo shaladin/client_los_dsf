@@ -380,16 +380,15 @@ export class ApplicationDataXDsfComponent implements OnInit {
     {
       let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
       obj.MasterAgreementNo = this.MasterAgreementNo;
+      obj.AppNo = this.resultResponse.AppNo;
 
       await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
         (response) => {
           if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
-            this.MasterAgreementNo = response["MasterAgreementNo"],
+            this.MasterAgreementNo = response["MasterAgreementNo"];
             // this.MaxPlafondMasterAgreement = response["MaxPlafondMasterAgreement"],
-            this.RequestedPlafond = response["RequestedPlafond"],
+            this.RequestedPlafond = response["RequestedPlafond"];
             // this.RemainingPlafond = response["RemainingPlafond"]
-
-            this.isAddMode = false;
           }
           else
           {
@@ -1081,6 +1080,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     this.agrParent = this.agrParentList[idx];
     await this.validateGoLiveDtAgrmntParent();
     await this.validateMaturityDtAgrmntParent();
+    await this.validateAgrmntParentAvaibility();
     if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
       if(!this.isAgrmntParentMaturityDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
@@ -1353,41 +1353,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.toastr.warningMessage("Prod Offering Component \"" + this.missingProdOfrComp + "\" Is Missing, Please Update Product Offering");
       return false;
     }
-    // Self Custom CR MPF & FD Validation
-    let IsAvailable = 1;
-    let IsAvailableLOB = 1;
-    let objMPFFD = {
-      AgrParentNo: this.agrParent.AgrmntNo,
-      CustNo: this.CustNo,
-      AppNo: this.resultResponseDsf.AppNo,
-      BizTemplateCode: this.BizTemplateCode,
-      Lob: this.resultResponseDsf.LobCode
-    };
-    await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPFFD).toPromise().then(
-      (response) => {
-        let ResponseObj = response[CommonConstant.ReturnObj];
-        if (ResponseObj.IsAvailable != true)
-          {
-            IsAvailable = 0;
-          }
-        if (ResponseObj.IsAvailableLob != true)
-          {
-            IsAvailableLOB = 0;
-          }
-      }
-    );
-    
-    if (IsAvailable != 1 && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
-    {
-      if (IsAvailableLOB != 1)
-      {
-        this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
-        return false;
-      }
-      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
-      return false;
-    }
-    // End Self Custom CR MPF & FD Validation
 
     if (this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.NapAppModelForm.patchValue({
@@ -2091,5 +2056,43 @@ export class ApplicationDataXDsfComponent implements OnInit {
     } else {
       this.isAgrmntParentMaturityDtValid  = false;
     }
+  }
+
+  async validateAgrmntParentAvaibility(){
+    // Self Custom CR MPF & FD Validation
+    let IsAvailable = 1;
+    let IsAvailableLOB = 1;
+    let objMPFFD = {
+      AgrParentNo: this.agrParent.AgrmntNo,
+      CustNo: this.CustNo,
+      AppNo: this.resultResponseDsf.AppNo,
+      BizTemplateCode: this.BizTemplateCode,
+      Lob: this.resultResponseDsf.LobCode
+    };
+    await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPFFD).toPromise().then(
+      (response) => {
+        let ResponseObj = response[CommonConstant.ReturnObj];
+        if (ResponseObj.IsAvailable != true)
+          {
+            IsAvailable = 0;
+          }
+        if (ResponseObj.IsAvailableLob != true)
+          {
+            IsAvailableLOB = 0;
+          }
+      }
+    );
+    
+    if (IsAvailable != 1 && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
+    {
+      if (IsAvailableLOB != 1)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
+        return false;
+      }
+      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+      return false;
+    }
+    // End Self Custom CR MPF & FD Validation
   }
 }

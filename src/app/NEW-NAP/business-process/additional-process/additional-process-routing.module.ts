@@ -65,6 +65,8 @@ import { AutoDebitRegistrationPagingComponent } from 'app/impl/NEW-NAP/business-
 import { AutoDebitRegistrationInquiryComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component';
 import { AutoDebitRegistrationCancelComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component';
 import { AutoDebitTestComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { ReturnHandlingNewEditAppPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-new-edit-app-paging-dsf/return-handling-new-edit-app-paging-dsf.component';
 
 
 const routes: Routes = [
@@ -158,6 +160,13 @@ const routes: Routes = [
       {
         path: PathConstant.RETURN_HANDLING_NAP2,
         component: ReturnHandlingNewEditAppPagingComponent,
+        data: {
+          title: 'Return Handling Edit NAP2 Paging'
+        },
+      },
+      {
+        path: PathConstantDsf.RETURN_HANDLING_NAP2,
+        component: ReturnHandlingNewEditAppPagingDsfComponent,
         data: {
           title: 'Return Handling Edit NAP2 Paging'
         },

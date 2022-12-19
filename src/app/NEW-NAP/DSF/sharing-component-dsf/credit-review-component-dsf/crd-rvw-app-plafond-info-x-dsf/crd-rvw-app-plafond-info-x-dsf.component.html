@@ -1,0 +1,58 @@
+<lib-ucSubsection [id]="'PlafondInfoId'" [title]="'Plafond Information'" [panel]="'PlafondInfo'">
+</lib-ucSubsection>
+<!-- Self Custom CR MPF Validation -->
+<div class="form-body" id="PlafondInfo">
+  <div class="row" *ngIf="isRequestedPlafondAvailable">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Max Plafond Master Agreement</label>
+        <label class="col-md-8 adInsLabel" translate>{{MaxPlafondMasterAgreement | number:'.2':'en-US'}}</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Requested Plafond</label>
+        <label class="col-md-8 adInsLabel" translate>{{RequestedPlafond | number:'.2':'en-US'}}</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Remaining Plafond</label>
+        <label class="col-md-8 adInsLabel" translate>{{RemainingPlafond | number:'.2':'en-US'}}</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+  <div class="row" *ngIf="!isRequestedPlafondAvailable">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Max Plafond Master Agreement</label>
+        <label class="col-md-8 adInsLabel" translate>0</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Requested Plafond</label>
+        <label class="col-md-8 adInsLabel" translate>0</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Remaining Plafond</label>
+        <label class="col-md-8 adInsLabel" translate>-</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+</div>
+<!-- End Self Custom CR MPF Validation -->

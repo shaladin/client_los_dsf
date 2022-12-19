@@ -45,6 +45,7 @@ import { CrdRvwResultAnalysisComponent } from "app/impl/NEW-NAP/sharing-componen
 import { CrdRvwFinancialDataComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-financial-data/crd-rvw-financial-data.component";
 import { CrdRvwAppFinInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-fin-info/crd-rvw-app-fin-info-x.component";
 import { CrdRvwAppAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-app-info/crd-rvw-app-app-info-x.component";
+import { CrdRvwAppPlafondInfoXDsfComponent } from "app/NEW-NAP/DSF/sharing-component-dsf/credit-review-component-dsf/crd-rvw-app-plafond-info-x-dsf/crd-rvw-app-plafond-info-x-dsf.component";
 
 @NgModule({
     exports: [
@@ -66,6 +67,7 @@ import { CrdRvwAppAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/c
         CrdRvwThirdPartyCheckingDsfComponent,
         CrdRvwAssetAccComponent,
         CrdRvwAppInfoXComponent,
+        CrdRvwAppPlafondInfoXDsfComponent,
         CrdRvwCustInfoXComponent,
         CrdRvwCustHistDataXComponent,
         CrdRvwSurveyDataXComponent,
@@ -113,6 +115,7 @@ import { CrdRvwAppAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/c
         CrdRvwThirdPartyCheckingDsfComponent,
         CrdRvwAssetAccComponent,
         CrdRvwAppInfoXComponent,
+        CrdRvwAppPlafondInfoXDsfComponent,
         CrdRvwCustPersonalInfoXComponent,
         CrdRvwCustCompanyInfoXComponent,
         CrdRvwCustInfoXComponent,
