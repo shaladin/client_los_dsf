@@ -40,10 +40,10 @@ export class ViewInsuranceDetailComponent implements OnInit {
     this.getInsuranceData();
   }
 
-  getInsuranceData() {
+  async getInsuranceData() {
     var reqAssetObj = { Id: this.AppAssetId };
-    this.http.post(URLConstant.GetInsuranceDataByAppAssetIdForView, reqAssetObj).subscribe(
-      (response) => {
+    await this.http.post(URLConstant.GetInsuranceDataByAppAssetIdForView, reqAssetObj).toPromise().then(
+      async (response) => {
         this.appInsuranceObj = response["AppInsuranceObj"];
         this.appInsObjObj = response["AppInsObjObj"];
         if (response["AppAssetObj"] != null) {
@@ -53,6 +53,22 @@ export class ViewInsuranceDetailComponent implements OnInit {
           this.appCollateralObj = response["AppCollateralObj"];
         }
         this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
+        
+        for (var i = 0; i < this.appInsMainCvgObjs.length; i++) {
+          this.appInsMainCvgObjs[i].CustAddPremiRate = "";
+          this.appInsMainCvgObjs[i].InscoAddPremiRate = "";
+          for (var j = 0; j < this.appInsMainCvgObjs[i].AppInsAddCvgObjs.length; j++){
+            if (j == (this.appInsMainCvgObjs[i].AppInsAddCvgObjs.length - 1)) {
+              this.appInsMainCvgObjs[i].CustAddPremiRate += (this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].CustAddPremiRate).toFixed(3);
+              this.appInsMainCvgObjs[i].InscoAddPremiRate +=  (this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].InscoAddPremiRate).toFixed(3);
+            }
+            else {
+              this.appInsMainCvgObjs[i].CustAddPremiRate += (this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].CustAddPremiRate).toFixed(3) + ", ";
+              this.appInsMainCvgObjs[i].InscoAddPremiRate +=  (this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].InscoAddPremiRate).toFixed(3) + ", ";
+            }
+          }
+        }
+        
 
         var detailForGridCoverage = {
           Data: this.appInsMainCvgObjs,
