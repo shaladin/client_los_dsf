@@ -96,6 +96,7 @@ export class PreGoLiveXComponent implements OnInit {
   IsNeedApv: boolean = false;
   ApvAmt: number = 0;
   DiffDay: number = 0;
+  diffDayEf: number = 0;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
 
   ReqByCodeObj: GenericObj = new GenericObj();
@@ -336,18 +337,7 @@ export class PreGoLiveXComponent implements OnInit {
 
   }
 
-  async SaveForm(flag = true) {
-    if (this.MainInfoForm.controls.AdditionalInterestPaidBy.value != null){
-      await this.getMaxDiffDays();
-      const diffTimes = new Date(this.MainInfoForm.controls.EffectiveDt.value).getTime() - new Date(this.MainInfoForm.controls.GoLiveEstimated.value).getTime();
-      if (diffTimes > 0) {
-        this.DiffDay = diffTimes / (1000 * 3600 * 24);
-      }
-      if(this.DiffDay > this.maxDiff){
-        this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
-        return;
-      }
-    }
+  SaveForm(flag = true) {
     if (this.BizTemplateCode == CommonConstant.DF) {
       this.IsCheckedAll = true;
       const effDate = new Date(this.MainInfoForm.controls.EffectiveDt.value);
@@ -447,16 +437,6 @@ export class PreGoLiveXComponent implements OnInit {
 
       });
 
-  }
-
-  async getMaxDiffDays(){
-    this.ReqByCodeObj.Code = CommonConstantX.GS_CODE_MAX_DIFF_DAYS;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, this.ReqByCodeObj).toPromise().then(
-      (response) => {
-        if(response["GsValue"] != null){
-          this.maxDiff = parseInt(response["GsValue"]);
-        }
-      });
   }
 
   async getAddInterestPaidBy() {
