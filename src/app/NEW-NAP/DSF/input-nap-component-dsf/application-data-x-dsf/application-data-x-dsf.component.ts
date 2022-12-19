@@ -214,7 +214,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     BirthDtOwnerBankAcc: [''],
     MasterAgreementNo: [''],
     MaxPlafondMasterAgreement: [''],
-    RequestedPlafond: [''],
+    RequestedPlafond: [0],
     RemainingPlafond: ['']
   });
   slikSecDescr: string = "";
@@ -379,7 +379,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     if (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD)
     {
       let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
-      obj.MasterAgreementNo = this.MasterAgreementNo;
+      obj.MasterAgreementNo = "";
       obj.AppNo = this.resultResponseDsf.AppNo;
 
       await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
@@ -389,6 +389,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
             // this.MaxPlafondMasterAgreement = response["MaxPlafondMasterAgreement"],
             this.RequestedPlafond = response["RequestedPlafond"];
             // this.RemainingPlafond = response["RemainingPlafond"]
+            this.isAddMode = false;
           }
           else
           {
@@ -1475,7 +1476,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
                   this.AgrmntMasterXDsf.RequestedPlafond = this.NapAppModelForm.controls.RequestedPlafond.value;
                   this.AgrmntMasterXDsf.RemainingPlafond = this.RemainingPlafond;
                   this.AgrmntMasterXDsf.Status = "ACT";
-                  this.AgrmntMasterXDsf.AppNo = this.NapAppModelForm.value.AppNo.value;
+                  this.AgrmntMasterXDsf.AppNo = this.resultResponseDsf.AppNo;
                   this.AgrmntMasterXDsf.AgrmntParentNo = this.agrmntParentNo;
 
                   this.http.post(URLConstantDsf.AddAgrmntMasterXDsf, this.AgrmntMasterXDsf).subscribe(
