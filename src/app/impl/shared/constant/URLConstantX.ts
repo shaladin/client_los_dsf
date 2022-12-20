@@ -234,6 +234,7 @@ export class URLConstantX {
 
   //APP TC
   public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
+  public static GetListTCbyAppIdFromRuleX = environment.losUrl + "/v1" + "/AppTcX/GetListTCbyAppIdFromRuleX";
 
   // CUST MAIN DATA
   public static CheckIfCustHasOngoingAppX = environment.losUrl + "/v1" + "/AppCustX/CheckIfCustHasOngoingApp";
