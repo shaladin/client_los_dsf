@@ -243,8 +243,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
   TotalAssetPrice: number = 0;
   Tenor: number = 0;
 
-  isAgrmntParentGoLiveDtValid: boolean = false;
-  isAgrmntParentMaturityDtValid: boolean = false;
+  // COMMENTED WHEN IN DEV
+  isAgrmntParentGoLiveDtValid: boolean = true;
+  isAgrmntParentMaturityDtValid: boolean = true;
   monthFromGoLiveDt: number = 6;  // 6 as default value
   monthFromMaturyityDateDt: number = 3;  // 3 as default value
 
