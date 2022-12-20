@@ -60,7 +60,11 @@ export class ApprovalHistXComponent implements OnInit {
       this.CrdApvRsltExtObj = new UcInputApprovalHistoryObj();
       this.CrdApvRsltExtObj.PathUrl = "/Approval/GetTaskHistory";
       this.CrdApvRsltExtObj.Identifier = "CrdApvRsltExtObj";
-      
+
+      this.GoliveApvObj = new UcInputApprovalHistoryObj();
+      this.GoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
+      this.GoliveApvObj.Identifier = "GoliveApvObj";
+
       this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
         (response) => {
           for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
@@ -135,7 +139,7 @@ export class ApprovalHistXComponent implements OnInit {
       }
     );
   }
-  
+
   getCrdApvExt(){
     this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
@@ -150,13 +154,13 @@ export class ApprovalHistXComponent implements OnInit {
           });
         let requestMainDataObj : ReqCreditApvResultExtObj = new ReqCreditApvResultExtObj();
         requestMainDataObj.AppId = response['AppId'];
-        
+
         this.http.post<ResCreditApvResultExtObj>(URLConstant.GetCreditApvResultExtMainData, requestMainDataObj).subscribe(
           response => {
             this.CrdApvMainDataObj = response;
           }
         );
       }
-    ); 
+    );
   }
 }
