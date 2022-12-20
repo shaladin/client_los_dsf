@@ -154,7 +154,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "NAP_ADM_PRCS_AGRMNT_CANCEL_DETAIL",
+                "path": "NAP_ADM_PRCS_AGRMNT_CANCEL_DETAIL_DSF",
                 "icon": "ft-edit-2",
                 "param": [
                   {
