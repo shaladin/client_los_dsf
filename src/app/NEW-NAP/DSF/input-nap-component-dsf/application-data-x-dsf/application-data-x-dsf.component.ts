@@ -1079,8 +1079,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
     if (idx == null) return;
 
     this.agrParent = this.agrParentList[idx];
-    await this.validateGoLiveDtAgrmntParent();
-    await this.validateMaturityDtAgrmntParent();
+    // COMMENTED WHEN IN DEV
+    // await this.validateGoLiveDtAgrmntParent();
+    // await this.validateMaturityDtAgrmntParent();
     await this.validateAgrmntParentAvaibility();
     if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
       if(!this.isAgrmntParentMaturityDtValid){
