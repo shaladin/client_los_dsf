@@ -79,27 +79,37 @@ export class ApprovalHistXComponent implements OnInit {
         }
       );
 
-      this.http.post(URLConstant.GetAgrmntByAppId, { Id: this.AppId }).subscribe(
+      await this.http.post(URLConstant.GetAgrmntByAppId, { Id: this.AppId }).subscribe(
         (response) => {
           let agrmntNo = response['AgrmntNo'];
-          this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: agrmntNo }).subscribe(
-            (response) => {
-              for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
-                if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryPreGoLive) {
-                  this.PregoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
-                }
-                if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryOfferingValidity) {
-                  this.OfferingObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
-                }
-                if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstantX.CAT_CODE_GO_LIVE_APV) {
-                  this.GoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
-                }
+          let agrmntNoPgv = agrmntNo + '_PGLV';
+          this.GetOfferingGoLiveObj(agrmntNo);
+          this.GetPreGoLiveObj(agrmntNoPgv);
 
-              }
-              this.IsPregoliveApvReady = true;
-              this.IsOfferingReady = true;
-              this.IsGoliveApvReady = true;
-            });
+          // this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: agrmntNo }).subscribe(
+          //   (response) => {
+          //     for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+          //       if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryOfferingValidity) {
+          //         this.OfferingObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          //       }
+          //       if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstantX.CAT_CODE_GO_LIVE_APV) {
+          //         this.GoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          //       }
+
+          //     }
+          //     this.IsOfferingReady = true;
+          //     this.IsGoliveApvReady = true;
+          //   });
+
+          // this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: TrxNoPgv }).subscribe(
+          //   (response) => {
+          //     for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+          //       if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryPreGoLive) {
+          //         this.PregoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          //       }
+          //     }
+          //     this.IsPregoliveApvReady = true;
+          //   });
         },
         (error) => {
           this.IsCrdApvReady = true;
@@ -108,6 +118,7 @@ export class ApprovalHistXComponent implements OnInit {
       this.getCrdApvExt();
     }
   }
+
 
   async GetApvOpl() {
     this.ApvHistObj = new UcInputApprovalHistoryObj();
@@ -163,4 +174,34 @@ export class ApprovalHistXComponent implements OnInit {
       }
     );
   }
+
+  async GetOfferingGoLiveObj(obj: any){
+    await this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: obj }).toPromise().then(
+      (response) => {
+        for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+          if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryOfferingValidity) {
+            this.OfferingObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          }
+          if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstantX.CAT_CODE_GO_LIVE_APV) {
+            this.GoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          }
+
+        }
+        this.IsOfferingReady = true;
+        this.IsGoliveApvReady = true;
+      });
+  }
+
+  async GetPreGoLiveObj(obj: any){
+    await this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: obj }).toPromise().then(
+      (response) => {
+        for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+          if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryPreGoLive) {
+            this.PregoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          }
+        }
+        this.IsPregoliveApvReady = true;
+      });
+  }
+
 }
