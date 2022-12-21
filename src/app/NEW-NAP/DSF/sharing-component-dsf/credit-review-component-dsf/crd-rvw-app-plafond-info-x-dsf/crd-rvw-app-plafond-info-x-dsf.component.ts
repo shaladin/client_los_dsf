@@ -44,6 +44,7 @@ export class CrdRvwAppPlafondInfoXDsfComponent implements OnInit {
   async ngOnInit() {
     await this.GetCrdRvwAppByCrdRvwCustInfoId();
     await this.GetLatestListScoringResultHAndResultDByTrxSourceNo();
+    await this.GetAppSummary();
   }
 
   async GetCrdRvwAppByCrdRvwCustInfoId() {
