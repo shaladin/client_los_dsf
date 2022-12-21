@@ -75,6 +75,7 @@ export class CrdRvwAppPlafondInfoXDsfComponent implements OnInit {
     await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
+        this.AppNo = this.AppObj.AppNo;
       });
 
     let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
