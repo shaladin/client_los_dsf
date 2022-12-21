@@ -12,6 +12,7 @@ import { AppFinDataObjX } from 'app/impl/shared/model/AppFinDataObjX.model';
 import { SummaryAppObj } from 'app/shared/model/app/summary-app-obj.model';
 import { AgrmntMasterXDsfObj } from 'app/shared/model/agrmnt-master-x-dsf-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { AppObj } from 'app/shared/model/app/app.model';
 
 @Component({
   selector: 'app-crd-rvw-app-plafond-info-x-dsf',
@@ -26,7 +27,7 @@ export class CrdRvwAppPlafondInfoXDsfComponent implements OnInit {
   @Output() callbackCrdRvwAppObj: EventEmitter<CrdRvwAppObj> = new EventEmitter();
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   AppNo: string = "";
-  SummaryAppObj: SummaryAppObj = new SummaryAppObj();
+  AppObj: AppObj;
   MasterAgreementNo;
   RemainingPlafond: number = 0;
   RequestedPlafond: number = 0;
@@ -70,12 +71,11 @@ export class CrdRvwAppPlafondInfoXDsfComponent implements OnInit {
 
   async GetAppSummary()
   {
-    var reqObj = { Id: this.appId };
-    await this.http.post<SummaryAppObj>(URLConstant.GetSummaryAppByAppId, reqObj).toPromise().then(
-    (response) => {
-      this.SummaryAppObj = response;
-      this.AppNo = this.SummaryAppObj["AppObj"]["AppNo"];
-    });
+    var appObj = { Id: this.appId };
+    await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
+      (response) => {
+        this.AppObj = response;
+      });
 
     let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
       obj.MasterAgreementNo = this.MasterAgreementNo == null ? null : this.MasterAgreementNo;
