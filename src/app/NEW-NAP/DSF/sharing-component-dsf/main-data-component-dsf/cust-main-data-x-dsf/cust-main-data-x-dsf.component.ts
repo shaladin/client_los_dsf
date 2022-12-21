@@ -1770,22 +1770,30 @@ export class CustMainDataXDsfComponent implements OnInit {
         await this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPFFD).toPromise().then(
           (response) => {
             let ResponseObj = response[CommonConstant.ReturnObj];
-            if (ResponseObj.IsAvailable == true)
+            if (ResponseObj.IsAgrmntParentNotExist == true)
             {
-              if (ResponseObj.IsAvailableLOB == true)
-              {
-                this.SaveCustomer();
-              }
-              else
-              {
-                this.toastr.warningMessage(ExceptionConstantDsf.AGR_PARENT_AVAILABLE_NOT_INLINE);
-                return;
-              }
+              this.toastr.warningMessage(ExceptionConstantDsf.CUST_NOT_HAVE_AGR_PARENT);
+              return;
             }
             else
             {
-              this.toastr.warningMessage(ExceptionConstantDsf.AGR_PARENT_NOT_AVAILABLE);
-              return;
+              if (ResponseObj.IsAvailable == true)
+              {
+                if (ResponseObj.IsAvailableLOB == true)
+                {
+                  this.SaveCustomer();
+                }
+                else
+                {
+                  this.toastr.warningMessage(ExceptionConstantDsf.AGR_PARENT_AVAILABLE_NOT_INLINE);
+                  return;
+                }
+              }
+              else
+              {
+                this.toastr.warningMessage(ExceptionConstantDsf.AGR_PARENT_NOT_AVAILABLE);
+                return;
+              }
             }
           }
         );

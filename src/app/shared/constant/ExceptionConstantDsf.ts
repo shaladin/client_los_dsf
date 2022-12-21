@@ -6,5 +6,6 @@ export class ExceptionConstantDsf {
 
     public static AGR_PARENT_AVAILABLE_NOT_INLINE = "All Available Agreement Parent for this Customer are not inline with this App LOB";
     public static SLC_AGR_PARENT_AVAILABLE_NOT_INLINE = "Selected Agreement Parent for this Customer are not inline with this App LOB";
+    public static CUST_NOT_HAVE_AGR_PARENT = "Customer must have Agreement Parent";
 }
 

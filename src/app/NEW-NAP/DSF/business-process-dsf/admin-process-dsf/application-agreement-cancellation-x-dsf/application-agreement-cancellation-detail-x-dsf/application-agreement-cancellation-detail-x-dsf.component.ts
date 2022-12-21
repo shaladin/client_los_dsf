@@ -16,6 +16,7 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AppObj } from 'app/shared/model/app/app.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail-x-dsf',
@@ -26,6 +27,7 @@ export class ApplicationAgreementCancellationDetailXDsfComponent implements OnIn
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
+  ReqByTrxNo: GenericObj = new GenericObj();
   AgrmntId: number;
   AppAgrmntCancelObj: AppAgrmntCancelObj;
   BizTemplateCode: string;
@@ -85,7 +87,9 @@ export class ApplicationAgreementCancellationDetailXDsfComponent implements OnIn
           this.appData = response;
     });
 
-    await this.http.post(URLConstantDsf.EditAgrmntMasterXDsf, { Id: this.appData.AppNo }).toPromise().then(
+    this.ReqByTrxNo.TrxNo = this.appData.AppNo;
+
+    await this.http.post(URLConstantDsf.DeactivateAgrmntMasterXDsf, this.ReqByTrxNo).toPromise().then(
       (response) => {
     });
 

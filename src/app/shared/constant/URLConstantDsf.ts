@@ -40,8 +40,9 @@ export class URLConstantDsf {
     public static GetAgrmntMasterXDsf = environment.losUrl + "/AppDsf/GetAgrmntMasterXDsf";
     public static CalculatePlafondAgrmntXDsf = environment.losUrl + "/AppDsf/CalculatePlafondAgrmntXDsf";
     public static AddAgrmntMasterXDsf = environment.losUrl + "/AppDsf/AddAgrmntMasterXDsf";
-    public static GetListAgrmntChildOsNiDsf = environment.losUrl + "/AppDsf/GetListAgrmntChildOsNiDsf";
     public static EditAgrmntMasterXDsf = environment.losUrl + "/AppDsf/EditAgrmntMasterXDsf";
+    public static GetListAgrmntChildOsNiDsf = environment.losUrl + "/AppDsf/GetListAgrmntChildOsNiDsf";
+    public static DeactivateAgrmntMasterXDsf = environment.losUrl + "/AppDsf/DeactivateAgrmntMasterXDsf";
     public static PreGoLiveApproval = environment.losUrl + "/AppDsf/PreGoLiveApprovalDsf";
     public static GoLiveApprovalX = environment.losUrl + "/AppDsf/GoLiveApprovalDsf";
 }
