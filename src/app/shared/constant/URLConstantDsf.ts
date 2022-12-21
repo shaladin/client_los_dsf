@@ -45,4 +45,5 @@ export class URLConstantDsf {
     public static DeactivateAgrmntMasterXDsf = environment.losUrl + "/AppDsf/DeactivateAgrmntMasterXDsf";
     public static PreGoLiveApproval = environment.losUrl + "/AppDsf/PreGoLiveApprovalDsf";
     public static GoLiveApprovalX = environment.losUrl + "/AppDsf/GoLiveApprovalDsf";
+    public static ApprovalDsf = environment.losUrl + "/AppDsf/ApprovalDsf";
 }

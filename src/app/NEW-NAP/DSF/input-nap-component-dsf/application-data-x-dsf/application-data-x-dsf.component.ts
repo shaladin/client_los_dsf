@@ -214,7 +214,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     BirthDtOwnerBankAcc: [''],
     MasterAgreementNo: [''],
     MaxPlafondMasterAgreement: [''],
-    RequestedPlafond: [0],
+    RequestedPlafond: [0, [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
     RemainingPlafond: ['']
   });
   slikSecDescr: string = "";
@@ -383,6 +383,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
       let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
       obj.MasterAgreementNo = "";
       obj.AppNo = this.resultResponseDsf.AppNo;
+      obj.Status = "TEMP";
 
       await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
         (response) => {
@@ -392,6 +393,11 @@ export class ApplicationDataXDsfComponent implements OnInit {
             this.RequestedPlafond = response["RequestedPlafond"];
             this.Status = response["Status"];
             // this.RemainingPlafond = response["RemainingPlafond"]
+
+            this.NapAppModelForm.patchValue({
+              RequestedPlafond: this.RequestedPlafond
+            });
+
             this.isAddMode = false;
           }
           else
@@ -1085,17 +1091,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // COMMENTED WHEN IN DEV
     // await this.validateGoLiveDtAgrmntParent();
     // await this.validateMaturityDtAgrmntParent();
-    await this.validateAgrmntParentAvaibility();
-    if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
-      if(!this.isAgrmntParentMaturityDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
-        return false;
-      }
-      if(!this.isAgrmntParentGoLiveDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
-        return false;
-      }
-    }
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
     this.goLiveDt = this.agrParent.GoLiveDt;
@@ -1169,7 +1164,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // Self Custom CR MPF & FD Validation
     if (task == 1)
     {
-      if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
         await this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantDsf.CalculatePlafondAgrmntXDsf, reqCalculatePlafondAgrmntXObj).toPromise().then(
           (response) => {
             this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
@@ -1199,13 +1193,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
             this.RemainingPlafond = this.RequestedPlafond - this.TotalOsNiChild
           }
         )
-      } else {
-        this.resCalculatePlafondAgrmntXObj = this.plafondDict[this.agrParent.AgrmntId]
-      }
     }
     // End Self Custom CR MPF & FD Validation
-
-
 
     var tempCrossApp = new NapAppCrossObj();
     tempCrossApp.CrossAgrmntNo = this.agrParent.AgrmntNo;
@@ -1225,6 +1214,19 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.agrmntParentNo = this.agrParent.AgrmntNo;
     }
 
+    // Self Custom CR MPF & FD Validation
+    await this.validateAgrmntParentAvaibility();
+    if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
+      if(!this.isAgrmntParentMaturityDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
+        return false;
+      }
+      if(!this.isAgrmntParentGoLiveDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
+        return false;
+      }
+    }
+    // End Self Custom CR MPF & FD Validation
   }
 
   async GetGSValueSalesOfficer() {
@@ -2109,11 +2111,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
     
     if (IsAvailable != 1 && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
     {
-      // if (IsAvailableLOB != 1)
-      // {
-      //   this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
-      //   return false;
-      // }
       this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
       return false;
     }
