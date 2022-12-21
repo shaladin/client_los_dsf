@@ -160,7 +160,7 @@ export class AssetDataXComponent implements OnInit {
     BranchManagerPositionCode: ['', Validators.maxLength(50)],
 
     /*App Collateral Regist*/
-    UserName: ['', Validators.maxLength(500)],
+    UserName: ['', [Validators.required, Validators.maxLength(500)]],
     MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
     OwnerName: ['', [Validators.required, Validators.maxLength(500)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
