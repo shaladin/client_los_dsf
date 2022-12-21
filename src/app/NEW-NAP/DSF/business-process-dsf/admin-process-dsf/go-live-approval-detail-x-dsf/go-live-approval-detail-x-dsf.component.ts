@@ -82,7 +82,7 @@ export class GoLiveApprovalDetailXDsfComponent implements OnInit {
     // Self Custom CR MPF Validation
     if (this.bizTemplateCode == CommonConstant.CFNA)
     {
-      this.viewAgrmntPlafond.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntPlafondDataAfterPreGoLiveXDsf";
+      this.viewAgrmntPlafond.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntPlafondDataAfterPreGoLiveXDsf.json";
     }
     // End Self Custom CR MPF Validation
     

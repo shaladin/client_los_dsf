@@ -263,6 +263,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
   AgrmntChildOsNiDsfListObj: Array<AgrmntChildOsNiDsfObj>;
   TotalOsNiChild: number = 0;
   Status: string;
+  isRequestedPlafondLive: boolean = false;
   //End Self Custom CR MPF & FD Validation
 
   constructor(private fb: FormBuilder,
@@ -399,6 +400,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
             });
 
             this.isAddMode = false;
+
           }
           else
           {
@@ -1162,6 +1164,23 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // End Self Custom CR MPF & FD Validation
 
     // Self Custom CR MPF & FD Validation
+    let obj2: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
+        obj2.MasterAgreementNo = this.MasterAgreementNo;
+        obj2.AppNo = "";
+        obj2.Status = "ACT";
+
+        await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj2).toPromise().then(
+          (response) => {
+            if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
+              this.isRequestedPlafondLive = true;
+              this.RequestedPlafond = response["RequestedPlafond"];
+              this.Status = response["Status"];
+
+              this.NapAppModelForm.patchValue({
+                RequestedPlafond: this.RequestedPlafond
+              });
+            }
+          })
     if (task == 1)
     {
         await this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantDsf.CalculatePlafondAgrmntXDsf, reqCalculatePlafondAgrmntXObj).toPromise().then(
