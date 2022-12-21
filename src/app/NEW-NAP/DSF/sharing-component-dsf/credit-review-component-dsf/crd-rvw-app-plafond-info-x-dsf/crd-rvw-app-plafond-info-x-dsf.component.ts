@@ -79,7 +79,7 @@ export class CrdRvwAppPlafondInfoXDsfComponent implements OnInit {
       });
 
     let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
-      obj.MasterAgreementNo = this.MasterAgreementNo == null ? null : this.MasterAgreementNo;
+      obj.MasterAgreementNo = this.MasterAgreementNo == null ? "" : this.MasterAgreementNo;
       obj.AppNo = this.AppNo;
 
       await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
