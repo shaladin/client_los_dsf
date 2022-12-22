@@ -1183,6 +1183,35 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // End Self Custom CR MPF & FD Validation
 
     // Self Custom CR MPF & FD Validation
+    let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
+      obj.MasterAgreementNo = "";
+      obj.AppNo = this.resultResponseDsf.AppNo;
+      obj.Status = "TEMP";
+
+      await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
+        (response) => {
+          if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") 
+          {
+            // this.MasterAgreementNo = response["MasterAgreementNo"];
+            // this.MaxPlafondMasterAgreement = response["MaxPlafondMasterAgreement"],
+            this.RequestedPlafond = response["RequestedPlafond"];
+            this.NapAppModelForm.patchValue(
+              {
+                RequestedPlafond: this.RequestedPlafond
+              })
+            this.Status = response["Status"];
+          }
+          else
+          {
+            this.RequestedPlafond = 0;
+            this.NapAppModelForm.patchValue(
+              {
+                RequestedPlafond: 0
+              })
+          }
+        }
+      );
+
     this.isRequestedPlafondLive = false;
 
     let obj2: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
@@ -1415,7 +1444,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
       });
     }
     if (this.BizTemplateCode == CommonConstant.CFNA) {
-
+      this.validateRequestedPlafond();
+      
       if(!this.isAgrmntParentMaturityDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
         return false;
@@ -1702,6 +1732,19 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
       return false;
     }
+
+    // Self Custom CR MPF & FD Validation
+    if (this.RemainingPlafond < financingAmt) {
+      this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REMAINING_PLAFOND);
+      return false;
+    }
+
+    if (this.MaxPlafondMasterAgreement < financingAmt) {
+      this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_PLAFOND_MASTER);
+      return false;
+    }
+    // End Self Custom CR MPF & FD Validation
+    
     return true;
   }
 

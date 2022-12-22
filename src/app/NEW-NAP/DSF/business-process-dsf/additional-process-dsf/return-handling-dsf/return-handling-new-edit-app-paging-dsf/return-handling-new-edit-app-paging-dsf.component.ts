@@ -123,7 +123,7 @@ export class ReturnHandlingNewEditAppPagingDsfComponent implements OnInit {
       }
       //Self Custom CR MPF & FD Validation
       if (this.BizTemplateCode == CommonConstant.CFNA) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CFNA_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CFNA_NAP2_X], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
       //End Self Custom CR MPF & FD Validation
       if (this.BizTemplateCode == CommonConstant.FCTR) {
