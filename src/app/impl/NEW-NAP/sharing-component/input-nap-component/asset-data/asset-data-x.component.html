@@ -469,16 +469,16 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2  adInsLabel" translate>User Name </label>
+                  <label class="col-md-2 adins-required-label" translate>User Name </label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control" formControlName="UserName">
+                    <input type="text" class="form-control" formControlName="UserName" [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.UserName.invalid}">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.UserName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2  adins-required-label" translate>User Relationship </label>
                   <div class="col-md-4">
-                    <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode"
-                            style="width:50%">
+                    <select class="form-control" id="userRelationship" formControlName="MrUserRelationshipCode" style="width:50%" [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrUserRelationshipCode.invalid}">
                       <option value="">-Select One-</option>
                       <option *ngFor="let item of UserRelationObj" [value]="item.Key">
                         {{item.Value}}
@@ -553,13 +553,13 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2 adins-required-label" translate>Owner Profession</label>
-                  <div class="col-md-4" *ngIf="AssetDataForm.controls.MrOwnerTypeCode.value == 'PERSONAL'">
+                  <div class="col-md-4" [hidden]="AssetDataForm.controls.MrOwnerTypeCode.value !== 'PERSONAL'">
                     <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
                                          [lookupInput]="InputLookupProfessionObj" [parentForm]="AssetDataForm"
                                          [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
                     </lib-uclookupgeneric>
                   </div>
-                  <div class="col-md-4" *ngIf="AssetDataForm.controls.MrOwnerTypeCode.value == 'COMPANY'">
+                  <div class="col-md-4" [hidden]="AssetDataForm.controls.MrOwnerTypeCode.value !== 'COMPANY'">
                     <select class="form-control adInsInput" style="width: auto" formControlName="OwnerProfessionCode"
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.OwnerProfessionCode.invalid }">
                       <option value="">Select One</option>
