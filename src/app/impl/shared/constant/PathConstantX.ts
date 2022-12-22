@@ -8,6 +8,7 @@ export class PathConstantX {
   public static PAGING = 'PagingX';
   public static CESSIE = 'Cessie';
   public static ADD = 'AddX';
+  public static PAGING_X = 'PagingX';
   public static DETAIL_X = 'DetailX';
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
@@ -63,6 +64,7 @@ export class PathConstantX {
   public static NAP1_PAGING = PathConstant.NAP1 + '/' + PathConstantX.PAGING;
   public static NAP1_ADD = PathConstant.NAP1 + '/' + PathConstantX.ADD;
 
+  public static PGL_PAGING_X = PathConstant.PGL + '/' + PathConstantX.PAGING_X;
   public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X;
   public static DO_MULTI_ASSET_PAGING_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.PAGING;
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
