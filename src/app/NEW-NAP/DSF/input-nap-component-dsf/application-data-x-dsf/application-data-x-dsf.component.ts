@@ -1550,7 +1550,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
             };
             this.http.post(URLConstantX.EditAppAddAppCrossX, obj).subscribe(
               (response) => {
-
+                // Self Custom CR MPF & FD Validation
                 if (this.isAddMode)
                 {
                   this.AgrmntMasterXDsf = new AgrmntMasterXDsfObj();
@@ -1583,6 +1583,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
                     }
                   );
                 }
+                // End Self Custom CR MPF & FD Validation
 
                 this.toastr.successMessage('Save Application Data');
                 this.outputTab.emit();
@@ -1712,21 +1713,23 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }
     }
 
-    if(this.NapAppModelForm.controls.LobCode.value == 'FD')
-    {
-      if (plafondUsed < financingAmt) {
-        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
-        return false;
-      }
-    }
+    // Self Custom CR MPF & FD Validation
+    // if(this.NapAppModelForm.controls.LobCode.value == 'FD')
+    // {
+    //   if (plafondUsed < financingAmt) {
+    //     this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+    //     return false;
+    //   }
+    // }
 
-    if(this.NapAppModelForm.controls.LobCode.value == 'MPF')
-    {
-      if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt < financingAmt) {
-        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
-        return false;
-      }
-    }
+    // if(this.NapAppModelForm.controls.LobCode.value == 'MPF')
+    // {
+    //   if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt < financingAmt) {
+    //     this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+    //     return false;
+    //   }
+    // }
+    // End Self Custom CR MPF & FD Validation
 
     if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
       this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
@@ -1734,9 +1737,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
     }
 
     // Self Custom CR MPF & FD Validation
-    if (this.RemainingPlafond < financingAmt) {
-      this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REMAINING_PLAFOND);
-      return false;
+    if (this.RemainingPlafond > 0)
+    {
+      if (this.RemainingPlafond < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REMAINING_PLAFOND);
+        return false;
+      }
     }
 
     if (this.MaxPlafondMasterAgreement < financingAmt) {
@@ -2171,10 +2177,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
     }
   }
 
+  // Self Custom CR MPF & FD Validation
   async validateAgrmntParentAvaibility(){
-    // Self Custom CR MPF & FD Validation
-    let IsAvailable = 1;
-    let IsAvailableLOB = 1;
+    let IsAvailable = true;
+    let IsAvailableLOB = true;
     let objMPFFD = {
       AgrParentNo: this.agrParent.AgrmntNo,
       CustNo: this.CustNo,
@@ -2185,23 +2191,30 @@ export class ApplicationDataXDsfComponent implements OnInit {
     await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPFFD).toPromise().then(
       (response) => {
         let ResponseObj = response[CommonConstant.ReturnObj];
-        if (ResponseObj.IsAvailable != true)
+        IsAvailable = ResponseObj.IsAvailable;
+        IsAvailableLOB = ResponseObj.IsAvailableLOB;
+
+        if ((!IsAvailable) && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
+        {
+          if (!IsAvailableLOB)
           {
-            IsAvailable = 0;
+            this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
+            return false;
           }
-        if (ResponseObj.IsAvailableLob != true)
+          else
           {
-            IsAvailableLOB = 0;
+          this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+          return false;
           }
+        }
+        if (!IsAvailableLOB && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
+        {
+          this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
+          return false;
+        }
       }
     );
     
-    if (IsAvailable != 1 && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
-    {
-      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
-      return false;
-    }
-    // End Self Custom CR MPF & FD Validation
   }
 
   validateRequestedPlafond()
@@ -2212,4 +2225,5 @@ export class ApplicationDataXDsfComponent implements OnInit {
       return false;
     } 
   }
+  // End Self Custom CR MPF & FD Validation
 }
