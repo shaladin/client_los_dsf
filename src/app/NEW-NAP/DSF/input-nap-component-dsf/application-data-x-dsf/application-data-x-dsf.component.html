@@ -94,6 +94,7 @@
                   <div class="col-md-8">
                   <input currencyMask type="" class="form-control adInsInput" style="width: 40%" formControlName="RequestedPlafond"
                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.RequestedPlafond.invalid }"
+                           (change)="validateRequestedPlafond()"
                            [options]="{thousands: ',', decimal: '.', align: 'left', allowNegative: false, allowZero:false, precision: 2, nullable: false }">
                     <lib-uc-show-errors [control]="NapAppModelForm.controls.RequestedPlafond" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>

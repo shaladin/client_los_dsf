@@ -407,6 +407,25 @@ export class ApplicationDataXDsfComponent implements OnInit {
             this.isRequestedPlafondAvailable = false;
           }
         })
+
+        let obj2: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
+        obj2.MasterAgreementNo = this.MasterAgreementNo;
+        obj2.AppNo = "";
+        obj2.Status = "ACT";
+
+        await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj2).toPromise().then(
+          (response) => {
+            if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
+              this.isRequestedPlafondLive = true;
+              this.isRequestedPlafondAvailable = true;
+              this.RequestedPlafond = response["RequestedPlafond"];
+              this.Status = response["Status"];
+
+              this.NapAppModelForm.patchValue({
+                RequestedPlafond: this.RequestedPlafond
+              });
+            }
+          })
     }
     // End Self Custom CR MPF & FD Validation
   }
@@ -1164,6 +1183,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // End Self Custom CR MPF & FD Validation
 
     // Self Custom CR MPF & FD Validation
+    this.isRequestedPlafondLive = false;
+
     let obj2: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
         obj2.MasterAgreementNo = this.MasterAgreementNo;
         obj2.AppNo = "";
@@ -1181,6 +1202,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
               });
             }
           })
+
+          this.isRequestedPlafondAvailable;
+          this.Status;
+          this.isRequestedPlafondLive;
     if (task == 1)
     {
         await this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantDsf.CalculatePlafondAgrmntXDsf, reqCalculatePlafondAgrmntXObj).toPromise().then(
@@ -2134,5 +2159,14 @@ export class ApplicationDataXDsfComponent implements OnInit {
       return false;
     }
     // End Self Custom CR MPF & FD Validation
+  }
+
+  validateRequestedPlafond()
+  {
+    if (this.NapAppModelForm.controls.RequestedPlafond.value > this.MaxPlafondMasterAgreement)
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_REQUESTED_PLAFOND);
+      return false;
+    } 
   }
 }
