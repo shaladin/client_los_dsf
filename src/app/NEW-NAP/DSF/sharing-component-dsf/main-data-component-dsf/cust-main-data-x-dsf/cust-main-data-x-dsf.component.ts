@@ -1769,8 +1769,15 @@ export class CustMainDataXDsfComponent implements OnInit {
 
         await this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPFFD).toPromise().then(
           (response) => {
+
+            let isHaveAgrmntParent : boolean = false;
+            this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).subscribe(
+              (response) => {
+                if (response && response.length > 0) isHaveAgrmntParent = true;
+              }
+            );
             let ResponseObj = response[CommonConstant.ReturnObj];
-            if (ResponseObj.IsAgrmntParentNotExist == true)
+            if (isHaveAgrmntParent)
             {
               this.toastr.warningMessage(ExceptionConstantDsf.CUST_NOT_HAVE_AGR_PARENT);
               return;

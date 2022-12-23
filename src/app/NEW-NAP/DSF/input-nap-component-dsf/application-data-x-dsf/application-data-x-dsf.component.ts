@@ -264,6 +264,11 @@ export class ApplicationDataXDsfComponent implements OnInit {
   TotalOsNiChild: number = 0;
   Status: string;
   isRequestedPlafondLive: boolean = false;
+  IsAvailable: boolean = true;
+  IsAvailableLOB: boolean = true;
+  IsRequestedPlafondExceed: boolean = false;
+  IsOnProgress: boolean = false;
+  IsLOBNotMatch: boolean = false;
   //End Self Custom CR MPF & FD Validation
 
   constructor(private fb: FormBuilder,
@@ -1289,6 +1294,17 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
     // Self Custom CR MPF & FD Validation
     await this.validateAgrmntParentAvaibility();
+    if (this.IsOnProgress)
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+      return false;
+    }
+    if (this.IsLOBNotMatch)
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
+      return false;
+    }
+
     if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
       if(!this.isAgrmntParentMaturityDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
@@ -1444,7 +1460,26 @@ export class ApplicationDataXDsfComponent implements OnInit {
       });
     }
     if (this.BizTemplateCode == CommonConstant.CFNA) {
-      this.validateRequestedPlafond();
+      // Self Custom CR MPF & FD Validation
+      await this.validateRequestedPlafond();
+      if (this.IsRequestedPlafondExceed)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_REQUESTED_PLAFOND);
+        return false;
+      } 
+
+      await this.validateAgrmntParentAvaibility();
+      if (this.IsOnProgress)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+        return false;
+      }
+      if (this.IsLOBNotMatch)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
+        return false;
+      }
+      // End Self Custom CR MPF & FD Validation
       
       if(!this.isAgrmntParentMaturityDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
@@ -2179,8 +2214,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   // Self Custom CR MPF & FD Validation
   async validateAgrmntParentAvaibility(){
-    let IsAvailable = true;
-    let IsAvailableLOB = true;
     let objMPFFD = {
       AgrParentNo: this.agrParent.AgrmntNo,
       CustNo: this.CustNo,
@@ -2191,38 +2224,34 @@ export class ApplicationDataXDsfComponent implements OnInit {
     await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPFFD).toPromise().then(
       (response) => {
         let ResponseObj = response[CommonConstant.ReturnObj];
-        IsAvailable = ResponseObj.IsAvailable;
-        IsAvailableLOB = ResponseObj.IsAvailableLOB;
+        this.IsAvailable = ResponseObj.IsAvailable;
+        this.IsAvailableLOB = ResponseObj.IsAvailableLOB;
 
-        if ((!IsAvailable) && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
+        if ((!this.IsAvailable) && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
         {
-          if (!IsAvailableLOB)
+          if (!this.IsAvailableLOB)
           {
-            this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
-            return false;
+            this.IsLOBNotMatch = true;
           }
           else
           {
-          this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
-          return false;
+            this.IsOnProgress = true;
           }
         }
-        if (!IsAvailableLOB && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
+        if (!this.IsAvailableLOB && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
         {
-          this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
-          return false;
+          this.IsLOBNotMatch = true;
         }
       }
     );
     
   }
 
-  validateRequestedPlafond()
+  async validateRequestedPlafond()
   {
     if (this.NapAppModelForm.controls.RequestedPlafond.value > this.MaxPlafondMasterAgreement)
     {
-      this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_REQUESTED_PLAFOND);
-      return false;
+      this.IsRequestedPlafondExceed = true;
     } 
   }
   // End Self Custom CR MPF & FD Validation
