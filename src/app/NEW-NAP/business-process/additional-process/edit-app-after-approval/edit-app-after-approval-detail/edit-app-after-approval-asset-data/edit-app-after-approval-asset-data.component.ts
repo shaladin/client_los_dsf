@@ -975,12 +975,18 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   async SetAssetDocument() {
     if (this.EditedAssetData.length != 0) {
+      let currAssetIndex = -1;
+      this.EditedAssetData.forEach((value, index) => {
+        if (value['AppAssetId'] == this.AppAssetId) currAssetIndex = index;
+      });
+      if (currAssetIndex < 0) return;
       for (var i = 0; i < this.EditAppAssetForm.controls.ListDoc.value.length; i++){
+        let currDoc = this.EditedAssetData[currAssetIndex].AppCollateralDocsObj[i];
         this.EditAppAssetForm.controls.ListDoc["controls"][i].patchValue({
-          DocNo: this.EditedAssetData[0].AppCollateralDocsObj[i].DocNo,
-          DocNotes: this.EditedAssetData[0].AppCollateralDocsObj[i].DocNotes,
-          ACDExpiredDt: this.EditedAssetData[0].AppCollateralDocsObj[i].ExpiredDt == "" ? "" : formatDate(this.EditedAssetData[0].AppCollateralDocsObj[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
-          IsReceived: this.EditedAssetData[0].AppCollateralDocsObj[i].IsReceived
+          DocNo: currDoc.DocNo,
+          DocNotes: currDoc.DocNotes,
+          ACDExpiredDt: currDoc.ExpiredDt == "" ? "" : formatDate(currDoc.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+          IsReceived: currDoc.IsReceived
         });
       }
     } else {

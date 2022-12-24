@@ -45,13 +45,19 @@
                                         <div class="col-md-3">
                                             <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3" *ngIf="detail.ChangeItemCode == 'IS_RECEIVED'">
+                                            <label class="adInsLabel"> {{detail.OldValue == '1' ? 'YES' : 'NO'}} </label>
+                                        </div>
+                                        <div class="col-md-3" *ngIf="detail.ChangeItemCode != 'IS_RECEIVED'">
                                             <label class="adInsLabel"> {{detail.OldValue}} </label>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3" *ngIf="detail.ChangeItemCode == 'IS_RECEIVED'">
+                                            <label class="adInsLabel" translate> {{detail.NewValue == '1' ? 'YES' : 'NO'}} </label>
+                                        </div>
+                                        <div class="col-md-3" *ngIf="detail.ChangeItemCode != 'IS_RECEIVED'">
                                             <label class="adInsLabel"> {{detail.NewValue}} </label>
                                         </div>
                                     </div>
