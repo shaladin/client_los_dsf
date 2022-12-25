@@ -974,12 +974,21 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
   }
 
   async SetAssetDocument() {
-    if (this.EditedAssetData.length != 0) {
-      let currAssetIndex = -1;
+    let isChangedDataExists = false;
+    let currAssetIndex = -1;
+
+    if (this.EditedAssetData.length != 0)
+    {
       this.EditedAssetData.forEach((value, index) => {
-        if (value['AppAssetId'] == this.AppAssetId) currAssetIndex = index;
+        if (value['AppAssetId'] == this.AppAssetId) 
+        {
+          currAssetIndex = index;
+          isChangedDataExists = true;
+        }
       });
-      if (currAssetIndex < 0) return;
+    }
+
+    if (isChangedDataExists && currAssetIndex > -1) {
       for (var i = 0; i < this.EditAppAssetForm.controls.ListDoc.value.length; i++){
         let currDoc = this.EditedAssetData[currAssetIndex].AppCollateralDocsObj[i];
         this.EditAppAssetForm.controls.ListDoc["controls"][i].patchValue({
