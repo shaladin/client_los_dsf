@@ -160,4 +160,6 @@ export class PathConstantDsf {
     public static AGRMNT_CANCEL = "AgreementCancellationDsf";
     public static AGRMNT_CANCEL_PAGING = PathConstantDsf.AGRMNT_CANCEL + "/" + PathConstant.PAGING;
     public static AGRMNT_CANCEL_DETAIL = PathConstantDsf.AGRMNT_CANCEL + "/" + PathConstantX.DETAIL_X;
+    public static PGL_PAGING = PathConstantDsf.PGL + "/" + PathConstant.PAGING;
+    public static PGL_DETAIL_X = PathConstantDsf.PGL + '/' + PathConstantX.DETAIL_X;
 }

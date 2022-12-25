@@ -85,6 +85,7 @@ import { PreGoLiveApprovalPagingXDsfComponent } from 'app/NEW-NAP/DSF/business-p
 import { PreGoLiveApprovalDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-approval-detail-dsf/pre-go-live-approval-detail-dsf.component';
 import { ApplicationAgreementCancellationPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-dsf/application-agreement-cancellation-paging-dsf/application-agreement-cancellation-paging-dsf.component';
 import { ApplicationAgreementCancellationDetailXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-x-dsf/application-agreement-cancellation-detail-x-dsf/application-agreement-cancellation-detail-x-dsf.component';
+import { PreGoLivePagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component';
 
 const routes: Routes = [
   {
@@ -170,6 +171,13 @@ const routes: Routes = [
       {
         path: PathConstant.PGL_PAGING,
         component: PreGoLivePagingComponent,
+        data: {
+          title: 'PreGoLive Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.PGL_PAGING,
+        component: PreGoLivePagingDsfComponent,
         data: {
           title: 'PreGoLive Paging'
         }

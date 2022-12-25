@@ -98,6 +98,24 @@ export class CrdRvwAppPlafondInfoXDsfComponent implements OnInit {
             this.isRequestedPlafondAvailable = false;
           }
         })
+      
+      obj.Status = "ACT";
+      await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
+          (response) => {
+            if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
+              this.MasterAgreementNo = response["MasterAgreementNo"];
+              // this.MaxPlafondMasterAgreement = response["MaxPlafondMasterAgreement"],
+              this.RequestedPlafond = response["RequestedPlafond"];
+              this.RemainingPlafond = response["RemainingPlafond"];
+              this.MaxPlafondMasterAgreement = response["MaxPlafondMasterAgreement"];
+              // this.RemainingPlafond = response["RemainingPlafond"]
+              this.isRequestedPlafondAvailable = true;
+            }
+            else
+            {
+              this.isRequestedPlafondAvailable = false;
+            }
+          })
   }
 
   //#region Link a href
