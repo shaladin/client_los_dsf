@@ -113,6 +113,7 @@ import { PreGoLiveApprovalDetailDsfComponent } from "app/NEW-NAP/DSF/business-pr
 import { ApplicationAgreementCancellationPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-dsf/application-agreement-cancellation-paging-dsf/application-agreement-cancellation-paging-dsf.component";
 import { ApplicationAgreementCancellationDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-x-dsf/application-agreement-cancellation-detail-x-dsf/application-agreement-cancellation-detail-x-dsf.component";
 import { PreGoLivePagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component";
+import { PreGoLiveXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live-x/pre-go-live-x-dsf/pre-go-live-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -208,6 +209,7 @@ export const customCurrencyMaskConfig = {
     DocSignerPagingDsfComponent,
     DocSignerDetailDsfComponent,
     PreGoLiveXComponent,
+    PreGoLiveXDsfComponent,
     DeliveryOrderMultiAssetDetailXComponent,
     CustConfirmationDetailXComponent,
     GoLiveApprovalPagingXComponent,
