@@ -60,7 +60,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     OwnerAreaCode4: ['', Validators.maxLength(50)],
     OwnerCity: ['', Validators.maxLength(50)],
     OwnerZipcode: ['', Validators.maxLength(50)],
-    OwnerProfessionCode: [''],
+    OwnerProfessionCode: ['', Validators.required],
     MrOwnerTypeCode: [''],
     SelfUser: [false],
     UserName: ['', Validators.maxLength(500)],
@@ -134,6 +134,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.isReady = true;
+    this.InputLookupProfessionObj.isRequired = false;
 
     this.inputAddressObjForOwner = new InputAddressObj();
     this.inputAddressObjForOwner.showSubsection = false;
