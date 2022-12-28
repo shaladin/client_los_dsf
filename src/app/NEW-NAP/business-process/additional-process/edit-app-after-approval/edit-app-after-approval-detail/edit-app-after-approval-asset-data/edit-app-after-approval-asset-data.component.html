@@ -196,6 +196,8 @@
                              [lookupInput]="InputLookupProfessionObj" [parentForm]="EditAppAssetForm" [identifier]="'lookupProfessionData'"
                              (lookup)="GetProfession($event)" #LookupProfession>
         </lib-uclookupgeneric>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.OwnerProfessionCode" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
       <div class="col-md-4" *ngIf="EditAppAssetForm.controls.MrOwnerTypeCode.value == 'COMPANY'">
         <select class="form-control adInsInput" style="width: auto" formControlName="OwnerProfessionCode"
