@@ -106,6 +106,9 @@ export class URLConstantX {
   public static GetInitForDmsDataByCessieHXId = environment.losUrl + "/v1" + "/Cessie/GetInitForDmsDataByCessieHXId";
   public static GetCessieHXById = environment.losUrl + "/v1" + "/Cessie/GetCessieHXById";
 
+  // CUSTOMER ADDRESS
+  public static GetListCustAddrByCustNoX = environment.FoundationR3Url + "/v1" + "/CustAddrX/GetListCustAddrByCustNoX";
+
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl + '/v1' + "/MouCustX/GetMouCustByAppId";
   public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
@@ -163,6 +166,8 @@ export class URLConstantX {
   public static DeleteAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/DeleteAppCustBankAccAndStmntX";
   public static GetAppCustBankAccAndStatementForView = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccAndStatementForViewX";
   public static AddEditNapCust = environment.losUrl + "/v1" + "/Application/AddEditNapCust";
+  public static GetCustBankAccByCustNoX = environment.FoundationR3Url + "/v1" + "/CustBankAccX/GetCustBankAccByCustNoX";
+  public static GetCustBankAccByCustBankAccIdX = environment.FoundationR3Url + "/v1" + "/CustBankAccX/GetCustBankAccByCustBankAccIdX";
 
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
