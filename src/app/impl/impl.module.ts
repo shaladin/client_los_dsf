@@ -97,7 +97,6 @@ export const customCurrencyMaskConfig = {
     EditCommV2XComponent,
     FormEditCommGenerateXComponent,
     CrdRvwListAssetComponent,
-    PreGoLivePagingXComponent
   ]
 })
 
