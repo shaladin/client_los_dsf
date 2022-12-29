@@ -218,5 +218,7 @@ export class ExceptionConstant {
 
     public static LEAD_INPUT_AGENCY_CMO_TELE = "Please input either Agency, CMO or Tele Sales";
     public static FINANCING_AMT_MORE_THAN_COLL_PORTION_AMT = "Total Financing Amount is More Than Total Collateral Portion Amount";
+
+    public static PLEASE_WAIT_A_MINUTE_UNTIL_CAPTURE_DATA_IS_FINISHED = "Please Wait A Minute Until Capture Data Is Finished";
 }
 
