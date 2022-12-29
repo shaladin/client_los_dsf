@@ -2214,6 +2214,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   // Self Custom CR MPF & FD Validation
   async validateAgrmntParentAvaibility(){
+    this.IsOnProgress = false;
+    this.IsLOBNotMatch = false;
+
     let objMPFFD = {
       AgrParentNo: this.agrParent.AgrmntNo,
       CustNo: this.CustNo,
@@ -2249,6 +2252,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   async validateRequestedPlafond()
   {
+    this.IsRequestedPlafondExceed = false;
     if (this.NapAppModelForm.controls.RequestedPlafond.value > this.MaxPlafondMasterAgreement)
     {
       this.IsRequestedPlafondExceed = true;
