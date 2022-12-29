@@ -248,7 +248,7 @@
                 </tr>
                 <ng-container *ngFor="let item of ltkmCustBankAccObjs[i].LtkmCustBankStmntObjs">
                   <tr>
-                    <td class="text-center">{{item.Month}}</td>
+                    <td class="text-center">{{item.MonthName ? item.MonthName : item.Month}}</td>
                     <td class="text-center">{{item.Year}}</td>
                     <td class="text-center">{{item.DebitTrxCount}}</td>
                     <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
