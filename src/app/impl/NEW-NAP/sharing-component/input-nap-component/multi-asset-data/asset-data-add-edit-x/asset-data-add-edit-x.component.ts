@@ -1404,38 +1404,19 @@ export class AssetDataAddEditXComponent implements OnInit {
   }
 
   GenerateAppAssetAttrForm() {
-    if (this.AppAssetAttrObj != null) {
-      this.appAssetAttrObjs = new Array<AppAssetAttrCustomObj>();
-      for (let i = 0; i < this.AppAssetAttrObj.length; i++) {
-        this.ListAttrAnswer.push([]);
-        let appAssetAttrObj = new AppAssetAttrCustomObj();
-        appAssetAttrObj.AssetAttrCode = this.AppAssetAttrObj[i].AttrCode;
-        appAssetAttrObj.AssetAttrName = this.AppAssetAttrObj[i].AttrName;
-        appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrValue;
-        appAssetAttrObj.AttrInputType = this.AppAssetAttrObj[i].AttrInputType;
-        appAssetAttrObj.AttrLength = this.AppAssetAttrObj[i].AttrLength;
-        if (this.AppAssetAttrObj[i].AttrQuestionValue != null) {
-          this.ListAttrAnswer[i].push(this.AppAssetAttrObj[i].AttrQuestionValue);
-          if (appAssetAttrObj.AttrValue == null) {
-            appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrQuestionValue[0]
+    let arrAppAssetAttributes = this.AssetDataForm.controls[this.identifierAssetAttr]['controls'];
+    if(arrAppAssetAttributes.length > 0){
+      for (let i = 0; i < arrAppAssetAttributes.length; i++) {
+        let attributeCode = arrAppAssetAttributes[i]['controls']['AttrCode'].value;
+        for (let x = 0; x < this.AppAssetAttrObj.length; x++) {
+          let code = this.AppAssetAttrObj[x].AttrCode;
+          let value = this.AppAssetAttrObj[x].AttrValue
+          if(code === attributeCode){
+            this.AssetDataForm.controls[this.identifierAssetAttr]['controls'][i].get('AttrValue').setValue(value)
           }
         }
-        else {
-          this.ListAttrAnswer[i].push("");
-        }
-        this.appAssetAttrObjs.push(appAssetAttrObj);
-
       }
-      let listAppAssetAttrs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
-      while (listAppAssetAttrs.length !== 0) {
-        listAppAssetAttrs.removeAt(0);
-      }
-      for (let j = 0; j < this.appAssetAttrObjs.length; j++) {
-        listAppAssetAttrs.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
-      }
-      this.isAssetAttrReady = true;
     }
-
   }
 
   addGroupAppAssetAttr(appAssetAttrObj: AppAssetAttrCustomObj, i: number) {
@@ -2904,7 +2885,7 @@ export class AssetDataAddEditXComponent implements OnInit {
             });
           }
           await this.GetAssetMaster(this.listAssetMasterDetailFromR2Obj.AssetInfo.FullAssetCode);
-          this.GenerataAppAssetAttrMaster(this.listAssetMasterDetailFromR2Obj.AssetAttr);
+          await this.GenerataAppAssetAttrMaster(this.listAssetMasterDetailFromR2Obj.AssetAttr);
           await this.GetRefAssetDocList(false);
           await this.GetRefAssetDocListMaster(false, this.listAssetMasterDetailFromR2Obj.AssetDocument);
           await this.GetAssetAccessoryMaster();
@@ -2933,8 +2914,9 @@ export class AssetDataAddEditXComponent implements OnInit {
           });
           this.AppAssetAttrObj[j].AttrQuestionValue = attrQuestionValue;
           for (let k = 0; k < AssetAttrR2.length; k++) {
-            if (AssetAttrR2[k].AssetAttrCode == this.AppAssetAttrObj[j].AttrCode)
+            if (AssetAttrR2[k].AssetAttrCode == this.AppAssetAttrObj[j].AttrCode){
               this.AppAssetAttrObj[j].AttrValue = AssetAttrR2[k].AssetAttrValue
+            }
           }
         }
         this.GenerateAppAssetAttrForm();
