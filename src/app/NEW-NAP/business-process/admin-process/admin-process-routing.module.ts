@@ -74,6 +74,7 @@ import { InvoiceDataPagingXComponent } from 'app/impl/NEW-NAP/business-process/a
 import { InvoiceDataDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-detail/invoice-data-detail-x.component';
 import { InvoiceDataXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data/invoice-data-x.component';
 import { PreGoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-paging-x/pre-go-live-approval-paging-x.component';
+import { PreGoLivePagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-paging-x/pre-go-live-paging-x.component';
 
 const routes: Routes = [
   {
@@ -157,8 +158,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.PGL_PAGING,
-        component: PreGoLivePagingComponent,
+        path: PathConstantX.PGL_PAGING_X,
+        component: PreGoLivePagingXComponent,
         data: {
           title: 'PreGoLive Paging'
         }
