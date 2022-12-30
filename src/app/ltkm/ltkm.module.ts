@@ -69,6 +69,7 @@ import { ViewLtkmCustomerDataCompanyXComponent } from "app/impl/ltkm/view-ltkm-c
 import { LtkmVerifyDetailXComponent } from "app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component";
 import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail-x.component";
 import { LtkmApprovalDetailComponent } from "./ltkm-approval/detail/ltkm-approval-detail.component";
+import { LtkmApprovalDetailXComponent } from "app/impl/ltkm/ltkm-approval/detail/ltkm-approval-detail-x.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: false,
@@ -115,7 +116,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalR3Module,
     UcapprovalgeneralinfoModule,
-    UcgridviewModule, 
+    UcgridviewModule,
     UcdropdownlistModule
   ],
   declarations: [
@@ -148,7 +149,8 @@ export const customCurrencyMaskConfig = {
     LtkmReturnHandlingXComponent,
     LtkmCustJobDataXComponent,
     LtkmFinancialCompanyXComponent,
-    LtkmVerifyDetailXComponent
+    LtkmVerifyDetailXComponent,
+    LtkmApprovalDetailXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,
