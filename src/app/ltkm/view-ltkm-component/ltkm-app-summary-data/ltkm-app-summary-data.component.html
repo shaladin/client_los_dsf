@@ -264,7 +264,7 @@
             *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsAssetPaidBy}}</label>
           <label class="col-md-2  adInsLabel" translate>Total Fee</label>
           <label class="col-md-4  adinslabel" translate
-            *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
+            *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoAdminFeeAmt + SummaryObj.AppIns.InscoStampDutyFee | number:'.2':'en-US'}}</label>
         </div>
         <div>
           <label class="col-md-2  adInsLabel" translate>Insurance Length</label>
@@ -325,7 +325,7 @@
             *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InsAssetPaidBy}}</label>
           <label class="col-md-2  adInsLabel" translate>Total Fee</label>
           <label class="col-md-4  adinslabel" translate
-            *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoAdminFeeAmt | number:'.2':'en-US'}}</label>
+            *ngIf="SummaryObj?.AppIns">{{SummaryObj.AppIns.InscoAdminFeeAmt + SummaryObj.AppIns.InscoStampDutyFee | number:'.2':'en-US'}}</label>
         </div>
         <div>
           <label class="col-md-2  adInsLabel" translate>Insurance Length</label>
