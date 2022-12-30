@@ -269,6 +269,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
   IsRequestedPlafondExceed: boolean = false;
   IsOnProgress: boolean = false;
   IsLOBNotMatch: boolean = false;
+  isActiveMode: boolean = false;
   //End Self Custom CR MPF & FD Validation
 
   constructor(private fb: FormBuilder,
@@ -429,6 +430,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
               this.NapAppModelForm.patchValue({
                 RequestedPlafond: this.RequestedPlafond
               });
+
+              this.isActiveMode = true;
             }
           })
     }
@@ -1234,6 +1237,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
               this.NapAppModelForm.patchValue({
                 RequestedPlafond: this.RequestedPlafond
               });
+
+              this.isActiveMode = true;
             }
           })
 
@@ -1772,7 +1777,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     }
 
     // Self Custom CR MPF & FD Validation
-    if (this.RemainingPlafond > 0)
+    if (this.isActiveMode)
     {
       if (this.RemainingPlafond < financingAmt) {
         this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REMAINING_PLAFOND);
@@ -1780,8 +1785,21 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }
     }
 
+    else
+    {
+      if (this.RemainingPlafond < financingAmt && this.RemainingPlafond > 0) {
+        this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REMAINING_PLAFOND);
+        return false;
+      }
+    }
+
     if (this.MaxPlafondMasterAgreement < financingAmt) {
       this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_PLAFOND_MASTER);
+      return false;
+    }
+
+    if (this.RequestedPlafond < financingAmt) {
+      this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REQUESTED_PLAFOND);
       return false;
     }
     // End Self Custom CR MPF & FD Validation

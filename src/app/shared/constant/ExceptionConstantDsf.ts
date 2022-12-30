@@ -10,5 +10,6 @@ export class ExceptionConstantDsf {
     public static VALIDATE_REQUESTED_PLAFOND = "Requested Plafond must be Equal or Lower than Max Plafond Master Agreement";
     public static EXCEEDED_FROM_PLAFOND_MASTER = "Loan Object must be Equal or Lower than Max Plafond Master Agreement";
     public static EXCEEDED_FROM_REMAINING_PLAFOND = "Loan Object must be Equal or Lower than Remaining Plafond";
+    public static EXCEEDED_FROM_REQUESTED_PLAFOND = "Loan Object must be Equal or Lower than Requested Plafond";
 }
 
