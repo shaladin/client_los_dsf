@@ -46,4 +46,5 @@ export class URLConstantDsf {
     public static PreGoLiveApproval = environment.losUrl + "/AppDsf/PreGoLiveApprovalDsf";
     public static GoLiveApprovalX = environment.losUrl + "/AppDsf/GoLiveApprovalDsf";
     public static ApprovalDsf = environment.losUrl + "/AppDsf/ApprovalDsf";
+    public static GetListAgrmntParentByCustNoX = environment.losUrl + "/AppDsf/GetListAgrmntParentByCustNoDsf";
 }

@@ -53,6 +53,8 @@ import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AgrmntMasterXDsfObj } from 'app/shared/model/agrmnt-master-x-dsf-obj.model';
 import { AgrmntChildOsNiDsfObj } from 'app/shared/model/agrmnt-child-os-ni-dsf-obj.model';
+import { AgrParentDsfObjX } from 'app/impl/shared/model/Response/AgrParentDsfObjX.model';
+import { ReqCalculatePlafondAgrmntDsfXObj } from 'app/impl/shared/model/ReqCalculatePlafondAgrmntDsfXObj.Model';
 
 @Component({
   selector: 'app-application-data-x-dsf',
@@ -117,8 +119,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
   agrmntParentNo: string;
   resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
   reqAgrmntMasterDataObjX: ReqAgrmntMasterDataObjX;
-  agrParent: AgrParentObjX;
-  agrParentList: Array<AgrParentObjX>;
+  agrParent: AgrParentDsfObjX;
+  agrParentList: Array<AgrParentDsfObjX>;
   plafondDict: { [id: string]: ResCalculatePlafondAgrmntXObj } = {};
   DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -1000,7 +1002,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       //lookup Agreement Parent
-      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
+      await this.http.post<Array<AgrParentDsfObjX>>(URLConstantDsf.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
         (response) => {
           this.agrParentList = response;
         }
@@ -1137,12 +1139,13 @@ export class ApplicationDataXDsfComponent implements OnInit {
     this.TotalAssetPrice = this.agrParent.TotalAssetPrice;
     this.MasterAgreementNo = 'MA'+this.agrParent.AgrmntId;
 
-    const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
+    const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntDsfXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
     reqCalculatePlafondAgrmntXObj.AgrmntParentNo = this.agrParent.AgrmntNo;
     reqCalculatePlafondAgrmntXObj.TotalAssetPrice = this.agrParent.TotalAssetPrice;
     reqCalculatePlafondAgrmntXObj.OsArAgrmntMasterAmt = this.agrParent.OsArAgrmntMasterAmt;
     reqCalculatePlafondAgrmntXObj.OsArMpfDtAmt = this.agrParent.OsArMpfDtAmt;
+    reqCalculatePlafondAgrmntXObj.OsNiMpfDtAmt = this.agrParent.OsNiMpfDtAmt;
     reqCalculatePlafondAgrmntXObj.LobCode = this.resultResponse.LobCode;
     reqCalculatePlafondAgrmntXObj.AssetTypeCode = this.agrParent.AssetTypeCode;
     reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
@@ -1265,21 +1268,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
             }
             this.plafondDict[this.agrParent.AgrmntId] = this.resCalculatePlafondAgrmntXObj;
           });
-        
-        await this.http.post<Array<AgrmntChildOsNiDsfObj>>(URLConstantDsf.GetListAgrmntChildOsNiDsf, reqCalculatePlafondAgrmntXObj).toPromise().then(
-          (response) =>
-          {
-            this.TotalOsNiChild = 0;
-            this.AgrmntChildOsNiDsfListObj = new Array<AgrmntChildOsNiDsfObj>();
-            this.AgrmntChildOsNiDsfListObj = response;
-            for(let i = 0; i < this.AgrmntChildOsNiDsfListObj.length; i++)
-            {
-              this.TotalOsNiChild += this.AgrmntChildOsNiDsfListObj[i].OsNiAmt;
-            }
 
-            this.RemainingPlafond = this.RequestedPlafond - this.TotalOsNiChild
-          }
-        )
+          this.RemainingPlafond = this.RequestedPlafond - this.agrParent.OsNiMpfDtAmt;
     }
     // End Self Custom CR MPF & FD Validation
 
