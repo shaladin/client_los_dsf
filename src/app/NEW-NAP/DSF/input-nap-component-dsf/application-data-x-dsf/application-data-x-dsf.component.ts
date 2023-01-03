@@ -1191,6 +1191,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // End Self Custom CR MPF & FD Validation
 
     // Self Custom CR MPF & FD Validation
+    this.isRequestedPlafondAvailable = true;
+
     let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
       obj.MasterAgreementNo = "";
       obj.AppNo = this.resultResponseDsf.AppNo;
@@ -1211,6 +1213,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           }
           else
           {
+            this.isRequestedPlafondAvailable = false;
             this.RequestedPlafond = 0;
             this.NapAppModelForm.patchValue(
               {
@@ -1231,6 +1234,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           (response) => {
             if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
               this.isRequestedPlafondLive = true;
+              this.isRequestedPlafondAvailable = true;
               this.RequestedPlafond = response["RequestedPlafond"];
               this.Status = response["Status"];
 
@@ -1798,9 +1802,20 @@ export class ApplicationDataXDsfComponent implements OnInit {
       return false;
     }
 
-    if (this.RequestedPlafond < financingAmt) {
-      this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REQUESTED_PLAFOND);
-      return false;
+    if (this.isRequestedPlafondAvailable)
+    {
+      if (this.RequestedPlafond < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REQUESTED_PLAFOND);
+        return false;
+      }
+    }
+    
+    else
+    {
+      if (this.NapAppModelForm.controls.RequestedPlafond.value  < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REQUESTED_PLAFOND);
+        return false;
+      }
     }
     // End Self Custom CR MPF & FD Validation
     
