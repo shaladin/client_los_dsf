@@ -420,11 +420,10 @@
         </tr>
         <tr *ngFor="let item of ExpiredApp; let i = index">
           <td>{{i+1}}</td>
-          <td *ngIf="item.ApplicationNo==null"> - </td>
           <td style="text-align: left;" *ngIf="item.ApplicationNo!=null">
             <a class="link" (click)="ClickLinkAppNoByAppNo(item.ApplicationNo)">{{item.ApplicationNo}}</a>
           </td>
-          <td *ngIf="item.AgreementNo==null"> - </td>
+          <td *ngIf="item.ApplicationNo==null"> - </td>
           <td style="text-align: left;" *ngIf="item.AgreementNo!=null">
             <a class="link" (click)="ClickLinkAgrmntNo(item.AgreementNo)">{{item.AgreementNo}}</a>
           </td>
