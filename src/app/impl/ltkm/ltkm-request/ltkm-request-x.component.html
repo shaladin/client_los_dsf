@@ -39,15 +39,48 @@
                       [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
                       [bizTemplateCode]="bizTemplateCode" [identifier]="'personalMainData'">
                     </app-ltkm-cust-personal-main-data-x>
-                    <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegal" [enjiForm]="enjiForm"
-                      [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm">
-                    </lib-ucaddress>
-                    <!-- <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
-            [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showAllPhn]="false">
-          </lib-ucaddress> -->
-                    <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
+
+                    <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
                     </lib-ucSubsection>
-                    <div id="residenceAddr">
+                    <div id="CustAddress" style="overflow-x: auto;">
+                      <table class="table table-responsive-md text-center table-hover">
+                          <thead>
+                              <tr class="table-header">
+                                  <th class="text-left"><span name='addrType' translate>Address Type</span> </th>
+                                  <th class="text-left"><span name='fullAddr' translate>Address</span></th>
+                                  <th class="text-left"><span name='houseOwnership' translate>Building Ownership</span></th>
+                                  <th class="text-center"><span name='phoneNo1' translate>Phone (Fix Line) 1</span></th>
+                                  <th class="text-center"><span name='phoneNo2' translate>Phone (Fix Line) 2</span></th>
+                              </tr>
+                          </thead>
+                          <tbody *ngIf="addrObjsForView?.length == 0">
+                              <tr>
+                                  <td colspan="100%">No Data Available</td>
+                              </tr>
+                          </tbody>
+                          <tbody>
+                              <ng-container *ngFor="let item of addrObjsForView">
+                                  <tr>
+                                    <td class="text-left">{{item.CustAddrTypeName ? item.CustAddrTypeName: '-'}}</td>
+                                    <td class="text-left">{{item.FullAddr ? item.FullAddr : '-'}}</td>
+                                    <td class="text-left">{{ item.HouseOwnershipName ? item.HouseOwnershipName : '-'}}</td>
+                                    <td class="text-center">{{item.PhoneNo ? item.PhoneNo : "-"}}</td>
+                                    <td class="text-center">{{item.PhoneNo2 ? item.PhoneNo2 : "-"}}</td>
+                                  </tr>
+                              </ng-container>
+                          </tbody>
+                      </table>
+                  </div>
+
+                    <!-- <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegal" [enjiForm]="enjiForm"
+                      [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm">
+                    </lib-ucaddress> -->
+                    <!-- (don't uncomment unless neccessary) <lib-ucaddress #UcAddrGrp [title]="'Legal Address'" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
+            [identifier]="'legalAddr'" [default]="legalAddrObj" [inputField]="inputFieldLegalObj" [showAllPhn]="false">
+          </lib-ucaddress> (don't uncomment unless neccessary) -->
+                    <!-- <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
+                    </lib-ucSubsection> -->
+                    <!-- <div id="residenceAddr">
                       <div *ngIf="!isLockMode" class="form-group row">
                         <label class="col-md-2" translate>Copy Address From</label>
                         <div class="col-md-4">
@@ -69,12 +102,12 @@
                         </div>
                       </div>
                       <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForResidence" [enjiForm]="enjiForm"
-                        [identifier]="'residenceAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
-                      <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
+                        [identifier]="'residenceAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress> -->
+                      <!-- (don't uncomment unless neccessary) <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
               [identifier]="'residenceAddr'" [default]="residenceAddrObj" [inputField]="inputFieldResidenceObj"
-              [showPhn3]="false" [showOwnership]="true"></lib-ucaddress> -->
-                    </div>
-                    <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
+              [showPhn3]="false" [showOwnership]="true"></lib-ucaddress> (don't uncomment unless neccessary) -->
+                    <!-- </div> -->
+                    <!-- <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
                     </lib-ucSubsection>
                     <div id="mailingAddr">
                       <div *ngIf="!isLockMode" class="form-group row">
@@ -98,22 +131,22 @@
                         </div>
                       </div>
                       <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForMailing" [enjiForm]="enjiForm"
-                        [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
-                      <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
+                        [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress> -->
+                      <!-- (don't uncomment unless neccessary) <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="CustDataForm" [enjiForm]="enjiForm"
               [identifier]="'mailingAddr'" [default]="mailingAddrObj" [inputField]="inputFieldMailingObj"
-              [showPhn3]="false"></lib-ucaddress> -->
-                    </div>
-                    <!-- <app-cust-personal-contact-information [isLockMode]="isLockMode" (callbackCopyAddr)="copyToContactPersonAddr($event)"
+              [showPhn3]="false"></lib-ucaddress> (don't uncomment unless neccessary) -->
+                    <!-- </div> -->
+                    <!-- (don't uncomment unless neccessary) <app-cust-personal-contact-information [isLockMode]="isLockMode" (callbackCopyAddr)="copyToContactPersonAddr($event)"
                       (callbackSubmit)="getCustContactInformation($event)" [isMarried]="isMarried"
                       [spouseGender]="spouseGender" [listContactPersonPersonal]="listAppCustPersonalContactInformation">
-                    </app-cust-personal-contact-information> -->
-                    <!-- <app-cust-personal-financial-data [isLockMode]="isLockMode"
+                    </app-cust-personal-contact-information> (don't uncomment unless neccessary) -->
+                    <!-- (don't uncomment unless neccessary) <app-cust-personal-financial-data [isLockMode]="isLockMode"
                       [appCustPersonalFinDataObj]="custDataPersonalObj.AppCustPersonalFinDataObj" [enjiForm]="enjiForm"
                       [parentForm]="CustDataForm" [identifier]="'financialData'" [isMarried]="isMarried">
                     </app-cust-personal-financial-data>
                     <app-cust-bank-account [isLockMode]="isLockMode" (callbackSubmit)="getAppCustBankAcc($event)"
                       [listBankAcc]="listAppCustBankAcc">
-                    </app-cust-bank-account> -->
+                    </app-cust-bank-account> (don't uncomment unless neccessary) -->
                     <app-ltkm-cust-job-data-x [isLockMode]="isLockMode" [custModelCode]="defCustModelCode"
                     [ltkmCustPersonalJobDataObj]="ltkmCustPersonalJobDataObj" [enjiForm]="enjiForm"
                       [parentForm]="CustDataForm" [identifier]="'jobData'"></app-ltkm-cust-job-data-x>
@@ -156,7 +189,7 @@
                     <br />
                     <br />
                     <lib-ucSubsection [id]="'applicationDataId'" [title]="'APPLICATION DATA'" [panel]="'ApplicationData'">
-                    </lib-ucSubsection>                     
+                    </lib-ucSubsection>
                     <div id="ApplicationData" class="row col-md-12">
                       <label class="col-md-3 adins-required-label" translate>Application No </label>
                       <div class="col-md-4">
@@ -164,10 +197,10 @@
                         [enjiForm]='enjiForm' [identifier]="'appNo'" #applicationData (lookup)="getLookupAppNo($event)"
                         >
                       </lib-uclookupgeneric>
-                      <label class="col-md-9" *ngIf="!isCustomerSelected" style="color: red;">Choose Customer First</label>                          
-                    </div>                                                                    
-                  </div>                                               
-                  <!-- Ltkm Analysis -->                    
+                      <label class="col-md-9" *ngIf="!isCustomerSelected" style="color: red;">Choose Customer First</label>
+                    </div>
+                  </div>
+                  <!-- Ltkm Analysis -->
                     <app-ltkm-request-analysis *ngIf="mode != 'return'" [enjiForm]="enjiForm"
                       [parentForm]="CustDataForm" [identifier]="'ltkmAnalysis'"></app-ltkm-request-analysis>
                   </div>
@@ -196,12 +229,45 @@
                       (callbackCopyCust)="CopyCustomerCompany($event)" [custDataCompanyObj]="custDataCompanyObj"
                       [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
                       [bizTemplateCode]="bizTemplateCode" [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data>
-                    <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy" [enjiForm]="enjiFormCompany"
-                      [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
-                    <!-- <lib-ucaddress [title]="'Company Legal Address'" [UCAddrForm]="CustDataCompanyForm"
+
+                      <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
+                      </lib-ucSubsection>
+                      <div id="CustAddress" style="overflow-x: auto;">
+                        <table class="table table-responsive-md text-center table-hover">
+                            <thead>
+                                <tr class="table-header">
+                                    <th class="text-left"><span name='addrType' translate>Address Type</span> </th>
+                                    <th class="text-left"><span name='fullAddr' translate>Address</span></th>
+                                    <th class="text-left"><span name='houseOwnership' translate>Building Ownership</span></th>
+                                    <th class="text-center"><span name='phoneNo1' translate>Phone (Fix Line) 1</span></th>
+                                    <th class="text-center"><span name='phoneNo2' translate>Phone (Fix Line) 2</span></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="addrObjsForView?.length == 0">
+                              <tr>
+                                  <td colspan="100%">No Data Available</td>
+                              </tr>
+                          </tbody>
+                          <tbody>
+                              <ng-container *ngFor="let item of addrObjsForView">
+                                  <tr>
+                                    <td class="text-left">{{item.CustAddrTypeName ? item.CustAddrTypeName: '-'}}</td>
+                                    <td class="text-left">{{item.FullAddr ? item.FullAddr : '-'}}</td>
+                                    <td class="text-left">{{ item.HouseOwnershipName ? item.HouseOwnershipName : '-'}}</td>
+                                    <td class="text-center">{{item.PhoneNo ? item.PhoneNo : "-"}}</td>
+                                    <td class="text-center">{{item.PhoneNo2 ? item.PhoneNo2 : "-"}}</td>
+                                  </tr>
+                              </ng-container>
+                          </tbody>
+                        </table>
+                    </div>
+
+                    <!-- <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy" [enjiForm]="enjiFormCompany"
+                      [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress> -->
+                    <!-- (don't uncomment unless neccessary) <lib-ucaddress [title]="'Company Legal Address'" [UCAddrForm]="CustDataCompanyForm"
             [enjiForm]="enjiFormCompany" [identifier]="'legalAddrCompany'" [default]="legalAddrCompanyObj"
-            [inputField]="inputFieldLegalCompanyObj" [showPhn3]="false"></lib-ucaddress> -->
-                    <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'"
+            [inputField]="inputFieldLegalCompanyObj" [showPhn3]="false"></lib-ucaddress> (don't uncomment unless neccessary) -->
+                    <!-- <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'"
                       [panel]="'mailingAddrCompany'">
                     </lib-ucSubsection>
                     <div id="mailingAddrCompany">
@@ -226,93 +292,92 @@
                           </div>
                         </div>
                       </div>
-                      <lib-ucaddress 
-                      [addressObj]="inputAddressObjForMailingCoy" 
+                      <lib-ucaddress
+                      [addressObj]="inputAddressObjForMailingCoy"
                       [enjiForm]="enjiFormCompany"
-                        [identifier]="'mailingAddrCompany'" 
+                        [identifier]="'mailingAddrCompany'"
                         [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
-                    </div>
-                    <app-ltkm-mgmnt-shrholder 
+                    </div> -->
+                    <app-ltkm-mgmnt-shrholder
                     [isLockMode]="isLockMode"
                       [listLtkmCustCompanyManagementShareholderObj]="listLtkmCustCompanyManagementShareholderObj">
                     </app-ltkm-mgmnt-shrholder>
-                    
-                    <app-ltkm-cc-contact-information
+
+                    <app-ltkm-cc-contact-information-x
                         [enjiForm]="enjiFormCompany"
-                        [identifier]="'contactPersonCompany'" 
+                        [identifier]="'contactPersonCompany'"
                         [parentForm]="CustDataCompanyForm"
                         [LtkmCustCompanyContactPersonObj]= "ContactPersonCompany"
-                        [IsAddrOwnershipMandatory]="isCcAddrOwnershipMandatory"
                         [isLockMode]="isLockMode"
-                    >  
-                    </app-ltkm-cc-contact-information>
+                    >
+                    </app-ltkm-cc-contact-information-x>
 
-                    <app-ltkm-financial-company-x 
+                    <app-ltkm-financial-company-x
                     [isLockMode]="isLockMode"
                       [ListLtkmCustCoyFinData]="listLtkmCustCoyFinData"
-                      [enjiForm]="enjiFormCompany" 
+                      [enjiForm]="enjiFormCompany"
                       [parentForm]="CustDataCompanyForm"
                       [identifier]="'financialDataCompany'"
                       (UpdateSource)="updateListLtkmCustCoyFinDatas($event)"
                       >
                     </app-ltkm-financial-company-x>
 
-                    <app-ltkm-attr-content-component 
+                    <app-ltkm-attr-content-component
                     [isLockMode]="isLockMode" #attrlistfindatacomponentcoy
-                      [ListAttrContent]="listAttrContentFinDataCoy" 
-                      [title]="'Financial Attribute'" 
+                      [ListAttrContent]="listAttrContentFinDataCoy"
+                      [title]="'Financial Attribute'"
                       [enjiForm]="enjiFormCompany"
-                      [parentForm]="CustDataCompanyForm" 
-                      [identifier]="'AttrListFinancialForm'" 
+                      [parentForm]="CustDataCompanyForm"
+                      [identifier]="'AttrListFinancialForm'"
                       [AttrGroup]="AttrGroupFinData">
                     </app-ltkm-attr-content-component>
 
-                    <app-ltkm-bank-section 
-                    [isLockMode]="isLockMode" 
+                    <app-ltkm-bank-section
+                    [isLockMode]="isLockMode"
                     (UpdateBankSection)="updateListLtkmCustBankAccObjsCoy($event)"
-                      [parentForm]="CustDataCompanyForm" 
-                      [identifier]="'BankSection'" 
+                      [parentForm]="CustDataCompanyForm"
+                      [identifier]="'BankSection'"
                       [enjiForm]="enjiFormCompany"
                       [LtkmCustBankAccList]="listLtkmCustBankAccCompany">
                     </app-ltkm-bank-section>
 
                     <!-- <app-cust-bank-account [isLockMode]="isLockMode" (callbackSubmit)="getAppCustBankAccCompany($event)"
                       [listBankAcc]="listAppCustBankAccCompany"></app-cust-bank-account> -->
-                    <app-ltkm-legal-doc-tab 
-                    [parentForm]="CustDataCompanyForm" 
+                    <app-ltkm-legal-doc-tab
+                    [parentForm]="CustDataCompanyForm"
                     [identifier]="'ListCompanyLegalDoc'"
                     [enjiForm]="enjiFormCompany"
-                    [listLtkmCustCompanyLegalDoc]="listLtkmCustCompanyLegalDoc" 
-                    [isLockMode]="isLockMode" 
+                    [listLtkmCustCompanyLegalDoc]="listLtkmCustCompanyLegalDoc"
+                    [isLockMode]="isLockMode"
                     (UpdateSource)="updateListLtkmCustCoyLegalDocs($event)">
                     </app-ltkm-legal-doc-tab>
 
                     <!-- <app-cust-grp-member [isLockMode]="isLockMode" [appCustGrpObjs]="custDataCompanyObj.AppCustGrpObjs"
                       [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
                       [identifier]="'custGrpMemberCompany'"></app-cust-grp-member> -->
-                      <app-ltkm-cust-grp-member 
+                      <app-ltkm-cust-grp-member
                       [isLockMode]="isLockMode"
-                      [ltkmCustGrpObjs]="listLtkmCustGrpsCompany" 
+                      [ltkmCustGrpObjs]="listLtkmCustGrpsCompany"
                       [enjiForm]="enjiFormCompany"
-                      [parentForm]="CustDataCompanyForm" 
+                      [parentForm]="CustDataCompanyForm"
                       [identifier]="'custGrpMemberCompany'"
                       ></app-ltkm-cust-grp-member>
 
-                      <app-ltkm-other-info 
-                      [isLockMode]="isLockMode" 
+                      <app-ltkm-other-info
+                      [isLockMode]="isLockMode"
                       [enjiForm]="enjiFormCompany"
-                      [parentForm]="CustDataCompanyForm" 
-                      [identifier]="'OtherInfoList'" 
-                      [CustOtherInfo]="ltkmCustOtherInfo" 
+                      [parentForm]="CustDataCompanyForm"
+                      [identifier]="'OtherInfoList'"
+                      [CustOtherInfo]="ltkmCustOtherInfo"
                       [CustTypeCode]="MrCustTypeCode"></app-ltkm-other-info>
 
-                    <app-ltkm-attr-content-component #attrlistcustcomponentcoy 
+                    <app-ltkm-attr-content-component #attrlistcustcomponentcoy
                     [ListAttrContent]="listAttrContentCustDataCoy"
-                      [isLockMode]="isLockMode" 
-                      [title]="'Customer Attribute'" 
+                      [isLockMode]="isLockMode"
+                      [title]="'Customer Attribute'"
                       [enjiForm]="enjiFormCompany"
-                      [parentForm]="CustDataCompanyForm" 
-                      [identifier]="'AttrList'" 
+                      [parentForm]="CustDataCompanyForm"
+                      [identifier]="'AttrList'"
                       [AttrGroup]="AttrGroup">
                     </app-ltkm-attr-content-component>
 
@@ -320,7 +385,7 @@
                     <br />
                     <!-- Ltkm Analysis -->
                     <lib-ucSubsection [id]="'applicationDataCompanyId'" [title]="'APPLICATION DATA'" [panel]="'ApplicationDataCompany'">
-                    </lib-ucSubsection>                     
+                    </lib-ucSubsection>
                     <div id="ApplicationDataCompany" class="row col-md-12">
                       <label class="col-md-3 adins-required-label" translate>Application No </label>
                       <div  class="col-md-4">
@@ -329,11 +394,11 @@
                           >
                         </lib-uclookupgeneric>
                         <label class="col-md-9" *ngIf="!isCustomerCompanySelected" style="color: red;">Choose Customer First</label>
-                      </div>                                                                    
-                    </div>                           
-                    <app-ltkm-request-analysis 
+                      </div>
+                    </div>
+                    <app-ltkm-request-analysis
                     *ngIf="mode != 'return'"
-                    [enjiForm]="enjiFormCompany" 
+                    [enjiForm]="enjiFormCompany"
                     [parentForm]="CustDataCompanyForm"
                       [identifier]="'ltkmAnalysis'">
                       </app-ltkm-request-analysis>
