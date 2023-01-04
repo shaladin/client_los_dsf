@@ -122,7 +122,7 @@
         "type": "sort",
         "position": "center",
         "label": "Invoice",
-        "name": "idx.INVOICE_D_X_ID"
+        "name": "AA.INVOICE_D_X_ID"
       },
       {
         "type": "sort",
