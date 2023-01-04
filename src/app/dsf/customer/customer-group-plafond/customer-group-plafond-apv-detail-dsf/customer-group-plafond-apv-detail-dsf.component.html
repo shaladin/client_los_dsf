@@ -68,11 +68,11 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of CustGrpPlfndFACTObj; let i=index">
-                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'">{{i + 1}}</td>
-                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.AppOrAgrNo}}</td>
-                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.CustomerName}}</td>
-                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.OSNIAmt | number }}</td>
-                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING' && item.AppOrAgrStatus != 'ICP'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'">{{i + 1}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'" class="text-center">{{item.AppOrAgrNo}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'" class="text-center">{{item.CustomerName}}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'" class="text-center">{{item.OSNIAmt | number }}</td>
+                    <td *ngIf="item.Category == 'AGR' && item.LobCode == 'FACTORING'" class="text-center">{{item.AppOrAgrStatus}}</td>                     
                 </tr>
               </tbody>
             </table>

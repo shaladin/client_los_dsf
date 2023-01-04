@@ -107,7 +107,7 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
           return obj.Category == 'OPL';
         });;
         this.CustGrpPlfndFACTObj = this.CustGrpPlfndObj.filter((obj) => {
-          return obj.Category == 'AGR' && obj.LobCode == 'FACTORING' && obj.AppOrAgrStatus != 'ICP';
+          return obj.Category == 'AGR' && obj.LobCode == 'FACTORING';
         });;
         this.CustGrpPlfndAPPObj = this.CustGrpPlfndObj.filter((obj) => {
           return obj.Category == 'APP';
