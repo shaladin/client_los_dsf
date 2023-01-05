@@ -1,7 +1,9 @@
+
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { HttpClient } from '@angular/common/http';
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -44,7 +46,8 @@ export class NewLeadInputPageDsfComponent implements OnInit {
               private router: Router, 
               private componentFactoryResolver: ComponentFactoryResolver, 
               private cookieService: CookieService,
-              private claimTaskService: ClaimTaskService) {
+              private claimTaskService: ClaimTaskService,
+              private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -218,6 +221,7 @@ export class NewLeadInputPageDsfComponent implements OnInit {
             if (!this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetName) this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetName = "";
             this.http.post(urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
               () => {
+                this.toastr.successMessage(response["message"]);
                 this.cancelHandler();
               }
             );
