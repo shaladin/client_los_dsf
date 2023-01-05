@@ -59,7 +59,6 @@ export class CustConfirmationDetailXComponent implements OnInit {
 
   maxDiff: number = null;
   ReqByCodeObj: GenericObj = new GenericObj();
-  diffDay: number = 0;
 
   readonly ViewLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW;
   readonly DetailLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL;
@@ -219,11 +218,12 @@ export class CustConfirmationDetailXComponent implements OnInit {
   async SaveForm() {
     if (this.CustConfirmForm.controls.AdditionalInterestPaidBy.value != null){
       await this.getMaxDiffDays();
+      let diffDay = 0;
       const diffTimes = new Date(this.CustConfirmForm.controls.EffectiveDt.value).getTime() - new Date(this.CustConfirmForm.controls.GoLiveEstimated.value).getTime();
       if (diffTimes > 0) {
-        this.diffDay = diffTimes / (1000 * 3600 * 24);
+        diffDay = diffTimes / (1000 * 3600 * 24);
       }
-      if(this.diffDay > this.maxDiff){
+      if(diffDay > this.maxDiff){
         this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
         return;
       }
