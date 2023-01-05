@@ -9,7 +9,7 @@
       <app-agr-main-info-x [arrValue]="arrValue"></app-agr-main-info-x>
       <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewAgrmnt"> </lib-ucviewgeneric>
       <!-- Self Custom CR MPF Validation -->
-      <lib-ucviewgeneric *ngIf="IsReady && bizTemplateCode == 'CFNA'" [viewGenericObj]="viewAgrmntPlafond"> </lib-ucviewgeneric>
+      <lib-ucviewgeneric *ngIf="bizTemplateCode == 'CFNA'" [viewGenericObj]="viewAgrmntPlafond"> </lib-ucviewgeneric>
       <!-- End Self Custom CR MPF Validation -->
       <div class="card-body">
         <div class="px-3">
