@@ -58,6 +58,31 @@
             "label": "Task Claim By",
             "placeholder": "Placeholder",
             "isCriteriaDataTable" : true
+          },
+          {
+            "type" : "dropdown",
+            "name" : "crci.CAPTURE_STAT",
+            "label": "Capture Data",
+            "id": "CaptureDataId",
+            "ddlType" : "all",
+            "items" : [
+                {
+                    "key" : "FAIL",
+                    "value" : "Failed"
+                },
+                {
+                    "key" : " ",
+                    "value" : "In Progress"
+                },
+                {
+                    "key" : "REQ",
+                    "value" : "Request"
+                },
+                {
+                    "key" : "SCS",
+                    "value" : "Success"
+                } 
+            ]
           }
     ],
     "headerList": [
@@ -96,6 +121,12 @@
             "position": "left",
             "label": "Product Offering Name",
             "name": "a.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Capture Data",
+            "name": "rss.DESCR"
         },
         {
             "type": "label",
@@ -151,6 +182,11 @@
             "property": "ProdOfferingName"
         },
         {
+            "type": "text",
+            "position": "left",
+            "property": "CaptureStatDescr"
+        },
+        {
             "type": "action",
             "position": "center",
             "action": [
@@ -163,6 +199,11 @@
                                     "isUser": true,
                                     "property": "Assignee",
                                     "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "CaptureStat",
+                                    "value": "SCS",
                                     "restriction": "EQ"
                                 }
                             ],
@@ -190,6 +231,11 @@
                                     "property": "Assignee",
                                     "value": null,
                                     "restriction": "EQ"
+                                },
+                                {
+                                    "property": "CaptureStat",
+                                    "value": "SCS",
+                                    "restriction": "EQ"
                                 }
                             ],
                             "result": {
@@ -206,6 +252,110 @@
                                         "property": "Id"
                                     }
                                 ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "CaptureStat",
+                                    "value": "FAIL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "BACK_TO_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "CaptureStat",
+                                    "value": "FAIL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "BACK_TO_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "CaptureStat",
+                                    "value": "REQ",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "key": "CaptureStat",
+                                "icon": "ft-edit-2"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "CaptureStat",
+                                    "value": "REQ",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "key": "CaptureStat",
+                                "icon": "ft-edit-2"
                             },
                             "isHide": false
                         }
