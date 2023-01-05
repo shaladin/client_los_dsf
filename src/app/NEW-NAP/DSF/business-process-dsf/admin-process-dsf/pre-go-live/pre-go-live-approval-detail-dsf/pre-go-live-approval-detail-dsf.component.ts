@@ -109,7 +109,7 @@ export class PreGoLiveApprovalDetailDsfComponent implements OnInit {
     this.initInputApprovalObj();
 
     // Self Custom CR MPF Validation
-    this.viewAgrmntPlafond.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntPlafondDataAfterPreGoLiveXDsf";
+    this.viewAgrmntPlafond.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntPlafondDataAfterPreGoLiveXDsf.json";
     // End Self Custom CR MPF Validation
   }
 

@@ -73,8 +73,8 @@ export class CreditReviewPagingXDsfComponent implements OnInit, OnDestroy  {
 
     let arrCrit = new Array();
     if(environment.isCore){
-      this.inputPagingObj._url = "./src/assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
-      this.inputPagingObj.pagingJson = "./src/assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
+      this.inputPagingObj._url = "./assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
       this.inputPagingObj.isJoinExAPI = true
   
       this.RequestTaskModel.UserName = this.userAccess[CommonConstant.USER_NAME];
