@@ -2276,10 +2276,13 @@ export class ApplicationDataXDsfComponent implements OnInit {
   async validateRequestedPlafond()
   {
     this.IsRequestedPlafondExceed = false;
-    if (this.NapAppModelForm.controls.RequestedPlafond.value > this.MaxPlafondMasterAgreement)
+    if (!this.isActiveMode)
     {
-      this.IsRequestedPlafondExceed = true;
-    } 
+      if (this.NapAppModelForm.controls.RequestedPlafond.value > this.MaxPlafondMasterAgreement)
+      {
+        this.IsRequestedPlafondExceed = true;
+      } 
+    }
   }
   // End Self Custom CR MPF & FD Validation
 }
