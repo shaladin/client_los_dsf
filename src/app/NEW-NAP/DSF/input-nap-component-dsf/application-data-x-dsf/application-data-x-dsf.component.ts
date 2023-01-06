@@ -2275,6 +2275,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   async validateRequestedPlafond()
   {
+    this.RequestedPlafond = this.NapAppModelForm.controls.RequestedPlafond.value;
     this.IsRequestedPlafondExceed = false;
     if (!this.isActiveMode)
     {
