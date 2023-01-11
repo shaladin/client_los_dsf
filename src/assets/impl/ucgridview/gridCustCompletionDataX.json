@@ -41,6 +41,12 @@
           "position": "center",
           "label": "Is Complete",
           "name": "IsCompletion"
+      },
+      {
+          "type": "label",
+          "position": "center",
+          "label": "Action",
+          "name": "Action"
       }
   ],
   "bodyList": [
@@ -78,6 +84,83 @@
           "type" : "boolean",
           "position" : "center",
           "property" : "IsCompletion"
+      },
+      {
+          "type": "action",
+          "position": "center",
+          "action": [
+              {
+                  "type": "switch",
+                  "case": [
+                      {
+                          "conditions": [
+                              {
+                                  "property": "MrCustTypeCode",
+                                  "value": "PERSONAL",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "url",
+                              "path": "BACK_TO_DETAIL_PERSONAL",
+                              "param": [
+                                  {
+                                      "type": "AppId",
+                                      "property": "AppId"
+                                  },
+                                  {
+                                      "type": "AppCustId",
+                                      "property": "AppCustId"
+                                  },
+                                  {
+                                      "type": "WfTaskListId",
+                                      "property": "WfTaskListId",
+                                      "isAddProp": true
+                                  },
+                                  {
+                                      "type": "BizTemplateCode",
+                                      "property": "BizTemplateCode",
+                                      "isAddProp": true
+                                  }
+                              ]
+                          }
+                      },
+                      {
+                          "conditions": [
+                              {
+                                  "property": "MrCustTypeCode",
+                                  "value": "COMPANY",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "url",
+                              "path": "BACK_TO_DETAIL_COY",
+                              "param": [
+                                  {
+                                      "type": "AppId",
+                                      "property": "AppId"
+                                  },
+                                  {
+                                      "type": "AppCustId",
+                                      "property": "AppCustId"
+                                  },
+                                  {
+                                      "type": "WfTaskListId",
+                                      "property": "WfTaskListId",
+                                      "isAddProp": true
+                                  },
+                                  {
+                                      "type": "BizTemplateCode",
+                                      "property": "BizTemplateCode",
+                                      "isAddProp": true
+                                  }
+                              ]
+                          }
+                      }
+                  ]
+              }
+          ]
       }
   ]
 }

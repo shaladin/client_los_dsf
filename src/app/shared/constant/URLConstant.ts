@@ -1626,11 +1626,11 @@ export class URLConstant {
   public static getLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/getLtkmReqByLtkmCustId";
 
   public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetCustDataByLtkmCustId";
-  public static GetLtkmCustEmrgncCntctByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustEmrgncCntctByLtkmCustId";
-  public static GetLtkmCustAddrByLtkmCustAddrId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustAddrByLtkmCustAddrId";
-  public static GetListLtkmCustAddrByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmCustAddrByLtkmCustId";
-  public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustBankAccAndStatementForView";
-  public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustData/DeleteLtkmCustBankAccAndStmnt";
+  public static GetLtkmCustEmrgncCntctByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustEmrgncCntctByLtkmCustId";
+  public static GetLtkmCustAddrByLtkmCustAddrId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustAddrByLtkmCustAddrId";
+  public static GetListLtkmCustAddrByLtkmCustId = environment.losUrl1 + "/v1" + "/LtkmCustomerData/GetListLtkmCustAddrByLtkmCustId";
+  public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustBankAccAndStatementForView";
+  public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustomerData/DeleteLtkmCustBankAccAndStmnt";
 
   public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
   public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmAppRjcByCustNoAndAppStat";
@@ -1975,7 +1975,7 @@ export class URLConstant {
   public static SendOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/SendOtp";
   public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
   public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
-  
+
   //Ref Fin Asset Usage Map
   public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
 

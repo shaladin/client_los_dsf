@@ -71,6 +71,8 @@ import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/
 import { LtkmApprovalDetailComponent } from "./ltkm-approval/detail/ltkm-approval-detail.component";
 import { LtkmApprovalDetailXComponent } from "app/impl/ltkm/ltkm-approval/detail/ltkm-approval-detail-x.component";
 import { LtkmCcContactInformationTabXComponent } from "app/impl/ltkm/ltkm-request/additional-component/company/cc-contact-information-tab-x/cc-contact-information-x.component";
+import { CcAddressDetailLtkmXComponent } from "app/impl/ltkm/ltkm-return-handling/address-tab/cc-address-detail/cc-address-detail-x.component";
+import { CcAddressPagingLtkmXComponent } from "app/impl/ltkm/ltkm-return-handling/address-tab/cc-address-paging/cc-address-paging-x.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: false,
@@ -152,7 +154,9 @@ export const customCurrencyMaskConfig = {
     LtkmFinancialCompanyXComponent,
     LtkmVerifyDetailXComponent,
     LtkmApprovalDetailXComponent,
-    LtkmCcContactInformationTabXComponent
+    LtkmCcContactInformationTabXComponent,
+    CcAddressDetailLtkmXComponent,
+    CcAddressPagingLtkmXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

@@ -100,35 +100,35 @@
                       <app-ltkm-cust-grp-member [isLockMode]="isLockMode"
                         [ltkmCustGrpObjs]="listLtkmCustGrpObj" [enjiForm]="enjiForm"
                         [parentForm]="CustDataForm" [identifier]="'custGrpMember'"></app-ltkm-cust-grp-member>
-  
+
                       <app-ltkm-other-info [isLockMode]="isLockMode" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
                         [identifier]="'OtherInfoList'" [CustOtherInfo]="ltkmCustOtherInfo" [CustTypeCode]="MrCustTypeCode"></app-ltkm-other-info>
-  
+
                       <app-ltkm-attr-content-component #attrlistcustcomponent [ListAttrContent]="listAttrContentCustData"
                         [isLockMode]="isLockMode" [title]="'Customer Attribute'" [enjiForm]="enjiForm"
                         [parentForm]="CustDataForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup">
                       </app-ltkm-attr-content-component>
-  
+
                       <app-ltkm-emergency-contact [LtkmCustEmergencyContact]="LtkmCustEmergencyContactObj"
                         [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
                         [parentForm]="CustDataForm" [identifier]="'EmergencyContact'"></app-ltkm-emergency-contact>
-  
+
                       <app-ltkm-financial-personal (UpdateSource)="updateListLtkmCustPersonalFinData($event)"
                         [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
                         [parentForm]="CustDataForm" [ListLtkmCustPersonalFinData]="listLtkmCustPersonalFinDataObjs"
                         [identifier]="'FinData'"></app-ltkm-financial-personal>
-  
-  
+
+
                       <app-ltkm-attr-content-component [isLockMode]="isLockMode" #attrlistfindatacomponent
                         [ListAttrContent]="listAttrContentFinData" [title]="'Financial Attribute'" [enjiForm]="enjiForm"
                         [parentForm]="CustDataForm" [identifier]="'AttrListFinancialForm'" [AttrGroup]="AttrGroupFinData">
                       </app-ltkm-attr-content-component>
-  
+
                       <app-ltkm-bank-section [isLockMode]="isLockMode" (UpdateBankSection)="updateListLtkmCustBankAccObjs($event)"
                         [parentForm]="CustDataForm" [identifier]="'BankSection'" [enjiForm]="enjiForm"
                         [LtkmCustBankAccList]="listLtkmCustBankAccObjs" (OutputObj)="GetEvent($event)">
                       </app-ltkm-bank-section>
-  
+
                       <ltkm-family-main-data-paging [listFamily]="listFamily"></ltkm-family-main-data-paging>
                       <br />
                       <br />
@@ -137,7 +137,7 @@
                         [parentForm]="CustDataForm" [identifier]="'ltkmAnalysis'"></app-ltkm-request-analysis>
                     </div>
                   </div>
-  
+
                   <div *ngIf="!FinFormIsDetail" class="form-actions right">
                     <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
                       translate>
@@ -159,7 +159,10 @@
                         (callbackCopyCust)="CopyCustomerCompany($event)" [custDataCompanyObj]="custDataCompanyObj"
                         [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
                         [bizTemplateCode]="bizTemplateCode" [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data>
-                      <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy" [enjiForm]="enjiFormCompany"
+                      <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
+                        <app-cc-address-paging-x [LtkmCustId]="LtkmCustId" [MrCustTypeCode]="'COMPANY'" (OutputTab)="GetEvent($event, 'Shrholder')"> </app-cc-address-paging-x>
+                      </div>
+                        <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy" [enjiForm]="enjiFormCompany"
                         [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
                       <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'"
                         [panel]="'mailingAddrCompany'">
@@ -186,96 +189,96 @@
                             </div>
                           </div>
                         </div>
-                        <lib-ucaddress 
-                        [addressObj]="inputAddressObjForMailingCoy" 
+                        <lib-ucaddress
+                        [addressObj]="inputAddressObjForMailingCoy"
                         [enjiForm]="enjiFormCompany"
-                          [identifier]="'mailingAddrCompany'" 
+                          [identifier]="'mailingAddrCompany'"
                           [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
                       </div>
-                      <app-ltkm-mgmnt-shrholder 
+                      <app-ltkm-mgmnt-shrholder
                       [isLockMode]="isLockMode"
                         [listLtkmCustCompanyManagementShareholderObj]="listLtkmCustCompanyManagementShareholderObj">
                       </app-ltkm-mgmnt-shrholder>
-                      
+
                       <app-ltkm-cc-contact-information
                           [enjiForm]="enjiFormCompany"
-                          [identifier]="'contactPersonCompany'" 
+                          [identifier]="'contactPersonCompany'"
                           [parentForm]="CustDataCompanyForm"
                           [LtkmCustCompanyContactPersonObj]= "ContactPersonCompany"
                           [isLockMode]="isLockMode"
-                      >  
+                      >
                       </app-ltkm-cc-contact-information>
-  
-                      <app-ltkm-financial-company 
+
+                      <app-ltkm-financial-company
                       [isLockMode]="isLockMode"
                         [ListLtkmCustCoyFinData]="listLtkmCustCoyFinData"
-                        [enjiForm]="enjiFormCompany" 
+                        [enjiForm]="enjiFormCompany"
                         [parentForm]="CustDataCompanyForm"
                         [identifier]="'financialDataCompany'"
                         (UpdateSource)="updateListLtkmCustCoyFinDatas($event)"
                         >
                       </app-ltkm-financial-company>
-  
-                      <app-ltkm-attr-content-component 
+
+                      <app-ltkm-attr-content-component
                       [isLockMode]="isLockMode" #attrlistfindatacomponentcoy
-                        [ListAttrContent]="listAttrContentFinDataCoy" 
-                        [title]="'Financial Attribute'" 
+                        [ListAttrContent]="listAttrContentFinDataCoy"
+                        [title]="'Financial Attribute'"
                         [enjiForm]="enjiFormCompany"
-                        [parentForm]="CustDataCompanyForm" 
-                        [identifier]="'AttrListFinancialForm'" 
+                        [parentForm]="CustDataCompanyForm"
+                        [identifier]="'AttrListFinancialForm'"
                         [AttrGroup]="AttrGroupFinData">
                       </app-ltkm-attr-content-component>
-  
-                      <app-ltkm-bank-section 
-                      [isLockMode]="isLockMode" 
+
+                      <app-ltkm-bank-section
+                      [isLockMode]="isLockMode"
                       (UpdateBankSection)="updateListLtkmCustBankAccObjsCoy($event)"
-                        [parentForm]="CustDataCompanyForm" 
-                        [identifier]="'BankSection'" 
+                        [parentForm]="CustDataCompanyForm"
+                        [identifier]="'BankSection'"
                         [enjiForm]="enjiFormCompany"
                         [LtkmCustBankAccList]="listLtkmCustBankAccCompany">
                       </app-ltkm-bank-section>
-  
-                      <app-ltkm-legal-doc-tab 
-                      [parentForm]="CustDataCompanyForm" 
+
+                      <app-ltkm-legal-doc-tab
+                      [parentForm]="CustDataCompanyForm"
                       [identifier]="'ListCompanyLegalDoc'"
                       [enjiForm]="enjiFormCompany"
-                      [listLtkmCustCompanyLegalDoc]="listLtkmCustCompanyLegalDoc" 
-                      [isLockMode]="isLockMode" 
+                      [listLtkmCustCompanyLegalDoc]="listLtkmCustCompanyLegalDoc"
+                      [isLockMode]="isLockMode"
                       (UpdateSource)="updateListLtkmCustCoyLegalDocs($event)">
                       </app-ltkm-legal-doc-tab>
-  
-                        <app-ltkm-cust-grp-member 
+
+                        <app-ltkm-cust-grp-member
                         [isLockMode]="isLockMode"
-                        [ltkmCustGrpObjs]="listLtkmCustGrpsCompany" 
+                        [ltkmCustGrpObjs]="listLtkmCustGrpsCompany"
                         [enjiForm]="enjiFormCompany"
-                        [parentForm]="CustDataCompanyForm" 
+                        [parentForm]="CustDataCompanyForm"
                         [identifier]="'custGrpMemberCompany'"
                         ></app-ltkm-cust-grp-member>
-  
-                        <app-ltkm-other-info 
-                        [isLockMode]="isLockMode" 
+
+                        <app-ltkm-other-info
+                        [isLockMode]="isLockMode"
                         [enjiForm]="enjiFormCompany"
-                        [parentForm]="CustDataCompanyForm" 
-                        [identifier]="'OtherInfoList'" 
-                        [CustOtherInfo]="ltkmCustOtherInfo" 
+                        [parentForm]="CustDataCompanyForm"
+                        [identifier]="'OtherInfoList'"
+                        [CustOtherInfo]="ltkmCustOtherInfo"
                         [CustTypeCode]="MrCustTypeCode"></app-ltkm-other-info>
-  
-                      <app-ltkm-attr-content-component #attrlistcustcomponentcoy 
+
+                      <app-ltkm-attr-content-component #attrlistcustcomponentcoy
                       [ListAttrContent]="listAttrContentCustDataCoy"
-                        [isLockMode]="isLockMode" 
-                        [title]="'Customer Attribute'" 
+                        [isLockMode]="isLockMode"
+                        [title]="'Customer Attribute'"
                         [enjiForm]="enjiFormCompany"
-                        [parentForm]="CustDataCompanyForm" 
-                        [identifier]="'AttrList'" 
+                        [parentForm]="CustDataCompanyForm"
+                        [identifier]="'AttrList'"
                         [AttrGroup]="AttrGroup">
                       </app-ltkm-attr-content-component>
-  
+
                       <br />
                       <br />
                       <!-- Ltkm Analysis -->
-                      <app-ltkm-request-analysis 
+                      <app-ltkm-request-analysis
                       *ngIf="mode != 'return'"
-                      [enjiForm]="enjiFormCompany" 
+                      [enjiForm]="enjiFormCompany"
                       [parentForm]="CustDataCompanyForm"
                         [identifier]="'ltkmAnalysis'">
                         </app-ltkm-request-analysis>
@@ -299,4 +302,3 @@
       </div>
     </div>
   </div>
-  
