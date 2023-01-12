@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -11,6 +11,9 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { CookieService } from 'ngx-cookie';
+import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.model';
+import { HttpClient } from '@angular/common/http';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-return-handling-paging',
@@ -25,7 +28,15 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
   isReady: boolean = false;
   navigationSubscription;
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router) {
+  isFromThingsToDo: boolean = false;
+  username: string;
+  roleCode: string;
+  empNo: string;
+  cmoObj: RefEmpForLookupObj;
+  listRole: Array<string> = new Array<string>();
+  listCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router, private http: HttpClient) {
     this.SubscribeParam();
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -41,6 +52,8 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
+
+      if (params['IsFromThingsToDo'] != null) this.isFromThingsToDo = true;
     });
   }
 
@@ -50,20 +63,22 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-    this.SetUcPaging();
+  async ngOnInit() {
+    this.username = this.userAccess[CommonConstant.USER_NAME];
+    this.roleCode = this.userAccess[CommonConstant.ROLE_CODE];
+    await this.SetUcPaging();
   }
 
-  RefetchData(){
+  async RefetchData(){
     this.isReady = false;
     this.SubscribeParam();
-    this.SetUcPaging();
+    await this.SetUcPaging();
     setTimeout (() => {
       this.isReady = true
     }, 10);
   }
 
-  SetUcPaging() {
+  async SetUcPaging() {
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandling.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandling.json";
     this.inputPagingObj.addCritInput = new Array();
@@ -72,6 +87,79 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchReturnHandlingV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchReturnHandlingV2.json";
       this.inputPagingObj.addCritInput = new Array();
+
+      if (this.isFromThingsToDo)
+      {
+        this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingFromThingsToDo.json";
+        this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingFromThingsToDo.json";
+
+        var generalSettingObj: GenericObj = new GenericObj();
+        generalSettingObj.Code = CommonConstant.GSRoleForCmo;
+        await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+          async (response) => {
+            this.listRole = response["GsValue"].split(",");
+            if(this.listRole.includes(this.roleCode))
+            { 
+              this.inputPagingObj.isJoinExAPI = true
+    
+              this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;
+              this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RTN + this.BizTemplateCode;
+
+              this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                                       this.userAccess[CommonConstant.OFFICE_CODE], 
+                                                       this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+              
+              this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+              this.IntegrationObj.requestObj = this.RequestTaskModel;
+              this.IntegrationObj.joinType = "LEFT"
+              this.IntegrationObj.leftColumnToJoin = "AppNo";
+              this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+              this.inputPagingObj.integrationObj = this.IntegrationObj;
+    
+              this.cmoObj = new RefEmpForLookupObj();
+              this.cmoObj.Username = this.username;
+              await this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).toPromise().then(
+                (response: RefEmpForLookupObj) => {
+                  this.empNo = response.EmpNo;
+                });
+
+              var critSalesOfficerNo = new CriteriaObj();
+              critSalesOfficerNo.restriction = AdInsConstant.RestrictionEq;
+              critSalesOfficerNo.propName = 'A.SALES_OFFICER_NO';
+              critSalesOfficerNo.value = this.empNo;
+              this.listCrit.push(critSalesOfficerNo);
+            }
+            else
+            {
+              var critLastUserInput = new CriteriaObj();
+              critLastUserInput.restriction = AdInsConstant.RestrictionEq;
+              critLastUserInput.propName = 'A.LAST_USER_INPUT';
+              critLastUserInput.value = this.username;
+              this.listCrit.push(critLastUserInput);
+            }
+            var critCurrStep = new CriteriaObj();
+            critCurrStep.restriction = AdInsConstant.RestrictionEq;
+            critCurrStep.propName = 'A.APP_CURR_STEP';
+            critCurrStep.value = CommonConstant.AppStepRtn;
+            this.listCrit.push(critCurrStep);
+    
+            var critLobObj = new CriteriaObj();
+            critLobObj.restriction = AdInsConstant.RestrictionEq;
+            critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
+            critLobObj.value = this.BizTemplateCode;
+            this.listCrit.push(critLobObj);
+    
+            var critAppStatObj = new CriteriaObj();
+            critAppStatObj.restriction = AdInsConstant.RestrictionEq;
+            critAppStatObj.propName = 'A.APP_STAT';
+            critAppStatObj.value = "PRP";
+            this.listCrit.push(critAppStatObj);
+            this.inputPagingObj.addCritInput = this.listCrit;
+          });
+
+        return;
+      }
+
       this.inputPagingObj.isJoinExAPI = true
   
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;

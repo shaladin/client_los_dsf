@@ -785,6 +785,7 @@ export class CommonConstant {
   public static GsCodeAssetTypeForHeavyEquipment = "ASSET_TYPE_CODE_FOR_HEAVY_EQUIPMENT";
   public static GSCodeCoyMandatoryLegalDocs = "COY_MANDATORY_LEGAL_DOCS";
   public static GSCodeCustAgeLimit = "CUST_AGE_LIMIT";
+  public static GSRoleForCmo = "ROLE_FOR_CMO";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
