@@ -16,6 +16,7 @@ import { LtkmCustAddrObj } from 'app/shared/model/ltkm/ltkm-cust-addr-obj.model'
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { AddressService } from 'app/shared/services/custAddr.service';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-cc-address-detail-x',
@@ -37,6 +38,7 @@ export class CcAddressDetailLtkmXComponent implements OnInit {
   isDllAddressTypeReady: boolean = false;
   isDllCopyAddressFromReady: boolean = false;
   isAddrObjReady: boolean = false;
+  HouseOwnershipName: string = '-';
 
   AddressForm = this.fb.group({
     MrCustAddrTypeCode: [],
@@ -67,35 +69,44 @@ export class CcAddressDetailLtkmXComponent implements OnInit {
     this.dllCopyAddressFromObj.customKey = "AppCustAddrId";
     this.dllCopyAddressFromObj.customValue = "MrCustAddrTypeDescr";
 
-    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany };
-    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).toPromise().then(
-      async (response) => {
-        let tempAddressType = response[CommonConstant.ReturnObj];
-        let filterTempAddr = tempAddressType.filter(x => x.Key != CommonConstant.AddrTypeCompany && x.Key != CommonConstant.AddrTypeEmergency);
-        this.AddressTypeObj = filterTempAddr;
-        this.AddressTypeObj = await this.FilterAddr(this.AddressTypeObj);
-        this.AddressForm.patchValue({
-          MrCustAddrTypeCode: this.AddressTypeObj[0].Key
-        })
-        await this.LoadAddrForCopy();
-        // this.ResetForm();
-        this.isDllAddressTypeReady = true;
-      }
-    );
+    // let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany };
+    // await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).toPromise().then(
+    //   async (response) => {
+    //     let tempAddressType = response[CommonConstant.ReturnObj];
+    //     let filterTempAddr = tempAddressType.filter(x => x.Key != CommonConstant.AddrTypeCompany && x.Key != CommonConstant.AddrTypeEmergency);
+    //     this.AddressTypeObj = filterTempAddr;
+    //     this.AddressTypeObj = await this.FilterAddr(this.AddressTypeObj);
+    //     this.AddressForm.patchValue({
+    //       MrCustAddrTypeCode: this.AddressTypeObj[0].Key
+    //     })
+    //     await this.LoadAddrForCopy();
+    //     // this.ResetForm();
+    //     this.isDllAddressTypeReady = true;
+    //   }
+    // );
 
     if (this.InputObj.LtkmCustAddrId != 0) {
-      await this.http.post<LtkmCustAddrObj>(URLConstant.GetLtkmCustAddrByLtkmCustAddrId, { Id: this.InputObj.LtkmCustAddrId }).toPromise().then(
-        (response) => {
-          this.AddrObj = response;
-          this.AddressForm.patchValue({ MrCustAddrTypeCode: response.MrCustAddrTypeCode })
-          this.LtkmCustAddrObj.MrCustAddrTypeCode = response.MrCustAddrTypeCode;
-          this.LtkmCustAddrObj.RowVersion = response.RowVersion;
-          this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
-          this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
-          this.inputAddressObj.default = this.AddrObj;
-          this.isAddrObjReady = true;
-        }
-      );
+      // await this.http.post<LtkmCustAddrObj>(URLConstant.GetLtkmCustAddrByLtkmCustAddrId, { Id: this.InputObj.LtkmCustAddrId }).toPromise().then(
+      //   (response) => {
+      //     this.AddrObj = response;
+      //     this.AddressForm.patchValue({ MrCustAddrTypeCode: response.MrCustAddrTypeCode })
+      //     this.LtkmCustAddrObj.MrCustAddrTypeCode = response.MrCustAddrTypeCode;
+      //     this.LtkmCustAddrObj.RowVersion = response.RowVersion;
+      //     this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
+      //     this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
+      //     this.inputAddressObj.default = this.AddrObj;
+      //     this.isAddrObjReady = true;
+      //   }
+      // );
+
+      this.AddrObj = this.InputObj.InputedAddr;
+      this.AddressForm.patchValue({ MrCustAddrTypeCode: this.InputObj.InputedAddr.MrCustAddrTypeCode })
+      this.LtkmCustAddrObj.MrCustAddrTypeCode = this.InputObj.InputedAddr.MrCustAddrTypeCode;
+      this.LtkmCustAddrObj.RowVersion = this.InputObj.InputedAddr.RowVersion;
+      this.inputAddressObj.inputField.inputLookupObj.nameSelect = this.InputObj.InputedAddr.Zipcode;
+      this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: this.InputObj.InputedAddr.Zipcode };
+      this.inputAddressObj.default = this.AddrObj;
+      this.isAddrObjReady = true;
     }
     else {
       this.isAddrObjReady = true;
@@ -145,54 +156,55 @@ export class CcAddressDetailLtkmXComponent implements OnInit {
     this.inputAddressObj.default = this.AddrObj;
   }
 
-  async LoadAddrForCopy() {
-    await this.http.post<Array<LtkmCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.InputObj.LtkmCustId }).toPromise().then(
-      (response) => {
-        this.copyAddressFromObj = response[CommonConstant.ReturnObj];
-        this.AddressForm.patchValue({ CopyAddrFrom: this.copyAddressFromObj[0]['AppCustAddrId'] });
-        this.isDllCopyAddressFromReady = true;
-      }
-    );
-  }
+  // async LoadAddrForCopy() {
+  //   await this.http.post<Array<LtkmCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.InputObj.LtkmCustId }).toPromise().then(
+  //     (response) => {
+  //       this.copyAddressFromObj = response[CommonConstant.ReturnObj];
+  //       this.AddressForm.patchValue({ CopyAddrFrom: this.copyAddressFromObj[0]['AppCustAddrId'] });
+  //       this.isDllCopyAddressFromReady = true;
+  //     }
+  //   );
+  // }
 
-  CopyAddress() {
-    if (this.copyAddressFromObj.length < 1) {
-      return
-    }
+  // CopyAddress() {
+  //   if (this.copyAddressFromObj.length < 1) {
+  //     return
+  //   }
 
-    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, { Id: this.AddressForm.controls.CopyAddrFrom.value }).subscribe(
-      (response) => {
-        this.AddrObj.Addr = response["Addr"];
-        this.AddrObj.AreaCode1 = response["AreaCode1"];
-        this.AddrObj.AreaCode2 = response["AreaCode2"];
-        this.AddrObj.AreaCode3 = response["AreaCode3"];
-        this.AddrObj.AreaCode4 = response["AreaCode4"];
-        this.AddrObj.City = response["City"];
-        this.AddrObj.Fax = response["Fax"];
-        this.AddrObj.FaxArea = response["FaxArea"];
-        this.AddrObj.Phn1 = response["Phn1"];
-        this.AddrObj.Phn2 = response["Phn2"];
-        this.AddrObj.Phn3 = response["Phn3"];
-        this.AddrObj.PhnArea1 = response["PhnArea1"];
-        this.AddrObj.PhnArea2 = response["PhnArea2"];
-        this.AddrObj.PhnArea3 = response["PhnArea3"];
-        this.AddrObj.PhnExt1 = response["PhnExt1"];
-        this.AddrObj.PhnExt2 = response["PhnExt2"];
-        this.AddrObj.PhnExt3 = response["PhnExt3"];
-        this.AddrObj.MrHouseOwnershipCode = response["MrBuildingOwnershipCode"];
+  //   this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, { Id: this.AddressForm.controls.CopyAddrFrom.value }).subscribe(
+  //     (response) => {
+  //       this.AddrObj.Addr = response["Addr"];
+  //       this.AddrObj.AreaCode1 = response["AreaCode1"];
+  //       this.AddrObj.AreaCode2 = response["AreaCode2"];
+  //       this.AddrObj.AreaCode3 = response["AreaCode3"];
+  //       this.AddrObj.AreaCode4 = response["AreaCode4"];
+  //       this.AddrObj.City = response["City"];
+  //       this.AddrObj.Fax = response["Fax"];
+  //       this.AddrObj.FaxArea = response["FaxArea"];
+  //       this.AddrObj.Phn1 = response["Phn1"];
+  //       this.AddrObj.Phn2 = response["Phn2"];
+  //       this.AddrObj.Phn3 = response["Phn3"];
+  //       this.AddrObj.PhnArea1 = response["PhnArea1"];
+  //       this.AddrObj.PhnArea2 = response["PhnArea2"];
+  //       this.AddrObj.PhnArea3 = response["PhnArea3"];
+  //       this.AddrObj.PhnExt1 = response["PhnExt1"];
+  //       this.AddrObj.PhnExt2 = response["PhnExt2"];
+  //       this.AddrObj.PhnExt3 = response["PhnExt3"];
+  //       this.AddrObj.MrHouseOwnershipCode = response["MrBuildingOwnershipCode"];
 
-        this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
-        this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
-        this.inputAddressObj.default = this.AddrObj;
-      }
-    );
-  }
+  //       this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
+  //       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
+  //       this.inputAddressObj.default = this.AddrObj;
+  //     }
+  //   );
+  // }
 
   Cancel() {
-    this.OutputTab.emit({ IsDetail: false })
+    this.OutputTab.emit({ IsDetail: false, CustAddress: this.LtkmCustAddrObj, ListAddress: this.InputObj.ListInputedAddr, Save: false})
   }
 
-  SaveForm() {
+  async SaveForm() {
+
     let Flag = false;
 
     if (this.InputObj.Mode == "Add") {
@@ -211,47 +223,66 @@ export class CcAddressDetailLtkmXComponent implements OnInit {
     }
 
     if (!Flag) {
-      this.LtkmCustAddrObj.LtkmCustAddrId = this.InputObj.LtkmCustAddrId;
-      this.LtkmCustAddrObj.MrCustAddrTypeCode = this.AddressForm.controls.MrCustAddrTypeCode.value;
-      this.LtkmCustAddrObj.LtkmCustId = this.InputObj.LtkmCustId;
-      this.LtkmCustAddrObj.MrHouseOwnershipCode = this.AddressForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
-      this.LtkmCustAddrObj.Addr = this.AddressForm.controls["Address"]["controls"].Addr.value;
-      this.LtkmCustAddrObj.AreaCode1 = this.AddressForm.controls["Address"]["controls"].AreaCode1.value;
-      this.LtkmCustAddrObj.AreaCode2 = this.AddressForm.controls["Address"]["controls"].AreaCode2.value;
-      this.LtkmCustAddrObj.AreaCode3 = this.AddressForm.controls["Address"]["controls"].AreaCode3.value;
-      this.LtkmCustAddrObj.AreaCode4 = this.AddressForm.controls["Address"]["controls"].AreaCode4.value;
-      this.LtkmCustAddrObj.City = this.AddressForm.controls["Address"]["controls"].City.value;
-      this.LtkmCustAddrObj.Zipcode = this.AddressForm.controls["AddressZipcode"]["value"].value;
-      this.LtkmCustAddrObj.SubZipcode = this.AddressForm.controls["Address"]["controls"].SubZipcode.value;
-      this.LtkmCustAddrObj.PhnArea1 = this.AddressForm.controls["Address"]["controls"].PhnArea1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea1.value;
-      this.LtkmCustAddrObj.Phn1 = this.AddressForm.controls["Address"]["controls"].Phn1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn1.value;
-      this.LtkmCustAddrObj.PhnExt1 = this.AddressForm.controls["Address"]["controls"].PhnExt1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt1.value;
-      this.LtkmCustAddrObj.PhnArea2 = this.AddressForm.controls["Address"]["controls"].PhnArea2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea2.value;
-      this.LtkmCustAddrObj.Phn2 = this.AddressForm.controls["Address"]["controls"].Phn2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn2.value;
-      this.LtkmCustAddrObj.PhnExt2 = this.AddressForm.controls["Address"]["controls"].PhnExt2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt2.value;
-      this.LtkmCustAddrObj.PhnArea3 = this.AddressForm.controls["Address"]["controls"].PhnArea3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea3.value;
-      this.LtkmCustAddrObj.Phn3 = this.AddressForm.controls["Address"]["controls"].Phn3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn3.value;
-      this.LtkmCustAddrObj.PhnExt3 = this.AddressForm.controls["Address"]["controls"].PhnExt3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt3.value;
-      this.LtkmCustAddrObj.FaxArea = this.AddressForm.controls["Address"]["controls"].FaxArea.value;
-      this.LtkmCustAddrObj.Fax = this.AddressForm.controls["Address"]["controls"].Fax.value;
 
-      if (this.InputObj.Mode == "Add") {
-        this.http.post(URLConstant.AddAppCustAddr, this.LtkmCustAddrObj).toPromise().then(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.OutputTab.emit({ IsDetail: false })
-          },
-          (error) => { }
-        );
-      } else {
-        this.http.post(URLConstant.EditAppCustAddr, this.LtkmCustAddrObj).toPromise().then(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.OutputTab.emit({ IsDetail: false })
-          },
-          (error) => { }
-        );
-      }
+      // if (this.InputObj.Mode == "Add") {
+      //   this.http.post(URLConstant.AddAppCustAddr, this.LtkmCustAddrObj).toPromise().then(
+      //     (response) => {
+      //       this.toastr.successMessage(response["message"]);
+      //       this.OutputTab.emit({ IsDetail: false })
+      //     },
+      //     (error) => { }
+      //   );
+      // } else {
+      //   this.http.post(URLConstant.EditAppCustAddr, this.LtkmCustAddrObj).toPromise().then(
+      //     (response) => {
+      //       this.toastr.successMessage(response["message"]);
+      //       this.OutputTab.emit({ IsDetail: false })
+      //     },
+      //     (error) => { }
+      //   );
+      // }
+      await this.GetAddress();
     }
+  }
+
+  async GetAddress(){
+    this.http
+      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+        RefMasterTypeCode: CommonConstant.RefMasterTypeCodeBuildingOwnership, MasterCode: this.AddressForm.controls["Address"]["controls"].MrHouseOwnershipCode.value
+      })
+      .toPromise().then((response) => {
+        if(response["Descr"] != null || response["Descr"] != ""){this.HouseOwnershipName = response["Descr"];}
+        this.LtkmCustAddrObj.LtkmCustAddrId = this.InputObj.LtkmCustAddrId;
+        this.LtkmCustAddrObj.MrCustAddrTypeCode = this.AddressForm.controls.MrCustAddrTypeCode.value;
+        this.LtkmCustAddrObj.CustAddrTypeName = this.InputObj.InputedAddr.CustAddrTypeName;
+        this.LtkmCustAddrObj.LtkmCustId = this.InputObj.LtkmCustId;
+        this.LtkmCustAddrObj.MrHouseOwnershipCode = this.AddressForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
+        this.LtkmCustAddrObj.Addr = this.AddressForm.controls["Address"]["controls"].Addr.value;
+        this.LtkmCustAddrObj.AreaCode1 = this.AddressForm.controls["Address"]["controls"].AreaCode1.value;
+        this.LtkmCustAddrObj.AreaCode2 = this.AddressForm.controls["Address"]["controls"].AreaCode2.value;
+        this.LtkmCustAddrObj.AreaCode3 = this.AddressForm.controls["Address"]["controls"].AreaCode3.value;
+        this.LtkmCustAddrObj.AreaCode4 = this.AddressForm.controls["Address"]["controls"].AreaCode4.value;
+        this.LtkmCustAddrObj.City = this.AddressForm.controls["Address"]["controls"].City.value;
+        this.LtkmCustAddrObj.Zipcode = this.AddressForm.controls["AddressZipcode"]["value"].value;
+        this.LtkmCustAddrObj.SubZipcode = this.AddressForm.controls["Address"]["controls"].SubZipcode.value;
+        this.LtkmCustAddrObj.PhnArea1 = this.AddressForm.controls["Address"]["controls"].PhnArea1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea1.value;
+        this.LtkmCustAddrObj.Phn1 = this.AddressForm.controls["Address"]["controls"].Phn1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn1.value;
+        this.LtkmCustAddrObj.PhnExt1 = this.AddressForm.controls["Address"]["controls"].PhnExt1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt1.value;
+        this.LtkmCustAddrObj.PhnArea2 = this.AddressForm.controls["Address"]["controls"].PhnArea2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea2.value;
+        this.LtkmCustAddrObj.Phn2 = this.AddressForm.controls["Address"]["controls"].Phn2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn2.value;
+        this.LtkmCustAddrObj.PhnExt2 = this.AddressForm.controls["Address"]["controls"].PhnExt2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt2.value;
+        this.LtkmCustAddrObj.PhnArea3 = this.AddressForm.controls["Address"]["controls"].PhnArea3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea3.value;
+        this.LtkmCustAddrObj.Phn3 = this.AddressForm.controls["Address"]["controls"].Phn3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn3.value;
+        this.LtkmCustAddrObj.PhnExt3 = this.AddressForm.controls["Address"]["controls"].PhnExt3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt3.value;
+        this.LtkmCustAddrObj.FaxArea = this.AddressForm.controls["Address"]["controls"].FaxArea.value;
+        this.LtkmCustAddrObj.Fax = this.AddressForm.controls["Address"]["controls"].Fax.value;
+        this.LtkmCustAddrObj.FullAddr = this.LtkmCustAddrObj.Addr  + " RT/RW " + this.LtkmCustAddrObj.AreaCode4 + "/"
+          + this.LtkmCustAddrObj.AreaCode3 + " " + this.LtkmCustAddrObj.AreaCode1 + " " + this.LtkmCustAddrObj.AreaCode2 + " "
+          + this.LtkmCustAddrObj.City + " " + this.LtkmCustAddrObj.Zipcode;
+        this.LtkmCustAddrObj.PhoneNo = this.LtkmCustAddrObj.PhnArea1 + " - " + this.LtkmCustAddrObj.Phn1 + " - " + this.LtkmCustAddrObj.PhnExt1;
+        this.LtkmCustAddrObj.PhoneNo2 = this.LtkmCustAddrObj.PhnArea2 + " - " + this.LtkmCustAddrObj.Phn2 + " - " + this.LtkmCustAddrObj.PhnExt2;
+        this.LtkmCustAddrObj.HouseOwnershipName = this.HouseOwnershipName;
+        this.OutputTab.emit({ IsDetail: false, CustAddress: this.LtkmCustAddrObj, ListAddress: this.InputObj.ListInputedAddr, Save: true});
+      });
   }
 }

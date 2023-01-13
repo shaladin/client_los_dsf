@@ -39,7 +39,13 @@
                         [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
                         [bizTemplateCode]="bizTemplateCode" [identifier]="'personalMainData'">
                       </app-ltkm-cust-personal-main-data>
-                      <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegal" [enjiForm]="enjiForm"
+                      <lib-ucSubsection [id]="'AddrId'" [title]="'Customer Address'"
+                        [panel]="'address-tab'">
+                      </lib-ucSubsection>
+                        <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
+                        <app-cc-address-paging-x [LtkmCustId]="LtkmCustId" [MrCustTypeCode]="'PERSONAL'" (OutputTab)="GetEvent($event, 'Shrholder')"> </app-cc-address-paging-x>
+                      </div>
+                      <!-- <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLegal" [enjiForm]="enjiForm"
                         [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm">
                       </lib-ucaddress>
                       <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
@@ -93,7 +99,7 @@
                         </div>
                         <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForMailing" [enjiForm]="enjiForm"
                           [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
-                      </div>
+                      </div> -->
                       <app-ltkm-cust-job-data-x [isLockMode]="isLockMode" [custModelCode]="defCustModelCode"
                       [ltkmCustPersonalJobDataObj]="ltkmCustPersonalJobDataObj" [enjiForm]="enjiForm"
                         [parentForm]="CustDataForm" [identifier]="'jobData'"></app-ltkm-cust-job-data-x>
@@ -159,10 +165,13 @@
                         (callbackCopyCust)="CopyCustomerCompany($event)" [custDataCompanyObj]="custDataCompanyObj"
                         [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
                         [bizTemplateCode]="bizTemplateCode" [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data>
-                      <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
-                        <app-cc-address-paging-x [LtkmCustId]="LtkmCustId" [MrCustTypeCode]="'COMPANY'" (OutputTab)="GetEvent($event, 'Shrholder')"> </app-cc-address-paging-x>
+                        <lib-ucSubsection [id]="'AddrId'" [title]="'Customer Address'"
+                        [panel]="'address-tab'">
+                      </lib-ucSubsection>
+                        <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
+                        <app-cc-address-paging-x [LtkmCustId]="LtkmCustId" [MrCustTypeCode]="'COMPANY'" (OutputTab)="GetEvent($event, 'Shrholder')" (OutputAddr)="updateListLtkmAddress($event)"> </app-cc-address-paging-x>
                       </div>
-                        <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy" [enjiForm]="enjiFormCompany"
+                        <!-- <lib-ucaddress [addressObj]="inputAddressObjForLegalCoy" [enjiForm]="enjiFormCompany"
                         [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
                       <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'"
                         [panel]="'mailingAddrCompany'">
@@ -194,22 +203,22 @@
                         [enjiForm]="enjiFormCompany"
                           [identifier]="'mailingAddrCompany'"
                           [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
-                      </div>
+                      </div> -->
                       <app-ltkm-mgmnt-shrholder
                       [isLockMode]="isLockMode"
                         [listLtkmCustCompanyManagementShareholderObj]="listLtkmCustCompanyManagementShareholderObj">
                       </app-ltkm-mgmnt-shrholder>
 
-                      <app-ltkm-cc-contact-information
+                      <app-ltkm-cc-contact-information-x
                           [enjiForm]="enjiFormCompany"
                           [identifier]="'contactPersonCompany'"
                           [parentForm]="CustDataCompanyForm"
                           [LtkmCustCompanyContactPersonObj]= "ContactPersonCompany"
                           [isLockMode]="isLockMode"
                       >
-                      </app-ltkm-cc-contact-information>
+                      </app-ltkm-cc-contact-information-x>
 
-                      <app-ltkm-financial-company
+                      <app-ltkm-financial-company-x
                       [isLockMode]="isLockMode"
                         [ListLtkmCustCoyFinData]="listLtkmCustCoyFinData"
                         [enjiForm]="enjiFormCompany"
@@ -217,7 +226,7 @@
                         [identifier]="'financialDataCompany'"
                         (UpdateSource)="updateListLtkmCustCoyFinDatas($event)"
                         >
-                      </app-ltkm-financial-company>
+                      </app-ltkm-financial-company-x>
 
                       <app-ltkm-attr-content-component
                       [isLockMode]="isLockMode" #attrlistfindatacomponentcoy
