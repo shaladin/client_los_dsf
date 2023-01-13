@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -22,6 +22,7 @@ export class CustAppListViewComponent implements OnInit {
   CustAppList: Array<any> = new Array<any>();
   AppList: Array<any> = new Array<any>();
   AppOplList: Array<any> = new Array<any>();
+  EmbeddOptions;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -30,6 +31,12 @@ export class CustAppListViewComponent implements OnInit {
       }
       if (params["CustId"] != null) {
         this.CustId = params["CustId"];
+      }
+      if (params["IsEmbedded"] != null && params["Token"] != null) {
+        const embeddHeaders = new HttpHeaders({
+          'AdInsKey': params["Token"]
+        });
+        this.EmbeddOptions = { headers: embeddHeaders, withCredentials: true };
       }
     });
   }
@@ -44,7 +51,7 @@ export class CustAppListViewComponent implements OnInit {
   }
 
   async SetAppList() {
-    await this.http.post(URLConstant.GetAppListForCustView, {CustNo: this.CustNo}).toPromise().then(
+    await this.http.post(URLConstant.GetAppListForCustView, {CustNo: this.CustNo}, this.EmbeddOptions).toPromise().then(
       (response) => {
         if(response[CommonConstant.ReturnObj] != null) {
           this.CustAppList = response[CommonConstant.ReturnObj];
@@ -58,7 +65,7 @@ export class CustAppListViewComponent implements OnInit {
       TrxNo: this.CustNo
     };
 
-    await this.http.post(URLConstant.GetAllAppAndAppOplListData, requestCustNo).toPromise().then(
+    await this.http.post(URLConstant.GetAllAppAndAppOplListData, requestCustNo, this.EmbeddOptions).toPromise().then(
       (response) => {
         if(response === undefined){
           return;
@@ -84,9 +91,9 @@ export class CustAppListViewComponent implements OnInit {
   async checkIsOpl() {
     let reqGetSysConfigResultLOSObj = new GenericObj();
     reqGetSysConfigResultLOSObj.Code  = CommonConstant.MODULE_LMS;
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigResultByCode, {ConfigCode : reqGetSysConfigResultLOSObj.Code}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigResultByCode, {ConfigCode : reqGetSysConfigResultLOSObj.Code}, this.EmbeddOptions).toPromise().then(
       (response) => {
-        if(response.ConfigValue === "1") {
+        if(response['ConfigValue'] === "1") {
           this.isOpl = true;
         }
       }

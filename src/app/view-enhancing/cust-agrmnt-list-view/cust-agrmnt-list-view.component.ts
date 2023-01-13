@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -15,11 +15,18 @@ export class CustAgrmntListViewComponent implements OnInit {
   CustNo: string = '';
   isReady: boolean = false;
   AgrmntList: Array<any> = new Array<any>();
+  EmbeddOptions;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["CustNo"] != null) {
         this.CustNo = params["CustNo"];
+      }
+      if (params["IsEmbedded"] != null && params["Token"] != null) {
+        const embeddHeaders = new HttpHeaders({
+          'AdInsKey': params["Token"]
+        });
+        this.EmbeddOptions = { headers: embeddHeaders, withCredentials: true };
       }
     });
   }
@@ -30,7 +37,7 @@ export class CustAgrmntListViewComponent implements OnInit {
   }
 
   async SetAppList() {
-    await this.http.post(URLConstant.GetAgrmntListForCustView, {CustNo: this.CustNo}).toPromise().then(
+    await this.http.post(URLConstant.GetAgrmntListForCustView, {CustNo: this.CustNo}, this.EmbeddOptions).toPromise().then(
       (response) => {
         if(response[CommonConstant.ReturnObj] != null) {
           this.AgrmntList = response[CommonConstant.ReturnObj];
