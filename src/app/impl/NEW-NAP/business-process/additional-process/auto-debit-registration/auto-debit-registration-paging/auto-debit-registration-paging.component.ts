@@ -83,7 +83,7 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
               this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, { TrxNo: e.RowObj.TransactionNo }).subscribe(
                 (response1) => {
                   //if (currDt < expDt)
-                  if (new Date() > new Date(response1["ExpiredDt"])) {
+                  if (new Date() > new Date(response1["ExpiredDt"]) && response1["RequestId"] != null) {
                     //window.open
                     window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response1["RequestId"] + "&verification=" + response1["Verification"]);
                     $(document).ready(function () {
