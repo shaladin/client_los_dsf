@@ -28,8 +28,9 @@ import { LeadViewModule } from "./lead-view/lead-view.module";
 import { ChangeMouViewModule } from "./change-mou-view/change-mou-view.module";
 import { POViewModule } from "./purchase-order-view/purchase-order-view.module";
 import { SurveyViewModule } from "./survey-view-prototype/survey-view.module";
-import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { CrdRvwViewModule } from "./crd-rvw-view/crd-rvw-view.module";
+import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     LeadViewModule,
     POViewModule,
     SurveyViewModule,
+    CrdRvwViewModule
   ],
   declarations: [
     LeadMainInfoComponent,

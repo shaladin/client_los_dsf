@@ -1,0 +1,80 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="card-header header-title" style="margin-bottom: 10px;">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate *ngIf="IsView">
+                Credit Review View
+              </h4>
+            </div>
+          </div>
+        </div>
+        
+        <div class="px-3">
+          <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+          <div class="card-body">
+            <div class="px-3">
+              <app-crd-rvw-cust-info *ngIf="isShow" [appId]="AppId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
+              </app-crd-rvw-cust-info>
+              <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+              </app-crd-rvw-fam-guar>
+              <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
+
+              <app-crd-rvw-third-party-checking *ngIf="appNo != ''" [AppNo]="AppNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
+              </app-crd-rvw-third-party-checking>
+              <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="AppId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
+              </app-crd-rvw-app-info>
+              <app-crd-rvw-asset *ngIf="isShow && BizTemplateCode != 'CFNA'" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
+              <app-crd-rvw-asset-acc *ngIf="isShow && BizTemplateCode != 'CFNA'" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-asset-acc>
+              <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+              </app-crd-rvw-additional-coll>
+              <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+              </app-crd-rvw-cmo-info>
+              <app-crd-rvw-dealer-info *ngIf="isShow && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+              </app-crd-rvw-dealer-info>
+
+              <lib-ucSubsection [id]="'documentId'" [title]="'Document'" [panel]="'document'">
+              </lib-ucSubsection>
+              <div class="form-body" [id]="'document'">
+                <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+              </div>
+
+              <app-tab-deviation [AppId]="AppId" *ngIf="!isReturnOn && !IsView" (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
+              <app-tab-deviation [AppId]="AppId" *ngIf="IsView" (GetData)="BindManualDeviationData($event)" [IsEditManualDeviation]="false"></app-tab-deviation>
+            </div>
+          </div>
+
+          <form class="form form-horizontal" [formGroup]="FormObj" *ngIf="IsView" #enjiForm="ngForm">
+          <div class="form-body">
+              <div class="px-3">
+                <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
+                </lib-ucSubsection>
+                <div class="form-body" [id]="'formCreditAnalysis'" formArrayName="arr">
+                  <div *ngFor="let item of FormObj.controls.arr['controls']; let i = index;">
+                    <div [formGroupName]="i">    
+                      <div class="form-group row">
+                        <div class="form-group col-md-4 adins-required">
+                          <label class="adInsLabel" translate>{{item.controls.Question.value}}</label>
+                        </div>
+                        <div class="col-md-8">
+                          <textarea type="textarea" class="form-control adInsInput width-50-per" formControlName="Answer" disabled *ngIf="IsView"></textarea>
+                          <lib-uc-show-errors [control]="item.controls.Answer" [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <br>
+          </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

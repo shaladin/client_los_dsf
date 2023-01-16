@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { CrdRvwViewComponent } from './crd-rvw-view/crd-rvw-view.component';
 
 const routes: Routes = [
     {
@@ -73,6 +74,10 @@ const routes: Routes = [
             {
                 path: PathConstant.VIEW_CUST_AGRMNT_LISTING,
                 loadChildren: './cust-agrmnt-list-view/cust-agrmnt-list-view.module#CustAgrmntListViewModule'
+            },
+            {
+                path: PathConstant.VIEW_CREDIT_REVIEW,
+                loadChildren: './crd-rvw-view/crd-rvw-view.module#CrdRvwViewModule'
             }
         ]
     }

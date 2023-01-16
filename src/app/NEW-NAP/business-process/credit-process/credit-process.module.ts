@@ -53,6 +53,7 @@ import { ViewApplicationDataMultiComponent } from "./shared-component/view-appli
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { CommissionV3Component } from "./commission-reserved-fund/component/commission-v3/commission-v3.component";
 import { FormCommissionGenerateV2Component } from "./commission-reserved-fund/component/commission-v3/form-commission-generate-v2/form-commission-generate-v2.component";
+import { CrdRvwViewModule } from "app/view-enhancing/crd-rvw-view/crd-rvw-view.module";
 
 
 export const customCurrencyMaskConfig = {
@@ -70,6 +71,14 @@ export const customCurrencyMaskConfig = {
 
 @NgModule({
   exports: [
+    CreditReviewComponent,
+    CreditReviewDetailPersonalComponent,
+    CreditReviewCrDetailComponent,
+    CreditReviewCrPagingComponent,
+    CreditReviewPagingComponent,
+    CreditReviewMainComponent,
+    CreditReviewCfnaDetailComponent,
+    CreditReviewCfnaPagingComponent
   ],
   imports: [
     CommonModule,
@@ -99,7 +108,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalcreateModule,
     UcapprovalHistoryModule,
     UcapprovalR3Module,
-    UcapprovalgeneralinfoModule
+    UcapprovalgeneralinfoModule,
+    CrdRvwViewModule
   ],
   declarations: [
     PhoneVerificationPagingComponent,

@@ -139,6 +139,9 @@ import { TabDeviationHistoryComponent } from "./tab-deviation-history/tab-deviat
         AppMainInfoComponent,
         AppAssetDataDetailComponent,
         TabReferantorMultiDetailComponent
+    ],
+    exports: [
+        AppMainInfoComponent
     ]
 })
 export class AppViewModule { }

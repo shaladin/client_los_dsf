@@ -522,7 +522,7 @@ export class URLConstant {
   public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
   public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode = environment.ApprovalR3Url + "/Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode";
   public static GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCodeDistinctByTransaction = environment.ApprovalR3Url + "/Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCodeDistinctByTransaction";
-
+  public static GetPagingObjectBySQLForManagementInquiry = "/Generic/GetPagingObjectBySQLForManagementInquiry";
   // SERVICE TASK
   public static GetListOSWfTaskListByActCode = "ServiceTask/GetListOSWfTaskListByActCode/";
 

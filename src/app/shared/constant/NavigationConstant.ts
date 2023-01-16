@@ -28,6 +28,7 @@ export class NavigationConstant {
   public static APP_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_INQUIRY; //'/Inquiry/AppInquiry'
   public static APP_AGR_CANCELLATION_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_AGR_CANCELLATION_INQUIRY; //'/Inquiry/AppAgrCancellationInquiry'
   public static PURCHASE_TRACKING_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.PURCHASE_TRACKING_INQUIRY; //'/Inquiry/PurchaseTrackingInquiry'
+  public static MANAGEMENT_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.MANAGEMENT_INQUIRY; //'/Inquiry/ManagementInquiry'
   //#endregion
 
   //#region NAP
@@ -266,6 +267,7 @@ export class NavigationConstant {
   public static VIEW_MOU_CUST = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_MOU_CUST; //"/View/Mou/CustView"
   public static VIEW_PHN_VERIF = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PHN_VERIF; //"/View/PhoneVerifView"
   public static VIEW_SRVY = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_SRVY; //'/View/SurveyView'
+  public static VIEW_CREDIT_REVIEW = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CREDIT_REVIEW; //'/View/CreditReviewView'
   //#endregion
 
   //#region FOU-VIEW
