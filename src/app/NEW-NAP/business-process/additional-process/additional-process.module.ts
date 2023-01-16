@@ -85,6 +85,7 @@ import { AutoDebitRegistrationPagingComponent } from "app/impl/NEW-NAP/business-
 import { AutoDebitRegistrationInquiryComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component";
 import { AutoDebitRegistrationCancelComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component";
 import { AutoDebitTestComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component";
+import { ReturnHandlingNewEditAppPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-new-edit-app-paging-dsf/return-handling-new-edit-app-paging-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -152,6 +153,7 @@ export const customCurrencyMaskConfig = {
     DupCheckMdSubjMatchComponent,
     ReturnHandlingEditNap4Component,
     ReturnHandlingNewEditAppPagingComponent,
+    ReturnHandlingNewEditAppPagingDsfComponent,
     AdditionalTcPagingComponent,
     AdditionalTcDetailComponent,
     ReturnHandlingEditCustPagingComponent,

@@ -478,7 +478,9 @@ export class NavigationConstant {
 
   //#region Self Custom
   public static REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
+  public static NAP_ADM_PRCS_AGRMNT_CANCEL_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.AGRMNT_CANCEL_DETAIL; //'/Nap/AdminProcess/AgreementCancellation/Detail'
   //#endregion 
+
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
   //EndSettings

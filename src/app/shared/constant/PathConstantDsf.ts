@@ -149,4 +149,17 @@ export class PathConstantDsf {
 
     public static REPORT_AGR_PROCESS = "ReportAgrProcess";
     public static PRINT_REPORT_AGR_PROCESS = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_AGR_PROCESS;
+
+    public static RETURN_HANDLING_NAP2 = PathConstant.RETURN_HANDLING + "/" + PathConstantDsf.NAP2;
+    public static GO_LIVE_APV_X = 'GoLiveApvXDsf';
+    public static PGL = "PreGoLiveDsf";
+    public static GO_LIVE_APV_DETAIL_X = PathConstantDsf.GO_LIVE_APV_X + '/' + PathConstantX.DETAIL_X;
+    public static GO_LIVE_APV_PAGING_X = PathConstantDsf.GO_LIVE_APV_X + '/' + PathConstantX.PAGING;
+    public static PGL_APPRVL_DETAIL = PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.DETAIL;
+    public static PGL_APPRVL_PAGING = PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.PAGING;
+    public static AGRMNT_CANCEL = "AgreementCancellationDsf";
+    public static AGRMNT_CANCEL_PAGING = PathConstantDsf.AGRMNT_CANCEL + "/" + PathConstant.PAGING;
+    public static AGRMNT_CANCEL_DETAIL = PathConstantDsf.AGRMNT_CANCEL + "/" + PathConstantX.DETAIL_X;
+    public static PGL_PAGING = PathConstantDsf.PGL + "/" + PathConstant.PAGING;
+    public static PGL_DETAIL_X = PathConstantDsf.PGL + '/' + PathConstantX.DETAIL_X;
 }

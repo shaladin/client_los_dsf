@@ -25,6 +25,10 @@
         <!-- Self Custom Change -->
         <app-crd-rvw-app-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
         </app-crd-rvw-app-app-info-x>
+        <!-- Self Custom Change -->
+        <app-crd-rvw-app-plafond-info-x-dsf *ngIf="BizTemplateCode == 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
+        </app-crd-rvw-app-plafond-info-x-dsf>
+        <!-- End Self Custom Change -->
         <!-- <app-crd-rvw-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
         </app-crd-rvw-app-info-x> -->
         <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
