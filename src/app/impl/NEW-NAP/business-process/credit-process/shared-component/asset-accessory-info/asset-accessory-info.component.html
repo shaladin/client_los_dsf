@@ -42,8 +42,7 @@
                   <td>{{ item.AssetPriceAmt | number: '.2':'en-US' }}</td>
                   <td>{{ item.TotalAssetInclAcc | number:'.2':'en-US' }}</td>
                   <td>{{ item.TotalDPInclAcc | number:'.2':'en-US' }}<br>/{{item.DownPaymentPrcnt | number:'.6' : 'en-US'}}%</td>
-                  {{InsuranceNaming(item.InsuranceType)}}
-                  <td>{{ InsuranceName }}</td>
+                  <td>{{ item.InsuranceType }}</td>
                   <td>{{ item.IsDoubleFinancing ? 'Yes' : 'No' }}</td>
                   <td>{{ item.ManufacturingYear }}</td>
                   <td>{{ item.AssetCondition }}</td>

@@ -24,7 +24,7 @@ export class AssetAccessoryInfoComponent implements OnInit {
   
   async getAssetAndAccInfoByAppId()
   {
-    await this.http.post<Array<AssetAccObj>>(URLConstantX.GetAssetAndAccByAppId, {id : this.AppId}).toPromise().then(
+    await this.http.post<Array<AssetAccObj>>(URLConstantX.GetAssetAndAccByAppIdV2, {id : this.AppId}).toPromise().then(
       (response) => {
         this.ListAssetAndListAccInfo = response['ReturnObject'];
       }
@@ -37,31 +37,6 @@ export class AssetAccessoryInfoComponent implements OnInit {
     for(this.letter = ""; num >= 0; num = ((num/26) | 0 ) - 1)
     {
       this.letter = String.fromCharCode(num%26 + 0x41) + this.letter;
-    }
-  }
-
-  InsuranceNaming(str: string)
-  {
-    this.InsuranceName = str;
-    if(str == CommonConstantX.ALLRISK)
-    {
-      this.InsuranceName = CommonConstantX.ALL_RISK;
-    }
-    else if(str == CommonConstantX.TLO)
-    {
-      this.InsuranceName = CommonConstantX.TOTAL_LOSS_ONLY;
-    }
-    else if(str == CommonConstantX.ALLRISK_MIP)
-    {
-      this.InsuranceName = CommonConstantX.ALL_RISK_MIP;
-    }
-    else if(str == CommonConstantX.TLO_MIP)
-    {
-      this.InsuranceName = CommonConstantX.TOTAL_LOSS_ONLY_MIP;
-    }
-    else if(str == CommonConstantX.ALLRISK_OTR)
-    {
-      this.InsuranceName = CommonConstantX.ALL_RISK_OTHER;
     }
   }
 }
