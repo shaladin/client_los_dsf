@@ -11,6 +11,9 @@
             <span class="thead-header" name='insuredBy' translate>Insured By</span>
           </th>
           <th style="text-align: left;">
+            <span class="thead-header" name='mainPremi' translate>Main Coverage</span>
+          </th>
+          <th style="text-align: left;">
             <span class="thead-header" name='paidBy' translate>Paid By</span>
           </th>
           <th style="text-align: left;">
@@ -37,12 +40,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of appCollObjs; index as i">
+        <tr *ngFor="let item of appCollObjFinal; index as i">
           <td style="text-align: left;">
             {{item.InsObjName}}
           </td>
           <td style="text-align: left;">
             {{item.InsAssetCoveredBy}}
+          </td>
+          <td style="text-align: center;">
+            {{item.MrMainCvgTypeCode}}
           </td>
           <td style="text-align: left;">
             {{item.InsAssetPaidBy}}

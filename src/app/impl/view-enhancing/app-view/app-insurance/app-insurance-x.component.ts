@@ -21,6 +21,8 @@ export class AppInsuranceXComponent implements OnInit {
   totalCapitalizedAmt: number;
   totalCustPaidAmt: number;
   isFCTR : boolean = false;
+  appInsCvgs: any;
+  appCollObjFinal: Array<any>;
 
   constructor(
     private httpClient: HttpClient,
@@ -31,18 +33,35 @@ export class AppInsuranceXComponent implements OnInit {
     this.totalCustPaidAmt = 0;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if(this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CF4W /* penjagaan CF4W Fleet - Perubahan Impl X*/){
       this.isFCTR = true;
     }
-    this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { Id: this.AppId }).subscribe(
+    await this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { Id: this.AppId }).toPromise().then(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
         this.appCollObjs = response.CollateralAppInsObjects;
         this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
+        this.appCollObjFinal = this.appCollObjs;
       });
+    for (let i = 0; i < this.appCollObjFinal.length; i++){
+    await this.httpClient.post(URLConstant.GetAppInsObjViewDetail, { Id: this.appCollObjFinal[i].AppInsObjId }).toPromise().then(
+      (response: any) => {
+        this.appInsCvgs = response.appInsCvgs;
+        let list = [];
+        let joinText: any;
+        list = this.appInsCvgs.map(function(val){
+          return val.appInsMainCvgObj.MrMainCvgTypeCode;
+        });
+        list = list.filter(function (x, i, a) {
+          return a.indexOf(x) == i;
+        });
+        joinText = list.join(',');
+        this.appCollObjFinal[i].MrMainCvgTypeCode = joinText;
+      });
+    }
   }
 
   viewDetailLoanHandler(appAssetId){
