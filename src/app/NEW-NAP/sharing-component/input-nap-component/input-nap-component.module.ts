@@ -146,7 +146,6 @@ import { UcInsuranceDetailComponent } from "./insurance-data/uc-insurance/uc-ins
 import { UcInsurancePagingComponent } from "./insurance-data/uc-insurance/uc-insurance-paging/uc-insurance-paging.component";
 import { UcInsuranceXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/uc-insurance-x/uc-insurance-x.component";
 import { UcInsuranceDetailXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/uc-insurance-x/uc-insurance-detail-x/uc-insurance-detail-x.component";
-import { TcDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/tc-data/tc-data-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -196,7 +195,6 @@ export const customCurrencyMaskConfig = {
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
-    TcDataXComponent, // sementara nanti dicross check sama term-conditions
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
@@ -293,7 +291,7 @@ export const customCurrencyMaskConfig = {
     SingleInstDlfnXComponent,
     SchmRegularFixDlfnXComponent,
     SchmEvenPrincipalDlfnXComponent,
-    LoanObjectXComponent,
+    LoanObjectXComponent
   ],
   imports: [
     CommonModule,
@@ -340,7 +338,6 @@ export const customCurrencyMaskConfig = {
     SubsidyAddEditComponent,
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions,
-    TcDataXComponent, // sementara nanti dicross check sama term-conditions,
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,

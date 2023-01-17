@@ -149,9 +149,9 @@
               </app-financial-data-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data-x *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
+              <app-tc-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
                            [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="'true'">
-              </app-tc-data-x>
+              </app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe
@@ -256,8 +256,8 @@
               </app-financial-data-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data-x *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
-                           [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()"></app-tc-data-x>
+              <app-tc-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
+                           [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe
