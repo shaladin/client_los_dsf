@@ -40,7 +40,7 @@ export class LeadInputPageComponent implements OnInit {
   customObj: any;
   isDmsReady: boolean = false;
   isDmsData: boolean;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService, private claimTaskService: ClaimTaskService,private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -211,6 +211,7 @@ export class LeadInputPageComponent implements OnInit {
 
             this.http.post(urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
               () => {
+                this.toastr.successMessage(response["message"]);
                 this.cancelHandler();
               }
             );

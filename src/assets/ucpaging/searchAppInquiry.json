@@ -14,7 +14,7 @@
       "url": "",
       "isQueryIn": true,
       "environment": "FOU",
-      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForInquiryPaging",
       "label": "Original Office Name",
       "items": [],
       "itemsUrl": []
@@ -78,6 +78,14 @@
       "datatype": "date"
     },
     {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_1",
+      "id": "serialNo1Id",
+      "value": "",
+      "label": "Serial No 1",
+      "placeholder": "Placeholder"
+    },
+    {
       "type": "dropdown",
       "datatype": "text",
       "name": "A.APP_CURR_STEP",
@@ -96,6 +104,14 @@
       "criteriaPropValue": "APP_STEP"
     },
     {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_2",
+      "id": "serialNo2Id",
+      "value": "",
+      "label": "Serial No 2",
+      "placeholder": "Placeholder"
+    },
+    {
       "type": "dropdown",
       "datatype": "text",
       "name": "B.AGRMNT_CURR_STEP",
@@ -112,6 +128,32 @@
       "itemsUrl": [],
       "criteriaPropName": "Code",
       "criteriaPropValue": "AGR_STEP"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_3",
+      "id": "serialNo3Id",
+      "value": "",
+      "label": "Serial No 3",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.CUST_CHECKING_STEP",
+      "id": "CustCheckingStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Customer Checking Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "CUST_CHECKING_STEP"
     },
     {
       "type": "dropdown",
@@ -148,24 +190,6 @@
       "itemsUrl": [],
       "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STAT"
-    },
-    {
-      "type": "dropdown",
-      "datatype": "text",
-      "name": "A.CUST_CHECKING_STEP",
-      "id": "CustCheckingStepId",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": true,
-      "ddlType": "all",
-      "url": "",
-      "environment": "FOU",
-      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-      "label": "Customer Checking Step",
-      "items": [],
-      "itemsUrl": [],
-      "criteriaPropName": "Code",
-      "criteriaPropValue": "CUST_CHECKING_STEP"
     }
   ],
   "querystring": {

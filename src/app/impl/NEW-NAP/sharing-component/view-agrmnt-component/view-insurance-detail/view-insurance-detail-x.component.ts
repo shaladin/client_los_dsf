@@ -64,6 +64,21 @@ export class ViewInsuranceDetailXComponent implements OnInit {
         }
         this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
 
+        for (var i = 0; i < this.appInsMainCvgObjs.length; i++) {
+          this.appInsMainCvgObjs[i].CustAddPremiRate = "";
+          this.appInsMainCvgObjs[i].InscoAddPremiRate = "";
+          var arrCustAddPremiRate = [];
+          var arrInscoAddPremiRate = [];
+          for (var j = 0; j < this.appInsMainCvgObjs[i].AppInsAddCvgObjs.length; j++) {
+            if (this.appInsMainCvgObjs[i].AppInsMainCvgId == this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].AppInsMainCvgId) {
+              arrCustAddPremiRate.push((this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].CustAddPremiRate).toFixed(3));
+              arrInscoAddPremiRate.push((this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].InscoAddPremiRate).toFixed(3));
+            }
+          }
+          this.appInsMainCvgObjs[i].CustAddPremiRate = arrCustAddPremiRate.join(", ");
+          this.appInsMainCvgObjs[i].InscoAddPremiRate = arrInscoAddPremiRate.join(", ");
+        }
+        
         if (response["AppAssetAccessoryObjs"] != null)
         {
           this.appAssetAcessoryObj = response["AppAssetAccessoryObjs"];

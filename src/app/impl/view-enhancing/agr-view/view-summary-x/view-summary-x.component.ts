@@ -27,6 +27,7 @@ export class ViewSummaryXComponent implements OnInit {
   BankAccNo: string;
   BankAccName: string;
   BankName: string;
+  AgrmntX: any;
 
   readonly wopAD = CommonConstantX.WOPADDescr;
   constructor(private http: HttpClient) { }
@@ -34,6 +35,7 @@ export class ViewSummaryXComponent implements OnInit {
   async ngOnInit() {
     this.agrmntObj.Id = this.agrmntId;
     await this.GetAgrmntSummary();
+    await this.GetAgrmntX();
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
     this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
@@ -62,6 +64,14 @@ export class ViewSummaryXComponent implements OnInit {
     {
       await this.GetAgrmntOtherInfo();
     }
+  }
+
+  async GetAgrmntX() {
+    await this.http.post(URLConstantX.GetLatestAgrmntXByAgrmntId, {Id: this.agrmntId}).toPromise().then(
+      (response) => {
+        this.AgrmntX = response;
+      }
+    );
   }
 
   async GetAgrmntOtherInfo() {
