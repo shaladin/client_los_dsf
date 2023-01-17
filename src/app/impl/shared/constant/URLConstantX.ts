@@ -200,7 +200,6 @@ export class URLConstantX {
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/AddVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
   public static EditVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/EditVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
   public static CompleteAppSurveyVerifXV2 = environment.losUrl + "/v2" + "/SurveyVerifX/CompleteAppSurveyVerif";
-  public static DeleteVerfResultHeaderAndVerfResultDetailByVerfResultHId = environment.FoundationR3Url + "/v1" + "/VerfResultHX/DeleteVerfResultHeaderAndVerfResultDetailByVerfResultHId";
 
   //REF SECTOR ECONOMY SLIK X
   public static GetRefSectorEconomySlikXByCode = environment.FoundationR3Url + "/v1" + "/RefSectorEconomySlikX/GetRefSectorEconomySlikXByCode";

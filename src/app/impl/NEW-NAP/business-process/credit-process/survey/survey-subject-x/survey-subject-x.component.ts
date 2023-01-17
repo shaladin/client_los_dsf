@@ -421,40 +421,36 @@ export class SurveySubjectXComponent implements OnInit {
   async Verif(mode: any, VerifResultHid: any, SubjectType: any, SurveyMethod: any, IdSource: any) {
     if (mode == 'add') {
       var surveymethod = this.ReturnHandlingForm.controls.SurveyMethod.value;
-      var surveymethodvalue = surveymethod == "BYPHN"? "BY PHONE" : "ON SITE"
-      var confirmation = confirm("Are you sure to add survey " + surveymethodvalue + "?");
-      if (confirmation) {
-        var VerfQAObj = {
-          AppId: this.appId,
-          Subject: surveymethod
-        };
-        const isExist: Boolean = await this.GetQuestionList(VerfQAObj);
+      var VerfQAObj = {
+        AppId: this.appId,
+        Subject: surveymethod
+      };
+      const isExist: Boolean = await this.GetQuestionList(VerfQAObj);
 
-        if (!isExist) {
-          return;
-        }
+      if (!isExist) {
+        return;
+      }
 
-        if (this.isReturnHandling == false) {
-          this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], {
-            queryParams: {
-              'AppId': this.appId,
-              'WfTaskListId': this.wfTaskListId,
-              'SurveyMethod': surveymethod,
-              'mode': mode
-            }
-          });
-        }
-        if (this.isReturnHandling == true) {
-          this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], {
-            queryParams: {
-              'AppId': this.appId,
-              'ReturnHandlingHId': this.returnHandlingHId,
-              'WfTaskListId': this.wfTaskListId,
-              'SurveyMethod': surveymethod,
-              'mode': mode
-            }
-          });
-        }
+      if (this.isReturnHandling == false) {
+        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], {
+          queryParams: {
+            'AppId': this.appId,
+            'WfTaskListId': this.wfTaskListId,
+            'SurveyMethod': surveymethod,
+            'mode': mode
+          }
+        });
+      }
+      if (this.isReturnHandling == true) {
+        this.router.navigate([NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF], {
+          queryParams: {
+            'AppId': this.appId,
+            'ReturnHandlingHId': this.returnHandlingHId,
+            'WfTaskListId': this.wfTaskListId,
+            'SurveyMethod': surveymethod,
+            'mode': mode
+          }
+        });
       }
     } else {
       if (this.isReturnHandling == false) {
@@ -482,29 +478,6 @@ export class SurveySubjectXComponent implements OnInit {
           }
         });
       }
-    }
-  }
-
-  async deleteSurveyVerif(verfResultHId) {
-    var confirmation = confirm("Are you sure to delete this data ?");
-    if (confirmation) {
-      this.http.post(URLConstantX.DeleteVerfResultHeaderAndVerfResultDetailByVerfResultHId, { Id: verfResultHId }).toPromise().then(
-        (response) => {
-          if (response["StatusCode"] == 200) {
-            this.toastr.successMessage(response["Message"]);
-            // this.GetAppCustAssetData();
-            this.GetVerfResultData();
-            this.GetPhnVerfSubjData();
-          }
-          else {
-            this.toastr.errorMessage("Error Deleting Survey");
-          }
-        }
-      ).catch(
-        (error) => {
-          console.log(error);
-        }
-      );
     }
   }
 
