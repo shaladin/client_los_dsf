@@ -60,7 +60,6 @@ export class ExceptionConstant {
     public static MUST_CALCUCATE_FIRST = "Must Calculate First";
     public static NTF_MUST_BE_GREAD_THAN_TOTFEE = "Total Fee Amount cannot be greater than NTF Amount ";
 
-    public static PLEASE_SELECT_ONE = "Please select One";
 
     public static OFFICE_IS_NOT_ALLOWED_TO_CREATE_APP = "Office Is Not Allowed to Create App";
     public static DUPLICATE_SOCIAL_MEDIA = "Social Media cannot be duplicate!";

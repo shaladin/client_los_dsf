@@ -48,8 +48,6 @@ import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model'
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
 import { String } from 'typescript-string-operations';
-import { ReqCustBankAccX } from 'app/impl/shared/model/app-cust-bank-acc-x/req-cust-bank-acc-x.model';
-import { CustAddrObj } from 'app/shared/model/cust-addr-obj.model';
 
 @Component({
   selector: 'app-application-data-x',
@@ -110,7 +108,6 @@ export class ApplicationDataXComponent implements OnInit {
   isDdlInterestTypeReady: boolean = false;
   isDdlInstallmentSchemeReady: boolean = false;
   tempCommodityName: string = '';
-  entitySelect: string = "";
   agrmntParentNo: string;
   resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
   reqAgrmntMasterDataObjX: ReqAgrmntMasterDataObjX;
@@ -196,7 +193,6 @@ export class ApplicationDataXComponent implements OnInit {
     EconomicSector: [''],
     ApplicationNotes: [''],
     CopyFromMailing: [''],
-    CopyFromMailingAddrBnkAcc: [''],
     CustBankAcc: [''],
     DpSrcPaymentCode: ['', Validators.required],
     InstSrcPaymentCode: ['', Validators.required],
@@ -223,9 +219,6 @@ export class ApplicationDataXComponent implements OnInit {
   isMrCustTypeCompany: boolean = false;
   MasterCustType: string = "";
   MasterIdNoType: string = "";
-  selectedCustNo: string;
-  selectedCustBankAccId: number;
-  CustAddrObj: Array<CustAddrObj> = new Array();
 
   AgrmntDt: Date = new Date();
   OsPrincipal: number = 0;
@@ -1562,14 +1555,11 @@ export class ApplicationDataXComponent implements OnInit {
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   mailingAddrObj: AddrObj = new AddrObj();
-  mailingAddrBnkAccObj: AddrObj = new AddrObj();
   AppCustAddrObj: Array<AppCustAddrObj> = new Array();
   copyToMailingTypeObj: Array<KeyValueObj> = [
     { Key: "LEGAL", Value: "Legal" },
     { Key: "RESIDENCE", Value: "Residence" }
   ];
-
-  copyToMailingTypeBnkAccObj = [];
   IsAddrReady: boolean = false;
   async initMailingAddress() {
     this.mailingAddrObj = new AddrObj();
@@ -1582,16 +1572,6 @@ export class ApplicationDataXComponent implements OnInit {
         this.copyToMailing(CommonConstant.AddrTypeMailing);
       }
     );
-
-    await this.http.post(URLConstantX.GetListCustAddrByCustNoX, { 'CustNo': this.CustNo }).toPromise().then(
-      (response) => {
-        this.CustAddrObj = response[CommonConstant.ReturnObj];
-      }
-    );
-
-    for (let i = 0; i < this.CustAddrObj.length; i++) {
-      this.copyToMailingTypeBnkAccObj.push(this.CustAddrObj[i].MrCustAddrTypeCode);
-    }
   }
 
   copyToMailing(addrType: string = '') {
@@ -1623,41 +1603,6 @@ export class ApplicationDataXComponent implements OnInit {
       this.inputAddressObj.default = this.mailingAddrObj;
     }
     this.IsAddrReady = true;
-  }
-
-  copyToMailingAddrBnkAcc(addrType: any) {
-    this.entitySelect = addrType.value;
-    if (addrType.value == "") {
-      this.toastr.warningMessage(ExceptionConstant.PLEASE_SELECT_ONE);
-    }
-    else{
-      if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailingAddrBnkAcc.value;
-  
-      let address = this.CustAddrObj.find(emp => emp.MrCustAddrTypeCode === this.entitySelect);
-      if (address != null && address != undefined) {
-        this.mailingAddrBnkAccObj.Addr = address.Addr;
-        this.mailingAddrBnkAccObj.AreaCode1 = address.AreaCode1;
-        this.mailingAddrBnkAccObj.AreaCode2 = address.AreaCode2;
-        this.mailingAddrBnkAccObj.AreaCode3 = address.AreaCode3;
-        this.mailingAddrBnkAccObj.AreaCode4 = address.AreaCode4;
-        this.mailingAddrBnkAccObj.City = address.City;
-        this.mailingAddrBnkAccObj.Fax = address.Fax;
-        this.mailingAddrBnkAccObj.FaxArea = address.FaxArea;
-        this.mailingAddrBnkAccObj.Phn1 = address.Phn1;
-        this.mailingAddrBnkAccObj.Phn2 = address.Phn2;
-        this.mailingAddrBnkAccObj.Phn3 = address.Phn3;
-        this.mailingAddrBnkAccObj.PhnArea1 = address.PhnArea1;
-        this.mailingAddrBnkAccObj.PhnArea2 = address.PhnArea2;
-        this.mailingAddrBnkAccObj.PhnArea3 = address.PhnArea3;
-        this.mailingAddrBnkAccObj.PhnExt1 = address.PhnExt1;
-        this.mailingAddrBnkAccObj.PhnExt2 = address.PhnExt2;
-        this.mailingAddrBnkAccObj.PhnExt3 = address.PhnExt3;
-  
-        this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.nameSelect = address.Zipcode;
-        this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.jsonSelect = { Zipcode: address.Zipcode };
-        this.inputAddressOwnerBankAccObj.default = this.mailingAddrBnkAccObj;
-      }
-    }
   }
 
   getMailingAddrForSave() {
@@ -1837,7 +1782,7 @@ export class ApplicationDataXComponent implements OnInit {
     );
   }
 
-  async selectedBank() {
+  selectedBank() {
     if (this.NapAppModelForm.controls.MrWopCode.value != this.WopAutoDebit) return;
     
     if(this.NapAppModelForm.get("CustBankAcc").value == "")
@@ -1852,79 +1797,11 @@ export class ApplicationDataXComponent implements OnInit {
     
     let custBankAccId: number = this.NapAppModelForm.get("CustBankAcc").value;
     let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
-    
     this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
     this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
     this.GetBankInfo.AppId = this.appId;
     this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
     this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName;
-
-    
-    await this.http.post(URLConstant.GetAppCustMainDataByAppCustId, { Id: selectedBankAcc.AppCustId }).toPromise().then(
-      async (response: any) => {
-        this.selectedCustNo = response['AppCustObj']['CustNo'];
-      }
-    )
-
-    let reqObj: ReqCustBankAccX = new ReqCustBankAccX();
-    reqObj.CustNo = this.selectedCustNo;
-    reqObj.BankAccName = selectedBankAcc.BankAccName;
-    reqObj.BankAccNo = selectedBankAcc.BankAccNo;
-    reqObj.BankBranch = selectedBankAcc.BankBranch;
-    await this.http.post(URLConstantX.GetCustBankAccByCustNoX, reqObj).toPromise().then(
-      async (response: any) => {
-        this.selectedCustBankAccId = response['CustBankAccId'];
-      }
-    )
-
-    await this.http.post(URLConstantX.GetCustBankAccByCustBankAccIdX, { Id: this.selectedCustBankAccId }).toPromise().then(
-      async (response: any) => {
-        let datePipe = new DatePipe("en-US");
-        
-        if ( response["MrCustTypeOwnerBnkAcc"] == null || response["MrIdTypeOwnerBnkAcc"] == null
-             || response["MrCustTypeOwnerBnkAcc"] == "" || response["MrIdTypeOwnerBnkAcc"] == "") {
-          this.initCustBankAccDetail();
-          this.NapAppModelForm.patchValue({
-            PrsdntDirectorOwnerBnkAcc: response["PrsdntDirectorOwnerBnkAcc"],
-            IdNoOwnerBankAcc: response["IdNoOwnerBankAcc"],
-            BirthDtOwnerBankAcc: datePipe.transform(response['BirthDtOwnerBankAcc'], 'yyyy-MM-dd'),
-            BirthPlaceOwnerBankAcc: response["BirthPlaceOwnerBankAcc"],
-        }); 
-        }
-        else{
-          this.NapAppModelForm.patchValue({
-            MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
-            MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
-            PrsdntDirectorOwnerBnkAcc: response["PrsdntDirectorOwnerBnkAcc"],
-            IdNoOwnerBankAcc: response["IdNoOwnerBankAcc"],
-            BirthDtOwnerBankAcc: datePipe.transform(response['BirthDtOwnerBankAcc'], 'yyyy-MM-dd'),
-            BirthPlaceOwnerBankAcc: response["BirthPlaceOwnerBankAcc"],
-          });
-        }               
-
-        this.inputAddrObj.Addr = response["AddrOwnerBankAcc"];
-        this.inputAddrObj.AreaCode1 = response["AreaCode1OwnerBankAcc"];
-        this.inputAddrObj.AreaCode2 = response["AreaCode2OwnerBankAcc"];
-        this.inputAddrObj.AreaCode3 = response["AreaCode3OwnerBankAcc"];
-        this.inputAddrObj.AreaCode4 = response["AreaCode4OwnerBankAcc"];
-        this.inputAddrObj.City = response["CityOwnerBankAcc"];
-
-        this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.nameSelect = response["ZipcodeOwnerBankAcc"];
-        this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["ZipcodeOwnerBankAcc"] };
-        this.inputAddressOwnerBankAccObj.default = this.inputAddrObj;        
-      }
-    )
-    this.isCustomerTypeCompany();
-    // this.checkIdTypeOwnerBnk(this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value);
-  }
-
-  checkIdTypeOwnerBnk(idTypeOwnerBnkAcc: string) {
-    if (idTypeOwnerBnkAcc == "" || idTypeOwnerBnkAcc == null) {
-      this.NapAppModelForm.get('MrIdTypeOwnerBnkAcc').enable();
-    }
-    else{
-      this.NapAppModelForm.get('MrIdTypeOwnerBnkAcc').disable();
-    }
   }
 
   async getAppXData() {

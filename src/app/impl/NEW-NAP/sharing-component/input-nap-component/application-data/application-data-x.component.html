@@ -410,24 +410,6 @@
                       </div>
                     </div>
 
-                    <div class="form-group row" *ngIf="pageType != 'editStmnt'">
-                      <label class="col-md-2" translate>Copy Address From</label>
-                      <div class="col-md-4">
-                        <div class="input-group">
-                          <select class="form-control" formControlName="CopyFromMailingAddrBnkAcc" #entityselect> 
-                            <option *ngFor="let item of copyToMailingTypeBnkAccObj" [value]="item">{{item}}</option>
-                          </select>
-                          <div class="input-group-append">
-                            <span class="input-group-btn">
-                              <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailingAddrBnkAcc(entityselect)" translate>
-                                <i class="fa fa-check-square-o"></i>Copy
-                              </button>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
                     <!-- Address -->
                     <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressOwnerBankAccObj" [enjiForm]="enjiForm"
                                    [identifier]="'BankAccOwnerAddress'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
