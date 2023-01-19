@@ -29,6 +29,9 @@ import { ChangeMouMainInfoXComponent } from '../../impl/view-enhancing/change-mo
 import { ChangeMouViewDetailXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-detail/change-mou-view-detail-x.component";
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ChangeMouHistoryVersionViewXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-history/change-mou-view-history-x.component";
+import { ChangeMouAddcollMouViewXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-addcoll-mou-view/change-mou-addcoll-mou-view-x.component";
+import { ChangeMouDetailHistoryXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-detail/change-mou-detail-history-x.component";
 
 @NgModule({
     imports: [
@@ -63,7 +66,10 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         ChangeMouViewXComponent,
         ChangeMouViewAddcollXComponent,
         ChangeMouMainInfoXComponent,
-        ChangeMouViewDetailXComponent
+        ChangeMouViewDetailXComponent,
+        ChangeMouHistoryVersionViewXComponent,
+        ChangeMouAddcollMouViewXComponent,
+        ChangeMouDetailHistoryXComponent
     ],
     entryComponents: [
         ChangeMouViewAddcollComponent,
@@ -71,6 +77,10 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
+    ],
+    exports: [
+      ChangeMouViewDetailXComponent,
+      ChangeMouAddcollMouViewXComponent
     ]
 
 })

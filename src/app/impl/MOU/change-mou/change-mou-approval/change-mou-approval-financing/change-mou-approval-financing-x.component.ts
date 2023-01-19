@@ -15,6 +15,7 @@ import { UcInputApprovalHistoryObj } from "app/shared/model/uc-input-approval-hi
 import { UcInputApprovalGeneralInfoObj } from "app/shared/model/uc-input-approval-general-info-obj.model";
 import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
 import { ApprovalObj } from "app/shared/model/approval/approval-obj.model";
+import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
 
 @Component({
   selector: "app-change-mou-approval-financing-x",
@@ -38,6 +39,7 @@ export class ChangeMouApprovalFinancingXComponent implements OnInit {
   MouCustId: number;
   MouType: string;
   TrxType: string;
+  changeMouTrxIdPrev: number;
   TrxTypeReqExp:string = CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP;
   constructor(
     private router: Router,
@@ -63,7 +65,11 @@ export class ChangeMouApprovalFinancingXComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.http.post(URLConstantX.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
+      if(responseId["ChangeMouTrxId"] != undefined){
+        this.changeMouTrxIdPrev = responseId["ChangeMouTrxId"];
+      }
+    });
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -74,10 +80,10 @@ export class ChangeMouApprovalFinancingXComponent implements OnInit {
     this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
     var ApvHoldObj = new ApprovalObj();
-    ApvHoldObj.TaskId = this.taskId; 
+    ApvHoldObj.TaskId = this.taskId;
 
     this.HoldTask(ApvHoldObj);
-    
+
     this.initInputApprovalObj();
   }
 
@@ -100,7 +106,7 @@ export class ChangeMouApprovalFinancingXComponent implements OnInit {
 
   HoldTask(obj) {
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-        (response) => { 
+        (response) => {
         },
         (error) => {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
