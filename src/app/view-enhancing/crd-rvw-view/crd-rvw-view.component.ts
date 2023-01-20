@@ -32,6 +32,10 @@ export class CrdRvwViewComponent implements OnInit {
   AppId: number = 0;
   BizTemplateCode: string = "";
 
+  readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
+  readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
+  isReturnOn: boolean = false;
+  
   crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   IsViewReady: boolean = true;
 
