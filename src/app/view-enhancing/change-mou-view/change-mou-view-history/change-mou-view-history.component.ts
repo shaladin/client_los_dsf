@@ -26,13 +26,13 @@ export class ChangeMouHistoryVerForViewComponent implements OnInit {
     this.http.post(URLConstant.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
       if(responseId["ChangeMouTrxId"] != undefined){
         this.ChangeMouTrxIdPrev = responseId["ChangeMouTrxId"];
+        if(this.ChangeMouTrxIdPrev == 0){
+          this.isPrevExist == false;
+        }
       }
     });
     if(this.Status == "EXE"){
       this.isExecuted == true;
-    }
-    if(this.ChangeMouTrxIdPrev == 0){
-      this.isPrevExist == false;
     }
   }
 }
