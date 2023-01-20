@@ -17,22 +17,24 @@ export class ChangeMouHistoryVerForViewComponent implements OnInit {
 
   isPrevExist: boolean = true;
   isExecuted: boolean = false;
+  isReady: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
 
   }
 
-  ngOnInit() {
-    this.http.post(URLConstant.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
+  async ngOnInit() {
+    await this.http.post(URLConstant.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).toPromise().then((responseId) => {
       if(responseId["ChangeMouTrxId"] != undefined){
         this.ChangeMouTrxIdPrev = responseId["ChangeMouTrxId"];
         if(this.ChangeMouTrxIdPrev == 0){
-          this.isPrevExist == false;
+          this.isPrevExist = false;
         }
+        this.isReady = true;
       }
     });
     if(this.Status == "EXE"){
-      this.isExecuted == true;
+      this.isExecuted = true;
     }
   }
 }

@@ -1,71 +1,187 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { MouCustDlrFinObj } from 'app/shared/model/mou-cust-dlr-fin.model';
+import { ResMouCustObj } from 'app/shared/model/response/mou/mou-cust/res-mou-cust-obj.model';
+import { ResMouCustClauseObj } from 'app/shared/model/response/mou/mou-cust/res-mou-cust-clause-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/response/mou/mou-cust/res-get-mou-cust-dlr-find-by-id-obj.model';
+import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { GenericKeyValueListObj } from 'app/shared/model/generic/generic-key-value-list-obj.model';
 import { VendorObj } from 'app/shared/model/vendor-obj.model';
+import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
 
 @Component({
   selector: 'app-change-mou-view-detail-history-ver',
   templateUrl: './change-mou-detail-history-ver.component.html'
 })
 export class ChangeMouDetailHistoryVerComponent implements OnInit {
-  @Input() ChangeMouTrxId: number;
   @Input() MouCustId: number;
   @Input() MouType: string;
-  @Input() TrxType: string; //CHNGMOU OR REQEXP
-  // listedCustFctrIsReady: boolean = false;
-  // listedCustFctr: Array<any>;
-  // ReqByIdObj: GenericObj = new GenericObj();
 
-  isDataAlreadyLoaded: boolean = false;
+  ReqByIdObj: GenericObj = new GenericObj();
+  MouCustClauseId: number;
+  CurrCode: string;
+  AssetTypeCode: string;
+  MrFirstInstTypeCode: string;
+  MrInterestTypeCode: string;
+  MrInstTypeCode: string;
+  MrInstSchmCode: string;
+  PayFreqCode: string;
+  DownPaymentFromPrcnt: number;
+  DownPaymentToPrcnt: number;
+  TenorFrom: number;
+  TenorTo: number;
 
-  viewMainDataObj: UcViewGenericObj = new UcViewGenericObj();
-  arrValue = [];
+  WopName: string;
+  PlafondAmt: number;
+  IsRevolving: boolean;
+  TopDays: number;
+  InterestRatePrcnt: number;
+  RetentionPrcnt: number;
+  IsDisclosed: boolean;
+  IsListedCust: boolean;
+  MrRecourseTypeCode: string;
+  Notes: string;
+  RevolvingType: string;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  mouCust: ResMouCustObj;
+  mouCustClause: ResMouCustClauseObj;
+  mouCustFctr: any;
+  listedCustFctrIsReady: boolean = false;
+  listedCustFctr: Array<any>;
+  listAssetData: Array<any>;
+  MrPaidByCode: string;
+  SingleInstCalcMthd: string;
+  LinkSupplier:any = "-";
+  MouCustDlrFindData: ResGetMouCustDlrFindByIdObj = new ResGetMouCustDlrFindByIdObj();
 
-  }
+  constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
   ngOnInit() {
-    // this.ReqByIdObj.Id = this.MouCustId ;
-    // if(this.MouType == 'FACTORING'){
-    //   this.getListedMouCustFctr(this.ReqByIdObj);
-    //   }
-    this.arrValue.push(this.ChangeMouTrxId);
-    this.arrValue.push(this.MouCustId);
-
-
-    if (this.TrxType == CommonConstant.CHANGE_MOU_TRX_TYPE_CHANGE_MOU) {
-      if (this.MouType == CommonConstant.DEALERFINANCING) {
-        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDetailFinancing.json";
-      }
-      else if (this.MouType == CommonConstant.FACTORING) {
-        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDetailFactoring.json";
-      }
-      else if (this.MouType == CommonConstant.GENERAL) {
-        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDetailGeneral.json";
-      }
-    } else if (CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP) {
-      if (this.MouType == CommonConstant.DEALERFINANCING) {
-        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChgMouDtlFinancingExpType.json";
-      }
-      else if (this.MouType == CommonConstant.FACTORING) {
-        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChgMouDtlFctrForExpType.json";
-      }
-      else if (this.MouType == CommonConstant.GENERAL) {
-        this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewChangeMouDtlGenrReqExpType.json";
-      }
+    this.ReqByIdObj.Id = this.MouCustId ;
+    this.GetListActiveRefPayFreq();
+    this.GetListKvpActiveRefCurr();
+    if(this.MouType == 'FACTORING'){
+    this.getListedMouCustFctr(this.ReqByIdObj);
     }
-    this.viewMainDataObj.whereValue = this.arrValue;
 
-    this.isDataAlreadyLoaded = true;
+    this.http.post(URLConstant.GetMouCustDataByMouCustId, this.ReqByIdObj).subscribe(
+      (response) => {
+
+        this.mouCust = response["MouCustObj"];
+        this.MouCustId = response["MouCustObj"].MouCustId;
+        this.CurrCode = response["MouCustObj"].CurrCode;
+        this.PlafondAmt = response["MouCustObj"].PlafondAmt;
+        this.IsRevolving = response["MouCustObj"].IsRevolving;
+        this.MouType = response["MouCustObj"].MrMouTypeCode;
+        this.RevolvingType = response["MouCustObj"].MrRevolvingTypeCode;
+
+        if (this.MouType == CommonConstant.GENERAL)
+        {
+          this.mouCustClause = response["MouCustClauseObj"];
+          this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
+          this.MrInterestTypeCode = this.mouCustClause.InterestTypeDescr;
+          this.MrFirstInstTypeCode = this.mouCustClause.MrFirstInstTypeCode;
+          this.MrInstSchmCode = this.mouCustClause.MrInstSchmCode;
+          this.PayFreqCode = this.mouCustClause.PayFreqCode;
+          this.DownPaymentFromPrcnt = this.mouCustClause.DownPaymentFromPrcnt;
+          this.DownPaymentToPrcnt = this.mouCustClause.DownPaymentToPrcnt;
+          this.TenorFrom = this.mouCustClause.TenorFrom;
+          this.TenorTo = this.mouCustClause.TenorTo;
+        }
+        else if (this.MouType == CommonConstant.FACTORING)
+        {
+          this.mouCustFctr = response["MouCustFctrObj"];
+          this.AssetTypeCode = this.mouCustFctr.AssetTypeCode;
+          this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
+          this.MrInstTypeCode = this.mouCustFctr.InstTypeDescr;
+          this.MrInstSchmCode = this.mouCustFctr.MrInstSchmCode;
+          this.SingleInstCalcMthd = this.mouCustFctr.SingleInstCalcMthdDescr;
+          this.MrPaidByCode =  this.mouCustFctr.PaidByDescr;
+          this.PayFreqCode = this.mouCustFctr.PayFreqCode;
+          this.DownPaymentFromPrcnt = this.mouCustFctr.DownPaymentFromPrcnt;
+          this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
+          this.TenorFrom = this.mouCustFctr.TenorFrom;
+          this.TenorTo = this.mouCustFctr.TenorTo;
+          this.WopName = this.mouCustFctr.WopName;
+          this.TopDays = this.mouCustFctr.TopDays;
+          this.InterestRatePrcnt = this.mouCustFctr.InterestRatePrcnt;
+          this.RetentionPrcnt = this.mouCustFctr.RetentionPrcnt;
+          this.IsListedCust = this.mouCustFctr.IsListedCust;
+          this.IsDisclosed = this.mouCustFctr.IsDisclosed;
+          this.MrRecourseTypeCode = this.mouCustFctr.MrRecourseTypeCode;
+          this.Notes = this.mouCustFctr.Notes;
+
+          var objVendor={
+            Code:this.mouCustFctr.VendorCode
+          }
+          this.http.post(URLConstant.GetVendorByVendorCode, objVendor).subscribe(
+            (responseLink)=>{
+              this.LinkSupplier = responseLink["VendorName"]
+            });
+        }
+        else if (this.MouType == CommonConstant.FINANCING)
+        {
+        this.http.post(URLConstant.GetMouCustDlrWithCustVendorNameFindById, this.ReqByIdObj).subscribe(
+          (responses) => {
+            this.MouCustDlrFindData.WopName = responses["WopName"];
+            this.MouCustDlrFindData.TopDays = responses["TopDays"];
+            this.MouCustDlrFindData.TopInterestRatePrcnt = responses["TopInterestRatePrcnt"];
+            this.MouCustDlrFindData.PayFreqCode = responses["PayFreqCode"];
+            this.MouCustDlrFindData.InterestRatePrcnt = responses["InterestRatePrcnt"];
+            this.MouCustDlrFindData.MaximumMonthsForExtend = responses["MaximumMonthsForExtend"];
+            this.MouCustDlrFindData.MaximumTimesForExtends = responses["MaximumTimesForExtends"];
+            this.MouCustDlrFindData.ExtendRatePrcnt = responses["ExtendRatePrcnt"];
+            this.MouCustDlrFindData.SpareDayToPay = responses["SpareDayToPay"];
+            this.MouCustDlrFindData.AssetCondition = responses["AssetCondition"];
+            this.MouCustDlrFindData.LcRate = responses["LcRate"];
+            this.MouCustDlrFindData.PrincipalPaidInExtendPrcntg = responses["PrincipalPaidInExtendPrcntg"];
+            this.MouCustDlrFindData.ManufacturerCode = responses["ManufacturerCode"];
+            this.MouCustDlrFindData.ManufacturerCustNo = responses["ManufacturerCustNo"];
+            this.MouCustDlrFindData.DealerCode = responses["DealerCode"];
+            this.MouCustDlrFindData.DealerCustNo = responses["DealerCustNo"];
+            this.MouCustDlrFindData.Notes = responses["Notes"];
+            this.MouCustDlrFindData.MaximumExtendTimes = responses["MaximumExtendTimes"];
+            this.MouCustDlrFindData.DealerName = responses["DealerName"];
+            this.MouCustDlrFindData.DealerCustName = responses["DealerCustName"];
+            this.MouCustDlrFindData.ManufacturerName = responses["ManufacturerName"];
+            this.MouCustDlrFindData.ManufacturerCustName = responses["ManufacturerCustName"];
+          })
+        }
+      })
+
+
+    this.http.post(URLConstant.GetMouCustAssetByMouCustId, this.ReqByIdObj).subscribe(
+      (response) => {
+        this.listAssetData = response[CommonConstant.ReturnObj];
+      });
+  }
+
+  dictRefPayFreq: { [id: string]: string } = {};
+  GetListActiveRefPayFreq() {
+    this.http.post(URLConstant.GetListActiveRefPayFreq, null).subscribe(
+      (response: GenericListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefPayFreq[element.PayFreqCode] = element.Descr;
+        }
+      }
+    );
+  }
+
+  dictRefCurr: { [id: string]: string } = {};
+  GetListKvpActiveRefCurr() {
+    this.http.post(URLConstant.GetListKvpActiveRefCurr, null).subscribe(
+      (response: GenericKeyValueListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefCurr[element.Key] = element.Value;
+        }
+      }
+    );
   }
 
   ClickLinkManufacturer(vendorCode: string) {
@@ -76,32 +192,25 @@ export class ChangeMouDetailHistoryVerComponent implements OnInit {
       });
   }
 
-  GetCallBack(ev: any) {
-    if (ev.Key == "manufacturer") {
-      this.ClickLinkManufacturer(ev.ViewObj.manufacturerCode)
-    } else if (ev.Key == "dealer") {
-      this.ClickLinkManufacturer(ev.ViewObj.dealerCode)
-    }
+  getListedMouCustFctr(ReqByIdObj){
+    this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, ReqByIdObj).subscribe(
+      (response) => {
+        this.listedCustFctr = response[CommonConstant.ReturnObj];
+        this.listedCustFctrIsReady = true;
+    });
   }
-  // openView(custNo) {
-  //   this.ReqByIdObj.CustNo = custNo;
-  //   this.http.post(URLConstant.GetCustByCustNo, this.ReqByIdObj).subscribe(
-  //     response => {
-  //       if(response["MrCustTypeCode"] == 'PERSONAL'){
-  //         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-  //       }
-  //       else if(response["MrCustTypeCode"] == 'COMPANY'){
-  //         AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
-  //       }
-  //     }
-  //   );
-  // }
 
-  // getListedMouCustFctr(ReqByIdObj){
-  //   this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, ReqByIdObj).subscribe(
-  //     (response) => {
-  //       this.listedCustFctr = response[CommonConstant.ReturnObj];
-  //       this.listedCustFctrIsReady = true;
-  //   });
-  // }
+  openView(custNo) {
+    this.ReqByIdObj.CustNo = custNo;
+    this.http.post(URLConstant.GetCustByCustNo, this.ReqByIdObj).subscribe(
+      response => {
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+          this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+        }
+        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+          this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+        }
+      }
+    );
+  }
 }
