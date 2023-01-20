@@ -30,6 +30,7 @@ import { ChangeMouViewDetailHistoryComponent } from "./change-mou-view-detail-hi
 import { ChangeMouViewAddcollHistoryVerComponent } from "./change-mou-view-addcoll-history-ver/change-mou-view-addcoll-history-ver.component";
 import { ChangeMouHistoryVerForViewComponent } from "./change-mou-view-history/change-mou-view-history.component";
 import { ChangeMouDetailHistoryVerComponent } from "./change-mou-detail-history-ver/change-mou-detail-history-ver.component";
+import { ChangeMouViewDetailHistoryOldComponent } from "./change-mou-view-detail-history-old/change-mou-view-detail-history-old.component";
 
 @NgModule({
     imports: [
@@ -66,7 +67,8 @@ import { ChangeMouDetailHistoryVerComponent } from "./change-mou-detail-history-
         ChangeMouViewAddcollHistoryVerComponent,
         ChangeMouViewDetailHistoryComponent,
         ChangeMouHistoryVerForViewComponent,
-        ChangeMouDetailHistoryVerComponent
+        ChangeMouDetailHistoryVerComponent,
+        ChangeMouViewDetailHistoryOldComponent
     ],
     entryComponents: [
         ChangeMouViewAddcollComponent,
