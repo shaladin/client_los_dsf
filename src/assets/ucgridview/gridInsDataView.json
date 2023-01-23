@@ -15,12 +15,6 @@
         {
             "type": "label",
             "position": "left",
-            "label": "Main Coverage",
-            "name": "MainCoverage"
-        },
-        {
-            "type": "label",
-            "position": "left",
             "label": "Paid By",
             "name": "PaidBy"
         },
@@ -83,11 +77,6 @@
             "type": "text",
             "position": "left",
             "property": "InsuredBy"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "MainCoverage"
         },
         {
             "type": "text",
