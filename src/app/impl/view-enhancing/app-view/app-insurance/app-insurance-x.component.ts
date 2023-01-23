@@ -21,6 +21,10 @@ export class AppInsuranceXComponent implements OnInit {
   totalCapitalizedAmt: number;
   totalCustPaidAmt: number;
   isFCTR : boolean = false;
+  isReadyCvg: boolean = false;
+
+  appInsCvgs: Array<any>;
+  appInsCvgsFinal: Array<any> = new Array<any>();
 
   constructor(
     private httpClient: HttpClient,
@@ -31,18 +35,22 @@ export class AppInsuranceXComponent implements OnInit {
     this.totalCustPaidAmt = 0;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if(this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CF4W /* penjagaan CF4W Fleet - Perubahan Impl X*/){
       this.isFCTR = true;
     }
-    this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { Id: this.AppId }).subscribe(
+    await this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { Id: this.AppId }).toPromise().then(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
         this.appCollObjs = response.CollateralAppInsObjects;
         this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
+        this.GetAppInsCvg(this.appCollObjs[0].AppInsObjId);
+        this.isReadyCvg = true;
       });
+
+
   }
 
   viewDetailLoanHandler(appAssetId){
@@ -58,5 +66,31 @@ export class AppInsuranceXComponent implements OnInit {
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
     });
+  }
+
+  async GetAppInsCvg(appInsObjId){
+    await this.httpClient.post(URLConstant.GetAppInsObjViewDetail, { Id: appInsObjId }).toPromise().then(
+      (response: any) => {
+        this.appInsCvgs = response.appInsCvgs;
+      });
+
+      for (const item of this.appInsCvgs) {
+        var addCvg = "";
+        for (let i = 0; i < item.appInsAddCvgObjs.length; i++){
+          if (i == (item.appInsAddCvgObjs.length - 1)) {
+            addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode;
+          }
+          else {
+            addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode + ", ";
+          }
+        }
+
+        this.appInsCvgsFinal.push({
+          YearNo: item.appInsMainCvgObj.YearNo,
+          MrMainCvgTypeCode: item.appInsMainCvgObj.MrMainCvgTypeCode,
+          MrAddCvgTypeCode: addCvg
+        });
+
+      }
   }
 }
