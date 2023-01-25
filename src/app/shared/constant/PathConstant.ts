@@ -87,13 +87,13 @@ export class PathConstant {
     public static NAP_APP_PRCS = "ApplicationProcess";
     public static NAP_DLFN = "DLFN";
     //#endregion
-    
+
     //#region Nap-CF2W
     public static CF2W_APP = "App";
     public static CF2W_ADD_FREE = "AddFree";
     public static CF2W_ADD_FIXED = "AddFixed";
     //#endregion
-    
+
     //#region Nap-Cust-Compl
     public static CUST_COMPL_PRSNL = PathConstant.DETAIL + "/" + PathConstant.PERSONAL;
     public static CUST_COMPL_COY = PathConstant.DETAIL + "/" + PathConstant.COY;
@@ -116,7 +116,7 @@ export class PathConstant {
     public static NAP1_ADD = PathConstant.NAP1 + "/" + PathConstant.ADD;
     public static NAP2_PAGING = PathConstant.NAP2 + "/" + PathConstant.PAGING;
     //#endregion
-    
+
     //#region Nap-Sharing-Page
     public static NAP_FROM_LEAD_PAGING = PathConstant.NAP_FROM_LEAD + "/" + PathConstant.PAGING;
     public static NAP_FROM_LEAD_DETAIL = PathConstant.NAP_FROM_LEAD + "/" + PathConstant.DETAIL;
@@ -277,7 +277,7 @@ export class PathConstant {
     public static ASSET_ALLOC_PAGING = PathConstant.ASSET_ALLOC + "/" + PathConstant.PAGING;
     public static ASSET_ALLOC_DETAIL = PathConstant.ASSET_ALLOC + "/" + PathConstant.DETAIL;
     //#endregion
-    
+
     //#region Nap-Crd-Prcs
     public static COMM_RSV_FUND_PAGING = PathConstant.COMM_RSV_FUND + "/" + PathConstant.PAGING;
     public static COMM_RSV_FUND_DETAIL = PathConstant.COMM_RSV_FUND + "/" + PathConstant.DETAIL;
@@ -323,7 +323,7 @@ export class PathConstant {
     public static CRD_APPRV_CR_PAGING = PathConstant.CRD_APPRV_CR + "/" + PathConstant.PAGING;
     public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstant.DETAIL;
     //#endregion
-    
+
     //#region Nap-App_Prcs
     public static APP_RVW = "ApplicationReview";
     public static APP_RVW_PAGING = PathConstant.APP_RVW + "/" + PathConstant.PAGING;
@@ -347,7 +347,7 @@ export class PathConstant {
     public static MOU_CUST_LEGAL_RVW_PAGING = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstant.PAGING;
     public static MOU_CUST_LEGAL_RVW_DETAIL = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstant.DETAIL;
     public static MOU_CUST = "Cust";
-    public static MOU_CUSTOMER = "Customer"; 
+    public static MOU_CUSTOMER = "Customer";
     public static MOU_CUST_RVW_PAGING = PathConstant.MOU_CUST + "/ReviewPaging";
     public static MOU_CUST_RVW_GENERAL = PathConstant.MOU_CUST + "/ReviewGeneral";
     public static MOU_CUST_RVW_FCTR = PathConstant.MOU_CUST + "/ReviewFactoring";
@@ -385,7 +385,7 @@ export class PathConstant {
     public static CHANGE_MOU_REQ = "ChangeMouRequest";
     public static CHANGE_MOU_REQ_PAGING = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.PAGING;
     public static CHANGE_MOU_REQ_DETAIL = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL;
-    public static CHANGE_MOU_REQ_DETAIL_CUST = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/" + PathConstant.MOU_CUSTOMER; 
+    public static CHANGE_MOU_REQ_DETAIL_CUST = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/" + PathConstant.MOU_CUSTOMER;
     public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/Customer/:MOUType";
     public static CHANGE_MOU = "ChangeMou";
     public static CHANGE_MOU_INQUIRY = PathConstant.CHANGE_MOU + "/" + PathConstant.INQUIRY;
@@ -457,7 +457,7 @@ export class PathConstant {
     public static POTENTIAL_RO_TEL_OFFER_DETAIL = PathConstant.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.DETAIL;
     public static POTENTIAL_RO_TEL_OFFER_VERIF = PathConstant.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.VERIF;
     //#endregion
-    
+
     //#region LTKM-Module
     public static REQ = "Request";
     public static VERIFY = "Verify";
@@ -476,7 +476,7 @@ export class PathConstant {
     public static TASK_REASSIGN_APV_PAGING = PathConstant.TASK_REASSIGN_APV + "/" + PathConstant.PAGING;
     public static TASK_REASSIGN_APV_DETAIL = PathConstant.TASK_REASSIGN_APV + "/" + PathConstant.DETAIL;
     //#endregion
-    
+
     public static TRIAL_CALC = "Trial-Calculation";
 
     //#region Report-Module
@@ -642,4 +642,13 @@ public static REQUISITION_DECISION = "requisitiondecision";
     public static APP_SRC = "AppSource";
     public static APP_SRC_PAGING = PathConstant.APP_SRC + "/" + PathConstant.PAGING;
     //endSetting
+
+
+
+    //#region Content Credit Review
+    public static CRD_REVIEW_CR_HISTORY = "CreditReviewCrHistory";
+    public static CRD_REVIEW_CR_DETAIL_HISTORY = PathConstant.CRD_REVIEW_CR_HISTORY + "/" + PathConstant.DETAIL;
+    //#endregion
+
+
 }

@@ -56,6 +56,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
 import { ViewDeviationComponent } from "./view-deviation/view-deviation.component";
 import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referantor-multi.component";
 import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail/tab-referantor-multi-detail.component";
+import { TabAnalysisResultHistoryComponent } from "./tab-analysis-result-history/tab-analysis-result-history.component";
+import { TabAnalysisResultHistoryDetailComponent } from "./tab-analysis-result-history-detail/tab-analysis-result-history-detail.component";
 
 
 @NgModule({
@@ -119,7 +121,9 @@ import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail
         ViewCreditProcessFlowComponent,
         ViewDeviationComponent,
         TabReferantorMultiComponent,
-        TabReferantorMultiDetailComponent
+        TabReferantorMultiDetailComponent,
+        TabAnalysisResultHistoryComponent,
+        TabAnalysisResultHistoryDetailComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

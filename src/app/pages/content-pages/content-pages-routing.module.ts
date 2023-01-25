@@ -8,7 +8,8 @@ import { RequestNewPasswordComponent } from './request-new-password/request-new-
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ModuleSelectionComponent } from './module-selection/module-selection.component';
- 
+import { CreditReviewCrDetailHistoryComponent } from './credit-review-cr-history/credit-review-cr-detail-history/credit-review-cr-detail-history.component';
+
 
 const routes: Routes = [
   {
@@ -61,6 +62,13 @@ const routes: Routes = [
         component: ModuleSelectionComponent,
         data: {
           title: 'Select Module Page'
+        }
+      },
+      {
+        path: PathConstant.CRD_REVIEW_CR_DETAIL_HISTORY,
+        component: CreditReviewCrDetailHistoryComponent,
+        data: {
+          title: 'Credit Review Detail Analysis History'
         }
       }
     ]

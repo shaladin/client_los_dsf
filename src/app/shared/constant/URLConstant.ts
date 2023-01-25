@@ -1515,6 +1515,9 @@ export class URLConstant {
   public static CrdRvwMakeNewApprovalV2 = environment.losUrl + "/v2" + "/AppCrdRvw/CrdRvwMakeNewApproval";
   public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/v1" + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
   public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/v1" + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
+  public static GetAppCrdRvwByAppCrdRvwHId = environment.losUrl + "/v1" + "/AppCrdRvw/GetAppCrdRvwByAppCrdRvwHId";
+  public static GetListAppCrdRvwById = environment.losUrl + "/v1" + "/AppCrdRvw/GetListAppCrdRvwById";
+
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/v1" + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";

@@ -91,7 +91,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_INQUIRY;//"/Nap/AddProcess/EditAppAftApv/Inquiry"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2;//"/Nap/AddProcess/ReturnHandling/NAP2"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4;//"/Nap/AddProcess/ReturnHandling/NAP4"
-  public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2_PAGING; //"NAP/AddProcess/ReturnHandling/NAP2" 
+  public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2_PAGING; //"NAP/AddProcess/ReturnHandling/NAP2"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4_PAGING; //"/Nap/AddProcess/ReturnHandling/NAP4"
   public static NAP_ADD_PRCS_EDIT_NAP_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_PAGING; //"/Nap/AddProcess/EditNapCust/Paging"
   public static NAP_ADD_PRCS_EDIT_NAP_CUST_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_DETAIL; //"/Nap/AddProcess/EditNapCust/Detail"
@@ -473,5 +473,9 @@ export class NavigationConstant {
   public static REPORT_MONTHLY_TOP_SUPPLIER = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_MONTHLY_TOP_SUPPLIER; //'/Report/RptMonthlyTopSupplier'
   public static REPORT_LTKM = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_LTKM; //'/Report/RptLtkm'
   //#endregion
-  
+
+  //#region Content Credit Review
+  public static NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CRD_REVIEW_CR_DETAIL_HISTORY; //"/Pages/Content/CreditReviewCrHistory/Detail"
+  //#endregion
+
 }
