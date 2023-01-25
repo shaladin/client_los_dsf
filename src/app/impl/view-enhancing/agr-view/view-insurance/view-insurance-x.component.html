@@ -4,6 +4,41 @@
     <lib-ucgridview [gridInput]="inputGridObj" (callback)="getEvent($event)"></lib-ucgridview>
   </div>
 </div>
+<div *ngIf="isReadyCvg">
+  <lib-ucSubsection [id]="'CoverageObjectId'" [title]="'Insurance Coverage'" [panel]="'CoverageObjectSection'"></lib-ucSubsection>
+  <div id="CoverageObjectSection">
+    <div class="col-md-12" style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: left;">
+              <span class="thead-header" name='assetName' translate>Year</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='insuredBy' translate>Main Coverage</span>
+            </th>
+            <th style="text-align: left;">
+              <span class="thead-header" name='paidBy' translate>Additional Coverage</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of  appInsMainCvgObjs; index as i">
+            <td style="text-align: left;">
+              {{item.YearNo}}
+            </td>
+            <td style="text-align: left;">
+              {{item.MainCvgTypeName}}
+            </td>
+            <td style="text-align: left;">
+              {{item.AddCvgTypeName}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <div class="SummarySection" style="margin-top: 20px;">
   <div class="col-md-12">
     <label class="col-md-3 adInsLabel" translate>Total Premi to Customer</label>
