@@ -18,16 +18,17 @@ export class ViewInsuranceDataXComponent implements OnInit {
   totalCustPaidAmt: number = 0;
   totalCapitalizedAmt: number = 0;
   totalCustDiscAmt: number = 0;
-  appCollObjFinal: Array<any>;
-  appInsCvgs: any;
+  isReadyCvg: boolean = false;
+
+  appInsCvgs: Array<any>;
+  appInsCvgsFinal: Array<any> = new Array<any>();
 
   constructor(private http: HttpClient, private modalService: NgbModal) { }
 
-  async ngOnInit() {
-    await this.http.post(URLConstantX.GetListAppInsObjByAgrmntIdForViewX, {Id: this.AgrmntId}).toPromise().then(
+  ngOnInit() {
+    this.http.post(URLConstantX.GetListAppInsObjByAgrmntIdForViewX, {Id: this.AgrmntId}).subscribe(
       (response) => {
         this.appCollObjs = response[CommonConstant.ReturnObj];
-        this.appCollObjFinal = this.appCollObjs
 
         for(let i = 0; i < this.appCollObjs.length; i++) {
           if(this.appCollObjs[i].TotalInsCustAmt != null) {
@@ -45,24 +46,11 @@ export class ViewInsuranceDataXComponent implements OnInit {
 
         this.custTotalPremi -= this.totalCustDiscAmt;
         this.totalCustPaidAmt = this.custTotalPremi - this.totalCapitalizedAmt;
+        this.GetAppInsCvg(this.appCollObjs[0].AppInsObjId);
+        this.isReadyCvg = true;
+
       }
     );
-    for (let i = 0; i < this.appCollObjFinal.length; i++){
-      await this.http.post(URLConstant.GetAppInsObjViewDetail, { Id: this.appCollObjFinal[i].AppInsObjId }).toPromise().then(
-        (response: any) => {
-          this.appInsCvgs = response.appInsCvgs;
-          let list = [];
-          let joinText: any;
-          list = this.appInsCvgs.map(function(val){
-            return val.appInsMainCvgObj.MrMainCvgTypeCode;
-          });
-          list = list.filter(function (x, i, a) {
-            return a.indexOf(x) == i;
-          });
-          joinText = list.join(',');
-          this.appCollObjFinal[i].MrMainCvgTypeCode = joinText;
-        });
-      }
   }
 
   viewDetailCollateralHandler(appInsObjId){
@@ -70,6 +58,32 @@ export class ViewInsuranceDataXComponent implements OnInit {
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
     });
+  }
+
+  async GetAppInsCvg(appInsObjId){
+    await this.http.post(URLConstant.GetAppInsObjViewDetail, { Id: appInsObjId }).toPromise().then(
+      (response: any) => {
+        this.appInsCvgs = response.appInsCvgs;
+      });
+
+      for (const item of this.appInsCvgs) {
+        var addCvg = "";
+        for (let i = 0; i < item.appInsAddCvgObjs.length; i++){
+          if (i == (item.appInsAddCvgObjs.length - 1)) {
+            addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode;
+          }
+          else {
+            addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode + ", ";
+          }
+        }
+
+        this.appInsCvgsFinal.push({
+          YearNo: item.appInsMainCvgObj.YearNo,
+          MrMainCvgTypeCode: item.appInsMainCvgObj.MrMainCvgTypeCode,
+          MrAddCvgTypeCode: addCvg
+        });
+
+      }
   }
 
 }

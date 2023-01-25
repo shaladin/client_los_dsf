@@ -21,8 +21,10 @@ export class AppInsuranceXComponent implements OnInit {
   totalCapitalizedAmt: number;
   totalCustPaidAmt: number;
   isFCTR : boolean = false;
-  appInsCvgs: any;
-  appCollObjFinal: Array<any>;
+  isReadyCvg: boolean = false;
+
+  appInsCvgs: Array<any>;
+  appInsCvgsFinal: Array<any> = new Array<any>();
 
   constructor(
     private httpClient: HttpClient,
@@ -44,24 +46,11 @@ export class AppInsuranceXComponent implements OnInit {
         this.custTotalPremi = response.AppInsurance.TotalCustPremiAmt;
         this.totalCapitalizedAmt = response.AppInsurance.TotalInsCptlzAmt;
         this.totalCustPaidAmt = response.AppInsurance.TotalPremiPaidByCustAmt;
-        this.appCollObjFinal = this.appCollObjs;
+        this.GetAppInsCvg(this.appCollObjs[0].AppInsObjId);
+        this.isReadyCvg = true;
       });
-    for (let i = 0; i < this.appCollObjFinal.length; i++){
-    await this.httpClient.post(URLConstant.GetAppInsObjViewDetail, { Id: this.appCollObjFinal[i].AppInsObjId }).toPromise().then(
-      (response: any) => {
-        this.appInsCvgs = response.appInsCvgs;
-        let list = [];
-        let joinText: any;
-        list = this.appInsCvgs.map(function(val){
-          return val.appInsMainCvgObj.MrMainCvgTypeCode;
-        });
-        list = list.filter(function (x, i, a) {
-          return a.indexOf(x) == i;
-        });
-        joinText = list.join(',');
-        this.appCollObjFinal[i].MrMainCvgTypeCode = joinText;
-      });
-    }
+
+
   }
 
   viewDetailLoanHandler(appAssetId){
@@ -77,5 +66,31 @@ export class AppInsuranceXComponent implements OnInit {
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
     });
+  }
+
+  async GetAppInsCvg(appInsObjId){
+    await this.httpClient.post(URLConstant.GetAppInsObjViewDetail, { Id: appInsObjId }).toPromise().then(
+      (response: any) => {
+        this.appInsCvgs = response.appInsCvgs;
+      });
+
+      for (const item of this.appInsCvgs) {
+        var addCvg = "";
+        for (let i = 0; i < item.appInsAddCvgObjs.length; i++){
+          if (i == (item.appInsAddCvgObjs.length - 1)) {
+            addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode;
+          }
+          else {
+            addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode + ", ";
+          }
+        }
+
+        this.appInsCvgsFinal.push({
+          YearNo: item.appInsMainCvgObj.YearNo,
+          MrMainCvgTypeCode: item.appInsMainCvgObj.MrMainCvgTypeCode,
+          MrAddCvgTypeCode: addCvg
+        });
+
+      }
   }
 }

@@ -83,7 +83,7 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
               this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, { TrxNo: e.RowObj.TransactionNo }).subscribe(
                 (response1) => {
                   //if (currDt < expDt)
-                  if (new Date() > new Date(response1["ExpiredDt"]) && response1["RequestId"] != null) {
+                  if (new Date() < new Date(response1["ExpiredDt"]) && response1["RequestId"] != null) {
                     //window.open
                     window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response1["RequestId"] + "&verification=" + response1["Verification"]);
                     $(document).ready(function () {
@@ -135,44 +135,45 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
 }
 
 function receiveMessage(event) {
+  console.log(event);
   let xhr = new XMLHttpRequest();
   try {
-    if (event.data === 'Success') {
-      xhr.open("POST", URLConstantX.ChangeAutoDebitRegisStat);
+    // if (event.data === 'Success') {
+    //   xhr.open("POST", URLConstantX.ChangeAutoDebitRegisStat);
 
-      let obj = {
-        TrxNo: trxNo,
-        Stat: CommonConstantX.AUTO_DEBIT_STATUS_INPAUTH
-      };
+    //   let obj = {
+    //     TrxNo: trxNo,
+    //     Stat: CommonConstantX.AUTO_DEBIT_STATUS_INPAUTH
+    //   };
 
-      xhr.setRequestHeader("Content-Type", "application/json");
+    //   xhr.setRequestHeader("Content-Type", "application/json");
 
-      xhr.onreadystatechange = () => {
-        if (xhr.status === 200) {
-          window.location.reload();
-        }
-      };
+    //   xhr.onreadystatechange = () => {
+    //     if (xhr.status === 200) {
+    //       window.location.reload();
+    //     }
+    //   };
 
-      xhr.send(JSON.stringify(obj));
-    }
-    else {
-      xhr.open("POST", URLConstantX.ChangeAutoDebitRegisStat);
+    //   xhr.send(JSON.stringify(obj));
+    // }
+    // else {
+    //   xhr.open("POST", URLConstantX.ChangeAutoDebitRegisStat);
 
-      let obj = {
-        TrxNo: trxNo,
-        Stat: CommonConstantX.AUTO_DEBIT_STATUS_FLD
-      };
+    //   let obj = {
+    //     TrxNo: trxNo,
+    //     Stat: CommonConstantX.AUTO_DEBIT_STATUS_FLD
+    //   };
 
-      xhr.setRequestHeader("Content-Type", "application/json");
+    //   xhr.setRequestHeader("Content-Type", "application/json");
 
-      xhr.onreadystatechange = () => {
-        if (xhr.status === 200) {
-          window.location.reload();
-        }
-      };
+    //   xhr.onreadystatechange = () => {
+    //     if (xhr.status === 200) {
+    //       window.location.reload();
+    //     }
+    //   };
 
-      xhr.send(JSON.stringify(obj));
-    }
+    //   xhr.send(JSON.stringify(obj));
+    // }
   } catch (e) {
     console.log(e);
   }

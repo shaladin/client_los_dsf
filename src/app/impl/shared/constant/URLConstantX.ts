@@ -208,8 +208,6 @@ export class URLConstantX {
   //credit review
   public static GetCrdRvwAppByCrdRvwCustInfoId = environment.losUrl + '/v1' + "/CrdRvwAppX/GetCrdRvwAppByCrdRvwCustInfoId";
   public static GetAssetAndAccByAppId = environment.losUrl + '/v1' + "/AppCrdRvwX/GetAssetAndAccByAppId"
-  public static GetAssetAndAccByAppIdV2 = environment.losUrl + '/v2' + "/AppCrdRvwX/GetAssetAndAccByAppId"
-
   //App Fin Data-Fee X
   public static GetInitAppFinDataByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataByAppId";
   public static GetInitFinDataForTrialCalcX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitFinDataForTrialCalc";
