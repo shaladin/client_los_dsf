@@ -68,6 +68,7 @@ import { AppInsuranceXComponent } from "app/impl/view-enhancing/app-view/app-ins
 import { AppViewInsuranceDetailXComponent } from "app/impl/view-enhancing/app-view/app-insurance/app-insurance-detail/app-insurance-detail-x.component";
 import { TabAnalysisResultHistoryComponent } from "./tab-analysis-result-history/tab-analysis-result-history.component";
 import { TabAnalysisResultHistoryDetailComponent } from "./tab-analysis-result-history-detail/tab-analysis-result-history-detail.component";
+import { TabAnalysisResultHistoryXComponent } from "app/impl/view-enhancing/app-view/tab-analysis-result-history-x/tab-analysis-result-history-x.component";
 
 
 @NgModule({
@@ -143,7 +144,8 @@ import { TabAnalysisResultHistoryDetailComponent } from "./tab-analysis-result-h
         AppInsuranceXComponent,
         AppViewInsuranceDetailXComponent,
         TabAnalysisResultHistoryComponent,
-        TabAnalysisResultHistoryDetailComponent
+        TabAnalysisResultHistoryDetailComponent,
+        TabAnalysisResultHistoryXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

@@ -9,6 +9,8 @@ import { PathConstant } from 'app/shared/constant/PathConstant';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ModuleSelectionComponent } from './module-selection/module-selection.component';
 import { CreditReviewCrDetailHistoryComponent } from 'app/NEW-NAP/business-process/credit-process/credit-review-cr-history/credit-review-cr-detail-history/credit-review-cr-detail-history.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { CreditReviewCrDetailHistoryXComponent } from 'app/impl/pages/credit-review-cr-history-x/credit-review-cr-detail-history-x/credit-review-cr-detail-history-x.component';
 
 
 const routes: Routes = [
@@ -67,6 +69,13 @@ const routes: Routes = [
       {
         path: PathConstant.CRD_REVIEW_CR_DETAIL_HISTORY,
         component: CreditReviewCrDetailHistoryComponent,
+        data: {
+          title: 'Credit Review Detail Analysis History'
+        }
+      },
+      {
+        path: PathConstantX.CRD_REVIEW_CR_DETAIL_HISTORY_X,
+        component: CreditReviewCrDetailHistoryXComponent,
         data: {
           title: 'Credit Review Detail Analysis History'
         }
