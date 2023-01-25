@@ -408,7 +408,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
             });
 
             this.isAddMode = false;
-
+            this.isActiveMode = false;
           }
           else
           {
@@ -434,6 +434,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
               });
 
               this.isActiveMode = true;
+            }
+            else
+            {
+              this.isActiveMode = false;
             }
           })
     }
@@ -1213,6 +1217,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
                 RequestedPlafond: this.RequestedPlafond
               })
             this.Status = response["Status"];
+            this.isActiveMode = false;
           }
           else
           {
@@ -1246,6 +1251,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
               });
 
               this.isActiveMode = true;
+            }
+            else
+            {
+              this.isActiveMode = false;
             }
           })
 
