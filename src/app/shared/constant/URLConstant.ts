@@ -516,7 +516,7 @@ export class URLConstant {
   public static CancelUploadV2 = environment.FoundationR3Url + "/v2" + "/Upload/CancelUpload";
   public static UploadReviewV2 = environment.FoundationR3Url + "/v2" + "/Upload/UploadReview";
 
-  
+
   // GENERIC
   public static GetPagingObjectBySQL = "/Generic/GetPagingObjectBySQL";
   public static GetPagingObjectForTaskReassignment = "/Generic/GetPagingObjectForTaskReassignment";
@@ -569,7 +569,7 @@ export class URLConstant {
   public static GetListAppGuarantorPersonalForView = environment.losUrl + "/v1" + "/AppCust/GetListAppGuarantorPersonalForView"
   public static GetListAppGuarantorCompanyForView = environment.losUrl + "/v1" + "/AppCust/GetListAppGuarantorCompanyForView"
   public static GetAppCustCompanyMainDataByAppId = environment.losUrl + "/v1" + "/AppCust/GetAppCustCompanyMainDataByAppId"
-  
+
   // AppCustCompanyMgmntShrholder
   public static GetAppCustCompanyMgmntShrholdersByAppCustCompanyMgmntShrholderId = environment.losUrl + "/v1" + "/AppCustCompanyMgmntShrholder/GetAppCustCompanyMgmntShrholdersByAppCustCompanyMgmntShrholderId"
   public static GetListManagementShareholderForListPagingByParentAppCustCompanyId = environment.losUrl + "/v1" + "/AppCustCompanyMgmntShrholder/GetListManagementShareholderForListPagingByParentAppCustCompanyId"
@@ -735,7 +735,7 @@ export class URLConstant {
   public static GetMouShareholderDuplicateCheck = environment.losUrl + "/v1" + "/MouCustDupCheck/GetMouShareholderDuplicateCheck";
   public static EditCustNoMouCust = environment.losUrl + "/v1" + "/MouCustDupCheck/EditCustNoMouCust";
   public static SubmitMouDupCheck = environment.losUrl + "/v1" + "/MouCustDupCheck/SubmitMouDupCheck";
- 
+
   // MOU Freeze Unfreeze
   public static SubmitMouFreezeUnfreeze = environment.losUrl + "/v1" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
   public static SubmitMouFreezeUnfreezeV2 = environment.losUrl + "/v2" + "/MouFreezeUnfreeze/SubmitMouFreezeUnfreeze";
@@ -1171,7 +1171,7 @@ export class URLConstant {
   public static GetCuCoInsLength = environment.losUrl + "/v1" + "/AppIns/GetCuCoInsLength";
   public static ExecuteInsRateCvgRule = environment.losUrl + "/v1" + "/AppIns/ExecuteInsRateCvgRule";
   public static ExecuteInsRateCvgRuleV2_1 = environment.losUrl + "/v2.1" + "/AppIns/ExecuteInsRateCvgRule";
-  
+
 
   //AGREEMENT DOC
   public static GetListAgrmntDocByAgrmntId = environment.losUrl + "/v1" + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
@@ -1513,6 +1513,9 @@ export class URLConstant {
   public static CrdRvwMakeNewApprovalV2 = environment.losUrl + "/v2" + "/AppCrdRvw/CrdRvwMakeNewApproval";
   public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/v1" + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
   public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/v1" + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
+  public static GetAppCrdRvwByAppCrdRvwHId = environment.losUrl + "/v1" + "/AppCrdRvw/GetAppCrdRvwByAppCrdRvwHId";
+  public static GetListAppCrdRvwById = environment.losUrl + "/v1" + "/AppCrdRvw/GetListAppCrdRvwById";
+
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/v1" + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";
@@ -1816,7 +1819,7 @@ export class URLConstant {
 
   // App List View
   public static GetAllAppAndAppOplListData = environment.losUrl + "/v1" + "/AppListView/GetAllAppAndAppOplListData";
-  
+
   public static GetAppListForCustView = environment.losUrl + "/v1" + "/Application/GetAppListForCustView";
 
   // Agreement List View
@@ -1972,7 +1975,7 @@ export class URLConstant {
   public static SendOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/SendOtp";
   public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
   public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
-  
+
   //Ref Fin Asset Usage Map
   public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
 
