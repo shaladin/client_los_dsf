@@ -36,7 +36,7 @@ export class TabAnalysisResultHistoryComponent implements OnInit {
     await this.http.post(URLConstant.GetListAppCrdRvwById, obj).toPromise().then(
       (response) => {
         this.listAppCrdRvw = response;
-        if (this.listAppCrdRvw.length != 0){
+        if (this.listAppCrdRvw.length > 0){
           this.isShowCrdRvw = true;
         }
       }
