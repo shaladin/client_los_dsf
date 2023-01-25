@@ -19,7 +19,6 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
 
   @Input() MrCustTypeCode: string;
   @Input() LtkmCustId: number;
-  @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   @Output() OutputAddr: EventEmitter<Object> = new EventEmitter();
   inputGridObj: InputGridObj = new InputGridObj();
   InputObj: InputCustomAddrLtkmObj = new InputCustomAddrLtkmObj();
@@ -27,7 +26,6 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
   Mode: string = "add";
   IsDetail: boolean = false;
   IsReady: boolean = false;
-  ListAddressLtkm: Array<LtkmCustAddrObj> = new Array();
 
   constructor(
     private http: HttpClient,
@@ -53,7 +51,7 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = this.ListAddress;
         this.IsReady = true;
-        this.OutputAddr.emit({ listLtkmAddress: this.ListAddress});
+        this.OutputAddr.emit({ IsDetail: this.IsDetail, listLtkmAddress: this.ListAddress});
       }
     );
   }
@@ -77,6 +75,7 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
     this.InputObj.LtkmCustAddrId = event.RowObj.LtkmCustAddrId;
     this.InputObj.MrCustTypeCode = this.MrCustTypeCode;
     this.InputObj.InputedAddr = event.RowObj;
+    this.OutputAddr.emit({ IsDetail: this.IsDetail, listLtkmAddress: this.ListAddress});
   }
 
   GetEvent(event){
@@ -158,8 +157,7 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
         }
       }
     }
-    this.ListAddressLtkm = this.ListAddress;
-    this.OutputAddr.emit({ listLtkmAddress: this.ListAddressLtkm});
+    this.OutputAddr.emit({ IsDetail: this.IsDetail, listLtkmAddress: this.ListAddress});
     this.IsReady = true;
   }
 }

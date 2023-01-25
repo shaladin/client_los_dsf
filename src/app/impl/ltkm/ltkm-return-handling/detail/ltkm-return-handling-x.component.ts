@@ -60,6 +60,7 @@ import { AppCustSocmedObj } from 'app/shared/model/app-cust-socmed-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { AddressService } from 'app/shared/services/custAddr.service';
+import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
 @Component({
     selector: 'app-ltkm-return-handling-x',
     templateUrl: './ltkm-return-handling-x.component.html',
@@ -199,6 +200,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     WfTaskListId: any;
     ReturnHandlingId: number;
     FinFormIsDetail: boolean = false;
+    EditAddressIsDetail: boolean = false;
     BankFormIsDetail: boolean = false;
     LtkmCustId: number;
     isLockLookupCust: boolean = false;
@@ -291,6 +293,32 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             }
         );
     }
+
+    ltkmCustGrpParentObjs: CustParentChildObj;
+    ltkmCustGrpChildObjs: Array<CustParentChildObj> = new Array<CustParentChildObj>();
+    ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
+    //20230125, richard, update mekanisme baca cust group
+    async getCustDataView(custtype: string){
+        let url = "";
+        if(custtype == CommonConstant.CustTypePersonal)
+        {
+            url = URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId;
+        }else{
+            url = URLConstant.GetLtkmCustDataCompanyForViewByLtkmCustId;
+        }
+
+        await this.http.post(url, { LtkmCustId: this.LtkmCustId }).toPromise().then(
+          (response) => {
+            this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
+
+            if(response["rLtkmCustGrpParent"] != null){
+                this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"];
+            }
+            if(response["rLtkmCustGrpChild"] != null){
+                this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];
+            }
+          });
+      }
 
     claimTask() {
         if (environment.isCore) {
@@ -439,7 +467,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     setCustPersonalObjForSave() {
         var custDataPersonalObj = new LtkmCustDataPersonalObj();
         custDataPersonalObj.LtkmCustObj = this.setAppCust();
-        // custDataPersonalObj.LtkmCustPersonalObj = this.setAppCustPersonal();
+        custDataPersonalObj.LtkmCustPersonalObj = this.setAppCustPersonal();
         // custDataPersonalObj.LtkmCustAddrLegalObj = this.setAppCustAddrLegal();
         // custDataPersonalObj.LtkmCustAddrResidenceObj = this.setAppCustAddrResidence();
         // custDataPersonalObj.LtkmCustAddrMailingObj = this.setAppCustAddrMailing();
@@ -450,7 +478,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         custDataPersonalObj.LtkmCustObj.MrCustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
         custDataPersonalObj.LtkmCustPersonalJobDataObj = this.setAppCustPersonalJobData(custDataPersonalObj.LtkmCustObj.MrCustModelCode);
         // custDataPersonalObj.AppCustSocmedObjs = this.setAppCustSocmedObj(); //tidak dipakai
-        custDataPersonalObj.LtkmCustGrpObjs = this.setAppCustGrpObj();
+        //20230125, richard, ubah mekanisme jadi hanya bisa view saja
+        // custDataPersonalObj.LtkmCustGrpObjs = this.setAppCustGrpObj();
         custDataPersonalObj.LtkmCustEmergencyContact = this.setLtkmCustEmergencyContactData();
         custDataPersonalObj.LtkmCustOtherInfoObj = this.setltkmCustOtherInfoData();
 
@@ -560,7 +589,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     setCustCompanyObjForSave() {
         var custDataCompanyObj = new CustDataCompanyLtkmObj();
         custDataCompanyObj.LtkmCustObj = this.setAppCust();
-        // custDataCompanyObj.LtkmCustCompanyObj = this.setAppCustCompany();
+        custDataCompanyObj.LtkmCustCompanyObj = this.setAppCustCompany();
         // custDataCompanyObj.LtkmCustAddrLegalObj = this.setAppCustAddrLegal();
         // custDataCompanyObj.LtkmCustAddrMailingObj = this.setAppCustAddrMailing();
         custDataCompanyObj.LtkmCustAddrObjs = this.listLtkmAddress;
@@ -569,7 +598,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         custDataCompanyObj.LtkmCustCompanyFinDataObjs = this.listLtkmCustCoyFinData;
         custDataCompanyObj.LtkmCustBankAccObjs = this.listLtkmCustBankAccCompany;
         custDataCompanyObj.LtkmCustCompanyLegalDocObjs = this.listLtkmCustCompanyLegalDoc;
-        custDataCompanyObj.LtkmCustGrpObjs = this.setAppCustGrpObj();
+        //20230125, richard, ubah mekanisme jadi hanya bisa view saja
+        // custDataCompanyObj.LtkmCustGrpObjs = this.setAppCustGrpObj();
         custDataCompanyObj.LtkmCustOtherInfoObj = this.setltkmCustOtherInfoDataCompany();
         // custDataCompanyObj.LtkmCustAttrContent = this.setLtkmCustAttrContent(this.attrlistcustcomponentcoy.ListAttrContent.concat(this.attrlistfindatacomponentcoy.ListAttrContent));
         custDataCompanyObj.LtkmCustAttrContent = this.setAttrContentCoy();
@@ -1457,6 +1487,9 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     }
 
     updateListLtkmAddress(ev) {
+        if (ev != undefined) {
+            this.EditAddressIsDetail = ev.IsDetail;
+        }
       this.listLtkmAddress = ev.listLtkmAddress;
   }
 
@@ -1528,6 +1561,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
                         this.isMarried = this.custDataPersonalObj.LtkmCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
 
                         this.CheckSpouseExist();
+
+                        await this.getCustDataView(CommonConstant.CustTypePersonal);
                     }
 
                     if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
@@ -1571,12 +1606,15 @@ export class LtkmReturnHandlingXComponent implements OnInit {
                         // this.setAddrMailingObj(CommonConstant.CustTypeCompany);
 
                         this.MrCustTypeCode = this.custDataCompanyObj.LtkmCustObj.MrCustTypeCode;
+
+                        await this.getCustDataView(CommonConstant.CustTypeCompany);
                     }
                 }
                 else {
                     this.MrCustTypeCode = this.CustTypeObj[0].Key;
                 }
                 this.onChangeMrCustTypeCode(this.MrCustTypeCode);
+                
                 this.isBindDataDone = true;
             },
             (error) => {

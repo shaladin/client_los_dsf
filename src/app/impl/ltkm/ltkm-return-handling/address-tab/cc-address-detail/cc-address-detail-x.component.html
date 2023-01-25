@@ -1,16 +1,18 @@
 <form class="form form-horizontal" [formGroup]="AddressForm" (ngSubmit)="AddressForm.valid && SaveForm()"
   #enjiForm="ngForm">
-  <div id="Address">
-    <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
-      [identifier]="'Address'" [UCAddrForm]="AddressForm"></lib-ucaddress>
-      <div class="pull-right margin-15">
-        <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
-          <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
-        </button>
-        <button type="submit" class="btn btn-raised btn-primary mr-1"
-          (click)=formValidate.scrollIfFormHasErrors(AddressForm)>
-          <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
-        </button>
-      </div>
+  <!-- <lib-ucSubsection [id]="'AddressId'" [title]="'Edit Customer Address'" [panel]="'Address'">
+  </lib-ucSubsection>
+  <div id="Address"> -->
+  <lib-ucaddress #UcAddrGrp *ngIf="isUcAddressReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+    [identifier]="'Address'" [UCAddrForm]="AddressForm"></lib-ucaddress>
+  <!-- </div> -->
+  <div>
+    <button type="button" (click)="Cancel()" class="btn btn-raised btn-warning mr-1">
+      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary mr-1"
+      (click)=formValidate.scrollIfFormHasErrors(AddressForm)>
+      <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+    </button>
   </div>
 </form>
