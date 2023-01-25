@@ -36,8 +36,6 @@ export class ViewAgrmntInsuranceXComponent implements OnInit {
   appAssetObj: AppAssetObj = new AppAssetObj();
   gridAssetDataObj: InputGridObj = new InputGridObj();
   listAppAssetObj: any;
-  appCollObjFinal: Array<any>;
-  appInsCvgs: any;
 
   constructor(
     private http: HttpClient,
@@ -55,23 +53,7 @@ export class ViewAgrmntInsuranceXComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        for (let i = 0; i < this.appCollObjFinal.length; i++){
-          this.http.post(URLConstant.GetAppInsObjViewDetail, { Id: this.appCollObjFinal[i].AppInsObjId }).toPromise().then(
-            (response: any) => {
-              this.appInsCvgs = response.appInsCvgs;
-              let list = [];
-              let joinText: any;
-              list = this.appInsCvgs.map(function(val){
-                return val.appInsMainCvgObj.MrMainCvgTypeCode;
-              });
-              list = list.filter(function (x, i, a) {
-                return a.indexOf(x) == i;
-              });
-              joinText = list.join(',');
-              this.appCollObjFinal[i].MainCoverage = joinText;
-            });
-          }
-        this.inputGridObj.resultData.Data = this.appCollObjFinal;
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.result = this.inputGridObj.resultData.Data;
 
         this.PaidAmtByCust = 0;
