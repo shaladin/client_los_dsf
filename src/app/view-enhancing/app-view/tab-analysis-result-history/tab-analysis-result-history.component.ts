@@ -18,6 +18,7 @@ export class TabAnalysisResultHistoryComponent implements OnInit {
   appCrdRvwHId: number;
 
   urlLink: string = "";
+  isShowCrdRvw: boolean = false;
 
   constructor(private http: HttpClient) { }
 
@@ -35,6 +36,9 @@ export class TabAnalysisResultHistoryComponent implements OnInit {
     await this.http.post(URLConstant.GetListAppCrdRvwById, obj).toPromise().then(
       (response) => {
         this.listAppCrdRvw = response;
+        if (this.listAppCrdRvw.length != 0){
+          this.isShowCrdRvw = true;
+        }
       }
     );
   }
