@@ -94,7 +94,7 @@
       },
       {
         "type": "textbox",
-        "name": "VATH.LEVEL_APV",
+        "name": "VATH.NODE",
         "id": "levelId",
         "value": "",
         "label": "Group Level Approval",
@@ -135,10 +135,19 @@
       },
       {
         "type": "dropdown",
-        "name": "ROA.AREA_NAME",
-        "id": "OfficeAreaId",
+        "datatype": "text",
+        "name": "ROA.AREA_CODE",
+        "id": "areaNameId",
+        "value": "",
         "label": "Office Area",
-        "ddlType" : "all"
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefOfficeArea/GetListKvpActiveRefOfficeArea",
+        "itemsUrl": [],
+        "items": [],
+        "ddlType": "all"
       },
       {
         "type": "textbox",
@@ -192,7 +201,7 @@
       {
         "type": "label",
         "position": "left",
-        "label": "Pokok Hutang",
+        "label": "NTF Amount",
         "name": "NtfAmt"
       },
       {
@@ -290,8 +299,10 @@
                             }
                         ],
                         "result": {
-                            "type": "url",
+                            "type": "link",
                             "path": "VIEW_CREDIT_REVIEW",
+                            "target": "_blank",
+                            "property": "AppStat",
                             "icon": "ft-edit-2",
                             "param": [
                                 {

@@ -19,11 +19,11 @@
             <div class="px-3">
               <app-crd-rvw-cust-info *ngIf="isShow" [appId]="AppId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
               </app-crd-rvw-cust-info>
-              <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+              <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="AppId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
               </app-crd-rvw-fam-guar>
               <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
 
-              <app-crd-rvw-third-party-checking *ngIf="appNo != ''" [AppNo]="AppNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
+              <app-crd-rvw-third-party-checking *ngIf="AppNo != ''" [AppNo]="AppNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
               </app-crd-rvw-third-party-checking>
               <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="AppId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
               </app-crd-rvw-app-info>
