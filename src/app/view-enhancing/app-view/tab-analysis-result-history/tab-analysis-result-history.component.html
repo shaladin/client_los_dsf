@@ -41,7 +41,7 @@
   <div class="card">
     <lib-ucSubsection [id]="'creditReviewId'" [title]="'Credit Review'" [panel]="'creditReview'">
     </lib-ucSubsection>
-    <div class="form-body" [id]="'creditReview'">
+    <div *ngIf="isShowCrdRvw" class="form-body" [id]="'creditReview'">
       <iframe [src]="urlLink | safe" style="width: 1400px; height: 1000px;" title="'Credit Review'"></iframe>
     </div>
   </div>
