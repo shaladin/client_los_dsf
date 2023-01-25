@@ -1742,7 +1742,7 @@ export class CustMainDataXDsfComponent implements OnInit {
     if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
     {
       //Self Custom Changes CR MPF & FD Validation
-      if (this.LobCode == CommonConstantDsf.MPF || this.LobCode == CommonConstantDsf.FD)
+      if (this.LobCode == CommonConstantDsf.MPF || this.LobCode == CommonConstantDsf.FD || this.LobCode == CommonConstantDsf.FMU)
       {
         // let isHaveAgrmntParent : boolean = false;
         // await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
@@ -1767,17 +1767,18 @@ export class CustMainDataXDsfComponent implements OnInit {
         //   return;
         // }
 
-        await this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPFFD).toPromise().then(
-          (response) => {
-
-            let isHaveAgrmntParent : boolean = false;
-            this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).subscribe(
+        let isHaveAgrmntParent : boolean = false;
+        await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
               (response) => {
                 if (response && response.length > 0) isHaveAgrmntParent = true;
               }
             );
+
+        await this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPFFD).toPromise().then(
+          (response) => {
+
             let ResponseObj = response[CommonConstant.ReturnObj];
-            if (isHaveAgrmntParent)
+            if (!isHaveAgrmntParent)
             {
               this.toastr.warningMessage(ExceptionConstantDsf.CUST_NOT_HAVE_AGR_PARENT);
               return;

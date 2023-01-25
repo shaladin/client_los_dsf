@@ -19,4 +19,5 @@ export class CommonConstantDsf {
 
     public static MPF = 'MPF';
     public static FD = 'FD';
+    public static FMU = 'FMU';
 }
