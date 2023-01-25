@@ -1,0 +1,109 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Credit Analysis Review Detail</h4>
+
+  <button *ngIf="IsPopup" type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+  </button>
+  <button *ngIf="!IsPopup" type="button" class="btn btn-raised btn-warning mr-1 mb-0" (click)="onBackClick()">
+      <i class="fa fa-arrow-left mr-1"></i> <span translate>Back</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="col-md-12 text-left" *ngIf="BizTemplateCode !== 'OPL'">
+    <div class="card">
+      <lib-ucSubsection *ngIf="isFormOnCreditInvestigation" [id]="'formCreditInvestigationId'" [title]="'Credit Investigation Analysis'" [panel]="'formCreditInvestigation'">
+      </lib-ucSubsection>
+      <div *ngIf="isFormOnCreditInvestigation" class="form-body" [id]="'formCreditInvestigation'">
+        <div class="form-body">
+
+          <div class="form-group row">
+            <div class="form-group col-md-4">
+              <label class="adInsLabel"  translate>Analysis By</label>
+            </div>
+            <div class="col-md-8">
+              <label class="adInsLabel"> {{ResponseCreditInvestigationData?.CrdRiskEmpNoDesc}} </label>
+            </div>
+          </div>
+
+          <div *ngFor="let item of ResponseCreditInvestigationData?.AppCrdInvstgDObjs" class="form-group row">
+            <div class="form-group col-md-4">
+              <label class="adInsLabel"> {{item.AnalysisItemName}} </label>
+            </div>
+            <div class="col-md-8">
+              <label class="adInsLabel"> {{item.AnalysisResult}} </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <lib-ucSubsection *ngIf="isFormOnCreditReview" [id]="'formCreditReviewId'" [title]="'Credit Review Analysis'" [panel]="'formCreditReview'">
+      </lib-ucSubsection>
+      <div *ngIf="isFormOnCreditReview" class="form-body" [id]="'formCreditReview'">
+        <div class="form-body">
+
+          <div class="form-group row">
+            <div class="form-group col-md-4">
+              <label class="adInsLabel"  translate> Analysis By </label>
+            </div>
+            <div class="col-md-8">
+              <label class="adInsLabel"> {{ResponseCreditReviewData?.CrdAnalystEmpNoDesc}} </label>
+            </div>
+          </div>
+
+          <div *ngFor="let item of ResponseCreditReviewData?.appCrdRvwDObjs" class="form-group row">
+            <div class="form-group col-md-4">
+              <label class="adInsLabel"> {{item.AnalysisItemName}} </label>
+            </div>
+            <div class="col-md-8">
+              <label class="adInsLabel"> {{item.AnalysisResult}} </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-12 text-left" *ngIf="BizTemplateCode === 'OPL'">
+    <div class="card">
+      <lib-ucSubsection *ngIf="isFormOnAppReview" [id]="'AppReviewAnalysisId'" [title]="'Application Review Analysis'" [panel]="'AppReviewAnalysis'">
+      </lib-ucSubsection>
+      <div *ngIf="isFormOnAppReview" class="form-body" [id]="'AppReviewAnalysis'">
+        <div class="form-body">
+          <div class="form-group row">
+            <div class="form-group col-md-4">
+              <label class="adInsLabel"  translate> Analysis By </label>
+            </div>
+            <div class="col-md-8">
+              <label class="adInsLabel"> {{ResponseAppReviewData.CrdAnalystEmpNoDesc}} </label>
+            </div>
+          </div>
+
+          <div *ngFor="let item of ResponseAppReviewData.appCrdRvwDObjs" class="form-group row">
+            <div class="form-group col-md-4">
+              <label class="adInsLabel"> {{item.AnalysisItemName}} </label>
+            </div>
+            <div class="col-md-8">
+              <label class="adInsLabel"> {{item.AnalysisResult}} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <lib-ucSubsection *ngIf="isFormOnAppReviewInfo" [id]="'AppReviewInfoId'" [title]="'Application Review Info'" [panel]="'AppReviewInfo'">
+      </lib-ucSubsection>
+      <div *ngIf="isFormOnAppReviewInfo" class="form-body" [id]="'AppReviewInfo'">
+        <div *ngFor="let item of ResponseAppReviewInfo" class="form-group row">
+          <div class="form-group col-md-4">
+            <label class="adInsLabel"> {{item.ScoreTypeDescr}} </label>
+          </div>
+          <div class="col-md-8">
+            <label class="adInsLabel"> {{item.ScoreValue}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -45,6 +45,7 @@ import { ViewFraudDetectionResultComponent } from './view-fraud-detection-result
 import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.component';
 import { ChangeMouViewModule } from "app/view-enhancing/change-mou-view/change-mou-view.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { TabDeviationHistoryComponent } from "./tab-deviation-history/tab-deviation-history.component";
 
 @NgModule({
   exports: [
@@ -88,6 +89,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     ViewFraudDetectionResultComponent,
     ViewSurveyVerifComponent,
     ChangeMouViewModule,
+    TabDeviationHistoryComponent
   ],
   imports: [
     CommonModule,
@@ -139,6 +141,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     FraudVerificationComponent,
     ViewFraudDetectionResultComponent,
     ViewSurveyVerifComponent,
+    TabDeviationHistoryComponent
   ],
   providers: [
     NGXToastrService

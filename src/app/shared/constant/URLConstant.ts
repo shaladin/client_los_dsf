@@ -1515,6 +1515,8 @@ export class URLConstant {
   public static CrdRvwMakeNewApprovalV2 = environment.losUrl + "/v2" + "/AppCrdRvw/CrdRvwMakeNewApproval";
   public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/v1" + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
   public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/v1" + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
+  public static GetAppCrdRvwByAppCrdRvwHId = environment.losUrl1 + "/v1" + "/AppCrdRvw/GetAppCrdRvwByAppCrdRvwHId";
+  public static GetListAppCrdRvwById = environment.losUrl1 + "/v1" + "/AppCrdRvw/GetListAppCrdRvwById";
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/v1" + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";
@@ -1975,7 +1977,7 @@ export class URLConstant {
   public static SendOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/SendOtp";
   public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
   public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
-  
+
   //Ref Fin Asset Usage Map
   public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
 
