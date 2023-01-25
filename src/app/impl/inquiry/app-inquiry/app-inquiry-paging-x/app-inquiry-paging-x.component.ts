@@ -92,10 +92,10 @@ export class AppInquiryPagingXComponent implements OnInit, OnDestroy {
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );
