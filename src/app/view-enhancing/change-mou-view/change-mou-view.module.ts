@@ -29,9 +29,10 @@ import { ChangeMouMainInfoXComponent } from '../../impl/view-enhancing/change-mo
 import { ChangeMouViewDetailXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-detail/change-mou-view-detail-x.component";
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
-import { ChangeMouHistoryVersionViewXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-history/change-mou-view-history-x.component";
+import { ChangeMouViewAddcollHistoryXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-addcoll-history/change-mou-view-addcoll-history-x.component";
+import { ChangeMouViewAddcollHistoryVerXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-addcoll-history-ver/change-mou-view-addcoll-history-ver-x.component";
+import { ChangeMouViewDetailHistoryXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-detail-history/change-mou-view-detail-history-x.component";
 import { ChangeMouAddcollMouViewXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-addcoll-mou-view/change-mou-addcoll-mou-view-x.component";
-import { ChangeMouDetailHistoryXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-detail/change-mou-detail-history-x.component";
 
 @NgModule({
     imports: [
@@ -67,9 +68,9 @@ import { ChangeMouDetailHistoryXComponent } from "app/impl/view-enhancing/change
         ChangeMouViewAddcollXComponent,
         ChangeMouMainInfoXComponent,
         ChangeMouViewDetailXComponent,
-        ChangeMouHistoryVersionViewXComponent,
-        ChangeMouAddcollMouViewXComponent,
-        ChangeMouDetailHistoryXComponent
+        ChangeMouViewAddcollHistoryXComponent,
+        ChangeMouViewAddcollHistoryVerXComponent,
+        ChangeMouViewDetailHistoryXComponent
     ],
     entryComponents: [
         ChangeMouViewAddcollComponent,
