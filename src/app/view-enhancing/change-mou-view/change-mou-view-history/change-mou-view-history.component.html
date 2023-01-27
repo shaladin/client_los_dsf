@@ -1,0 +1,61 @@
+<div class="col-md-12" >
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-body">
+          <h4 class="form-section card-title" translate>Change MOU Version History</h4>
+          <div *ngIf="!isExecuted && isReady">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="adInsLabel"> <b>Old Value</b> </label>
+                <app-change-mou-view-detail-history-ver [MouCustId]="MouCustId" [MouType]="MouType">
+
+                </app-change-mou-view-detail-history-ver>
+              </div>
+              <div class="col-md-6">
+                <label class="adInsLabel"> <b>New Value</b> </label>
+                <app-change-mou-view-detail-history [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MouType">
+
+                </app-change-mou-view-detail-history>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isExecuted && isReady">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="adInsLabel"> <b>Old Value</b> </label>
+                <app-change-mou-view-detail-history-old [ChangeMouTrxId]="ChangeMouTrxIdPrev" [MouCustId]="MouCustId" [MouType]="MouType">
+
+                </app-change-mou-view-detail-history-old>
+              </div>
+              <div class="col-md-6">
+                <label class="adInsLabel"> <b>New Value</b> </label>
+                <app-change-mou-view-detail-history [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MouType">
+
+                </app-change-mou-view-detail-history>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isPrevExist && isReady">
+            <label class="adInsLabel"> <b>Old Value</b> </label>
+            <app-change-mou-view-addcoll-history [ChangeMouTrxId]="ChangeMouTrxIdPrev">
+
+            </app-change-mou-view-addcoll-history>
+          </div>
+          <div *ngIf="!isPrevExist && isReady">
+            <label class="adInsLabel"> <b>Old Value</b> </label>
+            <app-change-mou-view-addcoll-history-ver [MouCustId]="MouCustId">
+
+            </app-change-mou-view-addcoll-history-ver>
+          </div>
+          <div>
+            <label class="adInsLabel"> <b>New Value</b> </label>
+            <app-change-mou-view-addcoll-history [ChangeMouTrxId]="ChangeMouTrxId">
+
+            </app-change-mou-view-addcoll-history>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

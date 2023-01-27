@@ -1,0 +1,51 @@
+<div class="col-md-12" >
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-body">
+          <h4 class="form-section card-title" translate>Change MOU Version History</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div *ngIf="isPrevExist && isReady">
+                <label class="adInsLabel"> <b>Old Value</b> </label>
+                <app-change-mou-detail-history [ChangeMouTrxId]="ChangeMouTrxIdPrev" [MouCustId]="MouCustId" [MouType]="MouType" [TrxType]="TrxType">
+
+                </app-change-mou-detail-history>
+              </div>
+              <div *ngIf="!isPrevExist && isReady">
+                <label class="adInsLabel"> <b>Old Value</b> </label>
+                <app-change-mou-view-detail-history-ver [MouCustId]="MouCustId" [MouType]="MouType">
+
+                </app-change-mou-view-detail-history-ver>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div>
+                <label class="adInsLabel"> <b>New Value</b> </label>
+                <app-change-mou-detail-history [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MouType" [TrxType]="TrxType">
+
+                </app-change-mou-detail-history>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isPrevExist && isReady">
+            <label class="adInsLabel"> <b>Old Value</b> </label>
+            <app-change-mou-addcoll-history [ChangeMouTrxId]="ChangeMouTrxIdPrev">
+            </app-change-mou-addcoll-history>
+          </div>
+          <div *ngIf="!isPrevExist && isReady">
+            <label class="adInsLabel"> <b>Old Value</b> </label>
+            <app-change-mou-view-addcoll-history-ver [MouCustId]="MouCustId">
+            </app-change-mou-view-addcoll-history-ver>
+          </div>
+          <div>
+            <label class="adInsLabel"> <b>New Value</b> </label>
+            <app-change-mou-addcoll-history [ChangeMouTrxId]="ChangeMouTrxId">
+            </app-change-mou-addcoll-history>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
