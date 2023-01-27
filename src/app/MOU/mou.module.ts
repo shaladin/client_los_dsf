@@ -110,6 +110,10 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
 import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
 import { MouCustMgmntShrholderPublicComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
 import { MouCustAttrContentComponentComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-attr-content-component/mou-cust-attr-content-component.component";
+import { ChangeMouAddcollHistoryComponent } from "./change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history.component";
+import { ChangeMouDetailHistoryComponent } from "./change-mou/change-mou-view/change-mou-detail-history/change-mou-detail-history.component";
+import { ChangeMouViewModule } from "app/view-enhancing/change-mou-view/change-mou-view.module";
+import { ChangeMouHistoryVersionComponent } from "./change-mou/change-mou-view/change-mou-history/change-mou-history.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -147,7 +151,8 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalgeneralinfoModule,
     SharedModule,
-    NgMultiSelectDropDownModule
+    NgMultiSelectDropDownModule,
+    ChangeMouViewModule
   ],
   declarations: [
     DocSignerComponent,
@@ -246,7 +251,10 @@ export const customCurrencyMaskConfig = {
     MouUnfreezeInquiryComponent,
     MouUnfreezeViewComponent,
     MouCancelDetailComponent,
-    MouCustAttrContentComponentComponent
+    MouCustAttrContentComponentComponent,
+    ChangeMouAddcollHistoryComponent,
+    ChangeMouDetailHistoryComponent,
+    ChangeMouHistoryVersionComponent
   ],
   exports: [],
   providers: [NGXToastrService],
