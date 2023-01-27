@@ -19,6 +19,7 @@ import { UcInputApprovalGeneralInfoObj } from "app/shared/model/uc-input-approva
 import { ChangeMouTrxObj } from "app/shared/model/change-mou-trx-obj.model";
 import { environment } from "environments/environment";
 import { ApprovalObj } from "app/shared/model/approval/approval-obj.model";
+import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
 
 @Component({
   selector: "app-change-mou-approval-factoring-x",
@@ -46,6 +47,7 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
   ChangeMouCustId: number;
   TrxType: string;
   TrxTypeReqExp:string = CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP;
+  changeMouTrxIdPrev: number;
 
   constructor(
     private fb: FormBuilder,
@@ -73,6 +75,11 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.http.post(URLConstantX.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
+      if(responseId["ChangeMouTrxId"] != undefined){
+        this.changeMouTrxIdPrev = responseId["ChangeMouTrxId"];
+      }
+    });
 
     this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewChangeMouHeaderX.json";
     this.viewGenericObj.ddlEnvironments = [

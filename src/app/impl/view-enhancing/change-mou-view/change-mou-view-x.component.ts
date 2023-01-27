@@ -6,6 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-change-mou-view-x',
@@ -22,6 +23,9 @@ export class ChangeMouViewXComponent implements OnInit {
   dmsObj: DMSObj;
   arrValue = [];
   MouCustId: number;
+  ChangeMouTrxIdPrev: number;
+  Status: string;
+  TrxType: string;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -35,6 +39,13 @@ export class ChangeMouViewXComponent implements OnInit {
     this.http.post(URLConstant.GetChangeMouTrxbyTrxId, { Id: this.ChangeMouTrxId }).subscribe(
       (responseCMT) => {
         this.MouCustId = responseCMT["MouCustId"];
+        this.Status = responseCMT["Status"];
+        this.TrxType = responseCMT["TrxType"];
+        this.http.post(URLConstantX.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
+          if(responseId["ChangeMouTrxId"] != undefined){
+            this.ChangeMouTrxIdPrev = responseId["ChangeMouTrxId"];
+          }
+        });
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (responseMC : MouCustObj) => {
             this.arrValue.push(this.ChangeMouTrxId);
