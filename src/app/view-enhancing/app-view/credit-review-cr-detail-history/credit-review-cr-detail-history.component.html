@@ -24,7 +24,7 @@
         </app-crd-rvw-cmo-info>
         <app-crd-rvw-dealer-info *ngIf="isShow && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
-        <app-tab-deviation-history [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation-history>
+        <app-tab-deviation-history [AppId]="appId" *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation-history>
       </div>
     </div>
   </div>

@@ -474,8 +474,4 @@ export class NavigationConstant {
   public static REPORT_LTKM = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_LTKM; //'/Report/RptLtkm'
   //#endregion
 
-  //#region Content Credit Review
-  public static NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CRD_REVIEW_CR_DETAIL_HISTORY; //"/Pages/Content/CreditReviewCrHistory/Detail"
-  //#endregion
-
 }

@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { environment } from 'environments/environment';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-tab-analysis-result-history',
@@ -23,12 +20,7 @@ export class TabAnalysisResultHistoryComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   async ngOnInit() {
-    await this.GetUrlLink();
     await this.GetListAppCrdRvwById();
-  }
-
-  async GetUrlLink(){
-    this.urlLink = environment.losR3Web + NavigationConstant.NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY + "?AppId=" + this.appId;
   }
 
   async GetListAppCrdRvwById(){
