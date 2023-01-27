@@ -1,6 +1,6 @@
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { HttpClient } from '@angular/common/http';
-import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, OnInit, Input  } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -29,17 +29,9 @@ import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.mod
   selector: 'app-credit-review-cr-detail-history',
   templateUrl: './credit-review-cr-detail-history.component.html'
 })
-export class CreditReviewCrDetailHistoryXComponent implements OnInit {
+export class CreditReviewCrDetailHistoryComponent implements OnInit {
 
-  private createComponent: UcapprovalcreateComponent;
-  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) {
-      // initially setter gets called with undefined
-      this.createComponent = content;
-    }
-  }
-  appId: number = 0;
-  wfTaskListId: any;
+  @Input() appId: number;
   isReturnOn: boolean = false;
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   Arr: FormArray;
@@ -82,14 +74,6 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
     public toastr: ToastrService,
     private cookieService: CookieService
   ) {
-    this.route.queryParams.subscribe(params => {
-      if (params["AppId"] != null) {
-        this.appId = params["AppId"];
-      }
-      if (params["WfTaskListId"] != null) {
-        this.wfTaskListId = params["WfTaskListId"];
-      }
-    });
 
   }
 
@@ -305,27 +289,6 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   }
   //#endregion
 
-  switchForm() {
-    this.FormReturnObj.patchValue({
-      Reason: "",
-      ReasonDesc: "",
-      Notes: ""
-    });
-
-    if (!this.isReturnOn) {
-      this.isReturnOn = true;
-      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
-      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
-    } else {
-      this.isReturnOn = false;
-      this.FormReturnObj.controls.Reason.clearValidators();
-      this.FormReturnObj.controls.Notes.clearValidators();
-    }
-    this.FormReturnObj.controls.Reason.updateValueAndValidity();
-    this.FormReturnObj.controls.Notes.updateValueAndValidity();
-
-  }
-
   PlafondAmt: number = 0;
   initInputApprovalObj(manualDevList = null) {
     var Attributes: Array<ResultAttrObj> = new Array();
@@ -358,58 +321,4 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
     this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.IsReady = true;
   }
-
-  //#region Submit
-  SaveForm() {
-    let temp = this.FormObj.value;
-    let tempAppCrdRvwObj = new AppCrdRvwHObj();
-    tempAppCrdRvwObj.AppId = this.appId;
-    tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
-    tempAppCrdRvwObj.CrdRvwStat = CommonConstant.CrdRvwStatDone;
-    tempAppCrdRvwObj.ReturnNotes = "";
-    if (this.ResponseExistCreditReview != null) {
-      tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
-    }
-    tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
-
-    if (!this.isReturnOn) {
-      this.RFAInfo = { RFAInfo: this.FormObj.controls.RFAInfo.value };
-
-    }
-
-    let apiObj = {
-      appCrdRvwHObj: tempAppCrdRvwObj,
-      ApprovedById: temp.Approver,
-      Reason: temp.ReasonDesc,
-      Notes: temp.Notes,
-      WfTaskListId: this.wfTaskListId,
-      RowVersion: "",
-      AppId: this.appId,
-      ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: this.RFAInfo
-    };
-
-    let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
-    this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
-      (response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-      });
-  }
-
-  BindAppCrdRvwDObj(objArr: Array<any>) {
-    let AppCrdRvwDObjs = new Array();
-    for (let i = 0; i < objArr.length; i++) {
-      let temp = new AppCrdRvwDObj();
-      temp.MrAnalysisItemCode = objArr[i].QuestionCode;
-      temp.AnalysisResult = objArr[i].Answer;
-      if (this.ResponseExistCreditReview.appCrdRvwDObjs != null) {
-        let idx = this.ResponseExistCreditReview.appCrdRvwDObjs.indexOf(this.ResponseExistCreditReview.appCrdRvwDObjs.find(x => x.MrAnalysisItemCode == objArr[i].QuestionCode));
-        temp.AppCrdRvwDId = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].AppCrdRvwDId;
-        temp.RowVersion = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].RowVersion;
-      }
-      AppCrdRvwDObjs.push(temp);
-    }
-    return AppCrdRvwDObjs;
-  }
-  //#endregion
 }

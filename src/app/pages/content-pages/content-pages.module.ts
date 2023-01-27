@@ -30,9 +30,6 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
 import { ModuleSelectionComponent } from './module-selection/module-selection.component';
 import { UcmoduleselectionModule } from '@adins/ucmoduleselection';
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
-import { CreditReviewCrDetailHistoryComponent } from "app/NEW-NAP/business-process/credit-process/credit-review-cr-history/credit-review-cr-detail-history/credit-review-cr-detail-history.component";
-import { CreditReviewComponentModule } from "app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module";
-import { CreditReviewCrDetailHistoryXComponent } from "app/impl/pages/credit-review-cr-history-x/credit-review-cr-detail-history-x/credit-review-cr-detail-history-x.component";
 
 export const customCurrencyMaskConfig = {
     align: "right",
@@ -70,8 +67,7 @@ export const customCurrencyMaskConfig = {
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
         CustSharingComponentModule,
         UcmoduleselectionModule,
-        ViewAppComponentModule,
-        CreditReviewComponentModule
+        ViewAppComponentModule
     ],
     declarations: [
         LoginPageComponent,
@@ -80,9 +76,7 @@ export const customCurrencyMaskConfig = {
         RequestNewPasswordComponent,
         ResetPasswordComponent,
         ChangePasswordComponent,
-        ModuleSelectionComponent,
-        CreditReviewCrDetailHistoryComponent,
-        CreditReviewCrDetailHistoryXComponent
+        ModuleSelectionComponent
     ],
       entryComponents: [
         UclookupgenericComponent,

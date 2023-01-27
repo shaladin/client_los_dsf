@@ -138,6 +138,8 @@ export class URLConstantX {
   public static DeleteMouCustCollateralX = environment.losUrl + '/v1' + '/MouCustCollateralX/DeleteMouCustCollateral';
   public static GetDealerGradingX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetDealerGrading';
   public static GetMouCustCollateralDataForUpdateByMouCustCollateralIdX = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
+  public static GetMouCustCollateralForMouViewByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralForMouViewByMouCustId";
+
 
   // CHANGE MOU
   public static GetChangeMouMainInfoByIdX = environment.losUrl + '/v1' + "/ChangeMouX/GetChangeMouMainInfoById";

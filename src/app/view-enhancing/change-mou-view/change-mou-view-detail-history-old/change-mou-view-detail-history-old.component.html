@@ -1,8 +1,7 @@
 <form class="form form-horizontal">
 
   <div class="form-body" *ngIf="MouType != 'FACTORING' && MouType != 'FINANCING'">
-    <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj"
-      (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+    <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
   </div>
 
   <div class="form-body" *ngIf="MouType == 'FACTORING' && isDataAlreadyLoaded">
@@ -10,85 +9,79 @@
     </lib-ucSubsection>
     <div class="form-body" id="MouData">
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Currency</label>
-        <label class="col-md-3 adInsLabel" *ngIf="CurrCode == ''" translate>-</label>
-        <label class="col-md-3 adInsLabel" *ngIf="CurrCode != ''" translate>{{CurrCode}}</label>
+        <label class="col-md-2 adInsLabel" translate>Currency</label>
+        <label class="col-md-4 adInsLabel" *ngIf="CurrCode == ''" translate>-</label>
+        <label class="col-md-4 adInsLabel" *ngIf="CurrCode != ''" translate>{{CurrCode}}</label>
 
-        <label class="col-md-3 adInsLabel" translate>Original Plafond Amount</label>
-        <label class="col-md-3 adInsLabel" translate>{{PlafondAmt | number:'.2':'en-US'}} </label>
+        <label class="col-md-2 adInsLabel" translate>Plafond Amount</label>
+        <label class="col-md-4 adInsLabel" translate>{{PlafondAmt | number:'.2':'en-US'}} </label>
       </div>
       <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate>Revolving</label>
+        <label *ngIf="IsRevolving" class="col-md-4 adInsLabel" translate>Yes </label>
+        <label *ngIf="!IsRevolving" class="col-md-4 adInsLabel" translate>No </label>
 
-        <label class="col-md-3 adInsLabel" translate>Revolving</label>
-        <label *ngIf="IsRevolving" class="col-md-3 adInsLabel" translate>Yes </label>
-        <label *ngIf="!IsRevolving" class="col-md-3 adInsLabel" translate>No </label>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>WoP</label>
-        <label class="col-md-3 adInsLabel" translate>{{WopCode}} </label>
-
-        <label class="col-md-3 adInsLabel" translate>Recourse Type</label>
-        <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-3 adInsLabel" translate>With Recourse
-        </label>
-        <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-3 adInsLabel" translate>Without Recourse
-        </label>
+        <label class="col-md-2 adInsLabel" translate>Revolving Type</label>
+        <label *ngIf="!RevolvingType" class="col-md-3 adInsLabel" translate>-</label>
+        <label *ngIf="RevolvingType" class="col-md-3 adInsLabel" translate>{{RevolvingType}}</label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Is Disclosed</label>
-        <label *ngIf="IsDisclosed == true" class="col-md-3 adInsLabel" translate>Yes </label>
-        <label *ngIf="IsDisclosed == false" class="col-md-3 adInsLabel" translate>No </label>
+        <label class="col-md-2 adInsLabel" translate>WoP</label>
+        <label class="col-md-4 adInsLabel" translate>{{WopCode}} </label>
 
-        <label class="col-md-3 adInsLabel" translate>Paid By</label>
-        <label class="col-md-3 adInsLabel" translate>{{MrPaidByCode}}</label>
+        <label class="col-md-2 adInsLabel" translate>Recourse Type</label>
+        <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-4 adInsLabel" translate>With Recourse </label>
+        <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-4 adInsLabel" translate>Without Recourse </label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Installment Type</label>
-        <label class="col-md-3 adInsLabel" translate>{{MrInstTypeCode}}</label>
+        <label class="col-md-2 adInsLabel" translate>Is Disclosed</label>
+        <label *ngIf="IsDisclosed == true" class="col-md-4 adInsLabel" translate>Yes </label>
+        <label *ngIf="IsDisclosed == false" class="col-md-4 adInsLabel" translate>No </label>
 
-        <label class="col-md-3 adInsLabel" translate>TOP</label>
-        <label style="align-items: left;" class="col-md-3 adInsLabel" translate>{{TopDays}} days </label>
+        <label class="col-md-2 adInsLabel" translate>Paid By</label>
+        <label class="col-md-4 adInsLabel" translate>{{MrPaidByCode}}</label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Payment Frequency </label>
-        <label class="col-md-3 adInsLabel" translate>{{PayFreqCode}}</label>
+        <label class="col-md-2 adInsLabel" translate>Installment Type</label>
+        <label class="col-md-4 adInsLabel" translate>{{MrInstTypeCode}}</label>
 
-        <label class="col-md-3 adInsLabel" translate>Interest Rate (%) (in Years)</label>
-        <label class="col-md-3 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}}%</label>
+        <label class="col-md-2 adInsLabel" translate>TOP</label>
+        <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{TopDays}} days </label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Retention (%)</label>
-        <label class="col-md-3 adInsLabel" translate>{{RetentionPrcnt | number:'.6':'en-US'}}%</label>
+        <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
+        <label class="col-md-4 adInsLabel" translate>{{PayFreqCode}}</label>
 
-        <label class="col-md-3 adInsLabel" translate>Notes</label>
-        <label *ngIf="Notes == '' || Notes == null" class="col-md-3 adInsLabel" translate>-</label>
-        <label *ngIf="Notes != '' && Notes != null" class="col-md-3 adInsLabel" translate>{{Notes}}</label>
+        <label class="col-md-2 adInsLabel" translate>Interest Rate (%) (in Years)</label>
+        <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}}%</label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Calculate Method</label>
-        <label *ngIf="!SingleInstCalcMthd" class="col-md-3 adInsLabel" translate>-</label>
-        <label *ngIf="SingleInstCalcMthd" class="col-md-3 adInsLabel" translate>{{SingleInstCalcMthd}}</label>
+        <label class="col-md-2 adInsLabel" translate>Retention (%)</label>
+        <label class="col-md-4 adInsLabel" translate>{{RetentionPrcnt | number:'.6':'en-US'}}%</label>
+
+        <label class="col-md-2 adInsLabel" translate>Notes</label>
+        <label *ngIf="Notes == '' || Notes == null" class="col-md-4 adInsLabel" translate>-</label>
+        <label *ngIf="Notes != '' && Notes != null" class="col-md-4 adInsLabel" translate>{{Notes}}</label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Link Supplier</label>
-        <label class="col-md-3 adInsLabel" *ngIf="!LinkSupplier.VendorCode" translate>-</label>
-        <label class="col-md-3 adInsLabel" *ngIf="LinkSupplier.VendorCode" translate>
+        <label class="col-md-2 adInsLabel" translate>Calculate Method</label>
+        <label *ngIf="!SingleInstCalcMthd" class="col-md-4 adInsLabel" translate>-</label>
+        <label *ngIf="SingleInstCalcMthd" class="col-md-4 adInsLabel" translate>{{SingleInstCalcMthd}}</label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate>Link Supplier</label>
+        <label class="col-md-4 adInsLabel" *ngIf="!LinkSupplier.VendorCode" translate>-</label>
+        <label class="col-md-4 adInsLabel" *ngIf="LinkSupplier.VendorCode"  translate>
           <a class="link" (click)="ClickLinkManufacturer(LinkSupplier.VendorCode)"> {{LinkSupplier.VendorName}} </a>
         </label>
       </div>
-
-
-      <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Dealer Grading</label>
-        <label class="col-md-3 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
-      </div>
-
     </div>
   </div>
 
@@ -119,7 +112,7 @@
         <label class="col-md-3 adInsLabel" translate>Term Of Payment (in Days)</label>
         <label class="col-md-3 adInsLabel" translate>{{TopDays}} days </label>
 
-        <label class="col-md-3 adInsLabel" translate>Term Of Payment Interest Rate Percent (%)</label>
+        <label class="col-md-3 adInsLabel" translate>Term Of Payment Interest Rate Percent (%) (in Years)</label>
         <label style="align-items: left;" class="col-md-3 adInsLabel" translate>{{TopDaysRatePercent | number:'.6':'en-US'}}% </label>
       </div>
 
@@ -127,12 +120,12 @@
         <label class="col-md-3 adInsLabel" translate>Payment Frequency </label>
         <label class="col-md-3 adInsLabel" translate>{{PayFreqCode}}</label>
 
-        <label class="col-md-3 adInsLabel" translate>Interest Rate (%)</label>
+        <label class="col-md-3 adInsLabel" translate>Interest Rate (%) (in Years)</label>
         <label class="col-md-3 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}}%</label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Extend Rate Percent (%)</label>
+        <label class="col-md-3 adInsLabel" translate>Extend Rate Percent (%) (in Years)</label>
         <label class="col-md-3 adInsLabel" translate>{{ExtendRate | number:'.6':'en-US'}}%</label>
 
         <label class="col-md-3 adInsLabel" translate>Maximum Months For Extend</label>
@@ -158,9 +151,8 @@
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" translate>Link Manufacturer</label>
         <label class="col-md-3 adInsLabel" *ngIf="!LinkManufacturer.VendorCode" translate>-</label>
-        <label class="col-md-3 adInsLabel" *ngIf="LinkManufacturer.VendorCode" translate>
-          <a class="link" (click)="ClickLinkManufacturer(LinkManufacturer.VendorCode)"> {{LinkManufacturer.VendorName}}
-          </a>
+        <label class="col-md-3 adInsLabel" *ngIf="LinkManufacturer.VendorCode"  translate>
+          <a class="link" (click)="ClickLinkManufacturer(LinkManufacturer.VendorCode)"> {{LinkManufacturer.VendorName}} </a>
         </label>
 
         <label class="col-md-3 adInsLabel" translate>Manufacturer</label>
@@ -168,11 +160,10 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Link Supplier Grading</label>
+        <label class="col-md-3 adInsLabel" translate>Link Supplier</label>
         <label class="col-md-3 adInsLabel" *ngIf="!LinkSupplGrading.VendorCode" translate>-</label>
         <label class="col-md-3 adInsLabel" *ngIf="LinkSupplGrading.VendorCode" translate>
-          <a class="link" (click)="ClickLinkManufacturer(LinkSupplGrading.VendorCode)"> {{LinkSupplGrading.VendorName}}
-          </a>
+          <a class="link" (click)="ClickLinkManufacturer(LinkSupplGrading.VendorCode)"> {{LinkSupplGrading.VendorName}} </a>
         </label>
 
         <label class="col-md-3 adInsLabel" translate>Customer</label>
@@ -180,19 +171,12 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>LC Rate (%)</label>
+        <label class="col-md-3 adInsLabel" translate>LC Rate (%) (in Days)</label>
         <label class="col-md-3 adInsLabel" translate>{{LcRate | number:'.6':'en-US'}}%</label>
 
         <label class="col-md-3 adInsLabel" translate>Notes</label>
         <label *ngIf="Notes == '' || Notes == null" class="col-md-3 adInsLabel" translate>-</label>
         <label *ngIf="Notes != '' && Notes != null" class="col-md-3 adInsLabel" translate>{{Notes}}</label>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-3 adInsLabel" translate>Original Plafond Amount</label>
-        <label class="col-md-3 adInsLabel" translate>{{PlafondAmt | number:'.2':'en-US'}} </label>
-        <label class="col-md-3 adInsLabel" translate>Dealer Grading</label>
-        <label class="col-md-3 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
       </div>
 
     </div>

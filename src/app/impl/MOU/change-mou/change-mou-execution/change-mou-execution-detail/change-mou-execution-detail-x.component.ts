@@ -68,11 +68,7 @@ export class ChangeMouExecutionDetailXComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post(URLConstantX.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
-      if(responseId["ChangeMouTrxId"] != undefined){
-        this.changeMouTrxIdPrev = responseId["ChangeMouTrxId"];
-      }
-    });
+
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(

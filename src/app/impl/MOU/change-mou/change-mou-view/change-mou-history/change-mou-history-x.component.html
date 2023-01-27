@@ -6,42 +6,42 @@
           <h4 class="form-section card-title" translate>Change MOU Version History</h4>
           <div class="row">
             <div class="col-md-6">
-              <div *ngIf="isPrevExist">
+              <div *ngIf="isPrevExist && isReady">
                 <label class="adInsLabel"> <b>Old Value</b> </label>
-                <app-change-mou-detail-x [ChangeMouTrxId]="ChangeMouTrxIdPrev" [MouCustId]="MouCustId" [MouType]="MouType" [TrxType]="TrxType">
+                <app-change-mou-detail-history-x [ChangeMouTrxId]="ChangeMouTrxIdPrev" [MouCustId]="MouCustId" [MouType]="MouType" [TrxType]="TrxType">
 
-                </app-change-mou-detail-x>
+                </app-change-mou-detail-history-x>
               </div>
-              <div *ngIf="!isPrevExist">
+              <div *ngIf="!isPrevExist && isReady">
                 <label class="adInsLabel"> <b>Old Value</b> </label>
-                <app-change-mou-view-detail-x [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MouType">
+                <app-change-mou-view-detail-history-ver-x [MouCustId]="MouCustId" [MouType]="MouType">
 
-                </app-change-mou-view-detail-x>
+                </app-change-mou-view-detail-history-ver-x>
               </div>
             </div>
 
             <div class="col-md-6">
               <div>
                 <label class="adInsLabel"> <b>New Value</b> </label>
-                <app-change-mou-detail-x [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MouType" [TrxType]="TrxType">
-                </app-change-mou-detail-x>
+                <app-change-mou-detail-history-x [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MouType" [TrxType]="TrxType">
+                </app-change-mou-detail-history-x>
               </div>
             </div>
           </div>
-          <div *ngIf="isPrevExist">
+          <div *ngIf="isPrevExist && isReady">
             <label class="adInsLabel"> <b>Old Value</b> </label>
-            <app-change-mou-addcoll-x [ChangeMouTrxId]="ChangeMouTrxIdPrev">
-            </app-change-mou-addcoll-x>
+            <app-change-mou-addcoll-history-x [ChangeMouTrxId]="ChangeMouTrxIdPrev">
+            </app-change-mou-addcoll-history-x>
           </div>
-          <div *ngIf="!isPrevExist">
+          <div *ngIf="!isPrevExist && isReady">
             <label class="adInsLabel"> <b>Old Value</b> </label>
-            <app-change-mou-addcoll-mou-view-x [MouCustId]="MouCustId">
-            </app-change-mou-addcoll-mou-view-x>
+            <app-change-mou-view-addcoll-history-ver-x [MouCustId]="MouCustId">
+            </app-change-mou-view-addcoll-history-ver-x>
           </div>
           <div>
             <label class="adInsLabel"> <b>New Value</b> </label>
-            <app-change-mou-addcoll-x [ChangeMouTrxId]="ChangeMouTrxId">
-            </app-change-mou-addcoll-x>
+            <app-change-mou-addcoll-history-x [ChangeMouTrxId]="ChangeMouTrxId">
+            </app-change-mou-addcoll-history-x>
           </div>
         </div>
       </div>

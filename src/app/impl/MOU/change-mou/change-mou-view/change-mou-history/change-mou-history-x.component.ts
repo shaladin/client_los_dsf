@@ -18,20 +18,27 @@ import { ChangeMouTrxObj } from 'app/shared/model/change-mou-trx-obj.model';
 })
 export class ChangeMouHistoryVersionXComponent implements OnInit {
   @Input() ChangeMouTrxId: number;
-  @Input() ChangeMouTrxIdPrev: number;
+  ChangeMouTrxIdPrev: number;
 
   @Input() MouCustId: number;
   @Input() MouType: string;
   @Input() TrxType: string;
   isPrevExist: boolean = true;
+  isReady: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
 
   }
 
-  ngOnInit() {
-    if(this.ChangeMouTrxIdPrev == 0){
-      this.isPrevExist = false;
-    }
+  async ngOnInit() {
+    await this.http.post(URLConstant.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).toPromise().then((responseId) => {
+      if(responseId["ChangeMouTrxId"] != undefined){
+        this.ChangeMouTrxIdPrev = responseId["ChangeMouTrxId"];
+        if(this.ChangeMouTrxIdPrev == 0){
+          this.isPrevExist = false;
+        }
+        this.isReady = true;
+      }
+    });
   }
 }

@@ -29,10 +29,17 @@ import { ChangeMouMainInfoXComponent } from '../../impl/view-enhancing/change-mo
 import { ChangeMouViewDetailXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-detail/change-mou-view-detail-x.component";
 import { ShrCompMouModule } from "app/components/sharing-components/shr-comp-mou/shr-comp-mou.module";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ChangeMouViewAddcollHistoryComponent } from "./change-mou-view-addcoll-history/change-mou-view-addcoll-history.component";
+import { ChangeMouViewDetailHistoryComponent } from "./change-mou-view-detail-history/change-mou-view-detail-history.component";
+import { ChangeMouViewAddcollHistoryVerComponent } from "./change-mou-view-addcoll-history-ver/change-mou-view-addcoll-history-ver.component";
+import { ChangeMouHistoryVerForViewComponent } from "./change-mou-view-history/change-mou-view-history.component";
+import { ChangeMouDetailHistoryVerComponent } from "./change-mou-detail-history-ver/change-mou-detail-history-ver.component";
+import { ChangeMouViewDetailHistoryOldComponent } from "./change-mou-view-detail-history-old/change-mou-view-detail-history-old.component";
 import { ChangeMouViewAddcollHistoryXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-addcoll-history/change-mou-view-addcoll-history-x.component";
 import { ChangeMouViewAddcollHistoryVerXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-addcoll-history-ver/change-mou-view-addcoll-history-ver-x.component";
 import { ChangeMouViewDetailHistoryXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-detail-history/change-mou-view-detail-history-x.component";
-import { ChangeMouAddcollMouViewXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-addcoll-mou-view/change-mou-addcoll-mou-view-x.component";
+import { ChangeMouViewDetailHistoryVerXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-view-detail-history-ver/change-mou-view-detail-history-ver-x.component";
+import { ChangeMouHistoryVersionViewXComponent } from "app/impl/view-enhancing/change-mou-view/change-mou-history/change-mou-view-history-x.component";
 
 @NgModule({
     imports: [
@@ -64,13 +71,21 @@ import { ChangeMouAddcollMouViewXComponent } from "app/impl/view-enhancing/chang
         ChangeMouViewDetailComponent,
         ChangeMouViewComponent,
         ChangeMouMainInfoComponent,
+        ChangeMouViewAddcollHistoryComponent,
+        ChangeMouViewAddcollHistoryVerComponent,
+        ChangeMouViewDetailHistoryComponent,
+        ChangeMouHistoryVerForViewComponent,
+        ChangeMouDetailHistoryVerComponent,
+        ChangeMouViewDetailHistoryOldComponent,
         ChangeMouViewXComponent,
         ChangeMouViewAddcollXComponent,
         ChangeMouMainInfoXComponent,
         ChangeMouViewDetailXComponent,
         ChangeMouViewAddcollHistoryXComponent,
         ChangeMouViewAddcollHistoryVerXComponent,
-        ChangeMouViewDetailHistoryXComponent
+        ChangeMouViewDetailHistoryXComponent,
+        ChangeMouViewDetailHistoryVerXComponent,
+        ChangeMouHistoryVersionViewXComponent
     ],
     entryComponents: [
         ChangeMouViewAddcollComponent,
@@ -79,10 +94,10 @@ import { ChangeMouAddcollMouViewXComponent } from "app/impl/view-enhancing/chang
         UcgridviewComponent,
         UcapprovalhistComponent,
     ],
-    exports: [
-      ChangeMouViewDetailXComponent,
-      ChangeMouAddcollMouViewXComponent
-    ]
+    exports: [ChangeMouViewAddcollHistoryVerComponent,
+      ChangeMouDetailHistoryVerComponent,
+      ChangeMouViewAddcollHistoryVerXComponent,
+      ChangeMouViewDetailHistoryVerXComponent]
 
 })
 export class ChangeMouViewModule { }

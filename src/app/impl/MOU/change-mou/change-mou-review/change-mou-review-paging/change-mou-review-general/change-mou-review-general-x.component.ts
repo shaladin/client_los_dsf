@@ -78,11 +78,6 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
 
   async ngOnInit() {
     this.claimTask();
-    this.http.post(URLConstantX.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
-      if(responseId["ChangeMouTrxId"] != undefined){
-        this.changeMouTrxIdPrev = responseId["ChangeMouTrxId"];
-      }
-    });
 
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewChangeMouHeader.json";

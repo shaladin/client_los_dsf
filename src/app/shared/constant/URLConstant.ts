@@ -672,8 +672,8 @@ export class URLConstant {
   public static SubmitChangeMouReturnV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitChangeMouReturn";
   public static GetChangeMouCustbyChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxId";
   public static GetChangeMouCustbyChangeMouTrxNo = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxNo";
+  public static GetChangeMouPreviousIdByMouCustId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouPreviousIdByMouCustId";
   public static GetForViewChangeMouCustDlrFncngDetailByChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetForViewChangeMouCustDlrFncngDetailByChangeMouTrxId";
-
 
   //CHANGE MOU CUST COLLATERAL
   public static GetChangeMouCustCollateralDocByChangeMouCustCollateralId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDocByChangeMouCustCollateralId";
@@ -1519,6 +1519,7 @@ export class URLConstant {
   public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/v1" + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
   public static GetAppCrdRvwByAppCrdRvwHId = environment.losUrl + "/v1" + "/AppCrdRvw/GetAppCrdRvwByAppCrdRvwHId";
   public static GetListAppCrdRvwById = environment.losUrl + "/v1" + "/AppCrdRvw/GetListAppCrdRvwById";
+
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/v1" + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";

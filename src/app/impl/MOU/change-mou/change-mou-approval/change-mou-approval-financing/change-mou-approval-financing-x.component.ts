@@ -65,11 +65,7 @@ export class ChangeMouApprovalFinancingXComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post(URLConstantX.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
-      if(responseId["ChangeMouTrxId"] != undefined){
-        this.changeMouTrxIdPrev = responseId["ChangeMouTrxId"];
-      }
-    });
+
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.ddlEnvironments = [
       {

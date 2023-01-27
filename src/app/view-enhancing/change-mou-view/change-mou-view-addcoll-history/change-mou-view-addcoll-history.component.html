@@ -1,7 +1,7 @@
-<form class="form form-horizontal" [formGroup]="AddCollDataForm" (ngSubmit)="AddCollDataForm.valid" #enjiForm="ngForm">
+<form class="form form-horizontal">
   <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Collateral'" [panel]="'AddCollData'">
   </lib-ucSubsection>
-  <div class="form-body" id="AddCollData" *ngIf="!isView" style="overflow-x: auto;">
+  <div class="form-body" id="AddCollData" style="overflow-x: auto;">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -15,29 +15,22 @@
           </th>
           <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
           </th>
-          <th><span style="float: center;" class="thead-header" name='CollRcvDt' translate>RECEIVE DATE</span>
-          </th>
-          <th><span style="float: center;" class="thead-header" name='CollRlsDt' translate>RELEASE DATE</span>
           <th><span style="float: center;" class="thead-header" name='ViewDetail' translate>VIEW DETAIL</span>
           </th>
         </tr>
       </thead>
-      <tbody *ngIf="listCollateralData.length == 0">
-        <tr>
+      <tbody>
+        <tr *ngIf="listCollateralData==null || listCollateralData?.length==0">
           <td colspan="100%">No Data Available</td>
         </tr>
-      </tbody>
-      <tbody>
         <tr *ngFor="let item of listCollateralData; let i = index">
           <td>{{item.CollateralNo}}</td>
           <td align="left">{{item.FullAssetName}}</td>
           <td align="left">{{item.OwnerName}}</td>
           <td align="center">{{item.CollateralStat}}</td>
           <td align="right">{{item.CollateralValueAmt | number}}</td>
-          <td align="center">{{item.CollateralReceivedDt | date: 'dd-MM-yyyy'}}</td>
-          <td align="center">{{item.CollateralReleasedDt | date: 'dd-MM-yyyy'}}</td>
           <td align="center">
-            <a class="success p-0" (click)="ViewColl(item.MouCustCollateralId)">
+            <a class="success p-0" (click)="ViewColl(item.ChangeMouCustCollateralId)">
               <i class="ft-edit-2 font-medium-3 mr-2"></i>
             </a>
           </td>
@@ -45,13 +38,13 @@
       </tbody>
     </table>
   </div>
-
   <div class="form-body" id="AddCollDetailData" *ngIf="isView">
     <div class="ucSearch-Button-Right">
-      <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
-        <i class="fa fa-check-square-o"></i> Back
+      <button type="button" (click)="Back()" class="btn btn-raised btn-warning">
+        <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Back</span>
       </button>
     </div>
-    <app-mou-view-addcoll-detail-x [MouCustCollateralId]="MouCustCollateralId"></app-mou-view-addcoll-detail-x>
+    <br>
+    <app-change-mou-view-addcoll-detail [ChangeMouCustCollateralId]="ChangeMouCustCollateralId"></app-change-mou-view-addcoll-detail>
   </div>
 </form>

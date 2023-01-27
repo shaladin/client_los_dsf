@@ -18,7 +18,7 @@ export class ChangeMouViewAddcollHistoryVerXComponent implements OnInit {
 
   ngOnInit() {
     var mouCustObj = { Id: this.MouCustId }
-    this.http.post(URLConstant.GetMouCustCollateralForMouViewByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstantX.GetMouCustCollateralForMouViewByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       });

@@ -23,12 +23,7 @@ export class TabAnalysisResultHistoryXComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   async ngOnInit() {
-    await this.GetUrlLink();
     await this.GetListAppCrdRvwById();
-  }
-
-  async GetUrlLink(){
-    this.urlLink = environment.losR3Web + NavigationConstant.NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY_X + "?AppId=" + this.appId;
   }
 
   async GetListAppCrdRvwById(){

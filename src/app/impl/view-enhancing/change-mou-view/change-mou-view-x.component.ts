@@ -41,11 +41,6 @@ export class ChangeMouViewXComponent implements OnInit {
         this.MouCustId = responseCMT["MouCustId"];
         this.Status = responseCMT["Status"];
         this.TrxType = responseCMT["TrxType"];
-        this.http.post(URLConstantX.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
-          if(responseId["ChangeMouTrxId"] != undefined){
-            this.ChangeMouTrxIdPrev = responseId["ChangeMouTrxId"];
-          }
-        });
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (responseMC : MouCustObj) => {
             this.arrValue.push(this.ChangeMouTrxId);

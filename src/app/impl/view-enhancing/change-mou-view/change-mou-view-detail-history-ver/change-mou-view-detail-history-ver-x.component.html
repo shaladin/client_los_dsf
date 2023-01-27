@@ -112,7 +112,6 @@
           <a class="link" (click)="ClickLinkManufacturer(mouCustFctr.VendorCode)"> {{LinkSupplier}} </a>
         </label>
       </div>
-    </div>
 
     <!-- <div *ngIf="MouType == 'GENERAL'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Insured By</label>
@@ -208,6 +207,7 @@
         <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.Notes}} </label>
       </div>
     </div>
+
     <div *ngIf="MouType == 'FINANCING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Installment Type</label>
       <label class="col-md-4 adInsLabel" translate>{{MrInstTypeCode}}</label>
@@ -215,44 +215,43 @@
       <label class="col-md-2 adInsLabel" translate>WoP </label>
       <label class="col-md-4 adInsLabel" translate>{{dictMasterCode['WopCode']}} </label>
     </div>
-  </div>
 
-  <div *ngIf="MouType == 'GENERAL'">
-    <lib-ucSubsection [id]="'AssetDataId'" [title]="'Asset Data'" [panel]="'AssetData'">
-    </lib-ucSubsection>
-    <div style="overflow-x: auto;">
-      <table class="table table-responsive-md text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th><span class="thead-header" name='No' translate>NO.</span>
-          </th>
-          <th><span class="thead-header" name='AssetType' translate>ASSET TYPE</span>
-          </th>
-          <th><span class="thead-header" name='Brand' translate>BRAND</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody *ngIf="listAssetData.length == 0">
-        <tr>
-          <td colspan="100%">No Data Available</td>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr *ngFor="let item of listAssetData; let i = index">
-          <td>{{i + 1}}</td>
-          <td>{{item.FullAssetCode}}</td>
-          <td>{{item.FullAssetName}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="MouType == 'GENERAL'">
+      <lib-ucSubsection [id]="'AssetDataId'" [title]="'Asset Data'" [panel]="'AssetData'">
+      </lib-ucSubsection>
+      <div style="overflow-x: auto;">
+        <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th><span class="thead-header" name='No' translate>NO.</span>
+            </th>
+            <th><span class="thead-header" name='AssetType' translate>ASSET TYPE</span>
+            </th>
+            <th><span class="thead-header" name='Brand' translate>BRAND</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="listAssetData.length == 0">
+          <tr>
+            <td colspan="100%">No Data Available</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let item of listAssetData; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{item.FullAssetCode}}</td>
+            <td>{{item.FullAssetName}}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="MouType != 'GENERAL'">
+      <label class="col-md-2 adInsLabel" translate>Dealer Grading</label>
+      <label class="col-md-4 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
+      <label class="col-md-2 adInsLabel" translate>Available OS Plafond Amount</label>
+      <label class="col-md-4 adInsLabel" translate>{{this.MouOsPlafond | number:'.2':'en-US'}}</label>
     </div>
   </div>
-
-  <div class="form-group row" *ngIf="MouType != 'GENERAL'">
-    <label class="col-md-2 adInsLabel" translate>Dealer Grading</label>
-    <label class="col-md-4 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
-    <label class="col-md-2 adInsLabel" translate>Available OS Plafond Amount</label>
-    <label class="col-md-4 adInsLabel" translate>{{this.MouOsPlafond | number:'.2':'en-US'}}</label>
-  </div>
-
 </form>

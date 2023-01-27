@@ -1,6 +1,6 @@
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { HttpClient } from '@angular/common/http';
-import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -26,10 +26,10 @@ import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.mode
 import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
 
 @Component({
-  selector: 'app-credit-review-cr-detail-history',
-  templateUrl: './credit-review-cr-detail-history.component.html'
+  selector: 'app-credit-review-cr-detail-history-x',
+  templateUrl: './credit-review-cr-detail-history-x.component.html'
 })
-export class CreditReviewCrDetailHistoryComponent implements OnInit {
+export class CreditReviewCrDetailHistoryXComponent implements OnInit {
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -38,7 +38,7 @@ export class CreditReviewCrDetailHistoryComponent implements OnInit {
       this.createComponent = content;
     }
   }
-  appId: number = 0;
+  @Input() appId: number = 0;
   wfTaskListId: any;
   isReturnOn: boolean = false;
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -82,14 +82,6 @@ export class CreditReviewCrDetailHistoryComponent implements OnInit {
     public toastr: ToastrService,
     private cookieService: CookieService
   ) {
-    this.route.queryParams.subscribe(params => {
-      if (params["AppId"] != null) {
-        this.appId = params["AppId"];
-      }
-      if (params["WfTaskListId"] != null) {
-        this.wfTaskListId = params["WfTaskListId"];
-      }
-    });
 
   }
 

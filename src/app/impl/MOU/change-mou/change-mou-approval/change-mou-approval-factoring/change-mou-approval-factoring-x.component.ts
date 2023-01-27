@@ -75,11 +75,7 @@ export class ChangeMouApprovalFactoringXComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post(URLConstantX.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).subscribe((responseId) => {
-      if(responseId["ChangeMouTrxId"] != undefined){
-        this.changeMouTrxIdPrev = responseId["ChangeMouTrxId"];
-      }
-    });
+
 
     this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewChangeMouHeaderX.json";
     this.viewGenericObj.ddlEnvironments = [
