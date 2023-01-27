@@ -58,6 +58,9 @@ import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referant
 import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail/tab-referantor-multi-detail.component";
 import { TabAnalysisResultHistoryComponent } from "./tab-analysis-result-history/tab-analysis-result-history.component";
 import { TabAnalysisResultHistoryDetailComponent } from "./tab-analysis-result-history-detail/tab-analysis-result-history-detail.component";
+import { CreditReviewComponentModule } from "app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module";
+import { CreditReviewCrDetailHistoryComponent } from "./credit-review-cr-detail-history/credit-review-cr-detail-history.component";
+import { TabDeviationHistoryComponent } from "./tab-deviation-history/tab-deviation-history.component";
 
 
 @NgModule({
@@ -84,7 +87,8 @@ import { TabAnalysisResultHistoryDetailComponent } from "./tab-analysis-result-h
         AppCustViewComponentsModule,
         ViewSharingComponentModule,
         SharedModule,
-        AdInsSharedModule
+        AdInsSharedModule,
+        CreditReviewComponentModule
     ],
     declarations: [
         AppMainInfoComponent,
@@ -123,7 +127,9 @@ import { TabAnalysisResultHistoryDetailComponent } from "./tab-analysis-result-h
         TabReferantorMultiComponent,
         TabReferantorMultiDetailComponent,
         TabAnalysisResultHistoryComponent,
-        TabAnalysisResultHistoryDetailComponent
+        TabAnalysisResultHistoryDetailComponent,
+        CreditReviewCrDetailHistoryComponent,
+        TabDeviationHistoryComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
