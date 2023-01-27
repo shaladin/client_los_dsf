@@ -58,7 +58,6 @@ import { ApprovalHistXComponent } from 'app/impl/view-enhancing/app-view/approva
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { ViewDeviationComponent } from "./view-deviation/view-deviation.component";
-import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
 import { AppMainInfoXComponent } from "../app-main-info-x/app-main-info-x.component";
 import { TabCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/tab-commission-x.component";
 import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referantor-multi.component";
@@ -67,6 +66,9 @@ import { ListDataCommissionXComponent } from "app/impl/view-enhancing/app-view/t
 import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-x.component";
 import { AppInsuranceXComponent } from "app/impl/view-enhancing/app-view/app-insurance/app-insurance-x.component";
 import { AppViewInsuranceDetailXComponent } from "app/impl/view-enhancing/app-view/app-insurance/app-insurance-detail/app-insurance-detail-x.component";
+import { TabAnalysisResultHistoryComponent } from "./tab-analysis-result-history/tab-analysis-result-history.component";
+import { TabAnalysisResultHistoryDetailComponent } from "./tab-analysis-result-history-detail/tab-analysis-result-history-detail.component";
+import { TabAnalysisResultHistoryXComponent } from "app/impl/view-enhancing/app-view/tab-analysis-result-history-x/tab-analysis-result-history-x.component";
 
 
 @NgModule({
@@ -140,7 +142,10 @@ import { AppViewInsuranceDetailXComponent } from "app/impl/view-enhancing/app-vi
         TabReferantorMultiDetailComponent,
         ListDataCommissionXComponent,
         AppInsuranceXComponent,
-        AppViewInsuranceDetailXComponent
+        AppViewInsuranceDetailXComponent,
+        TabAnalysisResultHistoryComponent,
+        TabAnalysisResultHistoryDetailComponent,
+        TabAnalysisResultHistoryXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

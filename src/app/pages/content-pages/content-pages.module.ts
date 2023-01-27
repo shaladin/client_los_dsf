@@ -22,23 +22,27 @@ import { LoginPageComponent } from "app/pages/content-pages/login/login-page.com
 import { CustomerSelfVerificationComponent } from './external-page/customer-self-verification/customer-self-verification.component';
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
 import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-nap-component/cust-sharing-component.module";
-import { PagesComponent } from './pages/pages.component'; 
+import { PagesComponent } from './pages/pages.component';
 import { RequestNewPasswordComponent } from "./request-new-password/request-new-password.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { ModuleSelectionComponent } from './module-selection/module-selection.component';
 import { UcmoduleselectionModule } from '@adins/ucmoduleselection';
+import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
+import { CreditReviewCrDetailHistoryComponent } from "app/NEW-NAP/business-process/credit-process/credit-review-cr-history/credit-review-cr-detail-history/credit-review-cr-detail-history.component";
+import { CreditReviewComponentModule } from "app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module";
+import { CreditReviewCrDetailHistoryXComponent } from "app/impl/pages/credit-review-cr-history-x/credit-review-cr-detail-history-x/credit-review-cr-detail-history-x.component";
 
-export const customCurrencyMaskConfig = {     
+export const customCurrencyMaskConfig = {
     align: "right",
-    allowNegative: false,     
-    allowZero: true,     
-    decimal: ".",     
-    precision: 0,     
-    prefix: "",     
-    suffix: "",     
-    thousands: ",",     
+    allowNegative: false,
+    allowZero: true,
+    decimal: ".",
+    precision: 0,
+    prefix: "",
+    suffix: "",
+    thousands: ",",
     nullable: false,
     inputMode: CurrencyMaskInputMode.NATURAL };
 
@@ -53,7 +57,7 @@ export const customCurrencyMaskConfig = {
         UcpagingModule,
         NgbModule,
         AdInsSharedModule,
-        SharingModule, 
+        SharingModule,
         ReactiveFormsModule,
         UcaddressModule,
         UcSubsectionModule,
@@ -65,7 +69,9 @@ export const customCurrencyMaskConfig = {
         MatRadioModule,
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
         CustSharingComponentModule,
-        UcmoduleselectionModule
+        UcmoduleselectionModule,
+        ViewAppComponentModule,
+        CreditReviewComponentModule
     ],
     declarations: [
         LoginPageComponent,
@@ -74,7 +80,9 @@ export const customCurrencyMaskConfig = {
         RequestNewPasswordComponent,
         ResetPasswordComponent,
         ChangePasswordComponent,
-        ModuleSelectionComponent
+        ModuleSelectionComponent,
+        CreditReviewCrDetailHistoryComponent,
+        CreditReviewCrDetailHistoryXComponent
     ],
       entryComponents: [
         UclookupgenericComponent,

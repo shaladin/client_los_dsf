@@ -57,6 +57,7 @@ export class PathConstantX {
   public static CRD_REVIEW_CR_PAGING_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.PAGING;
   public static CRD_REVIEW_CR_DETAIL_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.DETAIL_X;
   public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstantX.DETAIL_X;
+  public static CRD_REVIEW_CR_DETAIL_HISTORY_X = PathConstant.CRD_REVIEW_CR_HISTORY + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Nap-Main-Data

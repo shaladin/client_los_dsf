@@ -189,6 +189,8 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT; //"/Nap/CreditProcess/SurveyVerif/SubjectX"
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT_VERIF; //"/Nap/CreditProcess/SurveyVerif/SubjectX/VerifX"
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT_VIEW; //"/Nap/CreditProcess/SurveyVerif/SubjectX/ViewX"
+  public static NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CRD_REVIEW_CR_DETAIL_HISTORY; //"/Pages/CreditReviewCrHistory/Detail"
+  public static NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY_X = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstantX.CRD_REVIEW_CR_DETAIL_HISTORY_X; //"/Pages/CreditReviewCrHistory/DetailX"
   //#endregion
 
   //#region CF2W
