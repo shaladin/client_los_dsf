@@ -87,7 +87,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     FraudVerificationComponent,
     ViewFraudDetectionResultComponent,
     ViewSurveyVerifComponent,
-    ChangeMouViewModule,
+    ChangeMouViewModule
   ],
   imports: [
     CommonModule,
@@ -138,7 +138,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     FraudDetectionResultComponent,
     FraudVerificationComponent,
     ViewFraudDetectionResultComponent,
-    ViewSurveyVerifComponent,
+    ViewSurveyVerifComponent
   ],
   providers: [
     NGXToastrService
