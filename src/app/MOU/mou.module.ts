@@ -152,6 +152,8 @@ import {ChangeMouApprovalPagingXComponent} from 'app/impl/MOU/change-mou/change-
 import { UcpagingComponent } from '@adins/ucpaging';
 import { ChangeMouHistoryVersionXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-history/change-mou-history-x.component';
 import { ChangeMouViewModule } from 'app/view-enhancing/change-mou-view/change-mou-view.module';
+import { ChangeMouAddcollHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history-x.component';
+import { ChangeMouDetailHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-detail-history/change-mou-detail-history-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -332,7 +334,9 @@ export const customCurrencyMaskConfig = {
     MouCustomerRequestXComponent,
     MouCustomerInquiryXComponent,
     ChangeMouRequestPagingXComponent,
-    ChangeMouHistoryVersionXComponent
+    ChangeMouHistoryVersionXComponent,
+    ChangeMouAddcollHistoryXComponent,
+    ChangeMouDetailHistoryXComponent
   ],
   exports: [],
   providers: [NGXToastrService],
