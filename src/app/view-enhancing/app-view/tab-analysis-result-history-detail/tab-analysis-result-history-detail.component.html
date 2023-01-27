@@ -1,10 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title" translate>Credit Analysis Review Detail</h4>
 
-  <button *ngIf="IsPopup" type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
-      <span aria-hidden="true">&times;</span>
-  </button>
-  <button *ngIf="!IsPopup" type="button" class="btn btn-raised btn-warning mr-1 mb-0" (click)="onBackClick()">
+  <button type="button" class="btn btn-raised btn-warning mr-1 mb-0" (click)="onBackClick()">
       <i class="fa fa-arrow-left mr-1"></i> <span translate>Back</span>
   </button>
 </div>
