@@ -1607,11 +1607,11 @@ export class URLConstant {
   public static SubmitEditAppAftApvReqX = environment.losUrl + "/v1" + "/EditAppAftApvX/SubmitEditAppAftApvReq";
 
   //LTKM
-  public static GetCustCompanyLtkmForCopyByCustId = environment.FoundationR3Url1 + "/v1" + "/Cust/GetCustCompanyLtkmForCopyByCustId";
+  public static GetCustCompanyLtkmForCopyByCustId = environment.FoundationR3Url + "/v1" + "/Cust/GetCustCompanyLtkmForCopyByCustId";
   public static SaveLtkmRequestPersonal = environment.losUrl + "/v1" + "/ManualLtkm/SaveLtkmRequestPersonal";
-  public static SaveLtkmRequestPersonalV2 = environment.losUrl1 + "/v2" + "/ManualLtkm/SaveLtkmRequestPersonal";
+  public static SaveLtkmRequestPersonalV2 = environment.losUrl + "/v2" + "/ManualLtkm/SaveLtkmRequestPersonal";
   public static SaveLtkmRequestCompany = environment.losUrl + "/v1" + "/ManualLtkm/SaveLtkmRequestCompany";
-  public static SaveLtkmRequestCompanyV2 = environment.losUrl1 + "/v2" + "/ManualLtkm/SaveLtkmRequestCompany";
+  public static SaveLtkmRequestCompanyV2 = environment.losUrl + "/v2" + "/ManualLtkm/SaveLtkmRequestCompany";
   public static GetLtkmReqByLtkmNo = environment.losUrl + "/v1" + "/Ltkm/GetLtkmReqByLtkmNo";
   public static SubmitLtkmVerify = environment.losUrl + "/v1" + "/Ltkm/SubmitLtkmVerify";
   public static SubmitLtkmVerifyV2 = environment.losUrl + "/v2" + "/Ltkm/SubmitLtkmVerify";
@@ -1628,7 +1628,7 @@ export class URLConstant {
   public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetCustDataByLtkmCustId";
   public static GetLtkmCustEmrgncCntctByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustEmrgncCntctByLtkmCustId";
   public static GetLtkmCustAddrByLtkmCustAddrId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustAddrByLtkmCustAddrId";
-  public static GetListLtkmCustAddrByLtkmCustId = environment.losUrl1 + "/v1" + "/LtkmCustomerData/GetListLtkmCustAddrByLtkmCustId";
+  public static GetListLtkmCustAddrByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmCustAddrByLtkmCustId";
   public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustBankAccAndStatementForView";
   public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustomerData/DeleteLtkmCustBankAccAndStmnt";
 
