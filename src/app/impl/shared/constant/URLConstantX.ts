@@ -145,7 +145,6 @@ export class URLConstantX {
   public static GetChangeMouMainInfoByIdX = environment.losUrl + '/v1' + "/ChangeMouX/GetChangeMouMainInfoById";
   public static GetListChangeMouTrxByMouCustId = environment.losUrl + "/v1" + "/ChangeMOUX/GetListChangeMouTrxByMouCustId";
   public static AddChangeMou = environment.losUrl + "/v1" + "/ChangeMOUX/AddChangeMou";
-  public static GetChangeMouPreviousIdByMouCustId = environment.losUrl + "/v1" + "/ChangeMOUX/GetChangeMouPreviousIdByMouCustId";
 
   //CHANGE MOU CUST COLLATERAL X
   public static GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralStatByChangeMouCustCollateralId";
