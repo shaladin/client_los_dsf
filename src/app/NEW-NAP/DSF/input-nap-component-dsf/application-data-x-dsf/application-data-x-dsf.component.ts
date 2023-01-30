@@ -1219,7 +1219,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
             this.Status = response["Status"];
             this.isActiveMode = false;
 
-            if (this.MasterAgreementNo != response["MasterAgrmntNo"])
+            if (this.MasterAgreementNo != response["MasterAgreementNo"])
             {
               this.RequestedPlafond = 0;
               this.NapAppModelForm.patchValue(
