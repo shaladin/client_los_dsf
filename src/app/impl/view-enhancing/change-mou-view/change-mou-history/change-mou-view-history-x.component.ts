@@ -36,7 +36,7 @@ export class ChangeMouHistoryVersionViewXComponent implements OnInit {
       }
     });
     if(this.Status == "EXE"){
-      this.isExecuted == true;
+      this.isExecuted = true;
     }
   }
 }

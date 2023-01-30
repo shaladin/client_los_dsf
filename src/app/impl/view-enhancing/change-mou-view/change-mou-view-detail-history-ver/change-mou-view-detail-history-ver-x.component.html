@@ -1,257 +1,230 @@
-<form class="form form-horizontal" [formGroup]="MouDataForm" (ngSubmit)="MouDataForm.valid" #enjiForm="ngForm"
-  *ngIf="IsReady">
-  <lib-ucSubsection [id]="'MouDataId'" [title]="'Mou Data'" [panel]="'MouData'">
-  </lib-ucSubsection>
-  <div class="form-body" id="MouData">
-    <div class="form-group row" *ngIf="MouType != 'FINANCING'">
-      <div class="col-md-6" *ngIf="MouType == 'FACTORING'">
-        <label class="col-md-4 adInsLabel px-0" translate>Virtual Account </label>
-        <label class="col-md-8 adInsLabel px-0" translate>{{VirtualAccNo}} </label>
-      </div>
-      <label class="col-md-2 adInsLabel" translate>Currency </label>
-      <label class="col-md-4 adInsLabel" translate>{{dictRefCurr[CurrCode]}} </label>
-    </div>
-    <div *ngIf="MouType == 'FACTORING'">
+<form class="form form-horizontal">
+
+  <div class="form-body" *ngIf="MouType != 'FACTORING' && MouType != 'FINANCING'">
+    <lib-ucSubsection [id]="'MouDataId'" [title]="'Mou Data'" [panel]="'MouData'">
+    </lib-ucSubsection>
+    <div class="form-body" id="MouData">
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Remaining Plafond Amount</label>
-        <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{PlafondAmt - RealisationAmt | number:'.2':'en-US'}} </label>
-
-        <label class="col-md-2 adInsLabel" translate>Realisation Amount</label>
-        <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{RealisationAmt | number}} </label>
+        <label class="col-md-3 adInsLabel" translate>Currency </label>
+        <label class="col-md-3 adInsLabel" translate>{{CurrCode}} </label>
+        <label class="col-md-3 adInsLabel" translate>Interest Type </label>
+        <label class="col-md-3 adInsLabel" translate>{{MrInterestTypeCode}}</label>
       </div>
-
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Revolving</label>
-        <label *ngIf="IsRevolving == true" class="col-md-4 adInsLabel" translate>Yes </label>
-        <label *ngIf="IsRevolving == false" class="col-md-4 adInsLabel" translate>No </label>
-
-        <label class="col-md-2 adInsLabel" translate>Revolving Type</label>
-        <label class="col-md-4 adInsLabel"
-          translate>{{ MrRevolvingTypeCode == null ? '-' : dictRevolvingTypeCode[MrRevolvingTypeCode]}} </label>
+        <label class="col-md-3 adInsLabel" translate>Payment Frequency </label>
+        <label class="col-md-3 adInsLabel" translate>{{PayFreqCode}} </label>
+        <label class="col-md-3 adInsLabel" translate>Down Payment (%)</label>
+        <label class="col-md-3 adInsLabel" translate>{{DownPaymentFromPrcnt | number:'.6':'en-US'}} % &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp; {{DownPaymentToPrcnt | number:'.6':'en-US'}} % </label>
       </div>
-
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Recourse Type</label>
-        <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-4 adInsLabel" translate>With
-          Recourse </label>
-        <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-4 adInsLabel" translate>Without Recourse
-        </label>
-
-        <label class="col-md-2 adInsLabel" translate>Is Disclosed</label>
-        <label *ngIf="IsDisclosed == true" class="col-md-4 adInsLabel" translate>Yes </label>
-        <label *ngIf="IsDisclosed == false" class="col-md-4 adInsLabel" translate>No </label>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>WoP</label>
-        <label class="col-md-4 adInsLabel" translate>{{dictMasterCode['WopCode']}} </label>
-
-        <label class="col-md-2 adInsLabel" translate>Paid By</label>
-        <label class="col-md-4 adInsLabel" translate>{{MrPaidByCode}}</label>
-
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Term Of Payment (in Days)</label>
-        <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{TopDays}} </label>
-      </div>
-    </div>
-
-    <div *ngIf="MouType == 'GENERAL'" class="form-group row">
-      <label class="col-md-2 adInsLabel" translate>Interest Type </label>
-      <label class="col-md-4 adInsLabel" translate>{{MrInterestTypeCode}}</label>
-
-      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label class="col-md-4 adInsLabel" translate>{{dictRefPayFreq[PayFreqCode]}} </label>
-    </div>
-    <div class="form-group row" *ngIf="MouType != 'FINANCING'">
-      <label class="col-md-2 adInsLabel" translate>Installment Scheme </label>
-      <label *ngIf="MrInstSchmCode == 'BL'" class="col-md-4 adInsLabel" translate>Balloon </label>
-      <label *ngIf="MrInstSchmCode == 'EP'" class="col-md-4 adInsLabel" translate>Even Principle </label>
-      <label *ngIf="MrInstSchmCode == 'IR'" class="col-md-4 adInsLabel" translate>Irregular </label>
-      <label *ngIf="MrInstSchmCode == 'RF'" class="col-md-4 adInsLabel" translate>Regular Fixed </label>
-      <label *ngIf="MrInstSchmCode == 'STLS'" class="col-md-4 adInsLabel" translate>Step Up Step Down Leasing </label>
-      <label *ngIf="MrInstSchmCode == 'STNM'" class="col-md-4 adInsLabel" translate>Step Up Step Down Normal </label>
-      <label *ngIf="MrInstSchmCode == 'STRL'" class="col-md-4 adInsLabel" translate>Step Up Step Down Regular
+        <label class="col-md-3 adInsLabel" translate>Tenor</label>
+        <label class="col-md-3 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp; {{TenorTo}}</label>
+        <label class="col-md-3 adInsLabel" translate>Installment Scheme </label>
+      <label *ngIf="MrInstSchmCode == 'BL'" class="col-md-3 adInsLabel" translate>Balloon </label>
+      <label *ngIf="MrInstSchmCode == 'EP'" class="col-md-3 adInsLabel" translate>Even Principle </label>
+      <label *ngIf="MrInstSchmCode == 'IR'" class="col-md-3 adInsLabel" translate>Irregular </label>
+      <label *ngIf="MrInstSchmCode == 'RF'" class="col-md-3 adInsLabel" translate>Regular Fixed </label>
+      <label *ngIf="MrInstSchmCode == 'STLS'" class="col-md-3 adInsLabel" translate>Step Up Step Down Leasing </label>
+      <label *ngIf="MrInstSchmCode == 'STNM'" class="col-md-3 adInsLabel" translate>Step Up Step Down Normal </label>
+      <label *ngIf="MrInstSchmCode == 'STRL'" class="col-md-3 adInsLabel" translate>Step Up Step Down Regular
         Leasing</label>
-
-      <label *ngIf="MouType == 'GENERAL'" class="col-md-2 adInsLabel" translate>First Installment Type</label>
-      <label *ngIf="MrFirstInstTypeCode == 'AD' && MouType == 'GENERAL'" class="col-md-4 adInsLabel" translate>Advance
-      </label>
-      <label *ngIf="MrFirstInstTypeCode == 'AR' && MouType == 'GENERAL'" class="col-md-4 adInsLabel" translate>Arrear
-      </label>
+      </div>
+      <div class="form-group row">
+        <label *ngIf="MouType == 'GENERAL'" class="col-md-3 adInsLabel" translate>First Installment Type</label>
+        <label *ngIf="MrFirstInstTypeCode == 'AD' && MouType == 'GENERAL'" class="col-md-3 adInsLabel" translate>Advance </label>
+        <label *ngIf="MrFirstInstTypeCode == 'AR' && MouType == 'GENERAL'" class="col-md-3 adInsLabel" translate>Arrear </label>
+      </div>
     </div>
+  </div>
 
+  <div class="form-body" *ngIf="MouType == 'FACTORING'">
+    <lib-ucSubsection [id]="'MouDataId'" [title]="'Mou Data'" [panel]="'MouData'">
+    </lib-ucSubsection>
+    <div class="form-body" id="MouData">
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Interest Rate (%) (in Years)</label>
-        <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}} %</label>
-        <label class="col-md-2 adInsLabel" translate>Retention (%)</label>
-        <label class="col-md-4 adInsLabel" translate>{{RetentionPrcnt | number:'.6':'en-US'}} %</label>
+        <label class="col-md-3 adInsLabel" translate>Currency</label>
+        <label class="col-md-3 adInsLabel" *ngIf="CurrCode == ''" translate>-</label>
+        <label class="col-md-3 adInsLabel" *ngIf="CurrCode != ''" translate>{{CurrCode}}</label>
 
-        <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-        <label class="col-md-4 adInsLabel" translate>{{dictRefPayFreq[PayFreqCode]}}</label>
+        <label class="col-md-3 adInsLabel" translate>Original Plafond Amount</label>
+        <label class="col-md-3 adInsLabel" translate>{{PlafondAmt | number:'.2':'en-US'}} </label>
+      </div>
+      <div class="form-group row">
 
+        <label class="col-md-3 adInsLabel" translate>Revolving</label>
+        <label *ngIf="IsRevolving" class="col-md-3 adInsLabel" translate>Yes </label>
+        <label *ngIf="!IsRevolving" class="col-md-3 adInsLabel" translate>No </label>
+
+        <label class="col-md-3 adInsLabel" translate>Revolving Type</label>
+        <label *ngIf="RevolvingType == null" class="col-md-3 adInsLabel" translate>-</label>
+        <label *ngIf="RevolvingType != null" class="col-md-3 adInsLabel" translate>{{RevolvingType}}</label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Listed Customer Factoring</label>
-        <label *ngIf="IsListedCust == true" class="col-md-4 adInsLabel" translate>Yes </label>
-        <label *ngIf="IsListedCust == false" class="col-md-4 adInsLabel" translate>No </label>
+        <label class="col-md-3 adInsLabel" translate>WoP</label>
+        <label class="col-md-3 adInsLabel" translate>{{WopCode}} </label>
 
-        <label class="col-md-2 adInsLabel" translate>Installment Type / Calculate Method</label>
-        <label class="col-md-4 adInsLabel" translate>{{MrInstTypeCode + ' / ' + SingleInstCalcMthd}}</label>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Notes</label>
-        <label *ngIf="Notes == '' || Notes == null" class="col-md-4 adInsLabel" translate>-</label>
-        <label *ngIf="Notes != '' && Notes != null" class="col-md-4 adInsLabel" translate>{{Notes}}</label>
-
-        <label class="col-md-2 adInsLabel" translate>Link Supplier</label>
-        <label class="col-md-4 adInsLabel" translate>
-          <a class="link" (click)="ClickLinkManufacturer(mouCustFctr.VendorCode)"> {{LinkSupplier}} </a>
+        <label class="col-md-3 adInsLabel" translate>Recourse Type</label>
+        <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-3 adInsLabel" translate>With Recourse
+        </label>
+        <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-3 adInsLabel" translate>Without Recourse
         </label>
       </div>
 
-    <!-- <div *ngIf="MouType == 'GENERAL'" class="form-group">
-      <label class="col-md-2 adInsLabel" translate>Insured By</label>
-      <label class="col-md-2 adInsLabel" translate>Company</label>
-    </div> -->
-
-    <div *ngIf="MouType == 'FINANCING'">
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Currency </label>
-        <label class="col-md-4 adInsLabel" translate>{{dictRefCurr[CurrCode]}}</label>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Remaining Plafond Amount</label>
-        <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{PlafondAmt - RealisationAmt | number:'.2':'en-US'}} </label>
+        <label class="col-md-3 adInsLabel" translate>Is Disclosed</label>
+        <label *ngIf="IsDisclosed == true" class="col-md-3 adInsLabel" translate>Yes </label>
+        <label *ngIf="IsDisclosed == false" class="col-md-3 adInsLabel" translate>No </label>
 
-        <label class="col-md-2 adInsLabel" translate>Realisation Amount </label>
-        <label class="col-md-4 adInsLabel" translate>{{RealisationAmt | number:'.2':'en-US'}} </label>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Term of Payment (in Days) </label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.TopDays}}</label>
-
-        <label class="col-md-2 adInsLabel" translate>Term Of Payment Interest Rate Percent (%) (in Years)</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.TopInterestRatePrcnt | number:'.6':'en-US'}}
-          %</label>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Payment Frequency</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.PayFreqCode}}</label>
-
-        <label class="col-md-2 adInsLabel" translate>Interest Rate (%) (in Years)</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.InterestRatePrcnt | number:'.6':'en-US'}}
-          %</label>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Extend Rate Percent (%) (in Years)</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ExtendRatePrcnt | number:'.6':'en-US'}}
-          %</label>
-
-        <label class="col-md-2 adInsLabel" translate>Maximum Months For Extend</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.MaximumMonthsForExtend}} </label>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Maximum Extend Times</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.MaximumExtendTimes}}</label>
-
-        <label class="col-md-2 adInsLabel" translate>Principal Paid For Extend (%)</label>
-        <label class="col-md-4 adInsLabel"
-          translate>{{MouCustDlrFindData.PrincipalPaidInExtendPrcntg | number:'.6':'en-US'}} %</label>
+        <label class="col-md-3 adInsLabel" translate>Paid By</label>
+        <label class="col-md-3 adInsLabel" translate>{{MrPaidByCode}}</label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Revolving</label>
-        <label *ngIf="IsRevolving == true" class="col-md-4 adInsLabel" translate>Yes </label>
-        <label *ngIf="IsRevolving == false" class="col-md-4 adInsLabel" translate>No </label>
+        <label class="col-md-3 adInsLabel" translate>Installment Type</label>
+        <label class="col-md-3 adInsLabel" translate>{{MrInstTypeCode}}</label>
 
-        <label class="col-md-2 adInsLabel" translate>Revolving Type</label>
-        <label class="col-md-4 adInsLabel" translate>{{ MrRevolvingTypeCode == null ? '-' : dictRevolvingTypeCode[MrRevolvingTypeCode]}} </label>
+        <label class="col-md-3 adInsLabel" translate>TOP</label>
+        <label style="align-items: left;" class="col-md-3 adInsLabel" translate>{{TopDays}} days </label>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Spare Day To Pay</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.SpareDayToPay}}</label>
+        <label class="col-md-3 adInsLabel" translate>Payment Frequency </label>
+        <label class="col-md-3 adInsLabel" translate>{{PayFreqCode}}</label>
 
-        <label class="col-md-2 adInsLabel" translate>Asset Condition</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.AssetCondition}} </label>
+        <label class="col-md-3 adInsLabel" translate>Interest Rate (%) (in Years)</label>
+        <label class="col-md-3 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}}%</label>
       </div>
+
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Link Manufacturer </label>
-        <label class="col-md-4 adInsLabel" translate>
-          <a class="link" (click)="ClickLinkManufacturer(MouCustDlrFindData.ManufacturerCode)">
-            {{MouCustDlrFindData.ManufacturerName}} </a>
+        <label class="col-md-3 adInsLabel" translate>Retention (%)</label>
+        <label class="col-md-3 adInsLabel" translate>{{RetentionPrcnt | number:'.6':'en-US'}}%</label>
+
+        <label class="col-md-3 adInsLabel" translate>Notes</label>
+        <label *ngIf="Notes == '' || Notes == null" class="col-md-3 adInsLabel" translate>-</label>
+        <label *ngIf="Notes != '' && Notes != null" class="col-md-3 adInsLabel" translate>{{Notes}}</label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Calculate Method</label>
+        <label *ngIf="!SingleInstCalcMthd" class="col-md-3 adInsLabel" translate>-</label>
+        <label *ngIf="SingleInstCalcMthd" class="col-md-3 adInsLabel" translate>{{SingleInstCalcMthd}}</label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Link Supplier</label>
+        <label class="col-md-3 adInsLabel" *ngIf="!LinkSupplier.VendorCode" translate>-</label>
+        <label class="col-md-3 adInsLabel" *ngIf="LinkSupplier.VendorCode" translate>
+          <a class="link" (click)="ClickLinkManufacturer(LinkSupplier.VendorCode)"> {{LinkSupplier.VendorName}} </a>
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-body" *ngIf="MouType == 'FINANCING'">
+    <lib-ucSubsection [id]="'MouDataId'" [title]="'Mou Data'" [panel]="'MouData'">
+    </lib-ucSubsection>
+    <div class="form-body" id="MouData">
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Currency </label>
+        <label class="col-md-3 adInsLabel" *ngIf="CurrCode != ''" translate>{{CurrCode}}</label>
+        <label class="col-md-3 adInsLabel" *ngIf="CurrCode == ''" translate>-</label>
+
+        <label class="col-md-3 adInsLabel" translate>Revolving</label>
+        <label *ngIf="IsRevolving == true" class="col-md-3 adInsLabel" translate>Yes </label>
+        <label *ngIf="IsRevolving == false" class="col-md-3 adInsLabel" translate>No </label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Revolving Type</label>
+        <label *ngIf="RevolvingType" class="col-md-3 adInsLabel" translate>{{RevolvingType}}</label>
+        <label *ngIf="!RevolvingType" class="col-md-3 adInsLabel" translate>-</label>
+
+        <label class="col-md-3 adInsLabel" translate>WoP</label>
+        <label class="col-md-3 adInsLabel" translate>{{WopCode}} </label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Term Of Payment (in Days)</label>
+        <label class="col-md-3 adInsLabel" translate>{{TopDays}} days </label>
+
+        <label class="col-md-3 adInsLabel" translate>Term Of Payment Interest Rate Percent (%)</label>
+        <label style="align-items: left;" class="col-md-3 adInsLabel" translate>{{TopDaysRatePercent | number:'.6':'en-US'}}% </label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Payment Frequency </label>
+        <label class="col-md-3 adInsLabel" translate>{{PayFreqCode}}</label>
+
+        <label class="col-md-3 adInsLabel" translate>Interest Rate (%)</label>
+        <label class="col-md-3 adInsLabel" translate>{{InterestRatePrcnt | number:'.6':'en-US'}}%</label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Extend Rate Percent (%)</label>
+        <label class="col-md-3 adInsLabel" translate>{{ExtendRate | number:'.6':'en-US'}}%</label>
+
+        <label class="col-md-3 adInsLabel" translate>Maximum Months For Extend</label>
+        <label class="col-md-3 adInsLabel" translate>{{MaxMonths}}</label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Maximum Extend Times</label>
+        <label class="col-md-3 adInsLabel" translate>{{MaxExtendTimes}}</label>
+
+        <label class="col-md-3 adInsLabel" translate>Principal Paid For Extend (%)</label>
+        <label class="col-md-3 adInsLabel" translate>{{PrincipalPaid | number:'.6':'en-US'}}%</label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Spare Day To Pay</label>
+        <label class="col-md-3 adInsLabel" translate>{{SpareDay}}</label>
+
+        <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
+        <label class="col-md-3 adInsLabel" translate>{{AssetCondition}}</label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Link Manufacturer</label>
+        <label class="col-md-3 adInsLabel" *ngIf="!LinkManufacturer.VendorCode" translate>-</label>
+        <label class="col-md-3 adInsLabel" *ngIf="LinkManufacturer.VendorCode" translate>
+          <a class="link" (click)="ClickLinkManufacturer(LinkManufacturer.VendorCode)"> {{LinkManufacturer.VendorName}}
+          </a>
         </label>
 
-        <label class="col-md-2 adInsLabel" translate>Manufacturer</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ManufacturerCustName}} </label>
+        <label class="col-md-3 adInsLabel" translate>Manufacturer</label>
+        <label class="col-md-3 adInsLabel" translate>{{Manufacturer}}</label>
       </div>
+
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Link Supplier</label>
-        <label class="col-md-4 adInsLabel" translate>
-          <a class="link" (click)="ClickLinkManufacturer(MouCustDlrFindData.DealerCode)">
-            {{MouCustDlrFindData.DealerName}} </a>
+        <label class="col-md-3 adInsLabel" translate>Link Supplier Grading</label>
+        <label class="col-md-3 adInsLabel" *ngIf="!LinkSupplGrading.VendorCode" translate>-</label>
+        <label class="col-md-3 adInsLabel" *ngIf="LinkSupplGrading.VendorCode" translate>
+          <a class="link" (click)="ClickLinkManufacturer(LinkSupplGrading.VendorCode)"> {{LinkSupplGrading.VendorName}}
+          </a>
         </label>
 
-        <label class="col-md-2 adInsLabel" translate>Customer</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.DealerCustName}} </label>
+        <label class="col-md-3 adInsLabel" translate>Customer</label>
+        <label class="col-md-3 adInsLabel" translate>{{Customer}}</label>
       </div>
+
       <div class="form-group row">
-        <label class="col-md-2 adInsLabel" translate>Lc Rate (%) (in Days)</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.LcRate | number:'.6':'en-US'}} %</label>
+        <label class="col-md-3 adInsLabel" translate>LC Rate (%)</label>
+        <label class="col-md-3 adInsLabel" translate>{{LcRate | number:'.6':'en-US'}}%</label>
 
-        <label class="col-md-2 adInsLabel" translate>Notes</label>
-        <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.Notes}} </label>
+        <label class="col-md-3 adInsLabel" translate>Notes</label>
+        <label *ngIf="Notes == '' || Notes == null" class="col-md-3 adInsLabel" translate>-</label>
+        <label *ngIf="Notes != '' && Notes != null" class="col-md-3 adInsLabel" translate>{{Notes}}</label>
       </div>
-    </div>
 
-    <div *ngIf="MouType == 'FINANCING'" class="form-group row">
-      <label class="col-md-2 adInsLabel" translate>Installment Type</label>
-      <label class="col-md-4 adInsLabel" translate>{{MrInstTypeCode}}</label>
-
-      <label class="col-md-2 adInsLabel" translate>WoP </label>
-      <label class="col-md-4 adInsLabel" translate>{{dictMasterCode['WopCode']}} </label>
-    </div>
-
-    <div *ngIf="MouType == 'GENERAL'">
-      <lib-ucSubsection [id]="'AssetDataId'" [title]="'Asset Data'" [panel]="'AssetData'">
-      </lib-ucSubsection>
-      <div style="overflow-x: auto;">
-        <table class="table table-responsive-md text-center table-hover">
-        <thead>
-          <tr class="table-header">
-            <th><span class="thead-header" name='No' translate>NO.</span>
-            </th>
-            <th><span class="thead-header" name='AssetType' translate>ASSET TYPE</span>
-            </th>
-            <th><span class="thead-header" name='Brand' translate>BRAND</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody *ngIf="listAssetData.length == 0">
-          <tr>
-            <td colspan="100%">No Data Available</td>
-          </tr>
-        </tbody>
-        <tbody>
-          <tr *ngFor="let item of listAssetData; let i = index">
-            <td>{{i + 1}}</td>
-            <td>{{item.FullAssetCode}}</td>
-            <td>{{item.FullAssetName}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" translate>Original Plafond Amount</label>
+        <label class="col-md-3 adInsLabel" translate>{{PlafondAmt | number:'.2':'en-US'}} </label>
+        <label class="col-md-3 adInsLabel" translate>Dealer Grading</label>
+        <label class="col-md-3 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
       </div>
-    </div>
 
-    <div class="form-group row" *ngIf="MouType != 'GENERAL'">
-      <label class="col-md-2 adInsLabel" translate>Dealer Grading</label>
-      <label class="col-md-4 adInsLabel">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
-      <label class="col-md-2 adInsLabel" translate>Available OS Plafond Amount</label>
-      <label class="col-md-4 adInsLabel" translate>{{this.MouOsPlafond | number:'.2':'en-US'}}</label>
     </div>
   </div>
 </form>
