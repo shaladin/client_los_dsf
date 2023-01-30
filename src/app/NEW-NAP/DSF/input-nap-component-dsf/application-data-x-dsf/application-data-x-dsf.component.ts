@@ -1124,8 +1124,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
     this.agrParent = this.agrParentList[idx];
     // COMMENTED WHEN IN DEV
-    await this.validateGoLiveDtAgrmntParent();
-    await this.validateMaturityDtAgrmntParent();
+    // await this.validateGoLiveDtAgrmntParent();
+    // await this.validateMaturityDtAgrmntParent();
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
     this.goLiveDt = this.agrParent.GoLiveDt;
@@ -1218,6 +1218,15 @@ export class ApplicationDataXDsfComponent implements OnInit {
               })
             this.Status = response["Status"];
             this.isActiveMode = false;
+
+            if (this.MasterAgreementNo != response["MasterAgrmntNo"])
+            {
+              this.RequestedPlafond = 0;
+              this.NapAppModelForm.patchValue(
+                {
+                  RequestedPlafond: 0
+                })
+            }
           }
           else
           {
