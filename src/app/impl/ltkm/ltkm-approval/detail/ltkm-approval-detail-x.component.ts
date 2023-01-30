@@ -18,11 +18,11 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
-    selector: 'app-ltkm-approval-detail',
-    templateUrl: './ltkm-approval-detail.component.html',
+    selector: 'app-ltkm-approval-detail-x',
+    templateUrl: './ltkm-approval-detail-x.component.html',
     styleUrls: []
 })
-export class LtkmApprovalDetailComponent implements OnInit {
+export class LtkmApprovalDetailXComponent implements OnInit {
     IsSurveyVerification: boolean = true;
     LtkmNo: string;
     LtkmCustId: Number;
@@ -105,7 +105,7 @@ export class LtkmApprovalDetailComponent implements OnInit {
         this.http.post(URLConstant.GetLtkmCustById, reqObj).subscribe(
             (response) => {
                 this.CustTypeCode = response["MrCustTypeCode"];
-    
+
                 this.http.post(URLConstant.getLtkmReqByLtkmCustId, reqObj).subscribe(
                     (response) => {
                         if (response["ReturnObject"] != undefined) {

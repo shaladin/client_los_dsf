@@ -82,7 +82,7 @@ export class LtkmEmergencyContactComponent implements OnInit {
     private cookieService: CookieService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     if (this.isLockMode) {
       this.parentForm.addControl(this.identifier, this.fb.group({
@@ -165,11 +165,11 @@ export class LtkmEmergencyContactComponent implements OnInit {
       this.InputUcAddressObj.isReadonly = false;
     }
 
-    this.setDropdown();
-    this.getData();
+    await this.setDropdown();
+    await this.getData();
   }
 
-  setDropdown() {
+  async setDropdown() {
     this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
@@ -195,7 +195,7 @@ export class LtkmEmergencyContactComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).toPromise().then(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
         if (!this.IsMarried) {

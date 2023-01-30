@@ -13,10 +13,10 @@
       </mat-tab>
       <mat-tab label="Customer Data">
         <ng-template matTabContent>
-          <app-view-ltkm-cust-data-company *ngIf="mrCustTypeCode == 'COMPANY'" [LtkmCustId]="LtkmCustId">
-          </app-view-ltkm-cust-data-company>
-          <app-view-ltkm-cust-data-personal *ngIf="mrCustTypeCode == 'PERSONAL'" [LtkmCustId]="LtkmCustId">
-          </app-view-ltkm-cust-data-personal>
+          <app-view-ltkm-cust-data-company-x *ngIf="mrCustTypeCode == 'COMPANY'" [LtkmCustId]="LtkmCustId">
+          </app-view-ltkm-cust-data-company-x>
+          <app-view-ltkm-cust-data-personal-x *ngIf="mrCustTypeCode == 'PERSONAL'" [LtkmCustId]="LtkmCustId">
+          </app-view-ltkm-cust-data-personal-x>
         </ng-template>
       </mat-tab>
       <mat-tab label="Customer History">
@@ -37,7 +37,7 @@
 
     </mat-tab-group>
     <div class="card-body">
-      
+
       <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
       </lib-ucapprovalgeneralinfo>
       <!-- <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">

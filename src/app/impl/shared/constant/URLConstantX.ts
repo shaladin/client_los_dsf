@@ -316,6 +316,7 @@ export class URLConstantX {
   //App Agrmnt Cancellation
   public static AddAppAgrmntCancelV2_1X = environment.losUrl + "/v2.1" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
   public static AddAppAgrmntCancelV3X = environment.losUrl + "/v3" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
+  public static AddAppAgrmntCancelV4X = environment.losUrl + "/v4" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
 
   // Invoice
   public static AddInvoiceX = environment.losUrl + "/v1" + "/InvoiceX/AddInvoiceX";
