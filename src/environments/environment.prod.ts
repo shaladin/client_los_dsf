@@ -27,5 +27,6 @@ export const environment = {
   Superset: 'http://linuxdev4:8091/',
 r2Url: 'http://172.30.2.43/CONFINS',
   Module:"LOS",
-  isCore : true
+  isCore : true,
+  SpinnerOnHttpPost: true
 };
