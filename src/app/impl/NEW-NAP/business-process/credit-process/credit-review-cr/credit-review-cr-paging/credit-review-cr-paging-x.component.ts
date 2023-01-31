@@ -3,17 +3,17 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
-import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
-import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ToastrService } from 'ngx-toastr';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-review-cr-paging-x',

@@ -120,6 +120,11 @@
         "property": "CustCheckingStep"
       },
       {
+        "type": "text",
+        "label": "Business Line",
+        "property": "LobName"
+      },
+      {
         "type": "switch",
         "case": [{
           "conditions": [{

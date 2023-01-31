@@ -27,7 +27,7 @@ export class LeadCancelComponent implements OnInit {
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
-  allowedStat = ['INP', 'NEW', 'NEW_SMPL'];
+  allowedStat = ['INP', 'NEW', 'NEW_SMPL', 'RAPP_SIMPL'];
   tempLeadCancelObj: LeadCancelObj;
   HeadOfficeCode : string;
   MrLeadTypeCode: string;

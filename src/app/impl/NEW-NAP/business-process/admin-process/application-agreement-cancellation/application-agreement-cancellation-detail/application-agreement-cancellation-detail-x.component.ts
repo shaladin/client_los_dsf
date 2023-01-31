@@ -74,7 +74,7 @@ export class ApplicationAgreementCancellationDetailXComponent implements OnInit 
     this.AppAgrmntCancelObj.CancelByRefNo = "null";
     this.AppAgrmntCancelObj.RowVersion = "";
 
-    this.http.post(URLConstantX.AddAppAgrmntCancelV3X, this.AppAgrmntCancelObj).subscribe((response) => {
+    this.http.post(URLConstantX.AddAppAgrmntCancelV4X, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING], { BizTemplateCode: this.BizTemplateCode });
     });

@@ -17,6 +17,7 @@ import { UcInputApprovalHistoryObj } from "app/shared/model/uc-input-approval-hi
 import { UcInputApprovalGeneralInfoObj } from "app/shared/model/uc-input-approval-general-info-obj.model";
 import { ChangeMouTrxObj } from "app/shared/model/change-mou-trx-obj.model";
 import { ApprovalObj } from "app/shared/model/approval/approval-obj.model";
+import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
 
 @Component({
   selector: "app-change-mou-approval-general-x",
@@ -39,6 +40,7 @@ export class ChangeMouApprovalGeneralXComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
+  changeMouTrxIdPrev: number;
 
   pageTitle: string;
   ChangeMouCustId: number;
@@ -69,6 +71,8 @@ export class ChangeMouApprovalGeneralXComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -82,7 +86,7 @@ export class ChangeMouApprovalGeneralXComponent implements OnInit {
     ApvHoldObj.TaskId = this.taskId;
 
     this.HoldTask(ApvHoldObj);
-    
+
     this.initInputApprovalObj();
   }
 
@@ -113,7 +117,7 @@ export class ChangeMouApprovalGeneralXComponent implements OnInit {
       }
     )
   }
-  
+
   onApprovalSubmited(event) {
     let ReqMouApvCustomObj = {
       Tasks: event.Tasks

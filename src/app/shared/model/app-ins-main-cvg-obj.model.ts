@@ -25,6 +25,8 @@ export class AppInsMainCvgObj {
     AppInsAddCvgObjs: Array<AppInsAddCvgObj>;
     AddCvgTypeName: string;
     IsCapitalized: boolean;
+    CustAddPremiRate: string;
+    InscoAddPremiRate: string;
     
 constructor() { 
     this.AppInsMainCvgId = 0;

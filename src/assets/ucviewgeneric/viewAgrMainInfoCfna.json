@@ -70,6 +70,11 @@
           "type": "text",
           "label": "Agreement Last Step",
           "property": "LastStep"
+        },
+        {
+          "type": "text",
+          "label": "Business Line",
+          "property": "LobName"
         }
       ],
       "querystring": {

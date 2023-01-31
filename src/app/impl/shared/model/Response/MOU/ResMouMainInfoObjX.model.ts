@@ -6,6 +6,8 @@ export class ResMouMainInfoObjX {
   MouType: string
   StartDt: Date
   PlafondAmt: number
+  PlafondCollateralAmt: number
+  UsedAmt: number
   OsPlafondAmt : number
   EndDt: Date
   RefNo: string

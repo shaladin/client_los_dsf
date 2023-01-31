@@ -11,6 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from "ngx-cookie";
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-change-mou-execution-detail-x',
@@ -26,6 +27,7 @@ export class ChangeMouExecutionDetailXComponent implements OnInit {
   TrxType: string;
   MouType: string = "";
   ChangeMouTrxId: number = 0;
+  changeMouTrxIdPrev: number;
 
   ChangeMouExecutionForm = this.fb.group({
     MouCustId: [''],
@@ -66,6 +68,7 @@ export class ChangeMouExecutionDetailXComponent implements OnInit {
   }
 
   ngOnInit() {
+
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
@@ -114,7 +117,7 @@ export class ChangeMouExecutionDetailXComponent implements OnInit {
   }
   GetCallBack(ev: any) {
    if (ev.Key == "customer") {
-      
+
         AdInsHelper.OpenMOUCustViewByMouCustId(ev.ViewObj.MouCustId);
     }
 }
