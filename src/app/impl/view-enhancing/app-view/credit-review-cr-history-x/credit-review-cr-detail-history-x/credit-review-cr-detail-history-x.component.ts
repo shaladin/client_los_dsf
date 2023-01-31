@@ -1,6 +1,6 @@
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { HttpClient } from '@angular/common/http';
-import { ApplicationRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -8,22 +8,26 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppCrdRvwDObj } from 'app/shared/model/app-crd-rvw-d-obj.model';
-import { AppCrdRvwHObj } from 'app/shared/model/app-crd-rvw-h-obj.model';
-import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { environment } from 'environments/environment';
+import { ToastrService } from 'ngx-toastr';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
+import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
+import { TypeResultObj } from 'app/shared/model/type-result/type-result-obj.model';
 import { DeviationResultObj } from 'app/shared/model/deviation-result-obj.model';
 import { NapAppModel } from 'app/shared/model/nap-app.model';
 import { ScoringResultHObj } from 'app/shared/model/scoring-result-h-obj.model';
-import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
-import { environment } from 'environments/environment';
-import { ToastrService } from 'ngx-toastr';
-import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
-import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { TypeResultObj } from 'app/shared/model/type-result/type-result-obj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
+import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.model';
-import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
+import { AppCrdRvwHObj } from 'app/shared/model/app-crd-rvw-h-obj.model';
+import { WorkflowApiObj } from 'app/shared/model/workflow/workflow-api-obj.model';
+import { AppCrdRvwDObj } from 'app/shared/model/app-crd-rvw-d-obj.model';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-credit-review-cr-detail-history-x',
@@ -31,15 +35,7 @@ import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.mod
 })
 export class CreditReviewCrDetailHistoryXComponent implements OnInit {
 
-  private createComponent: UcapprovalcreateComponent;
-  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) {
-      // initially setter gets called with undefined
-      this.createComponent = content;
-    }
-  }
   @Input() appId: number = 0;
-  wfTaskListId: any;
   isReturnOn: boolean = false;
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   Arr: FormArray;
@@ -51,6 +47,8 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   apvSchmCode: string = "";
   OriOfficeCode: string;
 
+
+
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -60,7 +58,7 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   readonly CaptureStatScs: string = CommonConstant.CaptureStatScs;
   readonly CaptureStatFail: string = CommonConstant.CaptureStatFail;
 
-  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING + 'X';
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
@@ -73,19 +71,23 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   });
 
   crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
+  lobCode: string;
+  IsFD: boolean = false;
+
+  ProdOfferingCode: string;
+  ProdOfferingVersion: number;
+
   constructor(
     private route: ActivatedRoute,
     private ref: ApplicationRef,
     private http: HttpClient,
     private fb: FormBuilder,
-    private router: Router,
     public toastr: ToastrService,
     private cookieService: CookieService
   ) {
 
   }
 
-  readonly bizCfna: string = CommonConstant.CFNA;
   initData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
@@ -119,7 +121,7 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   }
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
-  BindManualDeviationData(ev) {
+  async BindManualDeviationData(ev) {
     this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
@@ -142,7 +144,7 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
         manualDevList.push(TypeCode);
       }
     }
-    this.initInputApprovalObj(manualDevList);
+    await this.initInputApprovalObj(manualDevList);
   }
 
   onChangeApprover(ev) {
@@ -159,17 +161,15 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   //#endregion
 
   //#region GET Approval Scheme Code
-  prodOfferingCode: string = "";
-  prodOfferingVersion: string = "";
   async GetApvSchemeFromRefProdCompnt() {
     let obj = {
-      prodOfferingCode: this.prodOfferingCode,
-      prodOfferingVersion: this.prodOfferingVersion,
+      prodOfferingCode: this.ProdOfferingCode,
+      prodOfferingVersion: this.ProdOfferingVersion,
       refProdCompntCode: CommonConstant.REF_PROD_COMPNT_CODE_CRD_APV
     };
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).toPromise().then(
       response => {
-        if(response != undefined){
+        if (response != undefined) {
           this.apvSchmCode = response["CompntValue"];
         }
       }
@@ -185,12 +185,17 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
       async (response) => {
         if (response != undefined) {
           this.appNo = response.AppNo;
-          this.prodOfferingCode = response.ProdOfferingCode;
-          this.prodOfferingVersion = response.ProdOfferingVersion;
+          this.lobCode = response.LobCode;
+          this.ProdOfferingCode = response.ProdOfferingCode;
+          this.ProdOfferingVersion = response.ProdOfferingVersion;
           this.OriOfficeCode = response.OriOfficeCode;
           await this.GetCreditScoring(response.AppNo);
         }
       });
+
+    if (this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "FD") {
+      this.IsFD = true;
+    }
   }
 
   async GetCreditScoring(appNo: string) {
@@ -212,7 +217,7 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
 
   //#region DDL Data
   DDLData: { [id: string]: Array<KeyValueObj> } = {};
-  readonly DDLRecomendation: string = CommonConstant.RefReasonTypeCodeCrdReview;
+  readonly DDLRecomendation: string = "RECOMENDED";
   async BindDDLRecommendation() {
     let Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
@@ -221,7 +226,7 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
       });
   }
 
-  readonly DDLReason: string = CommonConstant.RefReasonTypeCodeReturnHandlingGeneral;
+  readonly DDLReason: string = "REASON";
   async BindDDLReasonReturn() {
     let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeReturnHandlingGeneral };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
@@ -249,7 +254,7 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    await this.http.post(URLConstant.GetApvAmountForCrdRvwByAppId, { Id: this.appId }).toPromise().then(
+    await this.http.post(URLConstantX.GetApprovalAmountForCreditReviewByAppIdX, { Id: this.appId }).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
           AppvAmt: response["Result"]
@@ -277,11 +282,18 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
   captureStat: string = "";
+  readonly bizCfna: string = CommonConstant.CFNA;
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
+
+        // penjagaan CF4W Fleet - impl X
+        if (this.crdRvwCustInfoObj.BizTemplateCode == CommonConstant.CF4W) {
+          this.crdRvwCustInfoObj.BizTemplateCode = CommonConstant.FL4W;
+        }
+
       }
     );
 
@@ -319,16 +331,16 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
   }
 
   PlafondAmt: number = 0;
-  initInputApprovalObj(manualDevList = null) {
-    var Attributes: Array<ResultAttrObj> = new Array();
-    var attribute1: ResultAttrObj = {
+  async initInputApprovalObj(manualDevList = null) {
+    let Attributes: Array<ResultAttrObj> = new Array();
+    const attribute1: ResultAttrObj = {
       AttributeName: "Approval Amount",
       AttributeValue: this.PlafondAmt.toString()
     };
     Attributes.push(attribute1);
 
-    var listTypeCode: Array<TypeResultObj> = new Array();
-    var TypeCode: TypeResultObj = {
+    let listTypeCode: Array<TypeResultObj> = new Array();
+    const TypeCode: TypeResultObj = {
       TypeCode: "CRD_APV_CF_TYPE",
       Attributes: Attributes,
     };
@@ -350,58 +362,4 @@ export class CreditReviewCrDetailHistoryXComponent implements OnInit {
     this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.IsReady = true;
   }
-
-  //#region Submit
-  SaveForm() {
-    let temp = this.FormObj.value;
-    let tempAppCrdRvwObj = new AppCrdRvwHObj();
-    tempAppCrdRvwObj.AppId = this.appId;
-    tempAppCrdRvwObj.SubmitDt = this.UserAccess.BusinessDt;
-    tempAppCrdRvwObj.CrdRvwStat = CommonConstant.CrdRvwStatDone;
-    tempAppCrdRvwObj.ReturnNotes = "";
-    if (this.ResponseExistCreditReview != null) {
-      tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
-    }
-    tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
-
-    if (!this.isReturnOn) {
-      this.RFAInfo = { RFAInfo: this.FormObj.controls.RFAInfo.value };
-
-    }
-
-    let apiObj = {
-      appCrdRvwHObj: tempAppCrdRvwObj,
-      ApprovedById: temp.Approver,
-      Reason: temp.ReasonDesc,
-      Notes: temp.Notes,
-      WfTaskListId: this.wfTaskListId,
-      RowVersion: "",
-      AppId: this.appId,
-      ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: this.RFAInfo
-    };
-
-    let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
-    this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
-      (response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-      });
-  }
-
-  BindAppCrdRvwDObj(objArr: Array<any>) {
-    let AppCrdRvwDObjs = new Array();
-    for (let i = 0; i < objArr.length; i++) {
-      let temp = new AppCrdRvwDObj();
-      temp.MrAnalysisItemCode = objArr[i].QuestionCode;
-      temp.AnalysisResult = objArr[i].Answer;
-      if (this.ResponseExistCreditReview.appCrdRvwDObjs != null) {
-        let idx = this.ResponseExistCreditReview.appCrdRvwDObjs.indexOf(this.ResponseExistCreditReview.appCrdRvwDObjs.find(x => x.MrAnalysisItemCode == objArr[i].QuestionCode));
-        temp.AppCrdRvwDId = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].AppCrdRvwDId;
-        temp.RowVersion = this.ResponseExistCreditReview.appCrdRvwDObjs[idx].RowVersion;
-      }
-      AppCrdRvwDObjs.push(temp);
-    }
-    return AppCrdRvwDObjs;
-  }
-  //#endregion
 }
