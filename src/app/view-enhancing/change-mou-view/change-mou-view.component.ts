@@ -22,6 +22,7 @@ export class ChangeMouViewComponent implements OnInit {
   dmsObj: DMSObj;
   arrValue = [];
   MouCustId: number;
+  Status: string;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private adInsHelperService: AdInsHelperService) {
     this.route.queryParams.subscribe(params => {
@@ -30,12 +31,13 @@ export class ChangeMouViewComponent implements OnInit {
     });
 
   }
-  
+
   ngOnInit() {
     this.arrValue.push(this.ChangeMouTrxId);
     this.http.post(URLConstant.GetChangeMouTrxbyTrxId, { Id: this.ChangeMouTrxId }).subscribe(
       (responseCMT) => {
-        this.MouCustId = responseCMT["MouCustId"];  
+        this.MouCustId = responseCMT["MouCustId"];
+        this.Status = responseCMT["Status"];
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (responseMC : MouCustObj) => {
             this.resultData = responseMC;

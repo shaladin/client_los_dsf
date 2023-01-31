@@ -8,7 +8,6 @@ import { RequestNewPasswordComponent } from './request-new-password/request-new-
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ModuleSelectionComponent } from './module-selection/module-selection.component';
- 
 
 const routes: Routes = [
   {

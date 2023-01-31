@@ -19,6 +19,12 @@
                   <app-change-mou-view-addcoll [ChangeMouTrxId]="ChangeMouTrxId"></app-change-mou-view-addcoll>
                 </div>
               </ng-template>
+            </mat-tab><mat-tab label="History">
+              <ng-template matTabContent>
+                <div class="px-3">
+                  <app-change-mou-view-history [ChangeMouTrxId]="ChangeMouTrxId" [MouCustId]="MouCustId" [MouType]="MrMouTypeCode" [Status]="Status"></app-change-mou-view-history>
+                </div>
+              </ng-template>
             </mat-tab>
           </mat-tab-group>
         </div>
