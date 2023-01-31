@@ -135,45 +135,44 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
 }
 
 function receiveMessage(event) {
-  console.log(event);
   let xhr = new XMLHttpRequest();
   try {
-    // if (event.data === 'Success') {
-    //   xhr.open("POST", URLConstantX.ChangeAutoDebitRegisStat);
+    if (event.data === 'Success') {
+      xhr.open("POST", URLConstantX.ChangeAutoDebitRegisStat);
 
-    //   let obj = {
-    //     TrxNo: trxNo,
-    //     Stat: CommonConstantX.AUTO_DEBIT_STATUS_INPAUTH
-    //   };
+      let obj = {
+        TrxNo: trxNo,
+        Stat: CommonConstantX.AUTO_DEBIT_STATUS_INPAUTH
+      };
 
-    //   xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
 
-    //   xhr.onreadystatechange = () => {
-    //     if (xhr.status === 200) {
-    //       window.location.reload();
-    //     }
-    //   };
+      xhr.onreadystatechange = () => {
+        if (xhr.status === 200) {
+          window.location.reload();
+        }
+      };
 
-    //   xhr.send(JSON.stringify(obj));
-    // }
-    // else {
-    //   xhr.open("POST", URLConstantX.ChangeAutoDebitRegisStat);
+      xhr.send(JSON.stringify(obj));
+    }
+    else {
+      xhr.open("POST", URLConstantX.ChangeAutoDebitRegisStat);
 
-    //   let obj = {
-    //     TrxNo: trxNo,
-    //     Stat: CommonConstantX.AUTO_DEBIT_STATUS_FLD
-    //   };
+      let obj = {
+        TrxNo: trxNo,
+        Stat: CommonConstantX.AUTO_DEBIT_STATUS_FLD
+      };
 
-    //   xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
 
-    //   xhr.onreadystatechange = () => {
-    //     if (xhr.status === 200) {
-    //       window.location.reload();
-    //     }
-    //   };
+      xhr.onreadystatechange = () => {
+        if (xhr.status === 200) {
+          window.location.reload();
+        }
+      };
 
-    //   xhr.send(JSON.stringify(obj));
-    // }
+      xhr.send(JSON.stringify(obj));
+    }
   } catch (e) {
     console.log(e);
   }
