@@ -42,31 +42,35 @@ export class ViewLtkmSummaryDataComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     }
+
+    calculateAge(sqlString) {
+        let string = sqlString
+        let slicedString = string.slice(0, 10);
+        var pattern = /(\d{4})\.(\d{2})\.(\d{2})/;
+        var dt = new Date(slicedString.replace(pattern, '$2-$1-$3'));
+        let now = new Date()
+        let dif = now.getTime() - dt.getTime()
+        let month = new Date(dif)
+        let year = month.getUTCFullYear()
+        let finalresult = Math.abs(year - 1970);
+        return finalresult;
+    }
+
     ngOnInit() {
         this.http.post(URLConstant.GetSummaryByLtkmCustId, { Id: this.LtkmCustId }).pipe()
             .subscribe(
                 (response) => {
                     this.SummaryLtkmObj = response;
-                    this.Age = calculateAge(this.SummaryLtkmObj['rLtkmCustPersonalObj']['BirthDt']);
-                    this.http.post(URLConstant.GetRefProfessionByCode, { Code: response["rLtkmCustPersonalJobData"]["MrProfessionCode"] }).pipe()
-                        .subscribe(response2 => {
-                            this.Job = response2["ProfessionName"];
-                        })
+                    if(this.SummaryLtkmObj['rLtkmCustObj']['MrCustTypeCode'] == CommonConstant.CustTypePersonal)
+                    {
+                        this.Age = this.calculateAge(this.SummaryLtkmObj['rLtkmCustPersonalObj']['BirthDt']);
+                        this.http.post(URLConstant.GetRefProfessionByCode, { Code: response["rLtkmCustPersonalJobData"]["MrProfessionCode"] }).pipe()
+                            .subscribe(response2 => {
+                                this.Job = response2["ProfessionName"];
+                            })
+                    }
                 }
             );
-
-        function calculateAge(sqlString) {
-            let string = sqlString
-            let slicedString = string.slice(0, 10);
-            var pattern = /(\d{4})\.(\d{2})\.(\d{2})/;
-            var dt = new Date(slicedString.replace(pattern, '$2-$1-$3'));
-            let now = new Date()
-            let dif = now.getTime() - dt.getTime()
-            let month = new Date(dif)
-            let year = month.getUTCFullYear()
-            let finalresult = Math.abs(year - 1970);
-            return finalresult;
-        }
       
         this.http.post(URLConstant.getLtkmReqByLtkmCustId, { Id: this.LtkmCustId }).pipe()
             .subscribe(response => {

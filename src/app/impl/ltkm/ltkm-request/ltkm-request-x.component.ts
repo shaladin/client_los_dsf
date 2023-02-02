@@ -18,7 +18,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { LtkmCustJobDataXComponent } from './additional-component/cust-job-data/cust-job-data-x.component';
-import { LtkmCustGrpMemberComponent } from 'app/ltkm/ltkm-request/additional-component/cust-grp-member/cust-grp-member.component';
+// import { LtkmCustGrpMemberComponent } from 'app/ltkm/ltkm-request/additional-component/cust-grp-member/cust-grp-member.component';
 import { LtkmOtherInfoComponent } from 'app/ltkm/ltkm-request/additional-component/other-info/other-info.component';
 import { LtkmCcContactInformationTabComponent } from 'app/ltkm/ltkm-request/additional-component/company/cc-contact-information-tab/cc-contact-information.component';
 import { LtkmFinancialCompanyComponent } from 'app/ltkm/ltkm-request/additional-component/company/financial-company/financial-company.component';
@@ -64,6 +64,12 @@ import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { AddressService } from 'app/shared/services/custAddr.service';
 import { LtkmFinancialCompanyXComponent } from './additional-component/company/financial-company-x/financial-company-x.component';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
+import { LtkmCustAddrForViewObj } from 'app/shared/model/ltkm/ltkm-cust-addr-for-view-obj.model';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { LtkmAddrForViewObjX } from 'app/impl/shared/model/ltkm/ltkm-addr-data-for-view-objX.model';
+import { LtkmCcContactInformationTabXComponent } from './additional-component/company/cc-contact-information-tab-x/cc-contact-information-x.component';
+import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
 @Component({
     selector: 'app-ltkm-request-x',
     templateUrl: './ltkm-request-x.component.html',
@@ -74,9 +80,9 @@ export class LtkmRequestXComponent implements OnInit {
     @ViewChild(LtkmCustPersonalMainDataXComponent) mainDataComponent;
     @ViewChild(CustPersonalContactInformationComponent) custContactInformationComponent;
     @ViewChild(LtkmCustJobDataXComponent) custJobDataComponent;
-    @ViewChild(LtkmCustGrpMemberComponent) custGrpMemberComponent;
+    // @ViewChild(LtkmCustGrpMemberComponent) custGrpMemberComponent;
     @ViewChild(LtkmOtherInfoComponent) custOtherInfoComponent;
-    @ViewChild(LtkmCcContactInformationTabComponent) custCompanyContactInfo;
+    @ViewChild(LtkmCcContactInformationTabXComponent) custCompanyContactInfo;
     @ViewChild(LtkmFinancialCompanyXComponent) custCompanyFinDataComponent;
     @ViewChild(LtkmLegalDocComponent) custCompanyLegalDocComponent;
     @ViewChild(LtkmMgmntShrholderComponent) custCompanyManagementShareholderComponent;
@@ -145,6 +151,11 @@ export class LtkmRequestXComponent implements OnInit {
     isCustomerCompanySelected: boolean = false;
     listAddrRequiredOwnership: Array<string> = new Array();
     isCcAddrOwnershipMandatory: boolean = false;
+    addrPersonalObjsTemp: Array<AddrObj> = new Array<AddrObj>();
+    addrCompanyObjsTemp: Array<AddrObj> = new Array<AddrObj>();
+    addrObjsForView: Array<LtkmAddrForViewObjX> = new Array<LtkmAddrForViewObjX>();
+    listAddressType: Array<RefMasterObj> = new Array();
+    listOwnershipType: Array<RefMasterObj> = new Array();
     @ViewChild('applicationData') ucLookupApplicationData: UclookupgenericComponent;
     //@ViewChild('applicationCompanyData') ucLookupApplicationCompanyData: UclookupgenericComponent;
 
@@ -267,7 +278,10 @@ export class LtkmRequestXComponent implements OnInit {
         this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
         this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
 
-        await this.getAddrTypeOwnershipRequired();
+        await this.GetListRefAddress();
+        await this.GetListRefOwnership();
+
+        // await this.getAddrTypeOwnershipRequired();
 
         this.inputAddressObjForLegal = new InputAddressObj();
         this.inputAddressObjForLegal.title = "Legal Address";
@@ -519,7 +533,7 @@ export class LtkmRequestXComponent implements OnInit {
         custDataPersonalObj.LtkmCustObj.MrCustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
         custDataPersonalObj.LtkmCustPersonalJobDataObj = this.setAppCustPersonalJobData(custDataPersonalObj.LtkmCustObj.MrCustModelCode);
         // custDataPersonalObj.AppCustSocmedObjs = this.setAppCustSocmedObj(); //tidak dipakai
-        custDataPersonalObj.LtkmCustGrpObjs = this.setAppCustGrpObj();
+        // custDataPersonalObj.LtkmCustGrpObjs = this.setAppCustGrpObj();
         custDataPersonalObj.LtkmCustEmergencyContact = this.setLtkmCustEmergencyContactData();
         custDataPersonalObj.LtkmCustOtherInfoObj = this.setltkmCustOtherInfoData();
 
@@ -638,7 +652,7 @@ export class LtkmRequestXComponent implements OnInit {
         custDataCompanyObj.LtkmCustCompanyFinDataObjs = this.listLtkmCustCoyFinData;
         custDataCompanyObj.LtkmCustBankAccObjs = this.listLtkmCustBankAccCompany;
         custDataCompanyObj.LtkmCustCompanyLegalDocObjs = this.listLtkmCustCompanyLegalDoc;
-        custDataCompanyObj.LtkmCustGrpObjs = this.setAppCustGrpObj();
+        // custDataCompanyObj.LtkmCustGrpObjs = this.setAppCustGrpObj();
         custDataCompanyObj.LtkmCustOtherInfoObj = this.setltkmCustOtherInfoDataCompany();
         // custDataCompanyObj.LtkmCustAttrContent = this.setLtkmCustAttrContent(this.attrlistcustcomponentcoy.ListAttrContent.concat(this.attrlistfindatacomponentcoy.ListAttrContent));
         custDataCompanyObj.LtkmCustAttrContent = this.setAttrContentCoy();
@@ -788,78 +802,79 @@ export class LtkmRequestXComponent implements OnInit {
         return appCustPersonalObj;
     }
 
+    //20230119, richard, ubah cara baca addr legal object langsung ambil dari list addr copy
     setAppCustAddrLegal() {
         var appCustAddrLegalObj = new LtkmCustAddrObj();
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             appCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-            appCustAddrLegalObj.Addr = this.CustDataForm.controls["legalAddr"]["controls"].Addr.value;
-            appCustAddrLegalObj.AreaCode3 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode3.value;
-            appCustAddrLegalObj.AreaCode4 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode4.value;
-            appCustAddrLegalObj.Zipcode = this.CustDataForm.controls["legalAddrZipcode"]["controls"].value.value;
-            appCustAddrLegalObj.AreaCode1 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode1.value;
-            appCustAddrLegalObj.AreaCode2 = this.CustDataForm.controls["legalAddr"]["controls"].AreaCode2.value;
-            appCustAddrLegalObj.City = this.CustDataForm.controls["legalAddr"]["controls"].City.value;
-            appCustAddrLegalObj.PhnArea1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnArea1.value;
-            appCustAddrLegalObj.Phn1 = this.CustDataForm.controls["legalAddr"]["controls"].Phn1.value;
-            appCustAddrLegalObj.PhnExt1 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt1.value;
-            appCustAddrLegalObj.PhnArea2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnArea2.value;
-            appCustAddrLegalObj.Phn2 = this.CustDataForm.controls["legalAddr"]["controls"].Phn2.value;
-            appCustAddrLegalObj.PhnExt2 = this.CustDataForm.controls["legalAddr"]["controls"].PhnExt2.value;
-            appCustAddrLegalObj.FaxArea = this.CustDataForm.controls["legalAddr"]["controls"].FaxArea.value;
-            appCustAddrLegalObj.Fax = this.CustDataForm.controls["legalAddr"]["controls"].Fax.value;
-            appCustAddrLegalObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
+            appCustAddrLegalObj.Addr = this.legalAddrObj.Addr;
+            appCustAddrLegalObj.AreaCode3 = this.legalAddrObj.AreaCode3;
+            appCustAddrLegalObj.AreaCode4 = this.legalAddrObj.AreaCode4;
+            appCustAddrLegalObj.Zipcode = this.legalAddrObj.Zipcode;
+            appCustAddrLegalObj.AreaCode1 = this.legalAddrObj.AreaCode1;
+            appCustAddrLegalObj.AreaCode2 = this.legalAddrObj.AreaCode2;
+            appCustAddrLegalObj.City = this.legalAddrObj.City;
+            appCustAddrLegalObj.PhnArea1 = this.legalAddrObj.PhnArea1;
+            appCustAddrLegalObj.Phn1 = this.legalAddrObj.Phn1;
+            appCustAddrLegalObj.PhnExt1 = this.legalAddrObj.PhnExt1;
+            appCustAddrLegalObj.PhnArea2 = this.legalAddrObj.PhnArea2;
+            appCustAddrLegalObj.Phn2 = this.legalAddrObj.Phn2;
+            appCustAddrLegalObj.PhnExt2 = this.legalAddrObj.PhnExt2;
+            appCustAddrLegalObj.FaxArea = this.legalAddrObj.FaxArea;
+            appCustAddrLegalObj.Fax = this.legalAddrObj.Fax;
+            appCustAddrLegalObj.SubZipcode = this.legalAddrObj.SubZipcode;
 
-            appCustAddrLegalObj.MrHouseOwnershipCode = this.CustDataForm.controls["legalAddr"]["controls"].MrHouseOwnershipCode.value;
-            appCustAddrLegalObj.StayLength = this.CustDataForm.controls["legalAddr"]["controls"].StayLength.value;
+            appCustAddrLegalObj.MrHouseOwnershipCode = this.legalAddrObj.MrHouseOwnershipCode;
+            appCustAddrLegalObj.StayLength = this.legalAddrObj.StayLength;
         }
 
         if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
             appCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-            appCustAddrLegalObj.Addr = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Addr.value;
-            appCustAddrLegalObj.AreaCode3 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode3.value;
-            appCustAddrLegalObj.AreaCode4 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode4.value;
-            appCustAddrLegalObj.Zipcode = this.CustDataCompanyForm.controls["legalAddrCompanyZipcode"]["controls"].value.value;
-            appCustAddrLegalObj.AreaCode1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode1.value;
-            appCustAddrLegalObj.AreaCode2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].AreaCode2.value;
-            appCustAddrLegalObj.City = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].City.value;
-            appCustAddrLegalObj.PhnArea1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea1.value;
-            appCustAddrLegalObj.Phn1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn1.value;
-            appCustAddrLegalObj.PhnExt1 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt1.value;
-            appCustAddrLegalObj.PhnArea2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnArea2.value;
-            appCustAddrLegalObj.Phn2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Phn2.value;
-            appCustAddrLegalObj.PhnExt2 = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].PhnExt2.value;
-            appCustAddrLegalObj.FaxArea = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].FaxArea.value;
-            appCustAddrLegalObj.Fax = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Fax.value;
-            appCustAddrLegalObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
+            appCustAddrLegalObj.Addr = this.legalAddrCompanyObj.Addr;
+            appCustAddrLegalObj.AreaCode3 = this.legalAddrCompanyObj.AreaCode3;
+            appCustAddrLegalObj.AreaCode4 = this.legalAddrCompanyObj.AreaCode4;
+            appCustAddrLegalObj.Zipcode = this.legalAddrCompanyObj.Zipcode;
+            appCustAddrLegalObj.AreaCode1 = this.legalAddrCompanyObj.AreaCode1;
+            appCustAddrLegalObj.AreaCode2 = this.legalAddrCompanyObj.AreaCode2;
+            appCustAddrLegalObj.City = this.legalAddrCompanyObj.City;
+            appCustAddrLegalObj.PhnArea1 = this.legalAddrCompanyObj.PhnArea1;
+            appCustAddrLegalObj.Phn1 = this.legalAddrCompanyObj.Phn1;
+            appCustAddrLegalObj.PhnExt1 = this.legalAddrCompanyObj.PhnExt1;
+            appCustAddrLegalObj.PhnArea2 = this.legalAddrCompanyObj.PhnArea2;
+            appCustAddrLegalObj.Phn2 = this.legalAddrCompanyObj.Phn2;
+            appCustAddrLegalObj.PhnExt2 = this.legalAddrCompanyObj.PhnExt2;
+            appCustAddrLegalObj.FaxArea = this.legalAddrCompanyObj.FaxArea;
+            appCustAddrLegalObj.Fax = this.legalAddrCompanyObj.Fax;
+            appCustAddrLegalObj.SubZipcode = this.legalAddrCompanyObj.SubZipcode;
 
-            appCustAddrLegalObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].MrHouseOwnershipCode.value;
+            appCustAddrLegalObj.MrHouseOwnershipCode = this.legalAddrCompanyObj.MrHouseOwnershipCode;
         }
 
         return appCustAddrLegalObj;
     }
 
+    //20230119, richard, ubah cara baca addr legal object langsung ambil dari list addr copy
     setAppCustAddrResidence() {
         var appCustAddrResidenceObj = new LtkmCustAddrObj();
         appCustAddrResidenceObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
-        appCustAddrResidenceObj.Addr = this.CustDataForm.controls["residenceAddr"]["controls"].Addr.value;
-        appCustAddrResidenceObj.AreaCode3 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode3.value;
-        appCustAddrResidenceObj.AreaCode4 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode4.value;
-        appCustAddrResidenceObj.Zipcode = this.CustDataForm.controls["residenceAddrZipcode"]["controls"].value.value;
-        appCustAddrResidenceObj.AreaCode1 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode1.value;
-        appCustAddrResidenceObj.AreaCode2 = this.CustDataForm.controls["residenceAddr"]["controls"].AreaCode2.value;
-        appCustAddrResidenceObj.City = this.CustDataForm.controls["residenceAddr"]["controls"].City.value;
-        appCustAddrResidenceObj.PhnArea1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnArea1.value;
-        appCustAddrResidenceObj.Phn1 = this.CustDataForm.controls["residenceAddr"]["controls"].Phn1.value;
-        appCustAddrResidenceObj.PhnExt1 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt1.value;
-        appCustAddrResidenceObj.PhnArea2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnArea2.value;
-        appCustAddrResidenceObj.Phn2 = this.CustDataForm.controls["residenceAddr"]["controls"].Phn2.value;
-        appCustAddrResidenceObj.PhnExt2 = this.CustDataForm.controls["residenceAddr"]["controls"].PhnExt2.value;
-        appCustAddrResidenceObj.FaxArea = this.CustDataForm.controls["residenceAddr"]["controls"].FaxArea.value;
-        appCustAddrResidenceObj.Fax = this.CustDataForm.controls["residenceAddr"]["controls"].Fax.value;
-        appCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
-        appCustAddrResidenceObj.StayLength = this.CustDataForm.controls["residenceAddr"]["controls"].StayLength.value;
-        appCustAddrResidenceObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
-
+        appCustAddrResidenceObj.Addr = this.residenceAddrObj.Addr;
+        appCustAddrResidenceObj.AreaCode3 = this.residenceAddrObj.AreaCode3;
+        appCustAddrResidenceObj.AreaCode4 = this.residenceAddrObj.AreaCode4;
+        appCustAddrResidenceObj.Zipcode = this.residenceAddrObj.Zipcode;
+        appCustAddrResidenceObj.AreaCode1 = this.residenceAddrObj.AreaCode1;
+        appCustAddrResidenceObj.AreaCode2 = this.residenceAddrObj.AreaCode2;
+        appCustAddrResidenceObj.City = this.residenceAddrObj.City;
+        appCustAddrResidenceObj.PhnArea1 = this.residenceAddrObj.PhnArea1;
+        appCustAddrResidenceObj.Phn1 = this.residenceAddrObj.Phn1;
+        appCustAddrResidenceObj.PhnExt1 = this.residenceAddrObj.PhnExt1;
+        appCustAddrResidenceObj.PhnArea2 = this.residenceAddrObj.PhnArea2;
+        appCustAddrResidenceObj.Phn2 = this.residenceAddrObj.Phn2;
+        appCustAddrResidenceObj.PhnExt2 = this.residenceAddrObj.PhnExt2;
+        appCustAddrResidenceObj.FaxArea = this.residenceAddrObj.FaxArea;
+        appCustAddrResidenceObj.Fax = this.residenceAddrObj.Fax;
+        appCustAddrResidenceObj.MrHouseOwnershipCode = this.residenceAddrObj.MrHouseOwnershipCode;
+        appCustAddrResidenceObj.StayLength = this.residenceAddrObj.StayLength;
+        appCustAddrResidenceObj.SubZipcode = this.residenceAddrObj.SubZipcode;
         // if(this.isExisting){
         //   appCustAddrResidenceObj.RowVersion = this.custDataPersonalObj.LtkmCustAddrResidenceObj.RowVersion;
         // }
@@ -871,24 +886,24 @@ export class LtkmRequestXComponent implements OnInit {
         var appCustAddrMailingObj = new LtkmCustAddrObj();
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             appCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
-            appCustAddrMailingObj.Addr = this.CustDataForm.controls["mailingAddr"]["controls"].Addr.value;
-            appCustAddrMailingObj.AreaCode3 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode3.value;
-            appCustAddrMailingObj.AreaCode4 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode4.value;
-            appCustAddrMailingObj.Zipcode = this.CustDataForm.controls["mailingAddrZipcode"]["controls"].value.value;
-            appCustAddrMailingObj.AreaCode1 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode1.value;
-            appCustAddrMailingObj.AreaCode2 = this.CustDataForm.controls["mailingAddr"]["controls"].AreaCode2.value;
-            appCustAddrMailingObj.City = this.CustDataForm.controls["mailingAddr"]["controls"].City.value;
-            appCustAddrMailingObj.PhnArea1 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnArea1.value;
-            appCustAddrMailingObj.Phn1 = this.CustDataForm.controls["mailingAddr"]["controls"].Phn1.value;
-            appCustAddrMailingObj.PhnExt1 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt1.value;
-            appCustAddrMailingObj.PhnArea2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnArea2.value;
-            appCustAddrMailingObj.Phn2 = this.CustDataForm.controls["mailingAddr"]["controls"].Phn2.value;
-            appCustAddrMailingObj.PhnExt2 = this.CustDataForm.controls["mailingAddr"]["controls"].PhnExt2.value;
-            appCustAddrMailingObj.FaxArea = this.CustDataForm.controls["mailingAddr"]["controls"].FaxArea.value;
-            appCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
-            appCustAddrMailingObj.SubZipcode = this.CustDataForm.controls["mailingAddr"]["controls"].SubZipcode.value;
+            appCustAddrMailingObj.Addr = this.mailingAddrObj.Addr;
+            appCustAddrMailingObj.AreaCode3 = this.mailingAddrObj.AreaCode3;
+            appCustAddrMailingObj.AreaCode4 = this.mailingAddrObj.AreaCode4;
+            appCustAddrMailingObj.Zipcode = this.mailingAddrObj.Zipcode;
+            appCustAddrMailingObj.AreaCode1 = this.mailingAddrObj.AreaCode1;
+            appCustAddrMailingObj.AreaCode2 = this.mailingAddrObj.AreaCode2;
+            appCustAddrMailingObj.City = this.mailingAddrObj.City;
+            appCustAddrMailingObj.PhnArea1 = this.mailingAddrObj.PhnArea1;
+            appCustAddrMailingObj.Phn1 = this.mailingAddrObj.Phn1;
+            appCustAddrMailingObj.PhnExt1 = this.mailingAddrObj.PhnExt1;
+            appCustAddrMailingObj.PhnArea2 = this.mailingAddrObj.PhnArea2;
+            appCustAddrMailingObj.Phn2 = this.mailingAddrObj.Phn2;
+            appCustAddrMailingObj.PhnExt2 = this.mailingAddrObj.PhnExt2;
+            appCustAddrMailingObj.FaxArea = this.mailingAddrObj.FaxArea;
+            appCustAddrMailingObj.Fax = this.mailingAddrObj.Fax;
+            appCustAddrMailingObj.SubZipcode = this.mailingAddrObj.SubZipcode;
 
-            appCustAddrMailingObj.MrHouseOwnershipCode = this.CustDataForm.controls["mailingAddr"]["controls"].MrHouseOwnershipCode.value;
+            appCustAddrMailingObj.MrHouseOwnershipCode = this.mailingAddrObj.MrHouseOwnershipCode;
 
             // if(this.isExisting){
             //   appCustAddrMailingObj.RowVersion = this.custDataPersonalObj.LtkmCustAddrMailingObj.RowVersion;
@@ -897,23 +912,23 @@ export class LtkmRequestXComponent implements OnInit {
 
         if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
             appCustAddrMailingObj.MrCustAddrTypeCode = CommonConstant.AddrTypeMailing;
-            appCustAddrMailingObj.Addr = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Addr.value;
-            appCustAddrMailingObj.AreaCode3 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode3.value;
-            appCustAddrMailingObj.AreaCode4 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode4.value;
-            appCustAddrMailingObj.Zipcode = this.CustDataCompanyForm.controls["mailingAddrCompanyZipcode"]["controls"].value.value;
-            appCustAddrMailingObj.AreaCode1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode1.value;
-            appCustAddrMailingObj.AreaCode2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].AreaCode2.value;
-            appCustAddrMailingObj.City = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].City.value;
-            appCustAddrMailingObj.PhnArea1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnArea1.value;
-            appCustAddrMailingObj.Phn1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Phn1.value;
-            appCustAddrMailingObj.PhnExt1 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt1.value;
-            appCustAddrMailingObj.PhnArea2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnArea2.value;
-            appCustAddrMailingObj.Phn2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Phn2.value;
-            appCustAddrMailingObj.PhnExt2 = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].PhnExt2.value;
-            appCustAddrMailingObj.FaxArea = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].FaxArea.value;
-            appCustAddrMailingObj.Fax = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Fax.value;
-            appCustAddrMailingObj.SubZipcode = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].SubZipcode.value;
-            appCustAddrMailingObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].MrHouseOwnershipCode.value;
+            appCustAddrMailingObj.Addr = this.mailingAddrCompanyObj.Addr;
+            appCustAddrMailingObj.AreaCode3 = this.mailingAddrCompanyObj.AreaCode3;
+            appCustAddrMailingObj.AreaCode4 = this.mailingAddrCompanyObj.AreaCode4;
+            appCustAddrMailingObj.Zipcode = this.mailingAddrCompanyObj.Zipcode;
+            appCustAddrMailingObj.AreaCode1 = this.mailingAddrCompanyObj.AreaCode1;
+            appCustAddrMailingObj.AreaCode2 = this.mailingAddrCompanyObj.AreaCode2;
+            appCustAddrMailingObj.City = this.mailingAddrCompanyObj.City;
+            appCustAddrMailingObj.PhnArea1 = this.mailingAddrCompanyObj.PhnArea1;
+            appCustAddrMailingObj.Phn1 = this.mailingAddrCompanyObj.Phn1;
+            appCustAddrMailingObj.PhnExt1 = this.mailingAddrCompanyObj.PhnExt1;
+            appCustAddrMailingObj.PhnArea2 = this.mailingAddrCompanyObj.PhnArea2;
+            appCustAddrMailingObj.Phn2 = this.mailingAddrCompanyObj.Phn2;
+            appCustAddrMailingObj.PhnExt2 = this.mailingAddrCompanyObj.PhnExt2;
+            appCustAddrMailingObj.FaxArea = this.mailingAddrCompanyObj.FaxArea;
+            appCustAddrMailingObj.Fax = this.mailingAddrCompanyObj.Fax;
+            appCustAddrMailingObj.SubZipcode = this.mailingAddrCompanyObj.SubZipcode;
+            appCustAddrMailingObj.MrHouseOwnershipCode = this.mailingAddrCompanyObj.MrHouseOwnershipCode;
 
             // if(this.isExisting){
             //   appCustAddrMailingObj.RowVersion = this.custDataCompanyObj.AppCustAddrMailingObj.RowVersion;
@@ -1119,27 +1134,30 @@ export class LtkmRequestXComponent implements OnInit {
         }
     }
 
+    //20230119, richard, check company contact person
     setLtkmCustCompanyContactPerson() {
+        
         let ReqAddr: LtkmCustAddrObj = new LtkmCustAddrObj();
-        ReqAddr.Phn1 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].Phn1.value;
-        ReqAddr.Phn2 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].Phn2.value;
-        ReqAddr.PhnArea1 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].PhnArea1.value;
-        ReqAddr.PhnArea2 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].PhnArea2.value;
-        ReqAddr.PhnExt1 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].PhnExt1.value;
-        ReqAddr.PhnExt2 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].PhnExt2.value;
-        ReqAddr.Addr = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].Addr.value;
+        
+        ReqAddr.Phn1 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).Phn1;
+        ReqAddr.Phn2 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).Phn2;
+        ReqAddr.PhnArea1 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).PhnArea1;
+        ReqAddr.PhnArea2 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).PhnArea2;
+        ReqAddr.PhnExt1 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).PhnExt1;
+        ReqAddr.PhnExt2 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).PhnExt2;
+        ReqAddr.Addr = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).Addr;
         // ReqAddr.AppCustId = this.AppCustId;
-        ReqAddr.AreaCode1 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].AreaCode1.value;
-        ReqAddr.AreaCode2 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].AreaCode2.value;
-        ReqAddr.AreaCode3 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].AreaCode3.value;
-        ReqAddr.AreaCode4 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].AreaCode4.value;
-        ReqAddr.City = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].City.value;
-        ReqAddr.Fax = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].Fax.value;
-        ReqAddr.FaxArea = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].FaxArea.value;
+        ReqAddr.AreaCode1 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).AreaCode1;
+        ReqAddr.AreaCode2 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).AreaCode2;
+        ReqAddr.AreaCode3 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).AreaCode3;
+        ReqAddr.AreaCode4 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).AreaCode4;
+        ReqAddr.City = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).City;
+        ReqAddr.Fax = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).Fax;
+        ReqAddr.FaxArea = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).FaxArea;
         ReqAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeCompany;
-        ReqAddr.MrHouseOwnershipCode = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].MrHouseOwnershipCode.value;;
-        ReqAddr.Zipcode = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier + "Zipcode"]["controls"].value.value;
-        ReqAddr.SubZipcode = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].SubZipcode.value;
+        ReqAddr.MrHouseOwnershipCode = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).MrHouseOwnershipCode;;
+        ReqAddr.Zipcode = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).Zipcode;
+        ReqAddr.SubZipcode = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).SubZipcode;
 
         let ReqCcObj: LtkmCustCompanyContactPersonObj = new LtkmCustCompanyContactPersonObj();
         // ReqCcObj.LtkmCustId = this.LtkmCustId;
@@ -1164,14 +1182,13 @@ export class LtkmRequestXComponent implements OnInit {
         ReqCcObj.MrIdTypeCode = this.CustDataCompanyForm.controls["contactPersonCompany"]["controls"].MrIdTypeCode.value;
         ReqCcObj.MrJobPositionCode = this.CustDataCompanyForm.controls["contactPersonCompany"]["controls"].MrJobPositionCode.value;
 
-        ReqCcObj.Phn1 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].Phn1.value;
-        ReqCcObj.Phn2 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].Phn2.value;
-        ReqCcObj.PhnArea1 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].PhnArea1.value;
-        ReqCcObj.PhnArea2 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].PhnArea2.value;
-        ReqCcObj.PhnExt1 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].PhnExt1.value;
-        ReqCcObj.PhnExt2 = this.CustDataCompanyForm.controls[this.InputAddressObjForCc_Identifier]["controls"].PhnExt2.value;
+        ReqCcObj.Phn1 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).Phn1;
+        ReqCcObj.Phn2 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).Phn2;
+        ReqCcObj.PhnArea1 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).PhnArea1;
+        ReqCcObj.PhnArea2 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).PhnArea2;
+        ReqCcObj.PhnExt1 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).PhnExt1;
+        ReqCcObj.PhnExt2 = this.addrCompanyObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeContactInfo).PhnExt2;
         ReqCcObj.LtkmCustAddrObj = ReqAddr;
-
         return ReqCcObj;
     }
 
@@ -1948,7 +1965,47 @@ export class LtkmRequestXComponent implements OnInit {
         }
     }
 
-    CopyCustomer(event) {
+    ltkmCustGrpParentObjs: CustParentChildObj;
+    ltkmCustGrpChildObjs: Array<CustParentChildObj> = new Array<CustParentChildObj>();
+    ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
+    //20230125, richard, update mekanisme baca cust group
+    async getCustDataView(custtype: string){
+        let url = "";
+        if(custtype == CommonConstant.CustTypePersonal)
+        {
+            url = URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId;
+        }else{
+            url = URLConstant.GetLtkmCustDataCompanyForViewByLtkmCustId;
+        }
+
+        await this.http.post(url, { LtkmCustId: this.LtkmCustId }).toPromise().then(
+          (response) => {
+            this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
+
+            if(response["rLtkmCustGrpParent"] != null){
+                this.ltkmCustGrpParentObjs = response["rLtkmCustGrpParent"];
+            }
+            if(response["rLtkmCustGrpChild"] != null){
+                this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];
+            }
+          });
+      }
+
+      async GetCustObj(CustNo) {
+        var DealerCustNoObj = { CustNo: CustNo };
+        this.http.post(URLConstant.GetCustByCustNo, DealerCustNoObj).toPromise().then(
+          (response) => {
+            console.log(response);
+            return response["CustId"];
+          }
+        );
+      }
+
+    async CopyCustomer(event) {
+        //20230120, richard, reset temp pers
+        this.addrPersonalObjs = new Array<AddrObj>();
+        this.addrPersonalObjsTemp = new Array<AddrObj>();
+        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
         this.copyAddrFromLookup(event);
         // this.selectCustNo = event.
 
@@ -1987,11 +2044,46 @@ export class LtkmRequestXComponent implements OnInit {
             this.custJobDataComponent.IsCopy = true;
 
             this.custJobDataComponent.bindLtkmCustPersonalJobData();
+
+            let addrVar = new AddrObj();
+            addrVar.MrCustAddrTypeCode = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.MrCustAddrTypeCode;
+            addrVar.MrHouseOwnershipCode = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.MrBuildingOwnershipCode;
+            addrVar.Addr = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Addr;
+            addrVar.AreaCode1 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.AreaCode1;
+            addrVar.AreaCode2 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.AreaCode2;
+            addrVar.AreaCode3 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.AreaCode3;
+            addrVar.AreaCode4 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.AreaCode4;
+            addrVar.City = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.City;
+            addrVar.Zipcode = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Zipcode;
+            addrVar.SubZipcode = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.SubZipcode;
+            addrVar.PhnArea1 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObjPhnArea1;
+            addrVar.Phn1 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Phn1;
+            addrVar.PhnExt1 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnExt1;
+            addrVar.PhnArea2 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnArea2;
+            addrVar.Phn2 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Phn2;
+            addrVar.PhnExt2 = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnExt2;
+            addrVar.FaxArea = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.FaxArea;
+            addrVar.Fax = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Fax;
+            addrVar.StayLength = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.StayLength;
+            this.addrPersonalObjsTemp.push(addrVar);
+
         }
 
+        //20230125, richard, ubah mekanisme tampilin nilai cust group, baca dari master cust
         if (event["CustGrpObjs"] != undefined) {
-            this.custGrpMemberComponent.ltkmCustGrpObjs = event["CustGrpObjs"];
-            this.custGrpMemberComponent.copyAppGrp();
+            this.ltkmCustGrpObjs = event["CustGrpObjs"];
+            
+            var ReqCustId = { Id: event["CustObj"]["CustId"] };
+            this.http.post(URLConstant.GetListCustGrpForCustViewById, ReqCustId).subscribe(
+              response => {
+                if(response["ParentCustGrp"] != null){
+                    this.ltkmCustGrpParentObjs = response["ParentCustGrp"];
+                }
+                if(response["ChildCustGrp"] != null){
+                    this.ltkmCustGrpChildObjs = response["ChildCustGrp"];
+                }
+              }
+            );
         }
 
         this.spouseGender = event["CustPersonalObj"]["MrGenderCode"];
@@ -2046,14 +2138,43 @@ export class LtkmRequestXComponent implements OnInit {
             this.inputLookupApplicationObj.isDisable = false;
             this.inputLookupApplicationCompanyObj.isDisable = true;
         }
+
+        await this.GetNameForAddrOwnrshpCode(this.addrPersonalObjsTemp);
     }
 
-    CopyCustomerCompany(event) {
+    async CopyCustomerCompany(event) {
+        //20230120, richard, reset list temp coy
+        this.addrCompanyObjs = new Array<AddrObj>();
+        this.addrCompanyObjsTemp = new Array<AddrObj>();
+        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
         this.copyAddrCompanyFromLookup(event);
         if (event["CustCompanyContactPersonObjs"] != undefined) {
             // this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
             this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj = event["CustCompanyContactPersonObjs"][0];
             this.custCompanyContactInfo.GetAppCustCompanyContactPersonByAppCustId();
+
+            let addrVar = new AddrObj();
+            addrVar.MrCustAddrTypeCode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.MrCustAddrTypeCode;
+            addrVar.MrHouseOwnershipCode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.MrBuildingOwnershipCode;
+            addrVar.Addr = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Addr;
+            addrVar.AreaCode1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode1;
+            addrVar.AreaCode2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode2;
+            addrVar.AreaCode3 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode3;
+            addrVar.AreaCode4 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode4;
+            addrVar.City = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.City;
+            addrVar.Zipcode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Zipcode;
+            addrVar.SubZipcode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.SubZipcode;
+            addrVar.PhnArea1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObjPhnArea1;
+            addrVar.Phn1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Phn1;
+            addrVar.PhnExt1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnExt1;
+            addrVar.PhnArea2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnArea2;
+            addrVar.Phn2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Phn2;
+            addrVar.PhnExt2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnExt2;
+            addrVar.FaxArea = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.FaxArea;
+            addrVar.Fax = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Fax;
+            addrVar.StayLength = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.StayLength;
+            this.addrCompanyObjsTemp.push(addrVar);
+
         }
 
         if (event["CustCompanyMgmntShrholderObjs"] != undefined) {
@@ -2078,9 +2199,27 @@ export class LtkmRequestXComponent implements OnInit {
             this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
         }
 
+        //20230125, richard, ubah mekanisme tampilin nilai cust group, baca dari master cust
+        // if (event["CustGrpObjs"] != undefined) {
+        //     this.custGrpMemberComponent.ltkmCustGrpObjs = event["CustGrpObjs"];
+        //     this.custGrpMemberComponent.copyAppGrp();
+        // }
+
+        //20230125, richard, ubah mekanisme tampilin nilai cust group, baca dari master cust
         if (event["CustGrpObjs"] != undefined) {
-            this.custGrpMemberComponent.ltkmCustGrpObjs = event["CustGrpObjs"];
-            this.custGrpMemberComponent.copyAppGrp();
+            this.ltkmCustGrpObjs = event["CustGrpObjs"];
+            
+            var ReqCustId = { Id: event["CustObj"]["CustId"] };
+            this.http.post(URLConstant.GetListCustGrpForCustViewById, ReqCustId).subscribe(
+              response => {
+                if(response["ParentCustGrp"] != null){
+                    this.ltkmCustGrpParentObjs = response["ParentCustGrp"];
+                }
+                if(response["ChildCustGrp"] != null){
+                    this.ltkmCustGrpChildObjs = response["ChildCustGrp"];
+                }
+              }
+            );
         }
 
         //tambahan baru
@@ -2122,6 +2261,8 @@ export class LtkmRequestXComponent implements OnInit {
             this.inputLookupApplicationCompanyObj.isDisable = false;
             this.inputLookupApplicationObj.isDisable = true;
         }
+
+        await this.GetNameForAddrOwnrshpCode(this.addrCompanyObjsTemp);
     }
 
     copyAddrFromLookup(event) {
@@ -2141,14 +2282,18 @@ export class LtkmRequestXComponent implements OnInit {
             this.legalAddrObj.PhnExt1 = event["CustAddrLegalObj"].PhnExt1;
             this.legalAddrObj.PhnExt2 = event["CustAddrLegalObj"].PhnExt2;
             this.legalAddrObj.SubZipcode = event["CustAddrLegalObj"].SubZipcode;
+            this.legalAddrObj.Zipcode = event["CustAddrLegalObj"].Zipcode;
+
 
             this.legalAddrObj.MrHouseOwnershipCode = event["CustAddrLegalObj"].MrBuildingOwnershipCode;
             this.legalAddrObj.StayLength = event["CustAddrLegalObj"].StayLength;
+            this.legalAddrObj.MrCustAddrTypeCode = event["CustAddrLegalObj"].MrCustAddrTypeCode;
 
             this.inputFieldLegalObj.inputLookupObj.nameSelect = event["CustAddrLegalObj"].Zipcode;
             this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrLegalObj"].Zipcode };
             this.inputAddressObjForLegal.default = this.legalAddrObj;
             this.inputAddressObjForLegal.inputField = this.inputFieldLegalObj;
+            this.addrPersonalObjsTemp.push(this.legalAddrObj);
         }
 
         if (event["CustAddrResidenceObj"] != undefined) {
@@ -2168,13 +2313,16 @@ export class LtkmRequestXComponent implements OnInit {
             this.residenceAddrObj.PhnExt2 = event["CustAddrResidenceObj"].PhnExt2;
             this.residenceAddrObj.SubZipcode = event["CustAddrResidenceObj"].SubZipcode;
 
+
             this.residenceAddrObj.MrHouseOwnershipCode = event["CustAddrResidenceObj"].MrBuildingOwnershipCode;
             this.residenceAddrObj.StayLength = event["CustAddrResidenceObj"].StayLength;
+            this.residenceAddrObj.MrCustAddrTypeCode = event["CustAddrResidenceObj"].MrCustAddrTypeCode;
 
             this.inputFieldResidenceObj.inputLookupObj.nameSelect = event["CustAddrResidenceObj"].Zipcode;
             this.inputFieldResidenceObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrResidenceObj"].Zipcode };
             this.inputAddressObjForResidence.default = this.residenceAddrObj;
             this.inputAddressObjForResidence.inputField = this.inputFieldResidenceObj;
+            this.addrPersonalObjsTemp.push(this.residenceAddrObj);
         }
 
         if (event["CustAddrMailingObj"] != undefined) {
@@ -2194,15 +2342,17 @@ export class LtkmRequestXComponent implements OnInit {
             this.mailingAddrObj.PhnExt2 = event["CustAddrMailingObj"].PhnExt2;
             this.mailingAddrObj.SubZipcode = event["CustAddrMailingObj"].SubZipcode;
 
+            this.mailingAddrObj.MrCustAddrTypeCode = event["CustAddrMailingObj"].MrCustAddrTypeCode;
+
             this.inputFieldMailingObj.inputLookupObj.nameSelect = event["CustAddrMailingObj"].Zipcode;
             this.inputFieldMailingObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrMailingObj"].Zipcode };
             this.inputAddressObjForMailing.default = this.mailingAddrObj;
             this.inputAddressObjForMailing.inputField = this.inputFieldMailingObj;
+            this.addrPersonalObjsTemp.push(this.mailingAddrObj);
         }
 
         if(event["CustAddrObjs"] != undefined)
         {
-            this.addrPersonalObjs.splice(0);
             for (let i = 0; i < event["CustAddrObjs"].length; i++)
             {
                 let addrVar = new AddrObj();
@@ -2226,6 +2376,7 @@ export class LtkmRequestXComponent implements OnInit {
                 addrVar.Fax = event["CustAddrObjs"][i].Fax;
                 addrVar.StayLength = event["CustAddrObjs"][i].StayLength;
                 this.addrPersonalObjs.push(addrVar);
+                this.addrPersonalObjsTemp.push(addrVar);
             }
         }
 
@@ -2254,11 +2405,16 @@ export class LtkmRequestXComponent implements OnInit {
 
             this.legalAddrCompanyObj.MrHouseOwnershipCode = event["CustAddrLegalObj"].MrBuildingOwnershipCode;
             this.legalAddrCompanyObj.StayLength = event["CustAddrLegalObj"].StayLength;
+            this.legalAddrCompanyObj.MrCustAddrTypeCode = event["CustAddrLegalObj"].MrCustAddrTypeCode;
+            
+            this.legalAddrCompanyObj.Zipcode = event["CustAddrLegalObj"].Zipcode;
 
             this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = event["CustAddrLegalObj"].Zipcode;
             this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrLegalObj"].Zipcode };
             this.inputAddressObjForLegalCoy.default = this.legalAddrCompanyObj;
             this.inputAddressObjForLegalCoy.inputField = this.inputFieldLegalCompanyObj;
+
+            this.addrCompanyObjsTemp.push(this.legalAddrCompanyObj);
         }
 
         if (event["CustAddrMailingObj"] != undefined && event["CustAddrMailingObj"].CustAddrId > 0) {
@@ -2279,16 +2435,19 @@ export class LtkmRequestXComponent implements OnInit {
             this.mailingAddrCompanyObj.SubZipcode = event["CustAddrMailingObj"].SubZipcode;
 
             this.mailingAddrCompanyObj.MrHouseOwnershipCode = event["CustAddrMailingObj"].MrBuildingOwnershipCode;
+            this.mailingAddrCompanyObj.MrCustAddrTypeCode = event["CustAddrMailingObj"].MrCustAddrTypeCode;
+
+            this.mailingAddrCompanyObj.Zipcode = event["CustAddrMailingObj"].Zipcode;
 
             this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = event["CustAddrMailingObj"].Zipcode;
             this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = { Zipcode: event["CustAddrMailingObj"].Zipcode };
             this.inputAddressObjForMailingCoy.default = this.mailingAddrCompanyObj;
             this.inputAddressObjForMailingCoy.inputField = this.inputFieldMailingCompanyObj;
+            this.addrCompanyObjsTemp.push(this.mailingAddrCompanyObj);
         }
 
         if(event["CustAddrObjs"] != undefined)
         {
-            this.addrCompanyObjs.splice(0);
             for (let i = 0; i < event["CustAddrObjs"].length; i++)
             {
                 let addrVar = new AddrObj();
@@ -2312,6 +2471,7 @@ export class LtkmRequestXComponent implements OnInit {
                 addrVar.Fax = event["CustAddrObjs"][i].Fax;
                 addrVar.StayLength = event["CustAddrObjs"][i].StayLength;
                 this.addrCompanyObjs.push(addrVar);
+                this.addrCompanyObjsTemp.push(addrVar);
             }
         }
 
@@ -2330,6 +2490,16 @@ export class LtkmRequestXComponent implements OnInit {
             }
         );
     }
+    // async bindAddrTypeObj(addrType: string) {
+    //     let reqTempObj: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+    //     reqTempObj.RefMasterTypeCode = addrType;
+    //     reqTempObj.MappingCode = null;
+    //     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, reqTempObj).toPromise().then(
+    //         (response) => {
+    //              = response[CommonConstant.ReturnObj];
+    //         }
+    //     );
+    // }
 
     EmitToMainComp() {
         this.outputTab.emit(this.MrCustTypeCode);
@@ -2536,6 +2706,43 @@ export class LtkmRequestXComponent implements OnInit {
 
     getLookupAppNo(event){
         this.appNo = event["AppNo"];
+    }
+
+    async GetListRefAddress() {
+      this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCustAddrType }).subscribe(
+        (response) => {
+          this.listAddressType = response["RefMasterObjs"];
+        }
+      );
+    }
+
+    async GetListRefOwnership() {
+      this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeBuildingOwnership }).subscribe(
+        (response) => {
+          this.listOwnershipType = response["RefMasterObjs"];
+        }
+      );
+    }
+
+    async GetNameForAddrOwnrshpCode(listTemp: Array<AddrObj>){
+    //   this.addrObjsForView.splice(0);
+      for (let i = 0; i < listTemp.length; i++){
+        let addrVar: LtkmAddrForViewObjX = new LtkmAddrForViewObjX();
+        for (let j = 0; j < this.listAddressType.length; j++){
+          if (listTemp[i].MrCustAddrTypeCode == this.listAddressType[j].MasterCode){
+            addrVar.CustAddrTypeName = this.listAddressType[j].Descr;
+          }
+        }
+        for (let k = 0; k < this.listOwnershipType.length; k++){
+          if (listTemp[i].MrHouseOwnershipCode == this.listOwnershipType[k].MasterCode){
+            addrVar.HouseOwnershipName = this.listOwnershipType[k].Descr;
+          }
+        }
+        addrVar.FullAddr = listTemp[i].Addr + " RT/RW " + listTemp[i].AreaCode4 + "/" + listTemp[i].AreaCode3 + " " + listTemp[i].AreaCode1 + " " + listTemp[i].AreaCode2 + " " + listTemp[i].City + " " + listTemp[i].Zipcode;
+        addrVar.PhoneNo = (listTemp[i].PhnArea1 ? listTemp[i].PhnArea1 : '-') + " - " + (listTemp[i].Phn1 ? listTemp[i].Phn1 : '-') + " - " + (listTemp[i].PhnExt1 ? listTemp[i].PhnExt1 : '-');
+        addrVar.PhoneNo2 = (listTemp[i].PhnArea2 ? listTemp[i].PhnArea2 : '-') + " - " + (listTemp[i].Phn2 ? listTemp[i].Phn2 : '-') + " - " + (listTemp[i].PhnExt2 ? listTemp[i].PhnExt2 : '-');
+        this.addrObjsForView.push(addrVar);
+      }
     }
 }
 

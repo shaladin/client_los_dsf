@@ -3,17 +3,19 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
-import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
-import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
-import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
-import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ToastrService } from 'ngx-toastr';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+
 
 @Component({
   selector: 'app-credit-review-paging-x-dsf',
@@ -29,7 +31,8 @@ export class CreditReviewPagingXDsfComponent implements OnInit, OnDestroy  {
   isReady: boolean = false;
   navigationSubscription;
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router, private toastr: ToastrService) {
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router,
+  private toastr: ToastrService) {
     this.SubscribeParam();
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -77,7 +80,9 @@ export class CreditReviewPagingXDsfComponent implements OnInit, OnDestroy  {
       this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
       this.inputPagingObj.isJoinExAPI = true
   
+      //Self Cust CR PIC Credit Review
       this.RequestTaskModel.UserName = this.userAccess[CommonConstant.USER_NAME];
+      //End Self Cust CR PIC Credit Review
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RVW + this.BizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],

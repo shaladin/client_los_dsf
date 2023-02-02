@@ -29,6 +29,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   inputMode: string = "ADD";
   custDataObj: CustDataObj;
   custMainDataMode: string;
+  MrCustTypeCode: string;
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -43,7 +44,8 @@ export class GuarantorMainDataPagingComponent implements OnInit {
   add() {
     this.inputMode = "ADD";
     this.isDetail = true;
-    this.appCustId = 0; 
+    this.appCustId = 0;
+    this.MrCustTypeCode = CommonConstant.CustTypePersonal;
   }
 
   saveAndContinue() {
@@ -74,6 +76,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
       if(ev.RowObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
         this.listCustNoPers = this.listCustNoPers.filter((value) => value != ev.RowObj.CustNo);
       }
+      this.MrCustTypeCode = ev.RowObj.MrCustTypeCode;
     }
 
     if (ev.Key == "delete") {

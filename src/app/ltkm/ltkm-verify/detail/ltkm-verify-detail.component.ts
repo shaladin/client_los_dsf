@@ -155,9 +155,9 @@ export class LtkmVerifyDetailComponent implements OnInit {
                         if (response["ReturnObject"] != undefined) {
                             this.LtkmNo = response["ReturnObject"]["LtkmNo"];
                             this.AppId = response["ReturnObject"]["AppId"];
-                            if (response["ReturnObject"]["LtkmSrc"] == 'APP') {
+                            // if (response["ReturnObject"]["LtkmSrc"] == 'APP') {
                                 this.IsFromApp = true;
-                            }
+                            // }
                         }
                     }
                 );

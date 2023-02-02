@@ -1,0 +1,35 @@
+<div>
+  <div class="card">
+    <div class="card-header header-title">
+      <h4 class="card-title ucSearch-title" translate>Credit Review</h4>
+    </div>
+    <br>
+    <div class="card-body">
+      <div class="px-3">
+        <app-asset-accessory-info *ngIf="isShow  && BizTemplateCode != 'CFNA'" [AppId]="appId">
+        </app-asset-accessory-info>
+        <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-additional-coll>
+        <app-crd-rvw-cust-info-x *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
+        </app-crd-rvw-cust-info-x>
+        <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId">
+        </app-crd-rvw-legal-doc>
+        <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+        </app-crd-rvw-fam-guar>
+        <app-crd-rvw-app-fin-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
+        </app-crd-rvw-app-fin-info-x>
+        <app-crd-rvw-third-party-checking-x *ngIf="appNo != ''" [AppNo]="appNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
+        </app-crd-rvw-third-party-checking-x>
+        <app-crd-rvw-app-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
+        </app-crd-rvw-app-app-info-x>
+        <!-- <app-crd-rvw-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
+        </app-crd-rvw-app-info-x> -->
+        <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-cmo-info>
+        <app-crd-rvw-dealer-info *ngIf="isShow && !IsFD  && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        </app-crd-rvw-dealer-info>
+        <app-tab-deviation-history [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation-history>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
 import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
 import { ReqGetByTypeCodeObj } from "app/shared/model/ref-reason/req-get-by-type-code-obj.model";
 import { UcInputRFAObj } from "app/shared/model/uc-input-rfa-obj.model";
+import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
 
 @Component({
   selector: "app-change-mou-review-general-x",
@@ -42,6 +43,8 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
   ChangeMouCustId: number;
   TrxType: string;
   OriOfficeCode: string;
+
+  changeMouTrxIdPrev: number;
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild("ApprovalComponent") set content(
@@ -68,14 +71,14 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
       this.WfTaskListId = params["WfTaskListId"];
       this.TrxNo = params["TrxNo"];
       this.ChangeMouCustId = params["ChangeMouCustId"];
-      
+
       this.TrxType = params["TrxType"];
     });
   }
 
   async ngOnInit() {
     this.claimTask();
-    
+
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.ddlEnvironments = [
@@ -144,7 +147,7 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
 
       this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
       this.mouCustObj.MouCustId = this.MouCustId;
-      
+
       this.PlafondAmt = this.PlafondAmt;
       let submitMouReviewObj = {
         WfTaskListId: this.WfTaskListId,
@@ -166,7 +169,7 @@ export class ChangeMouReviewGeneralXComponent implements OnInit {
 
   Return() {
     let urlPost = environment.isCore ? URLConstant.ReturnChangeMouReviewV2 : URLConstant.ReturnChangeMouReview;
-    let mouObj = { 
+    let mouObj = {
       WfTaskListId: this.WfTaskListId,
       ChangeMouTrxId : this.ChangeMouTrxId
     };

@@ -22,7 +22,7 @@
         <!-- Self Custom Change -->
         <app-crd-rvw-third-party-checking-x-dsf *ngIf="appNo != ''" [AppNo]="appNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-third-party-checking-x-dsf>
-        <!-- Self Custom Change -->
+        <!-- End Self Custom Change -->
         <app-crd-rvw-app-app-info-x *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
         </app-crd-rvw-app-app-info-x>
         <!-- Self Custom Change -->
@@ -53,7 +53,7 @@
                         <label class="adInsLabel" translate>{{item.controls.Question.value}}</label>
                       </div>
                       <div class="col-md-8">
-                        <input type="text" class="form-control adInsInput width-50-per" formControlName="Answer">
+                        <textarea type="textarea" class="form-control adInsInput width-50-per" formControlName="Answer"></textarea>
                         <lib-uc-show-errors [control]="item.controls.Answer" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                       </div>

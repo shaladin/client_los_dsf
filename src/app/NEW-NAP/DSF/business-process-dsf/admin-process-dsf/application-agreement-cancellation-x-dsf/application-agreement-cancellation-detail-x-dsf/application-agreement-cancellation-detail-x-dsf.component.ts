@@ -93,7 +93,7 @@ export class ApplicationAgreementCancellationDetailXDsfComponent implements OnIn
       (response) => {
     });
 
-    await this.http.post(URLConstantX.AddAppAgrmntCancelV3X, this.AppAgrmntCancelObj).toPromise().then((response) => {
+    await this.http.post(URLConstantX.AddAppAgrmntCancelV4X, this.AppAgrmntCancelObj).toPromise().then((response) => {
       this.toastr.successMessage(response['message']);
       AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING], { BizTemplateCode: this.BizTemplateCode });
     });

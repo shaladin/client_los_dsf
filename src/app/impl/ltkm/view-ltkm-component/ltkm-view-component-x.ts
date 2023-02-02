@@ -50,10 +50,10 @@ export class LtkmViewComponentX implements OnInit {
             if(response["ReturnObject"] != undefined)
             {
               this.LtkmNo = response["ReturnObject"]["LtkmNo"];
-              if(response["ReturnObject"]["LtkmSrc"] == 'APP'){
+              // if(response["ReturnObject"]["LtkmSrc"] == 'APP'){
                 this.IsFromApp = true;
                 this.AppId = response["ReturnObject"]["AppId"];
-              }
+              // }
             }
           }
         );

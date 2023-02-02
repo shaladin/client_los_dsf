@@ -23,6 +23,7 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   AppRjct: any;
   AppPrcs: any;
   AppCan: any;
+  ExpiredApp: any;
 
   TotalNTF: number = 0;
   TotalUnit: number = 0;
@@ -31,6 +32,7 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   TotalAR: number = 0;
   TotalOSAR: number = 0;
   ReturnAgrmnt: any;
+  ReturnApp: any;
 
   TotalProcessAsset: number = 0;
   TotalProcessPrincipal: number = 0;
@@ -40,6 +42,11 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   TotalRejectedPrincipal: number = 0;
   TotalRejectedAR: number = 0;
   TotalRejectedInstallment: number = 0;
+
+  TotalExpiredAsset: number = 0;
+  TotalExpiredPrincipal: number = 0;
+  TotalExpiredAR: number = 0;
+  TotalExpiredInstallment: number = 0;
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -59,7 +66,6 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
             async (response) => {
               this.ExstAgrmnt = response;
               await this.GetGrandTotal();
-              await this.GetTotalARAndOSAR();
             }
           );
 
@@ -100,7 +106,16 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
               );
             }
           );
-          
+
+          let reqObjCustNo = {
+            CustNo: this.CustNo
+          }
+          this.http.post(URLConstantX.GetAgrmntExpiredHistForCustViewByCustNo, reqObjCustNo).subscribe(
+            async (response) => {
+              this.ExpiredApp = response;
+              await this.GetExpiredGrandTotal();
+            }
+          );
         }
       }
     );
@@ -114,6 +129,8 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
         this.TotalUnit = this.TotalUnit + element.NumOfAsset;
         this.TotalActiveInstallment += element.InstAmount;
         this.TotalOSPrincipal += element.OsPrincipal;
+        this.TotalAR += element.ArAmount;
+        this.TotalOSAR += element.OsArAmount;
       });
     }
   }
@@ -127,10 +144,6 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
         this.TotalProcessInstallment += element.InstAmount;
       });
     }
-  }
-  async GetTotalARAndOSAR() {
-    this.TotalAR += this.TotalNTF + this.TotalActiveInstallment;
-    this.TotalOSAR += this.TotalOSPrincipal + this.TotalActiveInstallment;
   }
 
   async GetRejectedGrandTotal() {
@@ -148,8 +161,32 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
     }
   }
 
+  async GetExpiredGrandTotal() {
+    if (this.ExpiredApp != undefined && this.ExpiredApp.length != 0) {
+      var expiredApp = this.ExpiredApp;
+      expiredApp.forEach(element => {
+        this.TotalExpiredPrincipal += element.NTFAmount;
+        this.TotalExpiredAsset += element.NumOfAsset;
+        this.TotalExpiredAR += element.ArAmount;
+      });
+    }
+  }
+
   ClickLinkAppNo(AppId) {
     AdInsHelper.OpenAppViewByAppId(AppId);
+  }
+
+  ClickLinkAppNoByAppNo(AppNo) {
+    this.http.post(URLConstant.GetAppByAppNo, { TrxNo: AppNo }).subscribe(
+      (response) => {
+        this.ReturnApp = response;
+        if (this.ReturnApp.AppId != 0 && this.ReturnApp.AppId != null && this.ReturnApp.AppId != undefined) {
+          AdInsHelper.OpenAppViewByAppId(this.ReturnApp.AppId);
+        } else {
+          this.toastr.errorMessage("Data not found");
+        }
+      }
+    )
   }
 
   ClickLinkAgrmntNo(AgrmntNo) {

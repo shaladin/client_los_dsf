@@ -192,6 +192,8 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT; //"/Nap/CreditProcess/SurveyVerif/SubjectX"
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT_VERIF; //"/Nap/CreditProcess/SurveyVerif/SubjectX/VerifX"
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT_VIEW; //"/Nap/CreditProcess/SurveyVerif/SubjectX/ViewX"
+  public static NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CRD_REVIEW_CR_DETAIL_HISTORY; //"/Pages/CreditReviewCrHistory/Detail"
+  public static NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY_X = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstantX.CRD_REVIEW_CR_DETAIL_HISTORY_X; //"/Pages/CreditReviewCrHistory/DetailX"
   //#endregion
 
   //#region CF2W
@@ -362,6 +364,7 @@ export class NavigationConstant {
   public static CHANGE_MOU_RTN_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RTN_DETAIL; //"/Mou/ChangeMou/ReturnDetail"
   public static CHANGE_MOU_REQ_ADD_COLL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X; //"/Mou/ChangeMou/RequestAddColl"
   public static CHANGE_MOU_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_INQUIRY_X; //"/Mou/ChangeMou/InquiryX"
+  public static CHANGE_MOU_APV_DETAIL_GEN_X = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_APV_DETAIL_GEN_X; //"/Mou/ChangeMou/ApvDetailGenX"
   //#endregion
 
   //#region LEAD
@@ -409,7 +412,7 @@ export class NavigationConstant {
   public static LTKM_VERIFY_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_PAGING; //'/Ltkm/Verify/Paging'
   public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_DETAIL; //'/Ltkm/Verify/DetailX'
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
-  public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
+  public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
   public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
   public static LTKM_RTN_HANDLING_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_DETAIL; //'/Ltkm/ReturnHandling/Detail'
   //#endregion
