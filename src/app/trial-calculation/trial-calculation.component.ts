@@ -475,7 +475,8 @@ export class TrialCalculationComponent implements OnInit {
       OfficeCode: this.TrialForm.controls["OfficeCode"].value,
       Tenor: this.TrialForm.controls["Tenor"].value,
       TotalAssetPrice: this.TrialForm.controls["AssetPriceAmt"].value,
-      MrFirstInstTypeCode: this.TrialForm.controls["MrFirstInstTypeCode"].value
+      MrFirstInstTypeCode: this.TrialForm.controls["MrFirstInstTypeCode"].value,
+      DpNettPrcnt: this.TrialForm.controls["DownPaymentPrctg"].value
     }
     this.http.post<AppFinDataObj>(URLConstant.GetInitFinDataForTrialCalc, reqObj).subscribe(
       (response) => {

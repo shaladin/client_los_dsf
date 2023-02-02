@@ -191,7 +191,7 @@
           <div class="form-group row">
             <label class="col-md-2" for="investmentType" translate>Investment Type</label>
             <div class="col-md-4">
-              <mat-radio-group [attr.disabled]="isLockMode == true ? true : null" formControlName="MrInvestmentTypeCode">
+              <mat-radio-group [disabled]="isLockMode == true ? true : null" formControlName="MrInvestmentTypeCode">
                 <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of InvestmentTypeObj" [value]="item.Key">
                   {{item.Value}}
                 </mat-radio-button>

@@ -83,8 +83,8 @@ export class ViewLtkmAppSummaryDataComponent implements OnInit {
                     if(this.SummaryObj.AppAsset.DownPaymentPrcnt != undefined && this.SummaryObj.AppAsset.DownPaymentPrcnt != null){
                         this.DPPercentage = this.SummaryObj.AppAsset.DownPaymentPrcnt;
                     }
-                    if(this.SummaryObj.AppAsset.MrAssetUsageCode != undefined && this.SummaryObj.AppAsset.MrAssetUsageCode != null){
-                        this.AssetUsage = this.SummaryObj.AppAsset.MrAssetUsageCode;
+                    if(this.SummaryObj.AppAsset.MrAssetUsageCodeDesc != undefined && this.SummaryObj.AppAsset.MrAssetUsageCodeDesc != null){
+                        this.AssetUsage = this.SummaryObj.AppAsset.MrAssetUsageCodeDesc;
                     }
                     if(this.SummaryObj.AppAsset.ManufacturingYear != undefined && this.SummaryObj.AppAsset.ManufacturingYear != null){
                         this.ManufacturingYear = this.SummaryObj.AppAsset.ManufacturingYear;
@@ -99,7 +99,7 @@ export class ViewLtkmAppSummaryDataComponent implements OnInit {
                     this.AssetCondition = this.SummaryObj.AppAsset.MrAssetConditionCode;
                     this.DPAmount = this.SummaryObj.AppAsset.DownPaymentAmt;
                     this.DPPercentage = this.SummaryObj.AppAsset.DownPaymentPrcnt;
-                    this.AssetUsage = this.SummaryObj.AppAsset.MrAssetUsageCode;
+                    this.AssetUsage = this.SummaryObj.AppAsset.MrAssetUsageCodeDesc;
                     this.ManufacturingYear = this.SummaryObj.AppAsset.ManufacturingYear;
                     this.Color = this.SummaryObj.AppAsset.Color;
                     this.SupplierName = this.SummaryObj.AppAsset.SupplName;

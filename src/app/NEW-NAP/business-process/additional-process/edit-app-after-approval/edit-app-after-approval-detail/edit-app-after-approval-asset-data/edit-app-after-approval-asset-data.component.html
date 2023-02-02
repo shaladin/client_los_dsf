@@ -196,6 +196,8 @@
                              [lookupInput]="InputLookupProfessionObj" [parentForm]="EditAppAssetForm" [identifier]="'lookupProfessionData'"
                              (lookup)="GetProfession($event)" #LookupProfession>
         </lib-uclookupgeneric>
+        <lib-uc-show-errors [control]="EditAppAssetForm.controls.OwnerProfessionCode" [submit]="enjiForm.submitted">
+        </lib-uc-show-errors>
       </div>
       <div class="col-md-4" *ngIf="EditAppAssetForm.controls.MrOwnerTypeCode.value == 'COMPANY'">
         <select class="form-control adInsInput" style="width: auto" formControlName="OwnerProfessionCode"
@@ -300,6 +302,47 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <lib-ucSubsection [id]="'AddAssetDocumentId'" [title]="'Asset Document'" [panel]="'AddAssetDocument'">
+  </lib-ucSubsection>
+  <div id="AddAssetDocument">
+    <div class="form-body" formArrayName="ListDoc" style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th><span translate class="thead-header">Document</span></th>
+            <th><span translate class="thead-header">Received</span></th>
+            <th><span translate class="thead-header">Document No</span></th>
+            <th><span translate class="thead-header">Expired Date</span></th>
+            <th><span translate class="thead-header">Document Notes</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of EditAppAssetForm.controls.ListDoc['controls']; let i = index" [formGroupName]="i">
+            <td>{{item.controls.AssetDocName.value}}</td>
+            <td>
+              <input type="checkbox" class="border-primary" formControlName="IsReceived">
+            </td>
+            <td>
+              <input type="text" class="form-control width-100-per" formControlName="DocNo">
+              <lib-uc-show-errors [control]="EditAppAssetForm.controls.DocNo" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </td>
+            <td>
+              <input type="date" class="form-control width-100-per" formControlName="ACDExpiredDt">
+              <lib-uc-show-errors [control]="EditAppAssetForm.controls.ACDExpiredDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </td>
+            <td>
+              <input type="text" class="form-control width-100-per" formControlName="DocNotes">
+              <lib-uc-show-errors [control]="EditAppAssetForm.controls.DocNotes" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 

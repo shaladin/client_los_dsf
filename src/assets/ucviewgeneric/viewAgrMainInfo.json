@@ -151,6 +151,11 @@
           "key": "ViewProdOffering",
           "label": "Product Offering Name",
           "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Business Line",
+          "property": "LobName"
         }
       ],
       "querystring": {
