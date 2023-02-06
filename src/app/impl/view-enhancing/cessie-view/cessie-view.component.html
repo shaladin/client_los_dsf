@@ -19,7 +19,10 @@
                     <mat-tab-group>
                         <mat-tab label="Summary">
                             <ng-template matTabContent>
-                                <cessie-summary-view [CessieHXId]="CessieHXId"></cessie-summary-view>
+                                <!-- Self Custom CR Add Reference Payment-->
+                                <!-- <cessie-summary-view [CessieHXId]="CessieHXId"></cessie-summary-view> -->
+                                <cessie-summary-view-dsf [CessieHXId]="CessieHXId"></cessie-summary-view-dsf>
+                                <!-- End Self Custom CR Add Reference Payment-->
                             </ng-template>
                         </mat-tab>
                         <mat-tab label="Customer Data">

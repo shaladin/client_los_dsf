@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CessiePreGoLiveApprovalDetailDsfComponent } from 'app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-approval-detail-dsf/pre-go-live-approval-detail-dsf.component';
+import { CessiePreGoLiveApprovalPagingDsfComponent } from 'app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-approval-paging-dsf/pre-go-live-approval-paging-dsf.component';
+import { CessiePreGoLiveDsfComponent } from 'app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-dsf/pre-go-live-dsf.component';
+import { CessiePreGoLivePagingDsfComponent } from 'app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { CessieCancellationDetailComponent } from './cessie/cessie-cancel/detail/cessie-cancel-detail.component';
 import { CessieCancellationPagingComponent } from './cessie/cessie-cancel/paging/cessie-cancel-paging.component';
 import { CessieInquiryComponent } from './cessie/cessie-inquiry/cessie-inquiry.component';
@@ -59,8 +64,22 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CESSIE_PGL_PAGING,
+        component: CessiePreGoLivePagingDsfComponent,
+        data: {
+          title: 'Cessie Pre GoLive Paging'
+        }
+      },
+      {
         path: PathConstantX.CESSIE_PGL_DETAIL,
         component: CessiePreGoLiveComponent,
+        data: {
+          title: 'Cessie Pre GoLive Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.CESSIE_PGL_DETAIL,
+        component: CessiePreGoLiveDsfComponent,
         data: {
           title: 'Cessie Pre GoLive Detail'
         }
@@ -73,8 +92,22 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CESSIE_PGL_APPRVL_PAGING,
+        component: CessiePreGoLiveApprovalPagingDsfComponent,
+        data: {
+          title: 'Cessie Pre GoLive Approval Paging'
+        }
+      },
+      {
         path: PathConstantX.CESSIE_PGL_APPRVL_DETAIL,
         component: CessiePreGoLiveApprovalDetailComponent,
+        data: {
+          title: 'Cessie Pre GoLive Approval Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.CESSIE_PGL_APPRVL_DETAIL,
+        component: CessiePreGoLiveApprovalDetailDsfComponent,
         data: {
           title: 'Cessie Pre GoLive Approval Detail'
         }
