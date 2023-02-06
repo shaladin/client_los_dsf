@@ -108,5 +108,11 @@ export class NavigationConstantDsf {
      public static NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.AGRMNT_CANCEL_PAGING; //'/Nap/AdminProcess/AgreementCancellation/Paging'
      public static NAP_ADM_PRCS_PGL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.PGL_DETAIL_X; //'/Nap/AdminProcess/PreGoLive/DetailX'
      public static NAP_ADM_PRCS_PGL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.PGL_PAGING; //'/Nap/AdminProcess/PreGoLive/Paging'
+
+     public static CESSIE_PGL_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.CESSIE_PGL_PAGING; //'/Impl/Cessie/Process/PreGoLiveDsf/Paging'
+     public static CESSIE_PGL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.CESSIE_PGL_DETAIL; //'/Impl/Cessie/Process/PreGoLiveDsf/Detail'
+     public static CESSIE_PGL_APPRVL_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.CESSIE_PGL_APPRVL_PAGING; //'/Impl/Cessie/Process/PreGoLiveDsf/Approval/Paging'
+     public static CESSIE_PGL_APPRVL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.CESSIE_PGL_APPRVL_DETAIL; //'/Impl/Cessie/Process/PreGoLiveDsf/Approval/Detail'
+ 
 }
  

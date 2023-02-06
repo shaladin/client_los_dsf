@@ -1,0 +1,77 @@
+<h4 class="form-section card-title" translate><i class="ft-file-text"></i> Pre Go Live</h4>
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="FormObj" #enjiForm="ngForm"
+            (ngSubmit)="FormObj.valid && SaveForm()">
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>
+                  <app-term-conditions *ngIf="isReadyToLoadTC" [AppId]="AppObj?.AppId" [parentForm]="FormObj" [enjiForm]="enjiForm"
+				  (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+                  </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+
+            <!-- <lib-ucSubsection [id]="'TermAndConditionId'" [title]="'Term And Condition'" [panel]="'tc'">
+            </lib-ucSubsection>
+            <div id="tc">
+              <app-term-conditions *ngIf="isReadyToLoadTC" [AppId]="AppObj?.AppId" [parentForm]="FormObj" [enjiForm]="enjiForm"
+                (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+              </app-term-conditions>
+            </div> -->
+			<!-- Self Custom CR Add Reference Payment -->
+            <div class="px-3">
+              <lib-ucSubsection [id]="'ReferencePaymentId'" [title]="'Reference Payment'"
+                [panel]="'ReferencePaymentData'">
+              </lib-ucSubsection>
+              <div class="form-body" id="ReferencePaymentData">
+                <div class="form-group row adins-required">
+                  <label class="col-md-3" for="RefPayment">Reference Payment</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control adInsInput" formControlName="RefPayment"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.RefPayment.invalid }" />
+                    <lib-uc-show-errors [control]="FormObj.controls.RefPayment" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+			<!-- End Self Custom CR Add Reference Payment -->
+            <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent>
+            </lib-ucapprovalcreate>
+
+            <div class="form-actions left">
+              <button class="btn btn-raised btn-primary mr-1" type="button" (click)="CalculateAdminFee1()">
+                Calculate Admin 1
+              </button>
+
+              <button class="btn btn-raised btn-primary mr-1" type="button" (click)="CalculateAdminFee2()">
+                Calculate Admin 2
+              </button>
+            </div>
+
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
+                <i class="far fa-check-square"></i> Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
