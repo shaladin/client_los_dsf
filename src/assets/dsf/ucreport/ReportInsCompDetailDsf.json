@@ -1,8 +1,8 @@
-{ 
+{
     "title" : "REPORT INSURANCE COMPANY DETAIL",
     "reportName": "Report Insurance Company Detail",
     "reportTemplateCode": "INS_COMPANY_DETAIL",
-    "component": [ 
+    "component": [
         {
             "type": "dropdown",
             "label": "Branch Name",
@@ -44,7 +44,7 @@
             "value" : "BD-10",
             "restriction" : "gte",
             "datatype" : "date",
-            "paramAssignment": 1 
+            "paramAssignment": 1
         },
         {
             "type" : "datepicker",
@@ -53,7 +53,7 @@
             "value" : "BD+10",
             "restriction" : "lte",
             "datatype" : "date",
-            "paramAssignment": 1 
+            "paramAssignment": 1
         },
         {
             "type" : "datepicker",
@@ -62,7 +62,7 @@
             "value" : "BD-10",
             "restriction" : "gte",
             "datatype" : "date",
-            "paramAssignment": 1 
+            "paramAssignment": 1
         },
         {
             "type" : "datepicker",
@@ -71,8 +71,26 @@
             "value" : "BD+10",
             "restriction" : "lte",
             "datatype" : "date",
-            "paramAssignment": 1 
-        }      
+            "paramAssignment": 1
+        },
+        {
+          "type" : "datepicker",
+          "label" : "GoLive Date >=",
+          "name" : "LeadDtGteGoLive",
+          "value" : "BD-10",
+          "restriction" : "gte",
+          "datatype" : "date",
+          "paramAssignment": 1
+      },
+      {
+          "type" : "datepicker",
+          "label" : "GoLive Date =<",
+          "name" : "LeadDtLteGoLive",
+          "value" : "BD+10",
+          "restriction" : "lte",
+          "datatype" : "date",
+          "paramAssignment": 1
+      }
     ],
     "exportTypeList": [
         {
