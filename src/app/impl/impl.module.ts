@@ -39,6 +39,10 @@ import { EditCommAfterApprovalPagingXComponent } from "./NEW-NAP/business-proces
 import { EditCommV2XComponent } from "./NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-v2-x/edit-comm-v2-x.component";
 import { FormEditCommGenerateXComponent } from "./NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-v2-x/form-edit-comm-generate-x/form-edit-comm-generate-x.component";
 import { CrdRvwListAssetComponent } from './new-nap/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-list-asset/crd-rvw-list-asset.component';
+import { CessiePreGoLiveApprovalPagingDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-approval-paging-dsf/pre-go-live-approval-paging-dsf.component";
+import { CessiePreGoLiveDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-dsf/pre-go-live-dsf.component";
+import { CessiePreGoLivePagingDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component";
+import { CessiePreGoLiveApprovalDetailDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-approval-detail-dsf/pre-go-live-approval-detail-dsf.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -79,9 +83,13 @@ export const customCurrencyMaskConfig = {
     FactoringReviewAssignProductComponent,
     FactoringReviewDetailComponent,
     CessiePreGoLivePagingComponent,
+    CessiePreGoLivePagingDsfComponent,
     CessiePreGoLiveComponent,
+    CessiePreGoLiveDsfComponent,
     CessiePreGoLiveApprovalPagingComponent,
+    CessiePreGoLiveApprovalPagingDsfComponent,
     CessiePreGoLiveApprovalDetailComponent,
+    CessiePreGoLiveApprovalDetailDsfComponent,
     CessieCancellationPagingComponent,
     CessieCancellationDetailComponent,
     CessieInquiryComponent,

@@ -162,4 +162,9 @@ export class PathConstantDsf {
     public static AGRMNT_CANCEL_DETAIL = PathConstantDsf.AGRMNT_CANCEL + "/" + PathConstantX.DETAIL_X;
     public static PGL_PAGING = PathConstantDsf.PGL + "/" + PathConstant.PAGING;
     public static PGL_DETAIL_X = PathConstantDsf.PGL + '/' + PathConstantX.DETAIL_X;
+
+    public static CESSIE_PGL_PAGING = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.PAGING;
+    public static CESSIE_PGL_DETAIL = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.DETAIL;
+    public static CESSIE_PGL_APPRVL_PAGING = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.PAGING;
+    public static CESSIE_PGL_APPRVL_DETAIL = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.DETAIL;
 }
