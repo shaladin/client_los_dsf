@@ -42,7 +42,7 @@ export class CessiePreGoLiveDsfComponent implements OnInit {
 
   FormObj = this.fb.group({
     //Self Custom CR Add Reference Payment
-    RefPayment: ['', Validators.required]
+    RefPayment: ['', Validators.maxLength(120), Validators.required]
     //End Self Custom CR Add Reference Payment
   });
 
