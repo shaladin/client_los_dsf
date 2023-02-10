@@ -47,18 +47,24 @@ export class ApprovalHistXComponent implements OnInit {
     else {
       this.OfferingObj = new UcInputApprovalHistoryObj();
       this.OfferingObj.PathUrl = "/Approval/GetTaskHistory";
+      this.OfferingObj.Identifier = "OfferingObj";
 
       this.CrdApvObj = new UcInputApprovalHistoryObj();
       this.CrdApvObj.PathUrl = "/Approval/GetTaskHistory";
+      this.CrdApvObj.Identifier = "CrdApvObj";
 
       this.PregoliveApvObj = new UcInputApprovalHistoryObj();
       this.PregoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
+      this.PregoliveApvObj.Identifier = "PregoliveApvObj";
 
       this.CrdApvRsltExtObj = new UcInputApprovalHistoryObj();
       this.CrdApvRsltExtObj.PathUrl = "/Approval/GetTaskHistory";
+      this.CrdApvRsltExtObj.Identifier = "CrdApvRsltExtObj";
 
       this.GoliveApvObj = new UcInputApprovalHistoryObj();
       this.GoliveApvObj.PathUrl = "/Approval/GetTaskHistory";
+      this.GoliveApvObj.Identifier = "GoliveApvObj";
+
       this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: this.AppNo }).subscribe(
         (response) => {
           for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
@@ -73,27 +79,37 @@ export class ApprovalHistXComponent implements OnInit {
         }
       );
 
-      this.http.post(URLConstant.GetAgrmntByAppId, { Id: this.AppId }).subscribe(
+      await this.http.post(URLConstant.GetAgrmntByAppId, { Id: this.AppId }).subscribe(
         (response) => {
           let agrmntNo = response['AgrmntNo'];
-          this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: agrmntNo }).subscribe(
-            (response) => {
-              for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
-                if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryPreGoLive) {
-                  this.PregoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
-                }
-                if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryOfferingValidity) {
-                  this.OfferingObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
-                }
-                if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstantX.CAT_CODE_GO_LIVE_APV) {
-                  this.GoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
-                }
+          let agrmntNoPgv = agrmntNo + '_PGLV';
+          this.GetOfferingGoLiveObj(agrmntNo);
+          this.GetPreGoLiveObj(agrmntNoPgv);
 
-              }
-              this.IsPregoliveApvReady = true;
-              this.IsOfferingReady = true;
-              this.IsGoliveApvReady = true;
-            });
+          // this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: agrmntNo }).subscribe(
+          //   (response) => {
+          //     for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+          //       if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryOfferingValidity) {
+          //         this.OfferingObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          //       }
+          //       if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstantX.CAT_CODE_GO_LIVE_APV) {
+          //         this.GoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          //       }
+
+          //     }
+          //     this.IsOfferingReady = true;
+          //     this.IsGoliveApvReady = true;
+          //   });
+
+          // this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: TrxNoPgv }).subscribe(
+          //   (response) => {
+          //     for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+          //       if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryPreGoLive) {
+          //         this.PregoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          //       }
+          //     }
+          //     this.IsPregoliveApvReady = true;
+          //   });
         },
         (error) => {
           this.IsCrdApvReady = true;
@@ -102,6 +118,7 @@ export class ApprovalHistXComponent implements OnInit {
       this.getCrdApvExt();
     }
   }
+
 
   async GetApvOpl() {
     this.ApvHistObj = new UcInputApprovalHistoryObj();
@@ -133,7 +150,7 @@ export class ApprovalHistXComponent implements OnInit {
       }
     );
   }
-  
+
   getCrdApvExt(){
     this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
@@ -148,13 +165,43 @@ export class ApprovalHistXComponent implements OnInit {
           });
         let requestMainDataObj : ReqCreditApvResultExtObj = new ReqCreditApvResultExtObj();
         requestMainDataObj.AppId = response['AppId'];
-        
+
         this.http.post<ResCreditApvResultExtObj>(URLConstant.GetCreditApvResultExtMainData, requestMainDataObj).subscribe(
           response => {
             this.CrdApvMainDataObj = response;
           }
         );
       }
-    ); 
+    );
   }
+
+  async GetOfferingGoLiveObj(obj: any){
+    await this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: obj }).toPromise().then(
+      (response) => {
+        for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+          if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryOfferingValidity) {
+            this.OfferingObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          }
+          if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstantX.CAT_CODE_GO_LIVE_APV) {
+            this.GoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          }
+
+        }
+        this.IsOfferingReady = true;
+        this.IsGoliveApvReady = true;
+      });
+  }
+
+  async GetPreGoLiveObj(obj: any){
+    await this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: obj }).toPromise().then(
+      (response) => {
+        for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
+          if (response['ListRfaLogObj'][i]['ApvCategory'] == CommonConstant.ApvCategoryPreGoLive) {
+            this.PregoliveApvObj.RequestId = response['ListRfaLogObj'][i]['RfaNo'];
+          }
+        }
+        this.IsPregoliveApvReady = true;
+      });
+  }
+
 }

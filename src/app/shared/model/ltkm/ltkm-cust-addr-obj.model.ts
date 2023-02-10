@@ -24,7 +24,12 @@ export class LtkmCustAddrObj {
     Fax: string;
     FullAddr: string;
     StayLength: number;
+    PhoneNo: string;
+    PhoneNo2: string;
+    CustAddrTypeName: string;
+    HouseOwnershipName: string;
     RowVersion: string;
+    Notes: string;
 
     constructor() { this.LtkmCustAddrId = 0; this.RowVersion = "" }
 }

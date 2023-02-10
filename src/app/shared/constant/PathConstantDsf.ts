@@ -108,7 +108,9 @@ export class PathConstantDsf {
 
     //#region 
     public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "ReportSuratKonfirmasiPersetujuan"
+    public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN_V2 = "ReportSuratKonfirmasiPersetujuanV2"
     public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN;
+    public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN_V2 = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN_V2;
     //#endregion
 
     //#region
@@ -133,7 +135,7 @@ export class PathConstantDsf {
     public static CRD_REVIEW_X = "CreditReviewXDsf";
     public static DETAIL_X = 'DetailXDsf';
     public static CRD_REVIEW_PAGING_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstant.PAGING;
-    public static CRD_REVIEW_DETAIL_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstant.DETAIL;
+    public static CRD_REVIEW_DETAIL_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstantX.DETAIL_X;
     public static CRD_APPRV_DETAIL_X = PathConstant.CRD_APPRV_CR + "/" + PathConstantDsf.DETAIL_X;
 
     public static NEW_CUST = "NewCustomerXDsf";
@@ -147,4 +149,22 @@ export class PathConstantDsf {
 
     public static REPORT_AGR_PROCESS = "ReportAgrProcess";
     public static PRINT_REPORT_AGR_PROCESS = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_AGR_PROCESS;
+
+    public static RETURN_HANDLING_NAP2 = PathConstant.RETURN_HANDLING + "/" + PathConstantDsf.NAP2;
+    public static GO_LIVE_APV_X = 'GoLiveApvXDsf';
+    public static PGL = "PreGoLiveDsf";
+    public static GO_LIVE_APV_DETAIL_X = PathConstantDsf.GO_LIVE_APV_X + '/' + PathConstantX.DETAIL_X;
+    public static GO_LIVE_APV_PAGING_X = PathConstantDsf.GO_LIVE_APV_X + '/' + PathConstantX.PAGING;
+    public static PGL_APPRVL_DETAIL = PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.DETAIL;
+    public static PGL_APPRVL_PAGING = PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.PAGING;
+    public static AGRMNT_CANCEL = "AgreementCancellationDsf";
+    public static AGRMNT_CANCEL_PAGING = PathConstantDsf.AGRMNT_CANCEL + "/" + PathConstant.PAGING;
+    public static AGRMNT_CANCEL_DETAIL = PathConstantDsf.AGRMNT_CANCEL + "/" + PathConstantX.DETAIL_X;
+    public static PGL_PAGING = PathConstantDsf.PGL + "/" + PathConstant.PAGING;
+    public static PGL_DETAIL_X = PathConstantDsf.PGL + '/' + PathConstantX.DETAIL_X;
+
+    public static CESSIE_PGL_PAGING = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.PAGING;
+    public static CESSIE_PGL_DETAIL = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.DETAIL;
+    public static CESSIE_PGL_APPRVL_PAGING = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.PAGING;
+    public static CESSIE_PGL_APPRVL_DETAIL = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.DETAIL;
 }

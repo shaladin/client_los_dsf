@@ -13,8 +13,8 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { LeadForLookupObj } from 'app/shared/model/lead-for-lookup-obj.model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
+import { LeadForLookupObj } from 'app/shared/model/lead-for-lookup-obj.model';
 import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.model';
 import { RefLobObj } from 'app/shared/model/ref-lob-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
@@ -39,10 +39,12 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   surveyorNameLookUpObj: InputLookupObj;
   salesNameLookUpObj: InputLookupObj;
   agencyLookUpObj: InputLookupObj;
+  //Self Custom
   tempCmoUsername: string = "";
   tempSurveyorUsername: string = "";
   tempSalesUsername: string = "";
   tempAgencyCode: string = "";
+  //End Self Custom
   listRefOffice: Array<KeyValueObj>;
   refOfficeObj: RefOfficeObj;
   listRefLob: Array<KeyValueObj>;
@@ -189,7 +191,9 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               this.returnVendorObj = response;
               this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
               this.agencyLookUpObj.jsonSelect = this.returnVendorObj;
-              this.tempAgencyCode = this.returnVendorObj.VendorCode;
+	      //Self Custom
+              this.tempAgencyCode = this.returnVendorObj.VendorCode == null ? "" : this.returnVendorObj.VendorCode;
+	      //End Self Custom
             });
 
           // this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoUsername;
@@ -295,7 +299,9 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             this.returnVendorExistObj = response;
             this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
             this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
-            this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
+	    //Self Custom
+            this.tempAgencyCode = this.returnVendorExistObj.VendorCode == null ? "" : this.returnVendorObj.VendorCode;
+	    //End Self Custom
           });
         // this.cmoNameLookUpObj.nameSelect = this.returnExistLead.CmoUsername;
         // this.cmoNameLookUpObj.jsonSelect = this.returnExistLead;
@@ -435,14 +441,17 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     this.leadObj.CmoUsername = this.tempCmoUsername;
     this.leadObj.SurveyorUsername = this.tempSurveyorUsername;
     this.leadObj.TeleMarketingUsername = this.tempSalesUsername;
+    this.leadObj.MrLeadTypeCode = CommonConstant.MrLeadTypeCodeSimpleLead;
   }
 
   SaveForm() {
     if (this.MainInfoForm.valid) {
+    //Self Custom
       if(this.tempAgencyCode == "" && this.tempCmoUsername == "" && this.tempSalesUsername == ""){
         this.toastr.warningMessage(ExceptionConstant.LEAD_INPUT_AGENCY_CMO_TELE);
         return;
       }
+    //End Self Custom
       if (this.pageType == "edit" || this.pageType == "update") {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;

@@ -119,6 +119,11 @@
           "type": "text",
           "label": "Credit Score",
           "property": "CreditScore"
+        },
+        {
+          "type": "text",
+          "label": "Business Line",
+          "property": "LobName"
         }
       ],
       "querystring": {
@@ -127,4 +132,3 @@
     }
   ]
 }
-

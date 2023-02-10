@@ -3,15 +3,19 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
+import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import { ToastrService } from 'ngx-toastr';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
-import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
-import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
-import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+
 
 @Component({
   selector: 'app-credit-review-paging-x-dsf',
@@ -27,7 +31,8 @@ export class CreditReviewPagingXDsfComponent implements OnInit, OnDestroy  {
   isReady: boolean = false;
   navigationSubscription;
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router) {
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router,
+  private toastr: ToastrService) {
     this.SubscribeParam();
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -71,11 +76,13 @@ export class CreditReviewPagingXDsfComponent implements OnInit, OnDestroy  {
 
     let arrCrit = new Array();
     if(environment.isCore){
-      this.inputPagingObj._url = "./assets/dsf/ucpaging/searchCreditReviewCrV2Dsf.json";
-      this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchCreditReviewCrV2Dsf.json";
+      this.inputPagingObj._url = "./assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/V2/searchCreditReviewCrV2.json";
       this.inputPagingObj.isJoinExAPI = true
   
+      //Self Cust CR PIC Credit Review
       this.RequestTaskModel.UserName = this.userAccess[CommonConstant.USER_NAME];
+      //End Self Cust CR PIC Credit Review
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RVW + this.BizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
@@ -107,8 +114,12 @@ export class CreditReviewPagingXDsfComponent implements OnInit, OnDestroy  {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
-    if (ev.Key == "Edit") {
+    else if (ev.Key == "Edit") {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_CR_DETAIL_X], { "AppId": ev.RowObj.AppId, "WfTaskListId": environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId });
+    }
+    else if (ev.Key == "CaptureStat") {
+      this.toastr.warning(ExceptionConstant.PLEASE_WAIT_A_MINUTE_UNTIL_CAPTURE_DATA_IS_FINISHED);
+      return;
     }
   }
 

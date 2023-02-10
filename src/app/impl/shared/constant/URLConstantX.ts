@@ -1,15 +1,17 @@
-import {environment} from 'environments/environment';
+import { environment } from 'environments/environment';
 
 export class URLConstantX {
   // X
-  public static CalculateAdditionalInterestX = environment.losUrl+ "/v1" + "/AgrmntX/CalculateAdditionalInterest";
-  public static UpdateEffectiveAndAgrmntCreatedDtX = environment.losUrl+ "/v1" + "/AgrmntX/UpdateEffectiveAndAgrmntCreatedDt";
+  public static CalculateAdditionalInterestX = environment.losUrl + "/v1" + "/AgrmntX/CalculateAdditionalInterest";
+  public static UpdateEffectiveAndAgrmntCreatedDtX = environment.losUrl + "/v1" + "/AgrmntX/UpdateEffectiveAndAgrmntCreatedDt";
   public static GetListAgrmntParentByCustNoX = environment.losUrl + '/v1' + '/AgrmntX/GetListAgrmntParentByCustNo';
+  public static CheckAgrmntParentOverdueByCustNo = environment.losUrl + '/v1' + '/AgrmntX/CheckAgrmntParentOverdueByCustNo';
 
   public static SubmitDeliveryOrderDataX = environment.losUrl+ "/v1" + "/DeliveryOrderX/SubmitDeliveryOrderData";
   public static AddCustCnfrmX = environment.losUrl+ "/v1" + "/CustCnfrmX/AddCustCnfrm";
   public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
   public static AddPreGoLiveXV2 = environment.losUrl+ "/v2" + "/PreGoLiveX/AddPreGoLive";
+  public static AddPreGoLiveXV3 = environment.losUrl+ "/v3" + "/PreGoLiveX/AddPreGoLive";
   public static BackToDeliveryOrderCustConfirm = environment.losUrl+ "/v1" + "/PreGoLiveX/BackToDeliveryOrderCustConfirm";
   public static BackToDeliveryOrderCustConfirmV2 = environment.losUrl+ "/v2" + "/PreGoLiveX/BackToDeliveryOrderCustConfirm";
 
@@ -32,6 +34,8 @@ export class URLConstantX {
   //Foundation
   public static GetVendorForSLB = environment.FoundationR3Url + "/v1" + "/VendorX/GetVendorForSLB";
   public static GetListCustCompanyFinDataXForCustViewByCustId = environment.FoundationR3Url + "/v1" + "/CustomerCompanyFinDataX/GetListCustCompanyFinDataXForCustViewByCustId";
+  public static GetRefAttrListByListAttrCode = environment.FoundationR3Url + "/v1" + "/RefAttr/GetRefAttrListByListAttrCode";
+  public static GetListCustPersonalFinDataXForCustViewByCustId = environment.FoundationR3Url + "/v1" + "/CustPersonalFinDataX/GetListCustPersonalFinDataXForCustViewByCustId";
 
   // APP Application
   public static EditAppAddAppCrossX = environment.losUrl + '/v1' + '/AppX/EditAppAddAppCross';
@@ -51,6 +55,7 @@ export class URLConstantX {
   // App Invoice
   public static UpdateAppInvoiceDlfnX = environment.losUrl + '/v1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
   public static UpdateAppInvoiceDlfnV2X = environment.losUrl + '/v2' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
+  public static UpdateAppInvoiceDlfnV2_1X = environment.losUrl + '/v2.1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
 
   //App Reserved Fund
   public static GetRsvFundSingleRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetRsvFundSingleRule";
@@ -67,14 +72,14 @@ export class URLConstantX {
   public static GetCommIncomeInfoByAppIdX = environment.losUrl + "/v1" + "/AppCommissionX/GetCommIncomeInfoByAppId";
   public static GetCommIncomeInfoByAgrIdX = environment.losUrl + "/v1" + "/AppCommissionX/GetCommIncomeInfoByAgrId";
   public static SubmitEditCommAfterApvDataReqV2 = environment.losUrl + "/v2" + "/AppCommissionX/SubmitEditCommAfterApvDataReq";
-  public static GetListEditCommOldByTrxId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditCommOldByTrxId";
-  public static GetListEditCommNewByTrxId = environment.losUrl   + "/v1" + "/AppCommissionX/GetEditCommNewByTrxId";
-  public static GetEditCommOldDataDetailByTrxId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditCommOldDataDetailByTrxId";
-  public static GetEditCommNewDataDetailByTrxId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditCommNewDataDetailByTrxId";
-  public static SubmitEditCommAftApvApproval = environment.losUrl  + "/v1" + "/AppCommissionX/SubmitEditCommAftApvApproval";
-  public static GetAgrmntCommissionDataForEditByAgrmntId = environment.losUrl + "/v1"+ "/AppCommissionX/GetAgrmntCommissionDataForEditByAgrmntId";
-  public static GetEditComReqAndApvByAgrmntId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditComReqAndApvByAgrmntId";
-  public static GetEditAppReqAndApvByAgrmntId = environment.losUrl  + "/v1" + "/AppCommissionX/GetEditAppReqAndApvByAgrmntId"
+  public static GetListEditCommOldByTrxId = environment.losUrl + "/v1" + "/AppCommissionX/GetEditCommOldByTrxId";
+  public static GetListEditCommNewByTrxId = environment.losUrl + "/v1" + "/AppCommissionX/GetEditCommNewByTrxId";
+  public static GetEditCommOldDataDetailByTrxId = environment.losUrl + "/v1" + "/AppCommissionX/GetEditCommOldDataDetailByTrxId";
+  public static GetEditCommNewDataDetailByTrxId = environment.losUrl + "/v1" + "/AppCommissionX/GetEditCommNewDataDetailByTrxId";
+  public static SubmitEditCommAftApvApproval = environment.losUrl + "/v1" + "/AppCommissionX/SubmitEditCommAftApvApproval";
+  public static GetAgrmntCommissionDataForEditByAgrmntId = environment.losUrl + "/v1" + "/AppCommissionX/GetAgrmntCommissionDataForEditByAgrmntId";
+  public static GetEditComReqAndApvByAgrmntId = environment.losUrl + "/v1" + "/AppCommissionX/GetEditComReqAndApvByAgrmntId";
+  public static GetEditAppReqAndApvByAgrmntId = environment.losUrl + "/v1" + "/AppCommissionX/GetEditAppReqAndApvByAgrmntId"
 
 
   //App Asset
@@ -102,13 +107,13 @@ export class URLConstantX {
   public static GetCessieHXById = environment.losUrl + "/v1" + "/Cessie/GetCessieHXById";
 
   //MOU CUST X
-  public static GetMouCustByAppIdX = environment.losUrl +'/v1' +  "/MouCustX/GetMouCustByAppId";
+  public static GetMouCustByAppIdX = environment.losUrl + '/v1' + "/MouCustX/GetMouCustByAppId";
   public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
   public static AddMouCustV2X = environment.losUrl + '/v2' + '/MouCustX/AddMouCust';
-  public static MouCustExecutionHumanActivityX = environment.losUrl +'/v1' + "/MouCustX/MouCustExecutionHumanActivity";
-  public static GetMouMainInfoByIdX = environment.losUrl +'/v1' + "/MouCustX/GetMouMainInfoById";
+  public static MouCustExecutionHumanActivityX = environment.losUrl + '/v1' + "/MouCustX/MouCustExecutionHumanActivity";
+  public static GetMouMainInfoByIdX = environment.losUrl + '/v1' + "/MouCustX/GetMouMainInfoById";
 
-  public static CheckMouActiveR2 = environment.losUrl +'/v1' + "/MouCustX/CheckMouActiveR2";
+  public static CheckMouActiveR2 = environment.losUrl + '/v1' + "/MouCustX/CheckMouActiveR2";
   public static MouCustExecutionHumanActivityXV2 = environment.losUrl + "/v2" + "/MouCustX/MouCustExecutionHumanActivity";
 
   // MOU CUST FCTR X
@@ -122,7 +127,7 @@ export class URLConstantX {
   public static GetMouDfOsPlafondByAppIdX = environment.losUrl + '/v1' + "/MouCustDlrFncngX/GetMouDfOsPlafondByAppId";
 
   //MOU CUST CLAUSE X
-  public static GetMouCustDataByMouCustIdX = environment.losUrl +'/v1' + "/MouCustClauseX/GetMouCustDataByMouCustIdX";
+  public static GetMouCustDataByMouCustIdX = environment.losUrl + '/v1' + "/MouCustClauseX/GetMouCustDataByMouCustIdX";
 
   // MOU CUST COLLATERAL X
   public static GetMouCustCollateralStatXByMouCustCollateralIdX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetMouCustCollateralStatXByMouCustCollateralId';
@@ -133,9 +138,11 @@ export class URLConstantX {
   public static DeleteMouCustCollateralX = environment.losUrl + '/v1' + '/MouCustCollateralX/DeleteMouCustCollateral';
   public static GetDealerGradingX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetDealerGrading';
   public static GetMouCustCollateralDataForUpdateByMouCustCollateralIdX = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
+  public static GetMouCustCollateralForMouViewByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralForMouViewByMouCustId";
+
 
   // CHANGE MOU
-  public static GetChangeMouMainInfoByIdX = environment.losUrl +'/v1' + "/ChangeMouX/GetChangeMouMainInfoById";
+  public static GetChangeMouMainInfoByIdX = environment.losUrl + '/v1' + "/ChangeMouX/GetChangeMouMainInfoById";
   public static GetListChangeMouTrxByMouCustId = environment.losUrl + "/v1" + "/ChangeMOUX/GetListChangeMouTrxByMouCustId";
   public static AddChangeMou = environment.losUrl + "/v1" + "/ChangeMOUX/AddChangeMou";
 
@@ -150,12 +157,12 @@ export class URLConstantX {
   public static GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralIdX = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId";
   //Approval
   public static NewApproval = environment.losUrl + "/v1" + "/ApprovalX/Approval";
-  public static EndDateGoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/EndDateGoLiveApproval";
-  public static GoLiveApprovalX = environment.losUrl+ "/v1" + "/ApprovalX/GoLiveApproval";
+  public static EndDateGoLiveApprovalX = environment.losUrl + "/v1" + "/ApprovalX/EndDateGoLiveApproval";
+  public static GoLiveApprovalX = environment.losUrl + "/v1" + "/ApprovalX/GoLiveApproval";
   //CUST MAIN DATA
   public static AddAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/AddAppCustBankAccAndStmntX";
   public static EditAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/EditAppCustBankAccAndStmntX";
-  public static DeleteAppCustBankAccAndStmnt = environment.losUrl +  '/v1' +"/AppCustBankAccX/DeleteAppCustBankAccAndStmntX";
+  public static DeleteAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/DeleteAppCustBankAccAndStmntX";
   public static GetAppCustBankAccAndStatementForView = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccAndStatementForViewX";
   public static AddEditNapCust = environment.losUrl + "/v1" + "/Application/AddEditNapCust";
 
@@ -168,10 +175,10 @@ export class URLConstantX {
   public static AddNewApplicationFromCopyV2 = environment.losUrl + "/v2" + "/AppX/AddNewApplicationFromCopy";
   public static AddNewApplicationFromCopyV2_1 = environment.losUrl + "/v2.1" + "/AppX/AddNewApplicationFromCopy";
   public static AddNewApplicationFromCopyV2_2 = environment.losUrl + "/v2.2" + "/AppX/AddNewApplicationFromCopy";
-  public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/v1" +"/AppX/GetAppByCustNoAndIsAppInitDone";
+  public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/AppX/GetAppByCustNoAndIsAppInitDone";
   public static GetAppByCustNoAndAppStat = environment.losUrl + "/v1" + "/AppX/GetAppByCustNoAndAppStat";
   public static GetAppByCustNoAndAppStatV2 = environment.losUrl + "/v2" + "/AppX/GetAppByCustNoAndAppStatV2";
-  public static GetAppByCustNoAndIsAppInitDoneV2 = environment.losUrl + "/v2" +"/AppX/GetAppByCustNoAndIsAppInitDoneV2";
+  public static GetAppByCustNoAndIsAppInitDoneV2 = environment.losUrl + "/v2" + "/AppX/GetAppByCustNoAndIsAppInitDoneV2";
 
   //AGRMNT ACTIVATION
   public static SubmitAgrmntActivationByHuman = environment.losUrl + '/v1' + "/AgrmntActivationX/SubmitAgrmntActivationByHuman";
@@ -179,10 +186,11 @@ export class URLConstantX {
 
   //APP INSURANCE X
   public static GetListAppInsObjByAgrmntIdForViewX = environment.losUrl + '/v1' + '/AppInsX/GetListAppInsObjByAgrmntIdForView';
+  public static GetAddCvgDiscRule = environment.losUrl + '/v1' + '/AppInsX/GetAddCvgDiscRule';
 
   //PO
-  public static GetAppCustBankAccsByAppIdX = environment.losUrl  + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";
-  public static GetPurchaseOrderHByAgrmntIdAndSupplCodeX = environment.losUrl  + '/v1' + "/PurchaseOrderHX/GetPurchaseOrderHByAgrmntIdAndSupplCode";
+  public static GetAppCustBankAccsByAppIdX = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";
+  public static GetPurchaseOrderHByAgrmntIdAndSupplCodeX = environment.losUrl + '/v1' + "/PurchaseOrderHX/GetPurchaseOrderHByAgrmntIdAndSupplCode";
   public static GetPurchaseOrderListForNewPOByAppId = environment.losUrl + "/v1" + "/PurchaseOrderHX/GetPurchaseOrderListForNewPOByAppId";
   public static ResumeWorkflowNewPurchaseOrderV2 = environment.losUrl + "/v2" + "/PurchaseOrderHX/ResumeWorkflowNewPurchaseOrder";
   public static GetAppLoanPurposeForPOByLoan = environment.losUrl + "/v1" + "/AppLoanPurposeX/GetAppLoanPurposeForPOByLoan";
@@ -200,25 +208,27 @@ export class URLConstantX {
   public static GetActiveMappingRefSectorEconomySlikXBySectorEconomySlikCode = environment.FoundationR3Url + "/v1" + "/RefSectorEconomySlikX/GetActiveMappingRefSectorEconomySlikXBySectorEconomySlikCode";
 
   //credit review
-  public static GetCrdRvwAppByCrdRvwCustInfoId = environment.losUrl  + '/v1' + "/CrdRvwAppX/GetCrdRvwAppByCrdRvwCustInfoId";
+  public static GetCrdRvwAppByCrdRvwCustInfoId = environment.losUrl + '/v1' + "/CrdRvwAppX/GetCrdRvwAppByCrdRvwCustInfoId";
   public static GetAssetAndAccByAppId = environment.losUrl + '/v1' + "/AppCrdRvwX/GetAssetAndAccByAppId"
-  //App Fin Data-Fee X
-  public static GetInitAppFinDataByAppIdX = environment.losUrl +"/v1"+ "/AppFinDataX/GetInitAppFinDataByAppId";
-  public static GetInitFinDataForTrialCalcX = environment.losUrl +"/v1"+ "/AppFinDataX/GetInitFinDataForTrialCalc";
-  public static GetInitAppFinDataFctrByAppIdX = environment.losUrl +"/v1"+ "/AppFinDataX/GetInitAppFinDataFctrByAppId";
-  public static GetInitAppFinDataDFByAppIdX = environment.losUrl +"/v1"+ "/AppFinDataX/GetInitAppFinDataDFByAppId";
+  public static GetAssetAndAccByAppIdV2 = environment.losUrl + '/v2' + "/AppCrdRvwX/GetAssetAndAccByAppId"
 
-  public static GetListAppFeeByAppIdX = environment.losUrl +"/v1"+ "/AppFeeX/GetListAppFeeByAppId";
-  public static GetListAppFeeAndMouFeeByAppIdX = environment.losUrl +"/v1"+ "/AppFeeX/GetListAppFeeAndMouFeeByAppId";
-  public static GetListAppFeeForTrialCalcX = environment.losUrl +"/v1"+ "/AppFeeX/GetListAppFeeForTrialCalc";
+  //App Fin Data-Fee X
+  public static GetInitAppFinDataByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataByAppId";
+  public static GetInitFinDataForTrialCalcX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitFinDataForTrialCalc";
+  public static GetInitAppFinDataFctrByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataFctrByAppId";
+  public static GetInitAppFinDataDFByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataDFByAppId";
+
+  public static GetListAppFeeByAppIdX = environment.losUrl + "/v1" + "/AppFeeX/GetListAppFeeByAppId";
+  public static GetListAppFeeAndMouFeeByAppIdX = environment.losUrl + "/v1" + "/AppFeeX/GetListAppFeeAndMouFeeByAppId";
+  public static GetListAppFeeForTrialCalcX = environment.losUrl + "/v1" + "/AppFeeX/GetListAppFeeForTrialCalc";
 
   public static GetApprovalAmountForCreditReviewByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetApprovalAmountForCreditReviewByAppId";
 
-  public static CalculateInstallmentBalloonX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentBalloon";
-  public static CalculateInstallmentEvenPrincipalX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentEvenPrincipal";
-  public static CalculateIrregularX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateIrregular";
-  public static CalculateInstallmentRegularFixX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentRegularFix";
-  public static CalculateInstallmentStepUpStepDownX = environment.losUrl +"/v1"+ "/AppFinDataX/CalculateInstallmentStepUpStepDown";
+  public static CalculateInstallmentBalloonX = environment.losUrl + "/v1" + "/AppFinDataX/CalculateInstallmentBalloon";
+  public static CalculateInstallmentEvenPrincipalX = environment.losUrl + "/v1" + "/AppFinDataX/CalculateInstallmentEvenPrincipal";
+  public static CalculateIrregularX = environment.losUrl + "/v1" + "/AppFinDataX/CalculateIrregular";
+  public static CalculateInstallmentRegularFixX = environment.losUrl + "/v1" + "/AppFinDataX/CalculateInstallmentRegularFix";
+  public static CalculateInstallmentStepUpStepDownX = environment.losUrl + "/v1" + "/AppFinDataX/CalculateInstallmentStepUpStepDown";
   public static SaveAppFinDataX = environment.losUrl + "/v1" + "/AppFinDataX/SaveAppFinData";
   public static GetAppFinDataWithRuleByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetAppFinDataWithRuleByAppId";
 
@@ -233,11 +243,13 @@ export class URLConstantX {
   public static CheckIfCustHasOngoingAppX = environment.losUrl + "/v1" + "/AppCustX/CheckIfCustHasOngoingApp";
   public static CheckAppCustShareholderMandatoryDataX = environment.losUrl + "/v1" + "/AppCustX/CheckAppCustShareholderMandatoryData";
   //AGRMNT
-  public static GetAgrmntHistByListCustNo = environment.losUrl + "/v1" +"/AgrmntX/GetAgrmntHistByListCustNo";
-  public static GetAgrmntHistByListCustNoFilterExpired = environment.losUrl + "/v1" +"/AgrmntX/GetAgrmntHistByListCustNoFilterExpired";
+  public static GetAgrmntHistByListCustNo = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntHistByListCustNo";
+  public static GetAgrmntHistByListCustNoFilterExpired = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntHistByListCustNoFilterExpired";
   public static GetAgrmntFinDataNtfAmtByAgrmntId = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntFinDataNtfAmtByAgrmntId";
   public static GetAgrmntOtherInfoByAgrmntIdX = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntOtherInfoByAgrmntId";
   public static GetAgrmntOtherInfoByAgrmntIdForViewX = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntOtherInfoByAgrmntIdForView";
+  public static GetLatestAgrmntXByAgrmntId = environment.losUrl + "/v1" + "/AgrmntX/GetLatestAgrmntXByAgrmntId";
+  public static GetAgrmntExpiredHistForCustViewByCustNo = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntExpiredHistForCustViewByCustNo";
 
   //ASSET
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocListX/GetListAssetDocListByAssetTypeCode";
@@ -272,6 +284,8 @@ export class URLConstantX {
 
   //R2 API
   public static R2ApiAgrmntGetListCustNoHaveAgrmntMaster = environment.r2Url + "/api/Agrmnt/GetListCustNoHaveAgrmntMaster";
+  public static GetListAssetMasterByCustNoAndAssetSchemeCodeFromR2 = environment.FoundationR3Url + "/v1" + "/AssetMasterX/GetListAssetMasterByCustNoAndAssetSchemeCodeFromR2";
+  public static GetAssetMasterDetailFromR2 = environment.FoundationR3Url + "/v1" + "/AssetMasterX/GetAssetMasterDetailFromR2";
 
   //Dealer Financing
   public static CalcGrossYieldSingleInstDF = environment.losUrl + "/v1" + "/AppFinDataX/CalcGrossYieldSingleInstDF";
@@ -293,20 +307,39 @@ export class URLConstantX {
 
   //Potential RO
   public static GetTelemkOfferingSubjectByRoPotentialNo = environment.losUrl + "/v1" + "/RoPotentialX/GetTelemkOfferingSubjectByRoPotentialNo";
+  public static GenerateRoPotentialDataFromSpX = environment.losUrl + "/v1" + "/RoPotentialX/GenerateRoPotentialDataFromSpX";
   //CUST EXPOSURE
   public static GetR2CustExposureByCustNo = environment.FoundationR3Url + "/v1" + "/CustX/GetR2CustExposureByCustNo";
   public static GetR2CustGroupExposureByCustNo = environment.FoundationR3Url + "/v1" + "/CustX/GetR2CustGroupExposureByCustNo";
 
   //App Agrmnt Cancellation
   public static AddAppAgrmntCancelV2_1X = environment.losUrl + "/v2.1" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
+  public static AddAppAgrmntCancelV3X = environment.losUrl + "/v3" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
+  public static AddAppAgrmntCancelV4X = environment.losUrl + "/v4" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
 
   // Invoice
   public static AddInvoiceX = environment.losUrl + "/v1" + "/InvoiceX/AddInvoiceX";
-  public static EditInvoiceX= environment.losUrl + "/v1" + "/InvoiceX/EditInvoiceX";
+  public static EditInvoiceX = environment.losUrl + "/v1" + "/InvoiceX/EditInvoiceX";
   public static GetInvoiceXByVendorCodeAndPurchaseOrderHId = environment.losUrl + "/v1" + "/InvoiceX/GetInvoiceXByVendorCodeAndPurchaseOrderHId";
   public static GetAppAssetListAndInvoiceXForView = environment.losUrl + '/v1' + "/InvoiceX/GetAppAssetListAndInvoiceXForView";
 
   //subsidyProfitability
-  public static GetListAppSubsidyProfitabilityXForViewByAppId = environment.losUrl + "/v1" +"/AppSubsidyProfitabilityX/GetAppSubsidyProfitabilityXByAppId";
+  public static GetListAppSubsidyProfitabilityXForViewByAppId = environment.losUrl + "/v1" + "/AppSubsidyProfitabilityX/GetAppSubsidyProfitabilityXByAppId";
   public static GetAppCollateralListAndInvoiceXForView = environment.losUrl + '/v1' + "/InvoiceX/GetAppCollateralListAndInvoiceXForView";
+
+  //app fin data
+  public static SaveAppFinDataDF = environment.losUrl + "/v1" + "/AppFinDataX/SaveAppFinDataDF";
+
+  //#region Auto Debit Registration
+  public static GetAutoDebitRegistrationById = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetAutoDebitRegistrationById";
+  public static GetAutoDebitRegistrationByNo = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetAutoDebitRegistrationByNo";
+  public static InsertIntoAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/InsertIntoAutoDebitRegistration";
+  public static AutoDebitRegistrationCancellation = environment.losUrl + "/v1" + "/AutoDebitRegistration/AutoDebitRegistrationCancellation";
+  public static ProcessAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/ProcessAutoDebitRegistration";
+  public static GetListStgAutoDebitRegisLog = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetListStgAutoDebitRegisLog";
+  public static ChangeAutoDebitRegisStat = environment.losUrl + "/v1" + "/AutoDebitRegistration/ChangeAutoDebitRegisStat";
+  //#endregion
+
+  public static GetInsuranceDataByAppAssetIdXForView = environment.losUrl + "/v1" + "/AppInsX/GetInsDataByAppAssetIdForView";
+  public static GetAssetCategoryNameByAssetCategoryCode = environment.losUrl + "/v1" + "/AppInsX/GetAssetCategoryNameByAssetCategoryCode";
 }

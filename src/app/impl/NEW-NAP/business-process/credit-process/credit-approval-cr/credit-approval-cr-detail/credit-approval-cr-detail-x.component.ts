@@ -20,6 +20,8 @@ import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-credit-approval-cr-detail-x',
@@ -89,6 +91,7 @@ export class CreditApprovalCrDetailXComponent implements OnInit {
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();
+    await this.getGsDisableRequiredNotes();
     this.initInputApprovalObj();
   }
 
@@ -124,6 +127,16 @@ export class CreditApprovalCrDetailXComponent implements OnInit {
     );
   }
 
+  ListGsDisableRequiredNotes : Array<string> = new Array<string>();
+  async getGsDisableRequiredNotes(){
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstantX.GSCodeDisableRequiredNotesApvAct }).toPromise().then(
+      (response: GeneralSettingObj) => {
+        let x = response.GsValue;
+        this.ListGsDisableRequiredNotes = x.split(';');
+      }
+    )
+  }
+
   HoldTask(obj: ApprovalObj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
@@ -153,6 +166,8 @@ export class CreditApprovalCrDetailXComponent implements OnInit {
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.InputApvObj.OfficeCodes.push(this.AppObj.OriOfficeCode);
+    this.InputApvObj.EnableRequiredNotes = false;
+    this.InputApvObj.DisableRequiredNotesList = this.ListGsDisableRequiredNotes;
     this.IsReady = true;
   }
 

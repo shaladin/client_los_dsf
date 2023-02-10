@@ -8,6 +8,12 @@
       "name": "IdNo"
     },
     {
+      "type": "sort",
+      "position": "left",
+      "label": "Shareholder No",
+      "name": "CustNo"
+    },
+    {
       "type": "label",
       "position": "left",
       "label": "Shareholder Name",
@@ -42,11 +48,6 @@
       "position": "center",
       "label": "Is Signer",
       "name": "IsSigner"
-    },
-    {
-      "type": "label",
-      "position": "center",
-      "label": "Action"
     }
   ],
   "bodyList": [
@@ -86,34 +87,6 @@
       "type": "boolean",
       "position": "center",
       "property": "IsSigner"
-    },
-    {
-      "type": "action",
-      "position": "center",
-      "action": [
-        {
-          "type": "callback",
-          "key": "edit",
-          "property": [
-            {
-              "type": "AppCustId",
-              "property": "AppCustId"
-            },
-            {
-              "type": "ShareholderType",
-              "property": "ShareholderType"
-            },
-            {
-              "type": "AppCustCompanyMgmntShrholderId",
-              "property": "AppCustCompanyMgmntShrholderId"
-            },
-            {
-              "type": "mode",
-              "property": "edit"
-            }
-          ]
-        }
-      ]
     }
   ]
 }

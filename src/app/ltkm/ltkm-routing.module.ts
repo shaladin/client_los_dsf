@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LtkmApprovalDetailXComponent } from 'app/impl/ltkm/ltkm-approval/detail/ltkm-approval-detail-x.component';
 import { LtkmRequestXComponent } from 'app/impl/ltkm/ltkm-request/ltkm-request-x.component';
 import { LtkmReturnHandlingXComponent } from 'app/impl/ltkm/ltkm-return-handling/detail/ltkm-return-handling-x.component';
 import { LtkmVerifyDetailXComponent } from 'app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component';
+import { LtkmViewComponentX } from 'app/impl/ltkm/view-ltkm-component/ltkm-view-component-x';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { PathConstant } from 'app/shared/constant/PathConstant';
-import { LtkmApprovalDetailXComponent } from 'app/impl/ltkm/ltkm-approval/detail/ltkm-approval-detail-x.component';
+import { LtkmApprovalDetailComponent } from './ltkm-approval/detail/ltkm-approval-detail.component';
 import { LtkmApprovalPagingComponent } from './ltkm-approval/paging/ltkm-approval-paging.component';
 import { LtkmInquiryComponent } from './ltkm-inquiry/ltkm-inquiry.component';
 import { LtkmRequestComponent } from './ltkm-request/ltkm-request.component';
@@ -63,10 +65,17 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstant.VERIFY_APV_DETAIL,
+        component: LtkmApprovalDetailComponent,
+        data: {
+          title: 'LTKM Verify Approval Detail'
+        }
+      },
+      {
         path: PathConstantX.VERIFY_APV_DETAIL,
         component: LtkmApprovalDetailXComponent,
         data: {
-          title: 'LTKM Verify Approval Detail'
+          title: 'LTKM Verify Approval Detail X'
         }
       },
       {
@@ -93,6 +102,13 @@ const routes: Routes = [
       {
         path: PathConstant.VIEW,
         component: LtkmViewComponent,
+        data: {
+          title: 'LTKM View'
+        }
+      },
+      {
+        path: PathConstantX.VIEW,
+        component: LtkmViewComponentX,
         data: {
           title: 'LTKM View'
         }

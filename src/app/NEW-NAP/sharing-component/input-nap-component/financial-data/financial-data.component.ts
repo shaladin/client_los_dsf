@@ -165,8 +165,8 @@ export class FinancialDataComponent implements OnInit {
         }
 
         this.FinDataForm.patchValue({
-          GracePeriod: this.appFinDataObj.GracePeriod,
-          MrGracePeriodTypeCode: this.appFinDataObj.MrGracePeriodTypeCode,
+          GracePeriod: !this.appFinDataObj || !this.appFinDataObj.GracePeriod ? 0 : this.appFinDataObj.GracePeriod,
+          MrGracePeriodTypeCode: !this.appFinDataObj || !this.appFinDataObj.MrGracePeriodTypeCode ? "" : this.appFinDataObj.MrGracePeriodTypeCode,
 
           TotalAssetPriceAmt: this.appFinDataObj.TotalAssetPriceAmt,
           TotalAccessoryPriceAmt: this.appFinDataObj.TotalAccessoryPriceAmt,

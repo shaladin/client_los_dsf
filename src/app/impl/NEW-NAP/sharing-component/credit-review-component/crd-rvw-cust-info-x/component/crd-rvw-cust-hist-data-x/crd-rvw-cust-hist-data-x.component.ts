@@ -22,6 +22,8 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   ExstAgrmnt: any;
   AppRjct: any;
   AppPrcs: any;
+  AppCan: any;
+  ExpiredApp: any;
 
   TotalNTF: number = 0;
   TotalUnit: number = 0;
@@ -30,6 +32,7 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   TotalAR: number = 0;
   TotalOSAR: number = 0;
   ReturnAgrmnt: any;
+  ReturnApp: any;
 
   TotalProcessAsset: number = 0;
   TotalProcessPrincipal: number = 0;
@@ -39,6 +42,11 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   TotalRejectedPrincipal: number = 0;
   TotalRejectedAR: number = 0;
   TotalRejectedInstallment: number = 0;
+
+  TotalExpiredAsset: number = 0;
+  TotalExpiredPrincipal: number = 0;
+  TotalExpiredAR: number = 0;
+  TotalExpiredInstallment: number = 0;
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -50,7 +58,7 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
       (response) => {
         this.CustNo = response['AppCustObj']['CustNo'];
 
-        if(this.CustNo != null && this.CustNo != undefined && this.CustNo != "") {
+        if (this.CustNo != null && this.CustNo != undefined && this.CustNo != "") {
           let reqObjListCustNo = {
             ListCustNo: [this.CustNo]
           }
@@ -58,7 +66,6 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
             async (response) => {
               this.ExstAgrmnt = response;
               await this.GetGrandTotal();
-              await this.GetTotalARAndOSAR();
             }
           );
 
@@ -79,12 +86,34 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
 
           let reqObj = {
             CustNo: this.CustNo,
-            AppStat:"RJC"
+            AppStat: "RJC"
           }
           this.http.post(URLConstantX.GetAppByCustNoAndAppStatV2, reqObj).subscribe(
             async (response) => {
               this.AppRjct = response;
-              await this.GetRejectedGrandTotal();
+              let reqCanObj = {
+                CustNo: this.CustNo,
+                AppStat: "CAN"
+              }
+              this.http.post(URLConstantX.GetAppByCustNoAndAppStatV2, reqCanObj).subscribe(
+                async (response) => {
+                  this.AppCan = response;
+                  this.AppCan.forEach(element => {
+                    this.AppRjct.push(element);
+                  });
+                  await this.GetRejectedGrandTotal();
+                }
+              );
+            }
+          );
+
+          let reqObjCustNo = {
+            CustNo: this.CustNo
+          }
+          this.http.post(URLConstantX.GetAgrmntExpiredHistForCustViewByCustNo, reqObjCustNo).subscribe(
+            async (response) => {
+              this.ExpiredApp = response;
+              await this.GetExpiredGrandTotal();
             }
           );
         }
@@ -93,19 +122,21 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
   }
 
   async GetGrandTotal() {
-    if(this.ExstAgrmnt != undefined && this.ExstAgrmnt.length != 0) {
+    if (this.ExstAgrmnt != undefined && this.ExstAgrmnt.length != 0) {
       var existingAgreement = this.ExstAgrmnt;
       existingAgreement.forEach(element => {
         this.TotalNTF = this.TotalNTF + element.NTFAmount;
         this.TotalUnit = this.TotalUnit + element.NumOfAsset;
         this.TotalActiveInstallment += element.InstAmount;
         this.TotalOSPrincipal += element.OsPrincipal;
+        this.TotalAR += element.ArAmount;
+        this.TotalOSAR += element.OsArAmount;
       });
     }
   }
 
-  async GetProcessGrandTotal(){
-    if(this.AppPrcs != undefined && this.AppPrcs.length != 0){
+  async GetProcessGrandTotal() {
+    if (this.AppPrcs != undefined && this.AppPrcs.length != 0) {
       this.AppPrcs.forEach(element => {
         this.TotalProcessAsset += element.NumOfAsset;
         this.TotalProcessPrincipal += element.TotalNTF;
@@ -114,13 +145,13 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
       });
     }
   }
-  async GetTotalARAndOSAR(){
-    this.TotalAR += this.TotalNTF + this.TotalActiveInstallment;
-    this.TotalOSAR += this.TotalOSPrincipal + this.TotalActiveInstallment;
-  }
 
-  async GetRejectedGrandTotal(){
-    if(this.AppRjct != undefined && this.AppRjct.length != 0){
+  async GetRejectedGrandTotal() {
+    if (this.AppRjct != undefined && this.AppRjct.length != 0) {
+      this.TotalRejectedAsset = 0;
+      this.TotalRejectedPrincipal = 0;
+      this.TotalRejectedAR = 0;
+      this.TotalRejectedInstallment = 0;
       this.AppRjct.forEach(element => {
         this.TotalRejectedAsset += element.NumOfAsset;
         this.TotalRejectedPrincipal += element.TotalNTF;
@@ -130,15 +161,39 @@ export class CrdRvwCustHistDataXComponent implements OnInit {
     }
   }
 
+  async GetExpiredGrandTotal() {
+    if (this.ExpiredApp != undefined && this.ExpiredApp.length != 0) {
+      var expiredApp = this.ExpiredApp;
+      expiredApp.forEach(element => {
+        this.TotalExpiredPrincipal += element.NTFAmount;
+        this.TotalExpiredAsset += element.NumOfAsset;
+        this.TotalExpiredAR += element.ArAmount;
+      });
+    }
+  }
+
   ClickLinkAppNo(AppId) {
     AdInsHelper.OpenAppViewByAppId(AppId);
+  }
+
+  ClickLinkAppNoByAppNo(AppNo) {
+    this.http.post(URLConstant.GetAppByAppNo, { TrxNo: AppNo }).subscribe(
+      (response) => {
+        this.ReturnApp = response;
+        if (this.ReturnApp.AppId != 0 && this.ReturnApp.AppId != null && this.ReturnApp.AppId != undefined) {
+          AdInsHelper.OpenAppViewByAppId(this.ReturnApp.AppId);
+        } else {
+          this.toastr.errorMessage("Data not found");
+        }
+      }
+    )
   }
 
   ClickLinkAgrmntNo(AgrmntNo) {
     this.http.post(URLConstant.GetAgrmntByAgrmntNo, { TrxNo: AgrmntNo }).subscribe(
       (response) => {
         this.ReturnAgrmnt = response;
-        if(this.ReturnAgrmnt.AgrmntId != 0 && this.ReturnAgrmnt.AgrmntId != null && this.ReturnAgrmnt.AgrmntId != undefined) {
+        if (this.ReturnAgrmnt.AgrmntId != 0 && this.ReturnAgrmnt.AgrmntId != null && this.ReturnAgrmnt.AgrmntId != undefined) {
           AdInsHelper.OpenAgrmntViewByAgrmntId(this.ReturnAgrmnt.AgrmntId);
         } else {
           this.toastr.errorMessage("Data not found");

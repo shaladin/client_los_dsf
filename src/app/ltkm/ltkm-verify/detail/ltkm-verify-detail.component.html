@@ -25,6 +25,12 @@
             <view-ltkm-cust-history [LtkmCustId]="LtkmCustId"></view-ltkm-cust-history>
           </ng-template>
         </mat-tab>
+
+        <mat-tab label="Approval History">
+          <ng-template matTabContent>
+            <app-ltkm-approval-hist [LtkmNo]="LtkmNo"></app-ltkm-approval-hist>
+          </ng-template>
+        </mat-tab>
   
         <mat-tab label="App Summary">
           <ng-template matTabContent>

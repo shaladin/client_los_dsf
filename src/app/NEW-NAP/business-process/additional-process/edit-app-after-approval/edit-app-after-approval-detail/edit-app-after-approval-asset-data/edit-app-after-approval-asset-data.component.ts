@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -27,6 +27,7 @@ import { ResProdOfferingDObj } from 'app/shared/model/response/product/res-get-p
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/app-cust-personal-job-data-obj.model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/response-job-data-personal-obj.model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-edit-app-after-approval-asset-data',
@@ -59,7 +60,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     OwnerAreaCode4: ['', Validators.maxLength(50)],
     OwnerCity: ['', Validators.maxLength(50)],
     OwnerZipcode: ['', Validators.maxLength(50)],
-    OwnerProfessionCode: [''],
+    OwnerProfessionCode: ['', Validators.required],
     MrOwnerTypeCode: [''],
     SelfUser: [false],
     UserName: ['', Validators.maxLength(500)],
@@ -74,11 +75,15 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     SerialNo3: [''],
     SerialNo4: [''],
     SerialNo5: [''],
+    ListDoc: this.fb.array([])
   });
 
   AppObj: NapAppModel;
   AppId: number;
   AppAssetId: number;
+  AppCollateralId: number;
+  RefAssetDocId: number;
+  AssetTypeCode: string;
   AppCustObj: AppCustObj;
   AppCustPersonalJobData: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
 
@@ -129,6 +134,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.isReady = true;
+    this.InputLookupProfessionObj.isRequired = false;
 
     this.inputAddressObjForOwner = new InputAddressObj();
     this.inputAddressObjForOwner.showSubsection = false;
@@ -138,6 +144,8 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     this.ownerAddrObj = new AddrObj();
     this.AppId = this.AppAssetObj.AppId;
     this.AppAssetId = this.AppAssetObj.AppAssetId;
+    this.AssetTypeCode = this.AppAssetObj.AssetTypeCode;
+    this.AppCollateralId = this.AppCollateralObj.AppCollateralId
 
     await this.bindOwnerTypeObj();
     await this.bindCompanyTypeObj();
@@ -159,6 +167,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     await this.bindAppInsObj();
     await this.bindAssetUsageObj();
     await this.GetRefProdCmptPurposeOfFinancing();
+    await this.GetRefAssetDocList();
 
     await this.setFormValidators();
 
@@ -784,6 +793,9 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       if(ArraySerial[i] == ""){
         continue;
       }
+      else if(ArraySerial[i] == null){
+        continue;
+      }
       let x = ArraySerial.filter(f=>f == ArraySerial[i])
 
       if(x.length > 1){
@@ -834,8 +846,20 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
             InsAssetCoveredBy: this.appInsObjObj.InsAssetCoveredBy,
             InscoBranchCode: "",
             InscoBranchName: "",
-          }
+          },
+        AppCollateralDocsObj: []
       }
+
+    for (var i = 0; i < this.EditAppAssetForm.controls.ListDoc.value.length; i++) {
+      var listDoc = {
+        DocNo: this.EditAppAssetForm.controls.ListDoc.value[i].DocNo,
+        DocNotes: this.EditAppAssetForm.controls.ListDoc.value[i].DocNotes,
+        ExpiredDt: this.EditAppAssetForm.controls.ListDoc.value[i].ACDExpiredDt == "" ? "" : formatDate(this.EditAppAssetForm.controls.ListDoc.value[i].ACDExpiredDt, 'yyyy-MM-dd', 'en-US'),
+        IsReceived: this.EditAppAssetForm.controls.ListDoc.value[i].IsReceived,
+        RowVersion: this.EditAppAssetForm.controls.ListDoc.value[i].RowVersion
+      }
+      this.AppAssetRelatedOutput.AppCollateralDocsObj.push(listDoc);
+    }
 
     var listAppAssetAttrs = this.EditAppAssetForm.controls["AppAssetAttrObjs"] as FormArray;
 
@@ -887,6 +911,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   async bindAssetUsageObj() {
     let reqByCode: GenericObj = new GenericObj();
+    await this.GetRefProdCmptPurposeOfFinancing();
     reqByCode.Code = this.RefProdCmptPurposeOfFinancing.CompntValue;
     await this.http.post(URLConstant.GetListKeyValueAssetUsageByPurposeOfFinCode, reqByCode).subscribe(
       (response) => {
@@ -949,4 +974,80 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     }
   }
 
+  async SetAssetDocument() {
+    let isChangedDataExists = false;
+    let currAssetIndex = -1;
+
+    if (this.EditedAssetData.length != 0)
+    {
+      this.EditedAssetData.forEach((value, index) => {
+        if (value['AppAssetId'] == this.AppAssetId) 
+        {
+          currAssetIndex = index;
+          isChangedDataExists = true;
+        }
+      });
+    }
+
+    if (isChangedDataExists && currAssetIndex > -1) {
+      for (var i = 0; i < this.EditAppAssetForm.controls.ListDoc.value.length; i++){
+        let currDoc = this.EditedAssetData[currAssetIndex].AppCollateralDocsObj[i];
+        this.EditAppAssetForm.controls.ListDoc["controls"][i].patchValue({
+          DocNo: currDoc.DocNo,
+          DocNotes: currDoc.DocNotes,
+          ACDExpiredDt: currDoc.ExpiredDt == "" ? "" : formatDate(currDoc.ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+          IsReceived: currDoc.IsReceived
+        });
+      }
+    } else {
+      await this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralId }).toPromise().then(
+        (response) => {
+          let AppCollateralDocs = new Array();
+          AppCollateralDocs = response["AppCollateralDocs"];
+          if (AppCollateralDocs["length"] > 0) {
+            for (let i = 0; i < AppCollateralDocs.length; i++) {
+              let AppCollatralDocId = AppCollateralDocs.findIndex(x => x.DocCode == this.EditAppAssetForm.controls.ListDoc["controls"][i]["controls"].DocCode.value);
+  
+              this.EditAppAssetForm.controls.ListDoc["controls"][i].patchValue({
+                DocNo: AppCollateralDocs[AppCollatralDocId].DocNo,
+                DocNotes: AppCollateralDocs[AppCollatralDocId].DocNotes,
+                ACDExpiredDt: AppCollateralDocs[AppCollatralDocId].ExpiredDt == null ? "" : formatDate(AppCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+                IsReceived: AppCollateralDocs[AppCollatralDocId].IsReceived,
+                RowVersion: AppCollateralDocs[AppCollatralDocId].RowVersion,
+              })
+            }
+          }
+        });
+    }
+  }
+
+  async GetRefAssetDocList() {
+    await this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AssetTypeCode }).toPromise().then(
+      (response) => {
+        let ListDoc = this.EditAppAssetForm.get('ListDoc') as FormArray;
+        ListDoc.reset();
+        while(ListDoc.length) {
+          ListDoc.removeAt(0);
+        }
+        if (response[CommonConstant.ReturnObj].length > 0) {
+          for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
+            this.RefAssetDocId = response[CommonConstant.ReturnObj][i].RefAssetDocId
+            let assetDocumentDetail = this.fb.group({
+              DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,
+              AssetDocName: response[CommonConstant.ReturnObj][i].AssetDocName,
+              IsValueNeeded: response[CommonConstant.ReturnObj][i].IsValueNeeded,
+              IsMandatoryNew: response[CommonConstant.ReturnObj][i].IsMandatoryNew,
+              IsMandatoryUsed: response[CommonConstant.ReturnObj][i].IsMandatoryUsed,
+              IsReceived: response[CommonConstant.ReturnObj][i].IsReceived,
+              DocNo: response[CommonConstant.ReturnObj][i].DocNo,
+              ACDExpiredDt: response[CommonConstant.ReturnObj][i].ACDExpiredDt,
+              DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
+              RowVersion: "",
+            }) as FormGroup;
+            ListDoc.push(assetDocumentDetail);
+          }
+        }
+        this.SetAssetDocument();
+      });
+  }
 }

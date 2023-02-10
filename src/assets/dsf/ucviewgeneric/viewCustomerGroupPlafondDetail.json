@@ -18,8 +18,8 @@
           },
           {
             "type": "text",
-            "label": "Outstanding AR",
-            "property": "TotalOSAR"
+            "label": "Outstanding NI",
+            "property": "TotalOSNI"
           },
           {
             "type": "text",
@@ -38,18 +38,23 @@
           },
           {
             "type": "text",
-            "label": "Existing Agreement Outstanding AR",
+            "label": "Existing Agreement Outstanding NI",
             "property": "Existing"
           },
           {
             "type": "text",
-            "label": "Application In Process Outstanding AR",
+            "label": "Application In Process Outstanding NI",
             "property": "Process"
           },
           {
             "type": "text",
-            "label": "OPL Agreement Outstanding AR",
+            "label": "OPL Agreement Outstanding NI",
             "property": "Opl"
+          },
+          {
+            "type": "text",
+            "label": "Factoring Agreement OS NI",
+            "property": "Factoring"
           }
         ],
         "querystring": {

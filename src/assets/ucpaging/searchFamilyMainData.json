@@ -24,11 +24,6 @@
       "position": "left",
       "label": "Customer Model",
       "name": "MrCustModelDescr"
-    },
-    {
-      "type": "label",
-      "position": "center",
-      "label": "Action"
     }
   ],
   "bodyList": [
@@ -51,75 +46,6 @@
       "type": "text",
       "position": "left",
       "property": "MrCustModelDescr"
-    },
-    {
-      "type": "action",
-      "position": "center",
-      "action": [
-        {
-          "type": "switch",
-          "case": [
-            {
-              "conditions": [
-                {
-                  "isUser": false,
-                  "property": "MrCustRelationshipDescr",
-                  "value": "Self Customer",
-                  "restriction": "NEQ"
-                }
-              ],
-              "result": {
-                "type": "callback",
-                "key": "edit",
-                "icon": "ft-edit-2",
-                "property": [
-                  {
-                    "type": "AppCustId",
-                    "property": "AppCustId"
-                  },
-                  {
-                    "type": "MrCustTypeCode",
-                    "property": "MrCustTypeCode"
-                  },
-                  {
-                    "type": "mode",
-                    "property": "edit"
-                  }
-                ]
-              },
-              "isHide": false
-            }
-          ]
-        },
-        {
-          "type": "switch",
-          "case": [
-            {
-              "conditions": [
-                {
-                  "isUser": false,
-                  "property": "MrCustRelationshipDescr",
-                  "value": "Self Customer",
-                  "restriction": "NEQ"
-                }
-              ],
-              "result": {
-                "type": "callback",
-                "key": "delete",
-                "property": [
-                  {
-                    "type": "AppCustId",
-                    "property": "AppCustId"
-                  }
-                ],
-                "icon" : "ft-trash-2",
-                "anchor" : "warning"
-              },
-              "isHide": false
-            }
-          ]
-        }
-      ]
     }
   ]
 }

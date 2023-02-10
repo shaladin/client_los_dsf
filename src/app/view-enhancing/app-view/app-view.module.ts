@@ -58,13 +58,21 @@ import { ApprovalHistXComponent } from 'app/impl/view-enhancing/app-view/approva
 import { ViewCreditProcessFlowComponent } from './view-credit-process-flow/view-credit-process-flow.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { ViewDeviationComponent } from "./view-deviation/view-deviation.component";
-import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
 import { AppMainInfoXComponent } from "../app-main-info-x/app-main-info-x.component";
 import { TabCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/tab-commission-x.component";
 import { TabReferantorMultiComponent } from "./tab-referantor-multi/tab-referantor-multi.component";
 import { TabReferantorMultiDetailComponent } from "./tab-referantor-multi-detail/tab-referantor-multi-detail.component";
+import { TabAnalysisResultHistoryComponent } from "./tab-analysis-result-history/tab-analysis-result-history.component";
+import { TabAnalysisResultHistoryDetailComponent } from "./tab-analysis-result-history-detail/tab-analysis-result-history-detail.component";
+import { CreditReviewComponentModule } from "app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module";
+import { TabDeviationHistoryComponent } from "./tab-deviation-history/tab-deviation-history.component";
 import { ListDataCommissionXComponent } from "app/impl/view-enhancing/app-view/tab-commission/list-data-commission/list-data-commission-x.component";
 import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-asset-data/view-asset-data-x.component";
+import { AppInsuranceXComponent } from "app/impl/view-enhancing/app-view/app-insurance/app-insurance-x.component";
+import { AppViewInsuranceDetailXComponent } from "app/impl/view-enhancing/app-view/app-insurance/app-insurance-detail/app-insurance-detail-x.component";
+import { TabAnalysisResultHistoryXComponent } from "app/impl/view-enhancing/app-view/tab-analysis-result-history-x/tab-analysis-result-history-x.component";
+import { CreditReviewCrDetailHistoryComponent } from "./credit-review-cr-detail-history/credit-review-cr-detail-history.component";
+import { CreditReviewCrDetailHistoryXComponent } from "app/impl/view-enhancing/app-view/credit-review-cr-history-x/credit-review-cr-detail-history-x/credit-review-cr-detail-history-x.component";
 
 
 @NgModule({
@@ -91,7 +99,8 @@ import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-a
         AppCustViewComponentsModule,
         ViewSharingComponentModule,
         SharedModule,
-        AdInsSharedModule
+        AdInsSharedModule,
+        CreditReviewComponentModule
     ],
     declarations: [
         AppMainInfoComponent,
@@ -136,7 +145,15 @@ import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-a
         TabCommissionXComponent,
         TabReferantorMultiComponent,
         TabReferantorMultiDetailComponent,
+        TabAnalysisResultHistoryComponent,
+        TabAnalysisResultHistoryDetailComponent,
+        CreditReviewCrDetailHistoryComponent,
+        TabDeviationHistoryComponent,
         ListDataCommissionXComponent,
+        AppInsuranceXComponent,
+        AppViewInsuranceDetailXComponent,
+        TabAnalysisResultHistoryXComponent,
+        CreditReviewCrDetailHistoryXComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -147,7 +164,8 @@ import { ViewAssetDataXComponent } from "app/impl/view-enhancing/app-view/view-a
         AppAssetDataDetailComponent,
         TabReferantorMultiDetailComponent,
         AppMainInfoXComponent,
-        AppAssetDataDetailComponent
+        AppAssetDataDetailComponent,
+        AppViewInsuranceDetailXComponent
     ]
 })
 export class AppViewModule { }

@@ -239,6 +239,8 @@ export class CommonConstant {
   //STATUS GRP
   public static StatusGrpVerfResultStat = "VERF_RESULT_STAT";
   public static VerfResultStatSuccess = "SCS";
+  public static VerfResultStatDash = "-";
+  public static VerfResultStatEmpty = "";
   public static VerfResultStatFailed = "FAIL";
   public static TrxTypeCodePhn = "PHN";
   public static VerfTrxTypeCodePhn = "PHN_VERIF";
@@ -325,7 +327,7 @@ export class CommonConstant {
   public static AttrCodeDeptAml = "AML_CUST_DEPARTMENT";
   public static AttrCodeAuthAml = "AUTH_AML";
   public static AttrCodeRoadWorthinessDoc = "ROAD_WORTHINESS_DOC";
-  
+
   //ATTR VALUE
   public static AttrValueOnTheRoad = "ON_THE_ROAD";
   public static AttrValueOffTheRoad = "OFF_THE_ROAD";
@@ -345,7 +347,7 @@ export class CommonConstant {
   public static VerfTrxTypeCodeCustConfirm = "CUST_CONFIRM";
 
   // AGRMNT STAT
-  public static AgrmntStatCancel = "CANCEL";
+  public static AgrmntStatCancel = "CAN";
   public static AgrmntStatReject = "RJC";
   public static AgrmntStatExpired = "EXP";
   public static AgrmntStatPaid = "RRD";
@@ -638,7 +640,9 @@ export class CommonConstant {
   public static PurchaseOrderItemTypeNonFee = "NON_FEE";
   public static PurchaseOrderItemTypeFee = "FEE";
   public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
+  public static RefProdCompIntrstType = "INTRSTTYPE";
   public static RefProdCompAssetCond = "ASSETCOND";
+  public static RefProdCompInstScheme = "INST_SCHM";
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
   public static RefMasterTypeCodeProvisionType = "PROVISION_TYPE";
   public static RefMasterTypeCodeCharacteristicCredit = "CHARACTERISTIC_OF_CREDIT";
@@ -713,6 +717,7 @@ export class CommonConstant {
   public static ReferantorCategorySupplierEmployee = "SUPPLIER EMPLOYEE";
   public static ReferantorCategoryMultifinanceEmployee = "MULTIFINANCE EMPLOYEE";
   public static ReferantorTypeSupplierEmployee = "SUPPL_EMP";
+  public static ReferantorTypeCustomerCompany = "CUSTOMER_COMPANY";
 
   //Martial Status
   public static MasteCodeMartialStatsMarried = "MARRIED";
@@ -834,7 +839,7 @@ export class CommonConstant {
   public static SCHM_CODE_EDIT_APP_AFT_APV_APV_SCHM_NORMAL = "EDIT_APP_AFT_APV_APV_SCHM_NORMAL";
   public static SCHM_CODE_CHG_MOU_APV = "CHG_MOU_APV";
   public static SCHM_CODE_CHG_MOU_DLFN_APV = "CHG_MOU_DLFN_APV";
-  public static SCHM_CODE_CHG_MOU_FCTR_APV  = "CHG_MOU_FCTR_APV";
+  public static SCHM_CODE_CHG_MOU_FCTR_APV = "CHG_MOU_FCTR_APV";
   public static SCHM_CODE_MOU_FRZ_UNFRZ_DLFN = "MOU_FRZ_UNFRZ_DLFN";
   public static SCHM_CODE_MOU_FRZ_UNFRZ_FCTR = "MOU_FRZ_UNFRZ_FCTR";
   public static SCHM_CODE_CHG_MOU_EXP_APV = "CHG_MOU_EXP_APV";

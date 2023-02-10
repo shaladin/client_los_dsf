@@ -92,6 +92,33 @@ export class LtkmApprovalDetailComponent implements OnInit {
         await this.BindDDLReasonReturn();
         this.initInputApprovalObj();
         this.SetIsGsReturn();
+        this.GetLtkmCust();
+    }
+
+    CustTypeCode: string;
+    IsFromApp: boolean = false;
+    AppId: number;
+    GetLtkmCust(isFromTabChange: boolean = false) {
+        var reqObj = {
+            Id: this.LtkmCustId,
+        };
+        this.http.post(URLConstant.GetLtkmCustById, reqObj).subscribe(
+            (response) => {
+                this.CustTypeCode = response["MrCustTypeCode"];
+    
+                this.http.post(URLConstant.getLtkmReqByLtkmCustId, reqObj).subscribe(
+                    (response) => {
+                        if (response["ReturnObject"] != undefined) {
+                            this.LtkmNo = response["ReturnObject"]["LtkmNo"];
+                            // if (response["ReturnObject"]["LtkmSrc"] == 'APP') {
+                                this.IsFromApp = true;
+                                this.AppId = response["ReturnObject"]["AppId"];
+                            // }
+                        }
+                    }
+                );
+            }
+        );
     }
 
     SetIsGsReturn() {

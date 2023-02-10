@@ -1,0 +1,40 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustMainInfoHeaderId",
+        "subSectionTitle": "Disburse Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Bank Account Name",
+            "property": "AccName"
+          },
+          {
+            "type": "text",
+            "label": "Bank Name",
+            "property": "BankName"
+          },
+          {
+            "type": "text",
+            "label": "Bank Account No",
+            "property": "AccNo"
+          },
+          {
+            "type": "currency",
+            "label": "Total Disburse Amount",
+            "property": "TotalDisbAmt"
+          },
+          {
+            "type": "text",
+            "label": "Reference Payment",
+            "property": "RefPayment"
+          }
+        ],
+        "querystring": {
+          "name": "viewCessieSummaryDisbInfoDsf"
+        }
+      }
+    ]
+  }

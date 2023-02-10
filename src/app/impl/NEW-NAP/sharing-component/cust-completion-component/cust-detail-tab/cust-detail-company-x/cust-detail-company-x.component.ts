@@ -5,22 +5,22 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
+import { AppCustGrpObj } from 'app/shared/model/app-cust-grp-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { ActivatedRoute } from '@angular/router';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
-import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { AppCustGrpObj } from 'app/shared/model/app-cust-grp-obj.model';
-import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
-import { AppCustCompanyObj } from 'app/shared/model/app-cust-company-obj.model';
-import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
-import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
-import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 
@@ -61,7 +61,7 @@ export class CustDetailCompanyXComponent implements OnInit {
     }
 
   CustDetailForm = this.fb.group({
-    NoOfEmployee: ['', Validators.required],
+    NoOfEmployee: ['', [Validators.required, Validators.max(2147483647)]],
     IsAffiliateWithMF: [false],
     IsSkt: [false],
     IsVip: [false],

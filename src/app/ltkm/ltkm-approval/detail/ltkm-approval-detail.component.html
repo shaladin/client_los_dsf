@@ -29,6 +29,11 @@
           <app-ltkm-approval-hist [LtkmNo]="LtkmNo"></app-ltkm-approval-hist>
         </ng-template>
       </mat-tab>
+      <mat-tab label="App Summary">
+        <ng-template matTabContent>
+          <view-ltkm-app-summary-data [AppId]="AppId"></view-ltkm-app-summary-data>
+        </ng-template>
+      </mat-tab>
 
     </mat-tab-group>
     <div class="card-body">

@@ -35,6 +35,7 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
   IsTrialCalc: boolean = false;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
+  readonly BhvLock = CommonConstant.ProductBehaviourLock;
   constructor(
   private fb: FormBuilder,
     private http: HttpClient,

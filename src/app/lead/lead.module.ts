@@ -60,6 +60,7 @@ import { RoTelemkOfferDetailXComponent } from "app/impl/lead/potential-ro/ro-tel
 import { RoTelemkOfferVerifXComponent } from "app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component";
 import {NewLeadInputLeadDataXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-lead-data/new-lead-input-lead-data-x.component';
 import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-page/new-lead-input-page-x.component';
+import { GeneratePotentialRoXComponent } from "app/impl/lead/potential-ro/generate-potential-ro/generate-potential-ro-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -121,7 +122,8 @@ export const customCurrencyMaskConfig = {
     NewLeadInputLeadDataXComponent,
     NewLeadUpdateDsfComponent,
     NewLeadInputDsfComponent,
-    NewLeadInputMainInfoDsfComponent
+    NewLeadInputMainInfoDsfComponent,
+    GeneratePotentialRoXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

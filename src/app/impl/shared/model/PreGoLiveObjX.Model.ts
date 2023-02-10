@@ -12,6 +12,7 @@ export class PreGoLiveObjX {
     AdditionalInterestPaidBy : string;
     RequestRFAEndDateObj: any;
     RequestRFAGoLiveObj: any;
+    RequestRFAPreGoLiveObj: any;
     IsNeedEndDateApv: boolean;
     IsNeedApv: boolean;
     constructor() {

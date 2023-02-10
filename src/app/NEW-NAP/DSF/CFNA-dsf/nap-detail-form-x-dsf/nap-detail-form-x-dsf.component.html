@@ -214,8 +214,10 @@
               </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel" [BizTemplateCode]="BizTemplateCode"
-                                      (outputTab)="NextStep('COLL')"></app-application-data-x>
+            <!-- Self Custom CR MPF Validation -->
+              <app-application-data-x-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId" [isCollateral]= "false" [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel" [BizTemplateCode]="BizTemplateCode"
+                                      (outputTab)="NextStep('COLL')"></app-application-data-x-dsf>
+            <!-- End Self Custom CR MPF Validation -->
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-collateral-data-cfna-x *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="showCancel">

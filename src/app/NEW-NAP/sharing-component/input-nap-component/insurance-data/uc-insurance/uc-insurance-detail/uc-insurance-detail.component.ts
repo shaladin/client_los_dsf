@@ -931,7 +931,7 @@ export class UcInsuranceDetailComponent implements OnInit {
     switch (this.ruleObj.CustStampdutyFeeToCustBhv) {
       case CommonConstant.InsFeeBhvDef:
         //set default jika pertama kali create
-        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.AdminFeeToCust });
+        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.CustStampdutyFeeToCust });
         break;
       case CommonConstant.InsFeeBhvMin:
         CustStampDutyFeeAmtValidator.push(Validators.min(this.ruleObj.CustStampdutyFeeToCust));
@@ -1569,10 +1569,10 @@ export class UcInsuranceDetailComponent implements OnInit {
       this.InsuranceDataForm.controls.AppInsMainCvgs["controls"][MainCvgIndex].controls.AppInsAddCvgs["controls"][AddCvgIndex].patchValue({
         SumInsuredAmt: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypeAmt ? this.groupAddCvrSumInsuredDropDown[MainCvgIndex][AddCvgToPatch.AdditionalCoverageType][0].SumInsuredAmt : null,
         PremiumType: AddCvgToPatch.PremiumType,
-        BaseCustAddPremiRate: AddCvgToPatch.PremiToCust,
+        BaseCustAddPremiRate: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypePrcnt ? AddCvgToPatch.RateToCust : AddCvgToPatch.PremiToCust,
         CustAddPremiRate: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypePrcnt ? AddCvgToPatch.RateToCust : AddCvgToPatch.PremiToCust,
         BaseCalculation: AddCvgToPatch.BaseCalc,
-        BaseInscoAddPremiRate: AddCvgToPatch.PremiToInsco,
+        BaseInscoAddPremiRate: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypePrcnt ? AddCvgToPatch.RateToInsco :AddCvgToPatch.PremiToInsco,
         InscoAddPremiRate: AddCvgToPatch.PremiumType == CommonConstant.PremiumTypePrcnt ? AddCvgToPatch.RateToInsco :AddCvgToPatch.PremiToInsco,
         SeatCount: 0,
         Value: checked

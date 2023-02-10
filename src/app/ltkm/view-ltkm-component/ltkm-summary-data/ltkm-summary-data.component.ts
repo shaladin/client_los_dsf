@@ -15,7 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
     selector: "view-ltkm-summary-app",
     templateUrl: "./ltkm-summary-data.component.html",
-    providers: [NGXToastrService]    
+    providers: [NGXToastrService]
 })
 
 export class ViewLtkmSummaryDataComponent implements OnInit {
@@ -23,72 +23,89 @@ export class ViewLtkmSummaryDataComponent implements OnInit {
     SummaryLtkmObj: any;
     SummaryLtkmReqObj: any;
     SummaryRefProfesionObj: any;
-    ProfessionCode: string;    
+    ProfessionCode: string;
+    MrOwnerTypeCode: string;
+    BpkbOccupancy: string = '-';
     MrDpSrcPaymentForMasterCode: string;
-    MrInstSrcPaymentForMasterCode: string ;    
+    MrInstSrcPaymentForMasterCode: string;
     AppId: string;
     AgrmntNo: string;
     DescDpSrcPayment: any;
     DescInstSrcPayment: any;
-    AgrmntId: string;           
-    UrlAppView : string = environment.losR3Web + NavigationConstant.VIEW_APP;
-    UrlAgrmntView: string = environment.losR3Web + NavigationConstant.VIEW_AGRMNT;    
+    AgrmntId: string;
+    UrlAppView: string = environment.losR3Web + NavigationConstant.VIEW_APP;
+    UrlAgrmntView: string = environment.losR3Web + NavigationConstant.VIEW_AGRMNT;
     Job: string = "";
     Age: number = 0;
+    MrCustTypeCode: string = '';
+    RefMaster: any = '';
 
     constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     }
-    ngOnInit() {        
+
+    calculateAge(sqlString) {
+        let string = sqlString
+        let slicedString = string.slice(0, 10);
+        var pattern = /(\d{4})\.(\d{2})\.(\d{2})/;
+        var dt = new Date(slicedString.replace(pattern, '$2-$1-$3'));
+        let now = new Date()
+        let dif = now.getTime() - dt.getTime()
+        let month = new Date(dif)
+        let year = month.getUTCFullYear()
+        let finalresult = Math.abs(year - 1970);
+        return finalresult;
+    }
+
+    ngOnInit() {
         this.http.post(URLConstant.GetSummaryByLtkmCustId, { Id: this.LtkmCustId }).pipe()
             .subscribe(
-                (response) => {                    
-                    this.SummaryLtkmObj = response;  
-                    this.Age = calculateAge(this.SummaryLtkmObj['rLtkmCustPersonalObj']['BirthDt']);
-                    this.http.post(URLConstant.GetRefProfessionByCode, { Code: response["rLtkmCustPersonalJobData"]["MrProfessionCode"] }).pipe()
-                    .subscribe( response2 => {                        
-                        this.Job = response2["ProfessionName"];
-                    })
+                (response) => {
+                    this.SummaryLtkmObj = response;
+                    if(this.SummaryLtkmObj['rLtkmCustObj']['MrCustTypeCode'] == CommonConstant.CustTypePersonal)
+                    {
+                        this.Age = this.calculateAge(this.SummaryLtkmObj['rLtkmCustPersonalObj']['BirthDt']);
+                        this.http.post(URLConstant.GetRefProfessionByCode, { Code: response["rLtkmCustPersonalJobData"]["MrProfessionCode"] }).pipe()
+                            .subscribe(response2 => {
+                                this.Job = response2["ProfessionName"];
+                            })
+                    }
                 }
             );
-
-        function calculateAge(sqlString){
-            let string = sqlString
-            let slicedString = string.slice(0,10);
-            var pattern = /(\d{4})\.(\d{2})\.(\d{2})/;
-            var dt = new Date(slicedString.replace(pattern,'$2-$1-$3'));                
-            let now = new Date()                
-            let dif = now.getTime() - dt.getTime()
-            let month = new Date(dif)                
-            let year = month.getUTCFullYear()
-            let finalresult =  Math.abs(year - 1970);  
-            return finalresult;
-        }
       
         this.http.post(URLConstant.getLtkmReqByLtkmCustId, { Id: this.LtkmCustId }).pipe()
-        .subscribe( response => {
-            this.SummaryLtkmReqObj = response;                   
-            this.ProfessionCode = response["ReturnObject"]["OwnerProfessionCode"]                    
-            this.MrInstSrcPaymentForMasterCode = response["ReturnObject"]["MrInstSrcPayment"]                              
-            this.MrDpSrcPaymentForMasterCode = response["ReturnObject"]["MrDpSrcPayment"]
-            this.AppId = response["ReturnObject"]["AppId"]
-            this.AgrmntNo = response["ReturnObject"]["AgrmntNo"]                                
-            this.http.post(URLConstant.GetAgrmntByAgrmntNo, { TrxNo: this.AgrmntNo }).pipe()
-                .subscribe( response => {
-                    this.AgrmntId = response["AgrmntId"]                                                   
-            })
-            this.http.post(URLConstant.GetRefProfessionByCode, { Code: this.ProfessionCode }).pipe()
-            .subscribe( response => {
-                this.SummaryRefProfesionObj = response;                                  
+            .subscribe(response => {
+                this.SummaryLtkmReqObj = response;
+                this.ProfessionCode = response["ReturnObject"]["OwnerProfessionCode"]
+                this.MrInstSrcPaymentForMasterCode = response["ReturnObject"]["MrInstSrcPayment"]
+                this.MrDpSrcPaymentForMasterCode = response["ReturnObject"]["MrDpSrcPayment"]
+                this.AppId = response["ReturnObject"]["AppId"]
+                this.AgrmntNo = response["ReturnObject"]["AgrmntNo"]
+                this.http.post(URLConstant.GetAgrmntByAgrmntNo, { TrxNo: this.AgrmntNo }).pipe()
+                    .subscribe(response => {
+                        this.AgrmntId = response["AgrmntId"]
+                    })
+                if (response["ReturnObject"]["MrOwnerTypeCode"] != null && response["ReturnObject"]["MrOwnerTypeCode"] != "") {
+                    this.MrOwnerTypeCode = response["ReturnObject"]["MrOwnerTypeCode"];
+                    if (this.MrOwnerTypeCode != null && this.MrOwnerTypeCode == "COMPANY") {
+                        this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType, MasterCode: this.ProfessionCode }).pipe()
+                            .subscribe(response => {
+                                this.BpkbOccupancy = response["Descr"];
+                            });
+                    } else if(this.MrOwnerTypeCode != null && this.MrOwnerTypeCode == "PERSONAL") {
+                        this.http.post(URLConstant.GetRefProfessionByCode, { Code: this.ProfessionCode }).pipe()
+                            .subscribe(response => {
+                                this.BpkbOccupancy = response["ProfessionName"];
+                            });
+                    }
+                }
+                this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCspUslAml, MasterCode: this.MrInstSrcPaymentForMasterCode }).pipe()
+                    .subscribe(response => {
+                        this.DescInstSrcPayment = response;
+                    })
+                this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCspUslAml, MasterCode: this.MrDpSrcPaymentForMasterCode }).pipe()
+                    .subscribe(response => {
+                        this.DescDpSrcPayment = response;
+                    })
             });
-            this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCspUslAml, MasterCode: this.MrInstSrcPaymentForMasterCode }).pipe()
-            .subscribe( response => {                        
-                this.DescInstSrcPayment = response;                    
-            })
-            this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCspUslAml, MasterCode: this.MrDpSrcPaymentForMasterCode }).pipe()
-            .subscribe( response => {                        
-                this.DescDpSrcPayment = response;                                               
-            })
-            }
-        );            
     }
 }

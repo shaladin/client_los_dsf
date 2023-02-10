@@ -16,6 +16,7 @@ import { environment } from 'environments/environment';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ProdOfferingBranchMbrObj } from 'app/shared/model/product/prod-offering-branch-mbr-obj.model';
 
 @Component({
   selector: 'app-customer-group-plafond-detail',
@@ -30,6 +31,10 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
   CustGrpPlafondId: any;
   CustGrpNo: any;
   CustGrpPlfndObj: any;
+  CustGrpPlfndAGRObj: any;
+  CustGrpPlfndOPLObj: any;
+  CustGrpPlfndFACTObj: any;
+  CustGrpPlfndAPPObj: any;
   resultData: any;
   InputObj: UcInputRFAObj;
   IsReady: Boolean = false;
@@ -95,6 +100,18 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     this.http.post(URLConstantDsf.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId, obj).subscribe(
       (response) => {
         this.CustGrpPlfndObj = response;
+        this.CustGrpPlfndAGRObj = this.CustGrpPlfndObj.filter((obj) => {
+          return obj.Category == 'AGR' && (obj.LobCode != 'FACTORING' || obj.LobCode == null);
+        });;
+        this.CustGrpPlfndOPLObj = this.CustGrpPlfndObj.filter((obj) => {
+          return obj.Category == 'OPL';
+        });;
+        this.CustGrpPlfndFACTObj = this.CustGrpPlfndObj.filter((obj) => {
+          return obj.Category == 'AGR' && obj.LobCode == 'FACTORING';
+        });;
+        this.CustGrpPlfndAPPObj = this.CustGrpPlfndObj.filter((obj) => {
+          return obj.Category == 'APP';
+        });;
       }
     );
   }

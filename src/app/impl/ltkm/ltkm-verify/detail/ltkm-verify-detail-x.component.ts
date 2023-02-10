@@ -153,10 +153,10 @@ export class LtkmVerifyDetailXComponent implements OnInit {
                 (response) => {
                     if (response["ReturnObject"] != undefined) {
                         this.LtkmNo = response["ReturnObject"]["LtkmNo"];
-                        if (response["ReturnObject"]["LtkmSrc"] == 'APP') {
+                        // if (response["ReturnObject"]["LtkmSrc"] == 'APP') {
                             this.IsFromApp = true;
                             this.AppId = response["ReturnObject"]["AppId"];
-                        }
+                        // }
                     }
                 }
             );

@@ -22,6 +22,9 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-mas
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-credit-approval-detail-x-dsf',
@@ -93,6 +96,7 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();
+    await this.getGsDisableRequiredNotes();
     this.initInputApprovalObj();
   }
 
@@ -128,6 +132,16 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
     );
   }
 
+  ListGsDisableRequiredNotes : Array<string> = new Array<string>();
+  async getGsDisableRequiredNotes(){
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstantX.GSCodeDisableRequiredNotesApvAct }).toPromise().then(
+      (response: GeneralSettingObj) => {
+        let x = response.GsValue;
+        this.ListGsDisableRequiredNotes = x.split(';');
+      }
+    )
+  }
+
   HoldTask(obj: ApprovalObj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
       (response) => {
@@ -159,6 +173,8 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.InputApvObj.OfficeCodes.push(this.AppObj.OriOfficeCode);
+    this.InputApvObj.EnableRequiredNotes = false;
+    this.InputApvObj.DisableRequiredNotesList = this.ListGsDisableRequiredNotes;
     this.IsReady = true;
   }
 
@@ -183,7 +199,15 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
       Tasks: event.Tasks
     }
     let postList = new Array<any>();
+    
+    //Self Custom Change
+    this.http.post(URLConstantDsf.ApprovalDsf, ReqApvCustomObj).subscribe(
+      (response) =>
+      {
 
+      }
+    );
+    //End Self Custom Change
     postList.push(this.http.post(URLConstant.Approval, ReqApvCustomObj));
 
     if (this.viewHighlightCommentComponent != undefined) {

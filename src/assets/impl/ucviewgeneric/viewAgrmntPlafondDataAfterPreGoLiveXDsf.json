@@ -1,0 +1,35 @@
+{
+  "title": "",
+  "subsection": [{
+      "subSectionId": "AgrDataPlafondId",
+      "subSectionTitle": "Plafond Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Max Plafond Master Agreement",
+          "property": "MaxPlafondMasterAgrmnt"
+        },
+        {
+        },
+        {
+          "type": "text",
+          "label": "Requested Plafond",
+          "property": "RequestedPlafond"
+        },
+        {
+        },
+        {
+          "type": "text",
+          "label": "Remaining Plafond",
+          "property": "RemainingPlafond"
+        },
+        {
+        }
+      ],
+      "querystring": {
+        "name": "viewAgrmntPlafondDataAfterPreGoLiveXDsf"
+      }
+    }
+  ]
+}

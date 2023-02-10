@@ -31,4 +31,20 @@ export class URLConstantDsf {
     public static AddListDocumentPrintingLBByAgrmntIdDsf = environment.losUrl + "/DocumentDsf/AddListDocumentPrintingLBByAgrmntIdDsf";
     public static GetListAgrmntDocByAgrmntIdDsf = environment.losUrl + "/DocumentDsf/GetListAgrmntDocByAgrmntIdDsf";
     public static AddAgrmntDocPrintDsf = environment.losUrl + "/DocumentDsf/AddAgrmntDocPrintDsf"
+
+    public static CheckIfCustHasOngoingAppDsf = environment.losUrl + "/AppDsf/CheckIfCustHasOngoingAppDsf";
+    public static CheckIfAgrmntParentHasOngoingAppDsf = environment.losUrl + "/AppDsf/CheckIfAgrmntParentHasOngoingAppDsf";
+    public static GetListAgrmntParentDsf = environment.losUrl + "/AppDsf/ListAgrmntParentDsf";
+    public static GetListAgrmntParentUsedDsf = environment.losUrl + "/AppDsf/ListAgrmntParentUsedDsf";
+
+    public static GetAgrmntMasterXDsf = environment.losUrl + "/AppDsf/GetAgrmntMasterXDsf";
+    public static CalculatePlafondAgrmntXDsf = environment.losUrl + "/AppDsf/CalculatePlafondAgrmntXDsf";
+    public static AddAgrmntMasterXDsf = environment.losUrl + "/AppDsf/AddAgrmntMasterXDsf";
+    public static EditAgrmntMasterXDsf = environment.losUrl + "/AppDsf/EditAgrmntMasterXDsf";
+    public static GetListAgrmntChildOsNiDsf = environment.losUrl + "/AppDsf/GetListAgrmntChildOsNiDsf";
+    public static DeactivateAgrmntMasterXDsf = environment.losUrl + "/AppDsf/DeactivateAgrmntMasterXDsf";
+    public static PreGoLiveApproval = environment.losUrl + "/AppDsf/PreGoLiveApprovalDsf";
+    public static GoLiveApprovalX = environment.losUrl + "/AppDsf/GoLiveApprovalDsf";
+    public static ApprovalDsf = environment.losUrl + "/AppDsf/ApprovalDsf";
+    public static GetListAgrmntParentByCustNoX = environment.losUrl + "/AppDsf/GetListAgrmntParentByCustNoDsf";
 }

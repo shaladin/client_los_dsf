@@ -1,0 +1,440 @@
+{
+  "keyProperty": "STG_AGRMNT_POTENTIAL_RO_ID",
+  "keyPropCriteria": "s.STG_AGRMNT_POTENTIAL_RO_ID",
+  "component": [
+    {
+      "type": "datepicker",
+      "name": "s.AGRMNT_DT",
+      "id": "AgrmntDtG",
+      "value": "",
+      "restriction" : "gte",
+      "label": "Agreement Date >=",
+      "placeholder": "",
+      "datatype" : "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "s.AGRMNT_DT",
+      "id": "AgrmntDtL",
+      "value": "",
+      "restriction" : "lte",
+      "label": "Agreement Date <=",
+      "placeholder": "",
+      "datatype" : "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "s.GO_LIVE_DT",
+      "id": "GoLiveDtG",
+      "value": "",
+      "restriction" : "gte",
+      "label": "Go Live Date >=",
+      "placeholder": "",
+      "datatype" : "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "s.GO_LIVE_DT",
+      "id": "GoLiveDtL",
+      "value": "",
+      "restriction" : "lte",
+      "label": "Go Live Date <=",
+      "placeholder": "",
+      "datatype" : "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "s.MATURITY_DT",
+      "id": "MaturityDtG",
+      "value": "",
+      "restriction" : "gte",
+      "label": "Maturity Date >=",
+      "placeholder": "",
+      "datatype" : "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "s.MATURITY_DT",
+      "id": "MaturityDtL",
+      "value": "",
+      "restriction" : "lte",
+      "label": "Maturity Date <=",
+      "placeholder": "",
+      "datatype" : "date"
+    },
+    {
+        "type" : "textbox",
+        "label" : "Plafond Agreement >=",
+        "name" : "s.PLAFOND_AGR",
+        "id" : "PlafondAgrmntG",
+        "value" : "",
+        "restriction" : "gte",
+        "placeholder" : "",
+        "datatype" : "numeric"
+    },
+    {
+        "type" : "textbox",
+        "label" : "Plafond Agreement <=",
+        "name" : "s.PLAFOND_AGR",
+        "id" : "PlafondAgrmntL",
+        "value" : "",
+        "restriction" : "lte",
+        "placeholder" : "",
+        "datatype" : "numeric"
+    },
+    {
+        "type" : "textbox",
+        "label" : "Plafond Cust Amount >=",
+        "name" : "s.PLAFOND_CUST_AMT",
+        "id" : "PlafondCustAmtG",
+        "value" : "",
+        "restriction" : "gte",
+        "placeholder" : "",
+        "datatype" : "numeric"
+    },
+    {
+        "type" : "textbox",
+        "label" : "Plafond Cust Amount <=",
+        "name" : "s.PLAFOND_CUST_AMT",
+        "id" : "PlafondCustAmtL",
+        "value" : "",
+        "restriction" : "lte",
+        "placeholder" : "",
+        "datatype" : "numeric"
+    },
+    {
+        "type" : "textbox",
+        "label" : "OS NI >=",
+        "name" : "s.OS_NI",
+        "id" : "OsNiG",
+        "value" : "",
+        "restriction" : "gte",
+        "placeholder" : "",
+        "datatype" : "numeric"
+    },
+    {
+        "type" : "textbox",
+        "label" : "OS NI <=",
+        "name" : "s.OS_NI",
+        "id" : "OsNiL",
+        "value" : "",
+        "restriction" : "lte",
+        "placeholder" : "",
+        "datatype" : "numeric"
+    },
+    {
+        "type" : "textbox",
+        "label" : "Remaining Tenor >=",
+        "name" : "s.MAX_TENOR",
+        "id" : "RmnngTenorLG",
+        "value" : "",
+        "restriction" : "gte",
+        "placeholder" : "",
+        "datatype" : "numeric"
+    },
+    {
+        "type" : "textbox",
+        "label" : "Remaining Tenor <=",
+        "name" : "s.MAX_TENOR",
+        "id" : "RmnngTenorL",
+        "value" : "",
+        "restriction" : "lte",
+        "placeholder" : "",
+        "datatype" : "numeric"
+    },
+    {
+      "type": "dropdown",
+      "name": "r.OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "isQueryIn" : true,
+      "url": "",
+      "environment": "FOU",
+      "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "items": [],
+      "itemsUrl": []
+  }
+
+  ],
+  "querystring": {
+    "name": "searchTableStagingLMS"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office Name",
+      "name": "r.OFFICE_NAME"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Customer No",
+        "name": "s.CUST_NO"
+    },
+    {
+        "type": "label",
+        "position": "left",
+        "label": "Customer Name",
+        "name": "s.CUST_NAME"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Agreement No",
+        "name": "s.AGRMNT_NO"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Agreement Date",
+        "name": "s.AGRMNT_DT"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Go Live Date",
+        "name": "s.GO_LIVE_DT"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Maturity Date",
+        "name": "s.MATURITY_DT"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Effective Date",
+      "name": "s.EFFECTIVE_DT"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Plafond Agreement",
+        "name": "s.PLAFOND_AGR"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Plafond Cust Amount",
+        "name": "s.PLAFOND_CUST_AMT"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Remaining Tenor",
+        "name": "s.MAX_TENOR"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "OS NI",
+        "name": "s.OS_NI"
+    }
+  ],
+  "bodyList": [
+  {
+      "type": "text",
+      "position": "center",
+      "property": "ORI_OFFICE_NAME"
+  },
+  {
+      "type": "text",
+      "position": "center",
+      "property": "CUST_NO"
+  },
+
+  {
+      "type": "text",
+      "position": "left",
+      "property": "CUST_NAME"
+  },
+  {
+      "type": "text",
+      "position": "center",
+      "property": "AGRMNT_NO"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "AGRMNT_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "GO_LIVE_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "MATURITY_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "EFFECTIVE_DT"
+  },
+  {
+      "type": "decimal",
+      "position": "center",
+      "property": "PLAFOND_AGR"
+  },
+  {
+      "type": "decimal",
+      "position": "center",
+      "property": "PLAFOND_CUST_AMT"
+  },
+  {
+      "type": "text",
+      "position": "center",
+      "property": "MAX_TENOR"
+  },
+  {
+      "type": "decimal",
+      "position": "center",
+      "property": "OS_NI"
+  }
+  ],
+  "headerListTemp": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office Name",
+      "name": "r.OFFICE_NAME"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Customer No",
+        "name": "s.CUST_NO"
+    },
+    {
+        "type": "label",
+        "position": "left",
+        "label": "Customer Name",
+        "name": "s.CUST_NAME"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Agreement No",
+        "name": "s.AGRMNT_NO"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Agreement Date",
+        "name": "s.AGRMNT_DT"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Go Live Date",
+        "name": "s.GO_LIVE_DT"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Maturity Date",
+        "name": "s.MATURITY_DT"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Effective Date",
+      "name": "s.EFFECTIVE_DT"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Plafond Agreement",
+        "name": "s.PLAFOND_AGR"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Plafond Cust Amount",
+        "name": "s.PLAFOND_CUST_AMT"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "Remaining Tenor",
+        "name": "s.MAX_TENOR"
+    },
+    {
+        "type": "label",
+        "position": "center",
+        "label": "OS NI",
+        "name": "s.OS_NI"
+    }
+  ],
+  "bodyListTemp": [
+  {
+      "type": "text",
+      "position": "center",
+      "property": "ORI_OFFICE_NAME"
+  },
+  {
+      "type": "text",
+      "position": "center",
+      "property": "CUST_NO"
+  },
+
+  {
+      "type": "text",
+      "position": "left",
+      "property": "CUST_NAME"
+  },
+  {
+      "type": "text",
+      "position": "center",
+      "property": "AGRMNT_NO"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "AGRMNT_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "GO_LIVE_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "MATURITY_DT"
+  },
+  {
+      "type": "date",
+      "position": "center",
+      "property": "EFFECTIVE_DT"
+  },
+  {
+      "type": "decimal",
+      "position": "center",
+      "property": "PLAFOND_AGR"
+  },
+  {
+      "type": "decimal",
+      "position": "center",
+      "property": "PLAFOND_CUST_AMT"
+  },
+  {
+      "type": "text",
+      "position": "center",
+      "property": "MAX_TENOR"
+  },
+  {
+      "type": "decimal",
+      "position": "center",
+      "property": "OS_NI"
+  }
+  ]
+}

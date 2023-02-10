@@ -16,4 +16,8 @@ export class CommonConstantDsf {
     public static WOF_IF = "IF";
     public static WOF_LB = "LB";
     public static WOF_SP = "SP";
+
+    public static MPF = 'MPF';
+    public static FD = 'FD';
+    public static FMU = 'FMU';
 }
