@@ -104,21 +104,17 @@ export class SchmRegulerFixXComponent implements OnInit {
   setReportData() {
     this.getJSON(this.inputReportObj.JsonPath).subscribe(data => {
       let obj = this.ParentForm.value;
-      let totalFee = obj.TotalInsCustAmt
-        + obj.AppFee[0].AppFeeAmt
-        + obj.AppFee[1].AppFeeAmt
-        + obj.AppFee[2].AppFeeAmt
-        + obj.AppFee[3].AppFeeAmt
-        + obj.AppFee[4].AppFeeAmt
-        + obj.AppFee[5].AppFeeAmt;
 
-      let totalFeeCapitalized = obj.TotalInsCustAmt
-        + obj.AppFee[0].FeeCapitalizeAmt
-        + obj.AppFee[1].FeeCapitalizeAmt
-        + obj.AppFee[2].FeeCapitalizeAmt
-        + obj.AppFee[3].FeeCapitalizeAmt
-        + obj.AppFee[4].FeeCapitalizeAmt
-        + obj.AppFee[5].FeeCapitalizeAmt;
+      let sumAppFeeAmt: number = 0;
+      let sumAppFeeCapitalizedAmt: number = 0;
+      obj.AppFee.forEach(element => {
+        sumAppFeeAmt += element.AppFeeAmt;
+        sumAppFeeCapitalizedAmt += element.FeeCapitalizeAmt;
+      });
+
+      let totalFee = obj.TotalInsCustAmt + sumAppFeeAmt;
+
+      let totalFeeCapitalized = obj.InsCptlzAmt + sumAppFeeCapitalizedAmt;
 
       let DownPayment = obj.DownPaymentAmt || (obj.DownPaymentPrctg / 100) * obj.AssetPriceAmt;
       let totalPrincipal = obj.AssetPriceAmt - DownPayment + totalFeeCapitalized;
@@ -131,6 +127,13 @@ export class SchmRegulerFixXComponent implements OnInit {
       if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst) {
         instAmt = obj.InstAmt;
       }
+
+      const AppFee = obj.AppFee.find(x => x.MrFeeTypeCode == CommonConstant.MrFeeTypeCodeAdmin);     
+      const AddAdminFee = obj.AppFee.find(x => x.MrFeeTypeCode == "ADDADMIN");
+      const ProvisionFee = obj.AppFee.find(x => x.MrFeeTypeCode == CommonConstant.MrFeeTypeCodeProvision);
+      const NotaryFee = obj.AppFee.find(x => x.MrFeeTypeCode == "NOTARY");
+      const FiduciaFee = obj.AppFee.find(x => x.MrFeeTypeCode == "FIDUCIA");
+      const OtherFee = obj.AppFee.find(x => x.MrFeeTypeCode == "OTHER");
 
       this.reportParameters = [
         { ParamKey: 'ProductOffering', ParamValue: obj.lookupProductOffering.value },
@@ -146,19 +149,19 @@ export class SchmRegulerFixXComponent implements OnInit {
         { ParamKey: 'MrFirstInstType', ParamValue: obj.MrFirstInstTypeValue },
         { ParamKey: 'TotalInsCustAmt', ParamValue: obj.TotalInsCustAmt },
         { ParamKey: 'InsCptlzAmt', ParamValue: obj.InsCptlzAmt },
-        { ParamKey: 'AppFeeAmt', ParamValue: obj.AppFee[0].AppFeeAmt },
-        { ParamKey: 'FeeCapitalizedAmt', ParamValue: obj.AppFee[0].FeeCapitalizeAmt },
-        { ParamKey: 'AddAdmAmt', ParamValue: obj.AppFee[1].AppFeeAmt },
-        { ParamKey: 'AddAdmCapitalizedAmt', ParamValue: obj.AppFee[1].FeeCapitalizeAmt },
-        { ParamKey: 'NotaryFeeAmt', ParamValue: obj.AppFee[2].AppFeeAmt },
-        { ParamKey: 'NotaryFeeCapitalizedAmt', ParamValue: obj.AppFee[2].FeeCapitalizeAmt },
-        { ParamKey: 'OtherFeeAmt', ParamValue: obj.AppFee[3].AppFeeAmt },
-        { ParamKey: 'OtherFeeCapitalizedAmt', ParamValue: obj.AppFee[3].FeeCapitalizeAmt },
-        { ParamKey: 'FiduciaFeeAmt', ParamValue: obj.AppFee[4].AppFeeAmt },
-        { ParamKey: 'FiduciaFeeCapitalizedAmt', ParamValue: obj.AppFee[4].FeeCapitalizeAmt },
-        { ParamKey: 'ProvisionFeeAmt', ParamValue: obj.AppFee[5].AppFeeAmt },
-        { ParamKey: 'ProvisionFeeCapitalizedAmt', ParamValue: obj.AppFee[5].FeeCapitalizeAmt },
-        { ParamKey: 'TotalFee', ParamValue: obj.TotalFeeAmt },
+        { ParamKey: 'AppFeeAmt', ParamValue: AppFee == undefined ? 0 : AppFee.AppFeeAmt },
+        { ParamKey: 'FeeCapitalizedAmt', ParamValue: AppFee == undefined ? 0 : AppFee.FeeCapitalizeAmt },
+        { ParamKey: 'AddAdmAmt', ParamValue: AddAdminFee == undefined ? 0 : AddAdminFee.AppFeeAmt },
+        { ParamKey: 'AddAdmCapitalizedAmt', ParamValue: AddAdminFee == undefined ? 0 : AddAdminFee.FeeCapitalizeAmt },
+        { ParamKey: 'NotaryFeeAmt', ParamValue: NotaryFee == undefined ? 0 : NotaryFee.AppFeeAmt },
+        { ParamKey: 'NotaryFeeCapitalizedAmt', ParamValue: NotaryFee == undefined ? 0 : NotaryFee.FeeCapitalizeAmt },
+        { ParamKey: 'OtherFeeAmt', ParamValue: OtherFee == undefined ? 0 : OtherFee.AppFeeAmt },
+        { ParamKey: 'OtherFeeCapitalizedAmt', ParamValue: OtherFee == undefined ? 0 : OtherFee.FeeCapitalizeAmt },
+        { ParamKey: 'FiduciaFeeAmt', ParamValue: FiduciaFee == undefined ? 0 : FiduciaFee.AppFeeAmt },
+        { ParamKey: 'FiduciaFeeCapitalizedAmt', ParamValue: FiduciaFee == undefined ? 0 : FiduciaFee.FeeCapitalizeAmt },
+        { ParamKey: 'ProvisionFeeAmt', ParamValue: ProvisionFee == undefined ? 0 : ProvisionFee.AppFeeAmt },
+        { ParamKey: 'ProvisionFeeCapitalizedAmt', ParamValue: ProvisionFee == undefined ? 0 : ProvisionFee.FeeCapitalizeAmt },
+        { ParamKey: 'TotalFee', ParamValue: totalFee },
         { ParamKey: 'TotalFeeCapitalized', ParamValue: totalFeeCapitalized },
         { ParamKey: 'EffectiveRatePrcnt', ParamValue: obj.EffectiveRatePrcnt },
         { ParamKey: 'TotalPincipalAmt', ParamValue: totalPrincipal },
