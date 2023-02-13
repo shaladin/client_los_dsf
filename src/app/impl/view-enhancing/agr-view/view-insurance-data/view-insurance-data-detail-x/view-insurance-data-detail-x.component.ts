@@ -49,12 +49,12 @@ export class ViewInsuranceDataDetailXComponent implements OnInit {
           var InscoPremi = "";
           for (var i = 0; i < item.appInsAddCvgObjs.length; i++) {
             if (i == (item.appInsAddCvgObjs.length - 1)) {
-              addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode;
+              addCvg += item.appInsAddCvgObjs[i].AddCvgTypeName;
               CustPremi += parseFloat(item.appInsAddCvgObjs[i].CustAddPremiRate).toFixed(3);
               InscoPremi += parseFloat(item.appInsAddCvgObjs[i].InscoAddPremiRate).toFixed(3);
             }
             else {
-              addCvg += item.appInsAddCvgObjs[i].MrAddCvgTypeCode + ", ";
+              addCvg += item.appInsAddCvgObjs[i].AddCvgTypeName + ", ";
               CustPremi += parseFloat(item.appInsAddCvgObjs[i].CustAddPremiRate).toFixed(3) + ", ";
               InscoPremi += parseFloat(item.appInsAddCvgObjs[i].InscoAddPremiRate).toFixed(3) + ", ";
             }
@@ -67,8 +67,8 @@ export class ViewInsuranceDataDetailXComponent implements OnInit {
 
           this.appInsCvgsFinal.push({
             YearNo: item.appInsMainCvgObj.YearNo,
-            MrMainCvgTypeCode: item.appInsMainCvgObj.MrMainCvgTypeCode,
-            MrAddCvgTypeCode: addCvg,
+            MainCvgTypeName: item.appInsMainCvgObj.MainCvgTypeName,
+            AddCvgTypeName: addCvg,
             CustMainPremiAmt: item.appInsMainCvgObj.CustMainPremiAmt,
             CustMainPremiRate: tempCustMainPremiRate,
             CustAddPremiAmt: item.appInsMainCvgObj.TotalCustAddPremiAmt,

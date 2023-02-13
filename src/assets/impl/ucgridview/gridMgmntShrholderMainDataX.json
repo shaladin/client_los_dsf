@@ -59,6 +59,11 @@
     {
       "type": "text",
       "position": "left",
+      "property": "CustNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
       "property": "ShareholderName"
     },
     {

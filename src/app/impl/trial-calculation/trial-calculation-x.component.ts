@@ -464,7 +464,8 @@ export class TrialCalculationXComponent implements OnInit {
         PrcntDp: this.TrialForm.controls.DownPaymentAmt.value / this.TrialForm.controls.AssetPriceAmt.value * 100,
         PrcntDpNett: this.TrialForm.controls.DownPaymentAmt.value / this.TrialForm.controls.AssetPriceAmt.value * 100,
         MrFirstInstTypeName: this.TrialForm.controls.MrFirstInstTypeName.value,
-        MrInstSchemeName:this.TrialForm.controls.MrInstSchemeName.value
+        MrInstSchemeName:this.TrialForm.controls.MrInstSchemeName.value,
+        EffectiveRateBhv: "DEF"
       });
       this.getValueForReport();
     }
