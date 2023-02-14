@@ -987,6 +987,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
       if (element.get("MrInsPaidByCode").value == CommonConstant.InsPaidByAtCost) {
         totalDiscAmt += (element.get("CustMainPremiAmt").value + element.get("TotalCustAddPremiAmt").value);
         this.isAllPaidByCust = false;
+        this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][index]["controls"]["TotalCustDiscAmt"].patchValue(0);
         if(index == tempListAppInsMainCvgs.length - 1)
         {
           this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
@@ -1030,6 +1031,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
       InscoMainPremiAmt: 0,
       TotalInscoAddPremiAmt: 0,
       TotalCustAddPremiAmt: 0,
+      TotalCustDiscAmt: 0,
       AppInsAddCvgs: new FormArray([])
     });
 
@@ -1102,6 +1104,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
       InscoMainPremiAmt: insMainCvg.InscoMainPremiAmt,
       TotalInscoAddPremiAmt: insMainCvg.TotalInscoAddPremiAmt,
       TotalCustAddPremiAmt: insMainCvg.TotalCustAddPremiAmt,
+      TotalCustDiscAmt: insMainCvg.TotalCustDiscAmt,
       AppInsAddCvgs: new FormArray([])
     });
 
@@ -1890,6 +1893,9 @@ export class UcInsuranceDetailXComponent implements OnInit {
             this.InsuranceDataForm.patchValue({
               TotalCustDiscAmt: currDisc + addCvgDisc
             })
+            this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
+              TotalCustDiscAmt: addCvgDisc
+            })
           }
         }
         this.isCalculate = true;
@@ -2061,6 +2067,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
         insCoverage.InscoMainPremiAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].InscoMainPremiAmt.value;
         insCoverage.TotalCustAddPremiAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].TotalCustAddPremiAmt.value;
         insCoverage.TotalInscoAddPremiAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].TotalInscoAddPremiAmt.value;
+        insCoverage.TotalCustDiscAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].TotalCustDiscAmt.value;
 
         for (let j = 0; j < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"].length; j++) {
           if (this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].Value.value == true) {

@@ -90,7 +90,7 @@
       "name": "AC.SERIAL_NO_1",
       "id": "serialNo1Id",
       "value": "",
-      "label": "Engine No",
+      "label": "Serial No 1",
       "placeholder": "Placeholder"
     },
     {
@@ -116,7 +116,7 @@
       "name": "AC.SERIAL_NO_2",
       "id": "serialNo2Id",
       "value": "",
-      "label": "Chassis No",
+      "label": "Serial No 2",
       "placeholder": "Placeholder"
     },
     {
@@ -142,7 +142,7 @@
       "name": "AC.SERIAL_NO_3",
       "id": "serialNo3Id",
       "value": "",
-      "label": "License Plate No",
+      "label": "Serial No 3",
       "placeholder": "Placeholder"
     },
     {
