@@ -299,10 +299,9 @@
                             }
                         ],
                         "result": {
-                            "type": "link",
+                            "type": "url",
                             "path": "VIEW_CREDIT_REVIEW",
                             "target": "_blank",
-                            "property": "AppStat",
                             "icon": "ft-edit-2",
                             "param": [
                                 {
