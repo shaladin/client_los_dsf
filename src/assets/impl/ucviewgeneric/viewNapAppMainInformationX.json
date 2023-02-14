@@ -155,6 +155,21 @@
           "type": "text",
           "label": "Business Line",
           "property": "LobName"
+        },
+        {
+          "type": "text",
+          "label": "Product Type",
+          "property": "ProdType"
+        },
+        {
+          "type": "text",
+          "label": "Purpose of Finance",
+          "property": "PurposeOfFin"
+        },
+        {
+          "type": "text",
+          "label": "Way of Finance",
+          "property": "WayOfFin"
         }
       ],
       "querystring": {

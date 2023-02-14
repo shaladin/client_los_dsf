@@ -78,7 +78,20 @@ export class ViewInsuranceDetailXComponent implements OnInit {
             }
             this.appInsMainCvgObjs[i].CustAddPremiRate = arrCustAddPremiRate.join(", ");
             this.appInsMainCvgObjs[i].InscoAddPremiRate = arrInscoAddPremiRate.join(", ");
+          }else{
+            arrCustAddPremiRate.push((0).toFixed(3));
+            arrInscoAddPremiRate.push((0).toFixed(3));
+            this.appInsMainCvgObjs[i].CustAddPremiRate = arrCustAddPremiRate.join(", ");
+            this.appInsMainCvgObjs[i].InscoAddPremiRate = arrInscoAddPremiRate.join(", ");
           }
+       
+          var tempCustMainPremiRate: string = ""; 
+          tempCustMainPremiRate += parseFloat((this.appInsMainCvgObjs[i].CustMainPremiRate).toString()).toFixed(3);
+          this.appInsMainCvgObjs[i].CustMainPremiRate = parseFloat(tempCustMainPremiRate);
+
+          var tempInscoMainPremiRate: string = ""; 
+          tempInscoMainPremiRate += parseFloat((this.appInsMainCvgObjs[i].InscoMainPremiRate).toString()).toFixed(3);
+          this.appInsMainCvgObjs[i].InscoMainPremiRate = parseFloat(tempInscoMainPremiRate);
         }
 
         if (response["AppAssetAccessoryObjs"] != null)

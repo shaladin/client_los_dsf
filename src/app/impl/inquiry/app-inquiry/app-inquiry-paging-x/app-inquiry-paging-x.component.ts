@@ -70,7 +70,10 @@ export class AppInquiryPagingXComponent implements OnInit, OnDestroy {
       this.inputPagingObj._url = "./assets/impl/ucpaging/searchAppInquiryFactoring.json";
       this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchAppInquiryFactoring.json";
     }
-    else {
+    else if(this.BizTemplateCode == CommonConstant.DF) {
+      this.inputPagingObj._url = "./assets/impl/ucpaging/searchAppInquiryDlfnX.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchAppInquiryDlfnX.json";
+    } else {
       this.inputPagingObj._url = "./assets/impl/ucpaging/searchAppInquiryX.json";
       this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchAppInquiryX.json";
     }
