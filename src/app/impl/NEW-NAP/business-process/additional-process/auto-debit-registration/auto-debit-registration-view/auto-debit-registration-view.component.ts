@@ -78,9 +78,9 @@ export class AutoDebitRegistrationViewComponent implements OnInit {
           }
         );
 
-        this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, {Code : this.autoDebitRegistrationObj.TransactionNo}).toPromise().then(
-          (response: Array<StgAutoDebitRegisLogObj>) => {
-            this.listStgAutoDebitRegisLog = response;
+        this.http.post(URLConstantX.GetListStgAutoDebitRegisLogForView, {TrxNo : this.autoDebitRegistrationObj.TransactionNo}).toPromise().then(
+          (response) => {
+            this.listStgAutoDebitRegisLog = response['ReturnObject'];
 
             for(let i = 0; i < this.listStgAutoDebitRegisLog.length; i++)
             {
