@@ -1,5 +1,5 @@
 {
-    "title": "Customer Main Data",
+    "title": "Application Commission/Reserved-Fund Paging",
     "exportExcel": false,
     "component": [
       {
@@ -30,7 +30,7 @@
         "type": "officeRoleCodes",
         "datatype": "text",
         "name": "a.ORI_OFFICE_CODE",
-        "id": "OfficeNameId",
+        "id": "OfficeCodeId",
         "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
@@ -68,7 +68,7 @@
         "ddlType": "all",
         "isRequired": false,
         "isFromURL": false,
-        "items" : [{"key":"", "value":"Things To Do - Credit Marketing Officer"}]
+        "items" : [{"key":"", "value":"Things To Do"}]
       }
     ],
     "headerList": [
@@ -88,25 +88,25 @@
         "type": "sort",
         "position": "left",
         "label": "Office",
-        "name": "A.ORI_OFFICE_NAME"
+        "name": "a.ORI_OFFICE_NAME"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "Application No",
-        "name": "A.APP_NO"
+        "name": "a.APP_NO"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Customer Name",
-        "name": "AC.CUST_NAME"
+        "name": "ac.CUST_NAME"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Product Offering Name",
-        "name": "A.PROD_OFFERING_NAME"
+        "name": "a.PROD_OFFERING_NAME"
       },
       {
         "type": "label",
@@ -115,10 +115,10 @@
       }
     ],
     "querystring": {
-      "name": "searchCustMainDataFromThingsToDoForCmo"
+      "name": "searchCommissionV2"
     },
     "orderby": {
-        "key": "A.APP_NO", 
+        "key": "a.APP_NO", 
         "value": "false"
     },
     "bodyList": [
@@ -178,9 +178,9 @@
                   }
                 ],
                 "result": {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
+                    "type": "callback",
+                    "key": "Edit",
+                    "icon": "ft-edit-2"
                 },
                 "isHide": false
               },
@@ -194,9 +194,9 @@
                   }
                 ],
                 "result": {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
+                    "type": "callback",
+                    "key": "Edit",
+                    "icon": "ft-edit-2"
                 },
                 "isHide": false
               }
@@ -205,4 +205,5 @@
         ]
       }
     ]
-}
+  }
+  

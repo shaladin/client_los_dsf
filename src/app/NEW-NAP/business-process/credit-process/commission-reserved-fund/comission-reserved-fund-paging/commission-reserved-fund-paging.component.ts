@@ -19,6 +19,7 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 import { CookieService } from 'ngx-cookie';
 import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RequestTaskModelForThingsToDoObj } from 'app/shared/model/workflow/request-task-model-for-things-to-do-obj.model';
 
 @Component({
   selector: 'app-commission-reserved-fund-paging',
@@ -32,14 +33,6 @@ export class CommissionReservedFundPagingComponent implements OnInit, OnDestroy 
   userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   isReady: boolean = false;
   navigationSubscription;
-
-  isFromThingsToDo: boolean = false;
-  username: string;
-  roleCode: string;
-  empNo: string;
-  cmoObj: RefEmpForLookupObj;
-  listRole: Array<string> = new Array<string>();
-  listCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.SubscribeParam();
@@ -94,93 +87,6 @@ export class CommissionReservedFundPagingComponent implements OnInit, OnDestroy 
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchCommissionV2.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchCommissionV2.json";
 
-      if (this.isFromThingsToDo)
-      {
-        var generalSettingObj: GenericObj = new GenericObj();
-        generalSettingObj.Code = CommonConstant.GSRoleForCmo;
-        await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
-          async (response) => {
-            this.listRole = response["GsValue"].split(",");
-            if(this.listRole.includes(this.roleCode))
-            {
-              this.inputPagingObj._url = "./assets/ucpaging/searchPagingFromThingsToDoForCmo.json";
-              this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPagingFromThingsToDoForCmo.json";
-              this.inputPagingObj.title = "Application Commission/Reserved-Fund Paging";
-              
-              this.inputPagingObj.isJoinExAPI = true
-    
-              this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
-              this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_COM_RSV + this.BizTemplateCode;
-
-              this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                                       this.userAccess[CommonConstant.OFFICE_CODE], 
-                                                       this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
-              
-              this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
-              this.IntegrationObj.requestObj = this.RequestTaskModel;
-              this.IntegrationObj.joinType = "LEFT"
-              this.IntegrationObj.leftColumnToJoin = "AppNo";
-              this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
-              this.inputPagingObj.integrationObj = this.IntegrationObj;
-    
-              this.cmoObj = new RefEmpForLookupObj();
-              this.cmoObj.Username = this.username;
-              await this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).toPromise().then(
-                (response: RefEmpForLookupObj) => {
-                  this.empNo = response.EmpNo;
-                });
-          
-              let whereValueObj = new WhereValueObj();
-              whereValueObj.property = "SalesOfficerNo";
-              whereValueObj.value = this.empNo;
-              this.inputPagingObj.whereValue.push(whereValueObj);
-          
-              whereValueObj = new WhereValueObj();
-              whereValueObj.property = "LastUserInput";
-              whereValueObj.value = this.username;
-              this.inputPagingObj.whereValue.push(whereValueObj);
-            }
-            else
-            {
-              this.inputPagingObj._url = "./assets/ucpaging/searchPagingFromThingsToDo.json";
-              this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPagingFromThingsToDo.json";
-              this.inputPagingObj.title = "Application Commission/Reserved-Fund Paging";
-
-              var critLastUserInput = new CriteriaObj();
-              critLastUserInput.restriction = AdInsConstant.RestrictionEq;
-              critLastUserInput.propName = 'A.LAST_USER_INPUT';
-              critLastUserInput.value = this.username;
-              this.listCrit.push(critLastUserInput);
-            }
-            var critCurrStep = new CriteriaObj();
-            critCurrStep.restriction = AdInsConstant.RestrictionIn;
-            critCurrStep.propName = 'A.APP_CURR_STEP';
-            critCurrStep.listValue = [CommonConstant.AppStepComm,CommonConstant.AppStepRSVFund];
-            this.listCrit.push(critCurrStep);
-    
-            var critLobObj = new CriteriaObj();
-            critLobObj.restriction = AdInsConstant.RestrictionEq;
-            critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
-            critLobObj.value = this.BizTemplateCode;
-            this.listCrit.push(critLobObj);
-    
-            var critAppStatObj = new CriteriaObj();
-            critAppStatObj.restriction = AdInsConstant.RestrictionEq;
-            critAppStatObj.propName = 'A.APP_STAT';
-            critAppStatObj.value = "PRP";
-            this.listCrit.push(critAppStatObj);
-
-            var critIsAppInitDone = new CriteriaObj();
-            critIsAppInitDone.restriction = AdInsConstant.RestrictionEq;
-            critIsAppInitDone.propName = 'A.IS_APP_INIT_DONE';
-            critIsAppInitDone.value = "1";
-            this.listCrit.push(critIsAppInitDone);
-            this.inputPagingObj.addCritInput = this.listCrit;
-          });
-
-        return;
-      }
-
       this.inputPagingObj.isJoinExAPI = true
 
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
@@ -194,6 +100,12 @@ export class CommissionReservedFundPagingComponent implements OnInit, OnDestroy 
       this.IntegrationObj.leftColumnToJoin = "AppNo";
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
+
+      if (this.isFromThingsToDo)
+      {
+        await this.setUcPagingFromThingsToDo();
+        if(this.isCmo) return;
+      }
       
       var critCurrStep = new CriteriaObj();
       critCurrStep.restriction = AdInsConstant.RestrictionIn;
@@ -209,12 +121,131 @@ export class CommissionReservedFundPagingComponent implements OnInit, OnDestroy 
     }
   }
 
+  //#region Things To Do Pending Application R3LOS-164 - RTHREE-410
+  isFromThingsToDo: boolean = false;
+  isCmo: boolean = false;
+  username: string;
+  roleCode: string;
+  cmoObj: RefEmpForLookupObj;
+  lastUserInput: RefEmpForLookupObj;
+  RequestTaskModelForThingsToDo: RequestTaskModelForThingsToDoObj = new RequestTaskModelForThingsToDoObj();
+  listRole: Array<string> = new Array<string>();
+  listCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  async setUcPagingFromThingsToDo()
+  {
+    var generalSettingObj: GenericObj = new GenericObj();
+    generalSettingObj.Code = CommonConstant.GSRoleForCmo;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+    async (response) => {
+      this.inputPagingObj.isSearched = true;
+      this.inputPagingObj.delay = 1000;
+      this.listRole = response["GsValue"].split(",");
+      if(this.listRole.includes(this.roleCode))
+      {
+        this.inputPagingObj._url = "./assets/ucpaging/searchPagingFromThingsToDoForCmo.json";
+        this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPagingFromThingsToDoForCmo.json";
+        this.inputPagingObj.title = "Application Commission/Reserved-Fund Paging";
+        
+        this.inputPagingObj.isJoinExAPI = true
+        this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
+        this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_COM_RSV + this.BizTemplateCode;
+        this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                                 this.userAccess[CommonConstant.OFFICE_CODE], 
+                                                 this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+        
+        this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+        this.IntegrationObj.requestObj = this.RequestTaskModel;
+        this.IntegrationObj.leftColumnToJoin = "AppNo";
+        this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+        this.inputPagingObj.integrationObj = this.IntegrationObj;
+
+        this.cmoObj = new RefEmpForLookupObj();
+        this.cmoObj.Username = this.username;
+        await this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).toPromise().then(
+          (response: RefEmpForLookupObj) => {
+            this.cmoObj = response
+          });
+    
+        let whereValueObj = new WhereValueObj();
+        whereValueObj.property = "SalesOfficerNo";
+        whereValueObj.value = this.cmoObj.EmpNo;
+        this.inputPagingObj.whereValue.push(whereValueObj);
+    
+        whereValueObj = new WhereValueObj();
+        whereValueObj.property = "LastUserInput";
+        whereValueObj.value = this.username;
+        this.inputPagingObj.whereValue.push(whereValueObj);
+
+        this.isCmo = true;
+      }
+      else
+      {
+        this.inputPagingObj._url = "./assets/ucpaging/searchComissionFromThingsToDo.json";
+        this.inputPagingObj.pagingJson = "./assets/ucpaging/searchComissionFromThingsToDo.json";
+
+        this.inputPagingObj.isJoinExAPI = true
+        this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
+        this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_COM_RSV + this.BizTemplateCode;
+        this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                                 this.userAccess[CommonConstant.OFFICE_CODE], 
+                                                 this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+
+        this.RequestTaskModelForThingsToDo.RequestTaskModel = this.RequestTaskModel;
+        this.RequestTaskModelForThingsToDo.UserName = this.username;
+        
+        this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflowForThingsToDo;
+        this.IntegrationObj.requestObj = this.RequestTaskModelForThingsToDo;
+        this.IntegrationObj.leftColumnToJoin = "AppNo";
+        this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+        this.inputPagingObj.integrationObj = this.IntegrationObj;
+        
+        return;
+      }
+      var critCurrStep = new CriteriaObj();
+      critCurrStep.restriction = AdInsConstant.RestrictionIn;
+      critCurrStep.propName = 'A.APP_CURR_STEP';
+      critCurrStep.listValue = [CommonConstant.AppStepComm,CommonConstant.AppStepRSVFund];
+      this.listCrit.push(critCurrStep);
+
+      var critLobObj = new CriteriaObj();
+      critLobObj.restriction = AdInsConstant.RestrictionEq;
+      critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
+      critLobObj.value = this.BizTemplateCode;
+      this.listCrit.push(critLobObj);
+
+      var critAppStatObj = new CriteriaObj();
+      critAppStatObj.restriction = AdInsConstant.RestrictionEq;
+      critAppStatObj.propName = 'A.APP_STAT';
+      critAppStatObj.value = "PRP";
+      this.listCrit.push(critAppStatObj);
+
+      var critIsAppInitDone = new CriteriaObj();
+      critIsAppInitDone.restriction = AdInsConstant.RestrictionEq;
+      critIsAppInitDone.propName = 'A.IS_APP_INIT_DONE';
+      critIsAppInitDone.value = "1";
+      this.listCrit.push(critIsAppInitDone);
+      this.inputPagingObj.addCritInput = this.listCrit;
+    });
+  }
+  //#endregion
+
   async GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
       let wfTaskListIdTemp = environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId;
+      if(this.isFromThingsToDo && ev.RowObj.LastUserInput != null  && ev.RowObj.LastUserInput != this.username)
+      {
+        this.lastUserInput = new RefEmpForLookupObj();
+        this.lastUserInput.Username = ev.RowObj.LastUserInput;
+        await this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.lastUserInput).toPromise().then(
+          (response: RefEmpForLookupObj) => {
+            this.lastUserInput = response;
+          });
+        this.toastr.warningMessage("Please contact " + ev.RowObj.LastUserInput + " (" + this.lastUserInput.EmpName +") to edit this application");
+        return;
+      }
       if (!await this.CheckRuleObj(ev.RowObj.AppId)) {
         this.toastr.warningMessage("Please complete MaxRefund Rule for " + this.BizTemplateCode + " ");
         return;

@@ -33,6 +33,34 @@
         "value": "",
         "label": "Product Offering Name",
         "placeholder": "Placeholder"
+      },
+      {
+        "type": "officeRoleCodes",
+        "datatype": "text",
+        "name": "A.ORI_OFFICE_CODE",
+        "id": "OfficeCodeId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "isQueryIn": true,
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "label": "Office",
+        "items": [],
+        "itemsUrl": []
+      },
+      {
+        "type": "dropdown",
+        "name": "Source",
+        "id": "SourceId",
+        "value": "",
+        "label": "Source",
+        "ddlType": "all",
+        "isRequired": false,
+        "isFromURL": false,
+        "items" : [{"key":"", "value":"Things To Do - Credit Marketing Officer"}]
       }
     ],
     "headerList": [
@@ -52,31 +80,31 @@
         "type": "sort",
         "position": "left",
         "label": "Office",
-        "name": "MAX(A.ORI_OFFICE_NAME)"
+        "name": "A.ORI_OFFICE_NAME"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Application No",
-        "name": "MAX(A.APP_NO)"
+        "name": "A.APP_NO"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Customer No",
-        "name": "MAX(AC.CUST_NO)"
+        "name": "AC.CUST_NO"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Customer Name",
-        "name": "MAX(AC.CUST_NAME)"
+        "name": "AC.CUST_NAME"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Product Offering Name",
-        "name": "MAX(A.PROD_OFFERING_NAME)"
+        "name": "A.PROD_OFFERING_NAME"
       },
       {
         "type": "label",
@@ -88,7 +116,7 @@
       "name": "searchPagingFromThingsToDoForCmo"
     },
     "orderby": {
-        "key": "MAX(A.APP_NO)", 
+        "key": "A.APP_NO", 
         "value": "false"
     },
     "bodyList": [

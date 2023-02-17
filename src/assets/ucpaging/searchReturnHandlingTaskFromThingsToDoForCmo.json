@@ -1,5 +1,4 @@
 {
-    "title": "Customer Main Data",
     "exportExcel": false,
     "component": [
       {
@@ -29,8 +28,8 @@
       {
         "type": "officeRoleCodes",
         "datatype": "text",
-        "name": "a.ORI_OFFICE_CODE",
-        "id": "OfficeNameId",
+        "name": "A.ORI_OFFICE_CODE",
+        "id": "OfficeCodeId",
         "value": "",
         "placeholder": "Placeholder",
         "isFromURL": true,
@@ -53,7 +52,7 @@
       {
         "type": "textbox",
         "name": "Assignee",
-        "id": "ClaimById",
+        "id": "claimById",
         "value": "",
         "label": "Claim By",
         "placeholder": "Placeholder",
@@ -71,6 +70,9 @@
         "items" : [{"key":"", "value":"Things To Do - Credit Marketing Officer"}]
       }
     ],
+    "querystring": {
+      "name": "searchReturnHandlingTaskFromThingsToDo"
+    },
     "headerList": [
       {
         "type": "label",
@@ -114,13 +116,6 @@
         "label": "Action"
       }
     ],
-    "querystring": {
-      "name": "searchCustMainDataFromThingsToDoForCmo"
-    },
-    "orderby": {
-        "key": "A.APP_NO", 
-        "value": "false"
-    },
     "bodyList": [
       {
         "type": "sla",
@@ -178,10 +173,10 @@
                   }
                 ],
                 "result": {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
-                },
+                    "type": "callback",
+                    "key": "Edit",
+                    "icon": "ft-edit-2"
+                  },
                 "isHide": false
               },
               {
@@ -194,10 +189,10 @@
                   }
                 ],
                 "result": {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
-                },
+                    "type": "callback",
+                    "key": "Edit",
+                    "icon": "ft-edit-2"
+                  },
                 "isHide": false
               }
             ]
@@ -205,4 +200,4 @@
         ]
       }
     ]
-}
+  }

@@ -14,6 +14,9 @@ import { CookieService } from 'ngx-cookie';
 import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { RequestTaskModelForThingsToDoObj } from 'app/shared/model/workflow/request-task-model-for-things-to-do-obj.model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-return-handling-paging',
@@ -28,15 +31,7 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
   isReady: boolean = false;
   navigationSubscription;
 
-  isFromThingsToDo: boolean = false;
-  username: string;
-  roleCode: string;
-  empNo: string;
-  cmoObj: RefEmpForLookupObj;
-  listRole: Array<string> = new Array<string>();
-  listCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
-
-  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router, private http: HttpClient, private toastr: NGXToastrService) {
     this.SubscribeParam();
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -88,78 +83,6 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
       this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchReturnHandlingV2.json";
       this.inputPagingObj.addCritInput = new Array();
 
-      if (this.isFromThingsToDo)
-      {
-        this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingFromThingsToDo.json";
-        this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingFromThingsToDo.json";
-
-        var generalSettingObj: GenericObj = new GenericObj();
-        generalSettingObj.Code = CommonConstant.GSRoleForCmo;
-        await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
-          async (response) => {
-            this.listRole = response["GsValue"].split(",");
-            if(this.listRole.includes(this.roleCode))
-            { 
-              this.inputPagingObj.isJoinExAPI = true
-    
-              this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;
-              this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RTN + this.BizTemplateCode;
-
-              this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                                       this.userAccess[CommonConstant.OFFICE_CODE], 
-                                                       this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
-              
-              this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
-              this.IntegrationObj.requestObj = this.RequestTaskModel;
-              this.IntegrationObj.joinType = "LEFT"
-              this.IntegrationObj.leftColumnToJoin = "AppNo";
-              this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
-              this.inputPagingObj.integrationObj = this.IntegrationObj;
-    
-              this.cmoObj = new RefEmpForLookupObj();
-              this.cmoObj.Username = this.username;
-              await this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).toPromise().then(
-                (response: RefEmpForLookupObj) => {
-                  this.empNo = response.EmpNo;
-                });
-
-              var critSalesOfficerNo = new CriteriaObj();
-              critSalesOfficerNo.restriction = AdInsConstant.RestrictionEq;
-              critSalesOfficerNo.propName = 'A.SALES_OFFICER_NO';
-              critSalesOfficerNo.value = this.empNo;
-              this.listCrit.push(critSalesOfficerNo);
-            }
-            else
-            {
-              var critLastUserInput = new CriteriaObj();
-              critLastUserInput.restriction = AdInsConstant.RestrictionEq;
-              critLastUserInput.propName = 'A.LAST_USER_INPUT';
-              critLastUserInput.value = this.username;
-              this.listCrit.push(critLastUserInput);
-            }
-            var critCurrStep = new CriteriaObj();
-            critCurrStep.restriction = AdInsConstant.RestrictionEq;
-            critCurrStep.propName = 'A.APP_CURR_STEP';
-            critCurrStep.value = CommonConstant.AppStepRtn;
-            this.listCrit.push(critCurrStep);
-    
-            var critLobObj = new CriteriaObj();
-            critLobObj.restriction = AdInsConstant.RestrictionEq;
-            critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
-            critLobObj.value = this.BizTemplateCode;
-            this.listCrit.push(critLobObj);
-    
-            var critAppStatObj = new CriteriaObj();
-            critAppStatObj.restriction = AdInsConstant.RestrictionEq;
-            critAppStatObj.propName = 'A.APP_STAT';
-            critAppStatObj.value = "PRP";
-            this.listCrit.push(critAppStatObj);
-            this.inputPagingObj.addCritInput = this.listCrit;
-          });
-
-        return;
-      }
-
       this.inputPagingObj.isJoinExAPI = true
   
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;
@@ -173,6 +96,12 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
       this.IntegrationObj.leftColumnToJoin = "AppNo";
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
+
+      if (this.isFromThingsToDo)
+      {
+        await this.setUcsetUcPagingFromThingsToDo();
+        if (this.isCmo) return;
+      }
       
       var critCurrStep = new CriteriaObj();
       critCurrStep.restriction = AdInsConstant.RestrictionEq;
@@ -188,7 +117,125 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
     }
   }
 
-  GetCallBack(ev) {
+  //#region Things To Do Pending Application R3LOS-164 - RTHREE-410
+  isFromThingsToDo: boolean = false;
+  isCmo: boolean = false;
+  username: string;
+  roleCode: string;
+  cmoObj: RefEmpForLookupObj;
+  lastUserInput: RefEmpForLookupObj;
+  RequestTaskModelForThingsToDo: RequestTaskModelForThingsToDoObj = new RequestTaskModelForThingsToDoObj();
+  listRole: Array<string> = new Array<string>();
+  listCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  async setUcsetUcPagingFromThingsToDo()
+  {
+    var generalSettingObj: GenericObj = new GenericObj();
+    generalSettingObj.Code = CommonConstant.GSRoleForCmo;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+      async (response) => {
+        this.inputPagingObj.isSearched = true;
+        this.inputPagingObj.delay = 1000;
+        this.listRole = response["GsValue"].split(",");
+        if(this.listRole.includes(this.roleCode))
+        { 
+          this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingFromThingsToDoForCmo.json";
+          this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingFromThingsToDoForCmo.json";
+
+          this.inputPagingObj.isJoinExAPI = true
+
+          this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;
+          this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RTN + this.BizTemplateCode;
+
+          this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                                   this.userAccess[CommonConstant.OFFICE_CODE], 
+                                                   this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+          
+          this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
+          this.IntegrationObj.requestObj = this.RequestTaskModel;
+          this.IntegrationObj.leftColumnToJoin = "AppNo";
+          this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+          this.inputPagingObj.integrationObj = this.IntegrationObj;
+
+          this.cmoObj = new RefEmpForLookupObj();
+          this.cmoObj.Username = this.username;
+          await this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).toPromise().then(
+            (response: RefEmpForLookupObj) => {
+              this.cmoObj = response;
+            });
+
+          var critSalesOfficerNo = new CriteriaObj();
+          critSalesOfficerNo.restriction = AdInsConstant.RestrictionEq;
+          critSalesOfficerNo.propName = 'A.SALES_OFFICER_NO';
+          critSalesOfficerNo.value = this.cmoObj.EmpNo;
+          this.listCrit.push(critSalesOfficerNo);
+
+          this.isCmo = true;
+        }
+        else
+        {
+          this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingFromThingsToDo.json";
+          this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingFromThingsToDo.json";
+
+          this.inputPagingObj.isJoinExAPI = true
+  
+          this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;
+          this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RTN + this.BizTemplateCode;
+          this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
+                                                   this.userAccess[CommonConstant.OFFICE_CODE], 
+                                                   this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+
+          this.RequestTaskModelForThingsToDo.RequestTaskModel = this.RequestTaskModel;
+          this.RequestTaskModelForThingsToDo.UserName = this.username;
+      
+          this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflowForThingsToDo;
+          this.IntegrationObj.requestObj = this.RequestTaskModelForThingsToDo;
+          this.IntegrationObj.leftColumnToJoin = "AppNo";
+          this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
+          this.inputPagingObj.integrationObj = this.IntegrationObj;
+
+          return;
+        }
+        var critCurrStep = new CriteriaObj();
+        critCurrStep.restriction = AdInsConstant.RestrictionEq;
+        critCurrStep.propName = 'A.APP_CURR_STEP';
+        critCurrStep.value = CommonConstant.AppStepRtn;
+        this.listCrit.push(critCurrStep);
+
+        var critLobObj = new CriteriaObj();
+        critLobObj.restriction = AdInsConstant.RestrictionEq;
+        critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
+        critLobObj.value = this.BizTemplateCode;
+        this.listCrit.push(critLobObj);
+
+        var critAppStatObj = new CriteriaObj();
+        critAppStatObj.restriction = AdInsConstant.RestrictionEq;
+        critAppStatObj.propName = 'A.APP_STAT';
+        critAppStatObj.value = "PRP";
+        this.listCrit.push(critAppStatObj);
+        this.inputPagingObj.addCritInput = this.listCrit;
+      });
+  }
+  //#endregion
+
+  async GetCallBack(ev) {
+    if (ev.Key == "Edit")
+    {
+      let WfTaskListId = environment.isCore ? ev.RowObj.Id : ev.RowObj.WfTaskListId;
+      if(this.isFromThingsToDo && ev.RowObj.LastUserInput != null  && ev.RowObj.LastUserInput != this.username)
+      {
+        this.lastUserInput = new RefEmpForLookupObj();
+        this.lastUserInput.Username = ev.RowObj.LastUserInput;
+        await this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.lastUserInput).toPromise().then(
+          (response: RefEmpForLookupObj) => {
+            this.lastUserInput = response;
+          });
+        this.toastr.warningMessage("Please contact " + ev.RowObj.LastUserInput + " (" + this.lastUserInput.EmpName +") to edit this application");
+        return;
+      }
+
+      AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/Detail"], { "AppId": ev.RowObj.AppId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId, "WfTaskListId": WfTaskListId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode});
+    }
+
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
