@@ -57,6 +57,8 @@ import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { ReqAddAppRoleObj } from 'app/shared/model/Request/NAP/new-application/ReqAddAppRoleObj.Model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 
 @Component({
   selector: 'app-cust-main-data-x-dsf',
@@ -112,6 +114,7 @@ export class CustMainDataXDsfComponent implements OnInit {
   AppNo: string;
 
   agrmntParentNo: string = "";
+  IsCustAllowedContinue: boolean = true;
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
@@ -180,6 +183,9 @@ export class CustMainDataXDsfComponent implements OnInit {
   checkIsAddressKnown: boolean = false;
   isDisableCustType: boolean = false;
   existShrHolder: boolean = false;
+  //Self Custom Changes CR PIC Credit Review
+  user: CurrentUserContext;
+  //End Self Custom Changes CR PIC Credit Review
 
   constructor(
     private regexService: RegexService,
@@ -262,6 +268,9 @@ export class CustMainDataXDsfComponent implements OnInit {
     this.ddlIdTypeObj.customKey = "MasterCode";
     this.ddlIdTypeObj.customValue = "Descr";
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    //Self Custom Changes CR PIC Credit Review
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    //End Self Custom Changes CR PIC Credit Review
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
     var datePipe = new DatePipe("en-US");
     this.MaxDateEmpEstblshmntDt = new Date(this.UserAccess[CommonConstant.BUSINESS_DT]);
@@ -759,7 +768,7 @@ export class CustMainDataXDsfComponent implements OnInit {
 
       if (this.from == 'SMPLLEAD') {
         this.MrCustTypeCode = CommonConstant.CustTypePersonal;
-        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
+        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == this.MrCustTypeCode);
       }
     }
   }
@@ -1036,6 +1045,21 @@ export class CustMainDataXDsfComponent implements OnInit {
     await this.disableInput();
   }
 
+  async checkIsCustAllowedContinue()
+  {
+    if(this.CustMainDataForm.controls.CustNo.value == null)
+    {
+      this.IsCustAllowedContinue = true;
+      return;
+    }
+    
+    await this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByCustNo, { Code: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+      (res) => {
+        res == undefined? this.IsCustAllowedContinue = false : this.IsCustAllowedContinue = true;
+      }
+    );
+  }
+
   ChangeIdType(IdType: string) {
     this.setValidatorPattern();
   }
@@ -1201,9 +1225,13 @@ export class CustMainDataXDsfComponent implements OnInit {
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
 
       if (this.inputMode == 'EDIT') {
+        this.isDdlMrCustRelationshipReady = false;
+        setTimeout (() => { 
         this.CustMainDataForm.patchValue({
           MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
         })
+        this.isDdlMrCustRelationshipReady = true; 
+        }, 0);
       }
     }
 
@@ -1690,18 +1718,25 @@ export class CustMainDataXDsfComponent implements OnInit {
   }
 
   async SaveForm() {
+    if(this.custMainDataMode == CommonConstant.CustMainDataModeCust)
+    {
+      await this.checkIsCustAllowedContinue();
+      if(!this.IsCustAllowedContinue) return;
+    }
     let obj = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
       AppNo: this.AppNo,
       BizTemplateCode: this.bizTemplateCode
     };
 
+    //Self Custom Changes CR MPF Validation
     let objMPF = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
       AppNo: this.AppNo,
       BizTemplateCode: this.bizTemplateCode,
       Lob: this.LobCode
     };
+    //End Self Custom Changes CR MPF Validation
 
 
     if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
@@ -1718,6 +1753,17 @@ export class CustMainDataXDsfComponent implements OnInit {
         if(!isHaveAgrmntParent)
         {
           this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
+          return;
+        }
+
+        let isOverdue: boolean = false;
+        await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+          (response: any) => {
+            if (response.IsOverdue) isOverdue = true;
+          }
+        );
+        if(isOverdue){
+          this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
           return;
         }
 
@@ -1752,6 +1798,17 @@ export class CustMainDataXDsfComponent implements OnInit {
           return;
         }
 
+        let isOverdue: boolean = false;
+        await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+          (response: any) => {
+            if (response.IsOverdue) isOverdue = true;
+          }
+        );
+        if(isOverdue){
+          this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
+          return;
+        }
+
         this.http.post(URLConstantX.CheckIfCustHasOngoingAppX, obj).subscribe(
           (response) => {
             this.SaveCustomer();
@@ -1761,6 +1818,18 @@ export class CustMainDataXDsfComponent implements OnInit {
     } else {
       this.SaveCustomer();
     }
+    //Self Custom Changes CR PIC Credit Review
+    let requestAddAppRoleObj: ReqAddAppRoleObj = new ReqAddAppRoleObj();
+
+    requestAddAppRoleObj.AppId = this.appId;
+    requestAddAppRoleObj.AppRoleCode = this.user.RoleCode;
+    
+    this.http.post<ReqAddAppRoleObj>(URLConstantDsf.AddNapRole, requestAddAppRoleObj).subscribe(
+      (response) => {
+        
+      }
+    )
+    //End Self Custom Changes CR PIC Credit Review
   }
 
   cancel() {
@@ -2367,5 +2436,4 @@ export class CustMainDataXDsfComponent implements OnInit {
       this.isDisableCustType = false;
     }
   }
-
 }

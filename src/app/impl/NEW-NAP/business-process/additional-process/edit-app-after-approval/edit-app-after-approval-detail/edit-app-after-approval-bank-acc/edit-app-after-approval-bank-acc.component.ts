@@ -114,13 +114,6 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
           this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.nameSelect = response["ZipcodeOwnerBankAcc"];
           this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["ZipcodeOwnerBankAcc"] };
           this.inputAddressOwnerBankAccObj.default = this.inputAddrObj;
-
-          if (response["MrCustTypeOwnerBnkAcc"] != null && response["MrIdTypeOwnerBnkAcc"] != null) {
-            this.EditBankAccForm.patchValue({
-              MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
-              MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
-            });
-          }
         }
         this.isCustomerTypeCompany();
       }
@@ -183,7 +176,7 @@ export class EditAppAfterApprovalBankAccComponent implements OnInit {
             this.EditBankAccForm.patchValue({
               CustBankAcc: selectedBankAcc.AppCustBankAccId
             });
-
+  
             this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
             this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
             this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;

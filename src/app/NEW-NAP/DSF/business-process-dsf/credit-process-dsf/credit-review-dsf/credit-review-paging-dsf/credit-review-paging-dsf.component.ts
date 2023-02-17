@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
@@ -11,6 +12,7 @@ import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-credit-review-paging-dsf',
@@ -26,7 +28,7 @@ export class CreditReviewPagingDsfComponent implements OnInit, OnDestroy {
   isReady: boolean = false;
   navigationSubscription;
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router) {
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router, private toastr: ToastrService) {
     this.SubscribeParam();
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -104,6 +106,10 @@ export class CreditReviewPagingDsfComponent implements OnInit, OnDestroy {
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
+    }
+    else if (ev.Key == "CaptureStat") {
+      this.toastr.warning(ExceptionConstant.PLEASE_WAIT_A_MINUTE_UNTIL_CAPTURE_DATA_IS_FINISHED);
+      return;
     }
   }
 }

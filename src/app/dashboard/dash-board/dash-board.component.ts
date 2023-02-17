@@ -59,13 +59,23 @@ export class DashBoardComponent implements OnInit {
       integrationObj.RequestObj.UserName = this.username;
       integrationObj.RequestObj.OfficeRoleCodes = [this.roleCode, this.roleCode + "-" + this.officeCode, this.officeCode];
       
-      integrationObj2 = new ThingsToDoIntegrationV2Obj();
-      integrationObj2.BaseUrl = AdInsConstant.GetListApvTaskListByUsernameAndRoleCodeForThingsToDo;
-      integrationObj2.ApiPath = "";
-      integrationObj2.RequestObj.OfficeCode = this.officeCode;
-      integrationObj2.RequestObj.UserName = this.username;
-      integrationObj2.RequestObj.RoleCode = this.roleCode;
-      this.Item.RequestObj.IntegrationObj.push(integrationObj2);
+      if (context[CommonConstant.MR_OFFICE_TYPE_CODE] == CommonConstant.HeadOffice) {
+        integrationObj2 = new ThingsToDoIntegrationV2Obj();
+        integrationObj2.BaseUrl = AdInsConstant.GetListApvTaskListByUsernameAndRoleCodeForThingsToDo;
+        integrationObj2.ApiPath = "";
+        integrationObj2.RequestObj.OfficeCode = "";
+        integrationObj2.RequestObj.UserName = this.username;
+        integrationObj2.RequestObj.RoleCode = this.roleCode;
+        this.Item.RequestObj.IntegrationObj.push(integrationObj2);
+      } else {
+        integrationObj2 = new ThingsToDoIntegrationV2Obj();
+        integrationObj2.BaseUrl = AdInsConstant.GetListApvTaskListByUsernameAndRoleCodeForThingsToDo;
+        integrationObj2.ApiPath = "";
+        integrationObj2.RequestObj.OfficeCode = this.officeCode;
+        integrationObj2.RequestObj.UserName = this.username;
+        integrationObj2.RequestObj.RoleCode = this.roleCode;
+        this.Item.RequestObj.IntegrationObj.push(integrationObj2);
+      }
     }else{
       integrationObj = new ThingsToDoIntegrationObj();
       integrationObj.RequestObj.Office = "";

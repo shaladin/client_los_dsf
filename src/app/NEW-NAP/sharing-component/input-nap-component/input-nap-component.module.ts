@@ -148,6 +148,8 @@ import { ReferantorDataNewDetailComponent } from "./referantor-data-new-detail/r
 import { UcInsuranceComponent } from "./insurance-data/uc-insurance/uc-insurance.component";
 import { UcInsuranceDetailComponent } from "./insurance-data/uc-insurance/uc-insurance-detail/uc-insurance-detail.component";
 import { UcInsurancePagingComponent } from "./insurance-data/uc-insurance/uc-insurance-paging/uc-insurance-paging.component";
+import { UcInsuranceXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/uc-insurance-x/uc-insurance-x.component";
+import { UcInsuranceDetailXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/uc-insurance-x/uc-insurance-detail-x/uc-insurance-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -454,7 +456,9 @@ export const customCurrencyMaskConfig = {
     LoanObjectXComponent,
     UcInsuranceComponent,
     UcInsuranceDetailComponent,
-    UcInsurancePagingComponent
+    UcInsurancePagingComponent,
+    UcInsuranceXComponent,
+    UcInsuranceDetailXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent, ReferantorDataNewDetailComponent],
   providers: [

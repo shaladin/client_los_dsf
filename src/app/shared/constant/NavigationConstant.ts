@@ -29,6 +29,7 @@ export class NavigationConstant {
 
   //#region Inquiry
   public static APP_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstantX.APP_INQUIRY; //'/Inquiry/AppInquiryX'
+  public static APP_AGR_CANCELLATION_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_AGR_CANCELLATION_INQUIRY; //'/Inquiry/AppAgrCancellationInquiry'
   public static PURCHASE_TRACKING_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.PURCHASE_TRACKING_INQUIRY; //'/Inquiry/PurchaseTrackingInquiry'
   //#endregion
 
@@ -99,6 +100,9 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_CUST_SYNC = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.CUST_SYNC_PAGING; //"/Nap/AddProcess/CustSync/PagingX"
   public static NAP_ADD_PRCS_EDIT_NAP_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_PAGING; //"/Nap/AddProcess/EditNapCust/Paging"
   public static NAP_ADD_PRCS_EDIT_NAP_CUST_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_NAP_CUST_DETAIL; //"/Nap/AddProcess/EditNapCust/Detail"
+  public static NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.AUTO_DEBIT_REGISTRATION_PAGING;//"/Nap/AddProcess/AutoDebitRegistration/Paging"
+  public static NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_INQUIRY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.AUTO_DEBIT_REGISTRATION_INQUIRY;//"Nap/AddProcess/AutoDebitRegistration/Inquiry"
+  public static NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_CANCEL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.AUTO_DEBIT_REGISTRATION_CANCEL;//"Nap/AddProcess/AutoDebitRegistration/Cancel"
   //#endregion
 
   //#region AdminProcess
@@ -285,6 +289,7 @@ export class NavigationConstant {
   public static VIEW_CHANGE_MOU = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_CHANGE_MOU_X; //"/View/ChangeMouView/X"
   public static VIEW_PHN_VERIF = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PHN_VERIF; //"/View/PhoneVerifView"
   public static VIEW_SRVY = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_SRVY; //'/View/SurveyView'
+  public static VIEW_AUTO_DEBIT_REGIS = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_AUTO_DEBIT_REGIS; //'/View/AutoDebitRegisView'
   //#endregion
 
   //#region FOU-VIEW
@@ -400,7 +405,7 @@ export class NavigationConstant {
   //#region LTKM
   public static LTKM_REQ = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.REQ_X; //'/Ltkm/RequestX'
   public static LTKM_INQUIRY = "/" + PathConstant.LR_LTKM + "/" + PathConstant.INQUIRY; //'/Ltkm/Inquiry'
-  public static LTKM_VIEW = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VIEW; //'/Ltkm/View'
+  public static LTKM_VIEW = "/" + PathConstantX.LTKM_VIEW; //'/Ltkm/View'
   public static LTKM_VERIFY_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_PAGING; //'/Ltkm/Verify/Paging'
   public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_DETAIL; //'/Ltkm/Verify/DetailX'
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
@@ -531,7 +536,7 @@ export class NavigationConstant {
   public static GO_LIVE_APV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.GO_LIVE_APV_DETAIL_X; //'/AdminProcess/GoLiveX/DetailX'
   //EndCessie
 
-  //Edit Commission After Approval
+  //#region Edit Commission After Approval
   public static EDIT_COMM_AFT_APV_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_PAGING;//"/Impl/EditCommAftApv/Paging"
   public static EDIT_COMM_AFT_APV_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_DETAIL_X;//"/Impl/EditCommAftApv/DetailX"
   public static EDIT_COMM_AFT_APV_APPRV_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_APPRV_PAGING;//"/Impl/EditCommAftApv/Approval/Paging"
@@ -539,4 +544,5 @@ export class NavigationConstant {
 
   public static EDIT_COMM_AFT_APV_INQUIRY_PAGING = "/" + PathConstantX.LR_IMPL + "/"+ PathConstantX.EDIT_COMM_AFT_APV_INQUIRY_PAGING;//"/Impl/EditCommAftApv/Inquiry/Paging"
   public static EDIT_COMM_AFT_APV_INQUIRY_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_INQUIRY_DETAIL;//"/Impl/EditCommAftApv/Inquiry/Detail"
+  //#endregion
 }

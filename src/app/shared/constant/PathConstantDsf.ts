@@ -108,7 +108,9 @@ export class PathConstantDsf {
 
     //#region 
     public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "ReportSuratKonfirmasiPersetujuan"
+    public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN_V2 = "ReportSuratKonfirmasiPersetujuanV2"
     public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN;
+    public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN_V2 = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN_V2;
     //#endregion
 
     //#region
@@ -133,7 +135,7 @@ export class PathConstantDsf {
     public static CRD_REVIEW_X = "CreditReviewXDsf";
     public static DETAIL_X = 'DetailXDsf';
     public static CRD_REVIEW_PAGING_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstant.PAGING;
-    public static CRD_REVIEW_DETAIL_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstant.DETAIL;
+    public static CRD_REVIEW_DETAIL_X = PathConstantDsf.CRD_REVIEW_X + "/" + PathConstantX.DETAIL_X;
     public static CRD_APPRV_DETAIL_X = PathConstant.CRD_APPRV_CR + "/" + PathConstantDsf.DETAIL_X;
 
     public static NEW_CUST = "NewCustomerXDsf";

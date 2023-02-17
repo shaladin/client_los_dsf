@@ -96,6 +96,11 @@
       {
         "type": "label",
         "position": "center",
+        "label": "Unhold"
+      },
+      {
+        "type": "label",
+        "position": "center",
         "label": "Take Back"
       },
       {
@@ -169,12 +174,48 @@
                     "property" : "CurrentUser", 
                     "value" : "-", 
                     "restriction" : "NEQ" 
+                  },
+                  {
+                    "property" : "IsHold", 
+                    "value" : false, 
+                    "restriction" : "EQ" 
                   }
                 ],
                 "result" : { 
                   "type": "callback",
                   "key": "HoldTask",
-                  "icon" : "ft-edit-2"
+                  "icon" : "ft-pause"
+                },
+                "isHide" : false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type" : "action",
+        "position" : "center",
+        "action" : [
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions" : [ 
+                  {
+                    "property" : "CurrentUser", 
+                    "value" : "-", 
+                    "restriction" : "NEQ" 
+                  },
+                  {
+                    "property" : "IsHold", 
+                    "value" : true, 
+                    "restriction" : "EQ" 
+                  }
+                ],
+                "result" : { 
+                  "type": "callback",
+                  "key": "HoldTask",
+                  "icon" : "ft-play"
                 },
                 "isHide" : false
               }

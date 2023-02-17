@@ -57,6 +57,9 @@ export class CustConfirmationDetailXComponent implements OnInit {
   PODt: Date = new Date();
   isHasPO: boolean = false;
 
+  maxDiff: number = null;
+  ReqByCodeObj: GenericObj = new GenericObj();
+
   readonly ViewLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW;
   readonly DetailLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_PAGING;
@@ -212,7 +215,19 @@ export class CustConfirmationDetailXComponent implements OnInit {
     return flag;
   }
 
-  SaveForm() {
+  async SaveForm() {
+    if (this.CustConfirmForm.controls.AdditionalInterestPaidBy.value != null){
+      await this.getMaxDiffDays();
+      let diffDay = 0;
+      const diffTimes = new Date(this.CustConfirmForm.controls.EffectiveDt.value).getTime() - new Date(this.CustConfirmForm.controls.GoLiveEstimated.value).getTime();
+      if (diffTimes > 0) {
+        diffDay = diffTimes / (1000 * 3600 * 24);
+      }
+      if(diffDay > this.maxDiff){
+        this.toastr.warningMessage('Difference date between effective date and go live date cannot be more than ' + this.maxDiff + ' days');
+        return;
+      }
+    }
     if (this.CustCnfrmObj.IsSkip == false) {
       for (var i = 0; i < this.VerfResultList.length; i++) {
         if (this.VerfResultList[i].MrVerfResultHStatCode == CommonConstant.VerificationFail || this.VerfResultList[i].MrVerfResultHStatCode == CommonConstant.VerificationNew) {
@@ -418,5 +433,15 @@ export class CustConfirmationDetailXComponent implements OnInit {
         GoLiveEstimated: this.CustConfirmForm.controls.EffectiveDt.value
       });
     }
+  }
+
+  async getMaxDiffDays(){
+    this.ReqByCodeObj.Code = CommonConstantX.GS_CODE_MAX_DIFF_DAYS;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, this.ReqByCodeObj).toPromise().then(
+      (response) => {
+        if(response["GsValue"] != null){
+          this.maxDiff = parseInt(response["GsValue"]);
+        }
+      });
   }
 }
