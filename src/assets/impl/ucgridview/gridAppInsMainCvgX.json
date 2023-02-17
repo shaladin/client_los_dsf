@@ -101,7 +101,7 @@
             "property": "CustMainPremiAmt"
         },
         {
-            "type": "decimal",
+            "type": "text",
             "position": "center",
             "property": "CustMainPremiRate"
         },
@@ -121,7 +121,7 @@
             "property": "InscoMainPremiAmt"
         },
         {
-            "type": "decimal",
+            "type": "text",
             "position": "center",
             "property": "InscoMainPremiRate"
         },

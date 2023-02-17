@@ -45,7 +45,7 @@ export class ViewInsuranceDetailXComponent implements OnInit {
   async ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridAccObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppInsMainCvg.json";
+    this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridAppInsMainCvgX.json";
     this.inputGridAccObj.pagingJson = "./assets/impl/ucgridview/gridAppInsuranceAssetAccessory.json";
     this.getInsuranceData();
   }
