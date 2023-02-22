@@ -20,7 +20,7 @@ export class MouMainInfoXComponent implements OnInit {
   MouCustObj: MouCustObj = new MouCustObj();
   CustNoObj: GenericObj = new GenericObj();
   MouMainInfo: ResMouMainInfoObjX;
-
+  MouType: string;
   constructor(private http: HttpClient,
     private router: Router,
     private toastr: NGXToastrService) {
@@ -36,6 +36,7 @@ export class MouMainInfoXComponent implements OnInit {
       this.http.post<ResMouMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, { Id: this.MouCustId }).subscribe(
         (response) => {
           this.MouMainInfo = response;
+          this.MouType = this.MouMainInfo.MouType;
           if (this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
             this.MouMainInfo.PlafondType = 'Base On Amount'
           } else {
