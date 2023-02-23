@@ -1985,7 +1985,7 @@ export class URLConstant {
   //Ref Fin Asset Usage Map
   public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
   public static GetRefFinAssetUsageMapByRefFinAssetUsageMapId = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetRefFinAssetUsageMapByRefFinAssetUsageMapId";
-  public static GetAllRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetAllRefFinAssetUsageMapD";
+  public static GetRefFinAssetUsageMapDByPurposeOfFinCodeAndMrAssetUsageCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetRefFinAssetUsageMapDByPurposeOfFinCodeAndMrAssetUsageCode";
   public static AddRefFinAssetUsageMap = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/AddRefFinAssetUsageMap";
   public static EditRefFinAssetUsageMap = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/EditRefFinAssetUsageMap";
   public static DeleteRefFinAssetUsageMapAndRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/DeleteRefFinAssetUsageMapAndRefFinAssetUsageMapD";
