@@ -1,0 +1,139 @@
+{
+    "title": "Asset Usage Mapping",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "P.PURPOSE_OF_FIN_CODE",
+            "id": "PurposeOfFinCodeId",
+            "value": "",
+            "label": "Purpose Of Financing Code",
+            "placeholder": "Purpose Of Financing Code"
+        },
+        {
+            "type": "textbox",
+            "name": "P.PURPOSE_OF_FIN_NAME",
+            "id": "PurposeOfFinNameId",
+            "value": "",
+            "label": "Purpose Of Financing Name",
+            "placeholder": "Purpose Of Financing Name"
+        },
+        {
+            "type": "textbox",
+            "name": "A.MR_ASSET_USAGE_CODE",
+            "id": "MrAssetUsageCodeId",
+            "value": "",
+            "label": "Asset Usage Code",
+            "placeholder": "Asset Usage Code"
+        },
+        {
+            "type": "textbox",
+            "name": "VRM.DESCR",
+            "id": "MrAssetUsageNameId",
+            "value": "",
+            "label": "Asset Usage Name",
+            "placeholder": "Asset Usage Name"
+        }
+    ],
+    "querystring": {
+        "name": "searchRefFinAssetUsageMap"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Purpose Of Financing Code",
+            "name": "PurposeOfFinCode"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Purpose Of Financing Name",
+            "name": "PurposeOfFinName"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Asset Usage Code",
+            "name": "MrAssetUsageCode"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Asset Usage Name",
+            "name": "MrAssetUsageName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Asset Category Mapping"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PurposeOfFinCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "PurposeOfFinName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrAssetUsageCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrAssetUsageName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "REF_FIN_ASSET_USAGE_MAP_ADD_EDIT",
+                    "param": [
+                      {
+                        "type": "RefFinAssetUsageMapId",
+                        "property": "RefFinAssetUsageMapId"
+                      }
+                    ]
+                },
+                {
+                    "type": "delete",
+                    "property": "RefFinAssetUsageMapId"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "REF_FIN_ASSET_USAGE_MAP_DETAIL",
+                    "param": [
+                      {
+                        "type": "PurposeOfFinCode",
+                        "property": "PurposeOfFinCode"
+                      },
+                      {
+                        "type": "MrAssetUsageCode",
+                        "property": "MrAssetUsageCode"
+                      }
+                    ]
+                }
+            ]
+        }
+    ]
+}

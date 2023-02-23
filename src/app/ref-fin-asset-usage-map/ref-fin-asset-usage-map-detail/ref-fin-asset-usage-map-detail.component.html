@@ -1,0 +1,22 @@
+<div class="ucSearch-Button-Right" style="padding-top: 10px;">
+  <span class="mr-1">
+    <button type="button" class="backButton" [routerLink]="[CancelLink]">
+      <i class="fa fa-arrow-left"> </i>&nbsp;<span translate>Back</span>
+    </button>
+    <button type="button" class="addButton" [routerLink]="[AddLink]"
+      [queryParams]="{PurposeOfFinCode: PurposeOfFinCode, MrAssetUsageCode: MrAssetUsageCode}">
+      <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
+    </button>
+  </span>
+</div>
+<div class="card">
+  <div class="card-header header-title">
+    <div class="row">
+      <div class="col-md-8">
+        <h4 class="form-section card-title" translate>Mapping Asset Usage Detail</h4>
+      </div>
+    </div>
+  </div>
+  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj"> </lib-ucviewgeneric>
+</div>
+<lib-ucpaging [searchObj]="inputPagingObj"></lib-ucpaging>

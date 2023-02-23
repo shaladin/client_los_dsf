@@ -474,4 +474,11 @@ export class NavigationConstant {
   public static REPORT_LTKM = "/" + PathConstant.REPORT + "/" + PathConstant.REPORT_LTKM; //'/Report/RptLtkm'
   //#endregion
 
+  //#region REF FIN ASSET USAGE MAP
+  public static REF_FIN_ASSET_USAGE_MAP_PAGING = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_PAGING; //'RefFinAssetUsageMap/RefFinAssetUsageMapPaging'
+  public static REF_FIN_ASSET_USAGE_MAP_ADD_EDIT = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_ADD_EDIT; //'RefFinAssetUsageMap/RefFinAssetUsageMapAddEdit'
+  public static REF_FIN_ASSET_USAGE_MAP_DETAIL = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL; //'RefFinAssetUsageMap/RefFinAssetUsageMapDetail'
+  public static REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD; //'RefFinAssetUsageMap/RefFinAssetUsageMapDetail/Add'
+  //#endregion
+  
 }
