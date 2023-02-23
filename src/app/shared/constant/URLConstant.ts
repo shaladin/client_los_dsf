@@ -1557,6 +1557,7 @@ export class URLConstant {
 
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetAssetCategoryById";
+  public static GetListAssetCategoryAndAssetTypeForAssetUsageMap = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetListAssetCategoryAndAssetTypeForAssetUsageMap";
 
   //Agrmnt Rsv Fund
   public static GetListAgrmntReservedFundByAgrmntId = environment.losUrl + "/v1" + "/AgrmntReservedFund/GetListAgrmntReservedFundByAgrmntId";
@@ -1978,7 +1979,16 @@ export class URLConstant {
   public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
   public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
 
+  // Ref Purpose Of Fin
+  public static GetListKvpActivePurposeOfFin = environment.losUrl + "/v1" + "/RefPurposeOfFin/GetListKvpActivePurposeOfFin";
+  
   //Ref Fin Asset Usage Map
   public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
-
+  public static GetRefFinAssetUsageMapByRefFinAssetUsageMapId = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetRefFinAssetUsageMapByRefFinAssetUsageMapId";
+  public static GetAllRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetAllRefFinAssetUsageMapD";
+  public static AddRefFinAssetUsageMap = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/AddRefFinAssetUsageMap";
+  public static EditRefFinAssetUsageMap = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/EditRefFinAssetUsageMap";
+  public static DeleteRefFinAssetUsageMapAndRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/DeleteRefFinAssetUsageMapAndRefFinAssetUsageMapD";
+  public static AddListRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/AddListRefFinAssetUsageMapD";
+  public static DeleteRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/DeleteRefFinAssetUsageMapD";
 }
