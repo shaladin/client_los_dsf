@@ -9,6 +9,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
+import { RefFinAssetUsageMapObj } from 'app/shared/model/ref-fin-asset-usage-map-obj.model';
 import { UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { environment } from 'environments/environment';
 
@@ -25,6 +26,7 @@ export class RefFinAssetUsageMapDetailAddComponent implements OnInit {
   IntegrationObj: IntegrationObj = new IntegrationObj();
   listSelectedCode: Array<string> = new Array<string>();
   listAssetCategory: Array<string> = new Array<string>();
+  RefFinAssetUsageMapObj: RefFinAssetUsageMapObj = new RefFinAssetUsageMapObj();
   tempDataExists = false;
 
   readonly CancelLink: string = NavigationConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL;
@@ -43,7 +45,9 @@ export class RefFinAssetUsageMapDetailAddComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.http.post(URLConstant.GetAllRefFinAssetUsageMapD, {}).toPromise().then(
+    this.RefFinAssetUsageMapObj.PurposeOfFinCode = this.PurposeOfFinCode;
+    this.RefFinAssetUsageMapObj.MrAssetUsageCode = this.MrAssetUsageCode;
+    await this.http.post(URLConstant.GetRefFinAssetUsageMapDByPurposeOfFinCodeAndMrAssetUsageCode, this.RefFinAssetUsageMapObj).toPromise().then(
       (response) => {
         if (response['ReturnObject'] != null)
         {
