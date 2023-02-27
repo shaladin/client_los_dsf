@@ -2153,27 +2153,28 @@ export class LtkmRequestXComponent implements OnInit {
             this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj = event["CustCompanyContactPersonObjs"][0];
             this.custCompanyContactInfo.GetAppCustCompanyContactPersonByAppCustId();
 
-            let addrVar = new AddrObj();
-            addrVar.MrCustAddrTypeCode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.MrCustAddrTypeCode;
-            addrVar.MrHouseOwnershipCode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.MrBuildingOwnershipCode;
-            addrVar.Addr = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Addr;
-            addrVar.AreaCode1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode1;
-            addrVar.AreaCode2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode2;
-            addrVar.AreaCode3 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode3;
-            addrVar.AreaCode4 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode4;
-            addrVar.City = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.City;
-            addrVar.Zipcode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Zipcode;
-            addrVar.SubZipcode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.SubZipcode;
-            addrVar.PhnArea1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObjPhnArea1;
-            addrVar.Phn1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Phn1;
-            addrVar.PhnExt1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnExt1;
-            addrVar.PhnArea2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnArea2;
-            addrVar.Phn2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Phn2;
-            addrVar.PhnExt2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnExt2;
-            addrVar.FaxArea = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.FaxArea;
-            addrVar.Fax = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Fax;
-            addrVar.StayLength = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.StayLength;
-            this.addrCompanyObjsTemp.push(addrVar);
+            //20230227, richard, untuk addr tipe contact sudah ditambahkan di CustAddrObjs
+            // let addrVar = new AddrObj();
+            // addrVar.MrCustAddrTypeCode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.MrCustAddrTypeCode;
+            // addrVar.MrHouseOwnershipCode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.MrBuildingOwnershipCode;
+            // addrVar.Addr = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Addr;
+            // addrVar.AreaCode1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode1;
+            // addrVar.AreaCode2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode2;
+            // addrVar.AreaCode3 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode3;
+            // addrVar.AreaCode4 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.AreaCode4;
+            // addrVar.City = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.City;
+            // addrVar.Zipcode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Zipcode;
+            // addrVar.SubZipcode = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.SubZipcode;
+            // addrVar.PhnArea1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObjPhnArea1;
+            // addrVar.Phn1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Phn1;
+            // addrVar.PhnExt1 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnExt1;
+            // addrVar.PhnArea2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnArea2;
+            // addrVar.Phn2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Phn2;
+            // addrVar.PhnExt2 = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.PhnExt2;
+            // addrVar.FaxArea = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.FaxArea;
+            // addrVar.Fax = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Fax;
+            // addrVar.StayLength = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.StayLength;
+            // this.addrCompanyObjsTemp.push(addrVar);
 
         }
 
@@ -2738,7 +2739,7 @@ export class LtkmRequestXComponent implements OnInit {
             addrVar.HouseOwnershipName = this.listOwnershipType[k].Descr;
           }
         }
-        addrVar.FullAddr = listTemp[i].Addr + " RT/RW " + (listTemp[i].AreaCode4 ? listTemp[i].AreaCode4 : '-') + "/" + (listTemp[i].AreaCode3 ? listTemp[i].AreaCode3 : '-') + " " + (listTemp[i].AreaCode1 ? listTemp[i].AreaCode1 : '-') + " " + (listTemp[i].AreaCode2 ? listTemp[i].AreaCode2 : '-') + " " + (listTemp[i].City ? listTemp[i].City : '-') + " " + (listTemp[i].Zipcode ? listTemp[i].Zipcode : '-');
+        addrVar.FullAddr = (listTemp[i].Addr ? '-': listTemp[i].Addr) + " RT/RW " + (listTemp[i].AreaCode4 ? listTemp[i].AreaCode4 : '-') + "/" + (listTemp[i].AreaCode3 ? listTemp[i].AreaCode3 : '-') + " " + (listTemp[i].AreaCode1 ? listTemp[i].AreaCode1 : '-') + " " + (listTemp[i].AreaCode2 ? listTemp[i].AreaCode2 : '-') + " " + (listTemp[i].City ? listTemp[i].City : '-') + " " + (listTemp[i].Zipcode ? listTemp[i].Zipcode : '-');
         addrVar.PhoneNo = (listTemp[i].PhnArea1 ? listTemp[i].PhnArea1 : '-') + " - " + (listTemp[i].Phn1 ? listTemp[i].Phn1 : '-') + " - " + (listTemp[i].PhnExt1 ? listTemp[i].PhnExt1 : '-');
         addrVar.PhoneNo2 = (listTemp[i].PhnArea2 ? listTemp[i].PhnArea2 : '-') + " - " + (listTemp[i].Phn2 ? listTemp[i].Phn2 : '-') + " - " + (listTemp[i].PhnExt2 ? listTemp[i].PhnExt2 : '-');
         this.addrObjsForView.push(addrVar);
