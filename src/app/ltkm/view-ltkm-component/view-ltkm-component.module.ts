@@ -24,6 +24,7 @@ import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/
 import { ViewLtkmCustDataCompletionPersonalXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-personal/view-ltkm-cust-data-completion-personal-x.component";
 import { ViewLtkmCustDataPersonalDataXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/ltkm-customer-data-personal/view-ltkm-customer-data-personal-x.component";
 import { LtkmViewComponentX } from "app/impl/ltkm/view-ltkm-component/ltkm-view-component-x";
+import { ViewLtkmAppSummaryDataXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-app-summary-data/ltkm-app-summary-data-x.component";
 
 @NgModule({
   exports: [
@@ -39,6 +40,7 @@ import { LtkmViewComponentX } from "app/impl/ltkm/view-ltkm-component/ltkm-view-
     ViewLtkmCustDataCompletionPersonalXComponent,
     ViewLtkmCustDetailComponent,
     ViewLtkmAppSummaryDataComponent,
+    ViewLtkmAppSummaryDataXComponent,
     LtkmViewComponent,
     ViewLtkmCustDataCompletionCompanyXComponent,
     ViewLtkmCustomerDataCompanyXComponent,
@@ -68,6 +70,7 @@ import { LtkmViewComponentX } from "app/impl/ltkm/view-ltkm-component/ltkm-view-
     ViewLtkmCustDataCompletionPersonalXComponent,
     ViewLtkmCustDetailComponent,
     ViewLtkmAppSummaryDataComponent,
+    ViewLtkmAppSummaryDataXComponent,
     LtkmViewComponent,
     ViewLtkmCustDataCompletionCompanyXComponent,
     ViewLtkmCustomerDataCompanyXComponent,

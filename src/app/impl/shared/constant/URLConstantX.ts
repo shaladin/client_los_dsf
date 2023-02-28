@@ -294,7 +294,8 @@ export class URLConstantX {
   public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
   public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmAppRjcByCustNoAndAppStat";
   public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
-
+  public static GetLtkmCustBankAccAndStatementForViewWithOrderedMonthAndYear = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmCustBankAccAndStatementForViewWithOrderedMonthAndYear";
+  
   //ltkm cust personal main data
   public static GetCustPersonalForLtkmCopyByCustIdX = environment.FoundationR3Url + "/v1" + "/CustX/GetCustPersonalForLtkmCopyByCustId";
 

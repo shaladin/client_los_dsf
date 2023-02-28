@@ -2739,7 +2739,7 @@ export class LtkmRequestXComponent implements OnInit {
             addrVar.HouseOwnershipName = this.listOwnershipType[k].Descr;
           }
         }
-        addrVar.FullAddr = (listTemp[i].Addr ? '-': listTemp[i].Addr) + " RT/RW " + (listTemp[i].AreaCode4 ? listTemp[i].AreaCode4 : '-') + "/" + (listTemp[i].AreaCode3 ? listTemp[i].AreaCode3 : '-') + " " + (listTemp[i].AreaCode1 ? listTemp[i].AreaCode1 : '-') + " " + (listTemp[i].AreaCode2 ? listTemp[i].AreaCode2 : '-') + " " + (listTemp[i].City ? listTemp[i].City : '-') + " " + (listTemp[i].Zipcode ? listTemp[i].Zipcode : '-');
+        addrVar.FullAddr = (listTemp[i].Addr ?listTemp[i].Addr: '-') + " RT/RW " + (listTemp[i].AreaCode4 ? listTemp[i].AreaCode4 : '-') + "/" + (listTemp[i].AreaCode3 ? listTemp[i].AreaCode3 : '-') + " " + (listTemp[i].AreaCode1 ? listTemp[i].AreaCode1 : '-') + " " + (listTemp[i].AreaCode2 ? listTemp[i].AreaCode2 : '-') + " " + (listTemp[i].City ? listTemp[i].City : '-') + " " + (listTemp[i].Zipcode ? listTemp[i].Zipcode : '-');
         addrVar.PhoneNo = (listTemp[i].PhnArea1 ? listTemp[i].PhnArea1 : '-') + " - " + (listTemp[i].Phn1 ? listTemp[i].Phn1 : '-') + " - " + (listTemp[i].PhnExt1 ? listTemp[i].PhnExt1 : '-');
         addrVar.PhoneNo2 = (listTemp[i].PhnArea2 ? listTemp[i].PhnArea2 : '-') + " - " + (listTemp[i].Phn2 ? listTemp[i].Phn2 : '-') + " - " + (listTemp[i].PhnExt2 ? listTemp[i].PhnExt2 : '-');
         this.addrObjsForView.push(addrVar);

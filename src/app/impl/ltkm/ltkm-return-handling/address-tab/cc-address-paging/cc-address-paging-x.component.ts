@@ -9,6 +9,7 @@ import { AppCustAddrObj } from 'app/shared/model/app-cust-addr-obj.model';
 import { InputCustomAddrCustCmpltObj } from 'app/shared/model/input-custom-addr-cust-cmplt-obj.model';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { LtkmCustAddrObj } from 'app/shared/model/ltkm/ltkm-cust-addr-obj.model';
+import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
@@ -26,6 +27,8 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
   Mode: string = "add";
   IsDetail: boolean = false;
   IsReady: boolean = false;
+  listOwnershipType: Array<RefMasterObj> = new Array();
+  listAddressType: Array<RefMasterObj> = new Array();
 
   constructor(
     private http: HttpClient,
@@ -33,13 +36,15 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
     public formValidate: FormValidateService) {
   }
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
+    await this.GetListRefAddress();
+    await this.GetListRefOwnership();
     this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridLtkmAddressX.json";
-    this.LoadListCustAddress();
+    await this.LoadListCustAddress();
   }
 
-  LoadListCustAddress(){
-    this.http.post<Array<LtkmCustAddrObj>>(URLConstant.GetListLtkmCustAddrByLtkmCustId, { Id: this.LtkmCustId }).subscribe(
+  async LoadListCustAddress(){
+    await this.http.post<Array<LtkmCustAddrObj>>(URLConstant.GetListLtkmCustAddrByLtkmCustId, { Id: this.LtkmCustId }).toPromise().then(
       (response) => {
         this.ListAddress = response[CommonConstant.ReturnObj];
         let idxEmergency = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeEmergency);
@@ -48,6 +53,9 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
         this.inputGridObj.resultData = {
           Data: ""
         }
+
+        this.ListAddress = this.GetNameForAddrOwnrshpCode(this.ListAddress);
+
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = this.ListAddress;
         this.IsReady = true;
@@ -55,6 +63,42 @@ export class CcAddressPagingLtkmXComponent implements OnInit {
       }
     );
   }
+
+  async GetListRefOwnership() {
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeBuildingOwnership }).toPromise().then(
+      (response) => {
+        this.listOwnershipType = response["RefMasterObjs"];
+      }
+    );
+  }
+
+  async GetListRefAddress() {
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCustAddrType }).toPromise().then(
+      (response) => {
+        this.listAddressType = response["RefMasterObjs"];
+      }
+    );
+  }
+
+  GetNameForAddrOwnrshpCode(listTemp: Array<LtkmCustAddrObj>){
+      for (let i = 0; i < listTemp.length; i++){
+        for (let j = 0; j < this.listAddressType.length; j++){
+          if (listTemp[i].MrCustAddrTypeCode == this.listAddressType[j].MasterCode){
+            listTemp[i].CustAddrTypeName = this.listAddressType[j].Descr;
+          }
+        }
+        for (let k = 0; k < this.listOwnershipType.length; k++){
+          if (listTemp[i].MrHouseOwnershipCode == this.listOwnershipType[k].MasterCode){
+            listTemp[i].HouseOwnershipName = this.listOwnershipType[k].Descr;
+          }
+        }
+        listTemp[i].FullAddr = (listTemp[i].Addr ? listTemp[i].Addr: '-') + " RT/RW " + (listTemp[i].AreaCode4 ? listTemp[i].AreaCode4 : '-') + "/" + (listTemp[i].AreaCode3 ? listTemp[i].AreaCode3 : '-') + " " + (listTemp[i].AreaCode1 ? listTemp[i].AreaCode1 : '-') + " " + (listTemp[i].AreaCode2 ? listTemp[i].AreaCode2 : '-') + " " + (listTemp[i].City ? listTemp[i].City : '-') + " " + (listTemp[i].Zipcode ? listTemp[i].Zipcode : '-');
+        listTemp[i].PhoneNo = (listTemp[i].PhnArea1 ? listTemp[i].PhnArea1 : '-') + " - " + (listTemp[i].Phn1 ? listTemp[i].Phn1 : '-') + " - " + (listTemp[i].PhnExt1 ? listTemp[i].PhnExt1 : '-');
+        listTemp[i].PhoneNo2 = (listTemp[i].PhnArea2 ? listTemp[i].PhnArea2 : '-') + " - " + (listTemp[i].Phn2 ? listTemp[i].Phn2 : '-') + " - " + (listTemp[i].PhnExt2 ? listTemp[i].PhnExt2 : '-');
+      }
+
+      return listTemp;
+    }
 
   // Add() {
   //   this.IsDetail = true;
