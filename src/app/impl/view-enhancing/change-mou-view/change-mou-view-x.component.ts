@@ -26,6 +26,7 @@ export class ChangeMouViewXComponent implements OnInit {
   ChangeMouTrxIdPrev: number;
   Status: string;
   TrxType: string;
+  Version: number;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -41,6 +42,7 @@ export class ChangeMouViewXComponent implements OnInit {
         this.MouCustId = responseCMT["MouCustId"];
         this.Status = responseCMT["Status"];
         this.TrxType = responseCMT["TrxType"];
+        this.Version = responseCMT["Version"];
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (responseMC : MouCustObj) => {
             this.arrValue.push(this.ChangeMouTrxId);

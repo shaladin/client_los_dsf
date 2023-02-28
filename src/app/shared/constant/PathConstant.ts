@@ -15,6 +15,7 @@ export class PathConstant {
     public static LR_BACKDOOR = "Backdoor";
     public static LR_LTKM = "Ltkm";
     public static LR_TRIAL_CALC = "TrialCalculation";
+    public static LR_REF_FIN_ASSET_USAGE_MAP = "RefFinAssetUsageMap";
     public static LR_TASK_REASSIGN = "TaskReassignment";
     public static UNAUTHORIZED = "Unauthorized";
     public static SETTING = "Setting";
@@ -322,8 +323,6 @@ export class PathConstant {
     public static CRD_APPRV_CR = "CreditApproval";
     public static CRD_APPRV_CR_PAGING = PathConstant.CRD_APPRV_CR + "/" + PathConstant.PAGING;
     public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstant.DETAIL;
-    public static CRD_REVIEW_CR_HISTORY = "CreditReviewCrHistory";
-    public static CRD_REVIEW_CR_DETAIL_HISTORY = PathConstant.CRD_REVIEW_CR_HISTORY + "/" + PathConstant.DETAIL;
     //#endregion
 
     //#region Nap-App_Prcs
@@ -645,4 +644,16 @@ public static REQUISITION_DECISION = "requisitiondecision";
     public static APP_SRC_PAGING = PathConstant.APP_SRC + "/" + PathConstant.PAGING;
     //endSetting
 
+    //#region Content Credit Review
+    public static CRD_REVIEW_CR_HISTORY = "CreditReviewCrHistory";
+    public static CRD_REVIEW_CR_DETAIL_HISTORY = PathConstant.CRD_REVIEW_CR_HISTORY + "/" + PathConstant.DETAIL;
+    //#endregion
+
+    //#region REF FIN ASSET USAGE MAP
+    public static REF_FIN_ASSET_USAGE_MAP = "RefFinAssetUsageMap";
+    public static REF_FIN_ASSET_USAGE_MAP_PAGING = PathConstant.REF_FIN_ASSET_USAGE_MAP + PathConstant.PAGING;
+    public static REF_FIN_ASSET_USAGE_MAP_DETAIL = PathConstant.REF_FIN_ASSET_USAGE_MAP + PathConstant.DETAIL;
+    public static REF_FIN_ASSET_USAGE_MAP_ADD_EDIT = PathConstant.REF_FIN_ASSET_USAGE_MAP + PathConstant.ADD + PathConstant.EDIT;
+    public static REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD = PathConstant.REF_FIN_ASSET_USAGE_MAP + PathConstant.DETAIL + "/" + PathConstant.ADD;
+    //#endregion
 }

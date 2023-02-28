@@ -530,4 +530,11 @@ export class NavigationConstant {
   public static EDIT_COMM_AFT_APV_INQUIRY_PAGING = "/" + PathConstantX.LR_IMPL + "/"+ PathConstantX.EDIT_COMM_AFT_APV_INQUIRY_PAGING;//"/Impl/EditCommAftApv/Inquiry/Paging"
   public static EDIT_COMM_AFT_APV_INQUIRY_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_INQUIRY_DETAIL;//"/Impl/EditCommAftApv/Inquiry/Detail"
   //#endregion
+  //#region REF FIN ASSET USAGE MAP
+  public static REF_FIN_ASSET_USAGE_MAP_PAGING = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_PAGING; //'RefFinAssetUsageMap/RefFinAssetUsageMapPaging'
+  public static REF_FIN_ASSET_USAGE_MAP_ADD_EDIT = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_ADD_EDIT; //'RefFinAssetUsageMap/RefFinAssetUsageMapAddEdit'
+  public static REF_FIN_ASSET_USAGE_MAP_DETAIL = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL; //'RefFinAssetUsageMap/RefFinAssetUsageMapDetail'
+  public static REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD; //'RefFinAssetUsageMap/RefFinAssetUsageMapDetail/Add'
+  //#endregion
+  
 }

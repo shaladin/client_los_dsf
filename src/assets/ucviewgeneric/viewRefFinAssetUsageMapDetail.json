@@ -1,0 +1,34 @@
+{
+    "subsection": [
+      {
+        "subSectionId": "AssetCategoryMappingId",
+        "subSectionTitle": "Main Info",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Purpose Of Financing Code",
+            "property": "PurposeOfFinCode"
+          },
+          {
+            "type": "text",
+            "label": "Purpose Of Financing Name",
+            "property": "PurposeOfFinName"
+          },
+          {
+            "type": "text",
+            "label": "Asset Usage Code",
+            "property": "MrAssetUsageCode"
+          },
+          {
+            "type": "text",
+            "label": "Asset Usage Name",
+            "property": "MrAssetUsageName"
+          }
+        ],
+        "querystring": {
+            "name": "viewRefFinAssetUsageMapDetail"
+        }
+      }
+    ]
+  }

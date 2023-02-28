@@ -1,0 +1,46 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="form-section card-title" translate>Asset Usage Mapping Registration</h4>
+          </div>
+        </div>
+      </div>
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="RefFinAssetUsageMapForm" (ngSubmit)="RefFinAssetUsageMapForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <div class="form-body">
+            <lib-ucSubsection [id]="'AssetUsageMap'" [title]="'Asset Usage Map Information'" [panel]="'AssetUsageMapId'">
+            </lib-ucSubsection>
+            <div id="AssetUsageMapId">
+              <div class="form-group row adins-required">
+                <label class="col-md-4 adInsLabel" translate>Purpose Of Financing </label>
+                <div class="col-md-5">
+                  <lib-ucdropdownlist [dropdownListObj]="DictUcDDLObj['PURPOSE_OF_FIN']"
+                    [parentForm]="RefFinAssetUsageMapForm" [enjiForm]="enjiForm" [identifier]="'PurposeOfFinCode'"></lib-ucdropdownlist>
+                </div>
+              </div>
+              <div class="form-group row adins-required">
+                <label class="col-md-4 adInsLabel" translate>Asset Usage </label>
+                <div class="col-md-5">
+                  <lib-ucdropdownlist [dropdownListObj]="DictUcDDLObj[ReqRefMasterObj.RefMasterTypeCode]"
+                    [parentForm]="RefFinAssetUsageMapForm" [enjiForm]="enjiForm" [identifier]="'MrAssetUsageCode'"></lib-ucdropdownlist>
+                </div>
+              </div>
+              <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]">
+                  <i class="far fa-window-close"></i>&nbsp;<span translate>Cancel</span>
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

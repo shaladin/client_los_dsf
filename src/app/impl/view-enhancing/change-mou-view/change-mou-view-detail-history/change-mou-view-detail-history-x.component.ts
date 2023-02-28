@@ -99,7 +99,7 @@ export class ChangeMouViewDetailHistoryXComponent implements OnInit {
   LinkSupplier: VendorObj;
   Manufacturer: string = "-";
   RevolvingType: string;
-  mouCustDlrFncng: MouCustDlrFinObj;
+  mouCustDlrFncng: any;
   Customer: string;
   TopDaysRatePercent: number;
   ExtendRate: number;
@@ -136,10 +136,10 @@ export class ChangeMouViewDetailHistoryXComponent implements OnInit {
               this.mouCust = response["MouCustObj"];
               this.MouCustId = this.mouCust.MouCustId;
               this.CurrCode = this.mouCust.CurrCode;
-              this.PlafondAmt = this.mouCust.PlafondAmt;
               this.IsRevolving = this.mouCust.IsRevolving;
               this.RealisationAmt = this.mouCust.RealisationAmt;
               this.mouCustFctr = response["MouCustFctrObj"];
+              this.PlafondAmt = this.mouCustFctr.PlafondAmt;
               this.RevolvingType = this.mouCustFctr.RevolvingTypeDesc;
               this.AssetTypeCode = this.mouCustFctr.AssetTypeCode;
               this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
@@ -250,10 +250,10 @@ export class ChangeMouViewDetailHistoryXComponent implements OnInit {
         this.mouCust = response["MouCustObj"];
         this.MouCustId = this.mouCust.MouCustId;
         this.CurrCode = this.mouCust.CurrCode;
-        this.PlafondAmt = this.mouCust.PlafondAmt;
         this.IsRevolving = this.mouCust.IsRevolving;
         this.RealisationAmt = this.mouCust.RealisationAmt;
         this.mouCustDlrFncng = response["MouCustDlrFncngObj"];
+        this.PlafondAmt = this.mouCustDlrFncng.PlafondAmt;
         this.PayFreqCode = this.mouCustDlrFncng.PayFreqCode;
         this.WopCode = this.mouCustDlrFncng.WopCode;
         this.RevolvingType = this.mouCustDlrFncng.RevolvingTypeDesc;
