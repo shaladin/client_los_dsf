@@ -73,6 +73,8 @@ import { AppViewInsuranceDetailXComponent } from "app/impl/view-enhancing/app-vi
 import { TabAnalysisResultHistoryXComponent } from "app/impl/view-enhancing/app-view/tab-analysis-result-history-x/tab-analysis-result-history-x.component";
 import { CreditReviewCrDetailHistoryComponent } from "./credit-review-cr-detail-history/credit-review-cr-detail-history.component";
 import { CreditReviewCrDetailHistoryXComponent } from "app/impl/view-enhancing/app-view/credit-review-cr-history-x/credit-review-cr-detail-history-x/credit-review-cr-detail-history-x.component";
+import { CreditReviewCrDetailHistoryXDsfComponent } from "app/impl/view-enhancing/app-view/credit-review-cr-history-x-dsf/credit-review-cr-detail-history-x-dsf/credit-review-cr-detail-history-x-dsf.component";
+import { TabAnalysisResultHistoryXDsfComponent } from "app/impl/view-enhancing/app-view/tab-analysis-result-history-x-dsf/tab-analysis-result-history-x-dsf.component";
 
 
 @NgModule({
@@ -153,7 +155,9 @@ import { CreditReviewCrDetailHistoryXComponent } from "app/impl/view-enhancing/a
         AppInsuranceXComponent,
         AppViewInsuranceDetailXComponent,
         TabAnalysisResultHistoryXComponent,
-        CreditReviewCrDetailHistoryXComponent
+        TabAnalysisResultHistoryXDsfComponent,
+        CreditReviewCrDetailHistoryXComponent,
+        CreditReviewCrDetailHistoryXDsfComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
