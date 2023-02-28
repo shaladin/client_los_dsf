@@ -80,6 +80,7 @@ export class CrdRvwViewComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
+    await this.GetAppNo();
     await this.GetCrdRvwCustInfoByAppId();
     await this.InitDms();
     await this.BindCreditAnalysisItemFormObj();
