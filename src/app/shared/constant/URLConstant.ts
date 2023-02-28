@@ -63,7 +63,7 @@ export class URLConstant {
   public static CopyCancelledAppForMainDataMultiBL = environment.losUrl + "/v1" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static CopyCancelledAppForMainDataMultiBLV2 = environment.losUrl + "/v2.1" + "/Application/CopyCancelledAppForMainDataMultiBL";
   public static GetSummaryAppByAppId = environment.losUrl + "/v1" + "/Application/GetSummaryAppByAppId";
-  public static GetAppSummaryByAppId = environment.losUrl1 + "/v1" + "/Application/GetAppSummaryByAppId";
+  public static GetAppSummaryByAppId = environment.losUrl + "/v1" + "/Application/GetAppSummaryByAppId";
   public static AddAppFromMou = environment.losUrl + "/v1" + "/Application/AddAppFromMou";
   public static CheckMouCustIntegrator = environment.losUrl + "/v1" + "/MouCust/CheckMouCustIntegrator";
   public static AddNap1FromLead = environment.losUrl + "/v1" + "/Application/AddNap1FromLead";
@@ -1625,7 +1625,7 @@ export class URLConstant {
   public static GetSummaryByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/GetSummaryByLtkmCustId";
   public static GetLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/ltkm/getLtkmReqByLtkmCustId";
   public static GetLtkmCustDataPersonalForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustDataPersonalForViewByLtkmCustId";
-  public static GetLtkmCustDataCompanyForViewByLtkmCustId = environment.losUrl1 + "/v1" + "/LtkmCustomerData/GetLtkmCustDataCompanyForViewByLtkmCustId";
+  public static GetLtkmCustDataCompanyForViewByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustDataCompanyForViewByLtkmCustId";
   public static GetLtkmCustCompanyFinDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustCompanyFinDataByLtkmCustId";
   public static GetLtkmCustById = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustById";
   public static getLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/getLtkmReqByLtkmCustId";
