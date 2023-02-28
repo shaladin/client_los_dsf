@@ -11,6 +11,7 @@ import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { ChangeMouTrxObj } from 'app/shared/model/change-mou-trx-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-change-mou-history-x',
@@ -25,20 +26,27 @@ export class ChangeMouHistoryVersionXComponent implements OnInit {
   @Input() TrxType: string;
   isPrevExist: boolean = true;
   isReady: boolean = false;
-
+  Version: number;
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
 
   }
 
   async ngOnInit() {
-    await this.http.post(URLConstant.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).toPromise().then((responseId) => {
-      if(responseId["ChangeMouTrxId"] != undefined){
-        this.ChangeMouTrxIdPrev = responseId["ChangeMouTrxId"];
-        if(this.ChangeMouTrxIdPrev == 0){
-          this.isPrevExist = false;
+    await this.http.post(URLConstant.GetChangeMouTrxbyTrxId, { Id: this.ChangeMouTrxId }).subscribe(
+      (responseCMT) => {
+        this.Version = responseCMT["Version"];
+        this.http.post(URLConstantX.GetChangeMouPreviousIdByChangeMouTrxIdX, { id: this.ChangeMouTrxId }).toPromise().then((responseId) => {
+          if (responseId["ChangeMouTrxId"] != undefined) {
+            this.ChangeMouTrxIdPrev = responseId["ChangeMouTrxId"];
+            if (this.ChangeMouTrxIdPrev == 0) {
+              this.isPrevExist = false;
+            }
+            this.isReady = true;
+          }
+        });
+        if (this.Version != 1) {
+          this.isPrevExist = true;
         }
-        this.isReady = true;
-      }
-    });
+      });
   }
 }
