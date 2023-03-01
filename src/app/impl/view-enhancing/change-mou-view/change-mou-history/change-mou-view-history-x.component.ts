@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-change-mou-view-history-x',
@@ -15,6 +16,7 @@ export class ChangeMouHistoryVersionViewXComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() MouType: string;
   @Input() TrxType: string;
+  @Input() Version: number;
 
   isPrevExist: boolean = true;
   isExecuted: boolean = false;
@@ -26,17 +28,27 @@ export class ChangeMouHistoryVersionViewXComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.http.post(URLConstant.GetChangeMouPreviousIdByMouCustId, {id: this.MouCustId}).toPromise().then((responseId) => {
+    await this.http.post(URLConstantX.GetChangeMouPreviousIdByChangeMouTrxIdX, {id: this.ChangeMouTrxId}).toPromise().then((responseId) => {
       if(responseId["ChangeMouTrxId"] != undefined){
         this.ChangeMouTrxIdPrev = responseId["ChangeMouTrxId"];
         if(this.ChangeMouTrxIdPrev == 0){
           this.isPrevExist = false;
         }
         this.isReady = true;
+        if (this.Version == 1) {
+          if (this.Status == "EXE") {
+            this.isExecuted = true;
+          }
+        } else if (this.Version == 0) {
+          this.isExecuted = true;
+          this.isPrevExist = true;
+          this.isReady = true;
+          this.ChangeMouTrxIdPrev = this.ChangeMouTrxId;
+          this.ChangeMouTrxId = this.ChangeMouTrxId;
+        } else {
+          this.isExecuted = true;
+        }
       }
     });
-    if(this.Status == "EXE"){
-      this.isExecuted = true;
-    }
   }
 }

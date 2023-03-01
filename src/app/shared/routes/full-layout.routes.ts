@@ -83,6 +83,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './trial-calculation/trial-calculation.module#TrialCalculationModule'
   },
   {
+    path: PathConstant.LR_REF_FIN_ASSET_USAGE_MAP,
+    loadChildren: './ref-fin-asset-usage-map/ref-fin-asset-usage-map.module#RefFinAssetUsageMapModule'
+  },
+  {
     path: PathConstant.LR_TASK_REASSIGN,
     loadChildren: './task-reassignment/task-reassignment.module#TaskReassignmentModule'
   },

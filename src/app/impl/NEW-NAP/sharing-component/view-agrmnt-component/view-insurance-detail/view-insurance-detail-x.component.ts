@@ -30,7 +30,7 @@ export class ViewInsuranceDetailXComponent implements OnInit {
   appInsObjObj: AppInsObjObj = new AppInsObjObj();
   appAssetObj: any;
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
-  appInsMainCvgObjs: Array<AppInsMainCvgObj> = new Array<AppInsMainCvgObj>();
+  appInsMainCvgObjs: any;
   appAssetAcessoryObj: AppAssetAccessoryObj = new AppAssetAccessoryObj();
   assetCategoryName: string = "";
 
@@ -45,7 +45,7 @@ export class ViewInsuranceDetailXComponent implements OnInit {
   async ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridAccObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppInsMainCvg.json";
+    this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridAppInsMainCvgX.json";
     this.inputGridAccObj.pagingJson = "./assets/impl/ucgridview/gridAppInsuranceAssetAccessory.json";
     this.getInsuranceData();
   }
@@ -87,11 +87,11 @@ export class ViewInsuranceDetailXComponent implements OnInit {
        
           var tempCustMainPremiRate: string = ""; 
           tempCustMainPremiRate += parseFloat((this.appInsMainCvgObjs[i].CustMainPremiRate).toString()).toFixed(3);
-          this.appInsMainCvgObjs[i].CustMainPremiRate = parseFloat(tempCustMainPremiRate);
+          this.appInsMainCvgObjs[i].CustMainPremiRate = tempCustMainPremiRate;
 
           var tempInscoMainPremiRate: string = ""; 
           tempInscoMainPremiRate += parseFloat((this.appInsMainCvgObjs[i].InscoMainPremiRate).toString()).toFixed(3);
-          this.appInsMainCvgObjs[i].InscoMainPremiRate = parseFloat(tempInscoMainPremiRate);
+          this.appInsMainCvgObjs[i].InscoMainPremiRate = tempInscoMainPremiRate;
         }
 
         if (response["AppAssetAccessoryObjs"] != null)

@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="ucSearch-Button-Right">
+    <span class="mr-1">
+      <button type="button" class="backButton" [routerLink]="[CancelLink]" [queryParams]="{PurposeOfFinCode: PurposeOfFinCode, MrAssetUsageCode: MrAssetUsageCode}">
+        <i class="fa fa-arrow-left"> </i>&nbsp;<span translate>Back</span>
+      </button>
+    </span>
+  </div>
+  <div class="card-header">
+    <h4 class="card-title" translate>Asset Category Usage Mapping Registration</h4>
+  </div>
+  <div class="card-body">
+    <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+    </lib-ucaddtotemp>
+
+    <div class="card-header">
+      <div class="text-right">
+        <button type="submit" *ngIf="tempDataExists" (click)="Save()" class="btn btn-raised btn-primary">
+          <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
