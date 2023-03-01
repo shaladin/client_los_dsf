@@ -167,6 +167,7 @@ export class ChangeMouDetailHistoryXComponent implements OnInit {
           this.SingleInstCalcMthd = this.mouCustFctr.SingleInstCalcMthdDescr;
           this.MrPaidByCode = this.mouCustFctr.PaidByDescr;
           this.PayFreqCode = this.mouCustFctr.PayFreqCode;
+          this.PlafondAmt = this.mouCustFctr.PlafondAmt;
 
           this.WopCode = this.mouCustFctr.WopCode;
           this.TopDays = this.mouCustFctr.TopDays;
@@ -202,6 +203,7 @@ export class ChangeMouDetailHistoryXComponent implements OnInit {
           this.MaxMonths = this.mouCustDlrFncng.MaximumMonthsForExtend;
           this.TopDays = this.mouCustDlrFncng.TopDays;
           this.MaxExtendTimes = this.mouCustDlrFncng.MaximumExtendTimes;
+          this.PlafondAmt = this.mouCustDlrFncng.PlafondAmt;
         }
       })
 
