@@ -140,61 +140,61 @@
         "type": "sort",
         "position": "center",
         "label": "Application No",
-        "name": "A.APP_NO"
+        "name": "MAX(A.APP_NO)"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "Agreement No",
-        "name": "B.AGRMNT_NO"
+        "name": "MAX(B.AGRMNT_NO)"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "Customer No",
-        "name": "C.CUST_NO"
+        "name": "MAX(C.CUST_NO)"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Customer Name",
-        "name": "C.CUST_NAME"
+        "name": "MAX(C.CUST_NAME)"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Product Offering Name",
-        "name": "A.PROD_OFFERING_NAME"
+        "name": "MAX(A.PROD_OFFERING_NAME)"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "Application Date",
-        "name": "A.APP_CREATED_DT"
+        "name": "MAX(A.APP_CREATED_DT)"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "NAP Submitted",
-        "name": "A.IS_APP_INIT_DONE"
+        "name": "MAX(A.IS_APP_INIT_DONE + 0)"
       },
       {
         "type": "sort",
         "position": "center",
         "label": "Contract Status",
-        "name": "B.AGRMNT_STAT"
+        "name": "MAX(B.AGRMNT_STAT)"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Application Step",
-        "name": "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)"
+        "name": "MAX(ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP))"
       },
       {
         "type": "sort",
         "position": "left",
         "label": "Application Status",
-        "name": "A.APP_STAT"
+        "name": "MAX(A.APP_STAT)"
       }
     ],
     "bodyList": [
