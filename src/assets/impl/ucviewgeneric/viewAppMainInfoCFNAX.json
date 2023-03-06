@@ -60,7 +60,7 @@
           "name": "LeadNo",
           "isHide": true,
           "position": "left",
-          "path": "/View/Lead",
+          "path": "VIEW_LEAD",
           "target": "_blank",
           "param": [
             {
