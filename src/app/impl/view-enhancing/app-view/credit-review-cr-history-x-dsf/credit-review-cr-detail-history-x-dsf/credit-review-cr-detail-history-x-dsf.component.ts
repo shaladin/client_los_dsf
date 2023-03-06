@@ -74,6 +74,9 @@ export class CreditReviewCrDetailHistoryXDsfComponent implements OnInit {
   crdRvwAppObj: CrdRvwAppObj = new CrdRvwAppObj();
   lobCode: string;
   IsFD: boolean = false;
+  //Self Custom Rework DSL-444
+  IsMPF: boolean = false;
+  //End Self Custom Rework DSL-444
 
   ProdOfferingCode: string;
   ProdOfferingVersion: number;
@@ -190,6 +193,9 @@ export class CreditReviewCrDetailHistoryXDsfComponent implements OnInit {
           this.ProdOfferingCode = response.ProdOfferingCode;
           this.ProdOfferingVersion = response.ProdOfferingVersion;
           this.OriOfficeCode = response.OriOfficeCode;
+          //Self Custom Rework DSL-444
+          this.BizTemplateCode = response.BizTemplateCode;
+          //End Self Custom Rework DSL-444
           await this.GetCreditScoring(response.AppNo);
         }
       });
@@ -197,6 +203,11 @@ export class CreditReviewCrDetailHistoryXDsfComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "FD") {
       this.IsFD = true;
     }
+    //Self Custom Rework DSL-444
+    if (this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "MPF") {
+      this.IsMPF = true;
+    }
+    //End Self Custom Rework DSL-444
   }
 
   async GetCreditScoring(appNo: string) {
