@@ -31,7 +31,7 @@
           "label": "Copy From",
           "property": "LeadCopyNo",
           "name": "LeadCopyNo",
-          "path": "/View/Lead",
+          "path": "VIEW_LEAD",
           "target" : "_blank",
           "param": [
             {
