@@ -12,7 +12,7 @@
             "property": "AppNo",
             "name": "AppNo",
             "environment": "LOSR3WEB",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "target" : "_blank",
             "param": [
               {
@@ -32,7 +32,7 @@
             "property": "AgrmntNo",
             "name": "AgrmntNo",
             "environment": "LOSR3WEB",
-            "path": "/View/AgrmntView",
+            "path": "VIEW_AGRMNT",
             "target" : "_blank",
             "param": [
               {
