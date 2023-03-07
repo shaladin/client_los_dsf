@@ -45,7 +45,7 @@
                     "type": "link",
                     "label": "Asset Name",
                     "property": "FullAssetName",
-                    "path": "/View/AppAsset",
+                    "path": "VIEW_APP_ASSET",
                     "target": "_blank",
                     "param": [
                         { 
