@@ -85,8 +85,6 @@ export class AppInquiryPagingXComponent implements OnInit, OnDestroy {
     critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
     critLobObj.value = this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critLobObj);
-
-    this.isReady = true;
   }
    
   getEvent(event: any) {

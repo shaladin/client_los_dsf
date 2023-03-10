@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {AdInsConstant} from 'app/shared/AdInstConstant';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
 import {String} from 'typescript-string-operations';
@@ -24,12 +24,13 @@ import {ApprovalTaskService} from 'app/shared/services/ApprovalTask.service';
   selector: 'app-go-live-approval-paging-x',
   templateUrl: './go-live-approval-paging-x.component.html'
 })
-export class GoLiveApprovalPagingXComponent implements OnInit {
+export class GoLiveApprovalPagingXComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private route: ActivatedRoute,
               private httpClient: HttpClient,
@@ -37,6 +38,16 @@ export class GoLiveApprovalPagingXComponent implements OnInit {
               private router: Router, private cookieService: CookieService,
               private apvTaskService: ApprovalTaskService
   ) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -45,7 +56,26 @@ export class GoLiveApprovalPagingXComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj.addCritInput = new Array();
 
     if (environment.isCore) {
