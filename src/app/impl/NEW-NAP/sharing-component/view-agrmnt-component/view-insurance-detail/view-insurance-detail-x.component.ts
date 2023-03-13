@@ -30,7 +30,7 @@ export class ViewInsuranceDetailXComponent implements OnInit {
   appInsObjObj: AppInsObjObj = new AppInsObjObj();
   appAssetObj: any;
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
-  appInsMainCvgObjs: Array<AppInsMainCvgObj> = new Array<AppInsMainCvgObj>();
+  appInsMainCvgObjs: any;
   appAssetAcessoryObj: AppAssetAccessoryObj = new AppAssetAccessoryObj();
   assetCategoryName: string = "";
 
@@ -45,7 +45,7 @@ export class ViewInsuranceDetailXComponent implements OnInit {
   async ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridAccObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppInsMainCvg.json";
+    this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridAppInsMainCvgX.json";
     this.inputGridAccObj.pagingJson = "./assets/impl/ucgridview/gridAppInsuranceAssetAccessory.json";
     this.getInsuranceData();
   }
@@ -63,6 +63,36 @@ export class ViewInsuranceDetailXComponent implements OnInit {
           this.appCollateralObj = response["AppCollateralObj"];
         }
         this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
+
+        for (var i = 0; i < this.appInsMainCvgObjs.length; i++) {
+          this.appInsMainCvgObjs[i].CustAddPremiRate = "";
+          this.appInsMainCvgObjs[i].InscoAddPremiRate = "";
+          var arrCustAddPremiRate = [];
+          var arrInscoAddPremiRate = [];
+          if(this.appInsMainCvgObjs[i].AppInsAddCvgObjs != null && this.appInsMainCvgObjs[i].AppInsAddCvgObjs != undefined){
+            for (var j = 0; j < this.appInsMainCvgObjs[i].AppInsAddCvgObjs.length; j++) {
+              if (this.appInsMainCvgObjs[i].AppInsMainCvgId == this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].AppInsMainCvgId) {
+                arrCustAddPremiRate.push((this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].CustAddPremiRate).toFixed(3));
+                arrInscoAddPremiRate.push((this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].InscoAddPremiRate).toFixed(3));
+              }
+            }
+            this.appInsMainCvgObjs[i].CustAddPremiRate = arrCustAddPremiRate.join(", ");
+            this.appInsMainCvgObjs[i].InscoAddPremiRate = arrInscoAddPremiRate.join(", ");
+          }else{
+            arrCustAddPremiRate.push((0).toFixed(3));
+            arrInscoAddPremiRate.push((0).toFixed(3));
+            this.appInsMainCvgObjs[i].CustAddPremiRate = arrCustAddPremiRate.join(", ");
+            this.appInsMainCvgObjs[i].InscoAddPremiRate = arrInscoAddPremiRate.join(", ");
+          }
+       
+          var tempCustMainPremiRate: string = ""; 
+          tempCustMainPremiRate += parseFloat((this.appInsMainCvgObjs[i].CustMainPremiRate).toString()).toFixed(3);
+          this.appInsMainCvgObjs[i].CustMainPremiRate = tempCustMainPremiRate;
+
+          var tempInscoMainPremiRate: string = ""; 
+          tempInscoMainPremiRate += parseFloat((this.appInsMainCvgObjs[i].InscoMainPremiRate).toString()).toFixed(3);
+          this.appInsMainCvgObjs[i].InscoMainPremiRate = tempInscoMainPremiRate;
+        }
 
         if (response["AppAssetAccessoryObjs"] != null)
         {

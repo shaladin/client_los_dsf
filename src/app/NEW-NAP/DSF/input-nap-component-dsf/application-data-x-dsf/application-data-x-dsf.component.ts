@@ -51,6 +51,10 @@ import { String } from 'typescript-string-operations';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { AgrmntMasterXDsfObj } from 'app/shared/model/agrmnt-master-x-dsf-obj.model';
+import { AgrmntChildOsNiDsfObj } from 'app/shared/model/agrmnt-child-os-ni-dsf-obj.model';
+import { AgrParentDsfObjX } from 'app/impl/shared/model/Response/AgrParentDsfObjX.model';
+import { ReqCalculatePlafondAgrmntDsfXObj } from 'app/impl/shared/model/ReqCalculatePlafondAgrmntDsfXObj.Model';
 
 @Component({
   selector: 'app-application-data-x-dsf',
@@ -115,8 +119,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
   agrmntParentNo: string;
   resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
   reqAgrmntMasterDataObjX: ReqAgrmntMasterDataObjX;
-  agrParent: AgrParentObjX;
-  agrParentList: Array<AgrParentObjX>;
+  agrParent: AgrParentDsfObjX;
+  agrParentList: Array<AgrParentDsfObjX>;
   plafondDict: { [id: string]: ResCalculatePlafondAgrmntXObj } = {};
   DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -210,6 +214,10 @@ export class ApplicationDataXDsfComponent implements OnInit {
     IdNoOwnerBankAcc: [''],
     BirthPlaceOwnerBankAcc: [''],
     BirthDtOwnerBankAcc: [''],
+    MasterAgreementNo: [''],
+    MaxPlafondMasterAgreement: [''],
+    RequestedPlafond: [0, [Validators.pattern("^[0-9]+$"), Validators.required, Validators.min(1)]],
+    RemainingPlafond: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -237,16 +245,34 @@ export class ApplicationDataXDsfComponent implements OnInit {
   TotalAssetPrice: number = 0;
   Tenor: number = 0;
 
-  isAgrmntParentGoLiveDtValid: boolean = false;
-  isAgrmntParentMaturityDtValid: boolean = false;
+  // COMMENTED WHEN IN DEV
+  isAgrmntParentGoLiveDtValid: boolean = true;
+  isAgrmntParentMaturityDtValid: boolean = true;
   monthFromGoLiveDt: number = 6;  // 6 as default value
   monthFromMaturyityDateDt: number = 3;  // 3 as default value
 
-  //Self Custom CR MPF Validation
+  //Self Custom CR MPF & FD Validation
   listAgrmntPrtDsf: Array<string> = new Array();
   listAgrmntPrtUsedDsf: Array<string> = new Array();
   resultResponseDsf;
-  //End Self Custom CR MPF Validation
+  MasterAgreementNo;
+  RemainingPlafond: number = 0;
+  RequestedPlafond: number = 0;
+  MaxPlafondMasterAgreement: number = 0;
+  isRequestedPlafondAvailable: boolean = true;
+  isAddMode: boolean = true;
+  AgrmntMasterXDsf: AgrmntMasterXDsfObj;
+  AgrmntChildOsNiDsfListObj: Array<AgrmntChildOsNiDsfObj>;
+  TotalOsNiChild: number = 0;
+  Status: string;
+  isRequestedPlafondLive: boolean = false;
+  IsAvailable: boolean = true;
+  IsAvailableLOB: boolean = true;
+  IsRequestedPlafondExceed: boolean = false;
+  IsOnProgress: boolean = false;
+  IsLOBNotMatch: boolean = false;
+  isActiveMode: boolean = false;
+  //End Self Custom CR MPF & FD Validation
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -334,7 +360,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }
     );
 
-    // Self Custom CR MPF Validation
+    // Self Custom CR MPF & FD Validation
     const obj = {
       Id: this.appId,
       RowVersion: ""
@@ -345,7 +371,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
         this.resultResponseDsf = response;
       }
     );
-    let objMPF = {
+    let objMPFFD = {
       CustNo: this.CustNo,
       AppNo: this.resultResponseDsf.AppNo,
       BizTemplateCode: this.BizTemplateCode,
@@ -353,13 +379,69 @@ export class ApplicationDataXDsfComponent implements OnInit {
     };
 
     // GET LIST AGR PARENT HAD APP ON GOING
-    await this.http.post<Array<string>>(URLConstantDsf.GetListAgrmntParentUsedDsf, objMPF).toPromise().then(
+    await this.http.post<Array<string>>(URLConstantDsf.GetListAgrmntParentUsedDsf, objMPFFD).toPromise().then(
       (response) => {
         
         this.listAgrmntPrtUsedDsf = response[CommonConstant.ReturnObj];
       }
     );
-    // End Self Custom CR MPF Validation
+
+    // GET AGRMNT MASTER X DSF
+    if (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD)
+    {
+      let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
+      obj.MasterAgreementNo = "";
+      obj.AppNo = this.resultResponseDsf.AppNo;
+      obj.Status = "TEMP";
+
+      await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
+        (response) => {
+          if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
+            this.MasterAgreementNo = response["MasterAgreementNo"];
+            this.MaxPlafondMasterAgreement = response["MaxPlafondMasterAgreement"],
+            this.RequestedPlafond = response["RequestedPlafond"];
+            this.Status = response["Status"];
+            // this.RemainingPlafond = response["RemainingPlafond"]
+
+            this.NapAppModelForm.patchValue({
+              RequestedPlafond: this.RequestedPlafond
+            });
+
+            this.isAddMode = false;
+            this.isActiveMode = false;
+          }
+          else
+          {
+            this.isRequestedPlafondAvailable = false;
+          }
+        })
+
+        let obj2: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
+        obj2.MasterAgreementNo = this.MasterAgreementNo;
+        obj2.AppNo = "";
+        obj2.Status = "ACT";
+
+        await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj2).toPromise().then(
+          (response) => {
+            if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
+              this.isRequestedPlafondLive = true;
+              this.isRequestedPlafondAvailable = true;
+              this.RequestedPlafond = response["RequestedPlafond"];
+              this.Status = response["Status"];
+
+              this.NapAppModelForm.patchValue({
+                RequestedPlafond: this.RequestedPlafond
+              });
+
+              this.isActiveMode = true;
+            }
+            else
+            {
+              this.isActiveMode = false;
+            }
+          })
+    }
+    // End Self Custom CR MPF & FD Validation
   }
 
 
@@ -924,7 +1006,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       //lookup Agreement Parent
-      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
+      await this.http.post<Array<AgrParentDsfObjX>>(URLConstantDsf.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
         (response) => {
           this.agrParentList = response;
         }
@@ -934,7 +1016,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
       if (this.agrParentList.length) {
         var idx = -1;
         for (var i = 0; i < this.agrParentList.length; i++) if (this.agrParentList[i].AgrmntNo == this.agrmntParentNo) idx = i;
-        if (idx > -1) this.copyAgrmntParentEvent(idx);
+        if (idx > -1) this.copyAgrmntParentEvent(idx, 0);
       }
     }
 
@@ -1037,22 +1119,13 @@ export class ApplicationDataXDsfComponent implements OnInit {
     await this.makeLookUpObj();
   }
 
-  async copyAgrmntParentEvent(idx) {
+  async copyAgrmntParentEvent(idx, task) {
     if (idx == null) return;
 
     this.agrParent = this.agrParentList[idx];
-    await this.validateGoLiveDtAgrmntParent();
-    await this.validateMaturityDtAgrmntParent();
-    if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
-      if(!this.isAgrmntParentMaturityDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
-        return false;
-      }
-      if(!this.isAgrmntParentGoLiveDtValid){
-        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
-        return false;
-      }
-    }
+    // COMMENTED WHEN IN DEV
+    // await this.validateGoLiveDtAgrmntParent();
+    // await this.validateMaturityDtAgrmntParent();
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
     this.goLiveDt = this.agrParent.GoLiveDt;
@@ -1068,20 +1141,22 @@ export class ApplicationDataXDsfComponent implements OnInit {
     this.EffectiveDt = this.agrParent.EffectiveDt;
     this.Tenor = this.agrParent.Tenor;
     this.TotalAssetPrice = this.agrParent.TotalAssetPrice;
+    this.MasterAgreementNo = 'MA'+this.agrParent.AgrmntId;
 
-    const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
+    const reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntDsfXObj();
     reqCalculatePlafondAgrmntXObj.AppId = this.appId;
     reqCalculatePlafondAgrmntXObj.AgrmntParentNo = this.agrParent.AgrmntNo;
     reqCalculatePlafondAgrmntXObj.TotalAssetPrice = this.agrParent.TotalAssetPrice;
     reqCalculatePlafondAgrmntXObj.OsArAgrmntMasterAmt = this.agrParent.OsArAgrmntMasterAmt;
     reqCalculatePlafondAgrmntXObj.OsArMpfDtAmt = this.agrParent.OsArMpfDtAmt;
+    reqCalculatePlafondAgrmntXObj.OsNiMpfDtAmt = this.agrParent.OsNiMpfDtAmt;
     reqCalculatePlafondAgrmntXObj.LobCode = this.resultResponse.LobCode;
     reqCalculatePlafondAgrmntXObj.AssetTypeCode = this.agrParent.AssetTypeCode;
     reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
     reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
     reqCalculatePlafondAgrmntXObj.Tenor = this.agrParent.Tenor;
 
-    // Self Custom CR MPF Validation
+    // Self Custom CR MPF & FD Validation
     // const index = Array.from(this.listAgrmntPrtUsedDsf).indexOf(this.agrParent.AgrmntNo);
     // if(index > -1)
     // {
@@ -1120,26 +1195,101 @@ export class ApplicationDataXDsfComponent implements OnInit {
     //   this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
     //   return
     // }  
-    // End Self Custom CR MPF Validation
+    // End Self Custom CR MPF & FD Validation
 
-    if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
-      this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
+    // Self Custom CR MPF & FD Validation
+    this.isRequestedPlafondAvailable = true;
+
+    let obj: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
+      obj.MasterAgreementNo = "";
+      obj.AppNo = this.resultResponseDsf.AppNo;
+      obj.Status = "TEMP";
+
+      await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj).toPromise().then(
         (response) => {
-          this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
-          this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
-          this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = response.MaxPlafondAgrmntAmt;
-          this.resCalculatePlafondAgrmntXObj.IsAppInProgress = response.IsAppInProgress;
+          if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") 
+          {
+            // this.MasterAgreementNo = response["MasterAgreementNo"];
+            // this.MaxPlafondMasterAgreement = response["MaxPlafondMasterAgreement"],
+            this.RequestedPlafond = response["RequestedPlafond"];
+            this.NapAppModelForm.patchValue(
+              {
+                RequestedPlafond: this.RequestedPlafond
+              })
+            this.Status = response["Status"];
+            this.isActiveMode = false;
 
-          if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
-            this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+            if (this.MasterAgreementNo != response["MasterAgreementNo"])
+            {
+              this.RequestedPlafond = 0;
+              this.NapAppModelForm.patchValue(
+                {
+                  RequestedPlafond: 0
+                })
+            }
           }
-          this.plafondDict[this.agrParent.AgrmntId] = this.resCalculatePlafondAgrmntXObj;
-        });
-    } else {
-      this.resCalculatePlafondAgrmntXObj = this.plafondDict[this.agrParent.AgrmntId]
+          else
+          {
+            this.isRequestedPlafondAvailable = false;
+            this.RequestedPlafond = 0;
+            this.NapAppModelForm.patchValue(
+              {
+                RequestedPlafond: 0
+              })
+          }
+        }
+      );
+
+    this.isRequestedPlafondLive = false;
+
+    let obj2: AgrmntMasterXDsfObj = new AgrmntMasterXDsfObj();
+        obj2.MasterAgreementNo = this.MasterAgreementNo;
+        obj2.AppNo = "";
+        obj2.Status = "ACT";
+
+        await this.http.post(URLConstantDsf.GetAgrmntMasterXDsf, obj2).toPromise().then(
+          (response) => {
+            if (response["MasterAgreementNo"] != null && response["StatusCode"] == "200") {
+              this.isRequestedPlafondLive = true;
+              this.isRequestedPlafondAvailable = true;
+              this.RequestedPlafond = response["RequestedPlafond"];
+              this.Status = response["Status"];
+
+              this.NapAppModelForm.patchValue({
+                RequestedPlafond: this.RequestedPlafond
+              });
+
+              this.isActiveMode = true;
+            }
+            else
+            {
+              this.isActiveMode = false;
+            }
+          })
+
+          this.isRequestedPlafondAvailable;
+          this.Status;
+          this.isRequestedPlafondLive;
+    if (task == 1)
+    {
+        await this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantDsf.CalculatePlafondAgrmntXDsf, reqCalculatePlafondAgrmntXObj).toPromise().then(
+          (response) => {
+            this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
+            this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
+            this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = response.MaxPlafondAgrmntAmt;
+            this.resCalculatePlafondAgrmntXObj.IsAppInProgress = response.IsAppInProgress;
+
+            this.MaxPlafondMasterAgreement = response.PlafondAgrmntAmt;
+
+            if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+              this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+            }
+            this.plafondDict[this.agrParent.AgrmntId] = this.resCalculatePlafondAgrmntXObj;
+          });
+
+          this.RemainingPlafond = this.RequestedPlafond - this.agrParent.OsNiMpfDtAmt;
     }
-
-
+    // End Self Custom CR MPF & FD Validation
 
     var tempCrossApp = new NapAppCrossObj();
     tempCrossApp.CrossAgrmntNo = this.agrParent.AgrmntNo;
@@ -1159,6 +1309,30 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.agrmntParentNo = this.agrParent.AgrmntNo;
     }
 
+    // Self Custom CR MPF & FD Validation
+    await this.validateAgrmntParentAvaibility();
+    if (this.IsOnProgress)
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+      return false;
+    }
+    if (this.IsLOBNotMatch)
+    {
+      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
+      return false;
+    }
+
+    if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
+      if(!this.isAgrmntParentMaturityDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
+        return false;
+      }
+      if(!this.isAgrmntParentGoLiveDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
+        return false;
+      }
+    }
+    // End Self Custom CR MPF & FD Validation
   }
 
   async GetGSValueSalesOfficer() {
@@ -1288,38 +1462,13 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.missingProdOfrComp += e.missingProdOfrComp;
     }
   }
-  // Self Custom CR MPF Validation
+  // Self Custom CR MPF & FD Validation
   async ClickSave() {
-  // End Self Custom CR MPF Validation
+  // End Self Custom CR MPF & FD Validation
     if (!this.isProdOfrUpToDate) {
       this.toastr.warningMessage("Prod Offering Component \"" + this.missingProdOfrComp + "\" Is Missing, Please Update Product Offering");
       return false;
     }
-    // Self Custom CR MPF Validation
-    let IsAvailable = 1;
-    let objMPF = {
-      AgrParentNo: this.agrParent.AgrmntNo,
-      CustNo: this.CustNo,
-      AppNo: this.resultResponseDsf.AppNo,
-      BizTemplateCode: this.BizTemplateCode,
-      Lob: this.resultResponseDsf.LobCode
-    };
-    await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPF).toPromise().then(
-      (response) => {
-        let ResponseObj = response[CommonConstant.ReturnObj];
-        if (ResponseObj.IsAvailable != true)
-          {
-            IsAvailable = 0;
-          }
-      }
-    );
-    
-    if (IsAvailable != 1 && this.resultResponseDsf.LobCode == CommonConstantDsf.MPF)
-    {
-      this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
-      return false;
-    }
-    // End Self Custom CR MPF Validation
 
     if (this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.NapAppModelForm.patchValue({
@@ -1328,7 +1477,27 @@ export class ApplicationDataXDsfComponent implements OnInit {
       });
     }
     if (this.BizTemplateCode == CommonConstant.CFNA) {
+      // Self Custom CR MPF & FD Validation
+      await this.validateRequestedPlafond();
+      if (this.IsRequestedPlafondExceed)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_REQUESTED_PLAFOND);
+        return false;
+      } 
 
+      await this.validateAgrmntParentAvaibility();
+      if (this.IsOnProgress)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+        return false;
+      }
+      if (this.IsLOBNotMatch)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_AVAILABLE_NOT_INLINE);
+        return false;
+      }
+      // End Self Custom CR MPF & FD Validation
+      
       if(!this.isAgrmntParentMaturityDtValid){
         this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
         return false;
@@ -1339,7 +1508,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }
 
       if(this.isAgrmntParentMaturityDtValid && this.isAgrmntParentGoLiveDtValid){
-      this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
+      await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).toPromise().then(
         (response) => {
           if (response['listResponseAppLoanPurpose'] && response['listResponseAppLoanPurpose'].length > 0) {
             if (!this.checkPlafondAndTenorAgrmnt(response['listResponseAppLoanPurpose'])) {
@@ -1433,6 +1602,41 @@ export class ApplicationDataXDsfComponent implements OnInit {
             };
             this.http.post(URLConstantX.EditAppAddAppCrossX, obj).subscribe(
               (response) => {
+                // Self Custom CR MPF & FD Validation
+                if (this.isAddMode)
+                {
+                  this.AgrmntMasterXDsf = new AgrmntMasterXDsfObj();
+                  this.AgrmntMasterXDsf.MasterAgreementNo = this.MasterAgreementNo;
+                  this.AgrmntMasterXDsf.MaxPlafondMasterAgreement = this.MaxPlafondMasterAgreement;
+                  this.AgrmntMasterXDsf.RequestedPlafond = this.NapAppModelForm.controls.RequestedPlafond.value;
+                  this.AgrmntMasterXDsf.RemainingPlafond = this.RemainingPlafond;
+                  this.AgrmntMasterXDsf.Status = "TEMP";
+                  this.AgrmntMasterXDsf.AppNo = this.resultResponseDsf.AppNo;
+                  this.AgrmntMasterXDsf.AgrmntParentNo = this.agrmntParentNo;
+
+                  this.http.post(URLConstantDsf.AddAgrmntMasterXDsf, this.AgrmntMasterXDsf).subscribe(
+                    (response) => {
+                    }
+                  );
+                }
+                else
+                {
+                  this.AgrmntMasterXDsf = new AgrmntMasterXDsfObj();
+                  this.AgrmntMasterXDsf.MasterAgreementNo = this.MasterAgreementNo;
+                  this.AgrmntMasterXDsf.MaxPlafondMasterAgreement = this.MaxPlafondMasterAgreement;
+                  this.AgrmntMasterXDsf.RequestedPlafond = this.NapAppModelForm.controls.RequestedPlafond.value;
+                  this.AgrmntMasterXDsf.RemainingPlafond = this.RemainingPlafond;
+                  this.AgrmntMasterXDsf.Status = this.Status;
+                  this.AgrmntMasterXDsf.AppNo = this.resultResponseDsf.AppNo;
+                  this.AgrmntMasterXDsf.AgrmntParentNo = this.agrmntParentNo;
+
+                  this.http.post(URLConstantDsf.EditAgrmntMasterXDsf, this.AgrmntMasterXDsf).subscribe(
+                    (response) => {
+                    }
+                  );
+                }
+                // End Self Custom CR MPF & FD Validation
+
                 this.toastr.successMessage('Save Application Data');
                 this.outputTab.emit();
               });
@@ -1561,26 +1765,68 @@ export class ApplicationDataXDsfComponent implements OnInit {
       }
     }
 
-    if(this.NapAppModelForm.controls.LobCode.value == 'FD')
-    {
-      if (plafondUsed < financingAmt) {
-        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
-        return false;
-      }
-    }
+    // Self Custom CR MPF & FD Validation
+    // if(this.NapAppModelForm.controls.LobCode.value == 'FD')
+    // {
+    //   if (plafondUsed < financingAmt) {
+    //     this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+    //     return false;
+    //   }
+    // }
 
-    if(this.NapAppModelForm.controls.LobCode.value == 'MPF')
-    {
-      if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt < financingAmt) {
-        this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
-        return false;
-      }
-    }
+    // if(this.NapAppModelForm.controls.LobCode.value == 'MPF')
+    // {
+    //   if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt < financingAmt) {
+    //     this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+    //     return false;
+    //   }
+    // }
+    // End Self Custom CR MPF & FD Validation
 
     if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
       this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
       return false;
     }
+
+    // Self Custom CR MPF & FD Validation
+    if (this.isActiveMode)
+    {
+      if (this.RemainingPlafond < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REMAINING_PLAFOND);
+        return false;
+      }
+    }
+
+    else
+    {
+      if (this.RemainingPlafond < financingAmt && this.RemainingPlafond > 0) {
+        this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REMAINING_PLAFOND);
+        return false;
+      }
+    }
+
+    if (this.MaxPlafondMasterAgreement < financingAmt) {
+      this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_PLAFOND_MASTER);
+      return false;
+    }
+
+    if (this.isRequestedPlafondAvailable)
+    {
+      if (this.RequestedPlafond < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REQUESTED_PLAFOND);
+        return false;
+      }
+    }
+    
+    else
+    {
+      if (this.NapAppModelForm.controls.RequestedPlafond.value  < financingAmt) {
+        this.toastr.warningMessage(ExceptionConstantDsf.EXCEEDED_FROM_REQUESTED_PLAFOND);
+        return false;
+      }
+    }
+    // End Self Custom CR MPF & FD Validation
+    
     return true;
   }
 
@@ -2006,4 +2252,56 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.isAgrmntParentMaturityDtValid  = false;
     }
   }
+
+  // Self Custom CR MPF & FD Validation
+  async validateAgrmntParentAvaibility(){
+    this.IsOnProgress = false;
+    this.IsLOBNotMatch = false;
+
+    let objMPFFD = {
+      AgrParentNo: this.agrParent.AgrmntNo,
+      CustNo: this.CustNo,
+      AppNo: this.resultResponseDsf.AppNo,
+      BizTemplateCode: this.BizTemplateCode,
+      Lob: this.resultResponseDsf.LobCode
+    };
+    await this.http.post(URLConstantDsf.CheckIfAgrmntParentHasOngoingAppDsf, objMPFFD).toPromise().then(
+      (response) => {
+        let ResponseObj = response[CommonConstant.ReturnObj];
+        this.IsAvailable = ResponseObj.IsAvailable;
+        this.IsAvailableLOB = ResponseObj.IsAvailableLOB;
+
+        if ((!this.IsAvailable) && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
+        {
+          if (!this.IsAvailableLOB)
+          {
+            this.IsLOBNotMatch = true;
+          }
+          else
+          {
+            this.IsOnProgress = true;
+          }
+        }
+        if (!this.IsAvailableLOB && (this.resultResponseDsf.LobCode == CommonConstantDsf.MPF || this.resultResponseDsf.LobCode == CommonConstantDsf.FD))
+        {
+          this.IsLOBNotMatch = true;
+        }
+      }
+    );
+    
+  }
+
+  async validateRequestedPlafond()
+  {
+    this.RequestedPlafond = this.NapAppModelForm.controls.RequestedPlafond.value;
+    this.IsRequestedPlafondExceed = false;
+    if (!this.isActiveMode)
+    {
+      if (this.NapAppModelForm.controls.RequestedPlafond.value > this.MaxPlafondMasterAgreement)
+      {
+        this.IsRequestedPlafondExceed = true;
+      } 
+    }
+  }
+  // End Self Custom CR MPF & FD Validation
 }

@@ -1,6 +1,6 @@
 export class AppInsAddCvgObj {
     AppInsAddCvgId: number;
-    AppInsMainvgId: number;
+    AppInsMainCvgId: number;
     MrAddCvgTypeCode: string;
     AddCvgTypeName: string;
     SumInsuredPrcnt: number;

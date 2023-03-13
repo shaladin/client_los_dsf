@@ -79,6 +79,14 @@ import { InvoiceDataPagingXComponent } from 'app/impl/NEW-NAP/business-process/a
 import { InvoiceDataDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-detail/invoice-data-detail-x.component';
 import { InvoiceDataXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data/invoice-data-x.component';
 import { PreGoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-paging-x/pre-go-live-approval-paging-x.component';
+import { GoLiveApprovalPagingXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/go-live-approval-paging-x-dsf/go-live-approval-paging-x-dsf.component';
+import { GoLiveApprovalDetailXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/go-live-approval-detail-x-dsf/go-live-approval-detail-x-dsf.component';
+import { PreGoLiveApprovalPagingXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live-x/pre-go-live-approval-paging-x-dsf/pre-go-live-approval-paging-x-dsf.component';
+import { PreGoLiveApprovalDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-approval-detail-dsf/pre-go-live-approval-detail-dsf.component';
+import { ApplicationAgreementCancellationPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-dsf/application-agreement-cancellation-paging-dsf/application-agreement-cancellation-paging-dsf.component';
+import { ApplicationAgreementCancellationDetailXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-x-dsf/application-agreement-cancellation-detail-x-dsf/application-agreement-cancellation-detail-x-dsf.component';
+import { PreGoLivePagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component';
+import { PreGoLiveXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live-x/pre-go-live-x-dsf/pre-go-live-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -169,6 +177,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.PGL_PAGING,
+        component: PreGoLivePagingDsfComponent,
+        data: {
+          title: 'PreGoLive Paging'
+        }
+      },
+      {
         path: PathConstant.PGL_DETAIL,
         component: PreGoLiveComponent,
         data: {
@@ -204,6 +219,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.PGL_APPRVL_PAGING,
+        component: PreGoLiveApprovalPagingXDsfComponent,
+        data: {
+          title: 'PreGoLive Paging For Approval'
+        }
+      },
+      {
         path: PathConstant.PGL_APPRVL_DETAIL,
         component: PreGoLiveApprovalDetailComponent,
         data: {
@@ -211,8 +233,22 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.PGL_APPRVL_DETAIL,
+        component: PreGoLiveApprovalDetailDsfComponent,
+        data: {
+          title: 'PreGoLive Detail For Approval'
+        }
+      },
+      {
         path: PathConstant.AGRMNT_CANCEL_PAGING,
         component: ApplicationAgreementCancellationPagingComponent,
+        data: {
+          title: 'Agreement Cancellation Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.AGRMNT_CANCEL_PAGING,
+        component: ApplicationAgreementCancellationPagingDsfComponent,
         data: {
           title: 'Agreement Cancellation Paging'
         }
@@ -505,8 +541,22 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.GO_LIVE_APV_PAGING_X,
+        component: GoLiveApprovalPagingXDsfComponent,
+        data: {
+          title: 'Go Live Approval Paging'
+        }
+      },
+      {
         path: PathConstantX.GO_LIVE_APV_DETAIL_X,
         component: GoLiveApprovalDetailXComponent,
+        data: {
+          title: 'Go Live Approval Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.GO_LIVE_APV_DETAIL_X,
+        component: GoLiveApprovalDetailXDsfComponent,
         data: {
           title: 'Go Live Approval Detail'
         }
@@ -521,6 +571,13 @@ const routes: Routes = [
       {
         path: PathConstantX.PGL_DETAIL_X,
         component: PreGoLiveXComponent,
+        data: {
+          title: 'PreGoLive Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.PGL_DETAIL_X,
+        component: PreGoLiveXDsfComponent,
         data: {
           title: 'PreGoLive Detail'
         }
@@ -584,6 +641,13 @@ const routes: Routes = [
       {
         path: PathConstantX.AGRMNT_CANCEL_DETAIL,
         component: ApplicationAgreementCancellationDetailXComponent,
+        data: {
+          title: 'Agreement Cancellation Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.AGRMNT_CANCEL_DETAIL,
+        component: ApplicationAgreementCancellationDetailXDsfComponent,
         data: {
           title: 'Agreement Cancellation Detail'
         }

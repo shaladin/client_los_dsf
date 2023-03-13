@@ -98,12 +98,17 @@ export class ViewLtkmCustDataCompletionPersonalXComponent implements OnInit {
   }
 
   async getCustData() {
+    await this.http.post(URLConstantX.GetLtkmCustBankAccAndStatementForViewWithOrderedMonthAndYear, { Id: this.LtkmCustId }).toPromise().then(
+      (response) => {
+          this.ltkmCustBankAccObjs = response['ReturnObject'];
+      });
+
     await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
       (response) => {
         this.ltkmCustObj = response["rLtkmCustObj"];
         this.custModelCode = response["MrCustModelCode"];
         this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
-        this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
+        // this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
         this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
         this.ltkmCustPersonalContactPersonObjs = response["rLtkmCustPersonalContactPersonObjs"] == null ? new Array<LtkmCustPersonalContactPersonObj>() : response["rLtkmCustPersonalContactPersonObjs"];
         this.ltkmCustFamilyObjs = response["rLtkmCustFamilyObjs"];

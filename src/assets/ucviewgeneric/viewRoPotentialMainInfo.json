@@ -20,7 +20,7 @@
             "label": "Agreement No",
             "property": "AgrmntNo",
             "name": "AgrmntNo",
-            "path": "/View/AgrmntView",
+            "path": "VIEW_AGRMNT",
             "target": "_blank",
             "param": [
               {

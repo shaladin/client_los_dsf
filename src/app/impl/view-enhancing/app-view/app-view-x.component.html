@@ -152,11 +152,13 @@
               </ng-template>
             </mat-tab>
 
+            <!-- Self Custom Rework DSL-444 -->
             <mat-tab *ngIf="IsAnalysisResult" label="Analysis Result">
               <ng-template matTabContent>
-                <app-tab-analysis-result [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></app-tab-analysis-result>
+                <app-tab-analysis-result-history-x-dsf [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></app-tab-analysis-result-history-x-dsf>
               </ng-template>
             </mat-tab>
+            <!-- Self Custom Rework DSL-444 -->
 
             <mat-tab *ngIf="IsApprovalHist" label="Approval History">
               <ng-template matTabContent>

@@ -1729,60 +1729,84 @@ export class CustMainDataXDsfComponent implements OnInit {
       BizTemplateCode: this.bizTemplateCode
     };
 
-    //Self Custom Changes CR MPF Validation
-    let objMPF = {
+    //Self Custom Changes CR MPF & FD Validation
+    let objMPFFD = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
       AppNo: this.AppNo,
       BizTemplateCode: this.bizTemplateCode,
       Lob: this.LobCode
     };
-    //End Self Custom Changes CR MPF Validation
+    //End Self Custom Changes CR MPF & FD Validation
 
 
     if (this.bizTemplateCode == CommonConstant.CFNA && this.custMainDataMode == CommonConstant.CustMainDataModeCust)
     {
-      //Self Custom Changes CR MPF Validation
-      if (this.LobCode == CommonConstantDsf.MPF)
+      //Self Custom Changes CR MPF & FD Validation
+      if (this.LobCode == CommonConstantDsf.MPF || this.LobCode == CommonConstantDsf.FD || this.LobCode == CommonConstantDsf.FMU)
       {
+        // let isHaveAgrmntParent : boolean = false;
+        // await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+        //   (response) => {
+        //     if (response && response.length > 0) isHaveAgrmntParent = true;
+        //   }
+        // );
+        // if(!isHaveAgrmntParent)
+        // {
+        //   this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
+        //   return;
+        // }
+
+        // let isOverdue: boolean = false;
+        // await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+        //   (response: any) => {
+        //     if (response.IsOverdue) isOverdue = true;
+        //   }
+        // );
+        // if(isOverdue){
+        //   this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
+        //   return;
+        // }
+
         let isHaveAgrmntParent : boolean = false;
         await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
-          (response) => {
-            if (response && response.length > 0) isHaveAgrmntParent = true;
-          }
-        );
-        if(!isHaveAgrmntParent)
-        {
-          this.toastr.warningMessage(ExceptionConstantX.CUST_MUST_HAVE_AGRMNT_PARENT);
-          return;
-        }
+              (response) => {
+                if (response && response.length > 0) isHaveAgrmntParent = true;
+              }
+            );
 
-        let isOverdue: boolean = false;
-        await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
-          (response: any) => {
-            if (response.IsOverdue) isOverdue = true;
-          }
-        );
-        if(isOverdue){
-          this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
-          return;
-        }
-
-        this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPF).subscribe(
+        await this.http.post(URLConstantDsf.CheckIfCustHasOngoingAppDsf, objMPFFD).toPromise().then(
           (response) => {
+
             let ResponseObj = response[CommonConstant.ReturnObj];
-            if (ResponseObj.IsAvailable == true)
+            if (!isHaveAgrmntParent)
             {
-              this.SaveCustomer();
+              this.toastr.warningMessage(ExceptionConstantDsf.CUST_NOT_HAVE_AGR_PARENT);
+              return;
             }
             else
             {
-              this.toastr.warningMessage(ExceptionConstantDsf.AGR_PARENT_NOT_AVAILABLE);
-              return;
+              if (ResponseObj.IsAvailable == true)
+              {
+                if (ResponseObj.IsAvailableLOB == true)
+                {
+                  this.SaveCustomer();
+                }
+                else
+                {
+                  this.toastr.warningMessage(ExceptionConstantDsf.AGR_PARENT_AVAILABLE_NOT_INLINE);
+                  return;
+                }
+              }
+              else
+              {
+                this.toastr.warningMessage(ExceptionConstantDsf.AGR_PARENT_NOT_AVAILABLE);
+                return;
+              }
             }
           }
         );
       }
-      //End Self Custom Changes CR MPF Validation
+      //End Self Custom Changes CR MPF & FD Validation
 
       else
       {

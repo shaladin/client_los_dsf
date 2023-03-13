@@ -103,7 +103,7 @@ export const customCurrencyMaskConfig = {
     EditCommAfterApprovalPagingXComponent,
     EditCommV2XComponent,
     FormEditCommGenerateXComponent,
-    CrdRvwListAssetComponent
+    CrdRvwListAssetComponent,
   ]
 })
 

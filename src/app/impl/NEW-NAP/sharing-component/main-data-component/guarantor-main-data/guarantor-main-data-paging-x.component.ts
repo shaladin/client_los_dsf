@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { CustDataObj } from 'app/shared/model/cust-data-obj.model';
 import { ResListCustMainDataObj } from 'app/shared/model/response/nap/cust-main-data/res-list-cust-main-data-obj.model';
 
@@ -29,6 +29,7 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
   inputMode: string = "ADD";
   custDataObj: CustDataObj;
   custMainDataMode: string;
+  MrCustTypeCode: string;
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
@@ -44,6 +45,7 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
     this.inputMode = "ADD";
     this.isDetail = true;
     this.appCustId = 0; 
+    this.MrCustTypeCode = CommonConstant.CustTypePersonal;
   }
 
   saveAndContinue() {
@@ -74,6 +76,7 @@ export class GuarantorMainDataPagingXComponent implements OnInit {
       if(ev.RowObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
         this.listCustNoPers = this.listCustNoPers.filter((value) => value != ev.RowObj.CustNo);
       }
+      this.MrCustTypeCode = ev.RowObj.MrCustTypeCode;
     }
 
     if (ev.Key == "delete") {

@@ -23,6 +23,9 @@ import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { AgrmntSignerObj } from 'app/shared/model/agrmnt-signer-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
+import { SubreportXObj } from 'app/impl/shared/model/document-printing-x/subreport-x-obj';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { PayloadSubreportXObj } from 'app/impl/shared/model/document-printing-x/payload-subreport-x-obj';
 
 @Component({
   selector: 'app-document-view-x-dsf',
@@ -204,7 +207,7 @@ export class DocumentViewXDsfComponent implements OnInit {
     }
   }
 
-  Print(item) {
+  async Print(item) {
     try {
       if (this.isDocSignerAvailable) {
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -220,7 +223,6 @@ export class DocumentViewXDsfComponent implements OnInit {
         reportParamObj.paramAssignment = 1;
         reportParamObj.paramDescr = "";
         this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
-        //this.RdlcReport.ReportInfo.SubReports = new Array();
         this.RdlcReport.ReportInfo.SubReports = [
           {
             reportName: "Lampiran IF",
@@ -250,24 +252,19 @@ export class DocumentViewXDsfComponent implements OnInit {
           }
         ]
 
-        //if(environment.isCore){
-        //  this.RdlcReport.ReportInfo.SubReports = new Array();
-        // if(this.RdlcReport.ReportInfo.ReportName == "Kartu Tanda Penduduk"){
-        //   this.RdlcReport.ReportInfo.SubReports = [{
-        //     reportName: this.RdlcReport.ReportInfo.ReportName,
-        //     reportTemplateCode: "",
-        //     exportFormat: 0,
-        //     reportParameters: [reportParamObj],
-        //     subReports: []
-        //   }]
-        // }
-        //}
-
-        // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
-
         if(environment.isCore){
-          //this.RdlcReport.ReportInfo.SubReports = new Array();
-          this.RdlcReport.ReportInfo.SubReports = [
+          let arrSubreportObj: Array<SubreportXObj> = new Array();
+          let reqObj = {
+            code: CommonConstantX.GSCodeConfigPayloadRptSubrpt
+          }
+          await this.http.post(URLConstant.GetGeneralSettingByCode, reqObj).toPromise().then(
+            (response: { GsCode: string, GsName: string, GsValue: string, GsDescr: string }) => {
+              arrSubreportObj = this.ConvertStringToObject(response.GsValue)
+            }
+          );
+          
+          this.RdlcReport.ReportInfo.SubReports = 
+          [
             {
               reportName: "Lampiran IF",
               reportTemplateCode: "DSF_IF_LAMPIRAN",
@@ -286,15 +283,16 @@ export class DocumentViewXDsfComponent implements OnInit {
               subReports: []
             }
             ,
-          {
-            reportName: "Lampiran SP",
-            reportTemplateCode: "DSF_SP_Lampiran",
-            reportPath: "",
-            exportFormat: 0,
-            reportParameters: [reportParamObj],
-            subReports: []
-          }
+            {
+              reportName: "Lampiran SP",
+              reportTemplateCode: "DSF_SP_Lampiran",
+              reportPath: "",
+              exportFormat: 0,
+              reportParameters: [reportParamObj],
+              subReports: []
+            }
           ]
+
           if(this.RdlcReport.ReportInfo.ReportTemplateCode == "INSPREMIUMSLIP"){
             this.RdlcReport.ReportInfo.SubReports = [
               {
@@ -312,6 +310,22 @@ export class DocumentViewXDsfComponent implements OnInit {
                 subReports: []
               }
           ]
+          }
+
+          for (let i = 0; i < arrSubreportObj.length; i++) {
+            if (this.RdlcReport.ReportInfo.ReportTemplateCode === arrSubreportObj[i].ReportTemplateCode) {
+              const subreportTemplateCode = arrSubreportObj[i].SubreportTemplateCode
+              for (let x = 0; x < subreportTemplateCode.length; x++) {
+                let subreport: PayloadSubreportXObj = {
+                  ReportName: this.RdlcReport.ReportInfo.ReportName,
+                  ReportTemplateCode: subreportTemplateCode[x],
+                  ExportFormat: 0,
+                  ReportParameters: [reportParamObj],
+                  SubReports: []
+                }
+                this.RdlcReport.ReportInfo.SubReports.push(subreport);
+              }
+            }
           }
         }
 
@@ -354,6 +368,16 @@ export class DocumentViewXDsfComponent implements OnInit {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
+  }
+
+  ConvertStringToObject(str: string): Array<SubreportXObj> {
+    let arrSubReports: Array<SubreportXObj> = new Array();
+    let arrSemicolon: Array<string> = str.split(';');
+    for (let i = 0; i < arrSemicolon.length; i++) {
+      const arrColon = arrSemicolon[i].split(':');
+      arrSubReports.push({ ReportTemplateCode: arrColon[0], SubreportTemplateCode: arrColon[1].split(',') });
+    }
+    return arrSubReports;
   }
 
 }

@@ -8,6 +8,12 @@
       "name": "IdNo"
     },
     {
+      "type": "sort",
+      "position": "left",
+      "label": "Shareholder No",
+      "name": "CustNo"
+    },
+    {
       "type": "label",
       "position": "left",
       "label": "Shareholder Name",
@@ -49,6 +55,11 @@
       "type": "text",
       "position": "center",
       "property": "IdNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustNo"
     },
     {
       "type": "text",

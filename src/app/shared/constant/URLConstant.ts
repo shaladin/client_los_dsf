@@ -672,6 +672,8 @@ export class URLConstant {
   public static SubmitChangeMouReturnV2 = environment.losUrl + "/v2" + "/ChangeMou/SubmitChangeMouReturn";
   public static GetChangeMouCustbyChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxId";
   public static GetChangeMouCustbyChangeMouTrxNo = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouCustbyChangeMouTrxNo";
+  public static GetChangeMouPreviousIdByMouCustId = environment.losUrl + "/v1" + "/ChangeMou/GetChangeMouPreviousIdByMouCustId";
+  public static GetForViewChangeMouCustDlrFncngDetailByChangeMouTrxId = environment.losUrl + "/v1" + "/ChangeMou/GetForViewChangeMouCustDlrFncngDetailByChangeMouTrxId";
 
   //CHANGE MOU CUST COLLATERAL
   public static GetChangeMouCustCollateralDocByChangeMouCustCollateralId = environment.losUrl + "/v1" + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDocByChangeMouCustCollateralId";
@@ -1515,6 +1517,9 @@ export class URLConstant {
   public static CrdRvwMakeNewApprovalV2 = environment.losUrl + "/v2" + "/AppCrdRvw/CrdRvwMakeNewApproval";
   public static AddOrEditAppCrdRvwDataAndListManualDeviationDataNew = environment.losUrl + "/v1" + "/AppCrdRvw/AddOrEditAppCrdRvwDataAndListManualDeviationDataNew";
   public static GetLatestScoringResultHByTrxSourceNo = environment.FoundationR3Url + "/v1" + "/CreditScoring/GetLatestScoringResultHByTrxSourceNo";
+  public static GetAppCrdRvwByAppCrdRvwHId = environment.losUrl + "/v1" + "/AppCrdRvw/GetAppCrdRvwByAppCrdRvwHId";
+  public static GetListAppCrdRvwById = environment.losUrl + "/v1" + "/AppCrdRvw/GetListAppCrdRvwById";
+
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/v1" + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";
@@ -1554,6 +1559,7 @@ export class URLConstant {
 
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetAssetCategoryById";
+  public static GetListAssetCategoryAndAssetTypeForAssetUsageMap = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetListAssetCategoryAndAssetTypeForAssetUsageMap";
 
   //Agrmnt Rsv Fund
   public static GetListAgrmntReservedFundByAgrmntId = environment.losUrl + "/v1" + "/AgrmntReservedFund/GetListAgrmntReservedFundByAgrmntId";
@@ -1626,15 +1632,15 @@ export class URLConstant {
   public static getLtkmReqByLtkmCustId = environment.losUrl + "/v1" + "/Ltkm/getLtkmReqByLtkmCustId";
 
   public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetCustDataByLtkmCustId";
-  public static GetLtkmCustEmrgncCntctByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustEmrgncCntctByLtkmCustId";
-  public static GetLtkmCustAddrByLtkmCustAddrId = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustAddrByLtkmCustAddrId";
-  public static GetListLtkmCustAddrByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustData/GetListLtkmCustAddrByLtkmCustId";
-  public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/v1" + "/LtkmCustData/GetLtkmCustBankAccAndStatementForView";
-  public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustData/DeleteLtkmCustBankAccAndStmnt";
+  public static GetLtkmCustEmrgncCntctByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustEmrgncCntctByLtkmCustId";
+  public static GetLtkmCustAddrByLtkmCustAddrId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustAddrByLtkmCustAddrId";
+  public static GetListLtkmCustAddrByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmCustAddrByLtkmCustId";
+  public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmCustBankAccAndStatementForView";
+  public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/v1" + "/LtkmCustomerData/DeleteLtkmCustBankAccAndStmnt";
 
   public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
   public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmAppRjcByCustNoAndAppStat";
-  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
+  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";  
   //ltkm cust attr content
   public static GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup = environment.losUrl + "/v1" + "/LtkmCustomerData/GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup";
 
@@ -1975,8 +1981,20 @@ export class URLConstant {
   public static SendOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/SendOtp";
   public static ConfirmOtp = environment.FoundationR3Url + "/v1" + "/Authenticate/ConfirmOtp";
   public static GetOtpProperties = environment.FoundationR3Url + "/v1" + "/Authenticate/GetOtpProperties";
+
+  // Ref Purpose Of Fin
+  public static GetListKvpActivePurposeOfFin = environment.losUrl + "/v1" + "/RefPurposeOfFin/GetListKvpActivePurposeOfFin";
   
   //Ref Fin Asset Usage Map
   public static GetListKeyValueAssetUsageByPurposeOfFinCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetListKeyValueAssetUsageByPurposeOfFinCode";
+  public static GetRefFinAssetUsageMapByRefFinAssetUsageMapId = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetRefFinAssetUsageMapByRefFinAssetUsageMapId";
+  public static GetRefFinAssetUsageMapDByPurposeOfFinCodeAndMrAssetUsageCode = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/GetRefFinAssetUsageMapDByPurposeOfFinCodeAndMrAssetUsageCode";
+  public static AddRefFinAssetUsageMap = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/AddRefFinAssetUsageMap";
+  public static EditRefFinAssetUsageMap = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/EditRefFinAssetUsageMap";
+  public static DeleteRefFinAssetUsageMapAndRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/DeleteRefFinAssetUsageMapAndRefFinAssetUsageMapD";
+  public static AddListRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/AddListRefFinAssetUsageMapD";
+  public static DeleteRefFinAssetUsageMapD = environment.losUrl + "/v1" + "/RefFinAssetUsageMap/DeleteRefFinAssetUsageMapD";
 
+  //cust group
+  public static GetListCustGrpForCustViewById = environment.FoundationR3Url +"/v1" + "/CustGrp/GetListCustGrpForCustViewById";
 }

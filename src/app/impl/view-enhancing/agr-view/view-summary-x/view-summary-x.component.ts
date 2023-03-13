@@ -27,6 +27,10 @@ export class ViewSummaryXComponent implements OnInit {
   BankAccNo: string;
   BankAccName: string;
   BankName: string;
+  AgrmntX: any;
+  Agrmnt: any;
+  MouCustFctr: any;
+  VirtualAccNo: string;
 
   readonly wopAD = CommonConstantX.WOPADDescr;
   constructor(private http: HttpClient) { }
@@ -34,6 +38,13 @@ export class ViewSummaryXComponent implements OnInit {
   async ngOnInit() {
     this.agrmntObj.Id = this.agrmntId;
     await this.GetAgrmntSummary();
+    await this.GetAgrmnt();
+    if(this.Agrmnt.BizTemplateCode ==  CommonConstant.FCTR){
+      await this.GetMouCustFctr();
+    }else{
+      await this.GetAgrmntX();
+    }
+    console.log(this.VirtualAccNo);
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
     this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
@@ -62,6 +73,32 @@ export class ViewSummaryXComponent implements OnInit {
     {
       await this.GetAgrmntOtherInfo();
     }
+  }
+
+  async GetAgrmntX() {
+    await this.http.post(URLConstantX.GetLatestAgrmntXByAgrmntId, {Id: this.agrmntId}).toPromise().then(
+      (response) => {
+        this.AgrmntX = response;
+        this.VirtualAccNo = this.AgrmntX.VirtualAccNo; 
+      }
+    );
+  }
+
+  async GetAgrmnt() {
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, {Id: this.agrmntId}).toPromise().then(
+      (response) => {
+        this.Agrmnt = response;
+      }
+    );
+  }
+  
+  async GetMouCustFctr(){
+    await this.http.post(URLConstant.GetMouCustFctrByMouCustId, {Id: this.Agrmnt.MouCustId}).toPromise().then(
+      (response) => {
+        this.MouCustFctr = response;
+        this.VirtualAccNo = this.MouCustFctr.VirtualAccNo; 
+      }
+    );
   }
 
   async GetAgrmntOtherInfo() {

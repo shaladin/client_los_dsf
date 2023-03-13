@@ -106,6 +106,14 @@ import { InvoiceDataPagingXComponent } from "app/impl/NEW-NAP/business-process/a
 import { InvoiceDataXComponent } from "app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data/invoice-data-x.component";
 import { InvoiceDataDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-detail/invoice-data-detail-x.component";
 import { PreGoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-paging-x/pre-go-live-approval-paging-x.component";
+import { GoLiveApprovalPagingXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/go-live-approval-paging-x-dsf/go-live-approval-paging-x-dsf.component";
+import { GoLiveApprovalDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/go-live-approval-detail-x-dsf/go-live-approval-detail-x-dsf.component";
+import { PreGoLiveApprovalPagingXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live-x/pre-go-live-approval-paging-x-dsf/pre-go-live-approval-paging-x-dsf.component";
+import { PreGoLiveApprovalDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-approval-detail-dsf/pre-go-live-approval-detail-dsf.component";
+import { ApplicationAgreementCancellationPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-dsf/application-agreement-cancellation-paging-dsf/application-agreement-cancellation-paging-dsf.component";
+import { ApplicationAgreementCancellationDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-x-dsf/application-agreement-cancellation-detail-x-dsf/application-agreement-cancellation-detail-x-dsf.component";
+import { PreGoLivePagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component";
+import { PreGoLiveXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live-x/pre-go-live-x-dsf/pre-go-live-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -151,12 +159,16 @@ export const customCurrencyMaskConfig = {
     DeliveryOrderDetailComponent,
     DeliveryOrderPagingComponent,
     PreGoLivePagingComponent,
+    PreGoLivePagingDsfComponent,
     PreGoLiveComponent,
     PreGoLiveRequestForApprovalComponent,
     PreGoLiveApprovalDetailComponent,
+    PreGoLiveApprovalDetailDsfComponent,
     PreGoLiveApprovalPagingComponent,
     PreGoLiveApprovalPagingXComponent,
+    PreGoLiveApprovalPagingXDsfComponent,
     ApplicationAgreementCancellationPagingComponent,
+    ApplicationAgreementCancellationPagingDsfComponent,
     ApplicationAgreementCancellationDetailComponent,
     AgrmntActivationPagingComponent,
     AgrmntActivationDetailComponent,
@@ -197,10 +209,13 @@ export const customCurrencyMaskConfig = {
     DocSignerPagingDsfComponent,
     DocSignerDetailDsfComponent,
     PreGoLiveXComponent,
+    PreGoLiveXDsfComponent,
     DeliveryOrderMultiAssetDetailXComponent,
     CustConfirmationDetailXComponent,
     GoLiveApprovalPagingXComponent,
     GoLiveApprovalDetailXComponent,
+    GoLiveApprovalPagingXDsfComponent,
+    GoLiveApprovalDetailXDsfComponent,
     EndDateForGoLiveApprovalPagingXComponent,
     EndDateForGoLiveApprovalDetailXComponent,
     InvoiceVerifDetailXComponent,
@@ -224,6 +239,11 @@ export const customCurrencyMaskConfig = {
     DeliveryOrderMultiAssetXComponent,
     CustConfirmationPagingXComponent,
     ApplicationAgreementCancellationDetailXComponent,
+    ApplicationAgreementCancellationDetailXDsfComponent,
+    PreGoLiveApprovalDetailDsfComponent,
+    PreGoLiveApprovalPagingXDsfComponent,
+    ApplicationAgreementCancellationPagingDsfComponent,
+    ApplicationAgreementCancellationDetailXDsfComponent,
     InvoiceDataPagingXComponent,
     InvoiceDataXComponent,
     InvoiceDataDetailXComponent,

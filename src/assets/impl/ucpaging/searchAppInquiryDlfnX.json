@@ -1,0 +1,357 @@
+{
+  "title": "Application Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.ORI_OFFICE_CODE",
+      "id": "oriOfficeCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "isQueryIn": true,
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForInquiryPaging",
+      "label": "Original Office Name",
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "C.CUST_NO",
+      "id": "custNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "appNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "C.CUST_NAME",
+      "id": "custNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "B.AGRMNT_NO",
+      "id": "agrmntNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "EMP.EMP_NAME",
+      "id": "empName",
+      "value": "",
+      "label": "Marketing Officer",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.PROD_OFFERING_NAME",
+      "id": "prodOfferingNameId",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.APP_CREATED_DT",
+      "id": "appDtgte",
+      "value": "",
+      "label": "Application Date >=",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.APP_CREATED_DT",
+      "id": "appDtlte",
+      "value": "",
+      "label": "Application Date <=",
+      "restriction": "lte",
+      "datatype": "date"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_1",
+      "id": "serialNo1Id",
+      "value": "",
+      "label": "Serial No 1",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.APP_CURR_STEP",
+      "id": "appStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Current Application Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "APP_STEP"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_2",
+      "id": "serialNo2Id",
+      "value": "",
+      "label": "Serial No 2",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "B.AGRMNT_CURR_STEP",
+      "id": "agrmntStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Current Agreement Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "AGR_STEP"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_3",
+      "id": "serialNo3Id",
+      "value": "",
+      "label": "Serial No 3",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.CUST_CHECKING_STEP",
+      "id": "CustCheckingStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Customer Checking Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "CUST_CHECKING_STEP"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.APP_STAT",
+      "id": "appStatId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Application Status",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "APP_STAT"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "B.AGRMNT_STAT",
+      "id": "agrmntStatId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Contract Status",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "APP_STAT"
+    }
+  ],
+  "querystring": {
+    "name": "searchAppInquiryX"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application No",
+      "name": "MAX(A.APP_NO)"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Agreement No",
+      "name": "MAX(B.AGRMNT_NO)"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer No",
+      "name": "MAX(C.CUST_NO)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "MAX(C.CUST_NAME)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Product Offering Name",
+      "name": "MAX(A.PROD_OFFERING_NAME)"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application Date",
+      "name": "MAX(A.APP_CREATED_DT)"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "NAP Submitted",
+      "name": "MAX(A.IS_APP_INIT_DONE + 0)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Agreement Step",
+      "name": "MAX(B.AGRMNT_CURR_STEP)"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Contract Status",
+      "name": "MAX(B.AGRMNT_STAT)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Application Step",
+      "name": "MAX(A.APP_CURR_STEP)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Application Status",
+      "name": "MAX(A.APP_STAT)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Checking Step",
+      "name": "MAX(A.CUST_CHECKING_STEP)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Marketing Officer",
+      "name": "MAX(EMP.EMP_NAME)"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "appNo",
+      "key": "application"
+    },
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "agrmntNo",
+      "key": "agreement"
+    },
+    {
+      "type": "callback",
+      "key": "customer",
+      "position": "center",
+      "property": "custNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "custName"
+    },
+    {
+      "type": "callback",
+      "key": "product",
+      "position": "left",
+      "property": "prodOfferingName"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "appDt"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "isNapSub"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "agrmntStepDesc"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "contractStatDesc"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "appStepDesc"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "appStatDesc"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustCheckingStep"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "marketingOfficer"
+    }
+  ]
+}
