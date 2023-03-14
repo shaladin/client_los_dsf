@@ -46,7 +46,7 @@
       },
       {
           "type": "dropdown",
-          "name": "CGP.STATUS",
+          "name": "CGP.APV_STATUS",
           "id": "StatusId",
           "label": "Status",
           "value": "",
@@ -55,16 +55,28 @@
           "ddlType": "all",
           "items": [
               {
-                  "key": "REJECT",
-                  "value": "REJECT"
+                  "key": "APPROVEFINAL",
+                  "value": "APPROVE FINAL"
               },
               {
-                  "key": "IN PROGRESS",
-                  "value": "INPROGRESS"
+                  "key": "REJECTFINAL",
+                  "value": "REJECT FINAL"
               },
               {
-                  "key": "APPROVE",
-                  "value": "APPROVE"
+                  "key": "REQUEST",
+                  "value": "REQUEST"
+              },
+              {
+                  "key": "RETURN",
+                  "value": "RETURN"
+              },
+              {
+                  "key": "EXPIRED",
+                  "value": "EXPIRED"
+              },
+              {
+                  "key": "REQUESTEXPIRED",
+                  "value": "REQUEST EXPIRED"
               }
           ],
           "itemsUrl": []
@@ -78,7 +90,7 @@
         "type": "sort",
         "position": "center",
         "label": "TRX NO",
-        "name": "CustGrpNo"
+        "name": "TrxNo"
       },
       {
         "type": "sort",
@@ -131,9 +143,21 @@
     ],
     "bodyList": [
       {
-        "type": "text",
-        "position": "center",
-        "property": "CustGrpNo"
+        "type": "link",
+            "position": "center",
+            "property": "TrxNo",
+            "path": "CUSTOMER_GROUP_PLAFOND_INQUIRY_DETAIL",
+            "target": "_blank",
+            "param": [
+              {
+                  "type": "CustGrpPlafondId",
+                  "property": "CustGrpPlafondId"
+              },
+              {
+                  "type": "CustGrpPlafondHistDsfId",
+                  "property": "CustGrpPlafondHistDsfId"
+              }
+          ]
       },
       {
         "type": "text",
