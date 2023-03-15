@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CessieMonitoringDsfComponent } from 'app/dsf/impl/cessie/cessie-upload-dsf/cessie-monitoring-dsf/cessie-monitoring-dsf.component';
 import { CessiePreGoLiveApprovalDetailDsfComponent } from 'app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-approval-detail-dsf/pre-go-live-approval-detail-dsf.component';
 import { CessiePreGoLiveApprovalPagingDsfComponent } from 'app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-approval-paging-dsf/pre-go-live-approval-paging-dsf.component';
 import { CessiePreGoLiveDsfComponent } from 'app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-dsf/pre-go-live-dsf.component';
@@ -31,6 +32,13 @@ const routes: Routes = [
       {
         path: PathConstantX.CESSIE_MONITORING,
         component: CessieMonitoringComponent,
+        data: {
+          title: 'Cessie Monitoring'
+        }
+      },
+      {
+        path: PathConstantDsf.CESSIE_MONITORING,
+        component: CessieMonitoringDsfComponent,
         data: {
           title: 'Cessie Monitoring'
         }
