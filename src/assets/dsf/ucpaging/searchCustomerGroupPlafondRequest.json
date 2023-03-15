@@ -285,7 +285,36 @@
                                 ]
                             },
                             "isHide": false
-                        }
+                        },
+                        {
+                          "conditions": [
+                              {
+                                  "property": "Status",
+                                  "value": "RETURN",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "url",
+                              "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                              "icon": "ft-edit-2",
+                              "param": [
+                                  {
+                                      "type": "CustGrpPlafondId",
+                                      "property": "CustGrpPlafondId"
+                                  },
+                                  {
+                                      "type": "CustGrpNo",
+                                      "property": "CustGrpNo"
+                                  },
+                                  {
+                                      "type": "mode",
+                                      "property": "add"
+                                  }
+                              ]
+                          },
+                          "isHide": false
+                      }
                     ]
                 }
             ]

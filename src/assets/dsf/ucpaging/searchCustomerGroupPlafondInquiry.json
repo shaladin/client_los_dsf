@@ -141,23 +141,119 @@
           "name": "Status"
       }
     ],
+    "orderby": {
+      "key": "CGP.CUST_GRP_PLAFOND_HIST_DSF_ID",
+      "value": "false"
+    },
     "bodyList": [
       {
-        "type": "link",
-            "position": "center",
-            "property": "TrxNo",
-            "path": "CUSTOMER_GROUP_PLAFOND_INQUIRY_DETAIL",
-            "target": "_blank",
-            "param": [
+
+        "type": "action",
+        "position": "center",
+        "action":[
+          {
+            "type": "switch",
+            "case": [
               {
-                  "type": "CustGrpPlafondId",
-                  "property": "CustGrpPlafondId"
+                "conditions": [
+                    {
+                        "property": "Status",
+                        "value": "APPROVEFINAL",
+                        "restriction": "EQ"
+                    }
+                ],
+                "result": {
+                  "type": "link",
+                  "position": "center",
+                  "property": "TrxNo",
+                  "path": "CUSTOMER_GROUP_PLAFOND_INQUIRY_DETAIL",
+                  "target": "_blank",
+                  "param":
+                    [
+                      {
+                          "type": "CustGrpPlafondId",
+                          "property": "CustGrpPlafondId"
+                      },
+                      {
+                          "type": "CustGrpPlafondHistDsfId",
+                          "property": "CustGrpPlafondHistDsfId"
+                      }
+                    ]
+                }
               },
               {
-                  "type": "CustGrpPlafondHistDsfId",
-                  "property": "CustGrpPlafondHistDsfId"
+                "conditions": [
+                    {
+                        "property": "Status",
+                        "value": "REJECTFINAL",
+                        "restriction": "EQ"
+                    }
+                ],
+                "result": {
+                  "type": "text",
+                  "position": "center",
+                  "property": "TrxNo"
+                }
+              },
+              {
+                "conditions": [
+                    {
+                        "property": "Status",
+                        "value": "REQUEST",
+                        "restriction": "EQ"
+                    }
+                ],
+                "result": {
+                  "type": "text",
+                  "position": "center",
+                  "property": "TrxNo"
+                }
+              },
+              {
+                "conditions": [
+                    {
+                        "property": "Status",
+                        "value": "RETURN",
+                        "restriction": "EQ"
+                    }
+                ],
+                "result": {
+                  "type": "text",
+                  "position": "center",
+                  "property": "TrxNo"
+                }
+              },
+              {
+                "conditions": [
+                    {
+                        "property": "Status",
+                        "value": "EXPIRED",
+                        "restriction": "EQ"
+                    }
+                ],
+                "result": {
+                  "type": "text",
+                  "position": "center",
+                  "property": "TrxNo"
+                }
+              },
+              {
+                "conditions": [
+                    {
+                        "property": "Status",
+                        "value": "REQUESTEXPIRED",
+                        "restriction": "EQ"
+                    }
+                ],
+                "result": {
+                  "type": "text",
+                  "position": "center",
+                  "property": "TrxNo"
+                }
               }
-          ]
+            ]
+          }
+        ]
       },
       {
         "type": "text",
