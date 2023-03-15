@@ -38,8 +38,11 @@
                 <div class="form-group row adins-required">
                   <label class="col-md-3" for="RefPayment">Reference Payment</label>
                   <div class="col-md-9">
+                    <!-- Self Custom CR Add Reference Payment Batch 2 -->
                     <input type="text" class="form-control adInsInput" formControlName="RefPayment"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.RefPayment.invalid }" />
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.RefPayment.invalid }" 
+                      (focusout)="onChangeRefPayment()"/>
+                      <!-- Self Custom CR Add Reference Payment Batch 2 -->
                     <lib-uc-show-errors [control]="FormObj.controls.RefPayment" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>

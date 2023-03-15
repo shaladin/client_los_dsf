@@ -43,6 +43,7 @@ import { CessiePreGoLiveApprovalPagingDsfComponent } from "app/dsf/impl/cessie/p
 import { CessiePreGoLiveDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-dsf/pre-go-live-dsf.component";
 import { CessiePreGoLivePagingDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component";
 import { CessiePreGoLiveApprovalDetailDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-approval-detail-dsf/pre-go-live-approval-detail-dsf.component";
+import { CessieMonitoringDsfComponent } from "app/dsf/impl/cessie/cessie-upload-dsf/cessie-monitoring-dsf/cessie-monitoring-dsf.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
@@ -78,6 +79,7 @@ export const customCurrencyMaskConfig = {
   ],
   declarations: [
     CessieMonitoringComponent,
+    CessieMonitoringDsfComponent,
     CessieMainInfoComponent,
     FactoringReviewPagingComponent,
     FactoringReviewAssignProductComponent,

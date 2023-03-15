@@ -167,4 +167,7 @@ export class PathConstantDsf {
     public static CESSIE_PGL_DETAIL = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.DETAIL;
     public static CESSIE_PGL_APPRVL_PAGING = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.PAGING;
     public static CESSIE_PGL_APPRVL_DETAIL = PathConstantX.CESSIE + "/" + PathConstantDsf.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.DETAIL;
+
+    public static MONITORING = 'MonitoringDsf';
+    public static CESSIE_MONITORING = PathConstantX.CESSIE + "/" + PathConstantDsf.MONITORING;
 }
