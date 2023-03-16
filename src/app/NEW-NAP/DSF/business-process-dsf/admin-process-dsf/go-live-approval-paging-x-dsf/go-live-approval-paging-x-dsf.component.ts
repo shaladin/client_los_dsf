@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AdInsConstant} from 'app/shared/AdInstConstant';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
 import {String} from 'typescript-string-operations';
@@ -25,13 +25,14 @@ import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf
   templateUrl: './go-live-approval-paging-x-dsf.component.html',
   styleUrls: ['./go-live-approval-paging-x-dsf.component.css']
 })
-export class GoLiveApprovalPagingXDsfComponent implements OnInit {
+export class GoLiveApprovalPagingXDsfComponent implements OnInit, OnDestroy {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
+  isReady: boolean = false;
+  navigationSubscription;
 
   constructor(private route: ActivatedRoute,
               private httpClient: HttpClient,
@@ -39,6 +40,16 @@ export class GoLiveApprovalPagingXDsfComponent implements OnInit {
               private router: Router, private cookieService: CookieService,
               private apvTaskService: ApprovalTaskService
   ) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
+      }
+    });
+  }
+
+  SubscribeParam(){
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -47,7 +58,26 @@ export class GoLiveApprovalPagingXDsfComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging() {
     this.inputPagingObj.addCritInput = new Array();
 
     if (environment.isCore) {
@@ -118,7 +148,7 @@ export class GoLiveApprovalPagingXDsfComponent implements OnInit {
       }
       // Self Custom CR MPF Validation
       AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.GO_LIVE_APV_DETAIL_DSF], {
-      // End Self Custom CR MPF Validation  
+        // End Self Custom CR MPF Validation 
         'AgrmntId': ev.RowObj.AgrmntId,
         'AppId': ev.RowObj.AppId,
         'TrxNo': ev.RowObj.TrxNo,
@@ -159,5 +189,4 @@ export class GoLiveApprovalPagingXDsfComponent implements OnInit {
       this.toastr.warningMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
     }
   }
-
 }
