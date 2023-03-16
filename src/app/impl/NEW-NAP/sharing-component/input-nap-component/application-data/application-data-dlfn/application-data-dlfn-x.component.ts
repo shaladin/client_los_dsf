@@ -230,11 +230,11 @@ export class ApplicationDataDlfnXComponent implements OnInit {
       });
     }else{
       this.SalesAppInfoForm.controls.IntrstRatePrcnt.enable();
-    }
+    }                
   }
-
+ 
   initCustBankAccDetail() {
-    this.SalesAppInfoForm.get('MrIdTypeOwnerBnkAcc').disable();
+    this.SalesAppInfoForm.get('MrIdTypeOwnerBnkAcc');
     this.SalesAppInfoForm.patchValue({
       MrIdTypeOwnerBnkAcc: CommonConstant.MrIdTypeCodeEKTP,
       MrCustTypeOwnerBnkAcc: CommonConstant.CustTypePersonal,
