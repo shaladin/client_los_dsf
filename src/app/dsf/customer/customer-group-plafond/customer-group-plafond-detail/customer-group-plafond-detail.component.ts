@@ -40,10 +40,8 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
   resultData: any;
   InputObj: UcInputRFAObj;
   IsReady: Boolean = false;
-  ApprovalCreateOutput: any;
   listReason: any;
   CustGrpPlfnReqDsfObj: any;
-  CustGrpPlfndPlafondMax: any;
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
