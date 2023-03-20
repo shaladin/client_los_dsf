@@ -17,6 +17,7 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type
 import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { ProdOfferingBranchMbrObj } from 'app/shared/model/product/prod-offering-branch-mbr-obj.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-customer-group-plafond-detail',
@@ -29,6 +30,7 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
   viewCustomerGroupPlafondDetailObj: UcViewGenericObj = new UcViewGenericObj();
   pageType: string = "add";
   CustGrpPlafondId: any;
+  CustGrpPlafondHistDsfId: any;
   CustGrpNo: any;
   CustGrpPlfndObj: any;
   CustGrpPlfndAGRObj: any;
@@ -41,7 +43,7 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
   ApprovalCreateOutput: any;
   listReason: any;
   CustGrpPlfnReqDsfObj: any;
-
+  CustGrpPlfndPlafondMax: any;
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -61,18 +63,22 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder,private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
-        this.pageType = params['mode'];
+        this.pageType = params['mode']; // add or edit
       }
+
       if (params['CustGrpPlafondId'] != null) {
         this.CustGrpPlafondId = params['CustGrpPlafondId'];
       }
+
       if (params['CustGrpNo'] != null) {
         this.CustGrpNo = params['CustGrpNo'];
       }
+
+      if (params['CustGrpPlafondHistDsfId'] != null && this.pageType == 'edit') {
+        this.CustGrpPlafondHistDsfId = params['CustGrpPlafondHistDsfId'];
+      }
     });
   }
-
-
 
   async ngOnInit() {
     this.viewCustomerGroupPlafondDetailObj.viewInput = "./assets/dsf/ucviewgeneric/viewCustomerGroupPlafondDetail.json";
@@ -86,12 +92,14 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
         });
       }
     );
+
+    this.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId();
+
     if (this.pageType == "add") {
-      this.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId();
       this.initInputApprovalObj();
     }
     else if (this.pageType == "edit") {
-
+      this.GetExistingPlafondRequestByCustomerGroupPlafondId();
     }
   }
 
@@ -99,21 +107,40 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     var obj = { CustomerGroupPlafondDsfId: this.CustGrpPlafondId }
     this.http.post(URLConstantDsf.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId, obj).subscribe(
       (response) => {
+
         this.CustGrpPlfndObj = response;
+
         this.CustGrpPlfndAGRObj = this.CustGrpPlfndObj.filter((obj) => {
           return obj.Category == 'AGR' && (obj.LobCode != 'FACTORING' || obj.LobCode == null);
-        });;
+        });
+
         this.CustGrpPlfndOPLObj = this.CustGrpPlfndObj.filter((obj) => {
           return obj.Category == 'OPL';
-        });;
+        });
+
         this.CustGrpPlfndFACTObj = this.CustGrpPlfndObj.filter((obj) => {
           return obj.Category == 'AGR' && obj.LobCode == 'FACTORING';
-        });;
+        });
+
         this.CustGrpPlfndAPPObj = this.CustGrpPlfndObj.filter((obj) => {
           return obj.Category == 'APP';
-        });;
+        });
       }
     );
+  }
+
+  GetExistingPlafondRequestByCustomerGroupPlafondId(){
+    var datePipe = new DatePipe("en-US");
+    var obj = { CustomerGroupPlafondDsfId: this.CustGrpPlafondId }
+    this.http.post(URLConstantDsf.GetExistingReturnByCustomerGroupPlafondId, obj).subscribe(
+      (response) => {
+        this.resultData = response;
+        this.plafondProposalForm.patchValue({
+          PlafondMax: this.resultData.PropPlafondMax,
+          StartPlafondDate: datePipe.transform(this.resultData.PropDtmStart, "yyyy-MM-dd"),
+          EndPlafondDate: datePipe.transform(this.resultData.PropDtmEnd, "yyyy-MM-dd")
+        })
+      });
   }
 
   initInputApprovalObj() {
@@ -141,13 +168,23 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     this.CustGrpPlfnReqDsfObj.PropPlafondMax = this.plafondProposalForm.controls["PlafondMax"].value;
     this.CustGrpPlfnReqDsfObj.PropDtmStart = this.plafondProposalForm.controls["StartPlafondDate"].value;
     this.CustGrpPlfnReqDsfObj.PropDtmEnd = this.plafondProposalForm.controls["EndPlafondDate"].value;
-    this.CustGrpPlfnReqDsfObj.RequestRFAObj = {RFAInfo: this.plafondProposalForm.controls.RFAInfo.value}
-    this.http.post(environment.isCore? URLConstantDsf.AddCustomerGroupPlafondRequestDsfV2 : URLConstantDsf.AddCustomerGroupPlafondRequestDsf, this.CustGrpPlfnReqDsfObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response['message']);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING],{});
-      }
-    );
-  }
 
+    if(this.pageType == "add"){
+      this.CustGrpPlfnReqDsfObj.RequestRFAObj = {RFAInfo: this.plafondProposalForm.controls.RFAInfo.value}
+      this.http.post(environment.isCore? URLConstantDsf.AddCustomerGroupPlafondRequestDsfV2 : URLConstantDsf.AddCustomerGroupPlafondRequestDsf, this.CustGrpPlfnReqDsfObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response['message']);
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING],{});
+        }
+      );
+    }
+    else if(this.pageType == "edit"){
+      this.http.post(environment.isCore? URLConstantDsf.EditCustomerGroupPlafondRequestDsfV2 : URLConstantDsf.EditCustomerGroupPlafondRequestDsf, this.CustGrpPlfnReqDsfObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response['message']);
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING],{});
+        }
+      );
+    }
+  }
 }
