@@ -16,7 +16,6 @@ import { environment } from 'environments/environment';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
-import { ProdOfferingBranchMbrObj } from 'app/shared/model/product/prod-offering-branch-mbr-obj.model';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -92,11 +91,9 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     );
 
     this.GetListCustomerGroupPlafondDetailDsfByCustomerGroupPlafondId();
+    this.initInputApprovalObj();
 
-    if (this.pageType == "add") {
-      this.initInputApprovalObj();
-    }
-    else if (this.pageType == "edit") {
+    if (this.pageType == "edit") {
       this.GetExistingPlafondRequestByCustomerGroupPlafondId();
     }
   }
@@ -166,9 +163,9 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     this.CustGrpPlfnReqDsfObj.PropPlafondMax = this.plafondProposalForm.controls["PlafondMax"].value;
     this.CustGrpPlfnReqDsfObj.PropDtmStart = this.plafondProposalForm.controls["StartPlafondDate"].value;
     this.CustGrpPlfnReqDsfObj.PropDtmEnd = this.plafondProposalForm.controls["EndPlafondDate"].value;
+    this.CustGrpPlfnReqDsfObj.RequestRFAObj = {RFAInfo: this.plafondProposalForm.controls.RFAInfo.value}
 
     if(this.pageType == "add"){
-      this.CustGrpPlfnReqDsfObj.RequestRFAObj = {RFAInfo: this.plafondProposalForm.controls.RFAInfo.value}
       this.http.post(environment.isCore? URLConstantDsf.AddCustomerGroupPlafondRequestDsfV2 : URLConstantDsf.AddCustomerGroupPlafondRequestDsf, this.CustGrpPlfnReqDsfObj).subscribe(
         (response) => {
           this.toastr.successMessage(response['message']);
