@@ -310,6 +310,22 @@
                   {
                     "type": "mode",
                     "property": "edit"
+                  },
+                  {
+                    "type": "TaskId",
+                    "property": "TaskId"
+                  },
+                  {
+                    "type": "InstanceId",
+                    "property": "InstanceId"
+                  },
+                  {
+                    "type": "ApvReqId",
+                    "property": "ApvReqId"
+                  },
+                  {
+                    "type": "TrxNo",
+                    "property": "TrxNo"
                   }
                 ]
               },
