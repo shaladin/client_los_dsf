@@ -52,4 +52,5 @@ export class URLConstantDsf {
     public static GetListAgrmntParentByCustNoX = environment.losUrl + "/AppDsf/GetListAgrmntParentByCustNoDsf";
 
     public static UploadFileV2 = environment.FoundationR3Url + "/UploadXDsf/UploadFileV2";
+    public static GetReferencePayment = environment.losUrl + "/CessieDsf/GetReferencePayment";
 }
