@@ -23,6 +23,7 @@ import { UcInputRFAObj } from 'app/shared/model/uc-input-rfa-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 
 @Component({
@@ -109,6 +110,13 @@ export class CessiePreGoLiveDsfComponent implements OnInit {
     await this.BindDDLReason();
     await this.initInputApprovalObj();
     await this.InitDms();
+
+    //Self Custom CR Add Reference Payment
+    await this.http.post(URLConstantDsf.GetReferencePayment, Obj).toPromise().then(
+      (response) => {
+        this.FormObj.controls.RefPayment.setValue(response["ReferencePaymentNo"]);
+      });
+    //End Self Custom CR Add Reference Payment
   }
 
   GetCallBack(ev) {
