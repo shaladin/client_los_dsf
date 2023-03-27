@@ -147,7 +147,7 @@ export class CrdRvwThirdPartyCheckingXDsfComponent implements OnInit {
 
   asliRiHandler(model)
   {
-    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo;
+    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI_X + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo;
     // window.open(this.urlLink);
     this.modalContainer = this.modalService.open(model);
     this.modalContainer.result.then((result) => {

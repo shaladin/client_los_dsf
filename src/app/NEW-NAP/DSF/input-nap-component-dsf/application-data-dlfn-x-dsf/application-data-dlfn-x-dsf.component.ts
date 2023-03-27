@@ -235,7 +235,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   }
 
   initCustBankAccDetail() {
-    this.SalesAppInfoForm.get('MrIdTypeOwnerBnkAcc').disable();
+    this.SalesAppInfoForm.get('MrIdTypeOwnerBnkAcc');
     this.SalesAppInfoForm.patchValue({
       MrIdTypeOwnerBnkAcc: CommonConstant.MrIdTypeCodeEKTP,
       MrCustTypeOwnerBnkAcc: CommonConstant.CustTypePersonal,
