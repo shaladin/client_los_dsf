@@ -67,6 +67,7 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     StartPlafondDate: ["", Validators.required],
     EndPlafondDate: ["", Validators.required],
   });
+
   readonly CancelLink: string =
     NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING;
 
@@ -113,10 +114,9 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     });
   }
 
-  ngAfterViewChecked(){
-    if(this.IsReady){
+  ngAfterViewChecked() {
+    if (this.IsReady) {
       this.disableElement();
-      // this.checkedElement();
     }
   }
 
@@ -142,20 +142,6 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
 
     if (this.pageType == "edit") {
       this.GetExistingPlafondRequestByCustomerGroupPlafondId();
-    }
-  }
-
-  disableElement() {
-    const element1 = this.elRef.nativeElement.querySelector('#jump');
-    if (element1) {
-      this.renderer.setProperty(element1, "disabled", true);
-    }
-  }
-
-  checkedElement() {
-    const element2 = this.elRef.nativeElement.querySelector('#new');
-    if (element2) {
-      this.renderer.setProperty(element2, "checked", true);
     }
   }
 
@@ -213,9 +199,7 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
 
   initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
-    let Attributes = [{
-
-    }];
+    let Attributes = [{}];
 
     let TypeCode = {
       TypeCode: "CUST_GRP_PLAFOND_APV_TYPE",
@@ -232,6 +216,13 @@ export class CustomerGroupPlafondDetailComponent implements OnInit {
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.TrxNo;
     this.IsReady = true;
+  }
+
+  disableElement() {
+    const element1 = this.elRef.nativeElement.querySelector("#jump");
+    if (element1) {
+      this.renderer.setProperty(element1, "disabled", true);
+    }
   }
 
   SaveForm(): void {
