@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { IntegrationObj } from 'app/shared/model/library/integration-obj.model';
 import { RequestTaskModelObj } from 'app/shared/model/workflow/v2/request-task-model-obj.model';
@@ -17,25 +17,45 @@ import { String } from 'typescript-string-operations';
   templateUrl: './delivery-order-multi-asset.component.html',
   styles: []
 })
-export class DeliveryOrderMultiAssetComponent implements OnInit {
+export class DeliveryOrderMultiAssetComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   bizTemplateCode: string;
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
+  navigationSubscription;
+  isReady:boolean = false;
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
-    this.route.queryParams.subscribe(params => {
-      if (params['BizTemplateCode'] != null) {
-        this.bizTemplateCode = params['BizTemplateCode'];
+  constructor(
+    private route: ActivatedRoute,
+    private cookieService: CookieService,
+    private router: Router) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {        
+        this.RefetchData();
       }
     });
   }
 
   ngOnInit() {
-    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    
+    this.SetUcPaging();
+  }
+
+  RefetchData(){    
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging(){
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));            
     this.inputPagingObj._url = "./assets/ucpaging/searchDeliveryOrderMultiAsset.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDeliveryOrderMultiAsset.json";
+    this.inputPagingObj.addCritInput = new Array();
 
     if(environment.isCore){
       this.inputPagingObj._url = "./assets/ucpaging/V2/searchDeliveryOrderMultiAssetV2.json";
@@ -62,18 +82,35 @@ export class DeliveryOrderMultiAssetComponent implements OnInit {
   
       this.inputPagingObj.addCritInput.push(critObj);
     }
-
+    
     var critBizTemplate = new CriteriaObj();
     critBizTemplate.restriction = AdInsConstant.RestrictionEq;
     critBizTemplate.propName = 'DOD.BIZ_TEMPLATE_CODE';
     critBizTemplate.value = this.bizTemplateCode;
 
-    this.inputPagingObj.addCritInput.push(critBizTemplate);
+    this.inputPagingObj.addCritInput.push(critBizTemplate);    
+  }
+
+  SubscribeParam(){
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.bizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
+      }
+      else{
+        this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+      }
+    });
   }
 
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
     }
   }
 

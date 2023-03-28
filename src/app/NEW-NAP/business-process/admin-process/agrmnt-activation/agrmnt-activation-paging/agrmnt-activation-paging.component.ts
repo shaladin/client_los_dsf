@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
@@ -16,23 +16,58 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   selector: 'app-agrmnt-activation-paging',
   templateUrl: './agrmnt-activation-paging.component.html'
 })
-export class AgrmntActivationPagingComponent implements OnInit {
+export class AgrmntActivationPagingComponent implements OnInit, OnDestroy {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   IntegrationObj: IntegrationObj = new IntegrationObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  navigationSubscription;
+  isReady:boolean = false;
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
-    this.route.queryParams.subscribe(params => {
-      if (params['BizTemplateCode'] != null) {
-        this.BizTemplateCode = params['BizTemplateCode'];
-        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router,
+    private cookieService: CookieService) {
+    this.SubscribeParam();
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.RefetchData();
       }
     });
   }
 
   ngOnInit() {
+    this.SetUcPaging();
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+  
+  SubscribeParam(){
+    this.route.queryParams.subscribe(params => {
+      if (params['BizTemplateCode'] != null) {
+        this.BizTemplateCode = params['BizTemplateCode'];
+        localStorage.setItem('BizTemplateCode', this.BizTemplateCode);
+      }
+    });
+  }
+
+  RefetchData(){
+    this.isReady = false;
+    this.SubscribeParam();
+    this.SetUcPaging();
+    setTimeout (() => {
+      this.isReady = true
+    }, 10);
+  }
+
+  SetUcPaging(){    
+    this.inputPagingObj.addCritInput = new Array();
     this.inputPagingObj._url = "./assets/ucpaging/searchAgrmntActivation.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAgrmntActivation.json";
     if(environment.isCore){
