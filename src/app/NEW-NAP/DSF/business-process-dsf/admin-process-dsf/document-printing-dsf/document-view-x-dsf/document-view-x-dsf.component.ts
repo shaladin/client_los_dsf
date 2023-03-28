@@ -215,7 +215,7 @@ export class DocumentViewXDsfComponent implements OnInit {
         this.RdlcReport.ReportInfo.ReportName = item.AgrmntDocName;
         this.RdlcReport.ReportInfo.ReportTemplateCode = item.RptTmpltCode;
         this.RdlcReport.ReportInfo.ReportParameters = new Array<ReportParamObj>();
-        this.RdlcReport.ReportInfo.ExportFormat = 0;
+        this.RdlcReport.ReportInfo.ExportFormat = item.ExportFormat;
 
         let reportParamObj: ReportParamObj = new ReportParamObj();
         reportParamObj.paramKey = "agrmntId";
