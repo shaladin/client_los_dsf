@@ -165,6 +165,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstant.PGL_PAGING,
+        component: PreGoLivePagingComponent,
+        data: {
+          title: 'PreGoLive Paging'
+        }
+      },
+      {
         path: PathConstant.PGL_DETAIL,
         component: PreGoLiveComponent,
         data: {
