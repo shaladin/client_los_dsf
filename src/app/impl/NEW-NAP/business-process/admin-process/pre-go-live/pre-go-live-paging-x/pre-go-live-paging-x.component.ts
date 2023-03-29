@@ -104,7 +104,14 @@ export class PreGoLivePagingXComponent implements OnInit, OnDestroy {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
     else if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_DETAIL], { "AgrmntId": ev.RowObj.AgrmntId, "AppId": ev.RowObj.AppId, "TaskListId": wfTaskListIdTemp, "AgrmntNo": ev.RowObj.AgrmntNo, "BizTemplateCode": this.bizTemplateCode });
+      if (ev.RowObj.InvoiceDX == "INCOMPLETE" || ev.RowObj.InsOrder == "INCOMPLETE") {
+        var confirmation = confirm("Invoice or Insurance Order hasn't completed yet, want to proceed?");
+      }else{
+        confirmation = true;
+      }
+      if (confirmation == true) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_DETAIL], { "AgrmntId": ev.RowObj.AgrmntId, "AppId": ev.RowObj.AppId, "TaskListId": wfTaskListIdTemp, "AgrmntNo": ev.RowObj.AgrmntNo, "BizTemplateCode": this.bizTemplateCode });
+      }
     }
   }
 
