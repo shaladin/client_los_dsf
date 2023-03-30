@@ -34,6 +34,9 @@ export class CommonConstantX {
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
     public static RefReasonTypeCodeEditCommAfterApproval = "EDIT_COMM_AFT_APV";
 
+    // MR ID TYPE CODE
+    public static MrIdTypeCodePassport = "Passport";
+
     //Approval Scheme
     public static SCHM_CODE_CESSIE_PGLV_APV = "CESSIE_PGLV_APV_SCHEME";
     public static SCHM_CODE_CHG_MOU_DLFN_APV = "CHG_MOU_DLFN_APV";
