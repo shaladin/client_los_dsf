@@ -41,9 +41,10 @@ export class PathConstantDsf {
     public static DETAIL = "Detail";
     public static APPROVAL = "Approval";
     public static INQUIRY = "Inquiry";
+    public static INQUIRY_DETAIL = "Inquiry-detail";
     //#endregion layout routes
 
-    //#region 
+    //#region
     public static REPORT = "ReportDsf";
     public static REPORT_FACT_MONITORING = "ReportFactMonitoring";
     public static REPORT_FACT_MORNING_MONITORING = "ReportFactMonitoringMorning";
@@ -79,6 +80,7 @@ export class PathConstantDsf {
     public static CUSTOMER_GROUP_PLAFOND = "CustomerGroupPlafondDsf";
     public static CUSTOMER_GROUP_PLAFOND_PAGING = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.PAGING;
     public static CUSTOMER_GROUP_PLAFOND_DETAIL = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.DETAIL;
+    public static CUSTOMER_GROUP_PLAFOND_INQUIRY_DETAIL = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.INQUIRY_DETAIL;
     public static CUSTOMER_GROUP_PLAFOND_APPROVAL_PAGING = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.PAGING;
     public static CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.DETAIL;
     public static CUSTOMER_GROUP_PLAFOND_APPROVAL_INQUIRY = PathConstantDsf.CUSTOMER_GROUP_PLAFOND + "/" + PathConstantDsf.APPROVAL + "/" + PathConstantDsf.INQUIRY;
@@ -90,7 +92,7 @@ export class PathConstantDsf {
     public static NAP_DOC_SIGNER_DETAIL = PathConstantDsf.NAP_DOC_SIGNER + "/" + PathConstant.DETAIL;
     //#endregion
 
-    
+
     //#region simple lead
     public static SIMPLE_LEAD = "SimpleLeadDsf";
     public static SIMPLE_LEAD_UPD = "SimpleLeadUpdateDsf";
@@ -106,7 +108,7 @@ export class PathConstantDsf {
     public static REPORT_INS_COMP_DETAIL = "ReportInsCompanyDetail";
     public static PRINT_REPORT_INS_COMP_DETAIL = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_INS_COMP_DETAIL;
 
-    //#region 
+    //#region
     public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "ReportSuratKonfirmasiPersetujuan"
     public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN_V2 = "ReportSuratKonfirmasiPersetujuanV2"
     public static PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SURAT_KONFIRMASI_PERSETUJUAN;
@@ -115,7 +117,7 @@ export class PathConstantDsf {
 
     //#region
     public static REPORT_LTKM = "ReportLTKM"
-    public static PRINT_REPORT_LTKM = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_LTKM; 
+    public static PRINT_REPORT_LTKM = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_LTKM;
     //#endregion
     public static REPORT_PLAFOND_FACTORING = "PlafondFactoringDsf";
     public static REPORT_PLAFOND_DF = "PlafondDfDsf";

@@ -1,294 +1,339 @@
 {
-    "title": "Search Customer Group Plafond Request",
-    "exportExcel": false,
-    "component": [
-        {
-            "type": "textbox",
-            "name": "A.CUST_GRP_NO",
-            "id": "CustGrpNo",
-            "value": "",
-            "label": "Customer Parent No",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "A.TOTAL_OS_NI",
-            "id": "TotalOSNI",
-            "value": "",
-            "label": "Outstanding NI",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "A.CUST_GRP_NAME",
-            "id": "CustGrpName",
-            "value": "",
-            "label": "Customer Parent Name",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "textbox",
-            "name": "A.STATUS",
-            "id": "Status",
-            "value": "",
-            "label": "Status",
-            "placeholder": "Placeholder"
-        }
-    ],
+  "title": "Search Customer Group Plafond Request",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "A.CUST_GRP_NO",
+      "id": "CustGrpNo",
+      "value": "",
+      "label": "Customer Parent No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.TOTAL_OS_NI",
+      "id": "TotalOSNI",
+      "value": "",
+      "label": "Outstanding NI",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.CUST_GRP_NAME",
+      "id": "CustGrpName",
+      "value": "",
+      "label": "Customer Parent Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.STATUS",
+      "id": "Status",
+      "value": "",
+      "label": "Status",
+      "placeholder": "Placeholder"
+    }
+  ],
   "querystring": {
     "name": "searchCustomerGroupPlafond"
   },
-    "headerList": [
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer Parent No",
+      "name": "CustGrpNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer Parent Name",
+      "name": "CustGrpName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Plafond Max",
+      "name": "PlafondMax"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Outstanding NI",
+      "name": "TotalOSNI"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Plafond Balance",
+      "name": "PlafondBalance"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Start Date",
+      "name": "DtmStart"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "End Date",
+      "name": "DtmEnd"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Status",
+      "name": "Status"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustGrpNo"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustGrpName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "PlafondMax"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "TotalOSNI"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "PlafondBalance"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "DtmStart"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "DtmEnd"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "Status"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
         {
-            "type": "sort",
-            "position": "center",
-            "label": "Customer Parent No",
-            "name": "CustGrpNo"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Customer Parent Name",
-            "name": "CustGrpName"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Plafond Max",
-            "name": "PlafondMax"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Outstanding NI",
-            "name": "TotalOSNI"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Plafond Balance",
-            "name": "PlafondBalance"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Start Date",
-            "name": "DtmStart"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "End Date",
-            "name": "DtmEnd"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "Status",
-            "name": "Status"
-        },
-        {
-            "type": "label",
-            "position": "center",
-            "label": "Action"
-        }
-    ],
-    "bodyList": [
-        {
-            "type": "text",
-            "position": "center",
-            "property": "CustGrpNo"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "CustGrpName"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "PlafondMax"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "TotalOSNI"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "PlafondBalance"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "DtmStart"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "DtmEnd"
-        },
-        {
-            "type": "text",
-            "position": "center",
-            "property": "Status"
-        },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
                 {
-                    "type": "switch",
-                    "case": [
-                        {
-                            "conditions": [
-                                {
-                                    "property": "Status",
-                                    "value": "EXCEED",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "CustGrpPlafondId",
-                                        "property": "CustGrpPlafondId"
-                                    },
-                                    {
-                                        "type": "CustGrpNo",
-                                        "property": "CustGrpNo"
-                                    },
-                                    {
-                                        "type": "mode",
-                                        "property": "add"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "Status",
-                                    "value": "NEAR EXCEED",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "CustGrpPlafondId",
-                                        "property": "CustGrpPlafondId"
-                                    },
-                                    {
-                                        "type": "CustGrpNo",
-                                        "property": "CustGrpNo"
-                                    },
-                                    {
-                                        "type": "mode",
-                                        "property": "add"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "Status",
-                                    "value": "NEAR EXPIRED",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "CustGrpPlafondId",
-                                        "property": "CustGrpPlafondId"
-                                    },
-                                    {
-                                        "type": "CustGrpNo",
-                                        "property": "CustGrpNo"
-                                    },
-                                    {
-                                        "type": "mode",
-                                        "property": "add"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "Status",
-                                    "value": "EXPIRED",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "CustGrpPlafondId",
-                                        "property": "CustGrpPlafondId"
-                                    },
-                                    {
-                                        "type": "CustGrpNo",
-                                        "property": "CustGrpNo"
-                                    },
-                                    {
-                                        "type": "mode",
-                                        "property": "add"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "property": "Status",
-                                    "value": "OK",
-                                    "restriction": "EQ"
-                                }
-                            ],
-                            "result": {
-                                "type": "url",
-                                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
-                                "icon": "ft-edit-2",
-                                "param": [
-                                    {
-                                        "type": "CustGrpPlafondId",
-                                        "property": "CustGrpPlafondId"
-                                    },
-                                    {
-                                        "type": "CustGrpNo",
-                                        "property": "CustGrpNo"
-                                    },
-                                    {
-                                        "type": "mode",
-                                        "property": "add"
-                                    }
-                                ]
-                            },
-                            "isHide": false
-                        }
-                    ]
+                  "property": "Status",
+                  "value": "EXCEED",
+                  "restriction": "EQ"
                 }
-            ]
+              ],
+              "result": {
+                "type": "url",
+                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "CustGrpPlafondId",
+                    "property": "CustGrpPlafondId"
+                  },
+                  {
+                    "type": "CustGrpNo",
+                    "property": "CustGrpNo"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "add"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "Status",
+                  "value": "NEAR EXCEED",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "CustGrpPlafondId",
+                    "property": "CustGrpPlafondId"
+                  },
+                  {
+                    "type": "CustGrpNo",
+                    "property": "CustGrpNo"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "add"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "Status",
+                  "value": "NEAR EXPIRED",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "CustGrpPlafondId",
+                    "property": "CustGrpPlafondId"
+                  },
+                  {
+                    "type": "CustGrpNo",
+                    "property": "CustGrpNo"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "add"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "Status",
+                  "value": "EXPIRED",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "CustGrpPlafondId",
+                    "property": "CustGrpPlafondId"
+                  },
+                  {
+                    "type": "CustGrpNo",
+                    "property": "CustGrpNo"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "add"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "Status",
+                  "value": "OK",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "CustGrpPlafondId",
+                    "property": "CustGrpPlafondId"
+                  },
+                  {
+                    "type": "CustGrpNo",
+                    "property": "CustGrpNo"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "add"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "Status",
+                  "value": "RETURN",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "CustGrpPlafondId",
+                    "property": "CustGrpPlafondId"
+                  },
+                  {
+                    "type": "CustGrpNo",
+                    "property": "CustGrpNo"
+                  },
+                  {
+                    "type": "mode",
+                    "property": "edit"
+                  },
+                  {
+                    "type": "TaskId",
+                    "property": "TaskId"
+                  },
+                  {
+                    "type": "InstanceId",
+                    "property": "InstanceId"
+                  },
+                  {
+                    "type": "ApvReqId",
+                    "property": "ApvReqId"
+                  },
+                  {
+                    "type": "TrxNo",
+                    "property": "TrxNo"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

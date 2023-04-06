@@ -4,7 +4,7 @@
     "component": [
       {
         "type": "textbox",
-        "name": "TL.TRX_NO",
+        "name": "CGP.CUST_GRP_NO",
         "id": "CustGrpNoId",
         "value": "",
         "label": "Customer Parent No",

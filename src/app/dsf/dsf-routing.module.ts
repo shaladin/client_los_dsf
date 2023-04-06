@@ -5,6 +5,7 @@ import { CustomerGroupPlafondApvDetailDsfComponent } from './customer/customer-g
 import { CustomerGroupPlafondApvInquiryDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-inquiry-dsf/customer-group-plafond-apv-inquiry-dsf.component';
 import { CustomerGroupPlafondApvPagingDsfComponent } from './customer/customer-group-plafond/customer-group-plafond-apv-paging-dsf/customer-group-plafond-apv-paging-dsf.component';
 import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
+import { CustomerGroupPlafondInquiryDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-inquiry-detail/customer-group-plafond-inquiry-detail.component';
 import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
 import { LtkmReportDsfComponent } from './ltkm/ltkm-report-dsf/ltkm-report-dsf.component';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
@@ -149,6 +150,18 @@ const routes: Routes = [
         component:  CustomerGroupPlafondDetailComponent,
         data: {
           title: "Customer Group Plafond Detail"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.CUSTOMER_GROUP_PLAFOND_INQUIRY_DETAIL,
+        component:  CustomerGroupPlafondInquiryDetailComponent,
+        data: {
+          title: "Customer Group Plafond Inquiry Detail"
         }
       }
     ]

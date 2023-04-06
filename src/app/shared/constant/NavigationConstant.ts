@@ -483,14 +483,15 @@ export class NavigationConstant {
   //#region Self Custom
   public static REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
   public static NAP_ADM_PRCS_AGRMNT_CANCEL_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.AGRMNT_CANCEL_DETAIL; //'/Nap/AdminProcess/AgreementCancellation/Detail'
-  //#endregion 
+  //#endregion
 
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
   //EndSettings
 
-  //#region 
+  //#region
   public static CUSTOMER_GROUP_PLAFOND_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_DETAIL;
+  public static CUSTOMER_GROUP_PLAFOND_INQUIRY_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_INQUIRY_DETAIL;
   public static CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_APPROVAL_DETAIL;
   //#endregion
 
@@ -557,5 +558,5 @@ export class NavigationConstant {
   public static REF_FIN_ASSET_USAGE_MAP_DETAIL = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL; //'RefFinAssetUsageMap/RefFinAssetUsageMapDetail'
   public static REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD; //'RefFinAssetUsageMap/RefFinAssetUsageMapDetail/Add'
   //#endregion
-  
+
 }

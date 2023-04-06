@@ -1,31 +1,31 @@
 {
-    "title": "Upgrade Customer Group Plafond Inquiry",
-    "exportExcel": false,
-    "component": [
-      {
-        "type": "textbox",
-        "name": "CGP.CUST_GRP_NO",
-        "id": "CustGrpNoId",
-        "value": "",
-        "label": "Customer Parent No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "CGP.CUST_GRP_NAME",
-        "id": "CustGrpNameId",
-        "value": "",
-        "label": "Customer Parent Name",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "CGP.TOTAL_OS_NI",
-        "id": "TotalOSNIId",
-        "value": "",
-        "label": "Outstanding NI",
-        "placeholder": "Placeholder"
-      },
+  "title": "Upgrade Customer Group Plafond Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "CGP.CUST_GRP_NO",
+      "id": "CustGrpNoId",
+      "value": "",
+      "label": "Customer Parent No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "CGP.CUST_GRP_NAME",
+      "id": "CustGrpNameId",
+      "value": "",
+      "label": "Customer Parent Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "CGP.TOTAL_OS_NI",
+      "id": "TotalOSNIId",
+      "value": "",
+      "label": "Outstanding NI",
+      "placeholder": "Placeholder"
+    },
     {
       "type": "datepicker",
       "name": "CGP.DTM_CRT",
@@ -36,144 +36,206 @@
       "datatype": "date"
     },
     {
-        "type": "datepicker",
-        "name": "CGP.DTM_CRT",
-        "id": "requestDtlte",
-        "value": "",
-        "label": "Request Date <=",
-        "restriction": "lte",
-        "datatype": "date"
-      },
-      {
-          "type": "dropdown",
-          "name": "CGP.STATUS",
-          "id": "StatusId",
-          "label": "Status",
-          "value": "",
-          "placeholder": "Placeholder",
-          "isFromURL": false,
-          "ddlType": "all",
-          "items": [
-              {
-                  "key": "REJECT",
-                  "value": "REJECT"
-              },
-              {
-                  "key": "IN PROGRESS",
-                  "value": "INPROGRESS"
-              },
-              {
-                  "key": "APPROVE",
-                  "value": "APPROVE"
-              }
-          ],
-          "itemsUrl": []
-      }
-    ],
-    "querystring": {
-      "name": "searchCustomerGroupPlafondInquiry"
-    },
-    "headerList": [
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "TRX NO",
-        "name": "CustGrpNo"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Cust Parent No",
-        "name": "CustGrpNo"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Cust Parent Name",
-        "name": "CustGrpName"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Plafond Max",
-        "name": "PlafondMax"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Outstanding NI",
-        "name": "TotalOSNI"
-      },
-      {
-          "type": "sort",
-          "position": "center",
-          "label": "Plafond Balance",
-          "name": "PlafondBalance"
-      },
-      {
-          "type": "sort",
-          "position": "center",
-          "label": "Start Date",
-          "name": "DtmStart"
-      },
-      {
-          "type": "sort",
-          "position": "center",
-          "label": "End Date",
-          "name": "DtmEnd"
-      },
-      {
-          "type": "sort",
-          "position": "center",
-          "label": "Status",
-          "name": "Status"
-      }
-    ],
-    "bodyList": [
-      {
-        "type": "text",
-        "position": "center",
-        "property": "CustGrpNo"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "CustGrpNo"
+      "type": "datepicker",
+      "name": "CGP.DTM_CRT",
+      "id": "requestDtlte",
+      "value": "",
+      "label": "Request Date <=",
+      "restriction": "lte",
+      "datatype": "date"
     },
     {
-        "type": "text",
-        "position": "center",
-        "property": "CustGrpName"
-    },
-    {
-        "type": "text",
-        "position": "center",
-        "property": "PlafondMax"
-    },
-    {
-        "type": "text",
-        "position": "center",
-        "property": "TotalOSNI"
-    },
-    {
-        "type": "text",
-        "position": "center",
-        "property": "PlafondBalance"
-    },
-    {
-        "type": "text",
-        "position": "center",
-        "property": "DtmStart"
-    },
-    {
-        "type": "text",
-        "position": "center",
-        "property": "DtmEnd"
-    },
-    {
-        "type": "text",
-        "position": "center",
-        "property": "Status"
+      "type": "dropdown",
+      "name": "CGP.APV_STATUS",
+      "id": "StatusId",
+      "label": "Status",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "ddlType": "all",
+      "items": [
+        {
+          "key": "APPROVEFINAL",
+          "value": "APPROVE FINAL"
+        },
+        {
+          "key": "REJECTFINAL",
+          "value": "REJECT FINAL"
+        },
+        {
+          "key": "REQUEST",
+          "value": "REQUEST"
+        },
+        {
+          "key": "RETURN",
+          "value": "RETURN"
+        },
+        {
+          "key": "EXPIRED",
+          "value": "EXPIRED"
+        },
+        {
+          "key": "REQUESTEXPIRED",
+          "value": "REQUEST EXPIRED"
+        }
+      ],
+      "itemsUrl": []
     }
-    ]
-  }
+  ],
+  "querystring": {
+    "name": "searchCustomerGroupPlafondInquiry"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "TRX NO",
+      "name": "TrxNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Cust Parent No",
+      "name": "CustGrpNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Cust Parent Name",
+      "name": "CustGrpName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Plafond Max",
+      "name": "PlafondMax"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Outstanding NI",
+      "name": "TotalOSNI"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Plafond Balance",
+      "name": "PlafondBalance"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Start Date",
+      "name": "DtmStart"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "End Date",
+      "name": "DtmEnd"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Status",
+      "name": "Status"
+    }
+  ],
+  "orderby": {
+    "key": "CGP.CUST_GRP_PLAFOND_HIST_DSF_ID",
+    "value": "false"
+  },
+  "bodyList": [
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "IsClickAble",
+                  "value": "1",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "link",
+                "position": "center",
+                "property": "TrxNo",
+                "path": "CUSTOMER_GROUP_PLAFOND_INQUIRY_DETAIL",
+                "target": "_blank",
+                "param": [
+                  {
+                    "type": "CustGrpPlafondId",
+                    "property": "CustGrpPlafondId"
+                  },
+                  {
+                    "type": "CustGrpPlafondHistDsfId",
+                    "property": "CustGrpPlafondHistDsfId"
+                  }
+                ]
+              }
+            },
+            {
+              "conditions": [
+                {
+                  "property": "IsClickAble",
+                  "value": "0",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "position": "center",
+                "property": "TrxNo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustGrpNo"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "CustGrpName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "PlafondMax"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "TotalOSNI"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "PlafondBalance"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "DtmStart"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "DtmEnd"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "Status"
+    }
+  ]
+}
