@@ -52,7 +52,8 @@ export class DeliveryOrderMultiAssetComponent implements OnInit, OnDestroy {
   }
 
   SetUcPaging(){
-    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));            
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    
     this.inputPagingObj._url = "./assets/ucpaging/searchDeliveryOrderMultiAsset.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDeliveryOrderMultiAsset.json";
     this.inputPagingObj.addCritInput = new Array();
@@ -113,5 +114,4 @@ export class DeliveryOrderMultiAssetComponent implements OnInit, OnDestroy {
       this.navigationSubscription.unsubscribe();
     }
   }
-
 }
