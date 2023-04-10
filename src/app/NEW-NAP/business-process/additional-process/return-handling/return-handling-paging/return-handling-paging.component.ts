@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
+import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -16,7 +16,6 @@ import { HttpClient } from '@angular/common/http';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { RequestTaskModelForThingsToDoObj } from 'app/shared/model/workflow/request-task-model-for-things-to-do-obj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-return-handling-paging',
@@ -84,13 +83,13 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
       this.inputPagingObj.addCritInput = new Array();
 
       this.inputPagingObj.isJoinExAPI = true
-  
+
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RTN + this.BizTemplateCode;
       this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                               this.userAccess[CommonConstant.OFFICE_CODE], 
+                                               this.userAccess[CommonConstant.OFFICE_CODE],
                                                this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
-  
+
       this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
       this.IntegrationObj.requestObj = this.RequestTaskModel;
       this.IntegrationObj.leftColumnToJoin = "AppNo";
@@ -102,7 +101,7 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
         await this.setUcsetUcPagingFromThingsToDo();
         if (this.isCmo) return;
       }
-      
+
       var critCurrStep = new CriteriaObj();
       critCurrStep.restriction = AdInsConstant.RestrictionEq;
       critCurrStep.propName = 'a.APP_CURR_STEP';
@@ -137,7 +136,7 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
         this.inputPagingObj.delay = 1000;
         this.listRole = response["GsValue"].split(",");
         if(this.listRole.includes(this.roleCode))
-        { 
+        {
           this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingFromThingsToDoForCmo.json";
           this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingFromThingsToDoForCmo.json";
 
@@ -147,9 +146,9 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
           this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RTN + this.BizTemplateCode;
 
           this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                                   this.userAccess[CommonConstant.OFFICE_CODE], 
+                                                   this.userAccess[CommonConstant.OFFICE_CODE],
                                                    this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
-          
+
           this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
           this.IntegrationObj.requestObj = this.RequestTaskModel;
           this.IntegrationObj.leftColumnToJoin = "AppNo";
@@ -177,16 +176,16 @@ export class ReturnHandlingPagingComponent implements OnInit, OnDestroy {
           this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingFromThingsToDo.json";
 
           this.inputPagingObj.isJoinExAPI = true
-  
+
           this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_RTN + this.BizTemplateCode;
           this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RTN + this.BizTemplateCode;
           this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                                   this.userAccess[CommonConstant.OFFICE_CODE], 
+                                                   this.userAccess[CommonConstant.OFFICE_CODE],
                                                    this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
 
           this.RequestTaskModelForThingsToDo.RequestTaskModel = this.RequestTaskModel;
           this.RequestTaskModelForThingsToDo.UserName = this.username;
-      
+
           this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflowForThingsToDo;
           this.IntegrationObj.requestObj = this.RequestTaskModelForThingsToDo;
           this.IntegrationObj.leftColumnToJoin = "AppNo";
