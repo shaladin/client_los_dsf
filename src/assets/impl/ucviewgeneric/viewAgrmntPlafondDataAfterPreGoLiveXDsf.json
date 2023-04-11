@@ -11,6 +11,9 @@
           "property": "MaxPlafondMasterAgrmnt"
         },
         {
+          "type": "text",
+          "label": "",
+          "property": "EmptyLabel1"
         },
         {
           "type": "text",
@@ -18,6 +21,9 @@
           "property": "RequestedPlafond"
         },
         {
+          "type": "text",
+          "label": "",
+          "property": "EmptyLabel1"
         },
         {
           "type": "text",
@@ -25,6 +31,9 @@
           "property": "RemainingPlafond"
         },
         {
+          "type": "text",
+          "label": "",
+          "property": "EmptyLabel1"
         }
       ],
       "querystring": {
