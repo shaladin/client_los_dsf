@@ -115,6 +115,8 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
             }
         });
     this.CustNoObj.CustNo = this.ltkmCustObj.CustNo;
+    console.log("haloooo");
+    console.log(this.CustNoObj.CustNo);
 
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
         (response) => {
@@ -166,6 +168,6 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
   }
 
   calculateCompanyFinData(){
-    this.NettIncomeAmtCoy = this.CustCoyFinData['GrossMonthlyIncomeAmt'] - this.CustCoyFinData['OthMonthlyInstAmt'] - this.CustCoyFinData['OprCost'];
+    this.NettIncomeAmtCoy = this.CustCoyFinData['GrossMonthlyIncomeAmt'] - (this.CustCoyFinData['OthMonthlyInstAmt'] + this.CustCoyFinData['OtherMonthlyInstallmentDsf']) - this.CustCoyFinData['OprCost'];
   }
 }

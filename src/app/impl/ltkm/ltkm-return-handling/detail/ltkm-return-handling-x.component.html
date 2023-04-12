@@ -196,6 +196,12 @@
                       [parentForm]="CustDataForm" [ListLtkmCustPersonalFinData]="listLtkmCustPersonalFinDataObjs"
                       [identifier]="'FinData'"></app-ltkm-financial-personal>
 
+                      <app-ltkm-financial-personal-x (UpdateSource)="updateListLtkmCustPersonalFinData($event)"
+                      [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
+                      [parentForm]="CustDataForm" [ListLtkmCustPersonalFinData]="listLtkmCustPersonalFinDataObjs"
+                      [identifier]="'FinData'"></app-ltkm-financial-personal-x>
+
+
 
                     <app-ltkm-attr-content-component [isLockMode]="isLockMode" #attrlistfindatacomponent
                       [ListAttrContent]="listAttrContentFinData" [title]="'Financial Attribute'" [enjiForm]="enjiForm"
@@ -286,12 +292,16 @@
                       [LtkmCustCompanyContactPersonObj]="ContactPersonCompany" [isLockMode]="isLockMode">
                     </app-ltkm-cc-contact-information-x>
 
-                    <app-ltkm-financial-company-x [isLockMode]="isLockMode"
+                    <!-- <app-ltkm-financial-company-x [isLockMode]="isLockMode"
                       [ListLtkmCustCoyFinData]="listLtkmCustCoyFinData" [enjiForm]="enjiFormCompany"
-                      [parentForm]="CustDataCompanyForm" [identifier]="'financialDataCompany'"
-                      (UpdateSource)="updateListLtkmCustCoyFinDatas($event)">
-                    </app-ltkm-financial-company-x>
+                      [parentForm]="CustDataCompanyForm" [identifier]="'financialDataCompany'" 
+                      [LtkmCustId]="ltkmCustId" (UpdateSource)="updateListLtkmCustCoyFinDatas($event)">
+                    </app-ltkm-financial-company-x>    -->
 
+                    <app-ltkm-financial-company-x
+                    [ListLtkmCustCoyFinData]="ListCustCoyFinData">
+                    </app-ltkm-financial-company-x>   
+                                                             
                     <app-ltkm-attr-content-component [isLockMode]="isLockMode" #attrlistfindatacomponentcoy
                       [ListAttrContent]="listAttrContentFinDataCoy" [title]="'Financial Attribute'"
                       [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"

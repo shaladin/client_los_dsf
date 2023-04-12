@@ -3,11 +3,10 @@ import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
 import { MatRadioChange } from '@angular/material/radio/typings/public-api';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustPersonalContactInformationComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/personal-contact-information/cust-personal-contact-information.component';
@@ -61,6 +60,8 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { AddressService } from 'app/shared/services/custAddr.service';
 import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 @Component({
     selector: 'app-ltkm-return-handling-x',
     templateUrl: './ltkm-return-handling-x.component.html',
@@ -206,6 +207,21 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     isLockLookupCust: boolean = false;
     listFamily: Array<any> = new Array();
 
+    //PERUBAHAN
+    // VARIABEL FIN DATA COMPANY VIEW
+    ListCustCoyFinData: Array<LtkmCustCompanyFinDataObj>;
+    CustNoObj: GenericObj = new GenericObj();
+    CustId: number = 0;
+    LtkmCustNo: string;
+    currentCustFinDataIndex: number;
+    CustCoyFinData: object;
+    NettIncomeAmtCoy: number = 0;
+    TitleCustFinSuffix: string = '';
+    IsShowDetailCustFin: boolean = false;
+
+    // VARIABEL VIN DATA PERSONAL
+    ListCustPersonalFinData : Array<object> = [];
+
     constructor(
         private router: Router,
         private fb: FormBuilder,
@@ -221,6 +237,9 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             }
             if (params["LtkmCustId"] != undefined && params["LtkmCustId"] != null) {
                 this.LtkmCustId = params["LtkmCustId"];
+                this.LtkmCustNo = params["CustNo"]
+                console.log('LTKM CUST ID : ' + this.LtkmCustId)
+                console.log('LTKM CUST NO : ' + this.LtkmCustNo)
             }
             if (params["WfTaskListId"] != undefined && params["WfTaskListId"] != null) {
                 this.WfTaskListId = params["WfTaskListId"];
@@ -270,6 +289,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         // this.inputAddressObjForMailingCoy.showOwnership = true;
         // this.inputAddressObjForMailingCoy.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeMailing);
 
+        await this.getListFinDataCompany();
+        await this.getListFinDataPersonal();
         await this.bindCustTypeObj();
         this.initAddrObj();
         if (this.mode == this.modeReqConst) {
@@ -2308,5 +2329,47 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         }
         return temp;
     }
+
+    //PERUBAHAN START
+    // FUNGSI FIN DATA COMPABY VIEW
+   async getListFinDataCompany() {
+    this.CustNoObj.CustNo = this.LtkmCustNo;
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
+        (response) => {
+            this.CustId = response['CustId'];
+        });
+        
+     await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
+          (response) => {
+              this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
+        });
+    }
+    showDetailCustFinData(index: number) {
+        let datePipe = new DatePipe("en-US");
+        this.currentCustFinDataIndex = index;
+        this.CustCoyFinData = this.ListCustCoyFinData[this.currentCustFinDataIndex];
+        this.calculateCompanyFinData()
+        this.TitleCustFinSuffix = 'Date as of ' + datePipe.transform(this.CustCoyFinData['DateAsOf'], 'dd-MMM-yyyy')
+        this.IsShowDetailCustFin = true;
+    }
+    calculateCompanyFinData(){
+        this.NettIncomeAmtCoy = this.CustCoyFinData['GrossMonthlyIncomeAmt'] - (this.CustCoyFinData['OthMonthlyInstAmt'] + this.CustCoyFinData['OtherMonthlyInstallmentDsf']) - this.CustCoyFinData['OprCost'];
+    }
+    hideDetailCustFinData() {
+        this.TitleCustFinSuffix = '';
+        this.IsShowDetailCustFin = false;
+        this.CustCoyFinData = {};
+    }
+
+
+    async getListFinDataPersonal() {
+        await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
+        (response) => {                     
+          this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"]; 
+        });
+    }
+    //PERUBAHAN END
+  
 }
+
 
