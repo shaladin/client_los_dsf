@@ -154,6 +154,15 @@ export class CessiePreGoLiveDsfComponent implements OnInit {
       return;
     }
 
+    // Self Custom CR Add Reference Payment Batch 2
+    this.onChangeRefPayment()
+    
+    if (!this.isRegexValid) {
+      this.toastr.warningMessage("Please check Reference Payment only allow A-Z 0-9 /-?(),.'+:");
+      return;
+    }
+    // Self Custom CR Add Reference Payment Batch 2
+
     this.RFAInfo = { RFAInfo: this.FormObj.controls.RFAInfo.value };
     //Self Custom CR Add Reference Payment
     this.RefPayment = this.FormObj.controls.RefPayment.value;
@@ -203,10 +212,6 @@ export class CessiePreGoLiveDsfComponent implements OnInit {
       ReferencePaymentNo: this.RefPayment
       //End Self Custom CR Add Reference Payment
     };
-
-    // Self Custom CR Add Reference Payment Batch 2
-    this.onChangeRefPayment()
-    // Self Custom CR Add Reference Payment Batch 2
 
     this.http.post(URLConstantX.SubmitPreGoLiveCessieV2, reqObj).subscribe(
       (response) => {
@@ -311,10 +316,8 @@ export class CessiePreGoLiveDsfComponent implements OnInit {
     {
       this.isRegexValid = true;
     }
-
     if (!this.isRegexValid) {
       this.toastr.warningMessage("Please check Reference Payment only allow A-Z 0-9 /-?(),.'+:");
-      return;
     }
   }
   // Self Custom CR Add Reference Payment Batch 2
