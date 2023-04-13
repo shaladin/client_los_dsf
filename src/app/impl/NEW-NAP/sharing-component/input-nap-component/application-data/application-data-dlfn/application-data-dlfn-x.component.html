@@ -264,6 +264,7 @@
                               <div class="col-md-4">
                                 <select class="form-control" formControlName="MrIdTypeOwnerBnkAcc" style="width: auto"
                                         class="form-control" name="MrIdTypeOwnerBnkAcc"
+                                        (change)="checkIdNoType()"
                                         [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.invalid }">
                                   <option *ngFor="let item of DictRefMaster[MasterIdNoType]" [value]="item.Key">
                                     {{item.Value}}
