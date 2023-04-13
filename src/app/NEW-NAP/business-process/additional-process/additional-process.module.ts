@@ -50,6 +50,7 @@ import { DocPickupRequestDetailComponent } from './doc-pickup-request/doc-pickup
 import { EditAppAfterApprovalPagingComponent } from "./edit-app-after-approval/edit-app-after-approval-paging/edit-app-after-approval-paging.component";
 import { EditAppAfterApprovalDetailComponent } from "./edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail.component";
 import { EditAppAfterApprovalAssetDataComponent } from "./edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-asset-data/edit-app-after-approval-asset-data.component";
+import { EditAppAfterApprovalAssetDataXComponent } from "app/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-asset-data-x/edit-app-after-approval-asset-data-x.component";
 import { EditAppAfterApprovalPurchaseOrderDataComponent } from "./edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-purchase-order-data/edit-app-after-approval-purchase-order-data.component";
 import { CreditApprovalResultExtensionApprovalDetailComponent } from "./credit-apv-result-ext/approval/detail/detail.component";
 import { CreditApprovalResultExtensionApprovalPagingComponent } from "./credit-apv-result-ext/approval/paging/paging.component";
@@ -164,6 +165,7 @@ export const customCurrencyMaskConfig = {
     EditAppAfterApprovalPagingComponent,
     EditAppAfterApprovalDetailComponent,
     EditAppAfterApprovalAssetDataComponent,
+    EditAppAfterApprovalAssetDataXComponent,
     EditAppAfterApprovalPurchaseOrderDataComponent,
     CreditApprovalResultExtensionApprovalDetailComponent,
     CreditApprovalResultExtensionApprovalPagingComponent,

@@ -29,10 +29,17 @@ export class CommonConstantX {
     public static GsCodeCustCompletionByPass = "CUST_COMPLETION_BY_PASS";
     public static GsCodeMandatoryByCollType = "MANDATORY_BY_COLL_TYPE"
     public static GsCodeAutoDebitBca = "AUTO_DEBIT_BCA";
+    public static GsCodeMinTenorAssetFL = "MIN_TENOR_ASSET_FL";
+    public static GsCodeMapPofWofFL = "MAP_POF_WOF_FL";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
     public static RefReasonTypeCodeEditCommAfterApproval = "EDIT_COMM_AFT_APV";
+
+    // MR ID TYPE CODE
+    public static MrIdTypeCodePassport = "PASSPORT";
+    public static MrIdTypeCodeNIB = "NIB";
+    public static MrIdTypeCodeTDPNIB = "TDPNIB";
 
     //Approval Scheme
     public static SCHM_CODE_CESSIE_PGLV_APV = "CESSIE_PGLV_APV_SCHEME";
@@ -67,6 +74,9 @@ export class CommonConstantX {
     //APP ASSET CONDITION
     public static APP_ASSET_CONDITION_CODE_NEW = "NEW";
     public static APP_ASSET_CONDITION_CODE_USED = "USED";
+    
+    // APP ASSET ATTRIBUTE
+    public static APP_ASSET_ATTRIBUTE_TAG_COLOR = "TAG_COLOR";
 
     //Ref Master
     public static REF_MASTER_ASSET_CONDITION_DESCR_USED = "Used";

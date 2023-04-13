@@ -23,7 +23,7 @@
           <mat-tab-group>
             <mat-tab label="Survey List">
               <br>
-              <div id="subjectList">
+              <div id="subjectList" style="overflow: hidden;">
                 <div class="form-group row">
                   <label class="col-sm-2 col-md-2" translate>SURVEY METHOD</label>
                   <div class="col-md-10 col-sm-10">
@@ -84,7 +84,11 @@
                       <td class="text-left"><a href="javascript:void(0);" (click)="View(item.VerfResultHId, item.MrVerfObjectCode)">View</a></td>
                       <td class="text-center">
                         <a class="success p-0" (click)="Verif('edit', item.VerfResultHId, item.MrVerfObjectCode, item.PhnType)">
-                          <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
+                          <i class="ft-edit-2 font-medium-3 px-2"></i>
+                        </a>
+                        <mat-divider vertical style="display: inline;"></mat-divider>
+                        <a class="danger p-0" (click)="deleteSurveyVerif(item.VerfResultHId)">
+                          <i class="ft-trash-2 font-medium-3 px-2"></i>
                         </a>
                       </td>
                     </tr>
