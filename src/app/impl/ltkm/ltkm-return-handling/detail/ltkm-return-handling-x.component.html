@@ -191,17 +191,14 @@
                       [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
                       [parentForm]="CustDataForm" [identifier]="'EmergencyContact'"></app-ltkm-emergency-contact>
 
-                    <app-ltkm-financial-personal (UpdateSource)="updateListLtkmCustPersonalFinData($event)"
+                    <!-- <app-ltkm-financial-personal (UpdateSource)="updateListLtkmCustPersonalFinData($event)"
                       [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
                       [parentForm]="CustDataForm" [ListLtkmCustPersonalFinData]="listLtkmCustPersonalFinDataObjs"
-                      [identifier]="'FinData'"></app-ltkm-financial-personal>
+                      [identifier]="'FinData'"></app-ltkm-financial-personal> -->
 
-                      <app-ltkm-financial-personal-x (UpdateSource)="updateListLtkmCustPersonalFinData($event)"
-                      [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
-                      [parentForm]="CustDataForm" [ListLtkmCustPersonalFinData]="listLtkmCustPersonalFinDataObjs"
-                      [identifier]="'FinData'"></app-ltkm-financial-personal-x>
-
-
+                    <app-ltkm-financial-personal-x
+                    [ListLtkmCustPersonalFinData]="ListCustPersonalFinData">
+                    </app-ltkm-financial-personal-x>
 
                     <app-ltkm-attr-content-component [isLockMode]="isLockMode" #attrlistfindatacomponent
                       [ListAttrContent]="listAttrContentFinData" [title]="'Financial Attribute'" [enjiForm]="enjiForm"

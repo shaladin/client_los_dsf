@@ -47,12 +47,19 @@ export class LtkmFinancialPersonalXComponent implements OnInit, AfterViewInit {
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
   LtkmCustBankAccList: Array<LtkmCustBankAccObj> = new Array();
-
-
+  
   @Input() ListLtkmCustPersonalFinData: Array<LtkmCustPersonalFinDataObj> = [];
   IsAddFinData: boolean = true;
   currentCustFinDataIndex: number;
   currentModal: any;
+  
+  //PERUBAHAN START
+  CustPersonalFinData : object;
+  TitleCustFinDataSuffix:string = '';
+  IsShowCustFinDataDetail:boolean = false;
+  countFinDataRows: number = 0;
+
+  //PERUBAHAN END
 
   AppCustAttrListForm = this.fb.group({
   });
@@ -85,7 +92,9 @@ export class LtkmFinancialPersonalXComponent implements OnInit, AfterViewInit {
       DateAsOf: [0],
       RowVersion: ['']
     }));
-    await this.GetRefMaster();
+    this.countFinDataRows = this.ListLtkmCustPersonalFinData.length;
+    // await this.GetRefMaster();
+
   }
 
   GetRefMaster() {
@@ -216,4 +225,21 @@ export class LtkmFinancialPersonalXComponent implements OnInit, AfterViewInit {
       this.UpdateSource.emit({ Key: 'IsDetail', Value: false, ListLtkmCustPersonalFinData: this.ListLtkmCustPersonalFinData });
     }
   }
+
+  //PERUBAHAN START  
+  showDetailCustFinData(index:number){
+    let datePipe = new DatePipe("en-US");
+    this.currentCustFinDataIndex = index;
+    this.CustPersonalFinData = this.ListLtkmCustPersonalFinData[this.currentCustFinDataIndex];
+    this.TitleCustFinDataSuffix = 'Date as of '+datePipe.transform(this.CustPersonalFinData['DateAsOf'], 'dd-MMM-yyyy')
+    this.IsShowCustFinDataDetail = true;
+  }
+  
+  hideDetailCustFinData()
+  {
+    this.TitleCustFinDataSuffix = '';
+    this.IsShowCustFinDataDetail = false;
+    this.CustPersonalFinData = null;
+  }
+  //PERUBAHAN END
 }

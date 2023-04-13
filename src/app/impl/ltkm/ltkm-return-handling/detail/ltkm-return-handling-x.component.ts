@@ -219,6 +219,9 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     TitleCustFinSuffix: string = '';
     IsShowDetailCustFin: boolean = false;
 
+    CustPersonalFinData : object;
+    TitleCustFinDataSuffix:string = '';
+    IsShowCustFinDataDetail:boolean = false;
     // VARIABEL VIN DATA PERSONAL
     ListCustPersonalFinData : Array<object> = [];
 
@@ -2331,7 +2334,6 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     }
 
     //PERUBAHAN START
-    // FUNGSI FIN DATA COMPABY VIEW
    async getListFinDataCompany() {
     this.CustNoObj.CustNo = this.LtkmCustNo;
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
@@ -2344,30 +2346,16 @@ export class LtkmReturnHandlingXComponent implements OnInit {
               this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
         });
     }
-    showDetailCustFinData(index: number) {
-        let datePipe = new DatePipe("en-US");
-        this.currentCustFinDataIndex = index;
-        this.CustCoyFinData = this.ListCustCoyFinData[this.currentCustFinDataIndex];
-        this.calculateCompanyFinData()
-        this.TitleCustFinSuffix = 'Date as of ' + datePipe.transform(this.CustCoyFinData['DateAsOf'], 'dd-MMM-yyyy')
-        this.IsShowDetailCustFin = true;
-    }
-    calculateCompanyFinData(){
-        this.NettIncomeAmtCoy = this.CustCoyFinData['GrossMonthlyIncomeAmt'] - (this.CustCoyFinData['OthMonthlyInstAmt'] + this.CustCoyFinData['OtherMonthlyInstallmentDsf']) - this.CustCoyFinData['OprCost'];
-    }
-    hideDetailCustFinData() {
-        this.TitleCustFinSuffix = '';
-        this.IsShowDetailCustFin = false;
-        this.CustCoyFinData = {};
-    }
-
 
     async getListFinDataPersonal() {
-        await this.http.post(URLConstant.GetLtkmCustDataPersonalForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
-        (response) => {                     
-          this.ListCustPersonalFinData = response["rLtkmCustPersonalFinDataObjs"]; 
-        });
+        this.CustNoObj.CustNo = this.LtkmCustNo;       
+        await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
+            (response) => {
+              this.ListCustPersonalFinData = response['ListCustPersonalFinDataForCustViewX'];
+            });
     }
+
+ 
     //PERUBAHAN END
   
 }

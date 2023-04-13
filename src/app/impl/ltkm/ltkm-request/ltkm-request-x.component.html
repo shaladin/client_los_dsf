@@ -295,9 +295,10 @@
                 (ngSubmit)="CustDataCompanyForm.valid && SaveForm()" #enjiFormCompany="ngForm">
                 <div class="form-body">
                   <div *ngIf="isBindDataDone == true">
-                    <app-ltkm-cust-company-main-data [isLockMode]="isLockMode"
+                    <app-ltkm-cust-company-main-data [isLockMode]="isLockMode"  
                     [isLockLookupCust]="isLockLookupCust"
-                      (callbackCopyCust)="CopyCustomerCompany($event)" [custDataCompanyObj]="custDataCompanyObj"
+                      (callbackCopyCust)="CopyCustomerCompany($event)" 
+                       [custDataCompanyObj]="custDataCompanyObj"
                       [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
                       [bizTemplateCode]="bizTemplateCode" [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data>
 
@@ -392,6 +393,14 @@
                       (UpdateSource)="updateListLtkmCustCoyFinDatas($event)"
                       >
                     </app-ltkm-financial-company-x>
+                    
+                    <app-ltkm-financial-company-x>
+                      [ListLtkmCustCoyFinData]="listCustCoyFinData"
+                    </app-ltkm-financial-company-x>
+
+                    <!-- <app-ltkm-financial-company-x
+                      [ListLtkmCustCoyFinData]="ListCustCoyFinData">
+                    </app-ltkm-financial-company-x> -->
 
                     <app-ltkm-attr-content-component
                     [isLockMode]="isLockMode" #attrlistfindatacomponentcoy

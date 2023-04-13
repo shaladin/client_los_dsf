@@ -275,8 +275,6 @@ export class LtkmFinancialCompanyXComponent implements OnInit {
     this.calculate()
     this.TitleCustFinSuffix = 'Date as of ' + datePipe.transform(this.CustCoyFinData['DateAsOf'], 'dd-MMM-yyyy')
     this.IsShowDetailCustFin = true;
-    console.log("haloooo")
-    console.log(this.CustCoyFinData)
   }
   calculate(){
     this.NettIncomeAmtCoy = this.CustCoyFinData['GrossMonthlyIncomeAmt'] - (this.CustCoyFinData['OthMonthlyInstAmt'] + this.CustCoyFinData['OtherMonthlyInstallmentDsf']) - this.CustCoyFinData['OprCost'];

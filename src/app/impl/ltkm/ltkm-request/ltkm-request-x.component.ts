@@ -7,7 +7,7 @@ import { formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
+// import { AppObj } from 'app/shared/model/App/App.Model';
 import { MatRadioChange } from '@angular/material/radio/typings/public-api';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustPersonalContactInformationComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/personal-contact-information/cust-personal-contact-information.component';
@@ -70,6 +70,8 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { LtkmAddrForViewObjX } from 'app/impl/shared/model/ltkm/ltkm-addr-data-for-view-objX.model';
 import { LtkmCcContactInformationTabXComponent } from './additional-component/company/cc-contact-information-tab-x/cc-contact-information-x.component';
 import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AppObj } from 'app/shared/model/app/app.model';
 @Component({
     selector: 'app-ltkm-request-x',
     templateUrl: './ltkm-request-x.component.html',
@@ -158,6 +160,15 @@ export class LtkmRequestXComponent implements OnInit {
     listOwnershipType: Array<RefMasterObj> = new Array();
     @ViewChild('applicationData') ucLookupApplicationData: UclookupgenericComponent;
     //@ViewChild('applicationCompanyData') ucLookupApplicationCompanyData: UclookupgenericComponent;
+
+    //PERBAHAN START
+    ltkmCustObj: LtkmCustObj;
+    CustNoObj: GenericObj = new GenericObj();
+    ListCustCoyFinData: Array<LtkmCustCompanyFinDataObj>;
+    CustId: number = 0;
+    LtkmCustNo: string;
+
+    //PERUBAHAN END
 
     private ucLookupApplicationCompanyData: UclookupgenericComponent;
     @ViewChild('applicationCompanyData') set content(content: UclookupgenericComponent) {
@@ -1969,7 +1980,7 @@ export class LtkmRequestXComponent implements OnInit {
     ltkmCustGrpChildObjs: Array<CustParentChildObj> = new Array<CustParentChildObj>();
     ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
     //20230125, richard, update mekanisme baca cust group
-    async getCustDataView(custtype: string){
+    async getCustDataView(custtype: string){     
         let url = "";
         if(custtype == CommonConstant.CustTypePersonal)
         {
@@ -1980,6 +1991,8 @@ export class LtkmRequestXComponent implements OnInit {
 
         await this.http.post(url, { LtkmCustId: this.LtkmCustId }).toPromise().then(
           (response) => {
+            this.ltkmCustObj = response["rLtkmCustObj"];
+
             this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
 
             if(response["rLtkmCustGrpParent"] != null){
@@ -1989,6 +2002,7 @@ export class LtkmRequestXComponent implements OnInit {
                 this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];
             }
           });
+
       }
 
       async GetCustObj(CustNo) {
@@ -2188,12 +2202,30 @@ export class LtkmRequestXComponent implements OnInit {
             this.listLtkmCustCompanyLegalDoc = event["CustCompanyLegalDocObjs"];
             this.custCompanyLegalDocComponent.listLtkmCustCompanyLegalDoc = event["CustCompanyLegalDocObjs"];
         }
-
-        if (event["CustCompanyFinDataObjs"] != undefined) {
-            this.listLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
-            this.custCompanyFinDataComponent.ListLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
-            // this.custCompanyFinDataComponent.AppCustCompanyFinDataObj.DateAsOf = formatDate(event["CustCompanyFinDataObj"].DateAsOf, 'yyyy-MM-dd', 'en-US');
+        
+        if(event["CustObj"]["CustId"] != undefined)
+        {
+            console.log('haloooo')
+            console.log('cust no : ' + event["CustObj"]["CustNo"])
+        
+            await this.http.post(URLConstant.GetCustByCustNo, event["CustObj"]["CustNo"]).toPromise().then(
+                (response) => {
+                    this.CustId = response['CustId'];
+                });
+                
+             await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
+                  (response) => {
+                      this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
+                });        
         }
+
+
+
+        // if (event["CustCompanyFinDataObjs"] != undefined) {
+        //     this.listLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
+        //     this.custCompanyFinDataComponent.ListLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
+        //     // this.custCompanyFinDataComponent.AppCustCompanyFinDataObj.DateAsOf = formatDate(event["CustCompanyFinDataObj"].DateAsOf, 'yyyy-MM-dd', 'en-US');
+        // }
 
         if (event["CustBankAccObjs"] != undefined) {
             this.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
@@ -2745,5 +2777,35 @@ export class LtkmRequestXComponent implements OnInit {
         this.addrObjsForView.push(addrVar);
       }
     }
+
+
+    //PERUBAHAN START
+   async getListFinDataCompany(event) { 
+    console.log('haloooo')
+    console.log('cust no : ' + event)
+
+    await this.http.post(URLConstant.GetCustByCustNo, event).toPromise().then(
+        (response) => {
+            this.CustId = response['CustId'];
+        });
+        
+     await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
+          (response) => {
+              this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
+        });
+        // this.custCompanyFinDataComponent.ListLtkmCustCoyFinData = this.ListCustCoyFinData;
+    }
+
+    // async getListFinDataPersonal() {
+    //     this.CustNoObj.CustNo = this.LtkmCustNo;       
+    //     await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
+    //         (response) => {
+    //           this.ListCustPersonalFinData = response['ListCustPersonalFinDataForCustViewX'];
+    //         });
+    // }
+
+    //PERUBAHAN END
+ 
+    
 }
 

@@ -115,9 +115,6 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
             }
         });
     this.CustNoObj.CustNo = this.ltkmCustObj.CustNo;
-    console.log("haloooo");
-    console.log(this.CustNoObj.CustNo);
-
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
         (response) => {
             this.CustId = response['CustId'];
