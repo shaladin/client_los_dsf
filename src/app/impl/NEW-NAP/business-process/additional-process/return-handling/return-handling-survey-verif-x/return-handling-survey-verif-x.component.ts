@@ -29,7 +29,6 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
 
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj;
-  userAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   isReady: boolean = false;
   navigationSubscription;
   context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -92,7 +91,6 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
 
     if (environment.isCore) {
-      const UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.username = this.context[CommonConstant.USER_NAME];
       this.roleCode = this.context[CommonConstant.ROLE_CODE];
       this.inputPagingObj._url = "./assets/impl/ucpaging/survey/V2/searchReturnHandlingSurveyVerifV2.json";
@@ -178,9 +176,9 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
         this.inputPagingObj.isJoinExAPI = true
         this.RequestTaskModel.ProcessKey = CommonConstantX.RETURN_HANDLING_ADD_SURVEY + this.BizTemplateCode;
         this.RequestTaskModel.TaskDefinitionKey = CommonConstantX.APP_STEP_RETURN_SURVEY_VERIF + this.BizTemplateCode;
-        this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                                 this.userAccess[CommonConstant.OFFICE_CODE], 
-                                                 this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+        this.RequestTaskModel.OfficeRoleCodes = [this.context[CommonConstant.ROLE_CODE],
+                                                 this.context[CommonConstant.OFFICE_CODE], 
+                                                 this.context[CommonConstant.ROLE_CODE] + "-" + this.context[CommonConstant.OFFICE_CODE]];
         
         this.IntegrationObj.baseUrl = URLConstant.GetAllTaskWorkflow;
         this.IntegrationObj.requestObj = this.RequestTaskModel;
@@ -215,9 +213,9 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
         this.inputPagingObj.isJoinExAPI = true
         this.RequestTaskModel.ProcessKey = CommonConstantX.RETURN_HANDLING_ADD_SURVEY + this.BizTemplateCode;
         this.RequestTaskModel.TaskDefinitionKey = CommonConstantX.APP_STEP_RETURN_SURVEY_VERIF + this.BizTemplateCode;
-        this.RequestTaskModel.OfficeRoleCodes = [this.userAccess[CommonConstant.ROLE_CODE],
-                                                 this.userAccess[CommonConstant.OFFICE_CODE], 
-                                                 this.userAccess[CommonConstant.ROLE_CODE] + "-" + this.userAccess[CommonConstant.OFFICE_CODE]];
+        this.RequestTaskModel.OfficeRoleCodes = [this.context[CommonConstant.ROLE_CODE],
+                                                 this.context[CommonConstant.OFFICE_CODE], 
+                                                 this.context[CommonConstant.ROLE_CODE] + "-" + this.context[CommonConstant.OFFICE_CODE]];
 
         this.RequestTaskModelForThingsToDo.RequestTaskModel = this.RequestTaskModel;
         this.RequestTaskModelForThingsToDo.UserName = this.username;
