@@ -1472,7 +1472,7 @@ export class ApplicationDataXComponent implements OnInit {
       }
     }
 
-    if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
+    if (this.NapAppModelForm.controls.Tenor.value > this.maxTenor) {
       this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
       return false;
     }
