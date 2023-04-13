@@ -37,7 +37,9 @@ export class CommonConstantX {
     public static RefReasonTypeCodeEditCommAfterApproval = "EDIT_COMM_AFT_APV";
 
     // MR ID TYPE CODE
-    public static MrIdTypeCodePassport = "Passport";
+    public static MrIdTypeCodePassport = "PASSPORT";
+    public static MrIdTypeCodeNIB = "NIB";
+    public static MrIdTypeCodeTDPNIB = "TDPNIB";
 
     //Approval Scheme
     public static SCHM_CODE_CESSIE_PGLV_APV = "CESSIE_PGLV_APV_SCHEME";
