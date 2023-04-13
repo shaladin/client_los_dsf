@@ -26,6 +26,11 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 import { TypeResultObj } from 'app/shared/model/type-result/type-result-obj.model';
 import { ResultAttrObj } from 'app/shared/model/type-result/result-attr-obj.model';
 import { CrdRvwAppObj } from 'app/shared/model/credit-review/crd-rvw-app-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -42,6 +47,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     }
   }
   appId: number = 0;
+  custNo: string;
   wfTaskListId: any;
   isReturnOn: boolean = false;
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -53,6 +59,11 @@ export class CreditReviewCrDetailComponent implements OnInit {
   RFAInfo: Object = new Object();
   apvSchmCode: string = "";
   OriOfficeCode: string;
+
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  dmsObj: DMSObj;
+  isDmsReady: boolean = false;
+  usingDmsAdins: string;
 
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
@@ -117,6 +128,74 @@ export class CreditReviewCrDetailComponent implements OnInit {
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
+    await this.InitDms();
+  }
+
+  async InitDms() {
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.SYS_CONFIG_USING_DMS_ADINS }).toPromise().then(
+      (response) => {
+        this.usingDmsAdins = response["ConfigValue"];
+      },
+      (error) => {
+        this.isDmsReady = false;
+      }
+    );
+
+    if (this.usingDmsAdins == '1') {
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+    
+      this.dmsObj.ViewCode = "APP";
+      this.dmsObj.UsingDmsAdIns = this.usingDmsAdins;
+      this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
+
+      let reqAppId = { Id: this.appId };
+      this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsOfficeCode, this.OriOfficeCode));
+      this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+      this.http.post(URLConstant.GetAppCustByAppId, reqAppId).subscribe(
+        (response) => {
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsCustName, response['CustName']));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsDealerName, "DEALER"));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsExpiredDate, formatDate(new Date(), 'dd/MM/yyyy', 'en-US').toString()));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsTimestamp, formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en-US').toString()));
+
+          this.isDmsReady = true;
+        }
+      );
+    }
+    else if (this.usingDmsAdins == '2') {
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+      var appObj = { Id: this.appId };
+      
+      await this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
+        (response: AppCustObj) => {
+          this.custNo = response.CustNo;
+
+          if (this.custNo != null && this.custNo != '') {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideViewDownload));
+          
+          this.isDmsReady = true;
+        }
+      );
+    }
+    else {
+      this.isDmsReady = false;
+    }
   }
 
   getCrdRvwAppObj(ev: CrdRvwAppObj) {

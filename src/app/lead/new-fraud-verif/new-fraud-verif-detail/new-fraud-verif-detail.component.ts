@@ -113,6 +113,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
             this.DuplicateCustObj.TaxIdNo = tempLeadCustObj.TaxIdNo;
             this.DuplicateCustObj.BirthDt = tempLeadCustPersonalObj.BirthDt;
             this.DuplicateCustObj.MotherMaidenName = tempLeadCustPersonalObj.MotherMaidenName;
+            this.DuplicateCustObj.MobilePhnNo1 = tempLeadCustPersonalObj.MobilePhnNo1; 
 
             this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, this.DuplicateCustObj).subscribe(
               (response) => {

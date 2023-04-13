@@ -942,7 +942,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
     switch (this.ruleObj.AdminFeeToCustBhv) {
       case CommonConstant.InsFeeBhvDef:
         //set default jika pertama kali create
-        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustAdminFeeAmt: this.ruleObj.AdminFeeToCust });
+        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.CustStampdutyFeeToCust });
         break;
       case CommonConstant.InsFeeBhvMin:
         CustAdminFeeAmtValidator.push(Validators.min(this.ruleObj.AdminFeeToCust));
