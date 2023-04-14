@@ -2030,20 +2030,35 @@ export class LtkmRequestXComponent implements OnInit {
         // }
 
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
-        if (event["CustPersonalFinDataObjs"] != undefined) {
+           if (event["CustPersonalFinDataObjs"] != undefined) {
+
             this.custDataPersonalObj.LtkmCustPersonalFinDataObj = event["CustPersonalFinDataObjs"];
             this.listLtkmCustPersonalFinDataObjs = event["CustPersonalFinDataObjs"];
-
+            
             // this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
-
+            
             // let TotalMonthlyIncome = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyIncomeAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
             // let TotalMonthlyExpense = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyExpenseAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt;
             // this.CustDataForm.controls["financialData"].patchValue({
-            //   TotalMonthlyIncome: TotalMonthlyIncome,
-            //   TotalMonthlyExpense: TotalMonthlyExpense,
-            //   NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
-            // });
-        }
+                //   TotalMonthlyIncome: TotalMonthlyIncome,
+                //   TotalMonthlyExpense: TotalMonthlyExpense,
+                //   NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
+                // });
+            }
+            
+            //handy, ambil fin data data dari fou
+            if(event["CustObj"]["CustId"] != undefined)
+            {
+                console.log('haloooo')
+                console.log(event["CustObj"]["CustId"])        
+                this.CustId = event["CustObj"]["CustId"];            
+            await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
+                (response) => {
+                  this.custDataPersonalObj.LtkmCustPersonalFinDataObj = response['ListCustPersonalFinDataForCustViewX'];
+                  this.listLtkmCustPersonalFinDataObjs = response['ListCustPersonalFinDataForCustViewX'];
+                });
+            }
+
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
         if (event["CustBankAccObjs"] != undefined) {
             this.listLtkmCustBankAccObjs = event["CustBankAccObjs"];
@@ -2203,24 +2218,20 @@ export class LtkmRequestXComponent implements OnInit {
             this.custCompanyLegalDocComponent.listLtkmCustCompanyLegalDoc = event["CustCompanyLegalDocObjs"];
         }
         
+        // handy, ambil fin data dari fou
         if(event["CustObj"]["CustId"] != undefined)
         {
             console.log('haloooo')
-            console.log('cust no : ' + event["CustObj"]["CustNo"])
-        
-            await this.http.post(URLConstant.GetCustByCustNo, event["CustObj"]["CustNo"]).toPromise().then(
-                (response) => {
-                    this.CustId = response['CustId'];
-                });
-                
+            console.log(event["CustObj"]["CustId"])        
+            this.CustId = event["CustObj"]["CustId"];
              await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
                   (response) => {
-                      this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
-                });        
+                      this.listLtkmCustCoyFinData = response['ListCustCompanyFinDataX'];
+                });     
+            
+            this.custCompanyFinDataComponent.ListLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
         }
-
-
-
+       
         // if (event["CustCompanyFinDataObjs"] != undefined) {
         //     this.listLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
         //     this.custCompanyFinDataComponent.ListLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];

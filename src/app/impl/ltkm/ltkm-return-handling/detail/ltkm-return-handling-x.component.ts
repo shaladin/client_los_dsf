@@ -2340,7 +2340,6 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         (response) => {
             this.CustId = response['CustId'];
         });
-        
      await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
           (response) => {
               this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
@@ -2348,7 +2347,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     }
 
     async getListFinDataPersonal() {
-        this.CustNoObj.CustNo = this.LtkmCustNo;       
+        // this.CustNoObj.CustNo = this.LtkmCustNo;       
         await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
             (response) => {
               this.ListCustPersonalFinData = response['ListCustPersonalFinDataForCustViewX'];

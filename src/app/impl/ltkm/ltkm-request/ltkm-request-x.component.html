@@ -240,10 +240,10 @@
                       [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
                       [parentForm]="CustDataForm" [identifier]="'EmergencyContact'"></app-ltkm-emergency-contact>
 
-                    <app-ltkm-financial-personal (UpdateSource)="updateListLtkmCustPersonalFinData($event)"
+                    <app-ltkm-financial-personal-x (UpdateSource)="updateListLtkmCustPersonalFinData($event)"
                       [IsMarried]="IsMarried" [isLockMode]="isLockMode" [enjiForm]="enjiForm"
                       [parentForm]="CustDataForm" [ListLtkmCustPersonalFinData]="listLtkmCustPersonalFinDataObjs"
-                      [identifier]="'FinData'"></app-ltkm-financial-personal>
+                      [identifier]="'FinData'"></app-ltkm-financial-personal-x>
 
 
                     <app-ltkm-attr-content-component [isLockMode]="isLockMode" #attrlistfindatacomponent
@@ -393,14 +393,6 @@
                       (UpdateSource)="updateListLtkmCustCoyFinDatas($event)"
                       >
                     </app-ltkm-financial-company-x>
-                    
-                    <app-ltkm-financial-company-x>
-                      [ListLtkmCustCoyFinData]="listCustCoyFinData"
-                    </app-ltkm-financial-company-x>
-
-                    <!-- <app-ltkm-financial-company-x
-                      [ListLtkmCustCoyFinData]="ListCustCoyFinData">
-                    </app-ltkm-financial-company-x> -->
 
                     <app-ltkm-attr-content-component
                     [isLockMode]="isLockMode" #attrlistfindatacomponentcoy
