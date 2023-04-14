@@ -114,6 +114,7 @@ import { ApplicationAgreementCancellationPagingDsfComponent } from "app/NEW-NAP/
 import { ApplicationAgreementCancellationDetailXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/application-agreement-cancellation-x-dsf/application-agreement-cancellation-detail-x-dsf/application-agreement-cancellation-detail-x-dsf.component";
 import { PreGoLivePagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component";
 import { PreGoLiveXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live-x/pre-go-live-x-dsf/pre-go-live-x-dsf.component";
+import { PreGoLivePagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-paging-x/pre-go-live-paging-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -247,6 +248,7 @@ export const customCurrencyMaskConfig = {
     InvoiceDataPagingXComponent,
     InvoiceDataXComponent,
     InvoiceDataDetailXComponent,
+    PreGoLivePagingXComponent
   ],
   providers: [
     NGXToastrService,

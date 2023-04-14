@@ -10,9 +10,9 @@
             <mat-tab-group>
               <mat-tab label="Term & Conditions">
                 <ng-template matTabContent>
-                  <app-term-conditions *ngIf="isReadyToLoadTC" [AppId]="AppObj?.AppId" [parentForm]="FormObj" [enjiForm]="enjiForm"
+                  <app-term-conditions-x *ngIf="isReadyToLoadTC" [AppId]="AppObj?.AppId" [parentForm]="FormObj" [enjiForm]="enjiForm"
                   (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
-                </app-term-conditions>
+                </app-term-conditions-x>
                 </ng-template>
               </mat-tab>
               <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">

@@ -34,6 +34,15 @@
                     <th>
                       <span class="thead-header" translate>Application Step</span>
                     </th>
+                    <th>
+                      <span class="thead-header" translate>Application Created</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Branch Name</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>MO Name</span>
+                    </th>
                   </tr>
                 </thead>
     
@@ -50,6 +59,9 @@
                     <td class="text-right">{{item.TotalDownPaymentAmt == null ? '-' : item.TotalDownPaymentAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.NtfAmt == null ? '-' : item.NtfAmt | number:'1.2-2':'en-US'}}</td>
                     <td>{{item.AppCurrStep}}</td>
+                    <td>{{item.AppCreatedDt | date:'dd-MMM-yyyy'}}</td>
+                    <td>{{item.OriOfficeName}}</td>
+                    <td>{{item.SalesOfficerName}}</td>
                   </tr>
                 </tbody>
               </table>
