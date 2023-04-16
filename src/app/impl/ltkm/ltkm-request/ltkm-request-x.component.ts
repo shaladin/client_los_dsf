@@ -2017,10 +2017,18 @@ export class LtkmRequestXComponent implements OnInit {
 
     async CopyCustomer(event) {
         //20230120, richard, reset temp pers
+        this.custDataPersonalObj = new LtkmCustDataPersonalObj();
         this.addrPersonalObjs = new Array<AddrObj>();
         this.addrPersonalObjsTemp = new Array<AddrObj>();
-        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
+        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();        
         this.copyAddrFromLookup(event);
+        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();        
+        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
+        this.addrPersonalObjsTemp = new Array<AddrObj>();
+        this.ltkmCustGrpParentObjs = new CustParentChildObj();
+        this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
+        this.inputLookupApplicationObj = new InputLookupObj();
+
         // this.selectCustNo = event.
 
         //perlu diganti cara bacanya (gak perlu), liat dri SELECT * FROM FOUNDATION_DSF.dbo.CUST_PERSONAL_FAMILY
@@ -2030,41 +2038,39 @@ export class LtkmRequestXComponent implements OnInit {
         // }
 
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
-           if (event["CustPersonalFinDataObjs"] != undefined) {
-
-            this.custDataPersonalObj.LtkmCustPersonalFinDataObj = event["CustPersonalFinDataObjs"];
-            this.listLtkmCustPersonalFinDataObjs = event["CustPersonalFinDataObjs"];
+        // if (event["CustPersonalFinDataObjs"] != undefined) {
             
-            // this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
+            //     this.custDataPersonalObj.LtkmCustPersonalFinDataObj = event["CustPersonalFinDataObjs"];
+            //     this.listLtkmCustPersonalFinDataObjs = event["CustPersonalFinDataObjs"];
             
-            // let TotalMonthlyIncome = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyIncomeAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
-            // let TotalMonthlyExpense = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyExpenseAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt;
-            // this.CustDataForm.controls["financialData"].patchValue({
-                //   TotalMonthlyIncome: TotalMonthlyIncome,
-                //   TotalMonthlyExpense: TotalMonthlyExpense,
-                //   NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
-                // });
-            }
+            //     // this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
             
-            //handy, ambil fin data data dari fou
-            if(event["CustObj"]["CustId"] != undefined)
-            {
-                console.log('haloooo')
-                console.log(event["CustObj"]["CustId"])        
-                this.CustId = event["CustObj"]["CustId"];            
+            //     // let TotalMonthlyIncome = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyIncomeAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
+            //     // let TotalMonthlyExpense = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyExpenseAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt;
+            //      // this.CustDataForm.controls["financialData"].patchValue({
+        //         //   TotalMonthlyIncome: TotalMonthlyIncome,
+        //         //   TotalMonthlyExpense: TotalMonthlyExpense,
+        //         //   NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
+        //         // });
+        // }
+        
+        //20230414 handy, ambil fin data dari fou
+        if(event["CustObj"]["CustId"] != undefined)
+        {
+            this.CustId = event["CustObj"]["CustId"];            
             await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
-                (response) => {
-                  this.custDataPersonalObj.LtkmCustPersonalFinDataObj = response['ListCustPersonalFinDataForCustViewX'];
-                  this.listLtkmCustPersonalFinDataObjs = response['ListCustPersonalFinDataForCustViewX'];
-                });
-            }
+            (response) => {
+                this.custDataPersonalObj.LtkmCustPersonalFinDataObj = response['ListCustPersonalFinDataForCustViewX'];
+                this.listLtkmCustPersonalFinDataObjs = response['ListCustPersonalFinDataForCustViewX'];
+            });
+        }
 
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
+
         if (event["CustBankAccObjs"] != undefined) {
             this.listLtkmCustBankAccObjs = event["CustBankAccObjs"];
             this.custLtkmBankSectionComponent.LtkmCustBankAccList = event["CustBankAccObjs"];
         }
-
 
 
         if (event["RLtkmCustPersonalJobDataObj"] != undefined) {
@@ -2151,6 +2157,7 @@ export class LtkmRequestXComponent implements OnInit {
             this.LtkmFamilyMainDataPagingComponent.listFamily = event["custPersonalFamilyForLtkmObjs"];
             this.LtkmFamilyMainDataPagingComponent.loadFamilyListData();
         }
+
         if (event["CustObj"] != undefined) {
             this.selectedCustNo = event["CustObj"]["CustNo"];
             this.isCustomerSelected = true;
@@ -2177,6 +2184,7 @@ export class LtkmRequestXComponent implements OnInit {
         this.addrCompanyObjsTemp = new Array<AddrObj>();
         this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
         this.copyAddrCompanyFromLookup(event);
+
         if (event["CustCompanyContactPersonObjs"] != undefined) {
             // this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
             this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj = event["CustCompanyContactPersonObjs"][0];
@@ -2220,9 +2228,7 @@ export class LtkmRequestXComponent implements OnInit {
         
         // handy, ambil fin data dari fou
         if(event["CustObj"]["CustId"] != undefined)
-        {
-            console.log('haloooo')
-            console.log(event["CustObj"]["CustId"])        
+        {   
             this.CustId = event["CustObj"]["CustId"];
              await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
                   (response) => {
