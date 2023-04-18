@@ -169,8 +169,8 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
       this.listRole = response["GsValue"].split(",");
       if(this.listRole.includes(this.roleCode))
       {
-        this.inputPagingObj._url = "./assets/ucpaging/searchPagingFromThingsToDoForCmo.json";
-        this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPagingFromThingsToDoForCmo.json";
+        this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingTaskFromThingsToDo.json";
+        this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingTaskFromThingsToDo.json";
         this.inputPagingObj.title = "Return Handling - Additional Survey Verification";
         
         this.inputPagingObj.isJoinExAPI = true
