@@ -192,16 +192,12 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
           (response: RefEmpForLookupObj) => {
             this.cmoObj = response
           });
-    
-        let whereValueObj = new WhereValueObj();
-        whereValueObj.property = "SalesOfficerNo";
-        whereValueObj.value = this.cmoObj.EmpNo;
-        this.inputPagingObj.whereValue.push(whereValueObj);
-    
-        whereValueObj = new WhereValueObj();
-        whereValueObj.property = "LastUserInput";
-        whereValueObj.value = this.username;
-        this.inputPagingObj.whereValue.push(whereValueObj);
+
+        var critSalesOfficerNo = new CriteriaObj();
+          critSalesOfficerNo.restriction = AdInsConstant.RestrictionEq;
+          critSalesOfficerNo.propName = 'A.SALES_OFFICER_NO';
+          critSalesOfficerNo.value = this.cmoObj.EmpNo;
+          this.listCrit.push(critSalesOfficerNo);
 
         this.isCmo = true;
       }
@@ -225,11 +221,9 @@ export class ReturnHandlingSurveyVerifXComponent implements OnInit {
         this.IntegrationObj.leftColumnToJoin = "AppNo";
         this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
         this.inputPagingObj.integrationObj = this.IntegrationObj;
-        
-        return;
       }
       var critCurrStep = new CriteriaObj();
-      critCurrStep.restriction = AdInsConstant.RestrictionIn;
+      critCurrStep.restriction = AdInsConstant.RestrictionEq;
       critCurrStep.propName = 'A.APP_CURR_STEP';
       critCurrStep.value = CommonConstant.AppStepRtn;
       this.listCrit.push(critCurrStep);
