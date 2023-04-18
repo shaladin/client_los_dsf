@@ -312,7 +312,7 @@ export class SurveyPagingXComponent implements OnInit {
           (response: RefEmpForLookupObj) => {
             this.lastUserInput = response;
           });
-        this.toastr.warningMessage("Please contact " + ev.RowObj.LastUserInput + " (" + this.lastUserInput.EmpName + ") to edit this application");
+        this.toastr.warningMessage("Please contact " + ev.RowObj.LastUserInput + " (" + this.lastUserInput.EmpName +") to edit this application");
         return;
       }
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.Id, "TrxNo": ev.RowObj.TrxNo });
