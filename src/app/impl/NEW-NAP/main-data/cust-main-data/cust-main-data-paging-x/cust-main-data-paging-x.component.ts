@@ -238,12 +238,19 @@ export class CustMainDataPagingXComponent implements OnInit, OnDestroy  {
       });
   }
 
-  AddApp() {
+  AddApp(addType = '') {
     if (!this.bizTemplateCode) return;
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_ADD], { "BizTemplateCode": this.bizTemplateCode });
+          if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
+          {
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_ADD], { "BizTemplateCode": this.bizTemplateCode, "addType": addType });
+          }
+          else
+          {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_ADD], { "BizTemplateCode": this.bizTemplateCode });
+          }
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
