@@ -2067,9 +2067,9 @@ export class LtkmRequestXComponent implements OnInit {
 
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
 
-        if (event["CustBankAccObjs"] != undefined) {
-            this.listLtkmCustBankAccObjs = event["CustBankAccObjs"];
-            this.custLtkmBankSectionComponent.LtkmCustBankAccList = event["CustBankAccObjs"];
+        if (event["CustBankAccObjs"] != undefined) {           
+            this.listLtkmCustBankAccObjs = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
+            this.custLtkmBankSectionComponent.LtkmCustBankAccList = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
         }
 
 
@@ -2245,8 +2245,9 @@ export class LtkmRequestXComponent implements OnInit {
         // }
 
         if (event["CustBankAccObjs"] != undefined) {
-            this.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
-            this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
+
+            this.listLtkmCustBankAccCompany =   this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);          
+            this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany =   this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
         }
 
         //20230125, richard, ubah mekanisme tampilin nilai cust group, baca dari master cust
@@ -2795,34 +2796,17 @@ export class LtkmRequestXComponent implements OnInit {
       }
     }
 
-
-    //PERUBAHAN START
-   async getListFinDataCompany(event) { 
-    console.log('haloooo')
-    console.log('cust no : ' + event)
-
-    await this.http.post(URLConstant.GetCustByCustNo, event).toPromise().then(
-        (response) => {
-            this.CustId = response['CustId'];
+    sortLtkmCustBankStmntObjs(accountsPayload: any) {
+        accountsPayload.forEach((account) => {
+          account.LtkmCustBankStmntObjs.sort((a, b) => {
+            const aDate = new Date(Number(a.Year), Number(a.Month) - 1);
+            const bDate = new Date(Number(b.Year), Number(b.Month) - 1);
+            return aDate.getTime() - bDate.getTime();
+          });
         });
-        
-     await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
-          (response) => {
-              this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
-        });
-        // this.custCompanyFinDataComponent.ListLtkmCustCoyFinData = this.ListCustCoyFinData;
-    }
+        return accountsPayload;
+      }
 
-    // async getListFinDataPersonal() {
-    //     this.CustNoObj.CustNo = this.LtkmCustNo;       
-    //     await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
-    //         (response) => {
-    //           this.ListCustPersonalFinData = response['ListCustPersonalFinDataForCustViewX'];
-    //         });
-    // }
-
-    //PERUBAHAN END
- 
     
 }
 

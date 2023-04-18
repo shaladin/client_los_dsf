@@ -1561,7 +1561,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
                         this.listLtkmCustGrpObj = response["AppCustGrpObjs"];
 
                         this.custDataPersonalObj.LtkmCustBankAccObjs = response["AppCustBankAccObjs"];
-                        this.listLtkmCustBankAccObjs = this.custDataPersonalObj.LtkmCustBankAccObjs;
+                        this.listLtkmCustBankAccObjs =this.sortLtkmCustBankStmntObjs(this.custDataPersonalObj.LtkmCustBankAccObjs);
 
                         this.custDataPersonalObj.LtkmCustEmergencyContact = response["rLtkmCustEmrgncCntct"];
                         this.LtkmCustEmergencyContactObj = response["rLtkmCustEmrgncCntct"];
@@ -1618,7 +1618,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
                         //   }
                         // }
                         this.custDataCompanyObj.LtkmCustBankAccObjs = response["AppCustBankAccObjs"];
-                        this.listLtkmCustBankAccCompany = this.custDataCompanyObj.LtkmCustBankAccObjs;
+                        this.listLtkmCustBankAccCompany = this.sortLtkmCustBankStmntObjs(this.custDataCompanyObj.LtkmCustBankAccObjs);
                         this.custDataCompanyObj.LtkmCustCompanyLegalDocObjs = response["AppCustCompanyLegalDocObjs"];
                         this.listLtkmCustCompanyLegalDoc = this.custDataCompanyObj.LtkmCustCompanyLegalDocObjs;
                         this.custDataCompanyObj.LtkmCustGrpObjs = response["AppCustGrpObjs"];
@@ -1835,7 +1835,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     //         }
     //     }
     // }
-
+      
     CopyCustomer(event) {
         console.log("copy customer");
         console.log(this.CustDataForm);
@@ -1864,11 +1864,9 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         }
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
         if (event["CustBankAccObjs"] != undefined) {
-            this.listLtkmCustBankAccObjs = event["CustBankAccObjs"];
-            this.custLtkmBankSectionComponent.LtkmCustBankAccList = event["CustBankAccObjs"];
+            this.listLtkmCustBankAccObjs = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
+            this.custLtkmBankSectionComponent.LtkmCustBankAccList = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
         }
-
-
 
         if (event["RLtkmCustPersonalJobDataObj"] != undefined) {
             this.custJobDataComponent.custModelCode = event["CustObj"].MrCustModelCode;
@@ -1948,8 +1946,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         }
 
         if (event["CustBankAccObjs"] != undefined) {
-            this.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
-            this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
+            this.listLtkmCustBankAccCompany = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
+            this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
         }
 
         if (event["CustGrpObjs"] != undefined) {
@@ -2354,7 +2352,17 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             });
     }
 
- 
+    sortLtkmCustBankStmntObjs(accountsPayload: any) {
+        accountsPayload.forEach((account) => {
+          account.LtkmCustBankStmntObjs.sort((a, b) => {
+            const aDate = new Date(Number(a.Year), Number(a.Month) - 1);
+            const bDate = new Date(Number(b.Year), Number(b.Month) - 1);
+            return aDate.getTime() - bDate.getTime();
+          });
+        });
+        return accountsPayload;
+      }
+      
     //PERUBAHAN END
   
 }
