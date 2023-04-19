@@ -266,7 +266,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
         });  
   }
 
-  AddApp() {
+  AddApp(addType = '') {
     if (!this.bizTemplateCode) return;
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
       (response) => {
@@ -279,7 +279,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
             {
               if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
               {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode });
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode, "addType": addType });
               }
               else
               {
@@ -295,7 +295,7 @@ export class CustMainDataPagingXDsfComponent implements OnInit, OnDestroy  {
           {
             if(this.bizTemplateCode == CommonConstant.CFNA || this.bizTemplateCode == CommonConstant.FL4W)
             {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode });
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP1_ADD_X], { "BizTemplateCode": this.bizTemplateCode, "addType": addType });
             }
             else
             {
