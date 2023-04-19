@@ -16,7 +16,7 @@ export class GeneratePotentialRoMonitoringDsfComponent implements OnInit {
 
   ngOnInit() {
     this.uploadObj.title = "Upload Potential RO";
-    this.uploadObj.UploadTypeCode = "UPL_POTENTIAL_RO";
+    this.uploadObj.UploadTypeCode = "UPL_POTENTIAL_RO_DSF";
     this.uploadObj.ErrorDownloadUrl = URLConstantDsf.GetPotentialROMonitoringByUploadMonitoringNoAndTrxType;
     this.uploadObj.TemplateName = "Upload_PotentialRO_Template";
     this.uploadObj.FileErrorName = "Upload_PotentialRO_ErrorDownload";

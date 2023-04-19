@@ -38,12 +38,12 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
   
   listSpResult: Array<{CustNo:string, CustName:string, AgrmntId:number, AgrmntNo:string, AgrmntDt:Date, MaturityDt: Date}>;
   // Self Custom Changes
-  reqGeneratePotentialRo: {AgrmntDtStart:Date, AgrmntDtEnd:Date, MaturityDtStart:Date, MaturityDtEnd:Date, GenerateRoPotentialCampaign:string};
+  reqListPotentialRo: {AgrmntDtStart:Date, AgrmntDtEnd:Date, MaturityDtStart:Date, MaturityDtEnd:Date, GenerateRoPotentialCampaign:string};
   // End Self Custom Changes
 
   
   async ngOnInit() {
-    this.GridResultSp.pagingJson = "./assets/ucgridview/gridListGenerateRoPotentialResult.json";
+    this.GridResultSp.pagingJson = "./assets/dsf/ucgridview/gridListGenerateRoPotentialResultDsf.json";
     await this.getListCampaignName();
     
   }
@@ -60,7 +60,7 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
 
   assignFilterReq()
   {
-    this.reqGeneratePotentialRo = {
+    this.reqListPotentialRo = {
       AgrmntDtStart: this.PotentialRoFilterForm.controls['AgrmntDtStart'].value,
       AgrmntDtEnd: this.PotentialRoFilterForm.controls['AgrmntDtEnd'].value,
       MaturityDtStart: this.PotentialRoFilterForm.controls['MaturityDtStart'].value,
@@ -88,7 +88,7 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
 
     this.assignFilterReq();
     // Self Custom Changes
-    this.http.post(URLConstantDsf.GetRoPotentialDataFromCampaign, this.reqGeneratePotentialRo).subscribe(
+    this.http.post(URLConstantDsf.GetRoPotentialDataFromCampaign, this.reqListPotentialRo).subscribe(
     // End Self Custom Changes
     (response) => {
         this.listSpResult = response['ListGenerateRoPotentialResult'];
@@ -107,7 +107,11 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
 
     this.assignFilterReq();
     // Self Custom Changes
-    this.http.post(URLConstantDsf.GenerateRoPotentialDataFromCampaign, this.reqGeneratePotentialRo).subscribe(
+    var reqGeneratePotentialRo = {
+      Campaign: this.reqListPotentialRo.GenerateRoPotentialCampaign,
+      RoPotentialList: this.GridResultSp
+    }
+    this.http.post(URLConstantDsf.GenerateRoPotentialDataFromCampaign, reqGeneratePotentialRo).subscribe(
     // End Self Custom Changes
     (response) => {
       this.toastr.successMessage('Generate success with Batch No : '+response["BatchNo"]);

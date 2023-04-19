@@ -172,4 +172,9 @@ export class PathConstantDsf {
 
     public static MONITORING = 'MonitoringDsf';
     public static CESSIE_MONITORING = PathConstantX.CESSIE + "/" + PathConstantDsf.MONITORING;
+
+    public static POTENTIAL_RO = "PotentialRoDsf";
+    public static POTENTIAL_RO_PAGING = PathConstantDsf.POTENTIAL_RO + "/" + PathConstant.PAGING;
+    public static POTENTIAL_RO_MONITORING = PathConstantDsf.POTENTIAL_RO + "/" + PathConstantDsf.MONITORING;
+
 }
