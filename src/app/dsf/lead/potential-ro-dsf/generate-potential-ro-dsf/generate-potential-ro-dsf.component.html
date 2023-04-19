@@ -35,7 +35,7 @@
                     (ngModelChange)="onChangeFilterForm()"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && PotentialRoFilterForm.controls.GenerateRoPotentialCampaignId.invalid }">
                       <option value="">Select one</option>
-                      <option *ngFor="let item of ListSpName" [value]="item.GenerateRoPotentialCampaignId">{{item.Descr}}</option>
+                      <option *ngFor="let item of ListCampaignName" [value]="item.GenerateRoPotentialCampaignId">{{item.Descr}}</option>
                     </select>
                     <lib-uc-show-errors [control]="PotentialRoFilterForm.controls.GenerateRoPotentialCampaignId" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                   </div>

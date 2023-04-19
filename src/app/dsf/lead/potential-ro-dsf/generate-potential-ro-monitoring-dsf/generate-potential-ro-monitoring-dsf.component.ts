@@ -6,8 +6,7 @@ import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-generate-potential-ro-monitoring-dsf',
-  templateUrl: './generate-potential-ro-monitoring-dsf.component.html',
-  styleUrls: ['./generate-potential-ro-monitoring-dsf.component.css']
+  templateUrl: './generate-potential-ro-monitoring-dsf.component.html'
 })
 export class GeneratePotentialRoMonitoringDsfComponent implements OnInit {
 
