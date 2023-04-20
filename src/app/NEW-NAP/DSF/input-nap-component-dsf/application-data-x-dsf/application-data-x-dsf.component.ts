@@ -1819,7 +1819,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // }
     // End Self Custom CR MPF & FD Validation
 
-    if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
+    if (this.NapAppModelForm.controls.Tenor.value > this.maxTenor) {
       this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
       return false;
     }
