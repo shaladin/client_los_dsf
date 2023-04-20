@@ -61,6 +61,8 @@ import { RoTelemkOfferVerifXComponent } from "app/impl/lead/potential-ro/ro-tele
 import {NewLeadInputLeadDataXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-lead-data/new-lead-input-lead-data-x.component';
 import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-page/new-lead-input-page-x.component';
 import { GeneratePotentialRoXComponent } from "app/impl/lead/potential-ro/generate-potential-ro/generate-potential-ro-x.component";
+import { GeneratePotentialRoDsfComponent } from "app/dsf/lead/potential-ro-dsf/generate-potential-ro-dsf/generate-potential-ro-dsf.component";
+import { GeneratePotentialRoMonitoringDsfComponent } from "app/dsf/lead/potential-ro-dsf/generate-potential-ro-monitoring-dsf/generate-potential-ro-monitoring-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -94,6 +96,8 @@ export const customCurrencyMaskConfig = {
     LeadCancelConfirmComponent,
     FraudVerifPagingComponent, FraudVerifPageComponent, LeadInquiryComponent,
     GeneratePotentialRoComponent,
+    GeneratePotentialRoDsfComponent,
+    GeneratePotentialRoMonitoringDsfComponent,
     RoTelemkOfferPagingComponent,
     RoTelemkOfferDetailComponent,
     RoTelemkOfferDetailXComponent,
