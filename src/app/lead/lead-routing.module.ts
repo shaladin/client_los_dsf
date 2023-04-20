@@ -46,6 +46,8 @@ import { RoTelemkOfferDetailXComponent } from 'app/impl/lead/potential-ro/ro-tel
 import { RoTelemkOfferVerifXComponent } from 'app/impl/lead/potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif-x.component';
 import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-input-page/new-lead-input-page-x.component';
 import { GeneratePotentialRoXComponent } from 'app/impl/lead/potential-ro/generate-potential-ro/generate-potential-ro-x.component';
+import { GeneratePotentialRoDsfComponent } from 'app/dsf/lead/potential-ro-dsf/generate-potential-ro-dsf/generate-potential-ro-dsf.component';
+import { GeneratePotentialRoMonitoringDsfComponent } from 'app/dsf/lead/potential-ro-dsf/generate-potential-ro-monitoring-dsf/generate-potential-ro-monitoring-dsf.component';
 
 
 const routes: Routes = [
@@ -197,6 +199,20 @@ const routes: Routes = [
         component: GeneratePotentialRoComponent,
         data: {
           title: 'Lead Review Monitoring Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.POTENTIAL_RO_PAGING,
+        component: GeneratePotentialRoDsfComponent,
+        data: {
+          title: 'Generate Potential RO'
+        }
+      },
+      {
+        path: PathConstantDsf.POTENTIAL_RO_MONITORING,
+        component: GeneratePotentialRoMonitoringDsfComponent,
+        data: {
+          title: 'Upload Potential RO'
         }
       },
       {

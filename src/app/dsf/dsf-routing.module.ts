@@ -32,8 +32,6 @@ import { RawDataFactoringComponent } from './report/factoring/raw-data-factoring
 import { ReportAppApprovalDsfComponent } from './report/report-app-approval-dsf/report-app-approval-dsf.component';
 import { ReportAgrProcessDsfComponent } from './report/report-agr-process-dsf/report-agr-process-dsf.component';
 import { SuratkonfirmasipersetujuanV2Component } from './report/suratkonfirmasipersetujuan-v2/suratkonfirmasipersetujuan-v2.component';
-import { GeneratePotentialRoDsfComponent } from './lead/potential-ro-dsf/generate-potential-ro-dsf/generate-potential-ro-dsf.component';
-import { GeneratePotentialRoMonitoringDsfComponent } from './lead/potential-ro-dsf/generate-potential-ro-monitoring-dsf/generate-potential-ro-monitoring-dsf.component';
 
 const routes: Routes = [
   {
@@ -404,30 +402,6 @@ const routes: Routes = [
         component: RawDataFactoringComponent,
         data: {
           title: "Report Fact Raw Data Factoring"
-        }
-      }
-    ]
-  },
-  {
-    path:'',
-    children: [
-      {
-        path: PathConstantDsf.POTENTIAL_RO_PAGING,
-        component: GeneratePotentialRoDsfComponent,
-        data: {
-          title: "Generate Potential RO"
-        }
-      }
-    ]
-  },
-  {
-    path:'',
-    children: [
-      {
-        path: PathConstantDsf.POTENTIAL_RO_MONITORING,
-        component: GeneratePotentialRoMonitoringDsfComponent,
-        data: {
-          title: "Potential RO Monitoring"
         }
       }
     ]
