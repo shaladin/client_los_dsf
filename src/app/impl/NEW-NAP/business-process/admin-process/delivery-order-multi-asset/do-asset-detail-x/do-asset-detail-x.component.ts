@@ -355,19 +355,19 @@ export class DoAssetDetailXComponent implements OnInit {
   async CheckValidationTransactionLeasseback(tenor: number, purposeOfFinancing: string, wayOfFinancing: string){
     let errorMessage: string = '';
 
-    // Get Attribute Tag Color
-    let attrTagColor: string | null | undefined = '';
+    // Get Attribute Plat Color
+    let attrPlatColor: string | null | undefined = '';
     for (let i = 0; i < this.DOAssetDetail.controls.AppAssetAttrObjs['controls'].length; i++) {
       const attribute = this.DOAssetDetail.controls.AppAssetAttrObjs['controls'][i];
-      if(attribute['controls']['AssetAttrCode'].value === CommonConstantX.APP_ASSET_ATTRIBUTE_TAG_COLOR){
-        attrTagColor = attribute['controls']['AttrValue'].value;
+      if(attribute['controls']['AssetAttrCode'].value === CommonConstantX.APP_ASSET_ATTRIBUTE_PLAT_COLOR){
+        attrPlatColor = attribute['controls']['AttrValue'].value;
         break;
       }
     }
 
-    if(attrTagColor === '' || attrTagColor === null || attrTagColor === undefined){
-      // Return error message for Tag color not selected at select option input
-      return 'Asset Attribute Tag Color is not selected';
+    if(attrPlatColor === '' || attrPlatColor === null || attrPlatColor === undefined){
+      // Return error message for plat color not selected at select option input
+      return 'Asset Attribute Plat Color is not selected';
     }
 
     // Get GS Tenor
@@ -404,14 +404,14 @@ export class DoAssetDetailXComponent implements OnInit {
     for (let i = 0; i < arrMapPofWofFL.length; i++) {
       if(mapPofWof === arrMapPofWofFL[i]){
         for (let x = 0; x < arrMinTenorAssetFL.length; x++) {
-          const gsTagColor = arrMinTenorAssetFL[x][0];
+          const gsPlatColor = arrMinTenorAssetFL[x][0];
           const gsTenorMonth = arrMinTenorAssetFL[x][1];
-          if(attrTagColor === gsTagColor && tenor < gsTenorMonth){
+          if(attrPlatColor === gsPlatColor && tenor < gsTenorMonth){
             let messageColor = 'Yellow';
-            if(attrTagColor === 'BLACK' || attrTagColor === 'WHITE'){
+            if(attrPlatColor === 'BLACK' || attrPlatColor === 'WHITE'){
               messageColor = 'Black/White'
             }
-            errorMessage = `Tag Color ${messageColor} must have minimum tenor of ${gsTenorMonth}`
+            errorMessage = `Plat Color ${messageColor} must have minimum tenor of ${gsTenorMonth}`
             break;
           }
         }

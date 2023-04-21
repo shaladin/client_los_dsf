@@ -7,7 +7,7 @@ import { formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
+// import { AppObj } from 'app/shared/model/App/App.Model';
 import { MatRadioChange } from '@angular/material/radio/typings/public-api';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustPersonalContactInformationComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/personal-contact-information/cust-personal-contact-information.component';
@@ -70,6 +70,8 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { LtkmAddrForViewObjX } from 'app/impl/shared/model/ltkm/ltkm-addr-data-for-view-objX.model';
 import { LtkmCcContactInformationTabXComponent } from './additional-component/company/cc-contact-information-tab-x/cc-contact-information-x.component';
 import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AppObj } from 'app/shared/model/app/app.model';
 @Component({
     selector: 'app-ltkm-request-x',
     templateUrl: './ltkm-request-x.component.html',
@@ -158,6 +160,15 @@ export class LtkmRequestXComponent implements OnInit {
     listOwnershipType: Array<RefMasterObj> = new Array();
     @ViewChild('applicationData') ucLookupApplicationData: UclookupgenericComponent;
     //@ViewChild('applicationCompanyData') ucLookupApplicationCompanyData: UclookupgenericComponent;
+
+    //PERBAHAN START
+    ltkmCustObj: LtkmCustObj;
+    CustNoObj: GenericObj = new GenericObj();
+    ListCustCoyFinData: Array<LtkmCustCompanyFinDataObj>;
+    CustId: number = 0;
+    LtkmCustNo: string;
+
+    //PERUBAHAN END
 
     private ucLookupApplicationCompanyData: UclookupgenericComponent;
     @ViewChild('applicationCompanyData') set content(content: UclookupgenericComponent) {
@@ -1969,7 +1980,7 @@ export class LtkmRequestXComponent implements OnInit {
     ltkmCustGrpChildObjs: Array<CustParentChildObj> = new Array<CustParentChildObj>();
     ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
     //20230125, richard, update mekanisme baca cust group
-    async getCustDataView(custtype: string){
+    async getCustDataView(custtype: string){     
         let url = "";
         if(custtype == CommonConstant.CustTypePersonal)
         {
@@ -1980,6 +1991,8 @@ export class LtkmRequestXComponent implements OnInit {
 
         await this.http.post(url, { LtkmCustId: this.LtkmCustId }).toPromise().then(
           (response) => {
+            this.ltkmCustObj = response["rLtkmCustObj"];
+
             this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
 
             if(response["rLtkmCustGrpParent"] != null){
@@ -1989,6 +2002,7 @@ export class LtkmRequestXComponent implements OnInit {
                 this.ltkmCustGrpChildObjs = response["rLtkmCustGrpChild"];
             }
           });
+
       }
 
       async GetCustObj(CustNo) {
@@ -2003,10 +2017,18 @@ export class LtkmRequestXComponent implements OnInit {
 
     async CopyCustomer(event) {
         //20230120, richard, reset temp pers
+        this.custDataPersonalObj = new LtkmCustDataPersonalObj();
         this.addrPersonalObjs = new Array<AddrObj>();
         this.addrPersonalObjsTemp = new Array<AddrObj>();
-        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
+        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();        
         this.copyAddrFromLookup(event);
+        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();        
+        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
+        this.addrPersonalObjsTemp = new Array<AddrObj>();
+        this.ltkmCustGrpParentObjs = new CustParentChildObj();
+        this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
+        this.inputLookupApplicationObj = new InputLookupObj();
+
         // this.selectCustNo = event.
 
         //perlu diganti cara bacanya (gak perlu), liat dri SELECT * FROM FOUNDATION_DSF.dbo.CUST_PERSONAL_FAMILY
@@ -2016,26 +2038,39 @@ export class LtkmRequestXComponent implements OnInit {
         // }
 
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
-        if (event["CustPersonalFinDataObjs"] != undefined) {
-            this.custDataPersonalObj.LtkmCustPersonalFinDataObj = event["CustPersonalFinDataObjs"];
-            this.listLtkmCustPersonalFinDataObjs = event["CustPersonalFinDataObjs"];
-
-            // this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
-
-            // let TotalMonthlyIncome = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyIncomeAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
-            // let TotalMonthlyExpense = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyExpenseAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt;
-            // this.CustDataForm.controls["financialData"].patchValue({
-            //   TotalMonthlyIncome: TotalMonthlyIncome,
-            //   TotalMonthlyExpense: TotalMonthlyExpense,
-            //   NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
-            // });
+        // if (event["CustPersonalFinDataObjs"] != undefined) {
+            
+            //     this.custDataPersonalObj.LtkmCustPersonalFinDataObj = event["CustPersonalFinDataObjs"];
+            //     this.listLtkmCustPersonalFinDataObjs = event["CustPersonalFinDataObjs"];
+            
+            //     // this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = event["CustPersonalFinDataObj"].MrSourceOfIncomeCode;
+            
+            //     // let TotalMonthlyIncome = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyIncomeAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.SpouseMonthlyIncomeAmt;
+            //     // let TotalMonthlyExpense = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.MonthlyExpenseAmt + this.custDataPersonalObj.AppCustPersonalFinDataObj.MonthlyInstallmentAmt;
+            //      // this.CustDataForm.controls["financialData"].patchValue({
+        //         //   TotalMonthlyIncome: TotalMonthlyIncome,
+        //         //   TotalMonthlyExpense: TotalMonthlyExpense,
+        //         //   NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
+        //         // });
+        // }
+        
+        //20230414 handy, ambil fin data dari fou
+        if(event["CustObj"]["CustId"] != undefined)
+        {
+            this.CustId = event["CustObj"]["CustId"];            
+            await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
+            (response) => {
+                this.custDataPersonalObj.LtkmCustPersonalFinDataObj = response['ListCustPersonalFinDataForCustViewX'];
+                this.listLtkmCustPersonalFinDataObjs = response['ListCustPersonalFinDataForCustViewX'];
+            });
         }
+
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
-        if (event["CustBankAccObjs"] != undefined) {
-            this.listLtkmCustBankAccObjs = event["CustBankAccObjs"];
-            this.custLtkmBankSectionComponent.LtkmCustBankAccList = event["CustBankAccObjs"];
-        }
 
+        if (event["CustBankAccObjs"] != undefined) {           
+            this.listLtkmCustBankAccObjs = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
+            this.custLtkmBankSectionComponent.LtkmCustBankAccList = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
+        }
 
 
         if (event["RLtkmCustPersonalJobDataObj"] != undefined) {
@@ -2122,6 +2157,7 @@ export class LtkmRequestXComponent implements OnInit {
             this.LtkmFamilyMainDataPagingComponent.listFamily = event["custPersonalFamilyForLtkmObjs"];
             this.LtkmFamilyMainDataPagingComponent.loadFamilyListData();
         }
+
         if (event["CustObj"] != undefined) {
             this.selectedCustNo = event["CustObj"]["CustNo"];
             this.isCustomerSelected = true;
@@ -2148,6 +2184,7 @@ export class LtkmRequestXComponent implements OnInit {
         this.addrCompanyObjsTemp = new Array<AddrObj>();
         this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
         this.copyAddrCompanyFromLookup(event);
+
         if (event["CustCompanyContactPersonObjs"] != undefined) {
             // this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
             this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj = event["CustCompanyContactPersonObjs"][0];
@@ -2188,16 +2225,29 @@ export class LtkmRequestXComponent implements OnInit {
             this.listLtkmCustCompanyLegalDoc = event["CustCompanyLegalDocObjs"];
             this.custCompanyLegalDocComponent.listLtkmCustCompanyLegalDoc = event["CustCompanyLegalDocObjs"];
         }
-
-        if (event["CustCompanyFinDataObjs"] != undefined) {
-            this.listLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
+        
+        // handy, ambil fin data dari fou
+        if(event["CustObj"]["CustId"] != undefined)
+        {   
+            this.CustId = event["CustObj"]["CustId"];
+             await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
+                  (response) => {
+                      this.listLtkmCustCoyFinData = response['ListCustCompanyFinDataX'];
+                });     
+            
             this.custCompanyFinDataComponent.ListLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
-            // this.custCompanyFinDataComponent.AppCustCompanyFinDataObj.DateAsOf = formatDate(event["CustCompanyFinDataObj"].DateAsOf, 'yyyy-MM-dd', 'en-US');
         }
+       
+        // if (event["CustCompanyFinDataObjs"] != undefined) {
+        //     this.listLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
+        //     this.custCompanyFinDataComponent.ListLtkmCustCoyFinData = event["CustCompanyFinDataObjs"];
+        //     // this.custCompanyFinDataComponent.AppCustCompanyFinDataObj.DateAsOf = formatDate(event["CustCompanyFinDataObj"].DateAsOf, 'yyyy-MM-dd', 'en-US');
+        // }
 
         if (event["CustBankAccObjs"] != undefined) {
-            this.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
-            this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
+
+            this.listLtkmCustBankAccCompany =   this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);          
+            this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany =   this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
         }
 
         //20230125, richard, ubah mekanisme tampilin nilai cust group, baca dari master cust
@@ -2745,5 +2795,18 @@ export class LtkmRequestXComponent implements OnInit {
         this.addrObjsForView.push(addrVar);
       }
     }
+
+    sortLtkmCustBankStmntObjs(accountsPayload: any) {
+        accountsPayload.forEach((account) => {
+          account.LtkmCustBankStmntObjs.sort((a, b) => {
+            const aDate = new Date(Number(a.Year), Number(a.Month) - 1);
+            const bDate = new Date(Number(b.Year), Number(b.Month) - 1);
+            return aDate.getTime() - bDate.getTime();
+          });
+        });
+        return accountsPayload;
+      }
+
+    
 }
 
