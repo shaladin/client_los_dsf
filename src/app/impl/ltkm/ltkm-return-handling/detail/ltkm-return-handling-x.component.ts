@@ -393,7 +393,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             var personalPath: string = "";
 
             if (this.mode == this.modeRtnConst) {
-                personalPath = environment.isCore? URLConstant.SaveLtkmReturnHandlingPersonalV2 : URLConstant.SaveLtkmReturnHandlingPersonal;
+                personalPath = environment.isCore? URLConstantX.SaveLtkmReturnHandlingPersonalV2 : URLConstant.SaveLtkmReturnHandlingPersonal;
                 sendPersonalObj = {
                     requestCustDataPersonalObj: custDataPersonalObj,
                     WfTaskListId: this.WfTaskListId,
@@ -453,7 +453,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             var coyPath: string = "";
 
             if (this.mode == this.modeRtnConst) {
-                coyPath = environment.isCore? URLConstant.SaveLtkmReturnHandlingCompanyV2 : URLConstant.SaveLtkmReturnHandlingCompany;
+                coyPath = environment.isCore? URLConstantX.SaveLtkmReturnHandlingCompanyV2 : URLConstant.SaveLtkmReturnHandlingCompany;
                 sendCoyObj = {
                     requestCustDataCompanyLtkmObj: custDataCompanyObj,
                     WfTaskListId: this.WfTaskListId,
