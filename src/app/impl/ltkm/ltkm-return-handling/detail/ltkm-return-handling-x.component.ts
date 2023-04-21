@@ -1095,7 +1095,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            // appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].MrJobTitleCode.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             // appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob();
         }
 
@@ -1104,7 +1105,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            // appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].MrJobTitleCode.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
@@ -1119,7 +1121,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            // appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].MrJobTitleCode.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
             appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
@@ -1134,7 +1137,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            // appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].MrJobTitleCode.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
             appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
@@ -1527,7 +1531,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             return;
         }
 
-        await this.http.post(URLConstant.GetCustDataByLtkmCustId, custDataObj).toPromise().then(
+        await this.http.post(URLConstantX.GetCustDataByLtkmCustId, custDataObj).toPromise().then(
             async (response) => {
                 if (response["AppCustObj"]["LtkmCustId"] > 0) {
                     if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -1554,8 +1558,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
                         this.listLtkmCustPersonalFinDataObjs = response["AppCustPersonalFinDataObj"];
                         // this.custDataPersonalObj.AppCustBankAccObjs = response["AppCustBankAccObjs"];
                         // this.listAppCustBankAcc = this.custDataPersonalObj.AppCustBankAccObjs;
-                        this.custDataPersonalObj.LtkmCustPersonalJobDataObj = response["AppCustPersonalJobDataObj"];
-                        this.ltkmCustPersonalJobDataObj = response["AppCustPersonalJobDataObj"];
+                        this.custDataPersonalObj.LtkmCustPersonalJobDataObj = response["AppCustPersonalJobDataObjX"];
+                        this.ltkmCustPersonalJobDataObj = response["AppCustPersonalJobDataObjX"];
                         // this.custDataPersonalObj.AppCustSocmedObjs = response["AppCustSocmedObjs"];
                         this.custDataPersonalObj.LtkmCustGrpObjs = response["AppCustGrpObjs"];
                         this.listLtkmCustGrpObj = response["AppCustGrpObjs"];
