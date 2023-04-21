@@ -76,7 +76,7 @@ export class CommonConstantX {
     public static APP_ASSET_CONDITION_CODE_USED = "USED";
     
     // APP ASSET ATTRIBUTE
-    public static APP_ASSET_ATTRIBUTE_TAG_COLOR = "TAG_COLOR";
+    public static APP_ASSET_ATTRIBUTE_PLAT_COLOR = "PLAT COLOR";
 
     //Ref Master
     public static REF_MASTER_ASSET_CONDITION_DESCR_USED = "Used";

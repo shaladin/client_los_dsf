@@ -405,11 +405,11 @@ export class AssetDataPagingXComponent implements OnInit {
     // region: additional validation transaction leasseback
     let isAlreadyHasAsset: boolean = false;
     let allAssetName: string[] = []
-    let allAssetAttributeTagColor: string[] = []
-    let tagColorRequestObj = {
+    let allAssetAttributePlatColor: string[] = []
+    let platColorRequestObj = {
       Id: this.AppId
     }
-    await this.http.post(URLConstant.GetListAllAssetDataByAppId, tagColorRequestObj).toPromise().then((res: any) =>{
+    await this.http.post(URLConstant.GetListAllAssetDataByAppId, platColorRequestObj).toPromise().then((res: any) =>{
       if(res['ReturnObject'] !== null && res['ReturnObject'].length > 0){
         isAlreadyHasAsset = true;
         if(res['ReturnObject'].length > 0){
@@ -426,8 +426,8 @@ export class AssetDataPagingXComponent implements OnInit {
             const attributes: any[] = res['ReturnObject'][i].ResponseAppAssetAttrObjs
             if(attributes.length > 0){
               for (let x = 0; x < attributes.length; x++) {
-                if(attributes[x].AssetAttrCode === CommonConstantX.APP_ASSET_ATTRIBUTE_TAG_COLOR){
-                  allAssetAttributeTagColor.push(attributes[x].AttrValue)
+                if(attributes[x].AssetAttrCode === CommonConstantX.APP_ASSET_ATTRIBUTE_PLAT_COLOR){
+                  allAssetAttributePlatColor.push(attributes[x].AttrValue)
                 }
               }
             }
@@ -461,7 +461,7 @@ export class AssetDataPagingXComponent implements OnInit {
           wayOfFinancing = componentValue
         }
       });
-      const errorMessages: string[] = await this.CheckValidationTransactionLeasseback(this.appObj.Tenor, purposeOfFinancing, wayOfFinancing, allAssetAttributeTagColor, allAssetName)
+      const errorMessages: string[] = await this.CheckValidationTransactionLeasseback(this.appObj.Tenor, purposeOfFinancing, wayOfFinancing, allAssetAttributePlatColor, allAssetName)
       if(errorMessages.length > 0){
         for (let i = 0; i < errorMessages.length; i++) {
           this.toastr.warningMessage(errorMessages[i]);
@@ -480,7 +480,7 @@ export class AssetDataPagingXComponent implements OnInit {
     this.outputValue.emit({ mode: 'submit' });
   }
 
-  async CheckValidationTransactionLeasseback(tenor: number, purposeOfFinancing: string, wayOfFinancing: string, allAssetAttributeTagColor: string[], allAssetName: string[]){
+  async CheckValidationTransactionLeasseback(tenor: number, purposeOfFinancing: string, wayOfFinancing: string, allAssetAttributePlatColor: string[], allAssetName: string[]){
     // get GS Tenor
     let errorMessages: string[] = [];
     let arrMinTenorAssetFL: any[]
@@ -515,19 +515,19 @@ export class AssetDataPagingXComponent implements OnInit {
     if(arrMapPofWofFL.length > 0){
       for (let i = 0; i < arrMapPofWofFL.length; i++) {
         if(mapPofWof === arrMapPofWofFL[i]){
-          if(allAssetAttributeTagColor.length > 0){
-            for (let x = 0; x < allAssetAttributeTagColor.length; x++) {
+          if(allAssetAttributePlatColor.length > 0){
+            for (let x = 0; x < allAssetAttributePlatColor.length; x++) {
               const assetName = allAssetName[x]
-              const attrTagColor = allAssetAttributeTagColor[x]
+              const attrPlatColor = allAssetAttributePlatColor[x]
               for (let gsIdx = 0; gsIdx < arrMinTenorAssetFL.length; gsIdx++) {
-                const gsTagColor = arrMinTenorAssetFL[gsIdx][0];
+                const gsPlatColor = arrMinTenorAssetFL[gsIdx][0];
                 const gsTenorMonth = arrMinTenorAssetFL[gsIdx][1];
-                if(attrTagColor === gsTagColor && tenor < gsTenorMonth){
+                if(attrPlatColor === gsPlatColor && tenor < gsTenorMonth){
                   let messageColor = 'Yellow';
-                  if(attrTagColor === 'BLACK' || attrTagColor === 'WHITE'){
+                  if(attrPlatColor === 'BLACK' || attrPlatColor === 'WHITE'){
                     messageColor = 'Black/White'
                   }
-                  errorMessages.push(`Tag Color ${messageColor} must have minimum tenor of ${gsTenorMonth} for asset ${assetName}`)
+                  errorMessages.push(`Plat Color ${messageColor} must have minimum tenor of ${gsTenorMonth} for asset ${assetName}`)
                 }
               }
             }
