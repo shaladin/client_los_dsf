@@ -788,6 +788,7 @@ export class CommonConstant {
   public static GSCodeCustAgeLimit = "CUST_AGE_LIMIT";
   public static GsCodeNegCustAllowNap = "NEGCUSTALLOWNAP";
   public static GsCodeAssetTypeForHeavyEquipment = "ASSET_TYPE_CODE_FOR_HEAVY_EQUIPMENT";
+  public static GSRoleForCmo = "ROLE_FOR_CMO";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";
