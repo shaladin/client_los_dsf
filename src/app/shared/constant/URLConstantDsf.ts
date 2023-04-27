@@ -53,9 +53,9 @@ export class URLConstantDsf {
 
     public static UploadFileV2 = environment.FoundationR3Url + "/UploadXDsf/UploadFileV2";
     public static GetReferencePayment = environment.losUrl + "/CessieDsf/GetReferencePayment";
-    public static GetPotentialROMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/v1" + "/ROPotentialDsf/GetPotentialROMonitoringByUploadMonitoringNoAndTrxTypeDsf";
-    public static GetListGenerateRoPotentialCampaign = environment.losUrl + "/v1" + "/RoPotentialDsf/GetListGenerateRoPotentialCampaignDsf";
-    public static GetRoPotentialDataFromCampaign = environment.losUrl + "/v1" + "/RoPotentialDsf/GetRoPotentialDataFromCampaignDsf";
-    public static GenerateRoPotentialDataFromCampaign = environment.losUrl + "/v1" + "/RoPotentialDsf/GenerateRoPotentialDataFromCampaignDsf";
+    public static GetPotentialROMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/ROPotentialDsf/GetPotentialROMonitoringByUploadMonitoringNoAndTrxTypeDsf";
+    public static GetListGenerateRoPotentialCampaign = environment.losUrl + "/RoPotentialDsf/GetListGenerateRoPotentialCampaignDsf";
+    public static GetRoPotentialDataFromCampaign = environment.losUrl  + "/RoPotentialDsf/GetRoPotentialDataFromCampaignDsf";
+    public static GenerateRoPotentialDataFromCampaign = environment.losUrl  + "/RoPotentialDsf/GenerateRoPotentialDataFromCampaignDsf";
 
 }
