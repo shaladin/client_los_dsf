@@ -11,7 +11,7 @@
       "type": "label",
       "position": "left",
       "label": "Shareholder Type",
-      "name": "MrShrholderTypeCode"
+      "name": "CustTypeName"
     },
     {
       "type": "label",
@@ -47,7 +47,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "MrShrholderTypeCode"
+      "property": "CustTypeName"
     },
     {
       "type": "decimal",

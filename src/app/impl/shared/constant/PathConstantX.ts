@@ -244,6 +244,8 @@ export class PathConstantX {
   public static VERIFY_DETAIL = PathConstant.VERIFY_DETAIL + PathConstantX.X;
   public static LTKM_VIEW = PathConstantX.LTKM + "/" + PathConstant.VIEW + PathConstantX.X;
   public static VERIFY_APV_DETAIL = PathConstant.VERIFY_APV_DETAIL + PathConstantX.X;
+  public static RTN_HANDLING = "ReturnHandling";
+  public static RTN_HANDLING_PAGING = PathConstant.RTN_HANDLING + "/" + PathConstantX.PAGING;
 
   public static FL4W_VIEW_INS_X = "ViewInsuranceX";
 }

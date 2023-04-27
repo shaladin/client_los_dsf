@@ -125,7 +125,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
     if (response["CustObj"] != undefined) {
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: response["CustObj"].CustNo,
-        CustModelCode: response["CustObj"].MrCustModelCode,
+        // CustModelCode: response["CustObj"].MrCustModelCode,
         IsAffiliated: response["CustObj"].IsAffiliateWithMf,
         TaxIdNo: response["CustObj"].TaxIdNo,
         IsVip: response["CustObj"].IsVip

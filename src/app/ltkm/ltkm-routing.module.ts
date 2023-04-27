@@ -16,6 +16,7 @@ import { LtkmReturnHandlingPagingComponent } from './ltkm-return-handling/paging
 import { LtkmVerifyDetailComponent } from './ltkm-verify/detail/ltkm-verify-detail.component';
 import { LtkmVerifyPagingComponent } from './ltkm-verify/paging/ltkm-verify-paging.component';
 import { LtkmViewComponent } from './view-ltkm-component/ltkm-view-component';
+import { LtkmReturnHandlingPagingXComponent } from 'app/impl/ltkm/ltkm-return-handling/paging/ltkm-return-handling-x.component';
 
 
 const routes: Routes = [
@@ -79,10 +80,10 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.RTN_HANDLING_PAGING,
-        component: LtkmReturnHandlingPagingComponent,
+        path: PathConstantX.RTN_HANDLING_PAGING,
+        component: LtkmReturnHandlingPagingXComponent,
         data: {
-          title: 'LTKM Return Handling Paging'
+          title: 'LTKM Return Handling Paging X'
         }
       },
       {
