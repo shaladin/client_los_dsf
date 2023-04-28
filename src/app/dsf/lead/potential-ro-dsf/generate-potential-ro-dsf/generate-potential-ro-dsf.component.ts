@@ -5,6 +5,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-generate-potential-ro-dsf',
@@ -16,12 +19,15 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
   constructor(
     private http: HttpClient, 
     private fb: FormBuilder,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    // Self Custom Changes
+    private router: Router
+    // End Self Custom Changes
   ) { }
 
   IsHasData: boolean = false;
   // Self Custom Changes
-  ListCampaignName: Array<{GenerateRoPotentialCampaignId:number, SpName:string, Descr:string}>;
+  ListCampaignName: Array<{Campaign:string}>;
   // End Self Custom Changes
   IsGridResultSpReady: boolean = false;
   GridResultSp: InputGridObj = new InputGridObj();
@@ -36,9 +42,10 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
   });
 
   
-  listSpResult: Array<{CustNo:string, CustName:string, AgrmntId:number, AgrmntNo:string, AgrmntDt:Date, MaturityDt: Date}>;
+  listSpResult: Array<{StgPotentialRoId:number, CustNo:string, CustName:string, AgrmntId:number, AgrmntNo:string, AgrmntDt:Date, MaturityDt: Date, Campaign:string}>;
   // Self Custom Changes
   reqListPotentialRo: {AgrmntDtStart:Date, AgrmntDtEnd:Date, MaturityDtStart:Date, MaturityDtEnd:Date, GenerateRoPotentialCampaign:string};
+  listStgPotentialRoIdtoGenerate: Array<number> = new Array<number>();
   // End Self Custom Changes
 
   
@@ -107,16 +114,44 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
 
     this.assignFilterReq();
     // Self Custom Changes
+    //if(!this.listStgPotentialRoIdtoGenerate.length) return;
     var reqGeneratePotentialRo = {
       Campaign: this.reqListPotentialRo.GenerateRoPotentialCampaign,
-      RoPotentialList: this.GridResultSp
+      RoPotentialList: this.listStgPotentialRoIdtoGenerate
     }
     this.http.post(URLConstantDsf.GenerateRoPotentialDataFromCampaign, reqGeneratePotentialRo).subscribe(
     // End Self Custom Changes
     (response) => {
       this.toastr.successMessage('Generate success with Batch No : '+response["BatchNo"]);
-    });
+      // Self Custom Changes
+      AdInsHelper.RedirectUrl(
+        this.router,
+        [NavigationConstantDsf.POTENTIAL_RO_PAGING],
+        {}
+      );
+      // End Self Custom Changes
+  });
 
   }
+
+  // Self Custom Changes
+  getIds(ev) {
+    for (let i = 0; i < ev.length; i++) {
+      if (ev[i].isActive != true) {
+        let index = this.listStgPotentialRoIdtoGenerate.findIndex(f=>f == ev[i].StgPotentialRoId)
+        if(index != -1){
+          this.listStgPotentialRoIdtoGenerate.splice(index,1);
+        }
+      }
+      else{
+        let index = this.listStgPotentialRoIdtoGenerate.findIndex(f=>f == ev[i].StgPotentialRoId)
+        if(index == -1){
+          this.listStgPotentialRoIdtoGenerate.push(ev[i].StgPotentialRoId);
+        }
+      }
+    }
+    // End Self Custom Changes
+  }
+
 
 }
