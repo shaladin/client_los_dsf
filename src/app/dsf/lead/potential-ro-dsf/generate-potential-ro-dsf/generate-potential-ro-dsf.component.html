@@ -3,6 +3,8 @@
     <div class="px-3">
       <h4 class="form-section card-title" translate="">Generate Potential RO</h4>
       <form class="form form-horizontal" [formGroup]="PotentialRoFilterForm" (ngSubmit)="PotentialRoFilterForm.valid" #enjiForm="ngForm">
+        <!-- Self Custom Changes -->
+        <!--
         <div class="form-body">
           <lib-ucSubsection [id]="'PotentialRoFilterId'" [title]="'Filter Potential RO'" [panel]="'PotentialRoFilter'">
           </lib-ucSubsection>
@@ -27,7 +29,6 @@
                     <lib-uc-show-errors [control]="PotentialRoFilterForm.controls.MaturityDtStart" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                   </div>
                 </div>
-                <!-- Self Custom Changes-->
                 <div class="form-group row">
                   <label class="col-md-5 adInsLabel" translate>Campaign</label>
                   <div class="col-md-7">
@@ -40,7 +41,6 @@
                     <lib-uc-show-errors [control]="PotentialRoFilterForm.controls.GenerateRoPotentialCampaignId" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                   </div>
                 </div>
-                <!-- End Self Custom Changes-->
               </div>
 
               <div class="col-md-6">
@@ -71,17 +71,21 @@
             <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Show Data</span>
           </button>
         </div>
+        -->
+        <!-- End Self Custom Changes -->
 
-        <lib-ucgridview *ngIf="IsGridResultSpReady" [gridInput]="GridResultSp" (callbackCheckBox)="getIds($event)"></lib-ucgridview>
-
-
-
+        <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+        </lib-ucaddtotemp>
 
         <div class="form-actions right text-right" *ngIf="IsHasData">
-          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="onChangeFilterForm()">
+        <!-- Self Custom Changes -->
+        <!--
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="onChangeFilterForm()">
             <i class="ft-x"></i>&nbsp;<span translate>Clear Filter</span>
           </button>
-          <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickGenerate()">
+          -->
+        <!-- End Self Custom Changes -->
+        <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickGenerate()">
             <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Generate Potential RO</span>
           </button>
         </div>

@@ -1,0 +1,121 @@
+{
+    "keyProperty": "StgPotentialRoId",
+    "keyPropCriteria": "A.STG_POTENTIAL_RO_ID",
+    "component": [
+        {
+            "type": "datepicker",
+            "name": "A.AGRMNT_DT",
+            "id": "AgrmntDtgte",
+            "value": "",
+            "label": "Agreement Date >=",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "A.AGRMNT_DT",
+            "id": "AgrmntDtlte",
+            "value": "",
+            "label": "Agreement Date <=",
+            "restriction": "lte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "A.MATURITY_DT",
+            "id": "MaturityDtgte",
+            "value": "",
+            "label": "Maturity Date >=",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "A.MATURITY_DT",
+            "id": "MaturityDtlte",
+            "value": "",
+            "label": "Maturity Date <=",
+            "restriction": "lte",
+            "datatype": "date"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "B.CAMPAIGN",
+            "id": "CampaignId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "one",
+            "isQueryIn": true,
+            "path": "/RoPotentialDsf/GetListRoPotentialCampaignForPagingDsf",
+            "label": "Campaign",
+            "items": [],
+            "itemsUrl": [],
+            "url":"",
+            "environment":"LOS_DSF"
+        }
+    ],
+    "querystring": {
+        "name": "StgPotentialRoTempPaging"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer No",
+            "name": "A.CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer Name",
+            "name": "A.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Agreement No",
+            "name": "A.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Agreement Date",
+            "name": "A.AGRMNT_DT"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Maturity Date",
+            "name": "A.MATURITY_DT"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "AgrmntDt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "MaturityDt"
+        }
+    ]
+}
