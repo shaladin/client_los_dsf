@@ -8,6 +8,9 @@ import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { ActivatedRoute, Router } from "@angular/router";
+import { FromValueObj, UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-generate-potential-ro-dsf',
@@ -27,7 +30,7 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
 
   IsHasData: boolean = false;
   // Self Custom Changes
-  ListCampaignName: Array<{Campaign:string}>;
+  //ListCampaignName: Array<{Campaign:string}>;
   // End Self Custom Changes
   IsGridResultSpReady: boolean = false;
   GridResultSp: InputGridObj = new InputGridObj();
@@ -45,23 +48,25 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
   listSpResult: Array<{StgPotentialRoId:number, CustNo:string, CustName:string, AgrmntId:number, AgrmntNo:string, AgrmntDt:Date, MaturityDt: Date, Campaign:string}>;
   // Self Custom Changes
   reqListPotentialRo: {AgrmntDtStart:Date, AgrmntDtEnd:Date, MaturityDtStart:Date, MaturityDtEnd:Date, GenerateRoPotentialCampaign:string};
-  listStgPotentialRoIdtoGenerate: Array<number> = new Array<number>();
+  listSelectedId: Array<number> = new Array<number>();
+  tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   // End Self Custom Changes
 
   
   async ngOnInit() {
-    this.GridResultSp.pagingJson = "./assets/dsf/ucgridview/gridListGenerateRoPotentialResultDsf.json";
-    await this.getListCampaignName();
+    // Self Custom Changes
+    this.tempPagingObj.urlJson = "./assets/dsf/ucpaging/ucTempPaging/stgPotentialRoTempPaging.json";
+    this.tempPagingObj.pagingJson = "./assets/dsf/ucpaging/ucTempPaging/stgPotentialRoTempPaging.json";
+    this.tempPagingObj.listEnvironments.push({environment:"LOS_DSF", url: environment.losUrl});
+    this.tempPagingObj.isReady = true;
+    // End Self Custom Changes 
+    //await this.getListCampaignName();
     
   }
 
   // Self Custom Changes
-  async getListCampaignName()
-  {
-    await this.http.post(URLConstantDsf.GetListGenerateRoPotentialCampaign, {}).toPromise().then(
-      (response) => {
-        this.ListCampaignName = response['ListGenerateRoPotentialCampaignObjs'];
-      });
+  getListTemp(ev) {
+    this.listSelectedId = ev.TempListId;
   }
   // End Self Custom Changes
 
@@ -114,11 +119,15 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
 
     this.assignFilterReq();
     // Self Custom Changes
-    //if(!this.listStgPotentialRoIdtoGenerate.length) return;
-    var reqGeneratePotentialRo = {
-      Campaign: this.reqListPotentialRo.GenerateRoPotentialCampaign,
-      RoPotentialList: this.listStgPotentialRoIdtoGenerate
+    if (this.listSelectedId.length == 0) {
+      this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
+      return;
     }
+    var reqGeneratePotentialRo = {
+      RoPotentialList: this.listSelectedId
+    }
+    log(this.listSelectedId);
+    /*
     this.http.post(URLConstantDsf.GenerateRoPotentialDataFromCampaign, reqGeneratePotentialRo).subscribe(
     // End Self Custom Changes
     (response) => {
@@ -130,11 +139,12 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
         {}
       );
       // End Self Custom Changes
-  });
+  });*/
 
   }
 
   // Self Custom Changes
+  /*
   getIds(ev) {
     for (let i = 0; i < ev.length; i++) {
       if (ev[i].isActive != true) {
@@ -150,8 +160,9 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
         }
       }
     }
-    // End Self Custom Changes
   }
+  */
+  // End Self Custom Changes
 
 
 }
