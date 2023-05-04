@@ -27,6 +27,7 @@ import {GenericObj} from 'app/shared/model/generic/generic-obj.model';
 import {AppCollateralRegistrationObj} from 'app/shared/model/app-collateral-registration-obj.model';
 import { CustomPatternObj } from 'app/shared/model/custom-pattern-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-do-asset-detail-x',
@@ -292,7 +293,41 @@ export class DoAssetDetailXComponent implements OnInit {
     }
   }
 
-  Save(){
+  async Save(){
+    // region: additional validation transaction leasseback
+    let purposeOfFinancing = '';
+    const prodOffferingPOFRequestObj = {
+      ProdOfferingCode: this.AppObj.ProdOfferingCode,
+      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
+      RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing
+    }
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, prodOffferingPOFRequestObj).toPromise().then((res) =>{
+      const componentValue = res['CompntValue']
+      if(componentValue !== null){
+        purposeOfFinancing = componentValue
+      }
+    });
+
+    let wayOfFinancing = '';
+    const prodOffferingWOFRequestObj = {
+      ProdOfferingCode: this.AppObj.ProdOfferingCode,
+      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
+      RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing
+    }
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, prodOffferingWOFRequestObj).toPromise().then((res) =>{
+      const componentValue = res['CompntValue']
+      if(componentValue !== null){
+        wayOfFinancing = componentValue
+      }
+    });
+
+    const errorMessage: string = await this.CheckValidationTransactionLeasseback(this.AppObj.Tenor, purposeOfFinancing, wayOfFinancing)
+    if(errorMessage !== ''){
+      this.toastr.warningMessage(errorMessage);
+      return;
+    }
+    // endregion: additional validation transaction leasseback
+
     this.reqAssetDataObj = new ReqAssetDataObj();
     var formData = this.DOAssetDetail.value;
 
@@ -315,6 +350,75 @@ export class DoAssetDetailXComponent implements OnInit {
       (response) => {
         this.activeModalAsset.close(response);
       });
+  }
+  
+  async CheckValidationTransactionLeasseback(tenor: number, purposeOfFinancing: string, wayOfFinancing: string){
+    let errorMessage: string = '';
+
+    // Get Attribute Plat Color
+    let attrPlatColor: string | null | undefined = '';
+    for (let i = 0; i < this.DOAssetDetail.controls.AppAssetAttrObjs['controls'].length; i++) {
+      const attribute = this.DOAssetDetail.controls.AppAssetAttrObjs['controls'][i];
+      if(attribute['controls']['AssetAttrCode'].value === CommonConstantX.APP_ASSET_ATTRIBUTE_PLAT_COLOR){
+        attrPlatColor = attribute['controls']['AttrValue'].value;
+        break;
+      }
+    }
+
+    if(attrPlatColor === '' || attrPlatColor === null || attrPlatColor === undefined){
+      // Return error message for plat color not selected at select option input
+      return 'Asset Attribute Plat Color is not selected';
+    }
+
+    // Get GS Tenor
+    let arrMinTenorAssetFL: any[]
+    const minTenorAssetFLRequestObj = {
+      Code: CommonConstantX.GsCodeMinTenorAssetFL
+    }
+    await this.http.post(URLConstant.GetGeneralSettingByCode, minTenorAssetFLRequestObj).toPromise().then((res) =>{
+      const GsValue = res['GsValue']
+      if(GsValue !== null){
+        let tempArr: any[] = GsValue.split(";")
+        if(tempArr.length > 0){
+          for (let i = 0; i < tempArr.length; i++) {
+            tempArr[i] = tempArr[i].split(":")
+          }
+        }
+        arrMinTenorAssetFL = tempArr
+      }
+    });
+
+    // Get GS Map POF n WOF
+    let arrMapPofWofFL: string[] = [];
+    const MapPofWofFLRequestObj = {
+      Code: CommonConstantX.GsCodeMapPofWofFL
+    }
+    await this.http.post(URLConstant.GetGeneralSettingByCode, MapPofWofFLRequestObj).toPromise().then((res) =>{
+      const GsValue = res['GsValue']
+      if(GsValue !== null){
+        arrMapPofWofFL = GsValue.split(";")
+      }
+    });
+
+    const mapPofWof = purposeOfFinancing+":"+wayOfFinancing;
+    for (let i = 0; i < arrMapPofWofFL.length; i++) {
+      if(mapPofWof === arrMapPofWofFL[i]){
+        for (let x = 0; x < arrMinTenorAssetFL.length; x++) {
+          const gsPlatColor = arrMinTenorAssetFL[x][0];
+          const gsTenorMonth = arrMinTenorAssetFL[x][1];
+          if(attrPlatColor === gsPlatColor && tenor < gsTenorMonth){
+            let messageColor = 'Yellow';
+            if(attrPlatColor === 'BLACK' || attrPlatColor === 'WHITE'){
+              messageColor = 'Black/White'
+            }
+            errorMessage = `Plat Color ${messageColor} must have minimum tenor of ${gsTenorMonth}`
+            break;
+          }
+        }
+      }
+    }
+    
+    return errorMessage
   }
 
   setAsset(formData){

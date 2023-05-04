@@ -38,7 +38,10 @@
           </th>
           <th>
             <span style="float: center;"  translate class="thead-header" name='MaxOverdue'>Max Overdue</span>
-          </th>        
+          </th>
+          <th>
+            <span style="float: center;"  translate class="thead-header" name='DocPending'>BPKB Pending</span>
+          </th>         
           <th>
             <span style="float: center;" translate  class="thead-header" name='Status'>Status</span>
           </th>
@@ -109,6 +112,8 @@
           <td *ngIf="item.DayOverdue==null"> - </td>
           <td *ngIf="item.MaxOverdue!=null">{{item.MaxOverdue}}</td>
           <td *ngIf="item.MaxOverdue==null"> - </td>
+          <td *ngIf="item.DocPending!=null">{{item.DocPending}}</td>
+          <td *ngIf="item.DocPending==null"> - </td>
           <td *ngIf="item.ContractStatus!=null">{{item.ContractStatus}}</td>
           <td *ngIf="item.ContractStatus==null"> - </td>
         </tr>

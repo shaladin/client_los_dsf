@@ -19,6 +19,7 @@ import { SerialNoObj } from 'app/shared/model/serial-no/serial-no-obj.model';
 import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { ResAssetTypeObj } from 'app/shared/model/app-asset-type/app-asset-type-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-asset-data-paging-x',
@@ -401,6 +402,75 @@ export class AssetDataPagingXComponent implements OnInit {
     }
     // if (await this.checkValidityAssetUsed()) return;
 
+    // region: additional validation transaction leasseback
+    let isAlreadyHasAsset: boolean = false;
+    let allAssetName: string[] = []
+    let allAssetAttributePlatColor: string[] = []
+    let platColorRequestObj = {
+      Id: this.AppId
+    }
+    await this.http.post(URLConstant.GetListAllAssetDataByAppId, platColorRequestObj).toPromise().then((res: any) =>{
+      if(res['ReturnObject'] !== null && res['ReturnObject'].length > 0){
+        isAlreadyHasAsset = true;
+        if(res['ReturnObject'].length > 0){
+          for (let i = 0; i < res['ReturnObject'].length; i++) {
+            // ASSET NAMES
+            if(res['ReturnObject'][i].ResponseAppAssetObj){
+              let fullAssetName = '';
+              if(res['ReturnObject'][i].ResponseAppAssetObj.FullAssetName !== null){
+                fullAssetName = res['ReturnObject'][i].ResponseAppAssetObj.FullAssetName
+              }
+              allAssetName.push(fullAssetName);
+            }
+            // ASSET ATTRIBUTES
+            const attributes: any[] = res['ReturnObject'][i].ResponseAppAssetAttrObjs
+            if(attributes.length > 0){
+              for (let x = 0; x < attributes.length; x++) {
+                if(attributes[x].AssetAttrCode === CommonConstantX.APP_ASSET_ATTRIBUTE_PLAT_COLOR){
+                  allAssetAttributePlatColor.push(attributes[x].AttrValue)
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+    if(isAlreadyHasAsset){
+      let purposeOfFinancing = '';
+      const prodOffferingPOFRequestObj = {
+        ProdOfferingCode: this.appObj.ProdOfferingCode,
+        ProdOfferingVersion: this.appObj.ProdOfferingVersion,
+        RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing
+      }
+      await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, prodOffferingPOFRequestObj).toPromise().then((res) =>{
+        const componentValue = res['CompntValue']
+        if(componentValue !== null){
+          purposeOfFinancing = componentValue
+        }
+      });
+
+      let wayOfFinancing = '';
+      const prodOffferingWOFRequestObj = {
+        ProdOfferingCode: this.appObj.ProdOfferingCode,
+        ProdOfferingVersion: this.appObj.ProdOfferingVersion,
+        RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing
+      }
+      await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, prodOffferingWOFRequestObj).toPromise().then((res) =>{
+        const componentValue = res['CompntValue']
+        if(componentValue !== null){
+          wayOfFinancing = componentValue
+        }
+      });
+      const errorMessages: string[] = await this.CheckValidationTransactionLeasseback(this.appObj.Tenor, purposeOfFinancing, wayOfFinancing, allAssetAttributePlatColor, allAssetName)
+      if(errorMessages.length > 0){
+        for (let i = 0; i < errorMessages.length; i++) {
+          this.toastr.warningMessage(errorMessages[i]);
+        }
+        return;
+      }
+    }
+    // endregion: additional validation transaction leasseback
+
     let checkAppNumOfAssetObj = { Id: this.AppId };
     await this.http.post(URLConstant.UpdateAppNumOfAsset, checkAppNumOfAssetObj).toPromise().then(
       (response) => {
@@ -408,6 +478,65 @@ export class AssetDataPagingXComponent implements OnInit {
     );
 
     this.outputValue.emit({ mode: 'submit' });
+  }
+
+  async CheckValidationTransactionLeasseback(tenor: number, purposeOfFinancing: string, wayOfFinancing: string, allAssetAttributePlatColor: string[], allAssetName: string[]){
+    // get GS Tenor
+    let errorMessages: string[] = [];
+    let arrMinTenorAssetFL: any[]
+    const minTenorAssetFLRequestObj = {
+      Code: CommonConstantX.GsCodeMinTenorAssetFL
+    }
+    await this.http.post(URLConstant.GetGeneralSettingByCode, minTenorAssetFLRequestObj).toPromise().then((res) =>{
+      const GsValue = res['GsValue']
+      if(GsValue !== null){
+        let tempArr: any[] = GsValue.split(";")
+        if(tempArr.length > 0){
+          for (let i = 0; i < tempArr.length; i++) {
+            tempArr[i] = tempArr[i].split(":")
+          }
+        }
+        arrMinTenorAssetFL = tempArr
+      }
+    });
+    
+    // get GS Tenor
+    let arrMapPofWofFL: string[] = [];
+    const MapPofWofFLRequestObj = {
+      Code: CommonConstantX.GsCodeMapPofWofFL
+    }
+    await this.http.post(URLConstant.GetGeneralSettingByCode, MapPofWofFLRequestObj).toPromise().then((res) =>{
+      const GsValue = res['GsValue']
+      if(GsValue !== null){
+        arrMapPofWofFL = GsValue.split(";")
+      }
+    });
+    const mapPofWof = purposeOfFinancing+":"+wayOfFinancing
+    if(arrMapPofWofFL.length > 0){
+      for (let i = 0; i < arrMapPofWofFL.length; i++) {
+        if(mapPofWof === arrMapPofWofFL[i]){
+          if(allAssetAttributePlatColor.length > 0){
+            for (let x = 0; x < allAssetAttributePlatColor.length; x++) {
+              const assetName = allAssetName[x]
+              const attrPlatColor = allAssetAttributePlatColor[x]
+              for (let gsIdx = 0; gsIdx < arrMinTenorAssetFL.length; gsIdx++) {
+                const gsPlatColor = arrMinTenorAssetFL[gsIdx][0];
+                const gsTenorMonth = arrMinTenorAssetFL[gsIdx][1];
+                if(attrPlatColor === gsPlatColor && tenor < gsTenorMonth){
+                  let messageColor = 'Yellow';
+                  if(attrPlatColor === 'BLACK' || attrPlatColor === 'WHITE'){
+                    messageColor = 'Black/White'
+                  }
+                  errorMessages.push(`Plat Color ${messageColor} must have minimum tenor of ${gsTenorMonth} for asset ${assetName}`)
+                }
+              }
+            }
+          }
+          break;  // to stop POF and WOF Validation loop
+        }
+      }
+    }
+    return errorMessages
   }
 
   async getDigitalizationSvcType(){
