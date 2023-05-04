@@ -1867,7 +1867,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
               });
 
 
-              if (this.InsuranceDataForm.controls.PayPeriodToInsco.value != CommonConstantX.PayPeriodAnnualy || i == 0){
+              if ((this.InsuranceDataForm.controls.PayPeriodToInsco.value == CommonConstantX.PayPeriodAnnualy && i == 0) || (this.InsuranceDataForm.controls.PayPeriodToInsco.value != CommonConstantX.PayPeriodAnnualy)){
                 this.discRuleObj.AdditionalCoverageType.forEach((x) => {
                 
                   if(x == this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["MrAddCvgTypeCode"].value)
