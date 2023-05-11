@@ -57,5 +57,8 @@ export class URLConstantDsf {
     public static GetListGenerateRoPotentialCampaign = environment.losUrl + "/RoPotentialDsf/GetListGenerateRoPotentialCampaignDsf";
     public static GetRoPotentialDataFromCampaign = environment.losUrl  + "/RoPotentialDsf/GetRoPotentialDataFromCampaignDsf";
     public static GenerateRoPotentialDataFromCampaign = environment.losUrl  + "/RoPotentialDsf/GenerateRoPotentialDataFromCampaignDsf";
+    public static AddVerfResultHeaderDsf = environment.FoundationR3Url + "/VerfResultHDsf/AddVerfResultHeaderDsf";
+    public static EditVerfResultHeaderDsf = environment.FoundationR3Url + "/VerfResultHDsf/EditVerfResultHeaderDsf";
+    public static GetVerfResultHDsfsByVerfResultIdAndObjectCode = environment.FoundationR3Url + "/VerfResultHDsf/GetVerfResultHDsfsByVerfResultIdAndObjectCode";
 
 }

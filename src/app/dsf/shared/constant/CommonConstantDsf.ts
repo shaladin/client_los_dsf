@@ -20,4 +20,6 @@ export class CommonConstantDsf {
     public static MPF = 'MPF';
     public static FD = 'FD';
     public static FMU = 'FMU';
+
+    public static TELEMK_CALL_STATUS = 'TELEMK_CALL_STATUS';
 }

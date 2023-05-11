@@ -176,5 +176,8 @@ export class PathConstantDsf {
     public static POTENTIAL_RO = "PotentialRoDsf";
     public static POTENTIAL_RO_PAGING = PathConstantDsf.POTENTIAL_RO + "/" + PathConstant.PAGING;
     public static POTENTIAL_RO_MONITORING = PathConstantDsf.POTENTIAL_RO + "/" + PathConstantDsf.MONITORING;
-
+    public static POTENTIAL_RO_TEL_OFFER = PathConstantDsf.POTENTIAL_RO + "/RoTelemkOffer";
+    public static POTENTIAL_RO_TEL_OFFER_PAGING = PathConstantDsf.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.PAGING
+    public static POTENTIAL_RO_TEL_OFFER_VERIF = PathConstantDsf.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.VERIF;
+    public static POTENTIAL_RO_VIEW = PathConstantDsf.POTENTIAL_RO + "/" + PathConstant.VIEW;
 }
