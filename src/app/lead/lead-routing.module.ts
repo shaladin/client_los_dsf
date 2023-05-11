@@ -48,6 +48,9 @@ import {NewLeadInputPageXComponent} from 'app/impl/lead/new-lead-input/new-lead-
 import { GeneratePotentialRoXComponent } from 'app/impl/lead/potential-ro/generate-potential-ro/generate-potential-ro-x.component';
 import { GeneratePotentialRoDsfComponent } from 'app/dsf/lead/potential-ro-dsf/generate-potential-ro-dsf/generate-potential-ro-dsf.component';
 import { GeneratePotentialRoMonitoringDsfComponent } from 'app/dsf/lead/potential-ro-dsf/generate-potential-ro-monitoring-dsf/generate-potential-ro-monitoring-dsf.component';
+import { RoTelemkOfferPagingDsfComponent } from 'app/dsf/lead/potential-ro-dsf/ro-telemk-offer-paging-dsf/ro-telemk-offer-paging-dsf.component';
+import { RoTelemkOfferVerifXDsfComponent } from 'app/dsf/lead/potential-ro-dsf/ro-telemk-offer-verif-x-dsf/ro-telemk-offer-verif-x-dsf.component';
+import { RoPotentialViewDsfComponent } from 'app/dsf/lead/potential-ro-dsf/ro-potential-view-dsf/ro-potential-view-dsf.component';
 
 
 const routes: Routes = [
@@ -223,6 +226,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.POTENTIAL_RO_TEL_OFFER_PAGING,
+        component: RoTelemkOfferPagingDsfComponent,
+        data: {
+          title: 'RO Telemarketing Offering'
+        }
+      },
+      {
         path: PathConstant.POTENTIAL_RO_TEL_OFFER_DETAIL,
         component: RoTelemkOfferDetailXComponent,
         data: {
@@ -237,6 +247,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.POTENTIAL_RO_TEL_OFFER_VERIF,
+        component: RoTelemkOfferVerifXDsfComponent,
+        data: {
+          title: 'RO Telemarketing Offering Verification'
+        }
+      },
+      {
         path: PathConstant.POTENTIAL_RO_INQUIRY,
         component: RoPotentialInquiryComponent,
         data: {
@@ -246,6 +263,13 @@ const routes: Routes = [
       {
         path: PathConstant.POTENTIAL_RO_VIEW,
         component: RoPotentialViewComponent,
+        data: {
+          title: 'RO Potential View'
+        }
+      },
+      {
+        path: PathConstantDsf.POTENTIAL_RO_VIEW,
+        component: RoPotentialViewDsfComponent,
         data: {
           title: 'RO Potential View'
         }

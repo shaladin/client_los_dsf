@@ -126,8 +126,7 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
     var reqGeneratePotentialRo = {
       RoPotentialList: this.listSelectedId
     }
-    log(this.listSelectedId);
-    /*
+
     this.http.post(URLConstantDsf.GenerateRoPotentialDataFromCampaign, reqGeneratePotentialRo).subscribe(
     // End Self Custom Changes
     (response) => {
@@ -138,8 +137,7 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
         [NavigationConstantDsf.POTENTIAL_RO_PAGING],
         {}
       );
-      // End Self Custom Changes
-  });*/
+  });
 
   }
 

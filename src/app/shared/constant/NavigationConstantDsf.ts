@@ -115,5 +115,9 @@ export class NavigationConstantDsf {
      public static CESSIE_PGL_APPRVL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.CESSIE_PGL_APPRVL_DETAIL; //'/Impl/Cessie/Process/PreGoLiveDsf/Approval/Detail'
   
      public static POTENTIAL_RO_PAGING = "/" + PathConstant.LEAD + "/" + PathConstantDsf.POTENTIAL_RO_PAGING; //'/Lead/PotentialRoDsf/Paging
+     public static LEAD_POTENTIAL_RO_TEL_OFFER_PAGING = "/" + PathConstant.LEAD + "/" + PathConstantDsf.POTENTIAL_RO_TEL_OFFER_PAGING; //'/Lead/PotentialRoDsf/RoTelemkOffer/Paging
+     public static LEAD_POTENTIAL_RO_TEL_OFFER_VERIF = "/" + PathConstant.LEAD + "/" + PathConstantDsf.POTENTIAL_RO_TEL_OFFER_VERIF; //'/Lead/PotentialRoDsf/RoTelemkOffer/Verif
+     public static LEAD_POTENTIAL_RO_VIEW = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.POTENTIAL_RO_VIEW; //'/Lead/PotentialRoDsf/View'
+  
 }
  
