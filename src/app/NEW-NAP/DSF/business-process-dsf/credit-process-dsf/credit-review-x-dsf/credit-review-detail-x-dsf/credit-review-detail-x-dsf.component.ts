@@ -10,6 +10,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
@@ -104,6 +105,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     public toastr: ToastrService,
+    private toastrNgx: NGXToastrService,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService
   ) {
@@ -138,6 +140,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
+<<<<<<< HEAD
     await this.InitDms();
   }
 
@@ -206,6 +209,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     else {
       this.isDmsReady = false;
     }
+=======
+    await this.CreditReviewvalidation();
+>>>>>>> 97c9464017 (273459 CR Credit Deviasi Original Value Plafond Konsumen v1.000)
   }
 
   getCrdRvwAppObj(ev: CrdRvwAppObj) {
@@ -465,6 +471,12 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
 
   //#region Submit
   SaveForm() {
+    // add credit review validation
+    if (!this.isCreditReviewValid){
+      this.toastrNgx.warningMessage('GRADE / OS GROUP NI or GROUP OS NI Current value cannot more than original value');
+      return;
+    }
+
     let temp = this.FormObj.value;
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -570,6 +582,34 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     else if (this.wfTaskListId > 0) {
       this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
+  }
+
+  isCreditReviewValid: boolean = true;
+  async CreditReviewvalidation() {
+    var dataDeviation = await this.GetDeviationData();
+    
+    // Validation for GRADE / OS GROUP NI and GROUP OS NI
+    var gradeOsGrpFilter = dataDeviation.filter(x => x.DeviationCategory == 'GRADE / OS GROUP NI' || x.DeviationCategory == 'Group OS NI');
+    gradeOsGrpFilter.forEach((item) => {
+      if (parseFloat(item.CurrentValue) > parseFloat(item.OriginalValue)){
+        this.isCreditReviewValid = false;
+      }
+    });
+  }
+
+  async GetDeviationData(){
+    let obj = {
+      Id: this.appId,
+      RowVersion: ""
+    };
+    let result:any;
+
+    await this.http.post(URLConstant.GetListDeviationResultForDeviationDataByAppId, obj).toPromise().then(
+      (response) => {
+        result = response["deviationResultObjs"];
+      });
+    
+    return result;
   }
 
 }
