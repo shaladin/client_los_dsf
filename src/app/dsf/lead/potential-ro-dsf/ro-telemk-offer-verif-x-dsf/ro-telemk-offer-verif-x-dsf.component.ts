@@ -68,8 +68,8 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
     QuestionObjs: new FormArray([]),
     // Self Custom Changes
     CallStatus: ['', [Validators.required]],
-    CallStatusDetail: ['', [Validators.required]],
-    NotesDetail: ['', [Validators.required, Validators.maxLength(4000)]]
+    CallStatusDetail: [''],
+    NotesDetail: ['']
     // End Self Custom Changes
   });
 
@@ -269,8 +269,8 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
       QuestionObjs: new FormArray([]),
       // Self Custom Changes
       CallStatus: ['', [Validators.required]],
-      CallStatusDetail: ['', [Validators.required]],
-      NotesDetail: ['', [Validators.required, Validators.maxLength(4000)]]
+      CallStatusDetail: [''],
+      NotesDetail: ['']
       // End Self Custom Changes
     });
     this.PhoneDataForm.controls.Notes.markAsPristine();
@@ -414,6 +414,7 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
     this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, this.reqVerfResultObj).subscribe(
       (response) => {
         // Self Custom Changes
+        console.log(response["Id"]);
         this.reqVerfResultHDsf = {
           VerfResultHId: response["Id"],
           CallStatus: this.PhoneDataForm.controls["CallStatus"].value,
@@ -461,6 +462,9 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
   ShowDetail(VerfResultHId:number) {
     this.VerifResultHDetailObj = this.ListVerifResultHObj.filter(vrh => vrh.VerfResultHId === VerfResultHId);
     this.IsViewSubDetail = true;
+    this.PhoneDataForm.controls['CallStatusDetail'].setValidators([Validators.required]);
+    this.PhoneDataForm.controls['NotesDetail'].setValidators([Validators.required]);
+
     this.PhoneDataForm.patchValue({
       CallStatusDetail: this.VerifResultHDetailObj[0].CallStatus,
       NotesDetail: this.VerifResultHDetailObj[0].Notes
@@ -476,6 +480,8 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
 
   hideDetail()
   {
+    this.PhoneDataForm.controls['CallStatusDetail'].clearValidators();
+    this.PhoneDataForm.controls['NotesDetail'].clearValidators();
     this.IsViewSubDetail = false;
   }
 
@@ -486,7 +492,7 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
       CallStatus: this.PhoneDataForm.controls["CallStatusDetail"].value,
       Notes: this.PhoneDataForm.controls["NotesDetail"].value
     }
-    if (this.reqVerfResultHDsf.Notes != "")
+    if (this.reqVerfResultHDsf.Notes != "" && this.reqVerfResultHDsf.CallStatus != "")
     {
       this.http.post(URLConstantDsf.EditVerfResultHeaderDsf, this.reqVerfResultHDsf).subscribe(
         (response) => {
