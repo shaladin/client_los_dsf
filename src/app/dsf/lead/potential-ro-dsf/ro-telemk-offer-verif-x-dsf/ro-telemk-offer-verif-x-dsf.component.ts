@@ -23,6 +23,7 @@ import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { VerfResultHDsfObj } from 'app/dsf/model/VerfResultHDsfObj.Model';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ro-telemk-offer-verif-x-dsf',
@@ -44,6 +45,7 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
   IsViewSubDetail: boolean = false;
   VerifResultHDetailObj: Array<VerfResultHDsfObj>;
   PromiseOpt: string = 'PROMISE_TO_LOAN';
+  listReason: Array<KeyValueObj>;
   RoTelemkOfferingForm = this.fb.group({
     RoPotentialNo: ['', Validators.required],
     IsCustWillRo: ['', Validators.required],
@@ -102,6 +104,11 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
     await this.getListVerfResulHtData();
     // Self Custom Changes
     await this.getDataFromRefMaster();
+    await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_RO_POTENTIAL }).pipe(first()).subscribe(
+      (response) => {
+        this.listReason = response[CommonConstant.ReturnObj];
+      }
+    );
     // End Self Custom Changes
   }
 
@@ -445,13 +452,16 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
       CallStatus: this.PhoneDataForm.controls["CallStatusDetail"].value,
       Notes: this.PhoneDataForm.controls["NotesDetail"].value
     }
-    this.http.post(URLConstantDsf.EditVerfResultHeaderDsf, this.reqVerfResultHDsf).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.IsViewSubDetail = false;
-        this.getListVerfResulHtData();
-        //this.clearform();
-    });
+    if (this.reqVerfResultHDsf.Notes != "")
+    {
+      this.http.post(URLConstantDsf.EditVerfResultHeaderDsf, this.reqVerfResultHDsf).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.IsViewSubDetail = false;
+          this.getListVerfResulHtData();
+          //this.clearform();
+      });
+      }
   }
 
   onChangeIsCustWillRo() {
@@ -471,6 +481,7 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
   }
 
   SaveActionForm() {
+    console.log("Save Action Form");
     let reqObj: object = {
       RoPotentialNo: this.RoTelemkOfferingForm.controls['RoPotentialNo'].value,
       IsCustWillRo: null,
