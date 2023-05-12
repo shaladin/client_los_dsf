@@ -24,6 +24,8 @@ import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { VerfResultHDsfObj } from 'app/dsf/model/VerfResultHDsfObj.Model';
 import { first } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
+import { VerfResultObj } from 'app/shared/model/verf-result/verf-result.model';
 
 @Component({
   selector: 'app-ro-telemk-offer-verif-x-dsf',
@@ -74,7 +76,9 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
   roPotentialNo: string;
   verfSchemeHId: number;
   reqVerfResultObj: VerifResulHDetailObj;
-  verfResultData: object;
+  // Self Custom Changes
+  verfResultData: VerfResultObj;
+  // End Self Custom Changes
   isQuestionLoaded: boolean = false;
   UserAccess: Object;
 
@@ -91,6 +95,9 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe(params => {
       this.roPotentialNo = params['RoPotentialNo'];
+      // Self Custom Changes
+      this.RoTelemkOfferingForm.patchValue({ RoPotentialNo: this.roPotentialNo });
+      // End Self Custom Changes
     });
   }
   BusinessDt: Date;
@@ -167,10 +174,37 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
       MrVerfTrxTypeCode: CommonConstant.VerfSchemeCodeRoTelemkOffering,
     };
     await this.http.post(URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode, req).toPromise().then(
-      (response) => {
+      (response: VerfResultObj) => {
         this.verfResultData = response;
       }
     );
+    // Self Custom Changes
+    if (!this.verfResultData || this.verfResultData['VerfResultId'] == 0) {
+      let Business_Date = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE));;
+      let datePipe = new DatePipe("en-US");
+      let value = datePipe.transform(Business_Date, "yyyy-MM-dd");
+      let businessDt = new Date(value);
+      let reqAddVerifResultObj: VerfResultObj = new VerfResultObj();
+      reqAddVerifResultObj.TrxRefNo = this.roPotentialNo;
+      reqAddVerifResultObj.VerfDt = businessDt;
+      reqAddVerifResultObj.MrVerfResultStatCode = CommonConstant.VerfResultStatCodeNew;
+      reqAddVerifResultObj.MrVerfTrxTypeCode = CommonConstant.VerfSchemeCodeRoTelemkOffering;
+      reqAddVerifResultObj.EmpNo = "-";
+      reqAddVerifResultObj.LobCode = "-";
+      reqAddVerifResultObj.LobName = "-";
+      reqAddVerifResultObj.Notes = "-";
+      await this.http.post(URLConstant.AddVerfResult, reqAddVerifResultObj).toPromise().then(
+        (response) => {
+        }
+      );
+      await this.http.post(URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode, req).toPromise().then(
+        (response: VerfResultObj) => {
+          this.verfResultData = response;
+        }
+      );
+    }
+
+    // End Self Custom Changes
   }
 
   async getListVerfResulHtData() {
@@ -481,7 +515,6 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
   }
 
   SaveActionForm() {
-    console.log("Save Action Form");
     let reqObj: object = {
       RoPotentialNo: this.RoTelemkOfferingForm.controls['RoPotentialNo'].value,
       IsCustWillRo: null,

@@ -265,7 +265,7 @@
         </form>
 
         <!-- Self Custom Changes -->
-        <form class="form form-horizontal" [formGroup]="RoTelemkOfferingForm" (ngSubmit)="RoTelemkOfferingForm.valid && SaveActionForm()" #enjiForm="ngForm">
+        <form class="form form-horizontal" [formGroup]="RoTelemkOfferingForm" (ngSubmit)="RoTelemkOfferingForm.valid && SaveActionForm()" #enjiFormAction="ngForm">
           <div>
             <lib-ucSubsection [id]="'ActionId'" [title]="'Action'" [panel]="'action'">
             </lib-ucSubsection>
@@ -276,24 +276,24 @@
                   <div class="col-md-8">
                     <select class="form-control" formControlName="IsCustWillRo"
                             (change)="onChangeIsCustWillRo()"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && RoTelemkOfferingForm.controls.IsCustWillRo.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiFormAction.submitted && RoTelemkOfferingForm.controls.IsCustWillRo.invalid }">
                       <option value="">-Select One-</option>
                       <option value="YES">Yes</option>
                       <option value="NO">No</option>
                       <option value="{{PromiseOpt}}">Promise to Loan</option>
                     </select>
-                    <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.IsCustWillRo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.IsCustWillRo" [submit]="enjiFormAction.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div *ngIf="RoTelemkOfferingForm.controls.IsCustWillRo.value == 'NO'" class="form-group row adins-required">
                   <label class="col-md-4  adInsLabel" translate>Reason Description</label>
                   <div class="col-md-8">
                     <select type="text" class="form-control adInsInput" formControlName="Reason"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && RoTelemkOfferingForm.controls.Reason.invalid }">
+                            [ngClass]="{ 'is-invalid': enjiFormAction.submitted && RoTelemkOfferingForm.controls.Reason.invalid }">
                       <option value="">-Select One-</option>
                       <option *ngFor="let item of listReason" [value]="item.Key">{{item.Value}}</option>
                     </select>
-                    <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.Reason" [submit]="enjiFormAction.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -308,10 +308,10 @@
                   <label class="col-md-4  adInsLabel" translate>Promise to Loan Date</label>
                   <div class="col-md-8">
                     <input type="date" class="form-control" formControlName="PromiseToLoanDt"
-                           [ngClass]="{ 'is-invalid': enjiForm.submitted && RoTelemkOfferingForm.controls.PromiseToLoanDt.invalid }"
+                           [ngClass]="{ 'is-invalid': enjiFormAction.submitted && RoTelemkOfferingForm.controls.PromiseToLoanDt.invalid }"
                            [min]="businessDate | date: 'yyyy-MM-dd'"
                     >
-                    <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.PromiseToLoanDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.PromiseToLoanDt" [submit]="enjiFormAction.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
               </div>

@@ -112,13 +112,13 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
 
   onClickGenerate()
   {
-    if(!this.IsHasData) return;
-
-    for(let i in this.PotentialRoFilterForm.controls) this.PotentialRoFilterForm.controls[i].markAsTouched();
-    if(!this.PotentialRoFilterForm.valid) return;
-
-    this.assignFilterReq();
     // Self Custom Changes
+    //if(!this.IsHasData) return;
+
+    //for(let i in this.PotentialRoFilterForm.controls) this.PotentialRoFilterForm.controls[i].markAsTouched();
+    //if(!this.PotentialRoFilterForm.valid) return;
+
+    //this.assignFilterReq();
     if (this.listSelectedId.length == 0) {
       this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
