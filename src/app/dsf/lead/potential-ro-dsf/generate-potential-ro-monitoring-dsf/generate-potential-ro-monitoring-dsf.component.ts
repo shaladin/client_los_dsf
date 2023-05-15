@@ -3,6 +3,7 @@ import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcUploadObj } from 'app/shared/model/uc-upload-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-generate-potential-ro-monitoring-dsf',
@@ -22,7 +23,7 @@ export class GeneratePotentialRoMonitoringDsfComponent implements OnInit {
     this.uploadObj.pagingJson = "./assets/dsf/ucpaging/searchPotentialROMonitoringDsf.json";
     if (!environment.isCore) {
       this.uploadObj.formatsAllowed = ".xls, .xlsx";
-      this.uploadObj.url = URLConstant.UploadFile;
+      this.uploadObj.url = URLConstantX.UploadFileV2;
     }
   }
 }
