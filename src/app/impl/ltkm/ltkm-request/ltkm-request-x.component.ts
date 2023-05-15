@@ -2022,12 +2022,41 @@ export class LtkmRequestXComponent implements OnInit {
         this.addrPersonalObjsTemp = new Array<AddrObj>();
         this.addrObjsForView = new Array<LtkmAddrForViewObjX>();        
         this.copyAddrFromLookup(event);
-        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();        
-        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
-        this.addrPersonalObjsTemp = new Array<AddrObj>();
+        // Cust Main Data (ada)(ok)
+        // Customer Address (ada)(ok)
+        // Job Data ()
+        this.ltkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
+        // Cust Group
         this.ltkmCustGrpParentObjs = new CustParentChildObj();
+        // Cust Group Member
         this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
+        // Other Information
+        this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
+        // Cust Attribute
+        var tempNewAttr: Array<LtkmAttrContent>;
+        tempNewAttr = new Array<LtkmAttrContent>();
+        tempNewAttr = event["CustAttrContentObjs"]["NewCustAttrContentObjsForLtkm"];
+        this.listAttrContentFinData = tempNewAttr.filter(x => x.AttrGroup == this.AttrGroupFinData);
+        this.listAttrContentCustData = tempNewAttr.filter(x => x.AttrGroup == this.AttrGroup);
+        
+        // Emergency Contact
+        this.LtkmCustEmergencyContactObj = new LtkmCustEmrgncCntctObj();            
+        // Fin Data
+        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();
+        // Cust Bank Account
+        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();               
+        // Family Data
+        this.listFamily = new Array();
+        // App Data
         this.inputLookupApplicationObj = new InputLookupObj();
+        this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
+        this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.isRequired = true;
+        this.inputLookupApplicationObj.addCritInput = new Array();        
+        // Ltkm Analys
+        
 
         // this.selectCustNo = event.
 
