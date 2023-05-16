@@ -8,7 +8,7 @@
         </button>
       </div>
     </div>
-    <app-app-main-info [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
+    <app-app-main-info-x [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info-x>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">
@@ -44,7 +44,7 @@
             <!-- your steps here -->
             <div class="step" data-target="#referantor-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="referantor-tab"
-                id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('REF')">
+                      id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab(AppCurrStepNap2.REF)">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Referantor Data</span>
               </button>
@@ -52,7 +52,7 @@
             <div class="line"></div>
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
-                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('APP')">
+                      id="application-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab(AppCurrStepNap2.APP)">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Application Data</span>
               </button>
@@ -60,7 +60,7 @@
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('ASSET')">
+                      [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab(AppCurrStepNap2.ASSET)">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Asset Data</span>
               </button>
@@ -68,7 +68,7 @@
             <div class="line"></div>
             <div class="step" data-target="#insurance-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="insurance-tab"
-                id="insurance-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('INS')">
+                      id="insurance-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab(AppCurrStepNap2.INS)">
                 <span class="bs-stepper-circle">4</span>
                 <span class="bs-stepper-label">Insurance Data</span>
               </button>
@@ -76,7 +76,7 @@
             <div class="line"></div>
             <div class="step" data-target="#lifeInsurance-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="lifeInsurance-tab"
-                id="lifeInsurance-tab-trigger" [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('LFI')">
+                      id="lifeInsurance-tab-trigger" [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab(AppCurrStepNap2.LFI)">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Life Insurance Data</span>
               </button>
@@ -84,7 +84,7 @@
             <div class="line"></div>
             <div class="step" data-target="#financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
-                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab('FIN')">
+                      id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab(AppCurrStepNap2.FIN)">
                 <span class="bs-stepper-circle">6</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
@@ -92,7 +92,7 @@
             <div class="line"></div>
             <div class="step" data-target="#TC-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
-                [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('TC')">
+                      [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab(AppCurrStepNap2.TC)">
                 <span class="bs-stepper-circle">7</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
@@ -100,7 +100,7 @@
             <div class="line" *ngIf="SysConfigResultObj?.ConfigValue == 1"></div>
             <div class="step" data-target="#upload-tab" *ngIf="SysConfigResultObj?.ConfigValue == 1">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('UPL_DOC')">
+                      [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab(AppCurrStepNap2.UPL_DOC)">
                 <span class="bs-stepper-circle">8</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -110,9 +110,12 @@
           <div class="bs-stepper-content" >
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
+              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady && IsShowMultiReferantor == 0" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
+              <app-referantor-data-new *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady && IsShowMultiReferantor == 1" [appId]="appId"
+                                       [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+              </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-x-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
@@ -140,11 +143,11 @@
               </app-financial-data-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()"></app-tc-data>
+              <app-tc-data-x *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
+                           [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()"></app-tc-data-x>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="ReturnHandlingHId == 0" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -153,7 +156,7 @@
             <!-- your steps here -->
             <div class="step" data-target="#referantor-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="referantor-tab"
-                id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('REF')">
+                      id="referantor-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab(AppCurrStepNap2.REF)">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Referantor Data</span>
               </button>
@@ -161,7 +164,7 @@
             <div class="line"></div>
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
-                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('APP')">
+                      id="application-tab-trigger" [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab(AppCurrStepNap2.APP)">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Application Data</span>
               </button>
@@ -169,7 +172,7 @@
             <div class="line"></div>
             <div class="step" data-target="#asset-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="asset-tab" id="asset-tab-trigger"
-                [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('ASSET')">
+                      [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab(AppCurrStepNap2.ASSET)">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Asset Data</span>
               </button>
@@ -177,7 +180,7 @@
             <div class="line"></div>
             <div class="step" data-target="#insurance-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="insurance-tab"
-                id="insurance-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('INS')">
+                      id="insurance-tab-trigger" [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab(AppCurrStepNap2.INS)">
                 <span class="bs-stepper-circle">4</span>
                 <span class="bs-stepper-label">Insurance Data</span>
               </button>
@@ -185,7 +188,7 @@
             <div class="line"></div>
             <div class="step" data-target="#financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
-                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('FIN')">
+                      id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab(AppCurrStepNap2.FIN)">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
@@ -193,7 +196,7 @@
             <div class="line"></div>
             <div class="step" data-target="#TC-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
-                [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab('TC')">
+                      [disabled]="!(AppStepIndex >= 6)" (click)="ChangeTab(AppCurrStepNap2.TC)">
                 <span class="bs-stepper-circle">6</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
@@ -201,7 +204,7 @@
             <div class="line" [hidden]="SysConfigResultObj?.ConfigValue == 0"></div>
             <div class="step" data-target="#upload-tab" [hidden]="SysConfigResultObj?.ConfigValue == 0">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('UPL_DOC')">
+                      [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab(AppCurrStepNap2.UPL_DOC)">
                 <span class="bs-stepper-circle">7</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -211,9 +214,12 @@
           <div class="bs-stepper-content" >
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
+              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady && IsShowMultiReferantor == 0" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
+              <app-referantor-data-new *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady && IsShowMultiReferantor == 1" [appId]="appId"
+                                       [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+              </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-x-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
@@ -226,9 +232,9 @@
               (outputCancel)="Cancel()"></app-multi-asset-data-x>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY' && IsDataReady"
+              <app-insurance-multi-asset-data-x *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY' && IsDataReady"
                 [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
-              </app-insurance-multi-asset-data>
+              </app-insurance-multi-asset-data-x>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <app-financial-data-x *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" [AppObj]="NapObj"
@@ -236,11 +242,11 @@
               </app-financial-data-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()"></app-tc-data>
+              <app-tc-data-x *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
+                           [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()"></app-tc-data-x>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="ReturnHandlingHId == 0" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

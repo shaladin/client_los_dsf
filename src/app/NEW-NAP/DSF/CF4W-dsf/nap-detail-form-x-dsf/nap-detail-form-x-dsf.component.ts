@@ -16,14 +16,14 @@ import { environment } from 'environments/environment';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
-import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
-import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
 import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
-
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 @Component({
   selector: 'app-nap-detail-form-x-dsf',
   templateUrl: './nap-detail-form-x-dsf.component.html',
@@ -50,6 +50,8 @@ export class NapDetailFormXDsfComponent implements OnInit {
   IsSavedTC: boolean = false;
   IsDataReady: boolean = false;
   bizTemplateCode: string;
+  IsShowMultiReferantor: number = 0;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "NAPD": 1,
@@ -97,6 +99,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     // check DMS
+    await this.GetGSValueShowRferantor();
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
@@ -139,6 +142,12 @@ export class NapDetailFormXDsfComponent implements OnInit {
     
 
   }
+  async GetGSValueShowRferantor() {
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GsCodeIsShowMultiReferantor }).toPromise().then(
+      (response) => {
+        this.IsShowMultiReferantor = parseInt(response.GsValue);
+      });
+  }
 
   async initDms() {
     if (this.SysConfigResultObj.ConfigValue == '1') {
@@ -155,7 +164,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
             let trxNo;
             this.appNo = this.NapObj.AppNo;
             this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
             let isExisting = response['IsExistingCust'];
             if (isExisting) {
               trxNo = response['CustNo'];
@@ -312,8 +321,24 @@ export class NapDetailFormXDsfComponent implements OnInit {
   }
 
   async NextStep(Step) {
+    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
+      const appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+          }
+        }
+      );
+    }
     if (Step == CommonConstant.AppStepUplDoc) {
       await this.initDms();
+    }else if(Step == CommonConstant.AppStepIns){
+      let ReqByIdObj = new GenericObj();
+      ReqByIdObj.Id = this.appId;
+      this.http.post(URLConstant.CalculateTotalAssetPriceAndDownPayment, ReqByIdObj).subscribe(
+        (response) => {
+        })
     }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
@@ -349,7 +374,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
       reqObj.AppId = this.NapObj.AppId;
       reqObj.WfTaskListId = this.wfTaskListId;
 
-      let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV2 : URLConstant.SubmitNAP;
+      let SubmitNAPUrl = environment.isCore ? URLConstant.SubmitNAPV21 : URLConstant.SubmitNAP;
       this.http.post(SubmitNAPUrl, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);

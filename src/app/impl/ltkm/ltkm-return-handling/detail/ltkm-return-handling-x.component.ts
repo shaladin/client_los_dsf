@@ -3,11 +3,10 @@ import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
 import { MatRadioChange } from '@angular/material/radio/typings/public-api';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CustPersonalContactInformationComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/personal-contact-information/cust-personal-contact-information.component';
@@ -61,6 +60,8 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { AddressService } from 'app/shared/services/custAddr.service';
 import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 @Component({
     selector: 'app-ltkm-return-handling-x',
     templateUrl: './ltkm-return-handling-x.component.html',
@@ -206,6 +207,24 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     isLockLookupCust: boolean = false;
     listFamily: Array<any> = new Array();
 
+    //PERUBAHAN
+    // VARIABEL FIN DATA COMPANY VIEW
+    ListCustCoyFinData: Array<LtkmCustCompanyFinDataObj>;
+    CustNoObj: GenericObj = new GenericObj();
+    CustId: number = 0;
+    LtkmCustNo: string;
+    currentCustFinDataIndex: number;
+    CustCoyFinData: object;
+    NettIncomeAmtCoy: number = 0;
+    TitleCustFinSuffix: string = '';
+    IsShowDetailCustFin: boolean = false;
+
+    CustPersonalFinData : object;
+    TitleCustFinDataSuffix:string = '';
+    IsShowCustFinDataDetail:boolean = false;
+    // VARIABEL VIN DATA PERSONAL
+    ListCustPersonalFinData : Array<object> = [];
+
     constructor(
         private router: Router,
         private fb: FormBuilder,
@@ -221,6 +240,9 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             }
             if (params["LtkmCustId"] != undefined && params["LtkmCustId"] != null) {
                 this.LtkmCustId = params["LtkmCustId"];
+                this.LtkmCustNo = params["CustNo"]
+                console.log('LTKM CUST ID : ' + this.LtkmCustId)
+                console.log('LTKM CUST NO : ' + this.LtkmCustNo)
             }
             if (params["WfTaskListId"] != undefined && params["WfTaskListId"] != null) {
                 this.WfTaskListId = params["WfTaskListId"];
@@ -270,6 +292,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         // this.inputAddressObjForMailingCoy.showOwnership = true;
         // this.inputAddressObjForMailingCoy.requiredOwnership = this.setOwnership(CommonConstant.AddrTypeMailing);
 
+        await this.getListFinDataCompany();
+        await this.getListFinDataPersonal();
         await this.bindCustTypeObj();
         this.initAddrObj();
         if (this.mode == this.modeReqConst) {
@@ -369,7 +393,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             var personalPath: string = "";
 
             if (this.mode == this.modeRtnConst) {
-                personalPath = environment.isCore? URLConstant.SaveLtkmReturnHandlingPersonalV2 : URLConstant.SaveLtkmReturnHandlingPersonal;
+                personalPath = environment.isCore? URLConstantX.SaveLtkmReturnHandlingPersonalV2 : URLConstant.SaveLtkmReturnHandlingPersonal;
                 sendPersonalObj = {
                     requestCustDataPersonalObj: custDataPersonalObj,
                     WfTaskListId: this.WfTaskListId,
@@ -429,7 +453,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             var coyPath: string = "";
 
             if (this.mode == this.modeRtnConst) {
-                coyPath = environment.isCore? URLConstant.SaveLtkmReturnHandlingCompanyV2 : URLConstant.SaveLtkmReturnHandlingCompany;
+                coyPath = environment.isCore? URLConstantX.SaveLtkmReturnHandlingCompanyV2 : URLConstant.SaveLtkmReturnHandlingCompany;
                 sendCoyObj = {
                     requestCustDataCompanyLtkmObj: custDataCompanyObj,
                     WfTaskListId: this.WfTaskListId,
@@ -1071,7 +1095,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            // appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].MrJobTitleCode.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             // appCustPersonalJobDataObj.LtkmCustAddrJobObj = this.setAppCustAddrJob();
         }
 
@@ -1080,7 +1105,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            // appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].MrJobTitleCode.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
@@ -1095,7 +1121,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            // appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].MrJobTitleCode.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
             appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
@@ -1110,7 +1137,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             appCustPersonalJobDataObj.IndustryTypeCode = this.CustDataForm.controls["jobData"]["controls"].IndustryTypeCode.value;
             appCustPersonalJobDataObj.RefSectorEconomySlikCode = this.CustDataForm.controls["jobData"]["controls"].RefSectorEconomySlikCode.value;
             appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-            appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+            // appCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].MrJobTitleCode.value;
+            appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
             appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
             appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
             appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
@@ -1503,7 +1531,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             return;
         }
 
-        await this.http.post(URLConstant.GetCustDataByLtkmCustId, custDataObj).toPromise().then(
+        await this.http.post(URLConstantX.GetCustDataByLtkmCustId, custDataObj).toPromise().then(
             async (response) => {
                 if (response["AppCustObj"]["LtkmCustId"] > 0) {
                     if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -1530,14 +1558,14 @@ export class LtkmReturnHandlingXComponent implements OnInit {
                         this.listLtkmCustPersonalFinDataObjs = response["AppCustPersonalFinDataObj"];
                         // this.custDataPersonalObj.AppCustBankAccObjs = response["AppCustBankAccObjs"];
                         // this.listAppCustBankAcc = this.custDataPersonalObj.AppCustBankAccObjs;
-                        this.custDataPersonalObj.LtkmCustPersonalJobDataObj = response["AppCustPersonalJobDataObj"];
-                        this.ltkmCustPersonalJobDataObj = response["AppCustPersonalJobDataObj"];
+                        this.custDataPersonalObj.LtkmCustPersonalJobDataObj = response["AppCustPersonalJobDataObjX"];
+                        this.ltkmCustPersonalJobDataObj = response["AppCustPersonalJobDataObjX"];
                         // this.custDataPersonalObj.AppCustSocmedObjs = response["AppCustSocmedObjs"];
                         this.custDataPersonalObj.LtkmCustGrpObjs = response["AppCustGrpObjs"];
                         this.listLtkmCustGrpObj = response["AppCustGrpObjs"];
 
                         this.custDataPersonalObj.LtkmCustBankAccObjs = response["AppCustBankAccObjs"];
-                        this.listLtkmCustBankAccObjs = this.custDataPersonalObj.LtkmCustBankAccObjs;
+                        this.listLtkmCustBankAccObjs =this.sortLtkmCustBankStmntObjs(this.custDataPersonalObj.LtkmCustBankAccObjs);
 
                         this.custDataPersonalObj.LtkmCustEmergencyContact = response["rLtkmCustEmrgncCntct"];
                         this.LtkmCustEmergencyContactObj = response["rLtkmCustEmrgncCntct"];
@@ -1594,7 +1622,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
                         //   }
                         // }
                         this.custDataCompanyObj.LtkmCustBankAccObjs = response["AppCustBankAccObjs"];
-                        this.listLtkmCustBankAccCompany = this.custDataCompanyObj.LtkmCustBankAccObjs;
+                        this.listLtkmCustBankAccCompany = this.sortLtkmCustBankStmntObjs(this.custDataCompanyObj.LtkmCustBankAccObjs);
                         this.custDataCompanyObj.LtkmCustCompanyLegalDocObjs = response["AppCustCompanyLegalDocObjs"];
                         this.listLtkmCustCompanyLegalDoc = this.custDataCompanyObj.LtkmCustCompanyLegalDocObjs;
                         this.custDataCompanyObj.LtkmCustGrpObjs = response["AppCustGrpObjs"];
@@ -1811,7 +1839,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     //         }
     //     }
     // }
-
+      
     CopyCustomer(event) {
         console.log("copy customer");
         console.log(this.CustDataForm);
@@ -1840,11 +1868,9 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         }
         //perlu review, perlu tambah mekanisme buat load data dri fou, cek method BindListFinDataFromFoundation
         if (event["CustBankAccObjs"] != undefined) {
-            this.listLtkmCustBankAccObjs = event["CustBankAccObjs"];
-            this.custLtkmBankSectionComponent.LtkmCustBankAccList = event["CustBankAccObjs"];
+            this.listLtkmCustBankAccObjs = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
+            this.custLtkmBankSectionComponent.LtkmCustBankAccList = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
         }
-
-
 
         if (event["RLtkmCustPersonalJobDataObj"] != undefined) {
             this.custJobDataComponent.custModelCode = event["CustObj"].MrCustModelCode;
@@ -1924,8 +1950,8 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         }
 
         if (event["CustBankAccObjs"] != undefined) {
-            this.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
-            this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany = event["CustBankAccObjs"];
+            this.listLtkmCustBankAccCompany = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
+            this.custLtkmBankSectionComponent.listLtkmCustBankAccCompany = this.sortLtkmCustBankStmntObjs(event["CustBankAccObjs"]);
         }
 
         if (event["CustGrpObjs"] != undefined) {
@@ -2308,5 +2334,41 @@ export class LtkmReturnHandlingXComponent implements OnInit {
         }
         return temp;
     }
+
+    //PERUBAHAN START
+   async getListFinDataCompany() {
+    this.CustNoObj.CustNo = this.LtkmCustNo;
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
+        (response) => {
+            this.CustId = response['CustId'];
+        });
+     await this.http.post(URLConstantX.GetListCustCompanyFinDataXForCustViewByCustId,  {Id: this.CustId }).toPromise().then(
+          (response) => {
+              this.ListCustCoyFinData = response['ListCustCompanyFinDataX'];
+        });
+    }
+
+    async getListFinDataPersonal() {
+        // this.CustNoObj.CustNo = this.LtkmCustNo;       
+        await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
+            (response) => {
+              this.ListCustPersonalFinData = response['ListCustPersonalFinDataForCustViewX'];
+            });
+    }
+
+    sortLtkmCustBankStmntObjs(accountsPayload: any) {
+        accountsPayload.forEach((account) => {
+          account.LtkmCustBankStmntObjs.sort((a, b) => {
+            const aDate = new Date(Number(a.Year), Number(a.Month) - 1);
+            const bDate = new Date(Number(b.Year), Number(b.Month) - 1);
+            return aDate.getTime() - bDate.getTime();
+          });
+        });
+        return accountsPayload;
+      }
+      
+    //PERUBAHAN END
+  
 }
+
 

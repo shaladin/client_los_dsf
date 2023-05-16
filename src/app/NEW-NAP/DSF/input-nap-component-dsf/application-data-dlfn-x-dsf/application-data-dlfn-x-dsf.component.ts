@@ -10,7 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { DatePipe } from '@angular/common';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
@@ -36,6 +36,7 @@ import { CookieService } from 'ngx-cookie';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { String } from 'typescript-string-operations';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
+
 
 @Component({
   selector: 'app-application-data-dlfn-x-dsf',
@@ -220,6 +221,26 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
+    else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstantX.MrIdTypeCodePassport) {
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[a-zA-Z0-9]+$"), Validators.minLength(8), Validators.maxLength(10)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+    else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstantX.MrIdTypeCodeNIB) {
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(12), Validators.maxLength(100)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+    else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstantX.MrIdTypeCodeTDPNIB) {
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(12), Validators.maxLength(100)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+    else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeNPWP) {
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
+    else {
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
+    }
   }
 
   checkIsTopDaysNull() {
@@ -241,6 +262,15 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       MrCustTypeOwnerBnkAcc: CommonConstant.CustTypePersonal,
     });
   }
+
+  // ChangeMrIdTypeOwnerBnkAcc() {
+  //   if (this.SalesAppInfoForm.value.MrIdTypeOwnerBnkAcc == CommonConstant.MrIdTypeCodeEKTP) {
+  //   } else {
+  //     this.SalesAppInfoForm.controls.WayRestructure.clearValidators();
+  //   }
+  //   this.SalesAppInfoForm.controls.WayRestructure.updateValueAndValidity();
+  // }
+
 
   inputAddressOwnerBankAccObj: InputAddressObj = new InputAddressObj();
   inputAddrObj: AddrObj = new AddrObj();

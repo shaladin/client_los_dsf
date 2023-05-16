@@ -48,6 +48,8 @@ import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model'
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
 import { String } from 'typescript-string-operations';
+import { ReqCustBankAccX } from 'app/impl/shared/model/app-cust-bank-acc-x/req-cust-bank-acc-x.model';
+import { CustAddrObj } from 'app/shared/model/cust-addr-obj.model';
 import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
@@ -116,6 +118,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
   isDdlInterestTypeReady: boolean = false;
   isDdlInstallmentSchemeReady: boolean = false;
   tempCommodityName: string = '';
+  entitySelect: string = "";
   agrmntParentNo: string;
   resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
   reqAgrmntMasterDataObjX: ReqAgrmntMasterDataObjX;
@@ -201,6 +204,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     EconomicSector: [''],
     ApplicationNotes: [''],
     CopyFromMailing: [''],
+    CopyFromMailingAddrBnkAcc: [''],
     CustBankAcc: [''],
     DpSrcPaymentCode: ['', Validators.required],
     InstSrcPaymentCode: ['', Validators.required],
@@ -231,6 +235,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
   isMrCustTypeCompany: boolean = false;
   MasterCustType: string = "";
   MasterIdNoType: string = "";
+  selectedCustNo: string;
+  selectedCustBankAccId: number;
+  CustAddrObj: Array<CustAddrObj> = new Array();
 
   AgrmntDt: Date = new Date();
   OsPrincipal: number = 0;
@@ -246,8 +253,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
   Tenor: number = 0;
 
   // COMMENTED WHEN IN DEV
-  isAgrmntParentGoLiveDtValid: boolean = true;
-  isAgrmntParentMaturityDtValid: boolean = true;
+  isAgrmntParentGoLiveDtValid: boolean = false;
+  isAgrmntParentMaturityDtValid: boolean = false;
   monthFromGoLiveDt: number = 6;  // 6 as default value
   monthFromMaturyityDateDt: number = 3;  // 3 as default value
 
@@ -1119,13 +1126,25 @@ export class ApplicationDataXDsfComponent implements OnInit {
     await this.makeLookUpObj();
   }
 
-  async copyAgrmntParentEvent(idx, task) {
+    // Self Custom CR MPF & FD Validation
+    async copyAgrmntParentEvent(idx, task) {
+    // End Self Custom CR MPF & FD Validation
     if (idx == null) return;
 
     this.agrParent = this.agrParentList[idx];
     // COMMENTED WHEN IN DEV
     await this.validateGoLiveDtAgrmntParent();
     await this.validateMaturityDtAgrmntParent();
+    if (this.BizTemplateCode == CommonConstant.CFNA && idx > -1) {
+      if(!this.isAgrmntParentMaturityDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
+        return false;
+      }
+      if(!this.isAgrmntParentGoLiveDtValid){
+        this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
+        return false;
+      }
+    }
     this.totalAgrmntMpfDt = this.agrParent.TotalAgrmntMpfDt;
     this.maxTenor = this.agrParent.MaxTenor;
     this.goLiveDt = this.agrParent.GoLiveDt;
@@ -1155,6 +1174,23 @@ export class ApplicationDataXDsfComponent implements OnInit {
     reqCalculatePlafondAgrmntXObj.EffectiveDt = this.agrParent.EffectiveDt;
     reqCalculatePlafondAgrmntXObj.GoLiveDt = this.agrParent.GoLiveDt;
     reqCalculatePlafondAgrmntXObj.Tenor = this.agrParent.Tenor;
+
+    if (this.plafondDict[this.agrParent.AgrmntId] == undefined) {
+      this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstantX.CalculatePlafondAgrmntX, reqCalculatePlafondAgrmntXObj).subscribe(
+        (response) => {
+          this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
+          this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
+          this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = response.MaxPlafondAgrmntAmt;
+          this.resCalculatePlafondAgrmntXObj.IsAppInProgress = response.IsAppInProgress;
+
+          if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+            this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+          }
+          this.plafondDict[this.agrParent.AgrmntId] = this.resCalculatePlafondAgrmntXObj;
+        });
+    } else {
+      this.resCalculatePlafondAgrmntXObj = this.plafondDict[this.agrParent.AgrmntId]
+    }
 
     // Self Custom CR MPF & FD Validation
     // const index = Array.from(this.listAgrmntPrtUsedDsf).indexOf(this.agrParent.AgrmntNo);
@@ -1783,7 +1819,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     // }
     // End Self Custom CR MPF & FD Validation
 
-    if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
+    if (this.NapAppModelForm.controls.Tenor.value > this.maxTenor) {
       this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
       return false;
     }
@@ -1906,11 +1942,14 @@ export class ApplicationDataXDsfComponent implements OnInit {
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   mailingAddrObj: AddrObj = new AddrObj();
+  mailingAddrBnkAccObj: AddrObj = new AddrObj();
   AppCustAddrObj: Array<AppCustAddrObj> = new Array();
   copyToMailingTypeObj: Array<KeyValueObj> = [
     { Key: "LEGAL", Value: "Legal" },
     { Key: "RESIDENCE", Value: "Residence" }
   ];
+
+  copyToMailingTypeBnkAccObj = [];
   IsAddrReady: boolean = false;
   async initMailingAddress() {
     this.mailingAddrObj = new AddrObj();
@@ -1923,6 +1962,16 @@ export class ApplicationDataXDsfComponent implements OnInit {
         this.copyToMailing(CommonConstant.AddrTypeMailing);
       }
     );
+
+    await this.http.post(URLConstantX.GetListCustAddrByCustNoX, { 'CustNo': this.CustNo }).toPromise().then(
+      (response) => {
+        this.CustAddrObj = response[CommonConstant.ReturnObj];
+      }
+    );
+
+    for (let i = 0; i < this.CustAddrObj.length; i++) {
+      this.copyToMailingTypeBnkAccObj.push(this.CustAddrObj[i].MrCustAddrTypeCode);
+    }
   }
 
   copyToMailing(addrType: string = '') {
@@ -1954,6 +2003,41 @@ export class ApplicationDataXDsfComponent implements OnInit {
       this.inputAddressObj.default = this.mailingAddrObj;
     }
     this.IsAddrReady = true;
+  }
+
+  copyToMailingAddrBnkAcc(addrType: any) {
+    this.entitySelect = addrType.value;
+    if (addrType.value == "") {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_SELECT_ONE);
+    }
+    else{
+      if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailingAddrBnkAcc.value;
+
+      let address = this.CustAddrObj.find(emp => emp.MrCustAddrTypeCode === this.entitySelect);
+      if (address != null && address != undefined) {
+        this.mailingAddrBnkAccObj.Addr = address.Addr;
+        this.mailingAddrBnkAccObj.AreaCode1 = address.AreaCode1;
+        this.mailingAddrBnkAccObj.AreaCode2 = address.AreaCode2;
+        this.mailingAddrBnkAccObj.AreaCode3 = address.AreaCode3;
+        this.mailingAddrBnkAccObj.AreaCode4 = address.AreaCode4;
+        this.mailingAddrBnkAccObj.City = address.City;
+        this.mailingAddrBnkAccObj.Fax = address.Fax;
+        this.mailingAddrBnkAccObj.FaxArea = address.FaxArea;
+        this.mailingAddrBnkAccObj.Phn1 = address.Phn1;
+        this.mailingAddrBnkAccObj.Phn2 = address.Phn2;
+        this.mailingAddrBnkAccObj.Phn3 = address.Phn3;
+        this.mailingAddrBnkAccObj.PhnArea1 = address.PhnArea1;
+        this.mailingAddrBnkAccObj.PhnArea2 = address.PhnArea2;
+        this.mailingAddrBnkAccObj.PhnArea3 = address.PhnArea3;
+        this.mailingAddrBnkAccObj.PhnExt1 = address.PhnExt1;
+        this.mailingAddrBnkAccObj.PhnExt2 = address.PhnExt2;
+        this.mailingAddrBnkAccObj.PhnExt3 = address.PhnExt3;
+
+        this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.nameSelect = address.Zipcode;
+        this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.jsonSelect = { Zipcode: address.Zipcode };
+        this.inputAddressOwnerBankAccObj.default = this.mailingAddrBnkAccObj;
+      }
+    }
   }
 
   getMailingAddrForSave() {
@@ -2133,7 +2217,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     );
   }
 
-  selectedBank() {
+  async selectedBank() {
     if (this.NapAppModelForm.controls.MrWopCode.value != this.WopAutoDebit) return;
     
     if(this.NapAppModelForm.get("CustBankAcc").value == "")
@@ -2148,11 +2232,79 @@ export class ApplicationDataXDsfComponent implements OnInit {
     
     let custBankAccId: number = this.NapAppModelForm.get("CustBankAcc").value;
     let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
+
     this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
     this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
     this.GetBankInfo.AppId = this.appId;
     this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
     this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName;
+
+
+    await this.http.post(URLConstant.GetAppCustMainDataByAppCustId, { Id: selectedBankAcc.AppCustId }).toPromise().then(
+      async (response: any) => {
+        this.selectedCustNo = response['AppCustObj']['CustNo'];
+      }
+    )
+
+    let reqObj: ReqCustBankAccX = new ReqCustBankAccX();
+    reqObj.CustNo = this.selectedCustNo;
+    reqObj.BankAccName = selectedBankAcc.BankAccName;
+    reqObj.BankAccNo = selectedBankAcc.BankAccNo;
+    reqObj.BankBranch = selectedBankAcc.BankBranch;
+    await this.http.post(URLConstantX.GetCustBankAccByCustNoX, reqObj).toPromise().then(
+      async (response: any) => {
+        this.selectedCustBankAccId = response['CustBankAccId'];
+      }
+    )
+
+    await this.http.post(URLConstantX.GetCustBankAccByCustBankAccIdX, { Id: this.selectedCustBankAccId }).toPromise().then(
+      async (response: any) => {
+        let datePipe = new DatePipe("en-US");
+
+        if ( response["MrCustTypeOwnerBnkAcc"] == null || response["MrIdTypeOwnerBnkAcc"] == null
+             || response["MrCustTypeOwnerBnkAcc"] == "" || response["MrIdTypeOwnerBnkAcc"] == "") {
+          this.initCustBankAccDetail();
+          this.NapAppModelForm.patchValue({
+            PrsdntDirectorOwnerBnkAcc: response["PrsdntDirectorOwnerBnkAcc"],
+            IdNoOwnerBankAcc: response["IdNoOwnerBankAcc"],
+            BirthDtOwnerBankAcc: datePipe.transform(response['BirthDtOwnerBankAcc'], 'yyyy-MM-dd'),
+            BirthPlaceOwnerBankAcc: response["BirthPlaceOwnerBankAcc"],
+        }); 
+        }
+        else{
+          this.NapAppModelForm.patchValue({
+            MrCustTypeOwnerBnkAcc: response["MrCustTypeOwnerBnkAcc"],
+            MrIdTypeOwnerBnkAcc: response["MrIdTypeOwnerBnkAcc"],
+            PrsdntDirectorOwnerBnkAcc: response["PrsdntDirectorOwnerBnkAcc"],
+            IdNoOwnerBankAcc: response["IdNoOwnerBankAcc"],
+            BirthDtOwnerBankAcc: datePipe.transform(response['BirthDtOwnerBankAcc'], 'yyyy-MM-dd'),
+            BirthPlaceOwnerBankAcc: response["BirthPlaceOwnerBankAcc"],
+          });
+        }               
+
+        this.inputAddrObj.Addr = response["AddrOwnerBankAcc"];
+        this.inputAddrObj.AreaCode1 = response["AreaCode1OwnerBankAcc"];
+        this.inputAddrObj.AreaCode2 = response["AreaCode2OwnerBankAcc"];
+        this.inputAddrObj.AreaCode3 = response["AreaCode3OwnerBankAcc"];
+        this.inputAddrObj.AreaCode4 = response["AreaCode4OwnerBankAcc"];
+        this.inputAddrObj.City = response["CityOwnerBankAcc"];
+
+        this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.nameSelect = response["ZipcodeOwnerBankAcc"];
+        this.inputAddressOwnerBankAccObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["ZipcodeOwnerBankAcc"] };
+        this.inputAddressOwnerBankAccObj.default = this.inputAddrObj;        
+      }
+    )
+    this.isCustomerTypeCompany();
+    // this.checkIdTypeOwnerBnk(this.NapAppModelForm.controls.MrIdTypeOwnerBnkAcc.value);
+  }
+
+  checkIdTypeOwnerBnk(idTypeOwnerBnkAcc: string) {
+    if (idTypeOwnerBnkAcc == "" || idTypeOwnerBnkAcc == null) {
+      this.NapAppModelForm.get('MrIdTypeOwnerBnkAcc').enable();
+    }
+    else{
+      this.NapAppModelForm.get('MrIdTypeOwnerBnkAcc').disable();
+    }
   }
 
   async getAppXData() {

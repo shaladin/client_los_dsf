@@ -4,11 +4,13 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
 import { AppCustCompanyFinDataObj } from 'app/shared/model/app-cust-company-fin-data-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { LtkmCustCompanyFinDataObj } from 'app/shared/model/ltkm/ltkm-cust-company-fin-data-obj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
@@ -20,6 +22,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 })
 export class LtkmFinancialCompanyXComponent implements OnInit {
   @Input() AppCustId: number;
+  @Input() ltkmCustId: number;
   @Output() UpdateSource: EventEmitter<object> = new EventEmitter();
   @ViewChild('ModalCoyFinData') ModalCoyFinData;
   IsDetail: boolean = false;
@@ -30,6 +33,16 @@ export class LtkmFinancialCompanyXComponent implements OnInit {
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
   NettIncomeAmtCoy: number;
   isCalculated: boolean = false;
+  IsShowDetailCustFin: boolean = false;
+
+  //PERUBAHAN START
+  // VARIABEL VIEW
+  CustId: number = 0;
+  CustNoObj: GenericObj = new GenericObj();
+  ListCustCoyFinData: Array<LtkmCustCompanyFinDataObj>;
+  TitleCustFinSuffix: string = '';
+  CustCoyFinData: object;
+  //PERUBAHAN START
 
   @Input() ListLtkmCustCoyFinData: Array<LtkmCustCompanyFinDataObj> = [];
   IsAddFinData: boolean = true;
@@ -81,7 +94,7 @@ export class LtkmFinancialCompanyXComponent implements OnInit {
     public formValidate: FormValidateService,
     private modalService: NgbModal) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.parentForm.addControl(this.identifier, this.fb.group({
       LtkmCustCompanyFinDataId: [0],
       LtkmCustId: [0],
@@ -110,7 +123,7 @@ export class LtkmFinancialCompanyXComponent implements OnInit {
       LongTermLiablts: [0],
       CurrRatio: [0],
       RowVersion: ['']
-    }));
+    }));    
   }
 
   GetFinData(currentCustFinDataIndex: number) {
@@ -190,6 +203,7 @@ export class LtkmFinancialCompanyXComponent implements OnInit {
   calculateCompanyFinData(){
     this.NettIncomeAmtCoy = this.parentForm['controls'][this.identifier]['controls']['GrossMonthlyIncomeAmt'].value - 
                             this.parentForm['controls'][this.identifier]['controls']['OthMonthlyInstAmt'].value -
+                            // this.parentForm['controls'][this.identifier]['controls']['OtherMonthlyInstallmentDsf'].value
                             this.parentForm['controls'][this.identifier]['controls']['OprCost'].value;
     this.isCalculated = true;
   }
@@ -251,4 +265,25 @@ export class LtkmFinancialCompanyXComponent implements OnInit {
     this.UpdateSource.emit({ Key: 'IsDetail', Value: false, ListLtkmCustCoyFinData: this.ListLtkmCustCoyFinData });
     this.IsDetail = false;
   }
+
+  //PERUBAHAN START
+  //FUNGSI VIEW
+  showDetailCustFinData(index: number) {
+    let datePipe = new DatePipe("en-US");
+    this.currentCustFinDataIndex = index;
+    this.CustCoyFinData = this.ListLtkmCustCoyFinData[this.currentCustFinDataIndex];
+    this.calculate()
+    this.TitleCustFinSuffix = 'Date as of ' + datePipe.transform(this.CustCoyFinData['DateAsOf'], 'dd-MMM-yyyy')
+    this.IsShowDetailCustFin = true;
+  }
+  calculate(){
+    this.NettIncomeAmtCoy = this.CustCoyFinData['GrossMonthlyIncomeAmt'] - (this.CustCoyFinData['OthMonthlyInstAmt'] + this.CustCoyFinData['OtherMonthlyInstallmentDsf']) - this.CustCoyFinData['OprCost'];
+  }
+  hideDetailCustFinData() {
+    this.TitleCustFinSuffix = '';
+    this.IsShowDetailCustFin = false;
+    this.CustCoyFinData = {};
+  }
+  //PERUBAHAN END
+  
 }

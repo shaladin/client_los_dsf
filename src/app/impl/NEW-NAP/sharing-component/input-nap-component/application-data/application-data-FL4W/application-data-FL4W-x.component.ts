@@ -356,8 +356,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     this.isDdlMrFirstInstTypeReady = true;
   }
 
-  initDdlInterestType()
-  {
+  initDdlInterestType() {
     this.ddlInterestTypeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
     this.ddlInterestTypeObj.requestObj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
@@ -369,8 +368,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     this.isDdlInterestTypeReady = true;
   }
 
-  initDdlInstallmentScheme()
-  {
+  initDdlInstallmentScheme() {
     this.ddlInstallmentSchemeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
     this.ddlInstallmentSchemeObj.requestObj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
@@ -381,7 +379,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     this.ddlInstallmentSchemeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
     this.isDdlInstallmentSchemeReady = true;
   }
-  
+
   initDdlPayFreq() {
     this.ddlPayFreqObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
     this.ddlPayFreqObj.requestObj = {
@@ -525,7 +523,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
           InstSrcPaymentCode: this.resultResponse.MrInstSrcPaymentCode
         });
 
-        if(this.resultResponse.MrSlikSecEcoCode){
+        if (this.resultResponse.MrSlikSecEcoCode) {
           this.NapAppModelForm.patchValue({
             MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode,
           });
@@ -980,7 +978,7 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     return temp;
   }
 
-  ClickSave() {
+  async ClickSave() {
     if (this.NapAppModelForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.NapAppModelForm.patchValue({
         PrevAgrNo: null,
@@ -1053,6 +1051,77 @@ export class ApplicationDataFL4WXComponent implements OnInit {
     obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
 
     if (this.isTenorValid == true) {
+      // region: additional validation transaction leasseback
+      let isAlreadyHasAsset: boolean = false;
+      let allAssetName: string[] = []
+      let allAssetAttributePlatColor: string[] = []
+      let platColorRequestObj = {
+        Id: this.AppId
+      }
+      await this.http.post(URLConstant.GetListAllAssetDataByAppId, platColorRequestObj).toPromise().then((res: any) => {
+        if (res['ReturnObject'] !== null && res['ReturnObject'].length > 0) {
+          isAlreadyHasAsset = true;
+          if (res['ReturnObject'].length > 0) {
+            for (let i = 0; i < res['ReturnObject'].length; i++) {
+              // ASSET NAMES
+              if (res['ReturnObject'][i].ResponseAppAssetObj) {
+                let fullAssetName = '';
+                if (res['ReturnObject'][i].ResponseAppAssetObj.FullAssetName !== null) {
+                  fullAssetName = res['ReturnObject'][i].ResponseAppAssetObj.FullAssetName
+                }
+                allAssetName.push(fullAssetName);
+              }
+
+              // ASSET ATTRIBUTES
+              const attributes: any[] = res['ReturnObject'][i].ResponseAppAssetAttrObjs
+              if (attributes.length > 0) {
+                for (let x = 0; x < attributes.length; x++) {
+                  if (attributes[x].AssetAttrCode === CommonConstantX.APP_ASSET_ATTRIBUTE_PLAT_COLOR) {
+                    allAssetAttributePlatColor.push(attributes[x].AttrValue)
+                  }
+                }
+              }
+            }
+          }
+        }
+      });
+      if (isAlreadyHasAsset) {
+        let purposeOfFinancing = '';
+        const prodOffferingPOFRequestObj = {
+          ProdOfferingCode: tempAppObj.ProdOfferingCode,
+          ProdOfferingVersion: tempAppObj.ProdOfferingVersion,
+          RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing
+        }
+        await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, prodOffferingPOFRequestObj).toPromise().then((res) => {
+          const componentValue = res['CompntValue']
+          if (componentValue !== null) {
+            purposeOfFinancing = componentValue
+          }
+        });
+
+        let wayOfFinancing = '';
+        const prodOffferingWOFRequestObj = {
+          ProdOfferingCode: tempAppObj.ProdOfferingCode,
+          ProdOfferingVersion: tempAppObj.ProdOfferingVersion,
+          RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing
+        }
+        await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, prodOffferingWOFRequestObj).toPromise().then((res) => {
+          const componentValue = res['CompntValue']
+          if (componentValue !== null) {
+            wayOfFinancing = componentValue
+          }
+        });
+        const errorMessages: string[] = await this.CheckValidationTransactionLeasseback(tempAppObj.Tenor, purposeOfFinancing, wayOfFinancing, allAssetAttributePlatColor, allAssetName)
+        console.log(errorMessages)
+        if (errorMessages.length > 0) {
+          for (let i = 0; i < errorMessages.length; i++) {
+            this.toastr.warningMessage(errorMessages[i]);
+          }
+          return;
+        }
+      }
+      // endregion: additional validation transaction leasseback
+
       this.http.post(URLConstantX.EditAppAddAppCrossX, obj).subscribe(
         (response) => {
           if (response['StatusCode'] == 200) {
@@ -1067,6 +1136,68 @@ export class ApplicationDataFL4WXComponent implements OnInit {
       this.toastr.errorMessage('Tenor must be between ' + this.TenorFrom + ' and ' + this.TenorTo)
     }
   }
+
+  async CheckValidationTransactionLeasseback(tenor: number, purposeOfFinancing: string, wayOfFinancing: string, allAssetAttributePlatColor: string[], allAssetName: string[]) {
+    // get GS Tenor
+    let errorMessages: string[] = [];
+
+    let arrMinTenorAssetFL: any[]
+    const minTenorAssetFLRequestObj = {
+      Code: CommonConstantX.GsCodeMinTenorAssetFL
+    }
+    await this.http.post(URLConstant.GetGeneralSettingByCode, minTenorAssetFLRequestObj).toPromise().then((res) => {
+      const GsValue = res['GsValue']
+      if (GsValue !== null) {
+        let tempArr: any[] = GsValue.split(";")
+        if (tempArr.length > 0) {
+          for (let i = 0; i < tempArr.length; i++) {
+            tempArr[i] = tempArr[i].split(":")
+          }
+        }
+        arrMinTenorAssetFL = tempArr
+      }
+    });
+
+    // get GS Tenor
+    let arrMapPofWofFL: string[] = [];
+    const MapPofWofFLRequestObj = {
+      Code: CommonConstantX.GsCodeMapPofWofFL
+    }
+    await this.http.post(URLConstant.GetGeneralSettingByCode, MapPofWofFLRequestObj).toPromise().then((res) => {
+      const GsValue = res['GsValue']
+      if (GsValue !== null) {
+        arrMapPofWofFL = GsValue.split(";")
+      }
+    });
+
+    const mapPofWof = purposeOfFinancing + ":" + wayOfFinancing
+    if (arrMapPofWofFL.length > 0) {
+      for (let i = 0; i < arrMapPofWofFL.length; i++) {
+        if (mapPofWof === arrMapPofWofFL[i]) {
+          if (allAssetAttributePlatColor.length > 0) {
+            for (let x = 0; x < allAssetAttributePlatColor.length; x++) {
+              const assetName = allAssetName[x]
+              const attrPlatColor = allAssetAttributePlatColor[x]
+              for (let gsIdx = 0; gsIdx < arrMinTenorAssetFL.length; gsIdx++) {
+                const gsPlatColor = arrMinTenorAssetFL[gsIdx][0];
+                const gsTenorMonth = arrMinTenorAssetFL[gsIdx][1];
+                if (attrPlatColor === gsPlatColor && tenor < gsTenorMonth) {
+                  let messageColor = 'Yellow';
+                  if (attrPlatColor === 'BLACK' || attrPlatColor === 'WHITE') {
+                    messageColor = 'Black/White'
+                  }
+                  errorMessages.push(`Plat Color ${messageColor} must have minimum tenor of ${gsTenorMonth} for asset ${assetName}`)
+                }
+              }
+            }
+          }
+          break;  // to stop POF and WOF Validation loop
+        }
+      }
+    }
+    return errorMessages
+  }
+
   Open(contentCrossApp) {
     this.modalService.open(contentCrossApp).result.then(
       (result) => {
