@@ -229,7 +229,6 @@
                             {{item.Descr}}
                           </option>
                         </select>
-                        <lib-uc-show-errors [control]="PhoneDataForm.controls.CallStatusDetail" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -237,8 +236,6 @@
                       <div class="col-md-4">
                         <textarea type="text" class="form-control adInsInput" formControlName="NotesDetail"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.NotesDetail.invalid }"></textarea>
-                        <lib-uc-show-errors [control]="PhoneDataForm.controls.NotesDetail" [submit]="enjiForm.submitted">
-                        </lib-uc-show-errors>
                       </div>
                     </div>
                   </div>

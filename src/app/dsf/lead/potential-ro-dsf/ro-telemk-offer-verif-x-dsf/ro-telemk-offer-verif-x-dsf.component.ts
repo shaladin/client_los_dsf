@@ -501,7 +501,11 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
           this.getListVerfResulHtData();
           //this.clearform();
       });
-      }
+    }
+    else
+    {
+      this.toastr.warningMessage("Call Status and Notes shouldn't be empty");
+    }
   }
 
   onChangeIsCustWillRo() {
