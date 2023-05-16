@@ -1,0 +1,177 @@
+{
+  "title": "Invoice Verification",
+  "exportExcel": false,
+  "component": [
+      {
+          "type": "textbox",
+          "name": "A.APP_NO",
+          "id": "AppNoId",
+          "value": "",
+          "label": "Application No",
+          "placeholder": "Placeholder"
+      },
+      {
+          "type": "textbox",
+          "name": "B.CUST_NAME",
+          "id": "CustNameId",
+          "value": "",
+          "label": "Customer Name",
+          "placeholder": "Placeholder"
+      },
+      {
+          "type": "textbox",
+          "name": "A.PROD_OFFERING_NAME",
+          "id": "ProdOfferingNameId",
+          "value": "",
+          "label": "Product Offering Name",
+          "placeholder": "Placeholder"
+      },
+      {
+          "type": "officeRoleCodes",
+          "datatype": "text",
+          "name": "A.ORI_OFFICE_CODE",
+          "id": "OfficeCodeId",
+          "value": "",
+          "placeholder": "Placeholder",
+          "isFromURL": true,
+          "ddlType": "all",
+          "isQueryIn": true,
+          "url": "",
+          "environment": "FOU",
+          "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+          "label": "Office",
+          "items": [],
+          "itemsUrl": []
+      },
+      {
+        "type": "dropdown",
+        "name": "Source",
+        "id": "SourceId",
+        "value": "",
+        "label": "Source",
+        "ddlType": "all",
+        "isRequired": false,
+        "isFromURL": false,
+        "items" : [{"key":"", "value":"Things To Do"}]
+      }
+  ],
+  "querystring": {
+      "name": "searchInvoiceVerifDFV2"
+  },
+  "headerList": [
+      {
+          "type": "label",
+          "position": "center",
+          "label": "SLA",
+          "name": "IndicatorSLA"
+      },
+      {
+          "type": "label",
+          "position": "left",
+          "label": "Claim By",
+          "name": "Assignee"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Application No",
+          "name": "ApplicationNo"
+      },
+      {
+          "type": "sort",
+          "position": "left",
+          "label": "Customer Name",
+          "name": "CustName"
+      },
+      {
+          "type": "sort",
+          "position": "left",
+          "label": "Product  Offering Name",
+          "name": "ProdName"
+      },
+      {
+          "type": "label",
+          "position": "center",
+          "label": "Verify"
+      }
+  ],
+  "bodyList": [
+      {
+          "type": "sla",
+          "position": "center",
+          "property": "IndicatorSLA"
+      },
+      {
+          "type": "text",
+          "position": "left",
+          "property": "Assignee"
+      },        
+      {
+          "type": "link",
+          "position": "center",
+          "property": "ApplicationNo",
+          "target": "_blank",
+          "path": "VIEW_APP",
+          "param": [
+              {
+                  "type": "AppId",
+                  "property": "AppId"
+              }
+          ]
+      },
+      {
+          "type": "text",
+          "position": "left",
+          "property": "CustName"
+      },
+      {
+          "type": "callback",
+          "key": "prodOff",
+          "position": "left",
+          "property": "ProdName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions": [
+                  {
+                    "isUser": true,
+                    "property": "Assignee",
+                    "value": null,
+                    "restriction": "EQ"
+                  }
+                ],
+                "result": {
+                  "type": "callback",
+                  "key": "Edit",
+                  "icon": "ft-edit-2"
+                },
+                "isHide": false
+              },
+              {
+                "conditions": [
+                  {
+                    "isUser": false,
+                    "property": "Assignee",
+                    "value": null,
+                    "restriction": "EQ"
+                  }
+                ],
+                "result": {
+                  "type": "callback",
+                  "key": "Edit",
+                  "icon": "ft-edit-2"
+                },
+                "isHide": false
+              }
+            ]
+          }
+        ]
+      }
+  ]
+}

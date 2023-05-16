@@ -137,7 +137,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_APPRV_DETAIL; //"/Nap/AdminProcess/OfferingValidityApproval/Detail"
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_REQ_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_REQ_PAGING; //"/Nap/AdminProcess/OfferingValidityApproval/Paging"
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_REQ_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_REQ_DETAIL; //"/Nap/AdminProcess/OfferingValidityApproval/Detail"
-  public static NAP_ADM_PRCS_PGL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_PAGING; //'/Nap/AdminProcess/PreGoLive/Paging'
+  public static NAP_ADM_PRCS_PGL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PGL_PAGING_X; //'/Nap/AdminProcess/PreGoLive/PagingX'
   public static NAP_ADM_PRCS_PGL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PGL_DETAIL_X; //'/Nap/AdminProcess/PreGoLive/DetailX'
   public static NAP_ADM_PRCS_PGL_OPL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_OPL_PAGING; //'/Nap/AdminProcess/pregoliveopl/paging'
   public static NAP_ADM_PRCS_PGL_OPL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_OPL_DETAIL; //'/Nap/AdminProcess/pregoliveopl/detail'
@@ -414,7 +414,7 @@ export class NavigationConstant {
   public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_DETAIL; //'/Ltkm/Verify/DetailX'
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
   public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
-  public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
+  public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
   public static LTKM_RTN_HANDLING_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_DETAIL; //'/Ltkm/ReturnHandling/Detail'
   //#endregion
 
