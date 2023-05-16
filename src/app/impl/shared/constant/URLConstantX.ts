@@ -81,6 +81,8 @@ export class URLConstantX {
   public static GetEditComReqAndApvByAgrmntId = environment.losUrl + "/v1" + "/AppCommissionX/GetEditComReqAndApvByAgrmntId";
   public static GetEditAppReqAndApvByAgrmntId = environment.losUrl + "/v1" + "/AppCommissionX/GetEditAppReqAndApvByAgrmntId"
 
+  //Pph23
+  public static GetPph23BySupplierNo = environment.losUrl + "/v1" + "/AppCommissionX/GetPph23BySupplierNo";
 
   //App Asset
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/v1" + "/AppAssetX/GetAllAssetDataForPOByAsset";

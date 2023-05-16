@@ -8,14 +8,14 @@ export const environment = {
   navbarColor: 'transparent',
   // losUrl: 'http://localhost:5000',
   // FoundationR3Url: 'http://localhost:5000',
-  losUrl: 'http://r3impl-appsvr.ad-ins.com/LOS_DSF_IMPL',
-  FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_DSF_IMPL',
+  losUrl: 'http://localhost:4001',
+  FoundationR3Url: 'http://hodipo-appr3.ad-ins.com/foundation_be_r3',
   DMSUrl: "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
   AMSUrl: "http://r3app-server.ad-ins.com/AMS_DEMO", //OPL dah ada
   LMSUrl: "http://r3app-server.ad-ins.com/LMS_DEMO", //OPL dah ada
   ApprovalR3Url: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_R3_BE_DSF_IMPL_CAMUNDA',
   ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
-  FoundationR3Web: 'http://r3impl-websvr.ad-ins.com/FOU_DSF_IMPL',
+  FoundationR3Web: 'http://hodipo-webr3.ad-ins.com/FOUNDATION_FE_R3/',
   losR3Web: 'http://localhost:4200',
   lmsR3web : "http://r3impl-websvr.ad-ins.com/LMS",
   cmsR3Web: 'http://r3web-server.ad-ins.com/CMS',
