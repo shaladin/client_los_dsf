@@ -34,21 +34,23 @@
                 <label class="col-md-4" translate>Customer</label>
                 <label class="col-md-2 adins-required-label" translate>Phone</label>
                 <div class="col-md-4">
-                  <select *ngIf="TelemkOfferSubj.ListPhoneNo" class="form-control" id="phoneNumberId" formControlName="Phn"
-                    (change)="onChangePhn()"
+                <!-- Self Custom Changes -->
+                <select *ngIf="TelemkOfferSubj.ListPhoneNo" class="form-control" id="phoneNumberId" formControlName="Phn"
+                    (change)="onChangePhn()" [attr.disabled]="IsViewSubDetail ? true : null"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Phn.invalid }">
                     <option *ngFor="let item of TelemkOfferSubj.ListPhoneNo" [value]="item.PhoneNumber">
                       {{item.PhoneType}}: {{item.PhoneNumber}}
                     </option>
                   </select>
-                </div>
+                <!-- End Self Custom Changes -->
+              </div>
               </div>
 
               <div class="form-group row">
                 <!-- Self Custom Changes -->
                 <label class="col-md-2 adins-required-label" translate>Call Status</label>
                 <div class="col-md-4">
-                  <select *ngIf="ListRefMaster" class="form-control" id="CallStatusId" formControlName="CallStatus"
+                  <select *ngIf="ListRefMaster" class="form-control" id="CallStatusId" formControlName="CallStatus" [attr.disabled]="IsViewSubDetail ? true : null"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.CallStatus.invalid }">
                     <option *ngFor="let item of ListRefMaster" [value]="item.Descr">
                       {{item.Descr}}
@@ -59,18 +61,20 @@
                 <!-- End Self Custom Changes -->
                 <label class="col-md-2  adins-required-label" translate>Result</label>
                 <div class="col-md-4">
-                  <select *ngIf="RmVerfResultStat" class="form-control" id="subjectResultId"
+                  <!-- Self Custom Changes -->
+                  <select *ngIf="RmVerfResultStat" class="form-control" id="subjectResultId" [attr.disabled]="IsViewSubDetail ? true : null"
                     (change)="onChangeRmVerfResultStat()" formControlName="MrVerfResultHStatCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.MrVerfResultHStatCode.invalid }">
                     <option *ngFor="let item of RmVerfResultStat" [value]="item.Key">{{item.Value}}</option>
                   </select>
+                  <!-- End Self Custom Changes -->
                 </div>
               </div>
               <!-- Self Custom Changes -->
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Remarks</label>
                 <div class="col-md-4">
-                  <textarea type="text" class="form-control adInsInput" formControlName="Notes"
+                  <textarea type="text" class="form-control adInsInput" formControlName="Notes" [attr.disabled]="IsViewSubDetail ? true : null"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && PhoneDataForm.controls.Notes.invalid }"></textarea>
                   <lib-uc-show-errors [control]="PhoneDataForm.controls.Notes" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -79,8 +83,9 @@
               <!-- End Self Custom Changes -->
             </div>
 
-
-            <div formArrayName="QuestionObjs" *ngIf="PhoneDataForm.controls.MrVerfResultHStatCode.value == 'SCS'">
+            <!-- Self Custom Changes -->
+            <div formArrayName="QuestionObjs" *ngIf="PhoneDataForm.controls.MrVerfResultHStatCode.value == 'SCS' && IsViewSubDetail == false">
+            <!-- End Self Custom Changes -->
               <div class="form-body" [formGroupName]="i"
                 *ngFor="let QuestionGrpList of PhoneDataForm.controls.QuestionObjs.controls; let i = index">
                 <lib-ucSubsection [id]="'grpName'+i+'id'" [title]="QuestionGrpList.value.VerfQuestionGrpName"
