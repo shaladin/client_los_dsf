@@ -422,15 +422,15 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
         }
         this.http.post(URLConstantDsf.AddVerfResultHeaderDsf, this.reqVerfResultHDsf).subscribe(
           (response2) => {
+            this.toastr.successMessage(response["message"]);
+            if (activeButton == "save") this.onClickCancel();
+            else {
+              this.getListVerfResulHtData();
+              formDirective.resetForm();
+              this.clearform();
+            }
           });
         // End Self Custom Changes 
-        this.toastr.successMessage(response["message"]);
-        if (activeButton == "save") this.onClickCancel();
-        else {
-          this.getListVerfResulHtData();
-          formDirective.resetForm();
-          this.clearform();
-        }
       });
   }
 
@@ -466,6 +466,10 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
     this.PhoneDataForm.controls['NotesDetail'].setValidators([Validators.required]);
 
     this.PhoneDataForm.patchValue({
+      Phn: this.VerifResultHDetailObj[0].Phn,
+      PhnType: this.VerifResultHDetailObj[0].PhnType,
+      CallStatus: this.VerifResultHDetailObj[0].CallStatus,
+      Notes: this.VerifResultHDetailObj[0].Notes,
       CallStatusDetail: this.VerifResultHDetailObj[0].CallStatus,
       NotesDetail: this.VerifResultHDetailObj[0].Notes
     });
@@ -483,6 +487,7 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
     this.PhoneDataForm.controls['CallStatusDetail'].clearValidators();
     this.PhoneDataForm.controls['NotesDetail'].clearValidators();
     this.IsViewSubDetail = false;
+    this.clearform();
   }
 
   saveDetail()
@@ -499,7 +504,7 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           this.IsViewSubDetail = false;
           this.getListVerfResulHtData();
-          //this.clearform();
+          this.clearform();
       });
     }
     else

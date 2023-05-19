@@ -269,9 +269,9 @@
         <!-- Self Custom Changes -->
         <form class="form form-horizontal" [formGroup]="RoTelemkOfferingForm" (ngSubmit)="RoTelemkOfferingForm.valid && SaveActionForm()" #enjiFormAction="ngForm">
           <div>
-            <lib-ucSubsection [id]="'ActionId'" [title]="'Action'" [panel]="'action'">
+            <lib-ucSubsection [id]="'ActionId'" [title]="'Action'" [panel]="'action'" *ngIf="IsViewSubDetail == false">
             </lib-ucSubsection>
-            <div id="action" class="row">
+            <div id="action" class="row" *ngIf="IsViewSubDetail == false">
               <div class="col-md-6">
                 <div class="form-group row adins-required">
                   <label class="col-md-4  adInsLabel" translate>Customer will RO</label>
