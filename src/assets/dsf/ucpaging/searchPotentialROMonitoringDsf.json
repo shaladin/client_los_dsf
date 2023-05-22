@@ -38,7 +38,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "UL.UPLOAD_STATUS",
+            "name": "UMH.UPLOAD_STATUS",
             "id": "UploadStatusId",
             "value": "",
             "placeholder": "Placeholder",
@@ -104,7 +104,7 @@
             "type": "sort",
             "position": "left",
             "label": "ERROR MESSAGE",
-            "name": "UL.ERROR_MESSAGE"
+            "name": "UMH.ERROR_MESSAGE"
         },
         {
             "type": "label",
