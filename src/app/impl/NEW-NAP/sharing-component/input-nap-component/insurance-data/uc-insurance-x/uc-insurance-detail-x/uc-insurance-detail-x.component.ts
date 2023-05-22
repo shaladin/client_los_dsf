@@ -150,7 +150,8 @@ export class UcInsuranceDetailXComponent implements OnInit {
     InsCpltzAmt: [0],
     PayPeriodToInsco: ['', Validators.required],
     IsFullCapitalizedAmount: [false],
-    DiscountToInsco: [0]
+    DiscountToInsco: [0],
+    IsFreeInsurance: [false]
   });
 
   constructor(private fb: FormBuilder,
@@ -832,6 +833,17 @@ export class UcInsuranceDetailXComponent implements OnInit {
     );
     this.GetAddCvgDiscRule(reqObj);
     this.bindCapitalize();
+
+    if(this.InsuranceDataForm.controls.IsFreeInsurance.value == true)
+    {
+      for (let i = 0; i < this.InsuranceDataForm.controls.AppInsMainCvgs['controls'].length; i++) {
+        this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i].controls.MrInsPaidByCode.value = "CO";        
+      }
+      
+      this.InsuranceDataForm.patchValue({
+        CustStampDutyFeeAmt: 0
+      });
+    }
   }
 
   GetAddCvgDiscRule(reqObj: object)
