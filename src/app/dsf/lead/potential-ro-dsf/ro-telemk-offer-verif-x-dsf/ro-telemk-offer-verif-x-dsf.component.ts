@@ -466,6 +466,7 @@ export class RoTelemkOfferVerifXDsfComponent implements OnInit {
     this.PhoneDataForm.controls['NotesDetail'].setValidators([Validators.required]);
 
     this.PhoneDataForm.patchValue({
+      MrVerfResultHStatCode: this.VerifResultHDetailObj[0].MrVerfResultHStatCode,
       Phn: this.VerifResultHDetailObj[0].Phn,
       PhnType: this.VerifResultHDetailObj[0].PhnType,
       CallStatus: this.VerifResultHDetailObj[0].CallStatus,
