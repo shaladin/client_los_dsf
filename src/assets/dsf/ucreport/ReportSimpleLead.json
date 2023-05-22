@@ -1,0 +1,92 @@
+{ 
+    "title" : "REPORT SIMPLE LEAD",
+    "reportName": "Report Simple Lead",
+    "reportTemplateCode": "DSF_RPT_SIMPLELEAD",
+    "component": [ 
+        {
+            "label": "OFFICE NAME",
+            "name": "BranchCode",
+            "type": "dropdown",
+            "datatype": "text",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn" : true,
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "label": "CUSTOMER NAME",
+            "name": "Customer",
+            "type": "textbox",
+            "id": "CustName",
+            "value": "",
+            "placeholder": "Placeholder"
+        },
+        {
+            "label" : "SIMPLE LEAD INPUT DATE FROM",
+            "name" : "LeadDtGte",
+            "type" : "datepicker",
+            "value" : "BD-10",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "label" : "SIMPLE LEAD INPUT DATE UNTIL",
+            "name" : "LeadDtLte",
+            "type" : "datepicker",
+            "value" : "BD+10",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "label": "SIMPLE LEAD STATUS",
+            "name": "LeadStatus",
+            "type": "dropdown",
+            "datatype": "text",
+            "id": "LeadStat",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "LEAD_STAT"
+        },
+        {
+            "label": "SIMPLE LEAD STEP",
+            "name": "LeadStep",
+            "type": "dropdown",
+            "datatype": "text",
+            "id": "LeadStepId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "LEAD_STEP"
+        }
+    ],
+    "exportTypeList": [
+        {
+            "key": 2,
+            "value": "Excel 2007"
+        }
+    ]
+}
