@@ -99,7 +99,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     BirthDate: ['', [Validators.required]],
     MrIdTypeCode: [''],
     MotherName: [''],
-    IdNo: [''],
+    IdNo: ['', [Validators.required]],
     MrMaritalStatCode: [''],
     Npwp: ['',[Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     Email: ['', [Validators.pattern(CommonConstant.regexEmail)]],
@@ -190,7 +190,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
 
     this.InitDms();
     // this.ClaimTask();
-      
+
     let context: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -1067,13 +1067,13 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   }
 
   // ClaimTask() {
-  //   if(environment.isCore){	
-  //       if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){	
-  //           this.claimTaskService.ClaimTaskV2(this.WfTaskListId);	
-  //       }	
-  //   }	
-  //   else if (this.WfTaskListId> 0) {	
-  //       this.claimTaskService.ClaimTask(this.WfTaskListId);	
+  //   if(environment.isCore){
+  //       if(this.WfTaskListId!= "" && this.WfTaskListId!= undefined){
+  //           this.claimTaskService.ClaimTaskV2(this.WfTaskListId);
+  //       }
+  //   }
+  //   else if (this.WfTaskListId> 0) {
+  //       this.claimTaskService.ClaimTask(this.WfTaskListId);
   //   }
   // }
 

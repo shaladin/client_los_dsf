@@ -11,7 +11,7 @@ export class ExceptionConstant {
     public static NOT_ELIGIBLE_FOR_PROCESS_TASK = "You are not Eligible to Process this Task";
     public static NOT_ELIGIBLE_FOR_UNCLAIM = "You are not Eligible to Unclaim this Task";
 
-    
+
     public static TOTAL_SHARE_PERCENTAGE_MUST_100 = "Total Share Percentage must be 100.";
     public static INVOICE_AMOUNT_CANNOT_ZERO = "Invoice Amount cannot be zero (0).";
     public static INVOICE_AMOUNT_CANNOT_LESS_THAN = "Invoice Amount cannot be less than ";
@@ -128,7 +128,7 @@ export class ExceptionConstant {
     public static DUPLICATE_SHRHLDR_ID_NO = "Shareholder's Id No cannot duplicate";
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
-    
+
     public static NO_EXISTING_COLL = "This MoU don't Have Existing Collateral";
     public static MOU_FREEZE_STATE = "Cant Process this MOU, Please Unfreeze First";
 
@@ -147,7 +147,7 @@ export class ExceptionConstant {
     public static EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN = "Employment Establishment Date can not be less than ";
     public static START_WORKING_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Start Working Date Date Must Be Less Than Business Date";
     public static OTHER_BIZ_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Other Business Establishment Date Must Be Less Than Business Date";
-    
+
     public static START_DT_MUST_LESS_THAN_END_DT = "Start Date Must be Less than End Date";
     public static END_DT_MUST_GREATER_THAN_BUSINESS_DT = "End Date Must be Greater than Business Date";
     public static START_DT_MUST_GREATER_THAN_BUSINESS_DT = "Start Date Must be Greater than Business Date";
@@ -164,7 +164,7 @@ export class ExceptionConstant {
     public static PLEASE_CHOOSE_VENDOR_BANK_ACCOUNT= "Please Choose Vendor Bank Account No";
 
     public static NO_DATA_EDITED = "Please edit at least one data!";
-    
+
     public static DATA_ALREADY_EXIST = "Data Already Exist!";
     public static INVOICE_NO_CANNOT_EMPTY = "Invoice No cannot be Empty";
     public static INVOICE_DUE_DT_CANNOT_EMPTY = "Invoice Due Date cannot be Empty";
@@ -197,26 +197,27 @@ export class ExceptionConstant {
     public static DUP_CHECK_NOT_COMPLETE = "Please complete Duplicate checking first";
     public static MANUFACTURING_YEAR_CAN_NOT_LESS_THAN = "Manufacturing Year can not less than ";
     public static MANUFACTURING_YEAR_IS_LESS_THAN = "Manufacturing Year is less than ";
-    
+
     public static EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Establishment Date Must Be Less Than Business Date";
     public static EMP_EST_DATE_MUST_BE_LESS_THAN_BIZ_DATE = "Employee Establishment Date Must Be Less Than Business Date";
-    
+
     public static JOB_POSITION_CANT_BE_EMPTY = "Job Position Cannot Be Empty - Shareholder {0}";
     public static INS_ASSET_CATEGORY_NOT_FOUND = "Ins Asset Category Not Found, Please Setting Rule First";
-    public static EXP_PASSWORD = "Password has expired. Please change your password."; 
+    public static EXP_PASSWORD = "Password has expired. Please change your password.";
     public static PWD_EXCEPTION = "Minimum 8 characters, at least 1 letter, 1 number and 1 special character.";
 
     public static MAX_REFERANTOR_EXCEPTION = "Number of Referantor Cannot Be More than {0}";
     public static DUPLICATE_SUPPL_EMP = "Supplier Employee {0} Receiving More Than 1 Commission";
 
     public static X_CANT_BE_GREATER_THAN_Y = "{0} cannot be greater than {1}";
-    
+
     public static MANDATORY_LEGAL_DOC = "Legal Documents with following type are mandatory: {0}";
     public static DOC_NOT_YET_CONFIGURED_IN_RULE_MANDATORY_DOC_EXP = "Document {0} not yet configured in Rule Set 'RS.Document Expired Date Mandatory'";
     public static CUST_AGE_BETWEEN = "Customer age must be between {0} and {1} year old";
     public static CUST_AGE_MIN = "Customer age must be at least {0} year old";
 
     public static LEAD_INPUT_AGENCY_CMO_TELE = "Please input either Agency, CMO or Tele Sales";
+    public static LEAD_INPUT_AGENCY_CMO_TELE_DSF = "Please input Lead Received By and Lead Proccessed By";
     public static FINANCING_AMT_MORE_THAN_COLL_PORTION_AMT = "Total Financing Amount is More Than Total Collateral Portion Amount";
 
     public static PLEASE_WAIT_A_MINUTE_UNTIL_CAPTURE_DATA_IS_FINISHED = "Please Wait A Minute Until Capture Data Is Finished";
