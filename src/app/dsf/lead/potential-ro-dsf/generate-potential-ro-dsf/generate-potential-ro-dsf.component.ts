@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FromValueObj, UcTempPagingObj } from 'app/shared/model/temp-paging/uc-temp-paging-obj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { environment } from 'environments/environment';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Component({
   selector: 'app-generate-potential-ro-dsf',
@@ -24,7 +25,9 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: NGXToastrService,
     // Self Custom Changes
-    private router: Router
+    private router: Router,
+    private elRef: ElementRef,
+    private renderer: Renderer2
     // End Self Custom Changes
   ) { }
 
@@ -66,10 +69,29 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
 
   // Self Custom Changes
   getListTemp(ev) {
+    //this.tempPagingObj.isHideSearch = true;
     this.listSelectedId = ev.TempListId;
+    if (this.listSelectedId.length > 0) {
+      this.IsHasData = true;
+      this.disableElement();
+    }
   }
-  // End Self Custom Changes
 
+  disableElement() {
+    const element1 = this.elRef.nativeElement.querySelector('select.search-form-control');
+    if (element1) {
+      this.renderer.setProperty(element1, "disabled", true);
+    }
+    const element2 = this.elRef.nativeElement.querySelector('button');
+    if (element2) {
+      this.renderer.setProperty(element2, "disabled", true);
+    }
+    
+    //var selectElements = document.querySelectorAll('.search-form-control');
+    //selectElements.forEach(function(selectElement) {this.renderer.setProperty(selectElement, "disabled", true);} );
+  }
+
+  /*
   assignFilterReq()
   {
     this.reqListPotentialRo = {
@@ -82,17 +104,26 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
       // End Self Custom Changes
     }   
   }
+  */
 
   onChangeFilterForm()
   {
+    AdInsHelper.RedirectUrl(
+      this.router,
+      [NavigationConstantDsf.POTENTIAL_RO_PAGING],
+      {}
+    );
+    /*
     if(this.IsHasData)
     {
       this.IsHasData = false;
       this.GridResultSp.resultData = {Data: []};
       this.IsGridResultSpReady = false;
-    }    
+    }
+    */
   }
 
+  /*
   onClickShowData()
   {
     for(let i in this.PotentialRoFilterForm.controls) this.PotentialRoFilterForm.controls[i].markAsTouched();
@@ -109,6 +140,7 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
         if(this.listSpResult.length) this.IsHasData = true;
       });
   }
+  */
 
   onClickGenerate()
   {
