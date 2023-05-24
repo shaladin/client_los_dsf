@@ -74,6 +74,10 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
     if (this.listSelectedId.length > 0) {
       this.IsHasData = true;
       this.disableElement();
+    } else
+    {
+      this.IsHasData = false;
+      this.enableElement();
     }
   }
 
@@ -86,9 +90,17 @@ export class GeneratePotentialRoDsfComponent implements OnInit {
     if (element2) {
       this.renderer.setProperty(element2, "disabled", true);
     }
-    
-    //var selectElements = document.querySelectorAll('.search-form-control');
-    //selectElements.forEach(function(selectElement) {this.renderer.setProperty(selectElement, "disabled", true);} );
+  }
+
+  enableElement() {
+    const element1 = this.elRef.nativeElement.querySelector('select.search-form-control');
+    if (element1) {
+      this.renderer.removeAttribute(element1, "disabled");
+    }
+    const element2 = this.elRef.nativeElement.querySelector('button');
+    if (element2) {
+      this.renderer.removeAttribute(element2, "disabled");
+    }
   }
 
   /*
