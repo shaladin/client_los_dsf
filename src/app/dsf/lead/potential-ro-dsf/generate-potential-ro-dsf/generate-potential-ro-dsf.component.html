@@ -78,12 +78,10 @@
         </lib-ucaddtotemp>
 
         <!-- Self Custom Changes -->
-        <div class="form-actions right text-right">
-        <!--
+        <div class="form-actions right text-right" *ngIf="IsHasData">
         <button type="button" class="btn btn-raised btn-warning mr-1" (click)="onChangeFilterForm()">
-            <i class="ft-x"></i>&nbsp;<span translate>Clear Filter</span>
+            <i class="ft-x"></i>&nbsp;<span translate>Clear Data</span>
           </button>
-          -->
         <!-- End Self Custom Changes -->
         <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickGenerate()">
             <i class="fa fa-check-square-o"></i>&nbsp;<span translate>Generate Potential RO</span>
