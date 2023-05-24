@@ -1,0 +1,234 @@
+{
+    "title": "Lead Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "l.ORI_OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "isQueryIn" : true,
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "l.MR_LEAD_SOURCE_CODE",
+            "id": "MrLeadSourceCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Lead Source",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "LEAD_SOURCE"
+        },
+        {
+            "type": "textbox",
+            "name": "l.LEAD_NO",
+            "id": "LeadNoId",
+            "value": "",
+            "label": "Lead No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "l.ORDER_NO",
+            "id": "OrderNoId",
+            "value": "",
+            "label": "Order No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "la.FULL_ASSET_NAME",
+            "id": "FullAssetNameId",
+            "value": "",
+            "label": "Full Asset Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "lc.CUST_NAME",
+            "id": "CustName",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "l.LEAD_STEP",
+            "id": "LeadStepId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Lead Step",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "LEAD_STEP"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "l.LEAD_STAT",
+            "id": "LeadStat",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Lead Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "LEAD_STAT"
+        }
+    ],
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Lead No",
+            "name": "l.LEAD_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office Name",
+            "name": "ro.OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Order No",
+            "name": "l.ORDER_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Source",
+            "name": "l.MR_LEAD_SOURCE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Full Asset Name",
+            "name": "la.FULL_ASSET_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "lc.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Step",
+            "name": "l.LEAD_STEP"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Lead Status",
+            "name": "l.LEAD_STAT"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Marketing Officer",
+          "name": "l.TELE_MARKETING_USERNAME"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Lead Date",
+          "name": "l.LEAD_DT"
+        }
+    ],
+  "querystring": {
+    "name": "searchLeadInquiryDsf"
+  },
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "LeadNo",
+            "path": "VIEW_LEAD",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "LeadId",
+                    "property": "LeadId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "OrderNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrLeadSourceCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "LeadStep"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "LeadStat"
+        },
+        {
+          "type": "text",
+          "position": "left",
+          "property": "TeleMarketingUsername"
+      },
+      {
+          "type": "text",
+          "position": "left",
+          "property": "LeadDt"
+      }
+    ]
+}

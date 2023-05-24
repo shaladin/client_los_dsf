@@ -38,6 +38,7 @@ import { RegexService } from 'app/shared/services/regex.services';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ElementRef, Renderer2 } from "@angular/core";
 
 @Component({
   selector: 'app-new-lead-input-cust-data-dsf',
@@ -142,7 +143,9 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService
+    private claimTaskService: ClaimTaskService,
+    private elementRef: ElementRef,
+    private renderer: Renderer2
   ) {
   }
 
@@ -717,6 +720,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     }
     this.IsReady = true;
     this.getInitPattern();
+    this.collapsOnInit();
   }
 
   ChangeIdType(IdType: string) {
@@ -1284,6 +1288,56 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     }
   }
 
+  collapsOnInit() {
+    //handle icon
+    const legalAddrIdElement = this.elementRef.nativeElement.querySelector("#legalAddrId");
+    const ilegalAddrIdTag = legalAddrIdElement.querySelector('i');
+
+    if (ilegalAddrIdTag) {
+      ilegalAddrIdTag.className = ilegalAddrIdTag.className.replace('fa-chevron-down', 'fa-chevron-right');
+    }
+
+    const residenceAddrIdElement = this.elementRef.nativeElement.querySelector("#residenceAddrId");
+    const iresidenceAddrIdTag = residenceAddrIdElement.querySelector('i');
+    if (iresidenceAddrIdTag) {
+      iresidenceAddrIdTag.className = iresidenceAddrIdTag.className.replace('fa-chevron-down', 'fa-chevron-right');
+    }
+
+    const jobDataIdElement = this.elementRef.nativeElement.querySelector("#jobDataId");
+    const ijobDataIdTag = jobDataIdElement.querySelector('i');
+
+    if (ijobDataIdTag) {
+      ijobDataIdTag.className = ijobDataIdTag.className.replace('fa-chevron-down', 'fa-chevron-right');
+    }
+
+    const custFinDataIdElement = this.elementRef.nativeElement.querySelector("#custFinDataId");
+    const icustFinDataIdTag = custFinDataIdElement.querySelector('i');
+
+    if (icustFinDataIdTag) {
+      icustFinDataIdTag.className = icustFinDataIdTag.className.replace('fa-chevron-down', 'fa-chevron-right');
+    }
+
+    // handle modal
+    const legalAddrElement = this.elementRef.nativeElement.querySelector("#legalAddr");
+    if (legalAddrElement) {
+      this.renderer.setStyle(legalAddrElement, 'display', 'none');
+    }
+
+    const residenceAddrElement = this.elementRef.nativeElement.querySelector("#residenceAddr");
+    if (residenceAddrElement) {
+      this.renderer.setStyle(residenceAddrElement, 'display', 'none');
+    }
+
+    const jobDataElement = this.elementRef.nativeElement.querySelector("#jobData");
+    if (jobDataElement) {
+      this.renderer.setStyle(jobDataElement, 'display', 'none');
+    }
+
+    const custFinDataElement = this.elementRef.nativeElement.querySelector("#custFinData");
+    if (custFinDataElement) {
+      this.renderer.setStyle(custFinDataElement, 'display', 'none');
+    }
+  }
 
   confirmFraudCheck() {
     let inputLeadCustObj = new LeadCustCompareObj();

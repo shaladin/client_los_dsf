@@ -181,9 +181,16 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
           (response2: LeadDsfObj) => {
             this.returnLeadDsf = response2;
 
-            this.MainInfoForm.patchValue({
-              SubmissionReceiptDate: formatDate(this.returnLeadDsf.SubmissionReceiptDate, 'yyyy-MM-dd', 'en-US'),
-            });
+            if(this.returnLeadDsf.LeadId != 0){
+              this.MainInfoForm.patchValue({
+                SubmissionReceiptDate: formatDate(this.returnLeadDsf.SubmissionReceiptDate, 'yyyy-MM-dd', 'en-US'),
+              });
+            }
+            else{
+              this.MainInfoForm.patchValue({
+                SubmissionReceiptDate: [null],
+              });
+            }
           });
           // End Self Custom
 
@@ -319,9 +326,16 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
         (response2: LeadDsfObj) => {
           this.returnExistLeadDsf = response2;
 
-          this.MainInfoForm.patchValue({
-            SubmissionReceiptDate: formatDate(this.returnExistLeadDsf.SubmissionReceiptDate, 'yyyy-MM-dd', 'en-US'),
-          });
+          if(this.returnExistLeadDsf.LeadId != 0){
+            this.MainInfoForm.patchValue({
+              SubmissionReceiptDate: formatDate(this.returnExistLeadDsf.SubmissionReceiptDate, 'yyyy-MM-dd', 'en-US'),
+            });
+          }
+          else{
+            this.MainInfoForm.patchValue({
+              SubmissionReceiptDate: [null],
+            });
+          }
         });
         // End Self Custom
 
@@ -491,12 +505,13 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
   SaveForm() {
     if (this.MainInfoForm.valid) {
-    //Self Custom
+      //Self Custom
       if(this.tempCmoUsername == "" || this.tempSalesUsername == ""){
         this.toastr.warningMessage(ExceptionConstant.LEAD_INPUT_AGENCY_CMO_TELE_DSF);
         return;
       }
-    //End Self Custom
+      //End Self Custom
+
       if (this.pageType == "edit" || this.pageType == "update") {
         this.leadObj = new LeadObj();
         this.leadDsfObj = new LeadDsfObj();
@@ -516,7 +531,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
             this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
             (response2) => {
-              this.toastr.successMessage(response["message"]);
+              this.toastr.successMessage(response2["message"]);
             });
             // End Self Custom
 
@@ -545,9 +560,9 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             }
 
             this.http.post(URLConstantDsf.AddLeadDsf, this.reqAddLeadDsf).subscribe(
-            (response2) => {
-              this.toastr.successMessage(response["message"]);
-            });
+              (response2) => {
+                this.toastr.successMessage(response2["message"]);
+              });
             // End Self Custom
 
             this.toastr.successMessage(response["message"]);
@@ -560,6 +575,13 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
   save() {
     if (this.MainInfoForm.valid) {
+      //Self Custom
+      if(this.tempCmoUsername == "" || this.tempSalesUsername == ""){
+        this.toastr.warningMessage(ExceptionConstant.LEAD_INPUT_AGENCY_CMO_TELE_DSF);
+        return;
+      }
+      //End Self Custom
+
       if (this.pageType == "edit" || this.pageType == "update") {
         this.leadObj = new LeadObj();
         this.leadDsfObj = new LeadDsfObj();
@@ -579,7 +601,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
             this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
             (response2) => {
-              this.toastr.successMessage(response["message"]);
+              this.toastr.successMessage(response2["message"]);
             });
             // End Self Custom
 
@@ -609,9 +631,9 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             }
 
             this.http.post(URLConstantDsf.AddLeadDsf, this.reqAddLeadDsf).subscribe(
-            (response2) => {
-              this.toastr.successMessage(response["message"]);
-            });
+              (response2) => {
+                this.toastr.successMessage(response2["message"]);
+              });
             // End Self Custom
 
              this.toastr.successMessage(response["message"]);
