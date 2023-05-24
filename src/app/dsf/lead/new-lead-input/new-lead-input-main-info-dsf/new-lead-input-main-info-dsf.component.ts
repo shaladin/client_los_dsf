@@ -22,6 +22,12 @@ import { RefOfficeObj } from 'app/shared/model/ref-office-obj.model';
 import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { LeadDsfObj } from 'app/shared/model/lead-dsf.model';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { Console } from 'console';
+import { Messages } from 'primeng/primeng';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-new-lead-input-main-info-dsf',
@@ -32,8 +38,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   user: CurrentUserContext;
   LeadId: number;
   returnLead: LeadObj;
+  returnLeadDsf: LeadDsfObj;
   responseLead: GenericObj;
   leadObj: LeadObj;
+  leadDsfObj: LeadDsfObj;
   getLeadObj: LeadObj;
   cmoNameLookUpObj: InputLookupObj;
   surveyorNameLookUpObj: InputLookupObj;
@@ -64,6 +72,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   leadIdExist: number;
   getExistLeadObj: LeadObj;
   returnExistLead: LeadObj;
+  returnExistLeadDsf: LeadDsfObj;
   vendorExistObj: VendorObj;
   returnVendorExistObj: VendorObj;
   cmoExistObj: RefEmpForLookupObj;
@@ -81,9 +90,12 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     OrderNo: [''],
     LobCode: [''],
     LeadSource: ['', [Validators.required]],
+    SubmissionReceiptDate: [''],
   });
   WfTaskListId: any;
   isCopyButtonDisabled: boolean = true;
+  reqAddLeadDsf:{LeadId:number, SubmissionReceiptDate:Date};
+  reqGetLeadDsf:{LeadId:number};
 
   constructor(
     private route: ActivatedRoute,
@@ -117,7 +129,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     else if (this.WfTaskListId > 0) {
         this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
-    
+
     this.MakeLookUpObj();
     this.GetOfficeDDL();
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -159,6 +171,22 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
       this.http.post(URLConstant.GetLeadByLeadId, obj).subscribe(
         (response: LeadObj) => {
           this.returnLead = response;
+
+          //Self Custom
+          this.reqGetLeadDsf = {
+            LeadId: this.returnLead.LeadId
+          }
+
+          this.http.post(URLConstantDsf.GetLeadDsfByLeadId, this.reqGetLeadDsf).subscribe(
+          (response2: LeadDsfObj) => {
+            this.returnLeadDsf = response2;
+
+            this.MainInfoForm.patchValue({
+              SubmissionReceiptDate: formatDate(this.returnLeadDsf.SubmissionReceiptDate, 'yyyy-MM-dd', 'en-US'),
+            });
+          });
+          // End Self Custom
+
           this.MainInfoForm.patchValue({
             OfficeCode: this.returnLead.OriOfficeCode,
             OfficeName: this.returnLead.OriOfficeName,
@@ -167,6 +195,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             LobName: this.returnLead.LobName,
             LeadSource: this.returnLead.MrLeadSourceCode,
           });
+
           this.leadIdExist = this.returnLead.LeadCopyId;
 
           if (this.returnLead.LeadCopyId != null) {
@@ -280,6 +309,22 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     this.http.post(URLConstant.GetLeadByLeadId, obj).subscribe(
       (response: LeadObj) => {
         this.returnExistLead = response;
+
+        //Self Custom
+        this.reqGetLeadDsf = {
+          LeadId: this.returnExistLead.LeadId
+        }
+
+        this.http.post(URLConstantDsf.GetLeadDsfByLeadId, this.reqGetLeadDsf).subscribe(
+        (response2: LeadDsfObj) => {
+          this.returnExistLeadDsf = response2;
+
+          this.MainInfoForm.patchValue({
+            SubmissionReceiptDate: formatDate(this.returnExistLeadDsf.SubmissionReceiptDate, 'yyyy-MM-dd', 'en-US'),
+          });
+        });
+        // End Self Custom
+
         this.MainInfoForm.patchValue({
           OfficeCode: this.returnExistLead.OriOfficeCode,
           OfficeName: this.returnExistLead.OriOfficeName,
@@ -411,7 +456,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             OfficeCode: this.listRefOffice[0].Key,
             OfficeName: this.listRefOffice[0].Value,
           });
-          // this.MainInfoForm.controls.OfficeCode.setValidators([Validators.required]);    
+          // this.MainInfoForm.controls.OfficeCode.setValidators([Validators.required]);
         }
         else {
           this.MainInfoForm.controls.OfficeCode.disable();
@@ -423,7 +468,6 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
         }
       });
   }
-
 
   setLead() {
     this.leadObj.LeadNo = "0";
@@ -442,23 +486,40 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     this.leadObj.SurveyorUsername = this.tempSurveyorUsername;
     this.leadObj.TeleMarketingUsername = this.tempSalesUsername;
     this.leadObj.MrLeadTypeCode = CommonConstant.MrLeadTypeCodeSimpleLead;
+    this.leadDsfObj.SubmissionReceiptDate = this.MainInfoForm.controls["SubmissionReceiptDate"].value;
   }
 
   SaveForm() {
     if (this.MainInfoForm.valid) {
     //Self Custom
-      if(this.tempAgencyCode == "" && this.tempCmoUsername == "" && this.tempSalesUsername == ""){
-        this.toastr.warningMessage(ExceptionConstant.LEAD_INPUT_AGENCY_CMO_TELE);
+      if(this.tempCmoUsername == "" || this.tempSalesUsername == ""){
+        this.toastr.warningMessage(ExceptionConstant.LEAD_INPUT_AGENCY_CMO_TELE_DSF);
         return;
       }
     //End Self Custom
       if (this.pageType == "edit" || this.pageType == "update") {
         this.leadObj = new LeadObj();
+        this.leadDsfObj = new LeadDsfObj();
+
         this.leadObj.LeadId = this.LeadId;
         this.leadObj.RowVersion = this.returnLead.RowVersion;
+
         this.setLead();
         this.http.post(URLConstant.EditLead, this.leadObj).subscribe(
           (response) => {
+
+            //Self Custom
+            this.reqAddLeadDsf = {
+              LeadId: this.leadObj.LeadId,
+              SubmissionReceiptDate: this.MainInfoForm.controls["SubmissionReceiptDate"].value
+            }
+
+            this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
+            (response2) => {
+              this.toastr.successMessage(response["message"]);
+            });
+            // End Self Custom
+
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit") {
               this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "CopyFrom": this.leadIdExist } });
@@ -470,10 +531,25 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
         );
       } else {
         this.leadObj = new LeadObj();
+        this.leadDsfObj = new LeadDsfObj();
+
         this.setLead();
         this.http.post(URLConstant.AddLead, this.leadObj).subscribe(
           (response) => {
             this.LeadId = response["Id"];
+
+            //Self Custom
+            this.reqAddLeadDsf = {
+              LeadId: this.LeadId,
+              SubmissionReceiptDate: this.MainInfoForm.controls["SubmissionReceiptDate"].value
+            }
+
+            this.http.post(URLConstantDsf.AddLeadDsf, this.reqAddLeadDsf).subscribe(
+            (response2) => {
+              this.toastr.successMessage(response["message"]);
+            });
+            // End Self Custom
+
             this.toastr.successMessage(response["message"]);
             this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
           }
@@ -486,11 +562,27 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     if (this.MainInfoForm.valid) {
       if (this.pageType == "edit" || this.pageType == "update") {
         this.leadObj = new LeadObj();
+        this.leadDsfObj = new LeadDsfObj();
+
         this.leadObj.LeadId = this.LeadId;
         this.leadObj.RowVersion = this.returnLead.RowVersion;
+
         this.setLead();
         this.http.post(URLConstant.EditLead, this.leadObj).subscribe(
           (response) => {
+
+            //Self Custom
+            this.reqAddLeadDsf = {
+              LeadId: this.leadObj.LeadId,
+              SubmissionReceiptDate: this.MainInfoForm.controls["SubmissionReceiptDate"].value
+            }
+
+            this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
+            (response2) => {
+              this.toastr.successMessage(response["message"]);
+            });
+            // End Self Custom
+
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit") {
               this.router.navigate(["/Lead/SimpleLeadDsf/Paging"]);
@@ -502,14 +594,29 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
         );
       } else {
         this.leadObj = new LeadObj();
+        this.leadDsfObj = new LeadDsfObj();
+
         this.setLead();
         this.http.post(URLConstant.AddLead, this.leadObj).subscribe(
           (response: GenericObj) => {
             this.responseLead = response;
             this.LeadId = this.responseLead.Id;
-            this.toastr.successMessage(response["message"]);
-            this.router.navigate(["/Lead/SimpleLeadDsf/Paging"]);
-          }
+
+            //Self Custom
+            this.reqAddLeadDsf = {
+              LeadId: this.LeadId,
+              SubmissionReceiptDate: this.MainInfoForm.controls["SubmissionReceiptDate"].value
+            }
+
+            this.http.post(URLConstantDsf.AddLeadDsf, this.reqAddLeadDsf).subscribe(
+            (response2) => {
+              this.toastr.successMessage(response["message"]);
+            });
+            // End Self Custom
+
+             this.toastr.successMessage(response["message"]);
+             this.router.navigate(["/Lead/SimpleLeadDsf/Paging"]);
+            }
         );
       }
     }
