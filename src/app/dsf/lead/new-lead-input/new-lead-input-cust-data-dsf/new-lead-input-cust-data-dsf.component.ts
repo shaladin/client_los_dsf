@@ -761,13 +761,13 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     if (pattern != undefined) {
       if (this.CustomerDataForm.controls.MrIdTypeCode.value == 'EKTP') {
         if (pattern != "") {
-          if(this.typePage == "update"){
+          if(this.typePage == "update" || this.typePage == "edit" || this.typePage == null){
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
           }else{
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
           }
         } else {
-          if(this.typePage == "update"){
+          if(this.typePage == "update" || this.typePage == "edit" || this.typePage == null){
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
           }else{
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern("^[0-9]+$")]);
@@ -776,14 +776,14 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
       }
       else {
         this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
-        if(this.typePage == "update"){
+        if(this.typePage == "update" || this.typePage == "edit" || this.typePage == null){
           this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
         }
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
     } else {
       this.CustomerDataForm.controls.IdNo.clearValidators();
-      if(this.typePage == "update"){
+      if(this.typePage == "update" || this.typePage == "edit" || this.typePage == null){
         this.CustomerDataForm.controls.IdNo.setValidators([Validators.required]);
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
