@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { CrdRvwViewComponent } from './crd-rvw-view/crd-rvw-view.component';
 
 const routes: Routes = [
     {
@@ -90,6 +91,10 @@ const routes: Routes = [
             {
                 path: PathConstantX.VIEW_AUTO_DEBIT_REGIS,
                 loadChildren: 'app/impl/view-enhancing/auto-debit-regis-view/auto-debit-regis-view.module#AutoDebitRegisViewModule'
+            },
+            {
+                path: PathConstant.VIEW_CREDIT_REVIEW,
+                loadChildren: './crd-rvw-view/crd-rvw-view.module#CrdRvwViewModule'
             }
 
         ]
