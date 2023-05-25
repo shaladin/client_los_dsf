@@ -41,7 +41,7 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
       // var reqObj = { TrxNo: ev.RowObj.LeadNo };
       // this.http.post(URLConstantDsf.UpdateNotify, reqObj).subscribe(
       //   (response) => {
-        
+
       //   }
       // )
 
@@ -52,7 +52,7 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
 
           if (ev.RowObj.CustType == "PERSONAL")
           {
-          AdInsHelper.EditCustomerMainDataXDSFPersonalByCustId(this.CustId, "EditMainData");
+          AdInsHelper.EditCustomerMainDataXDSFPersonalByCustId(this.CustId, "EditMainDataLeadDsf");
           // AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
           }
           else
@@ -63,7 +63,7 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
         }
       );
 
-      
+
     }
   }
 
