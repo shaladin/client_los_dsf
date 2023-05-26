@@ -510,6 +510,7 @@ export class PathConstant {
     public static PROD_INQUIRY = "ProdInquiry";
     public static PROD_OFF_INQUIRY = "ProdOffInquiry";
     public static PURCHASE_TRACKING_INQUIRY = "PurchaseTrackingInquiry";
+    public static MANAGEMENT_INQUIRY = "ManagementInquiry";
     //#endregion
 
     //#region Integration-Module
@@ -585,6 +586,7 @@ export class PathConstant {
     public static VIEW_PEFINDO = "Pefindo";
     public static VIEW_CUST_APP_LISTING = "CustAppListView";
     public static VIEW_CUST_AGRMNT_LISTING = "CustAgrmntListView";
+    public static VIEW_CREDIT_REVIEW = "CreditReviewView";
     //#endregion
 
     //#region FOU-View-Module
