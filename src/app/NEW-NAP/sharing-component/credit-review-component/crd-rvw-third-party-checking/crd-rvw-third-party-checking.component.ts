@@ -15,6 +15,7 @@ import { ThirdPartyRapindoRsltObj } from 'app/shared/model/third-party-data/thir
 import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
 import { ThirdPartySlikRsltObj } from 'app/shared/model/third-party-data/third-party-slik-rslt-obj.model';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-crd-rvw-third-party-checking',
@@ -39,7 +40,8 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private cookieService: CookieService) { }
 
   async ngOnInit(): Promise<void> {
     await this.GetIsUseDigitalization();
@@ -95,7 +97,8 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
   }
 
   pefindoHandler() {
-    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true);
+    const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
   }
 
   closeResult: any;
