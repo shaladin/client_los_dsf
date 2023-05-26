@@ -290,7 +290,7 @@ export class NavigationConstant {
   public static VIEW_PHN_VERIF = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PHN_VERIF; //"/View/PhoneVerifView"
   public static VIEW_SRVY = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_SRVY; //'/View/SurveyView'
   public static VIEW_AUTO_DEBIT_REGIS = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_AUTO_DEBIT_REGIS; //'/View/AutoDebitRegisView'
-  public static VIEW_CREDIT_REVIEW = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CREDIT_REVIEW; //'/View/CreditReviewView'
+  public static VIEW_CREDIT_REVIEW = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_CREDIT_REVIEW; //'/View/CreditReviewView/X'
   //#endregion
 
   //#region FOU-VIEW
