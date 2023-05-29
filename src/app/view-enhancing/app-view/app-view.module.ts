@@ -170,6 +170,9 @@ import { TabAnalysisResultHistoryXDsfComponent } from "app/impl/view-enhancing/a
         AppMainInfoXComponent,
         AppAssetDataDetailComponent,
         AppViewInsuranceDetailXComponent
+    ],
+    exports: [
+        AppMainInfoComponent
     ]
 })
 export class AppViewModule { }
