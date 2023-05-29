@@ -175,9 +175,12 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
     this.inputAddressObjForLegalAddr.title = "Legal Address";
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showOwnership = false;
-    if(this.typePage != "update"){
+
+    // if(this.typePage != "update"){
+    // this.inputAddressObjForLegalAddr.isRequired = false;
+    // }
+
     this.inputAddressObjForLegalAddr.isRequired = false;
-    }
     this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isRequired = false;
 
 
@@ -572,6 +575,11 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
               (response: LeadCustAddrObj) => {
                 this.resLeadCustAddrLegalObj = response;
                 this.legalAddressObj = new LeadCustAddrObj();
+
+                if(this.typePage == "update" && this.resLeadCustAddrLegalObj.Addr == ""){
+                  this.resLeadCustAddrLegalObj.Addr = "-";
+                }
+
                 this.legalAddressObj.Addr = this.resLeadCustAddrLegalObj.Addr;
                 this.legalAddressObj.AreaCode3 = this.resLeadCustAddrLegalObj.AreaCode3;
                 this.legalAddressObj.AreaCode4 = this.resLeadCustAddrLegalObj.AreaCode4;
@@ -653,6 +661,11 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
             this.http.post(URLConstant.GetLeadCustPersonalByLeadCustId, obj).subscribe(
               (response: LeadCustPersonalObj) => {
                 this.resLeadCustPersonalObj = response;
+
+                if(this.typePage == "update" && this.resLeadCustPersonalObj.BirthPlace == ""){
+                  this.resLeadCustPersonalObj.BirthPlace = "-";
+                }
+
                 this.CustomerDataForm.patchValue({
                   Gender: this.resLeadCustPersonalObj.MrGenderCode,
                   BirthPlace: this.resLeadCustPersonalObj.BirthPlace,
@@ -855,7 +868,14 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   setLegalAddr() {
     //this.legalAddressObj = new LeadCustAddrObj();
     this.leadInputObj.LeadCustLegalAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal
-    this.leadInputObj.LeadCustLegalAddrObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
+
+    if(this.typePage == "update" && this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value == ""){
+      this.leadInputObj.LeadCustLegalAddrObj.Addr = "-";
+    }
+    else{
+      this.leadInputObj.LeadCustLegalAddrObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
+    }
+
     this.leadInputObj.LeadCustLegalAddrObj.AreaCode3 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode3.value;
     this.leadInputObj.LeadCustLegalAddrObj.AreaCode4 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode4.value;
     this.leadInputObj.LeadCustLegalAddrObj.Zipcode = this.CustomerDataForm.controls["legalAddressZipcode"]["controls"].value.value;
@@ -927,7 +947,14 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
 
     this.leadInputObj.LeadCustPersonalObj.CustFullName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustPersonalObj.MrGenderCode = this.CustomerDataForm.controls["Gender"].value;
-    this.leadInputObj.LeadCustPersonalObj.BirthPlace = this.CustomerDataForm.controls["BirthPlace"].value;
+
+    if(this.typePage == "update" && this.CustomerDataForm.controls["BirthPlace"].value == ""){
+      this.leadInputObj.LeadCustPersonalObj.BirthPlace = "-";
+    }
+    else{
+      this.leadInputObj.LeadCustPersonalObj.BirthPlace = this.CustomerDataForm.controls["BirthPlace"].value;
+    }
+
     this.leadInputObj.LeadCustPersonalObj.BirthDt = this.CustomerDataForm.controls["BirthDate"].value;
     this.leadInputObj.LeadCustPersonalObj.MotherMaidenName = this.CustomerDataForm.controls["MotherName"].value;
     this.leadInputObj.LeadCustPersonalObj.MrMaritalStatCode = this.CustomerDataForm.controls["MrMaritalStatCode"].value;
@@ -1385,18 +1412,18 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   setValidatorForUpdate() {
     if (this.typePage == "update") {
       this.IsSimpleLeadUpdate = true;
-      this.CustomerDataForm.controls['Gender'].setValidators([Validators.required]);
-      this.CustomerDataForm.controls['Gender'].updateValueAndValidity();
-      this.CustomerDataForm.controls['BirthPlace'].setValidators([Validators.required]);
-      this.CustomerDataForm.controls['BirthPlace'].updateValueAndValidity();
-      this.CustomerDataForm.controls['MrIdTypeCode'].setValidators([Validators.required]);
-      this.CustomerDataForm.controls['MrIdTypeCode'].updateValueAndValidity();
-      this.CustomerDataForm.controls['MotherName'].setValidators([Validators.required]);
-      this.CustomerDataForm.controls['MotherName'].updateValueAndValidity();
+      // this.CustomerDataForm.controls['Gender'].setValidators([Validators.required]);
+      // this.CustomerDataForm.controls['Gender'].updateValueAndValidity();
+      // this.CustomerDataForm.controls['BirthPlace'].setValidators([Validators.required]);
+      // this.CustomerDataForm.controls['BirthPlace'].updateValueAndValidity();
+      // this.CustomerDataForm.controls['MrIdTypeCode'].setValidators([Validators.required]);
+      // this.CustomerDataForm.controls['MrIdTypeCode'].updateValueAndValidity();
+      // this.CustomerDataForm.controls['MotherName'].setValidators([Validators.required]);
+      // this.CustomerDataForm.controls['MotherName'].updateValueAndValidity();
       this.CustomerDataForm.controls['IdNo'].setValidators([Validators.required]);
       this.CustomerDataForm.controls['IdNo'].updateValueAndValidity();
-      this.CustomerDataForm.controls['MrMaritalStatCode'].setValidators([Validators.required]);
-      this.CustomerDataForm.controls['MrMaritalStatCode'].updateValueAndValidity();
+      // this.CustomerDataForm.controls['MrMaritalStatCode'].setValidators([Validators.required]);
+      // this.CustomerDataForm.controls['MrMaritalStatCode'].updateValueAndValidity();
       // this.inputAddressObjForLegalAddr.isRequired = true;
     }
   }

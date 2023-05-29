@@ -531,7 +531,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
             this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
             (response2) => {
-              this.toastr.successMessage(response2["message"]);
+              // this.toastr.successMessage(response2["message"]);
             });
             // End Self Custom
 
@@ -561,7 +561,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
             this.http.post(URLConstantDsf.AddLeadDsf, this.reqAddLeadDsf).subscribe(
               (response2) => {
-                this.toastr.successMessage(response2["message"]);
+                // this.toastr.successMessage(response2["message"]);
               });
             // End Self Custom
 
@@ -601,7 +601,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
             this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
             (response2) => {
-              this.toastr.successMessage(response2["message"]);
+              // this.toastr.successMessage(response2["message"]);
             });
             // End Self Custom
 
@@ -632,7 +632,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
             this.http.post(URLConstantDsf.AddLeadDsf, this.reqAddLeadDsf).subscribe(
               (response2) => {
-                this.toastr.successMessage(response2["message"]);
+                // this.toastr.successMessage(response2["message"]);
               });
             // End Self Custom
 

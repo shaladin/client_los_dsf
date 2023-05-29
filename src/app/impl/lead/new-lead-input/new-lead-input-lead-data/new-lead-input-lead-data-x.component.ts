@@ -20,6 +20,7 @@ import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-c
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/third-party-result-h-for-fraud-chck-obj.model';
 import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
+import { ElementRef, Renderer2, AfterViewInit } from "@angular/core";
 
 @Component({
   selector: 'app-new-lead-input-lead-data-x',
@@ -107,7 +108,7 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
   textButton: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private elementRef: ElementRef, private renderer: Renderer2) {
 
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -246,6 +247,10 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
       this.GetLeadAssetByLeadId(obj, isCopyFrom);
     }
 
+    ngAfterViewInit() {
+      this.collapsOnInit();
+    }
+
     GetLeadAssetByLeadId(getObj, isCopyFrom: boolean) {
       this.http.post(URLConstant.GetLeadAssetByLeadId, getObj).subscribe(
         (response: LeadAssetObj) => {
@@ -339,7 +344,7 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
             });
         });
     }
-    
+
     GetLeadAppByLeadId(obj, isCopyFrom: boolean) {
       this.http.post(URLConstant.GetLeadAppByLeadId, obj).toPromise().then(
         (response: LeadAppObj) => {
@@ -926,5 +931,33 @@ export class NewLeadInputLeadDataXComponent implements OnInit {
 
   Cancel(){
     this.outputCancel.emit();
+  }
+
+  collapsOnInit() {
+    console.log("test1: collapsOnInit()");
+    //handle icon
+    const assetDataIdElement = this.elementRef.nativeElement.querySelector("#assetDataId");
+    const iassetDataIdTag = assetDataIdElement.querySelector('i');
+
+    if (iassetDataIdTag) {
+      iassetDataIdTag.className = iassetDataIdTag.className.replace('fa-chevron-down', 'fa-chevron-right');
+    }
+
+    const financialDataIdElement = this.elementRef.nativeElement.querySelector("#financialDataId");
+    const ifinancialDataIdTag = financialDataIdElement.querySelector('i');
+    if (ifinancialDataIdTag) {
+      ifinancialDataIdTag.className = ifinancialDataIdTag.className.replace('fa-chevron-down', 'fa-chevron-right');
+    }
+
+    // handle modal
+    const assetDataElement = this.elementRef.nativeElement.querySelector("#assetData");
+    if (assetDataElement) {
+      this.renderer.setStyle(assetDataElement, 'display', 'none');
+    }
+
+    const financialDataElement = this.elementRef.nativeElement.querySelector("#financialData");
+    if (financialDataElement) {
+      this.renderer.setStyle(financialDataElement, 'display', 'none');
+    }
   }
 }
