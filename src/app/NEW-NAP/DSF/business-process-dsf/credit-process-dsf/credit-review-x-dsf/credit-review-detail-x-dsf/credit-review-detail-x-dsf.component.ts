@@ -140,7 +140,7 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
-<<<<<<< HEAD
+    await this.CreditReviewvalidation();
     await this.InitDms();
   }
 
@@ -209,9 +209,6 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     else {
       this.isDmsReady = false;
     }
-=======
-    await this.CreditReviewvalidation();
->>>>>>> 97c9464017 (273459 CR Credit Deviasi Original Value Plafond Konsumen v1.000)
   }
 
   getCrdRvwAppObj(ev: CrdRvwAppObj) {
