@@ -4,39 +4,8 @@
       <h4 class="card-title ucSearch-title" translate>Credit Review</h4>
     </div>
     <br>
-    <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+    <app-crd-rvw-view></app-crd-rvw-view>
     <div class="card-body">
-      <div class="px-3">
-        <app-crd-rvw-cust-info *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
-        </app-crd-rvw-cust-info>
-        <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
-        </app-crd-rvw-fam-guar>
-        <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
-        
-        <!-- Self Custom Change -->
-        <app-crd-rvw-third-party-checking-x-dsf *ngIf="appNo != ''" [AppNo]="appNo" [CrdRvwCustInfoObj]="crdRvwCustInfoObj">
-        </app-crd-rvw-third-party-checking-x-dsf>
-        <!-- End Self Custom Change -->
-        <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" (callbackCrdRvwAppObj)="getCrdRvwAppObj($event)">
-        </app-crd-rvw-app-info>
-        <app-crd-rvw-asset *ngIf="isShow && BizTemplateCode != 'CFNA'" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
-        <app-crd-rvw-asset-acc *ngIf="isShow && BizTemplateCode != 'CFNA'" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-asset-acc>
-        <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
-        </app-crd-rvw-additional-coll>
-        <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
-        </app-crd-rvw-cmo-info>
-        <app-crd-rvw-dealer-info *ngIf="isShow && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
-        </app-crd-rvw-dealer-info>
-
-        <lib-ucSubsection [id]="'documentId'" [title]="'Document'" [panel]="'document'">
-        </lib-ucSubsection>
-        <div class="form-body" [id]="'document'">
-          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
-        </div>
-
-        <app-tab-deviation [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
-        
-      </div>
       <form class="form form-horizontal" *ngIf="!isReturnOn" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
             #enjiForm="ngForm">
         <div class="form-body">
