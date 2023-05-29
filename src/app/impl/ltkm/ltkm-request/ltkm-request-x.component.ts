@@ -2015,7 +2015,6 @@ export class LtkmRequestXComponent implements OnInit {
           }
         );
       }
-
       
     async CopyCustomer(event) {
         
@@ -2027,6 +2026,12 @@ export class LtkmRequestXComponent implements OnInit {
         this.addrPersonalObjsTemp = new Array<AddrObj>();
         this.addrObjsForView = new Array<LtkmAddrForViewObjX>();        
         this.copyAddrFromLookup(event);
+        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();        
+        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
+        this.addrPersonalObjsTemp = new Array<AddrObj>();
+        this.ltkmCustGrpParentObjs = new CustParentChildObj();
+        this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
+        this.inputLookupApplicationObj = new InputLookupObj();
 
         // this.selectCustNo = event.
 
