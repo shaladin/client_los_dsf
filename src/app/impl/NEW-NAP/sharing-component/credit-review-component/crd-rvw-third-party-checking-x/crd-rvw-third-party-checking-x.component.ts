@@ -107,10 +107,11 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
     )
     let Roles = PefindoBasicRole.split(',');
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
     if (Roles.includes(this.user.RoleCode)) {
-      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false);
+      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false, token);
     } else {
-      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true);
+      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
     }
   }
 
