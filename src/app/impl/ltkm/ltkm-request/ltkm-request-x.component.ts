@@ -2018,16 +2018,34 @@ export class LtkmRequestXComponent implements OnInit {
 
       
     async CopyCustomer(event) {
-        
-        this.refreshCustPersonal()
-        
+             
         //20230120, richard, reset temp pers
         this.custDataPersonalObj = new LtkmCustDataPersonalObj();
         this.addrPersonalObjs = new Array<AddrObj>();
         this.addrPersonalObjsTemp = new Array<AddrObj>();
         this.addrObjsForView = new Array<LtkmAddrForViewObjX>();        
         this.copyAddrFromLookup(event);
-
+        this.custDataPersonalObj = new LtkmCustDataPersonalObj();
+        this.addrPersonalObjs = new Array<AddrObj>();
+        this.addrPersonalObjsTemp = new Array<AddrObj>();
+        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
+        this.ltkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
+        this.ltkmCustGrpParentObjs = null;
+        this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
+        this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
+        this.listAttrContentCustData = new Array<LtkmAttrContent>();
+        this.LtkmCustEmergencyContactObj = new LtkmCustEmrgncCntctObj();
+        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();
+        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
+        this.listFamily = new Array();
+        this.inputLookupApplicationObj = new InputLookupObj();
+        this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
+        this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.isRequired = true;
+        this.inputLookupApplicationObj.addCritInput = new Array();
+    
         // this.selectCustNo = event.
 
         //perlu diganti cara bacanya (gak perlu), liat dri SELECT * FROM FOUNDATION_DSF.dbo.CUST_PERSONAL_FAMILY
@@ -2183,8 +2201,6 @@ export class LtkmRequestXComponent implements OnInit {
         this.addrCompanyObjsTemp = new Array<AddrObj>();
         this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
         this.copyAddrCompanyFromLookup(event);
-
-        this.RefreshCustCompany()
 
         if (event["CustCompanyContactPersonObjs"] != undefined) {
             // this.listContactPersonCompany = event["CustCompanyContactPersonObjs"];
@@ -2612,31 +2628,35 @@ export class LtkmRequestXComponent implements OnInit {
                     NoOfDependents: ['0'],
                 });
 
-                // this.mailingAddrObj = new AddrObj();
-                // this.inputFieldMailingObj.inputLookupObj.nameSelect = "";
-                // this.inputFieldMailingObj.inputLookupObj.jsonSelect = {};
-                // this.inputAddressObjForMailing.default = null;
-                // this.inputAddressObjForMailing.inputField = new InputFieldObj();
+                this.legalAddrObj = new AddrObj();
+                this.inputFieldLegalObj.inputLookupObj.nameSelect = "";
+                this.inputFieldLegalObj.inputLookupObj.jsonSelect = {};
+                this.inputAddressObjForLegal.default = null;
+                this.inputAddressObjForLegal.inputField = new InputFieldObj();
 
-                // this.residenceAddrObj = new AddrObj();
-                // this.inputFieldResidenceObj.inputLookupObj.nameSelect = "";
-                // this.inputFieldResidenceObj.inputLookupObj.jsonSelect = {};
-                // this.inputAddressObjForResidence.default = null;
-                // this.inputAddressObjForResidence.inputField = new InputFieldObj();
+                this.mailingAddrObj = new AddrObj();
+                this.inputFieldMailingObj.inputLookupObj.nameSelect = "";
+                this.inputFieldMailingObj.inputLookupObj.jsonSelect = {};
+                this.inputAddressObjForMailing.default = null;
+                this.inputAddressObjForMailing.inputField = new InputFieldObj();
 
-                // this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
-                // this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();
-                // this.listLtkmCustGrpObj = new Array<LtkmCustGrpObj>();
-                // this.ltkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
-                // this.LtkmCustEmergencyContactObj = new LtkmCustEmrgncCntctObj();
+                this.residenceAddrObj = new AddrObj();
+                this.inputFieldResidenceObj.inputLookupObj.nameSelect = "";
+                this.inputFieldResidenceObj.inputLookupObj.jsonSelect = {};
+                this.inputAddressObjForResidence.default = null;
+                this.inputAddressObjForResidence.inputField = new InputFieldObj();
 
-                // this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
-                // this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
-                // this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
-                // this.listFamily = new Array();
+                this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
+                this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();
+                this.listLtkmCustGrpObj = new Array<LtkmCustGrpObj>();
+                this.ltkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
+                this.LtkmCustEmergencyContactObj = new LtkmCustEmrgncCntctObj();
 
-                this.refreshCustPersonal()
-                
+                this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
+                this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
+                this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
+                this.listFamily = new Array();
+
                 this.CustDataForm.controls['personalMainData']['controls']["MrIdTypeCode"].enable();
                 this.CustDataForm.controls['personalMainData']['controls']["IdNo"].enable();
                 this.CustDataForm.controls['personalMainData']['controls']["TaxIdNo"].enable();
@@ -2657,34 +2677,28 @@ export class LtkmRequestXComponent implements OnInit {
                     IsVip: [false]
                 });
 
-                this.RefreshCustCompany();
+                this.legalAddrCompanyObj = new AddrObj();
+                this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = "";
+                this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = {};
+                this.inputAddressObjForLegalCoy.default = null;
+                this.inputAddressObjForLegalCoy.inputField = new InputFieldObj();
 
-                // this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
-                // this.ltkmCustGrpParentObjs = null;
-                // this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
+                this.mailingAddrCompanyObj = new AddrObj();
+                this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = "";
+                this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = {};
+                this.inputAddressObjForMailingCoy.default = null;
+                this.inputAddressObjForMailingCoy.inputField = new InputFieldObj();
 
-                // this.legalAddrCompanyObj = new AddrObj();
-                // this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = "";
-                // this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = {};
-                // this.inputAddressObjForLegalCoy.default = null;
-                // this.inputAddressObjForLegalCoy.inputField = new InputFieldObj();
+                this.listLtkmCustCompanyManagementShareholderObj = new Array<LtkmCustCompanyMgmntShrholderObj>();
+                this.ContactPersonCompany = new LtkmCustCompanyContactPersonObj();
+                this.listLtkmCustCoyFinData = new Array<LtkmCustCompanyFinDataObj>();
+                this.listLtkmCustBankAccCompany = new Array<LtkmCustBankAccObj>();
+                this.listLtkmCustCompanyLegalDoc = new Array<LtkmCustCompanyLegalDocObj>();
+                this.listLtkmCustGrpsCompany = new Array<LtkmCustGrpObj>();
 
-                // this.mailingAddrCompanyObj = new AddrObj();
-                // this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = "";
-                // this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = {};
-                // this.inputAddressObjForMailingCoy.default = null;
-                // this.inputAddressObjForMailingCoy.inputField = new InputFieldObj();
-
-                // this.listLtkmCustCompanyManagementShareholderObj = new Array<LtkmCustCompanyMgmntShrholderObj>();
-                // this.ContactPersonCompany = new LtkmCustCompanyContactPersonObj();
-                // this.listLtkmCustCoyFinData = new Array<LtkmCustCompanyFinDataObj>();
-                // this.listLtkmCustBankAccCompany = new Array<LtkmCustBankAccObj>();
-                // this.listLtkmCustCompanyLegalDoc = new Array<LtkmCustCompanyLegalDocObj>();
-                // this.listLtkmCustGrpsCompany = new Array<LtkmCustGrpObj>();
-
-                // this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
-                // this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
-                // this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
+                this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
+                this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
+                this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
                 this.CustDataCompanyForm.controls['companyMainData']['controls']["TaxIdNo"].enable();
             }
         }
@@ -2808,113 +2822,5 @@ export class LtkmRequestXComponent implements OnInit {
         });
         return accountsPayload;
       }
-
-     refreshCustPersonal(){
-            // Customer main data
-            // customer address
-                this.custDataPersonalObj = new LtkmCustDataPersonalObj();
-                this.addrPersonalObjs = new Array<AddrObj>();
-                this.addrPersonalObjsTemp = new Array<AddrObj>();
-                this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
-
-            // job data
-                this.ltkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
-                // this.custJobDataComponent.custModelCode = null;
-                // this.custJobDataComponent.ltkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
-                // this.custJobDataComponent.IsCopy = false;
-                // this.custJobDataComponent.bindLtkmCustPersonalJobData();
-    
-            // cust groub
-                this.ltkmCustGrpParentObjs = null;
-
-            // cust group member
-                this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
-
-            // other info
-                this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
-                // this.custOtherInfoComponent.CustOtherInfo = new LtkmCustOtherInfoObj();
-                // this.custOtherInfoComponent.copyOtherInfo();
-               
-            // cust attribute
-                this.listAttrContentCustData = new Array<LtkmAttrContent>();
-                // this.attrlistcustcomponent.ListAttrContent = new Array<LtkmAttrContent>();
-                // this.attrlistcustcomponent.copyListAttrContent();
-
-            // emergency contact & contact address
-                this.LtkmCustEmergencyContactObj = new LtkmCustEmrgncCntctObj();
-                // this.LtkmEmergencyContactComponent.LtkmCustEmergencyContact = new LtkmCustEmrgncCntctObj();
-                // this.LtkmEmergencyContactComponent.getData();
-
-            // financial data
-                this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();
-
-                
-            // customer bank account
-                this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
-
-            // family data
-                this.listFamily = new Array();
-                
-            // app no
-                this.inputLookupApplicationObj = new InputLookupObj();
-                this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
-                this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
-                this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
-                this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
-                this.inputLookupApplicationObj.isRequired = true;
-                this.inputLookupApplicationObj.addCritInput = new Array();
-
-     } 
-
-     RefreshCustCompany(){
-        // Cust Adderess
-        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
-        // Management Shareholder
-        this.listLtkmCustCompanyManagementShareholderObj = new Array<LtkmCustCompanyMgmntShrholderObj>();
-        
-        // Contact Main Info
-        this.ContactPersonCompany = new LtkmCustCompanyContactPersonObj(); 
-        // this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj = new LtkmCustCompanyContactPersonObj();
-        // this.custCompanyContactInfo.GetAppCustCompanyContactPersonByAppCustId();
-
-        // Financial Data
-        this.listLtkmCustCoyFinData = new Array<LtkmCustCompanyFinDataObj>();
-
-        // Cust Bank Account
-        this.listLtkmCustBankAccCompany = new Array<LtkmCustBankAccObj>();
-
-        // Legal Doc
-        this.listLtkmCustCompanyLegalDoc = new Array<LtkmCustCompanyLegalDocObj>();
-      
-        // Cust Group
-        this.ltkmCustGrpParentObjs = null;
-
-        // Cust Group 
-        this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
-
-        // Other Info
-        this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
-        // this.custOtherInfoComponent.CustOtherInfo = new LtkmCustOtherInfoObj();
-        // this.custOtherInfoComponent.copyOtherInfo();
-
-        // Cust Attr
-        this.listAttrContentFinDataCoy = new Array<LtkmAttrContent>();
-        this.listAttrContentCustDataCoy = new Array<LtkmAttrContent>();
-        // this.attrlistcustcomponentcoy.ListAttrContent = new Array<LtkmAttrContent>();
-        // this.attrlistcustcomponentcoy.copyListAttrContent();
-
-
-        this.legalAddrCompanyObj = new AddrObj();
-        this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = "";
-        this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = {};
-        this.inputAddressObjForLegalCoy.default = null;
-        this.inputAddressObjForLegalCoy.inputField = new InputFieldObj();
-
-        this.mailingAddrCompanyObj = new AddrObj();
-        this.inputFieldMailingCompanyObj.inputLookupObj.nameSelect = "";
-        this.inputFieldMailingCompanyObj.inputLookupObj.jsonSelect = {};
-        this.inputAddressObjForMailingCoy.default = null;
-        this.inputAddressObjForMailingCoy.inputField = new InputFieldObj();
-     }
    
 }
