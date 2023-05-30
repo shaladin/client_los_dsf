@@ -2015,6 +2015,7 @@ export class LtkmRequestXComponent implements OnInit {
           }
         );
       }
+
       
     async CopyCustomer(event) {
         
@@ -2026,12 +2027,6 @@ export class LtkmRequestXComponent implements OnInit {
         this.addrPersonalObjsTemp = new Array<AddrObj>();
         this.addrObjsForView = new Array<LtkmAddrForViewObjX>();        
         this.copyAddrFromLookup(event);
-        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();        
-        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
-        this.addrPersonalObjsTemp = new Array<AddrObj>();
-        this.ltkmCustGrpParentObjs = new CustParentChildObj();
-        this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
-        this.inputLookupApplicationObj = new InputLookupObj();
 
         // this.selectCustNo = event.
 
@@ -2663,7 +2658,11 @@ export class LtkmRequestXComponent implements OnInit {
                 });
 
                 this.RefreshCustCompany();
-                
+
+                // this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
+                // this.ltkmCustGrpParentObjs = null;
+                // this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
+
                 // this.legalAddrCompanyObj = new AddrObj();
                 // this.inputFieldLegalCompanyObj.inputLookupObj.nameSelect = "";
                 // this.inputFieldLegalCompanyObj.inputLookupObj.jsonSelect = {};
@@ -2917,7 +2916,5 @@ export class LtkmRequestXComponent implements OnInit {
         this.inputAddressObjForMailingCoy.default = null;
         this.inputAddressObjForMailingCoy.inputField = new InputFieldObj();
      }
-
-    
+   
 }
-
