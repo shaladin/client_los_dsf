@@ -2355,9 +2355,6 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     }
 
     sortLtkmCustBankStmntObjs(accountsPayload: any) {
-        console.log('account length : ' + accountsPayload.length)
-        console.log(accountsPayload)
-        // if (accountsPayload.LtkmCustBankStmntObjs != null){
             accountsPayload.forEach((account) => {
                 if (account.LtkmCustBankStmntObjs != null){
                     account.LtkmCustBankStmntObjs.sort((a, b) => {
@@ -2367,7 +2364,6 @@ export class LtkmReturnHandlingXComponent implements OnInit {
                     });
                 }
             });
-        // }
         return accountsPayload;
       }
       
