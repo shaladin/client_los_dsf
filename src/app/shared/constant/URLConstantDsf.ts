@@ -62,5 +62,6 @@ export class URLConstantDsf {
     public static GetVerfResultHDsfsByVerfResultIdAndObjectCode = environment.FoundationR3Url + "/VerfResultHDsf/GetVerfResultHDsfsByVerfResultIdAndObjectCode";
     public static AddLeadDsf = environment.losUrl + "/v1" + "/LeadX/AddLeadDsf";
     public static UpdateLeadDsf = environment.losUrl + "/v1" + "/LeadX/UpdateLeadDsf";
+    public static UpdateLeadStep = environment.losUrl + "/v1" + "/LeadX/UpdateLeadStep";
     public static GetLeadDsfByLeadId = environment.losUrl + "/v1" + "/LeadX/GetLeadDsfByLeadId";
 }

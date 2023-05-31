@@ -533,6 +533,13 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             (response2) => {
               // this.toastr.successMessage(response2["message"]);
             });
+
+            if(this.pageType == "update"){
+              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqAddLeadDsf).subscribe(
+                (response3) => {
+                  // this.toastr.successMessage(response3["message"]);
+                });
+            }
             // End Self Custom
 
             this.toastr.successMessage(response["message"]);
@@ -603,6 +610,13 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             (response2) => {
               // this.toastr.successMessage(response2["message"]);
             });
+
+            if(this.pageType == "update"){
+              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqAddLeadDsf).subscribe(
+                (response3) => {
+                  // this.toastr.successMessage(response3["message"]);
+                });
+            }
             // End Self Custom
 
             this.toastr.successMessage(response["message"]);

@@ -68,6 +68,7 @@ import { RoTelemkOfferVerifXDsfComponent } from "app/dsf/lead/potential-ro-dsf/r
 import { RoPotentialViewDsfComponent } from "app/dsf/lead/potential-ro-dsf/ro-potential-view-dsf/ro-potential-view-dsf.component";
 import { SimpleLeadReportDsfComponent } from 'app/dsf/lead/simple-lead-report-dsf/simple-lead-report-dsf.component';
 import { LeadInquiryDsfComponent } from 'app/lead/lead-inquiry-dsf/lead-inquiry-dsf.component';
+import {NewLeadInputLeadDataXDsfComponent} from 'app/dsf/lead/new-lead-input/new-lead-input-lead-data-x-dsf/new-lead-input-lead-data-x-dsf.component';
 
 import { UcreportModule } from '@adins/ucreport';
 
@@ -140,7 +141,8 @@ export const customCurrencyMaskConfig = {
     NewLeadInputMainInfoDsfComponent,
     GeneratePotentialRoXComponent,
     SimpleLeadReportDsfComponent,
-    LeadInquiryDsfComponent
+    LeadInquiryDsfComponent,
+    NewLeadInputLeadDataXDsfComponent
   ],
   entryComponents: [
     UclookupgenericComponent,
