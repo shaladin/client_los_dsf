@@ -14,7 +14,7 @@
       "url": "",
       "isQueryIn": true,
       "environment": "FOU",
-      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForInquiryPaging",
       "label": "Original Office Name",
       "items": [],
       "itemsUrl": []
@@ -78,6 +78,14 @@
       "datatype": "date"
     },
     {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_1",
+      "id": "serialNo1Id",
+      "value": "",
+      "label": "Serial No 1",
+      "placeholder": "Placeholder"
+    },
+    {
       "type": "dropdown",
       "datatype": "text",
       "name": "A.APP_CURR_STEP",
@@ -96,6 +104,14 @@
       "criteriaPropValue": "APP_STEP"
     },
     {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_2",
+      "id": "serialNo2Id",
+      "value": "",
+      "label": "Serial No 2",
+      "placeholder": "Placeholder"
+    },
+    {
       "type": "dropdown",
       "datatype": "text",
       "name": "B.AGRMNT_CURR_STEP",
@@ -112,6 +128,32 @@
       "itemsUrl": [],
       "criteriaPropName": "Code",
       "criteriaPropValue": "AGR_STEP"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.SERIAL_NO_3",
+      "id": "serialNo3Id",
+      "value": "",
+      "label": "Serial No 3",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.CUST_CHECKING_STEP",
+      "id": "CustCheckingStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Customer Checking Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "CUST_CHECKING_STEP"
     },
     {
       "type": "dropdown",
@@ -148,24 +190,6 @@
       "itemsUrl": [],
       "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STAT"
-    },
-    {
-      "type": "dropdown",
-      "datatype": "text",
-      "name": "A.CUST_CHECKING_STEP",
-      "id": "CustCheckingStepId",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": true,
-      "ddlType": "all",
-      "url": "",
-      "environment": "FOU",
-      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
-      "label": "Customer Checking Step",
-      "items": [],
-      "itemsUrl": [],
-      "criteriaPropName": "Code",
-      "criteriaPropValue": "CUST_CHECKING_STEP"
     }
   ],
   "querystring": {
@@ -176,73 +200,73 @@
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "A.APP_NO"
+      "name": "MAX(A.APP_NO)"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Agreement No",
-      "name": "B.AGRMNT_NO"
+      "name": "MAX(B.AGRMNT_NO)"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Customer No",
-      "name": "C.CUST_NO"
+      "name": "MAX(C.CUST_NO)"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "C.CUST_NAME"
+      "name": "MAX(C.CUST_NAME)"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Product Offering Name",
-      "name": "A.PROD_OFFERING_NAME"
+      "name": "MAX(A.PROD_OFFERING_NAME)"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application Date",
-      "name": "A.APP_CREATED_DT"
+      "name": "MAX(A.APP_CREATED_DT)"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "NAP Submitted",
-      "name": "A.IS_APP_INIT_DONE"
+      "name": "MAX(A.IS_APP_INIT_DONE + 0)"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Agreement Step",
-      "name": "B.AGRMNT_CURR_STEP"
+      "name": "MAX(B.AGRMNT_CURR_STEP)"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Contract Status",
-      "name": "B.AGRMNT_STAT"
+      "name": "MAX(B.AGRMNT_STAT)"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Application Step",
-      "name": "A.APP_CURR_STEP"
+      "name": "MAX(A.APP_CURR_STEP)"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Application Status",
-      "name": "A.APP_STAT"
+      "name": "MAX(A.APP_STAT)"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Checking Step",
-      "name": "A.CUST_CHECKING_STEP"
+      "name": "MAX(A.CUST_CHECKING_STEP)"
     }
   ],
   "bodyList": [

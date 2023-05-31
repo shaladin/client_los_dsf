@@ -96,7 +96,7 @@
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi to Customer </label>
                   <label class="col-md-6 adInsLabel">
-                    {{appInsObjObj.TotalInsCustAmt | number:'.2':'en-US'}}
+                    {{appInsObjObj?.TotalInsCustAmt + appInsObjObj?.TotalCustDiscAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
@@ -106,7 +106,7 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi to Customer after Discount</label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalInsCustAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalInsCustAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">

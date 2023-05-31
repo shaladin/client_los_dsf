@@ -140,7 +140,7 @@
           <label class="col-md-3 adInsLabel"
             *ngIf="CustPersonalFinData.SourceOfOtherIncome != null">{{CustPersonalFinData.SourceOfOtherIncome}}</label>
           <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.SourceOfOtherIncome == null">-</label>
-          <label class="col-md-3 adInsLabel" translate>Monthly Installment</label>
+          <label class="col-md-3 adInsLabel" translate>Monthly Installment Amount</label>
           <label class="col-md-3 adInsLabel"
             *ngIf="CustPersonalFinData.MonthlyInstallmentAmt != 0">{{CustPersonalFinData.MonthlyInstallmentAmt |
             number:'.2':'en-US'}}</label>
@@ -153,7 +153,7 @@
             number:'.2':'en-US'}}</label>
           <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.SpouseMonthlyIncomeAmt == 0">-</label>
           <label class="col-md-3 adInsLabel" translate>Join Income</label>
-          <label class="col-md-3 adInsLabel">{{CustPersonalFinData.IsJoinIncome ? 'Yes' : 'No'}}</label>
+          <label class="col-md-3 adInsLabel">{{CustPersonalFinData.IsJoinInc ? 'Yes' : 'No'}}</label>
         </div>
         <div class="form-group row ">
           <label class="col-md-3 adInsLabel" translate>Other Income</label>
@@ -177,11 +177,6 @@
             *ngIf="CustPersonalFinData.TotalIncomeAmt != 0">{{CustPersonalFinData.TotalIncomeAmt |
             number:'.2':'en-US'}}</label>
           <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalIncomeAmt == 0">-</label>
-          <label class="col-md-3 adInsLabel" translate>Total Monthly Expense</label>
-          <label class="col-md-3 adInsLabel"
-            *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt != 0">{{CustPersonalFinData.TotalMonthlyExpenseAmt |
-            number:'.2':'en-US'}}</label>
-          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt == 0">-</label>
         </div>
         <div class="form-group row ">
           <label class="col-md-3 adInsLabel" translate>Total Monthly Installment DSF Amount</label>
@@ -191,9 +186,9 @@
           <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstallmentDsf == 0">-</label>
           <label class="col-md-3 adInsLabel" translate>Total Monthly Installment Other Amount</label>
           <label class="col-md-3 adInsLabel"
-            *ngIf="CustPersonalFinData.OthMonthlyInstAmt != null">{{CustPersonalFinData.OthMonthlyInstAmt |
+            *ngIf="CustPersonalFinData.OtherMonthlyInstAmt != null">{{CustPersonalFinData.OtherMonthlyInstAmt |
             number:'.2':'en-US'}}</label>
-          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OthMonthlyInstAmt == null">-</label>
+          <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt == null">-</label>
         </div>
       </div>
     </form>
@@ -253,7 +248,7 @@
                 </tr>
                 <ng-container *ngFor="let item of ltkmCustBankAccObjs[i].LtkmCustBankStmntObjs">
                   <tr>
-                    <td class="text-center">{{item.MonthName}}</td>
+                    <td class="text-center">{{item.MonthName ? item.MonthName : item.Month}}</td>
                     <td class="text-center">{{item.Year}}</td>
                     <td class="text-center">{{item.DebitTrxCount}}</td>
                     <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
@@ -278,11 +273,12 @@
         <thead>
           <tr class="table-header">
             <th class="text-center"><span name='no' translate>No</span> </th>
-            <th class="text-left"><span name='custNo' translate>Customer No</span></th>
-            <th class="text-left"><span name='custName' translate>Customer Name</span></th>
-            <th class="text-center"><span name='relationship' translate>Customer Relationship</span></th>
-            <th class="text-center"><span name='notes' translate>Notes</span></th>
-            <th class="text-center"><span name='activeStatus' translate>Active Status</span></th>
+            <th class="text-left"><span class="thead-header" name='negativeStatus' translate>Negative Status</span> </th>
+            <th class="text-left"><span class="thead-header" name='customerNo' translate>Customer No</span></th>
+            <th class="text-left"><span class="thead-header" name='customerName' translate>Customer Name</span></th>
+            <th class="text-center"><span class="thead-header" name='customerRelationship' translate>Customer Relationship</span></th>
+            <th class="text-center"><span class="thead-header" name='notes' translate>Notes</span></th>
+            <th class="text-center"><span class="thead-header" name='isActive' translate>Active Status</span></th>
           </tr>
         </thead>
         <tbody *ngIf="ltkmCustGrpParentObjs == null">
@@ -294,6 +290,9 @@
           <ng-container>
             <tr>
               <td class="text-center">1</td>
+              <td *ngIf="ltkmCustGrpParentObjs.NegativeStatus == null || ltkmCustGrpParentObjs.NegativeStatus == ''" class="text-left">Normal</td>
+              <td *ngIf="ltkmCustGrpParentObjs.NegativeStatus == 'BAD'" class="text-left">Bad</td>
+              <td *ngIf="ltkmCustGrpParentObjs.NegativeStatus == 'WARNING'" class="text-left">Warning</td>
               <td class="text-left">{{ltkmCustGrpParentObjs?.CustNo}}</td>
               <td class="text-left">{{ltkmCustGrpParentObjs?.CustName}}</td>
               <td class="text-center">{{ltkmCustGrpParentObjs?.RelationshipName}}</td>
@@ -313,11 +312,12 @@
         <thead>
           <tr class="table-header">
             <th class="text-center"><span name='no' translate>No</span> </th>
-            <th class="text-left"><span name='custNo' translate>Customer No</span></th>
-            <th class="text-left"><span name='custName' translate>Customer Name</span></th>
-            <th class="text-center"><span name='relationship' translate>Customer Relationship</span></th>
-            <th class="text-center"><span name='notes' translate>Notes</span></th>
-            <th class="text-center"><span name='activeStatus' translate>Active Status</span></th>
+            <th class="text-left"><span class="thead-header" name='negativeStatus' translate>Negative Status</span> </th>
+            <th class="text-left"><span class="thead-header" name='customerNo' translate>Customer No</span></th>
+            <th class="text-left"><span class="thead-header" name='customerName' translate>Customer Name</span></th>
+            <th class="text-center"><span class="thead-header" name='customerRelationship' translate>Customer Relationship</span></th>
+            <th class="text-center"><span class="thead-header" name='notes' translate>Notes</span></th>
+            <th class="text-center"><span class="thead-header" name='isActive' translate>Active Status</span></th>
           </tr>
         </thead>
         <tbody *ngIf="ltkmCustGrpChildObjs.length == 0">
@@ -329,6 +329,9 @@
           <ng-container *ngFor="let item of ltkmCustGrpChildObjs; let i=index">
             <tr>
               <td class="text-center">{{i + 1}}</td>
+              <td *ngIf="item.NegativeStatus == null || item.NegativeStatus == ''" class="text-left">Normal</td>
+              <td *ngIf="item.NegativeStatus == 'BAD'" class="text-left">Bad</td>
+              <td *ngIf="item.NegativeStatus == 'WARNING'" class="text-left">Warning</td>
               <td class="text-left">{{item?.CustNo}}</td>
               <td class="text-left">{{item?.CustName}}</td>
               <td class="text-center">{{item?.RelationshipName}}</td>

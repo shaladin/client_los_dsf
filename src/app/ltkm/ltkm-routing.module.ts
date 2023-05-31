@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LtkmApprovalDetailXComponent } from 'app/impl/ltkm/ltkm-approval/detail/ltkm-approval-detail-x.component';
 import { LtkmRequestXComponent } from 'app/impl/ltkm/ltkm-request/ltkm-request-x.component';
 import { LtkmReturnHandlingXComponent } from 'app/impl/ltkm/ltkm-return-handling/detail/ltkm-return-handling-x.component';
 import { LtkmVerifyDetailXComponent } from 'app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component';
@@ -15,6 +16,7 @@ import { LtkmReturnHandlingPagingComponent } from './ltkm-return-handling/paging
 import { LtkmVerifyDetailComponent } from './ltkm-verify/detail/ltkm-verify-detail.component';
 import { LtkmVerifyPagingComponent } from './ltkm-verify/paging/ltkm-verify-paging.component';
 import { LtkmViewComponent } from './view-ltkm-component/ltkm-view-component';
+import { LtkmReturnHandlingPagingXComponent } from 'app/impl/ltkm/ltkm-return-handling/paging/ltkm-return-handling-x.component';
 
 
 const routes: Routes = [
@@ -71,10 +73,17 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.RTN_HANDLING_PAGING,
-        component: LtkmReturnHandlingPagingComponent,
+        path: PathConstantX.VERIFY_APV_DETAIL,
+        component: LtkmApprovalDetailXComponent,
         data: {
-          title: 'LTKM Return Handling Paging'
+          title: 'LTKM Verify Approval Detail X'
+        }
+      },
+      {
+        path: PathConstantX.RTN_HANDLING_PAGING,
+        component: LtkmReturnHandlingPagingXComponent,
+        data: {
+          title: 'LTKM Return Handling Paging X'
         }
       },
       {

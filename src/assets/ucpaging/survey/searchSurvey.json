@@ -90,6 +90,12 @@
         },
         {
             "type": "sort",
+            "position": "left",
+            "label": "Office",
+            "name": "A.ORI_OFFICE_NAME"
+        },
+        {
+            "type": "sort",
             "position": "center",
             "label": "Application No",
             "name": "A.APP_NO"
@@ -124,11 +130,16 @@
             "property": "ClaimBy"
         },
         {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+          },
+        {
             "type": "link",
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "param": [
               {
                 "type": "AppId",

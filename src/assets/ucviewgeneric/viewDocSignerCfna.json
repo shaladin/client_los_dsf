@@ -13,7 +13,7 @@
             "name": "AppNo",
             "environment": "LOSR3WEB",
             "target": "_blank",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "param": [
               {
                 "type": "AppId",
@@ -28,7 +28,7 @@
             "name": "MouCustNo",
             "isHide": true,
             "environment": "LOSR3WEB",
-            "path": "/View/Mou/CustView",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
               {

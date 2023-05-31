@@ -184,10 +184,10 @@
               {{item.YearNo}}
             </td>
             <td style="text-align: left;">
-              {{item.MrMainCvgTypeCode}}
+              {{item.MainCvgTypeName}}
             </td>
             <td style="text-align: left;">
-              {{item.MrAddCvgTypeCode}}
+              {{item.AddCvgTypeName}}
             </td>
             <td style="text-align: left;">
               {{item.CustMainPremiAmt | number:'.2':'en-US'}}
@@ -252,7 +252,7 @@
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Total Premi to Customer</label>
-          <label class="col-md-3 adInsLabel text-right" translate>{{appInsObj?.TotalInsCustAmt | number:'.2':'en-US'}}</label>
+          <label class="col-md-3 adInsLabel text-right" translate>{{appInsObj?.TotalInsCustAmt + appInsObj?.TotalCustDiscAmt | number:'.2':'en-US'}}</label>
         </div>
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Total Premi from Insco</label>
@@ -466,7 +466,7 @@
                 {{item.MrMainCvgTypeCode}}
               </td>
               <td style="text-align: left;">
-                {{item.MrAddCvgTypeCode}}
+                {{item.MrAddCvgTypeName}}
               </td>
               <td style="text-align: left;">
                 {{item.CustMainPremiAmt | number:'.2':'en-US'}}

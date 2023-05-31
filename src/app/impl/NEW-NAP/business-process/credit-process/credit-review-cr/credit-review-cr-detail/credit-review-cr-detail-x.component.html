@@ -29,6 +29,13 @@
         </app-crd-rvw-cmo-info>
         <app-crd-rvw-dealer-info *ngIf="isShow && !IsFD  && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
+
+        <lib-ucSubsection [id]="'documentId'" [title]="'Document'" [panel]="'document'">
+        </lib-ucSubsection>
+        <div class="form-body" [id]="'document'">
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+        </div>
+        
         <app-tab-deviation [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation>
 
       </div>
@@ -47,7 +54,7 @@
                         <label class="adInsLabel" translate>{{item.controls.Question.value}}</label>
                       </div>
                       <div class="col-md-8">
-                        <input type="text" class="form-control adInsInput width-50-per" formControlName="Answer">
+                        <textarea type="textarea" class="form-control adInsInput width-50-per" formControlName="Answer"></textarea>
                         <lib-uc-show-errors [control]="item.controls.Answer" [submit]="enjiForm.submitted">
                         </lib-uc-show-errors>
                       </div>

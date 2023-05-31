@@ -150,6 +150,26 @@
           "type": "text",
           "label": "Credit Score",
           "property": "CreditScore"
+        },
+        {
+          "type": "text",
+          "label": "Business Line",
+          "property": "LobName"
+        },
+        {
+          "type": "text",
+          "label": "Product Type",
+          "property": "ProdType"
+        },
+        {
+          "type": "text",
+          "label": "Purpose of Finance",
+          "property": "PurposeOfFin"
+        },
+        {
+          "type": "text",
+          "label": "Way of Finance",
+          "property": "WayOfFin"
         }
       ],
       "querystring": {

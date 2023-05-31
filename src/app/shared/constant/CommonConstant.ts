@@ -347,7 +347,7 @@ export class CommonConstant {
   public static VerfTrxTypeCodeCustConfirm = "CUST_CONFIRM";
 
   // AGRMNT STAT
-  public static AgrmntStatCancel = "CANCEL";
+  public static AgrmntStatCancel = "CAN";
   public static AgrmntStatReject = "RJC";
   public static AgrmntStatExpired = "EXP";
   public static AgrmntStatPaid = "RRD";
@@ -788,6 +788,7 @@ export class CommonConstant {
   public static GSCodeCustAgeLimit = "CUST_AGE_LIMIT";
   public static GsCodeNegCustAllowNap = "NEGCUSTALLOWNAP";
   public static GsCodeAssetTypeForHeavyEquipment = "ASSET_TYPE_CODE_FOR_HEAVY_EQUIPMENT";
+  public static GSRoleForCmo = "ROLE_FOR_CMO";
 
   //MOU CUST FEE PAYMENT TYPE
   public static PaymentTypeApDeduction = "AP_DEDUCTION";

@@ -8,6 +8,7 @@ export class PathConstantX {
   public static PAGING = 'PagingX';
   public static CESSIE = 'Cessie';
   public static ADD = 'AddX';
+  public static PAGING_X = 'PagingX';
   public static DETAIL_X = 'DetailX';
   public static MONITORING = 'Monitoring';
   public static MOU_CUSTOMER_X = 'CustomerX';
@@ -57,12 +58,14 @@ export class PathConstantX {
   public static CRD_REVIEW_CR_PAGING_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.PAGING;
   public static CRD_REVIEW_CR_DETAIL_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.DETAIL_X;
   public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstantX.DETAIL_X;
+  public static CRD_REVIEW_CR_DETAIL_HISTORY_X = PathConstant.CRD_REVIEW_CR_HISTORY + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Nap-Main-Data
   public static NAP1_PAGING = PathConstant.NAP1 + '/' + PathConstantX.PAGING;
   public static NAP1_ADD = PathConstant.NAP1 + '/' + PathConstantX.ADD;
 
+  public static PGL_PAGING_X = PathConstant.PGL + '/' + PathConstantX.PAGING_X;
   public static PGL_DETAIL_X = PathConstant.PGL + '/' + PathConstantX.DETAIL_X;
   public static DO_MULTI_ASSET_PAGING_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.PAGING;
   public static DO_MULTI_ASSET_DETAIL_X = PathConstant.DO_MULTI_ASSET + '/' + PathConstantX.DETAIL_X;
@@ -240,6 +243,9 @@ export class PathConstantX {
   public static LTKM = "Ltkm";
   public static VERIFY_DETAIL = PathConstant.VERIFY_DETAIL + PathConstantX.X;
   public static LTKM_VIEW = PathConstantX.LTKM + "/" + PathConstant.VIEW + PathConstantX.X;
+  public static VERIFY_APV_DETAIL = PathConstant.VERIFY_APV_DETAIL + PathConstantX.X;
+  public static RTN_HANDLING = "ReturnHandling";
+  public static RTN_HANDLING_PAGING = PathConstant.RTN_HANDLING + "/" + PathConstantX.PAGING;
 
   public static FL4W_VIEW_INS_X = "ViewInsuranceX";
 }

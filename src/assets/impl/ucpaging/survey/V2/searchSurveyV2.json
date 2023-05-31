@@ -43,18 +43,19 @@
       "itemsUrl": []
     },
     {
+      "type": "claim",
+      "label": "Task Claim Status",
+      "id": "TaskClaimStatId",
+      "ddlType" : "all",
+      "isCriteriaDataTable": true
+    },
+    {
       "type": "textbox",
       "name": "Assignee",
       "id": "TaskClaimById",
       "value": "",
       "label": "Task Claim By",
       "placeholder": "Placeholder",
-      "isCriteriaDataTable": true
-    },
-    {
-      "type": "claim",
-      "label": "Task Claim Status",
-      "id": "TaskClaimStatId",
       "isCriteriaDataTable": true
     }
   ],
@@ -63,10 +64,22 @@
   },
   "headerList": [
     {
+      "type": "label",
+      "position": "center",
+      "label": "SLA",
+      "name": "IndicatorSLA"
+    },
+    {
       "type": "sort",
       "position": "left",
       "label": "Claim By",
       "name": "Assignee"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office",
+      "name": "A.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
@@ -94,9 +107,19 @@
   ],
   "bodyList": [
     {
+      "type": "sla",
+      "position": "center",
+      "property": "IndicatorSLA"
+    },
+    {
       "type": "text",
       "position": "left",
       "property": "Assignee"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OfficeName"
     },
     {
       "type": "link",

@@ -134,7 +134,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_APPRV_DETAIL; //"/Nap/AdminProcess/OfferingValidityApproval/Detail"
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_REQ_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_REQ_PAGING; //"/Nap/AdminProcess/OfferingValidityApproval/Paging"
   public static NAP_ADM_PRCS_OFFERING_VALIDITY_REQ_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.OFFERING_VALIDITY_REQ_DETAIL; //"/Nap/AdminProcess/OfferingValidityApproval/Detail"
-  public static NAP_ADM_PRCS_PGL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_PAGING; //'/Nap/AdminProcess/PreGoLive/Paging'
+  public static NAP_ADM_PRCS_PGL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PGL_PAGING_X; //'/Nap/AdminProcess/PreGoLive/PagingX'
   public static NAP_ADM_PRCS_PGL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PGL_DETAIL_X; //'/Nap/AdminProcess/PreGoLive/DetailX'
   public static NAP_ADM_PRCS_PGL_OPL_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_OPL_PAGING; //'/Nap/AdminProcess/pregoliveopl/paging'
   public static NAP_ADM_PRCS_PGL_OPL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_OPL_DETAIL; //'/Nap/AdminProcess/pregoliveopl/detail'
@@ -189,6 +189,8 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT; //"/Nap/CreditProcess/SurveyVerif/SubjectX"
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT_VERIF; //"/Nap/CreditProcess/SurveyVerif/SubjectX/VerifX"
   public static NAP_CRD_PRCS_SURVEY_VERIF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstantX.SURVEY_VERIF_SUBJECT_VIEW; //"/Nap/CreditProcess/SurveyVerif/SubjectX/ViewX"
+  public static NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CRD_REVIEW_CR_DETAIL_HISTORY; //"/Pages/CreditReviewCrHistory/Detail"
+  public static NAP_VIEW_CRD_REVIEW_CR_DETAIL_HISTORY_X = "/" + PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstantX.CRD_REVIEW_CR_DETAIL_HISTORY_X; //"/Pages/CreditReviewCrHistory/DetailX"
   //#endregion
 
   //#region CF2W
@@ -297,6 +299,7 @@ export class NavigationConstant {
   public static VIEW_FOU_SRVY_TASK = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_TASK; //'/View/Survey/SurveyTask'
   public static VIEW_FOU_VENDOR_BRANCH = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_VENDOR_BRANCH; //'/View/Vendor/VendorBranch'
   public static VIEW_FOU_ASLI_RI = "/" + PathConstant.VIEW +"/" + PathConstant.VIEW_CUST_ASLI_RI; //'/View/Customer/CustAsliRi'
+  public static VIEW_FOU_ASLI_RI_X = "/" + PathConstant.VIEW +"/" + PathConstant.VIEW_CUST_ASLI_RI + "/" + PathConstantX.X; //'/View/Customer/CustAsliRi/X'
   //#endregion
 
   //#region MOU
@@ -359,6 +362,7 @@ export class NavigationConstant {
   public static CHANGE_MOU_RTN_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RTN_DETAIL; //"/Mou/ChangeMou/ReturnDetail"
   public static CHANGE_MOU_REQ_ADD_COLL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X; //"/Mou/ChangeMou/RequestAddColl"
   public static CHANGE_MOU_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_INQUIRY_X; //"/Mou/ChangeMou/InquiryX"
+  public static CHANGE_MOU_APV_DETAIL_GEN_X = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_APV_DETAIL_GEN_X; //"/Mou/ChangeMou/ApvDetailGenX"
   //#endregion
 
   //#region LEAD
@@ -404,8 +408,8 @@ export class NavigationConstant {
   public static LTKM_VERIFY_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_PAGING; //'/Ltkm/Verify/Paging'
   public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_DETAIL; //'/Ltkm/Verify/DetailX'
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
-  public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
-  public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
+  public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
+  public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
   public static LTKM_RTN_HANDLING_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_DETAIL; //'/Ltkm/ReturnHandling/Detail'
   //#endregion
 
@@ -527,4 +531,11 @@ export class NavigationConstant {
   public static EDIT_COMM_AFT_APV_INQUIRY_PAGING = "/" + PathConstantX.LR_IMPL + "/"+ PathConstantX.EDIT_COMM_AFT_APV_INQUIRY_PAGING;//"/Impl/EditCommAftApv/Inquiry/Paging"
   public static EDIT_COMM_AFT_APV_INQUIRY_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantX.EDIT_COMM_AFT_APV_INQUIRY_DETAIL;//"/Impl/EditCommAftApv/Inquiry/Detail"
   //#endregion
+  //#region REF FIN ASSET USAGE MAP
+  public static REF_FIN_ASSET_USAGE_MAP_PAGING = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_PAGING; //'RefFinAssetUsageMap/RefFinAssetUsageMapPaging'
+  public static REF_FIN_ASSET_USAGE_MAP_ADD_EDIT = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_ADD_EDIT; //'RefFinAssetUsageMap/RefFinAssetUsageMapAddEdit'
+  public static REF_FIN_ASSET_USAGE_MAP_DETAIL = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL; //'RefFinAssetUsageMap/RefFinAssetUsageMapDetail'
+  public static REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD = "/" + PathConstant.LR_REF_FIN_ASSET_USAGE_MAP + "/" + PathConstant.REF_FIN_ASSET_USAGE_MAP_DETAIL_ADD; //'RefFinAssetUsageMap/RefFinAssetUsageMapDetail/Add'
+  //#endregion
+  
 }

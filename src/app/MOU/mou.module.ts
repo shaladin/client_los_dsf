@@ -144,12 +144,19 @@ import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-can
 import { MouCustMgmntShrholderPublicComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
 import { MouCustTabXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-tab-x.component';
 import { MouCustAttrContentComponentComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-attr-content-component/mou-cust-attr-content-component.component";
+import { ChangeMouAddcollHistoryComponent } from "./change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history.component";
+import { ChangeMouDetailHistoryComponent } from "./change-mou/change-mou-view/change-mou-detail-history/change-mou-detail-history.component";
+import { ChangeMouHistoryVersionComponent } from "./change-mou/change-mou-view/change-mou-history/change-mou-history.component";
 import { MouCustomerRequestXComponent } from 'app/impl/MOU/mou-customer-request/mou-customer-request-x.component';
 import { MouCustomerInquiryXComponent } from 'app/impl/MOU/mou-customer/mou-customer-inquiry/mou-customer-inquiry-x.component';
 import { ChangeMouRequestPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-paging/change-mou-request-paging-x.component';
 import {MouCustomerApprovalXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-customer-approval-x.component';
 import {ChangeMouApprovalPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-paging/change-mou-approval-paging-x.component';
 import { UcpagingComponent } from '@adins/ucpaging';
+import { ChangeMouHistoryVersionXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-history/change-mou-history-x.component';
+import { ChangeMouViewModule } from 'app/view-enhancing/change-mou-view/change-mou-view.module';
+import { ChangeMouAddcollHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history-x.component';
+import { ChangeMouDetailHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-detail-history/change-mou-detail-history-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -188,8 +195,10 @@ export const customCurrencyMaskConfig = {
     UcapprovalgeneralinfoModule,
     SharedModule,
     NgMultiSelectDropDownModule,
+    ChangeMouViewModule,
     ViewModule,
-    MouViewModule
+    MouViewModule,
+    ChangeMouViewModule
   ],
   declarations: [
     DocSignerComponent,
@@ -326,9 +335,15 @@ export const customCurrencyMaskConfig = {
     MouCustTabXComponent,
     MouCancelDetailComponent,
     MouCustAttrContentComponentComponent,
+    ChangeMouAddcollHistoryComponent,
+    ChangeMouDetailHistoryComponent,
+    ChangeMouHistoryVersionComponent,
     MouCustomerRequestXComponent,
     MouCustomerInquiryXComponent,
     ChangeMouRequestPagingXComponent,
+    ChangeMouHistoryVersionXComponent,
+    ChangeMouAddcollHistoryXComponent,
+    ChangeMouDetailHistoryXComponent
   ],
   exports: [],
   providers: [NGXToastrService],

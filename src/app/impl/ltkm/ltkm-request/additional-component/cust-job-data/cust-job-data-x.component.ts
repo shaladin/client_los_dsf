@@ -319,7 +319,7 @@ export class LtkmCustJobDataXComponent implements OnInit {
         CustModelCode: this.custModelCode,
         ProfessionalNo: this.ltkmCustPersonalJobDataObj.ProfessionalNo,
         EstablishmentDt: this.ltkmCustPersonalJobDataObj.EstablishmentDt != undefined ? formatDate(this.ltkmCustPersonalJobDataObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : '',
-        JobTitleName: this.ltkmCustPersonalJobDataObj.MrJobTitleCode,
+        JobTitleName: this.ltkmCustPersonalJobDataObj.JobTitleName,//richard, 20230421, fixing set default untuk job title name
         IsMfEmp: this.ltkmCustPersonalJobDataObj.IsMfEmp,
         CompanyName: this.ltkmCustPersonalJobDataObj.CompanyName,
         MrJobPositionCode: this.ltkmCustPersonalJobDataObj.MrJobPositionCode,
@@ -329,7 +329,7 @@ export class LtkmCustJobDataXComponent implements OnInit {
         MrInvestmentTypeCode: this.ltkmCustPersonalJobDataObj.MrInvestmentTypeCode,
         IndustryTypeCode: this.ltkmCustPersonalJobDataObj.IndustryTypeCode,
         RefSectorEconomySlikCode: this.ltkmCustPersonalJobDataObj.RefSectorEconomySlikCode,
-        MrProfessionCode: this.ltkmCustPersonalJobDataObj.MrProfessionCode
+        MrProfessionCode: this.ltkmCustPersonalJobDataObj.MrProfessionCode,
       });
 
       await this.setProfessionName(this.ltkmCustPersonalJobDataObj.MrProfessionCode);

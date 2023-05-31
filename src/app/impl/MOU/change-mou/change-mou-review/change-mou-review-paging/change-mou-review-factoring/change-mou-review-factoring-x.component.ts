@@ -19,6 +19,7 @@ import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
 import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
 import { ReqGetByTypeCodeObj } from "app/shared/model/ref-reason/req-get-by-type-code-obj.model";
 import { UcInputRFAObj } from "app/shared/model/uc-input-rfa-obj.model";
+import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
 
 @Component({
   selector: "app-change-mou-review-factoring-x",
@@ -44,6 +45,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
   ChangeMouCustId: number;
   TrxType: string;
   OriOfficeCode: string;
+  changeMouTrxIdPrev: number;
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild("ApprovalComponent") set content(
@@ -53,7 +55,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
       this.createComponent = content;
     }
   }
-  ApprovalCreateOutput: any; 
+  ApprovalCreateOutput: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -167,7 +169,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
 
   Return() {
     let urlPost = environment.isCore ? URLConstant.ReturnChangeMouReviewV2 : URLConstant.ReturnChangeMouReview;
-    var mouObj = { 
+    var mouObj = {
       WfTaskListId: this.WfTaskListId,
       ChangeMouTrxId : this.ChangeMouTrxId
     };
@@ -231,7 +233,7 @@ export class ChangeMouReviewFactoringXComponent implements OnInit {
     this.InputObj.OfficeCodes.push(this.OriOfficeCode);
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CHG_MOU_APV;
-    
+
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.TrxNo;
 

@@ -27,8 +27,20 @@
         {
             "type": "label",
             "position": "center",
+            "label": "Main Premi To Customer Rate (%)",
+            "name": "CustMainPremiRate"
+        },
+        {
+            "type": "label",
+            "position": "center",
             "label": "Additional Premi To Customer",
             "name": "TotalCustAddPremiAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Additional Premi To Customer Rate (%)",
+            "name": "CustAddPremiRate"
         },
         {
             "type": "label",
@@ -39,8 +51,20 @@
         {
             "type": "label",
             "position": "center",
+            "label": "Main Premi To Insco Rate (%)",
+            "name": "InscoMainPremiRate"
+        },
+        {
+            "type": "label",
+            "position": "center",
             "label": "Additional Premi To Insco",
             "name": "TotalInscoAddPremiAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Additional Premi To Insco Rate (%)",
+            "name": "InscoAddPremiRate"
         },
         {
             "type": "label",
@@ -79,7 +103,17 @@
         {
             "type": "decimal",
             "position": "center",
+            "property": "CustMainPremiRate"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
             "property": "TotalCustAddPremiAmt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustAddPremiRate"
         },
         {
             "type": "decimal",
@@ -89,7 +123,17 @@
         {
             "type": "decimal",
             "position": "center",
+            "property": "InscoMainPremiRate"
+        },
+        {
+            "type": "decimal",
+            "position": "center",
             "property": "TotalInscoAddPremiAmt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InscoAddPremiRate"
         },
         {
             "type": "text",

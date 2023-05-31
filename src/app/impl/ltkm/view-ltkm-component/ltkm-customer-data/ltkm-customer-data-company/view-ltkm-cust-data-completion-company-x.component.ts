@@ -81,12 +81,18 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
   }
 
   async getCustData() {
+    await this.http.post(URLConstantX.GetLtkmCustBankAccAndStatementForViewWithOrderedMonthAndYear, { Id: this.LtkmCustId }).toPromise().then(
+        (response) => {
+            this.ltkmCustBankAccObjs = response['ReturnObject'];
+        });
     await this.http.post(URLConstant.GetLtkmCustDataCompanyForViewByLtkmCustId, { LtkmCustId: this.LtkmCustId, IsForNapCompletionVersion: true }).toPromise().then(
         (response) => {
             this.ltkmCustObj = response["rLtkmCustObj"];
             this.ltkmCustAddrForViewObjs = response["rLtkmCustAddrObjs"];
             this.ltkmCustCompanyMgmntShrholderObjs = response["rLtkmCustCompanyMgmntShrholderObjs"];
-            this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
+            
+            // this.ltkmCustBankAccObjs = response["rLtkmCustBankAccObjs"];
+            
             this.ltkmCustCompanyLegalDocObjs = response["rLtkmCustCompanyLegalDocObjs"];
             this.ltkmCustSocmedObjs = response["rLtkmCustSocmedObjs"];
             this.ltkmCustGrpObjs = response["rLtkmCustGrpObjs"];
@@ -109,7 +115,6 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
             }
         });
     this.CustNoObj.CustNo = this.ltkmCustObj.CustNo;
-
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
         (response) => {
             this.CustId = response['CustId'];
@@ -160,6 +165,6 @@ export class ViewLtkmCustDataCompletionCompanyXComponent implements OnInit {
   }
 
   calculateCompanyFinData(){
-    this.NettIncomeAmtCoy = this.CustCoyFinData['GrossMonthlyIncomeAmt'] - this.CustCoyFinData['OthMonthlyInstAmt'] - this.CustCoyFinData['OprCost'];
+    this.NettIncomeAmtCoy = this.CustCoyFinData['GrossMonthlyIncomeAmt'] - (this.CustCoyFinData['OthMonthlyInstAmt'] + this.CustCoyFinData['OtherMonthlyInstallmentDsf']) - this.CustCoyFinData['OprCost'];
   }
 }

@@ -60,6 +60,7 @@ export class ExceptionConstant {
     public static MUST_CALCUCATE_FIRST = "Must Calculate First";
     public static NTF_MUST_BE_GREAD_THAN_TOTFEE = "Total Fee Amount cannot be greater than NTF Amount ";
 
+    public static PLEASE_SELECT_ONE = "Please select One";
 
     public static OFFICE_IS_NOT_ALLOWED_TO_CREATE_APP = "Office Is Not Allowed to Create App";
     public static DUPLICATE_SOCIAL_MEDIA = "Social Media cannot be duplicate!";
@@ -217,5 +218,7 @@ export class ExceptionConstant {
 
     public static LEAD_INPUT_AGENCY_CMO_TELE = "Please input either Agency, CMO or Tele Sales";
     public static FINANCING_AMT_MORE_THAN_COLL_PORTION_AMT = "Total Financing Amount is More Than Total Collateral Portion Amount";
+
+    public static PLEASE_WAIT_A_MINUTE_UNTIL_CAPTURE_DATA_IS_FINISHED = "Please Wait A Minute Until Capture Data Is Finished";
 }
 

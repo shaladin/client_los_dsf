@@ -60,7 +60,7 @@
           "name": "LeadNo",
           "isHide": true,
           "position": "left",
-          "path": "/View/Lead",
+          "path": "VIEW_LEAD",
           "target": "_blank",
           "param": [
             {
@@ -93,6 +93,11 @@
           "type": "text",
           "label": "Credit Score",
           "property": "CreditScore"
+        },
+        {
+          "type": "text",
+          "label": "Business Line",
+          "property": "LobName"
         }
       ],
       "querystring": {

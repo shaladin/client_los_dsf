@@ -70,7 +70,10 @@ export class AppInquiryPagingXComponent implements OnInit, OnDestroy {
       this.inputPagingObj._url = "./assets/impl/ucpaging/searchAppInquiryFactoring.json";
       this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchAppInquiryFactoring.json";
     }
-    else {
+    else if(this.BizTemplateCode == CommonConstant.DF) {
+      this.inputPagingObj._url = "./assets/impl/ucpaging/searchAppInquiryDlfnX.json";
+      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchAppInquiryDlfnX.json";
+    } else {
       this.inputPagingObj._url = "./assets/impl/ucpaging/searchAppInquiryX.json";
       this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchAppInquiryX.json";
     }
@@ -82,8 +85,6 @@ export class AppInquiryPagingXComponent implements OnInit, OnDestroy {
     critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
     critLobObj.value = this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critLobObj);
-
-    this.isReady = true;
   }
    
   getEvent(event: any) {
@@ -92,10 +93,10 @@ export class AppInquiryPagingXComponent implements OnInit, OnDestroy {
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerViewByCustId(response["CustId"]);
           }
           if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
-            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+            this.adInsHelperService.OpenCustomerCoyViewByCustId(response["CustId"]);
           }
         }
       );

@@ -8,6 +8,8 @@ import { AppAssetObj } from 'app/shared/model/app-asset-obj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/app-asset-collateral-for-insurance.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { AppInsMainCvgObj } from 'app/shared/model/app-ins-main-cvg-obj.model';
 
 @Component({
   selector: 'agrmnt-view-insurance-x',
@@ -37,6 +39,10 @@ export class ViewAgrmntInsuranceXComponent implements OnInit {
   gridAssetDataObj: InputGridObj = new InputGridObj();
   listAppAssetObj: any;
 
+  appInsMainCvgObjs: Array<AppInsMainCvgObj> = new Array<AppInsMainCvgObj>();
+
+  isReadyCvg: boolean = false;
+
   constructor(
     private http: HttpClient,
   ) {}
@@ -60,6 +66,7 @@ export class ViewAgrmntInsuranceXComponent implements OnInit {
         this.InsCpltzAmt = 0;
         this.InsDiscAmt = 0;
         this.TotalPremiumToCust = 0;
+        if(this.listAppAssetObj != null && this.listAppAssetObj != undefined){
 
         for (var i = 0; i < this.listAppAssetObj.length; i++) {
           if (this.listAppAssetObj[i].PaidAmtByCust != null)
@@ -74,6 +81,31 @@ export class ViewAgrmntInsuranceXComponent implements OnInit {
           if (this.listAppAssetObj[i].TotalCustPremiAmt != null)
             this.TotalPremiumToCust = this.listAppAssetObj[i].TotalCustPremiAmt;
         }
+
+        this.GetInsCvgs(this.listAppAssetObj[0].AppAssetId);
+        }
+      });
+  }
+
+  async GetInsCvgs(appAssetId){
+    var reqAssetObj = { Id: appAssetId };
+    await this.http.post(URLConstantX.GetInsuranceDataByAppAssetIdXForView, reqAssetObj).toPromise().then(
+      (response) => {
+        this.appInsMainCvgObjs = response["AppInsMainCvgObjs"];
+        this.isReadyCvg = true;
+
+        // for (var i = 0; i < this.appInsMainCvgObjs.length; i++) {
+        //   if(this.appInsMainCvgObjs[i].AppInsAddCvgObjs != null && this.appInsMainCvgObjs[i].AppInsAddCvgObjs != undefined){
+        //     for (var j = 0; j < this.appInsMainCvgObjs[i].AppInsAddCvgObjs.length; j++) {
+        //       if (this.appInsMainCvgObjs[i].AppInsMainCvgId == this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].AppInsMainCvgId) {
+        //         arrCustAddPremiRate.push((this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].CustAddPremiRate).toFixed(3));
+        //         arrInscoAddPremiRate.push((this.appInsMainCvgObjs[i].AppInsAddCvgObjs[j].InscoAddPremiRate).toFixed(3));
+        //       }
+        //     }
+        //     this.appInsMainCvgObjs[i].CustAddPremiRate = arrCustAddPremiRate.join(", ");
+        //     this.appInsMainCvgObjs[i].InscoAddPremiRate = arrInscoAddPremiRate.join(", ");
+        //   }
+        // }
       });
   }
 

@@ -31,8 +31,41 @@
                                     <label class="adInsLabel"> <b>{{item.FullAssetName}}</b> </label>
                                 </div>
                             </div>
+                            <div *ngFor="let docname of item.AppCollateralDocsObjs">
+                                <div class="form-group row" *ngIf="docname.length != 0">
+                                    <div class="col-md-6">
+                                        <label class="adInsLabel"> <b>{{docname.DocName}}</b> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="adInsLabel"> <b>{{docname.DocName}}</b> </label>
+                                    </div>
+                                </div>
+                                <div *ngFor="let detail of item.EditAppAftApvTrxDObjs">
+                                    <div class="form-group row" *ngIf="detail.RefId == docname.AppCollateralDocId && detail.TableName == 'APP_COLLATERAL_DOC'">
+                                        <div class="col-md-3">
+                                            <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
+                                        </div>
+                                        <div class="col-md-3" *ngIf="detail.ChangeItemCode == 'IS_RECEIVED'">
+                                            <label class="adInsLabel"> {{detail.OldValue == '1' ? 'YES' : 'NO'}} </label>
+                                        </div>
+                                        <div class="col-md-3" *ngIf="detail.ChangeItemCode != 'IS_RECEIVED'">
+                                            <label class="adInsLabel"> {{detail.OldValue}} </label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
+                                        </div>
+                                        <div class="col-md-3" *ngIf="detail.ChangeItemCode == 'IS_RECEIVED'">
+                                            <label class="adInsLabel" translate> {{detail.NewValue == '1' ? 'YES' : 'NO'}} </label>
+                                        </div>
+                                        <div class="col-md-3" *ngIf="detail.ChangeItemCode != 'IS_RECEIVED'">
+                                            <label class="adInsLabel"> {{detail.NewValue}} </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
                             <div *ngFor="let detail of item.EditAppAftApvTrxDObjs">
-                                <div class="form-group row">
+                                <div class="form-group row" *ngIf="detail.TableName != 'APP_COLLATERAL_DOC'">
                                     <div class="col-md-3">
                                         <label class="adInsLabel"> {{detail.ChangeItemDescr}} </label>
                                     </div>

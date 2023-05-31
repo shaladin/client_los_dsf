@@ -69,6 +69,12 @@ import { ViewLtkmCustomerDataCompanyXComponent } from "app/impl/ltkm/view-ltkm-c
 import { LtkmVerifyDetailXComponent } from "app/impl/ltkm/ltkm-verify/detail/ltkm-verify-detail-x.component";
 import { ViewLtkmCustDetailXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-customer-data/view-ltkm-cust-detail/view-ltkm-cust-detail-x.component";
 import { LtkmApprovalDetailComponent } from "./ltkm-approval/detail/ltkm-approval-detail.component";
+import { LtkmApprovalDetailXComponent } from "app/impl/ltkm/ltkm-approval/detail/ltkm-approval-detail-x.component";
+import { LtkmCcContactInformationTabXComponent } from "app/impl/ltkm/ltkm-request/additional-component/company/cc-contact-information-tab-x/cc-contact-information-x.component";
+import { CcAddressDetailLtkmXComponent } from "app/impl/ltkm/ltkm-return-handling/address-tab/cc-address-detail/cc-address-detail-x.component";
+import { CcAddressPagingLtkmXComponent } from "app/impl/ltkm/ltkm-return-handling/address-tab/cc-address-paging/cc-address-paging-x.component";
+import { LtkmReturnHandlingPagingXComponent } from "app/impl/ltkm/ltkm-return-handling/paging/ltkm-return-handling-x.component";
+import { LtkmFinancialPersonalXComponent } from "app/impl/ltkm/ltkm-request/additional-component/financial-personal/financial-personal-x.component";
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: false,
@@ -115,7 +121,7 @@ export const customCurrencyMaskConfig = {
     UcapprovalHistoryModule,
     UcapprovalR3Module,
     UcapprovalgeneralinfoModule,
-    UcgridviewModule, 
+    UcgridviewModule,
     UcdropdownlistModule
   ],
   declarations: [
@@ -148,7 +154,13 @@ export const customCurrencyMaskConfig = {
     LtkmReturnHandlingXComponent,
     LtkmCustJobDataXComponent,
     LtkmFinancialCompanyXComponent,
-    LtkmVerifyDetailXComponent
+    LtkmVerifyDetailXComponent,
+    LtkmApprovalDetailXComponent,
+    LtkmCcContactInformationTabXComponent,
+    LtkmFinancialPersonalXComponent,
+    CcAddressDetailLtkmXComponent,
+    LtkmReturnHandlingPagingXComponent,
+    CcAddressPagingLtkmXComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

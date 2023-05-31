@@ -56,7 +56,7 @@ export class URLConstantX {
   public static UpdateAppInvoiceDlfnX = environment.losUrl + '/v1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
   public static UpdateAppInvoiceDlfnV2X = environment.losUrl + '/v2' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
   public static UpdateAppInvoiceDlfnV2_1X = environment.losUrl + '/v2.1' + '/AppInvoiceX/UpdateAppInvoiceDlfn';
-  
+
   //App Reserved Fund
   public static GetRsvFundSingleRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetRsvFundSingleRule";
   public static GetAppRsvFundPriorityRule = environment.losUrl + "/v1" + "/AppReservedFundX/GetAppRsvFundPriorityRule";
@@ -106,6 +106,9 @@ export class URLConstantX {
   public static GetInitForDmsDataByCessieHXId = environment.losUrl + "/v1" + "/Cessie/GetInitForDmsDataByCessieHXId";
   public static GetCessieHXById = environment.losUrl + "/v1" + "/Cessie/GetCessieHXById";
 
+  // CUSTOMER ADDRESS
+  public static GetListCustAddrByCustNoX = environment.FoundationR3Url + "/v1" + "/CustAddrX/GetListCustAddrByCustNoX";
+
   //MOU CUST X
   public static GetMouCustByAppIdX = environment.losUrl + '/v1' + "/MouCustX/GetMouCustByAppId";
   public static AddMouCustX = environment.losUrl + '/v1' + '/MouCustX/AddMouCust';
@@ -138,11 +141,14 @@ export class URLConstantX {
   public static DeleteMouCustCollateralX = environment.losUrl + '/v1' + '/MouCustCollateralX/DeleteMouCustCollateral';
   public static GetDealerGradingX = environment.losUrl + '/v1' + '/MouCustCollateralX/GetDealerGrading';
   public static GetMouCustCollateralDataForUpdateByMouCustCollateralIdX = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralDataForUpdateByMouCustCollateralId";
+  public static GetMouCustCollateralForMouViewByMouCustId = environment.losUrl + "/v1" + "/MouCustCollateralX/GetMouCustCollateralForMouViewByMouCustId";
+
 
   // CHANGE MOU
   public static GetChangeMouMainInfoByIdX = environment.losUrl + '/v1' + "/ChangeMouX/GetChangeMouMainInfoById";
   public static GetListChangeMouTrxByMouCustId = environment.losUrl + "/v1" + "/ChangeMOUX/GetListChangeMouTrxByMouCustId";
   public static AddChangeMou = environment.losUrl + "/v1" + "/ChangeMOUX/AddChangeMou";
+  public static GetChangeMouPreviousIdByChangeMouTrxIdX = environment.losUrl + "/v1" + "/ChangeMouX/GetChangeMouPreviousIdByChangeMouTrxIdX";
 
   //CHANGE MOU CUST COLLATERAL X
   public static GetChangeMouCustCollateralStatByChangeMouCustCollateralIdX = environment.losUrl + "/v1" + "/ChangeMouCustCollateralX/GetChangeMouCustCollateralStatByChangeMouCustCollateralId";
@@ -163,6 +169,8 @@ export class URLConstantX {
   public static DeleteAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/DeleteAppCustBankAccAndStmntX";
   public static GetAppCustBankAccAndStatementForView = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccAndStatementForViewX";
   public static AddEditNapCust = environment.losUrl + "/v1" + "/Application/AddEditNapCust";
+  public static GetCustBankAccByCustNoX = environment.FoundationR3Url + "/v1" + "/CustBankAccX/GetCustBankAccByCustNoX";
+  public static GetCustBankAccByCustBankAccIdX = environment.FoundationR3Url + "/v1" + "/CustBankAccX/GetCustBankAccByCustBankAccIdX";
 
   //APP X
   public static SubmitNAPX = environment.losUrl + '/v1' + "/AppX/SubmitNAP";
@@ -200,6 +208,7 @@ export class URLConstantX {
   public static AddVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/AddVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
   public static EditVerfResultHeaderAndVerfResultDetailForSurveyVerif = environment.FoundationR3Url + "/v1" + "/VerfResultHX/EditVerfResultHeaderAndVerfResultDetailForSurveyVerifX";
   public static CompleteAppSurveyVerifXV2 = environment.losUrl + "/v2" + "/SurveyVerifX/CompleteAppSurveyVerif";
+  public static DeleteVerfResultHeaderAndVerfResultDetailByVerfResultHId = environment.FoundationR3Url + "/v1" + "/VerfResultHX/DeleteVerfResultHeaderAndVerfResultDetailByVerfResultHId";
 
   //REF SECTOR ECONOMY SLIK X
   public static GetRefSectorEconomySlikXByCode = environment.FoundationR3Url + "/v1" + "/RefSectorEconomySlikX/GetRefSectorEconomySlikXByCode";
@@ -208,6 +217,8 @@ export class URLConstantX {
   //credit review
   public static GetCrdRvwAppByCrdRvwCustInfoId = environment.losUrl + '/v1' + "/CrdRvwAppX/GetCrdRvwAppByCrdRvwCustInfoId";
   public static GetAssetAndAccByAppId = environment.losUrl + '/v1' + "/AppCrdRvwX/GetAssetAndAccByAppId"
+  public static GetAssetAndAccByAppIdV2 = environment.losUrl + '/v2' + "/AppCrdRvwX/GetAssetAndAccByAppId"
+
   //App Fin Data-Fee X
   public static GetInitAppFinDataByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataByAppId";
   public static GetInitFinDataForTrialCalcX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitFinDataForTrialCalc";
@@ -234,6 +245,7 @@ export class URLConstantX {
 
   //APP TC
   public static EditAppTcX = environment.losUrl + "/v1" + "/AppTcX/EditAppTc";
+  public static GetListTCbyAppIdFromRuleX = environment.losUrl + "/v1" + "/AppTcX/GetListTCbyAppIdFromRuleX";
 
   // CUST MAIN DATA
   public static CheckIfCustHasOngoingAppX = environment.losUrl + "/v1" + "/AppCustX/CheckIfCustHasOngoingApp";
@@ -244,6 +256,8 @@ export class URLConstantX {
   public static GetAgrmntFinDataNtfAmtByAgrmntId = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntFinDataNtfAmtByAgrmntId";
   public static GetAgrmntOtherInfoByAgrmntIdX = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntOtherInfoByAgrmntId";
   public static GetAgrmntOtherInfoByAgrmntIdForViewX = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntOtherInfoByAgrmntIdForView";
+  public static GetLatestAgrmntXByAgrmntId = environment.losUrl + "/v1" + "/AgrmntX/GetLatestAgrmntXByAgrmntId";
+  public static GetAgrmntExpiredHistForCustViewByCustNo = environment.losUrl + "/v1" + "/AgrmntX/GetAgrmntExpiredHistForCustViewByCustNo";
 
   //ASSET
   public static GetRefAssetDocList = environment.FoundationR3Url + "/v1" + "/AssetDocListX/GetListAssetDocListByAssetTypeCode";
@@ -288,9 +302,16 @@ export class URLConstantX {
   public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
   public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmAppRjcByCustNoAndAppStat";
   public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
-
+  public static GetLtkmCustBankAccAndStatementForViewWithOrderedMonthAndYear = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmCustBankAccAndStatementForViewWithOrderedMonthAndYear";
+  public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetCustDataByLtkmCustId";
+  
   //ltkm cust personal main data
   public static GetCustPersonalForLtkmCopyByCustIdX = environment.FoundationR3Url + "/v1" + "/CustX/GetCustPersonalForLtkmCopyByCustId";
+
+  //ltkm return handling
+  public static SaveLtkmReturnHandlingPersonalV2 = environment.losUrl + "/v2" + "/LtkmCustomerDataX/SaveLtkmReturnHandlingPersonal";
+  public static SaveLtkmReturnHandlingCompanyV2 = environment.losUrl + "/v2" + "/LtkmCustomerDataX/SaveLtkmReturnHandlingCompany";
+
 
   //Delivery Order
   public static EditAppAssetDOMultiAsset = environment.losUrl + "/v1" + "/AppAssetX/EditAppAssetDOMultiAsset";
@@ -309,6 +330,7 @@ export class URLConstantX {
   //App Agrmnt Cancellation
   public static AddAppAgrmntCancelV2_1X = environment.losUrl + "/v2.1" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
   public static AddAppAgrmntCancelV3X = environment.losUrl + "/v3" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
+  public static AddAppAgrmntCancelV4X = environment.losUrl + "/v4" + "/AppAgrmntCancelX/AddAppAgrmntCancel";
 
   // Invoice
   public static AddInvoiceX = environment.losUrl + "/v1" + "/InvoiceX/AddInvoiceX";
@@ -331,6 +353,7 @@ export class URLConstantX {
   public static ProcessAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/ProcessAutoDebitRegistration";
   public static GetListStgAutoDebitRegisLog = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetListStgAutoDebitRegisLog";
   public static ChangeAutoDebitRegisStat = environment.losUrl + "/v1" + "/AutoDebitRegistration/ChangeAutoDebitRegisStat";
+  public static GetListStgAutoDebitRegisLogForView = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetListStgAutoDebitRegisLogForView";
   //#endregion
 
   public static GetInsuranceDataByAppAssetIdXForView = environment.losUrl + "/v1" + "/AppInsX/GetInsDataByAppAssetIdForView";

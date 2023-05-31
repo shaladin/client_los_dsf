@@ -23,6 +23,7 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
   bizTemplateCode: string;
   isJqueryWork: string
   bankBCA: string;
+  windowSkpr: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,12 +84,12 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
               this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, { TrxNo: e.RowObj.TransactionNo }).subscribe(
                 (response1) => {
                   //if (currDt < expDt)
-                  if (new Date() > new Date(response1["ExpiredDt"])) {
+                  if (new Date() < new Date(response1["ExpiredDt"]) && response1["RequestId"] != null) {
                     //window.open
-                    window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response1["RequestId"] + "&verification=" + response1["Verification"]);
-                    $(document).ready(function () {
-                      window.addEventListener("message", receiveMessage, false)
-                    })
+                    this.windowSkpr = window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response1["RequestId"] + "&verification=" + response1["Verification"]);
+                    $(document).ready(() => {
+                      window.addEventListener("message", receiveMessage.bind(this), false);
+                    });
                   }
                   //else
                   else {
@@ -101,10 +102,10 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
                         else {
                           this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, { TrxNo: e.RowObj.TransactionNo }).subscribe(
                             (response3) => {
-                              window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response3["RequestId"] + "&verification=" + response3["Verification"]);
-                              $(document).ready(function () {
-                                window.addEventListener("message", receiveMessage, false)
-                              })
+                              this.windowSkpr = window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response3["RequestId"] + "&verification=" + response3["Verification"]);
+                              $(document).ready(() => {
+                                window.addEventListener("message", receiveMessage.bind(this), false);
+                              });
                             }
                           )
                         }
@@ -152,7 +153,7 @@ function receiveMessage(event) {
           window.location.reload();
         }
       };
-
+      this.windowSkpr.location.replace("https://registrasi.klikbca.com/id/skpr/success");
       xhr.send(JSON.stringify(obj));
     }
     else {
@@ -170,7 +171,7 @@ function receiveMessage(event) {
           window.location.reload();
         }
       };
-
+      this.windowSkpr.location.replace("https://registrasi.klikbca.com/id/skpr/failed");
       xhr.send(JSON.stringify(obj));
     }
   } catch (e) {
