@@ -2146,8 +2146,7 @@ export class LtkmRequestXComponent implements OnInit {
         tempNewAttr = event["CustAttrContentObjs"]["NewCustAttrContentObjsForLtkm"];
 
         this.listAttrContentFinData = tempNewAttr.filter(x => x.AttrGroup == this.AttrGroupFinData);
-        this.listAttrContentCustData = tempNewAttr.filter(x => 
-            x.AttrGroup == this.AttrGroup);
+        this.listAttrContentCustData = tempNewAttr.filter(x => x.AttrGroup == this.AttrGroup);
 
         if (this.listAttrContentFinData.length > 0) {
             this.attrlistfindatacomponent.ListAttrContent = this.listAttrContentFinData;
