@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -43,7 +44,8 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private modalService: NgbModal,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private toastr: NGXToastrService) { }
 
   async ngOnInit() : Promise<void> {
     await this.GetIsUseDigitalization();
@@ -105,14 +107,25 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
         PefindoBasicRole = response.GsValue;
       }
     )
-    let Roles = PefindoBasicRole.split(',');
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-    if (Roles.includes(this.user.RoleCode)) {
-      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false, token);
-    } else {
-      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
-    }
+
+    await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
+      (response) => {
+        let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
+        if (thirdPartyTrxNo == null || thirdPartyTrxNo == "")
+        {
+          this.toastr.warningMessage("Please request Pefindo first!");
+          return;
+        }
+
+        let Roles = PefindoBasicRole.split(',');
+        this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+        if (Roles.includes(this.user.RoleCode)) {
+            AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false, token);
+        } else {
+            AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
+        }
+    })
   }
 
   closeResult: any;
