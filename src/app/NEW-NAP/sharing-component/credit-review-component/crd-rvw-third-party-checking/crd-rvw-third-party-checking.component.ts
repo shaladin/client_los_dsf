@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -41,7 +42,8 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private modalService: NgbModal,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private toastr: NGXToastrService) { }
 
   async ngOnInit(): Promise<void> {
     await this.GetIsUseDigitalization();
@@ -96,9 +98,19 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
     )
   }
 
-  pefindoHandler() {
-    const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
+  async pefindoHandler() {
+    await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
+      (response) => {
+        let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
+        if (thirdPartyTrxNo == null || thirdPartyTrxNo == "")
+        {
+          this.toastr.warningMessage("Please request Pefindo first!");
+          return;
+        }
+
+        const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+        AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
+      })
   }
 
   closeResult: any;
