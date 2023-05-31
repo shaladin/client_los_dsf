@@ -66,6 +66,11 @@ import { GeneratePotentialRoMonitoringDsfComponent } from "app/dsf/lead/potentia
 import { RoTelemkOfferPagingDsfComponent } from "app/dsf/lead/potential-ro-dsf/ro-telemk-offer-paging-dsf/ro-telemk-offer-paging-dsf.component";
 import { RoTelemkOfferVerifXDsfComponent } from "app/dsf/lead/potential-ro-dsf/ro-telemk-offer-verif-x-dsf/ro-telemk-offer-verif-x-dsf.component";
 import { RoPotentialViewDsfComponent } from "app/dsf/lead/potential-ro-dsf/ro-potential-view-dsf/ro-potential-view-dsf.component";
+import { SimpleLeadReportDsfComponent } from 'app/dsf/lead/simple-lead-report-dsf/simple-lead-report-dsf.component';
+import { LeadInquiryDsfComponent } from 'app/lead/lead-inquiry-dsf/lead-inquiry-dsf.component';
+import {NewLeadInputLeadDataXDsfComponent} from 'app/dsf/lead/new-lead-input/new-lead-input-lead-data-x-dsf/new-lead-input-lead-data-x-dsf.component';
+
+import { UcreportModule } from '@adins/ucreport';
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -91,7 +96,8 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     CustSharingComponentModule,
     SharedModule,
-    AdInsModule
+    AdInsModule,
+    UcreportModule
   ],
   declarations: [
     LeadVerifComponent,
@@ -133,7 +139,10 @@ export const customCurrencyMaskConfig = {
     NewLeadUpdateDsfComponent,
     NewLeadInputDsfComponent,
     NewLeadInputMainInfoDsfComponent,
-    GeneratePotentialRoXComponent
+    GeneratePotentialRoXComponent,
+    SimpleLeadReportDsfComponent,
+    LeadInquiryDsfComponent,
+    NewLeadInputLeadDataXDsfComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

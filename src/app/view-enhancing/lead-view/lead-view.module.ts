@@ -23,6 +23,7 @@ import { LeadViewRoutingModule } from "./lead-view-routing.module";
 import { SharedModule } from "app/shared/shared.module";
 import { LeadViewSrvyTaskComponent } from "./lead-view-srvy-task/lead-view-srvy-task.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewLeadProcessFlowComponent } from "./view-lead-process-flow/view-lead-process-flow.component";
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         LeadViewComponent,
         ViewLeadDataComponent,
         ViewCustomerDataComponent,
-        LeadViewSrvyTaskComponent
+        LeadViewSrvyTaskComponent,
+        ViewLeadProcessFlowComponent
     ],
     entryComponents: [
         UclookupgenericComponent,

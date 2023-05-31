@@ -92,7 +92,7 @@
                                   </div>
                               </div>
                               <div class="form-group row">
-                                <label class="col-md-3 adInsLabel adInsLabel" translate>Agency </label>
+                                <label class="col-md-3 adInsLabel adInsLabel" translate>Referantor </label>
                                   <div class="col-md-4">
                                       <lib-uclookupgeneric [lookupInput]="agencyLookUpObj" [parentForm]="MainInfoForm"
                                           [enjiForm]="enjiForm" [identifier]="'Agency'"
@@ -101,7 +101,7 @@
                                   </div>
                               </div>
                               <div class="form-group row">
-                                  <label class="col-md-3 adInsLabel" translate>CMO Username </label>
+                                  <label class="col-md-3 adInsLabel adins-required-label" translate>Lead Received By </label>
                                   <div class="col-md-4">
                                       <lib-uclookupgeneric [lookupInput]="cmoNameLookUpObj"
                                           [parentForm]="MainInfoForm" [enjiForm]="enjiForm" [identifier]="'CmoName'"
@@ -110,7 +110,7 @@
                                   </div>
                               </div>
                               <div class="form-group row">
-                                <label class="col-md-3 adInsLabel adInsLabel" translate>Tele Sales Username </label>
+                                <label class="col-md-3 adInsLabel adInsLabel adins-required-label" translate>Lead Processed By </label>
                                 <div class="col-md-4">
                                     <lib-uclookupgeneric [lookupInput]="salesNameLookUpObj" [parentForm]="MainInfoForm"
                                         [enjiForm]="enjiForm" [identifier]="'SalesName'" (lookup)=getLookUpSalesName($event)>
@@ -118,12 +118,21 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 adInsLabel" translate>Surveyor Username </label>
+                                <label class="col-md-3 adInsLabel" translate>Supplier Name </label>
                                 <div class="col-md-4">
                                     <lib-uclookupgeneric [lookupInput]="surveyorNameLookUpObj" [parentForm]="MainInfoForm"
                                         [enjiForm]="enjiForm" [identifier]="'SurveyorName'" (lookup)=getLookUpSurveyorName($event)>
                                     </lib-uclookupgeneric>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-md-3 adInsLabel" translate>Submission Receipt Date </label>
+                              <div class="col-md-4">
+                                <input type="date" class="form-control adInsInput" formControlName="SubmissionReceiptDate"
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.SubmissionReceiptDate.invalid}">
+                                <lib-uc-show-errors [control]="MainInfoForm.controls.SubmissionReceiptDate"
+                                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                              </div>
                             </div>
                           </div>
                       </div>

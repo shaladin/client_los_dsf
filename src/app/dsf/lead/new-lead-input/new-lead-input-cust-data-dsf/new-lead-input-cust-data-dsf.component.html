@@ -35,10 +35,10 @@
                 <div class="col-md-4">
                   <label style="font-size: 12px;">PERSONAL</label>
                 </div>
-                <label class="col-md-2" [ngClass]="{ 'adins-required-label' : IsSimpleLeadUpdate }" translate>Gender
+                <label class="col-md-2" translate>Gender
                 </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="Gender" required
+                  <select class="form-control adInsInput" style="width: auto" formControlName="Gender"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.Gender.invalid }">
                     <option *ngFor="let it of tempGender" [value]="it.Key">
                       {{it.Value}}</option>
@@ -57,9 +57,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel " [ngClass]="{ 'adins-required-label' : IsSimpleLeadUpdate }"
-                  translate>Birth
-                  Place</label>
+                <label class="col-md-2 adInsLabel "
+                  translate>Birth Place</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control adInsInput" formControlName="BirthPlace"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.BirthPlace.invalid}">
@@ -76,9 +75,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel" [ngClass]="{ 'adins-required-label' : IsSimpleLeadUpdate }"
-                  translate>ID
-                  Type</label>
+                <label class="col-md-2 adInsLabel"
+                  translate>ID Type</label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode" (change)="ChangeIdType($event.target.value)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.MrIdTypeCode.invalid }">
@@ -88,9 +86,8 @@
                   <lib-uc-show-errors [control]="CustomerDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adInsLabel" [ngClass]="{ 'adins-required-label' : IsSimpleLeadUpdate }"
-                  translate>Mother
-                  Maiden Name</label>
+                <label class="col-md-2 adInsLabel"
+                  translate>Mother Maiden Name</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control adInsInput" formControlName="MotherName"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.MotherName.invalid}">
@@ -99,16 +96,14 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel" [ngClass]="{ 'adins-required-label' : IsSimpleLeadUpdate }"
-                  translate>ID
-                  No</label>
+                <label class="col-md-2 adInsLabel adins-required-label" translate>ID No</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput" formControlName="IdNo"
+                  <input type="text" class="form-control adInsInput" formControlName="IdNo" required
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.IdNo.invalid}">
-                  <lib-uc-show-errors [customPattern]="customPattern"  [control]="CustomerDataForm.controls.IdNo" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [customPattern]="customPattern" [control]="CustomerDataForm.controls.IdNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2 adInsLabel" [ngClass]="{ 'adins-required-label' : IsSimpleLeadUpdate }"
+                <label class="col-md-2 adInsLabel"
                   translate>Marital Status</label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrMaritalStatCode"
