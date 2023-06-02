@@ -168,7 +168,13 @@ public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: Http
     window.open(environment.losR3Web + NavigationConstant.VIEW_CUST_EXPSR + "?CrdRvwExposureHId=" + CrdRvwExposureHId + "&Token=" + token, '_blank');
   }
 
-  public static OpenPefindoView(CustNo: string, IsLos: boolean) {
+  public static OpenPefindoView(CustNo: string, IsLos: boolean, Token: string = "") {
+    if (Token != "")
+    {
+      window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos + "&Token=" + Token, '_blank');
+      return;
+    }
+
     window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos);
   }
 

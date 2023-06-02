@@ -10,11 +10,12 @@ import { CrdRvwViewRoutingModule } from './crd-rvw-view.routing.modul';
 import { ViewAppComponentModule } from 'app/NEW-NAP/sharing-component/view-app-component/view-app-component.module';
 import { ViewMainInfoComponentModule } from 'app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module';
 import { CreditReviewComponentModule } from 'app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module';
+import { CrdRvwViewXComponent } from 'app/impl/view-enhancing/crd-rvw-view/crd-rvw-view-x.component';
 
 @NgModule({
   declarations: [
     CrdRvwViewComponent,
-    
+    CrdRvwViewXComponent
   ],
   imports: [
     CrdRvwViewRoutingModule,
@@ -32,7 +33,8 @@ import { CreditReviewComponentModule } from 'app/NEW-NAP/sharing-component/credi
     UcviewgenericComponent
   ],
   exports: [
-    CrdRvwViewComponent
+    CrdRvwViewComponent,
+    CrdRvwViewXComponent
   ]
 })
 export class CrdRvwViewModule { }

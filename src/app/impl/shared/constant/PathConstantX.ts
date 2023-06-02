@@ -40,6 +40,7 @@ export class PathConstantX {
   public static VIEW_FOU_CUST_PERSONAL_DETAIL_X = "Customer/X/PersonalDetailX";
   public static VIEW_FOU_CUST_COY_DETAIL_X = "Customer/X/CoyDetail/X";
   public static VIEW_AUTO_DEBIT_REGIS = "AutoDebitRegisView"
+  public static VIEW_CREDIT_REVIEW = PathConstant.VIEW_CREDIT_REVIEW + "/" + PathConstantX.X;
   //#endregion
 
   //#region Nap-Crd-Prcs
