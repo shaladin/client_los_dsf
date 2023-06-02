@@ -116,10 +116,6 @@
             <button type="submit" class="btn btn-raised btn-primary mr-1" translate>
               <i class="far fa-check-square"></i> Save
             </button>
-            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
-            (click)="checkObj()" translate>
-            <i class="ft-x"></i> check obj
-          </button>
           </div>
         </form>
         <form class="form form-horizontal" *ngIf="isReturnOn && ReturnHandlingHObj.ReturnHandlingHId == 0" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid && SaveReturnForm()"

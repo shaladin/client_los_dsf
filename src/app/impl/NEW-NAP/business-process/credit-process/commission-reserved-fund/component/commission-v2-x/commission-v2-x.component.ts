@@ -673,6 +673,7 @@ export class CommissionV2XComponent implements OnInit {
         //region 2.1.2
         if(this.pph23&&identifier==this.identifierSupplier){
           taxAmt= 0;
+          totalPenaltyDAmount = 0;
         }
         //emd region
 
@@ -807,37 +808,6 @@ export class CommissionV2XComponent implements OnInit {
 
   }
 
-  checkObj(){
-    let listAppCommissionHAddObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
-    let listAppCommissionHEditObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
-    for (let i = 0; i < this.ListAppCommHObj.length; i++) {
-      if (this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt == null || isNaN(this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt)) {
-        this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt = 0;
-      }
-      //if (this.ListAppCommHObj[i].AppCommissionHId == 0) {
-        listAppCommissionHAddObj.push(this.ListAppCommHObj[i]);
-      //}
-      // else {
-      //   listAppCommissionHEditObj.push(this.ListAppCommHObj[i]);
-      // }
-    }
-    let obj = {
-      AppId: this.AppId,
-      GrossYield: this.Summary.GrossYield,
-      ReturnHandlingHId: this.ReturnHandlingHObj.ReturnHandlingHId,
-      WfTaskIdListId: this.ReturnHandlingHObj.WfTaskListId,
-      IsPersonal: this.AppIsPersonal,
-      ListAppCommissionHAddObj: listAppCommissionHAddObj,
-      ListAppCommissionHEditObj: listAppCommissionHEditObj,
-      ListResultRefundRsvFundObjs : this.ListResultRefundIncomeInfo, // START UATDSFCF-911
-      MaxAllocAmt : this.maxAllocAmt, //END UATDSFCF-911
-      skbNo:this.pph23No,
-      skbStartDt:this.pph23From,
-      skbEndDt:this.pph23To
-    };
-    console.log(obj)
-
-  }
 
   totalAlloc: number = 0;
   AllocateDataWithPriority(identifier: string, listVendorCode: Array<string>, listVendorEmpNo: Array<string>, listTrxAmt: Array<Array<number>>) {
