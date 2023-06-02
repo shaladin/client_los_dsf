@@ -29,6 +29,11 @@ export class FormCommissionGenerateXComponent implements OnInit {
   @Input() DictCalcMethod: { [id: string]: string } = {};
   @Input() SectionPosition: boolean = false;
   @Output() outputChangeEmp: EventEmitter<number> = new EventEmitter<any>();
+
+  //tambahin pph23
+  @Input() pph23: boolean;
+  supplier:string=CommonConstant.CommissionIdentifierSupplier
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -206,6 +211,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
         MrSupplEmpPositionCodeDesc: this.DDLContentAdd[idx].MrSupplEmpPositionCodeDesc,
         SupplCode: this.DDLContentAdd[idx].SupplCode
       });
+    
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentAdd[idx].MrSupplEmpPositionCode);
     this.tempDDLContentName.push(obj);
@@ -570,6 +576,13 @@ export class FormCommissionGenerateXComponent implements OnInit {
       });
     }
 
+    //region DSF-7303
+    if(this.pph23 && this.identifier==this.supplier){
+      appCommObj.TaxAmt =0
+      TotalPenaltyAmt = 0
+      console.log("di nol kan")
+    }
+    //end region
 
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
       HoldingTaxWithPenalty: (appCommObj.TaxAmt + TotalPenaltyAmt)

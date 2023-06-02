@@ -45,6 +45,38 @@ export class EditCommAfterApprovalComponentViewDetailComponent implements OnInit
   MaxAllocatedAmount = 0;
   // END UATDSFCF-911
 
+    //region pph23 2.1.5 DSF-7303
+    pph23:boolean
+    pph23No:string
+    pph23From:Date
+    pph23To:Date
+    currentDate:Date
+    supplier:string=CommonConstant.CommissionReceipientTypeCodeSupplier 
+    supplierNo:string=""
+
+    async checkPph23(){
+      let reqPphObj= 
+    {
+      "requestDateTime": new Date(),
+      "rowVersion": "",
+      "supplierNo": this.supplierNo//nanti ganti ke nomor asli klo udh ada
+    }
+    await this.http.post(URLConstantX.GetPph23BySupplierNo,reqPphObj).toPromise().then(
+      (response) => {
+        this.pph23No = response["ReturnObject"].SkbNo
+        this.pph23From = response["ReturnObject"].SkbStartDt
+        this.pph23To = response["ReturnObject"].SkbEndDt
+        //this.pph23To = new Date("2019-01-26") //buat ngecek kalo kondisi false
+        this.currentDate =response["ReturnObject"].BusinessDate
+        console.log("sudah dicek di API")
+      });
+
+      if(this.currentDate>this.pph23From && this.currentDate<this.pph23To){
+        this.pph23 = true
+      }
+    }
+    //end region 
+
   async initData() {
     this.ListSupplData = new Array();
     this.ListSupplEmpData = new Array();
@@ -107,6 +139,7 @@ export class EditCommAfterApprovalComponentViewDetailComponent implements OnInit
     }
     this.initData();
     this.GetCalcMethod();
+    await this.checkPph23();
     await this.GetCommissionData();
   }
 
@@ -134,7 +167,7 @@ export class EditCommAfterApprovalComponentViewDetailComponent implements OnInit
       this.ListSupplEmpData.push(tempObj);
     if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeReferantor)
       this.ListReferantorData.push(tempObj);
-
+    
 
     if(tempObj.MrTaxCalcMethodCode == "NETT"){
       summaryObj.totalCommAmt += tempObj.TotalCommissionAmt;
@@ -148,6 +181,17 @@ export class EditCommAfterApprovalComponentViewDetailComponent implements OnInit
     summaryObj.totalVatAmt += tempObj.VatAmt;
     summaryObj.totalDisburmentAmt += tempObj.TotalDisburseAmt;
     summaryObj.totalExpenseAmt += tempObj.TotalExpenseAmt;
+
+    //region 2.1.5 DSF-7303
+    if (tempObj.MrCommissionRecipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplier &&this.pph23){
+      summaryObj.totalTaxAmt =0;
+      tempObj.TaxAmt=0
+      tempObj.PenaltyAmt=0
+      this.supplierNo= tempObj.CommissionRecipientRefNo
+      console.log("Code supplier adalah",this.supplierNo)
+      console.log("temp obj adalah",tempObj)
+    }
+    //end region
   }
 
   async GetCommissionData() {

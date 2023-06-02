@@ -266,6 +266,18 @@ export class AgrmntActivationDetailXComponent implements OnInit {
     }
   }
 
+  checkObj(){
+    let Obj = {
+      CreateDt: this.CreateDt,
+      ListAppAssetId: this.listSelectedId,
+      TaskListId: this.WfTaskListId,
+      TransactionNo: this.TrxNo,
+      AgreementNo: this.AgrmntNo,
+      IsEnd: this.IsEnd
+    }
+    console.log(Obj)
+  }
+
   markFormTouched(group: FormGroup | FormArray) {
     Object.keys(group.controls).forEach((key: string) => {
       const control = group.controls[key];
