@@ -95,6 +95,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   WfTaskListId: any;
   isCopyButtonDisabled: boolean = true;
   reqAddLeadDsf:{LeadId:number, SubmissionReceiptDate:Date};
+  reqUpdateLeadStepDsf:{LeadId:number};
   reqGetLeadDsf:{LeadId:number};
 
   constructor(
@@ -529,13 +530,17 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               SubmissionReceiptDate: this.MainInfoForm.controls["SubmissionReceiptDate"].value
             }
 
+            this.reqUpdateLeadStepDsf = {
+              LeadId: this.leadObj.LeadId
+            }
+
             this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
             (response2) => {
               // this.toastr.successMessage(response2["message"]);
             });
 
             if(this.pageType == "update"){
-              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqAddLeadDsf).subscribe(
+              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqUpdateLeadStepDsf).subscribe(
                 (response3) => {
                   // this.toastr.successMessage(response3["message"]);
                 });
@@ -606,13 +611,18 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               SubmissionReceiptDate: this.MainInfoForm.controls["SubmissionReceiptDate"].value
             }
 
+            this.reqUpdateLeadStepDsf = {
+              LeadId: this.leadObj.LeadId
+            }
+
             this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
             (response2) => {
               // this.toastr.successMessage(response2["message"]);
             });
 
+
             if(this.pageType == "update"){
-              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqAddLeadDsf).subscribe(
+              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqUpdateLeadStepDsf).subscribe(
                 (response3) => {
                   // this.toastr.successMessage(response3["message"]);
                 });
