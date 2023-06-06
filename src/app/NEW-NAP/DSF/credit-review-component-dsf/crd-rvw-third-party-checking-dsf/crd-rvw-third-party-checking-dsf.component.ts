@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
-import { AppObj } from 'app/shared/model/App/App.Model';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { environment } from 'environments/environment';
 import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
@@ -18,6 +17,8 @@ import { ThirdPartyRapindoRsltObj } from 'app/shared/model/third-party-data/thir
 import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
 import { ThirdPartySlikRsltObj } from 'app/shared/model/third-party-data/third-party-slik-rslt-obj.model';
 import { ThirdPartyDataRobotObj } from 'app/shared/model/third-party-data/ThirdPartyDataRobotObj.Model';
+import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 @Component({
   selector: 'app-crd-rvw-third-party-checking-dsf',
   templateUrl: './crd-rvw-third-party-checking-dsf.component.html',
@@ -43,7 +44,9 @@ export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private cookieService: CookieService,
+    private toastr: NGXToastrService) { }
 
   async ngOnInit(): Promise<void> {
     await this.GetIsUseDigitalization();
@@ -109,8 +112,19 @@ export class CrdRvwThirdPartyCheckingDsfComponent implements OnInit {
     )
   }
 
-  pefindoHandler() {
-    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true);
+  async pefindoHandler() {
+    await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
+      (response) => {
+        let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
+        if (thirdPartyTrxNo == null || thirdPartyTrxNo == "")
+        {
+          this.toastr.warningMessage("Please request Pefindo first!");
+          return;
+        }
+
+        const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+        AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
+      })
   }
 
   closeResult: any;
