@@ -94,6 +94,7 @@ export class LtkmRequestXComponent implements OnInit {
     @ViewChild(LtkmFamilyMainDataPagingComponent) LtkmFamilyMainDataPagingComponent;
 
 
+
     @ViewChild("attrlistcustcomponent") public attrlistcustcomponent: LtkmAttrContentComponentComponent;
     @ViewChild("attrlistfindatacomponent") public attrlistfindatacomponent: LtkmAttrContentComponentComponent;
 
@@ -2015,20 +2016,36 @@ export class LtkmRequestXComponent implements OnInit {
         );
       }
 
+      
     async CopyCustomer(event) {
+             
         //20230120, richard, reset temp pers
         this.custDataPersonalObj = new LtkmCustDataPersonalObj();
         this.addrPersonalObjs = new Array<AddrObj>();
         this.addrPersonalObjsTemp = new Array<AddrObj>();
         this.addrObjsForView = new Array<LtkmAddrForViewObjX>();        
         this.copyAddrFromLookup(event);
-        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();        
-        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
+        this.custDataPersonalObj = new LtkmCustDataPersonalObj();
+        this.addrPersonalObjs = new Array<AddrObj>();
         this.addrPersonalObjsTemp = new Array<AddrObj>();
-        this.ltkmCustGrpParentObjs = new CustParentChildObj();
+        this.addrObjsForView = new Array<LtkmAddrForViewObjX>();
+        this.ltkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
+        this.ltkmCustGrpParentObjs = null;
         this.ltkmCustGrpChildObjs = new Array<CustParentChildObj>();
+        this.ltkmCustOtherInfo = new LtkmCustOtherInfoObj();
+        this.listAttrContentCustData = new Array<LtkmAttrContent>();
+        this.LtkmCustEmergencyContactObj = new LtkmCustEmrgncCntctObj();
+        this.listLtkmCustPersonalFinDataObjs = new Array<LtkmCustPersonalFinDataObj>();
+        this.listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
+        this.listFamily = new Array();
         this.inputLookupApplicationObj = new InputLookupObj();
-
+        this.inputLookupApplicationObj.urlJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.urlEnviPaging = environment.losUrl + "/v1";
+        this.inputLookupApplicationObj.pagingJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.genericJson = "./assets/uclookup/NAP/lookupAppLtkm.json";
+        this.inputLookupApplicationObj.isRequired = true;
+        this.inputLookupApplicationObj.addCritInput = new Array();
+    
         // this.selectCustNo = event.
 
         //perlu diganti cara bacanya (gak perlu), liat dri SELECT * FROM FOUNDATION_DSF.dbo.CUST_PERSONAL_FAMILY
@@ -2101,7 +2118,6 @@ export class LtkmRequestXComponent implements OnInit {
             addrVar.Fax = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Fax;
             addrVar.StayLength = this.custJobDataComponent.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.StayLength;
             this.addrPersonalObjsTemp.push(addrVar);
-
         }
 
         //20230125, richard, ubah mekanisme tampilin nilai cust group, baca dari master cust
@@ -2212,7 +2228,6 @@ export class LtkmRequestXComponent implements OnInit {
             // addrVar.Fax = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.Fax;
             // addrVar.StayLength = this.custCompanyContactInfo.LtkmCustCompanyContactPersonObj.LtkmCustAddrObj.StayLength;
             // this.addrCompanyObjsTemp.push(addrVar);
-
         }
 
         if (event["CustCompanyMgmntShrholderObjs"] != undefined) {
@@ -2580,7 +2595,7 @@ export class LtkmRequestXComponent implements OnInit {
             this.IsSpouseExist = false;
         }
     }
-
+    
     CheckBox(ev: MatRadioChange) {
         this.onChangeMrCustTypeCode(ev.value);
         // clearing if not edit
@@ -2806,7 +2821,5 @@ export class LtkmRequestXComponent implements OnInit {
         });
         return accountsPayload;
       }
-
-    
+   
 }
-

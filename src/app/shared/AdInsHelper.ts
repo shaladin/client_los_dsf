@@ -189,7 +189,13 @@ public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: Http
     window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_NEW_FORM_DSF + "?CustId=" + CustId + "&CustType=COMPANY" + "&From=" + From, "_blank");
   }
 
-  public static OpenPefindoView(CustNo: string, IsLos: boolean) {
+  public static OpenPefindoView(CustNo: string, IsLos: boolean, Token: string = "") {
+    if (Token != "")
+    {
+      window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos + "&Token=" + Token, '_blank');
+      return;
+    }
+
     window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos);
   }
 

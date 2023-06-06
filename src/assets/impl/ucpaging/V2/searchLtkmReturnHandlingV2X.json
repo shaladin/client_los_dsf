@@ -243,6 +243,10 @@
                               {
                                 "type": "LtkmCustId",
                                 "property": "LtkmCustId"
+                              },
+                              {
+                                "type": "CustNo",
+                                "property": "CustNo"
                               }
                             ]
                         },
