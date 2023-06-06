@@ -1,25 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 import { CrdRvwCustInfoObj } from 'app/shared/model/credit-review/crd-rvw-cust-info-obj.model';
-import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
-import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
+import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { ThirdPartyDukcapilRsltObj } from 'app/shared/model/third-party-data/third-party-dukcapil-rslt-obj.model';
 import { ThirdPartyPefindoRsltObj } from 'app/shared/model/third-party-data/third-party-pefindo-rslt-obj.model';
 import { ThirdPartyProfindRsltObj } from 'app/shared/model/third-party-data/third-party-profind-rslt-obj.model';
 import { ThirdPartyRapindoRsltObj } from 'app/shared/model/third-party-data/third-party-rapindo-rslt-obj.model';
-import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
 import { ThirdPartySlikRsltObj } from 'app/shared/model/third-party-data/third-party-slik-rslt-obj.model';
+import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { ThirdPartyDataRobotObj } from 'app/shared/model/third-party-data/ThirdPartyDataRobotObj.Model';
-import { environment } from 'environments/environment';
-import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-crd-rvw-third-party-checking-x-dsf',
@@ -46,7 +47,8 @@ export class CrdRvwThirdPartyCheckingXDsfComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private modalService: NgbModal,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private toastr: NGXToastrService) { }
 
   async ngOnInit() : Promise<void> {
     await this.GetIsUseDigitalization();
@@ -120,13 +122,24 @@ export class CrdRvwThirdPartyCheckingXDsfComponent implements OnInit {
         PefindoBasicRole = response.GsValue;
       }
     )
-    let Roles = PefindoBasicRole.split(',');
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    if (Roles.includes(this.user.RoleCode)) {
-      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false);
-    } else {
-      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true);
-    }
+
+    await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
+      (response) => {
+        let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
+        if (thirdPartyTrxNo == null || thirdPartyTrxNo == "")
+        {
+          this.toastr.warningMessage("Please request Pefindo first!");
+          return;
+        }
+        let Roles = PefindoBasicRole.split(',');
+        this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+            const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+        if (Roles.includes(this.user.RoleCode)) {
+              AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false, token);
+        } else {
+              AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
+        }
+    })
   }
 
   closeResult: any;
