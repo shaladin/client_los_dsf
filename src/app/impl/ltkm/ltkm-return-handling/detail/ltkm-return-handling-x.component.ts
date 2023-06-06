@@ -212,7 +212,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     ListCustCoyFinData: Array<LtkmCustCompanyFinDataObj>;
     CustNoObj: GenericObj = new GenericObj();
     CustId: number = 0;
-    LtkmCustNo: string;
+    CustNo: string;
     currentCustFinDataIndex: number;
     CustCoyFinData: object;
     NettIncomeAmtCoy: number = 0;
@@ -240,9 +240,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
             }
             if (params["LtkmCustId"] != undefined && params["LtkmCustId"] != null) {
                 this.LtkmCustId = params["LtkmCustId"];
-                this.LtkmCustNo = params["CustNo"]
-                console.log('LTKM CUST ID : ' + this.LtkmCustId)
-                console.log('LTKM CUST NO : ' + this.LtkmCustNo)
+                this.CustNo = params["CustNo"]
             }
             if (params["WfTaskListId"] != undefined && params["WfTaskListId"] != null) {
                 this.WfTaskListId = params["WfTaskListId"];
@@ -2337,7 +2335,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
 
     //PERUBAHAN START
    async getListFinDataCompany() {
-    this.CustNoObj.CustNo = this.LtkmCustNo;
+    this.CustNoObj.CustNo = this.CustNo;
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
         (response) => {
             this.CustId = response['CustId'];
@@ -2349,7 +2347,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     }
 
     async getListFinDataPersonal() {
-        // this.CustNoObj.CustNo = this.LtkmCustNo;       
+  
         await this.http.post(URLConstantX.GetListCustPersonalFinDataXForCustViewByCustId, { CustId: this.CustId }).toPromise().then(
             (response) => {
               this.ListCustPersonalFinData = response['ListCustPersonalFinDataForCustViewX'];
@@ -2357,13 +2355,15 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     }
 
     sortLtkmCustBankStmntObjs(accountsPayload: any) {
-        accountsPayload.forEach((account) => {
-          account.LtkmCustBankStmntObjs.sort((a, b) => {
-            const aDate = new Date(Number(a.Year), Number(a.Month) - 1);
-            const bDate = new Date(Number(b.Year), Number(b.Month) - 1);
-            return aDate.getTime() - bDate.getTime();
-          });
-        });
+            accountsPayload.forEach((account) => {
+                if (account.LtkmCustBankStmntObjs != null){
+                    account.LtkmCustBankStmntObjs.sort((a, b) => {
+                        const aDate = new Date(Number(a.Year), Number(a.Month) - 1);
+                        const bDate = new Date(Number(b.Year), Number(b.Month) - 1);
+                        return aDate.getTime() - bDate.getTime();
+                    });
+                }
+            });
         return accountsPayload;
       }
       
