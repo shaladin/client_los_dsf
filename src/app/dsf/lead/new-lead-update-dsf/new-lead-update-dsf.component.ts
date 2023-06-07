@@ -42,8 +42,8 @@ export class NewLeadUpdateDsfComponent implements OnInit {
       this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchSimpleLeadUpdateV2Dsf.json";
       this.inputPagingObj.isJoinExAPI = true;
 
-      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_SIMPLE_LEAD;      
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_LEAD_UPD;     
+      this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_SIMPLE_LEAD;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_LEAD_UPD;
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
@@ -71,7 +71,7 @@ export class NewLeadUpdateDsfComponent implements OnInit {
       leadReject.LeadId = event.RowObj.LeadId;
       leadReject.LeadStat = CommonConstant.LeadStatReject;
       leadReject.LeadStep = CommonConstant.LeadStatReject;
-      leadReject.WfTaskListId = environment.isCore ? event.RowObj.ExecutionId : event.RowObj.WfTaskListId; //Ini WF Instance GUID Versi Camunda
+      leadReject.WfTaskListId = environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId; //Ini WF Instance GUID Versi Camunda
 
       this.http.post(urlPost, leadReject).subscribe(
         response => {
