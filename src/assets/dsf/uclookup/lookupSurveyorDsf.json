@@ -1,0 +1,88 @@
+{
+  "url": "",
+  "title":"Lookup - Supplier",
+  "sectionTitle": "Search",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "RU.USERNAME",
+      "id": "usernameId",
+      "value": "",
+      "label": "Username",
+      "placeholder": ""
+    },
+    {
+      "type": "textbox",
+      "name": "RE.EMP_NO",
+      "id": "empNo",
+      "value": "",
+      "label": "Supplier NO",
+      "placeholder": ""
+    },
+    {
+      "type": "textbox",
+      "name": "RE.EMP_NAME",
+      "id": "empNae",
+      "value": "",
+      "label": "Supplier Name",
+      "placeholder": ""
+    }
+  ],
+"querystring": {
+  "name": "lookupSurveyor"
+},
+  "headerList": [
+      {
+          "type": "sort",
+          "position": "left",
+          "label": "Username",
+          "name": "RU.USERNAME"
+      },
+      {
+          "type": "sort",
+          "position": "center",
+          "label": "Supplier NO",
+          "name": "RE.EMP_NO"
+      },
+      {
+          "type": "sort",
+          "position": "left",
+          "label": "Supplier Name",
+          "name": "RE.EMP_NAME"
+      },
+      {
+          "type": "label",
+          "position": "center",
+          "label": "Select"
+      }
+  ],
+  "bodyList": [
+      {
+          "type": "text",
+          "position": "left",
+          "property": "Username"
+      },
+      {
+          "type": "text",
+          "position": "center",
+          "property": "EmpNo"
+      },
+      {
+          "type": "text",
+          "position": "left",
+          "property": "EmpName"
+      },
+      {
+          "type": "action",
+          "position": "center",
+          "action": [
+              {
+                  "type": "select",
+                  "property": "EmpId"
+              }
+          ]
+      }
+  ],
+  "propertyId": "Username",
+  "propertyName": "Username"
+}

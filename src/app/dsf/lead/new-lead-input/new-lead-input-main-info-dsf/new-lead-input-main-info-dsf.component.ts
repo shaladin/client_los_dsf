@@ -413,10 +413,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
     this.agencyLookUpObj = new InputLookupObj();
     this.agencyLookUpObj.isRequired = false;
-    this.agencyLookUpObj.urlJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.urlJson = "./assets/dsf/uclookup/lookupAgencyDsf.json";
     this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
-    this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.pagingJson = "./assets/dsf/uclookup/lookupAgencyDsf.json";
+    this.agencyLookUpObj.genericJson = "./assets/dsf/uclookup/lookupAgencyDsf.json";
 
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
@@ -427,10 +427,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
     this.surveyorNameLookUpObj = new InputLookupObj();
     this.surveyorNameLookUpObj.isRequired = false;
-    this.surveyorNameLookUpObj.urlJson = "./assets/uclookup/lookupSurveyor.json";
+    this.surveyorNameLookUpObj.urlJson = "./assets/dsf/uclookup/lookupSurveyorDsf.json";
     this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
-    this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
+    this.surveyorNameLookUpObj.pagingJson = "./assets/dsf/uclookup/lookupSurveyorDsf.json";
+    this.surveyorNameLookUpObj.genericJson = "./assets/dsf/uclookup/lookupSurveyorDsf.json";
 
     this.salesNameLookUpObj = new InputLookupObj();
     this.salesNameLookUpObj.isRequired = false;
