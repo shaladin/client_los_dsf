@@ -150,8 +150,8 @@ export class EditCommV2XComponent implements OnInit {
     {
       "requestDateTime": new Date(),
       "rowVersion": "",
-      //"supplierNo": this.supplierCode
-      "supplierNo": "ZIO ZIO ZIO"
+      "supplierNo": this.supplierCode
+      //"supplierNo": "ZIO ZIO ZIO"
     }
     await this.http.post(URLConstantX.GetPph23BySupplierNo,reqPphObj).toPromise().then(
       (response) => {
