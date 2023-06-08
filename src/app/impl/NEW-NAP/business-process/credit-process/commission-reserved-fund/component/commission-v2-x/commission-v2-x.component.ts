@@ -670,12 +670,6 @@ export class CommissionV2XComponent implements OnInit {
             totalVATAmount += TaxTrxDObjData[k].TaxAmt;
           }
         }
-        //region 2.1.2
-        if(this.pph23&&identifier==this.identifierSupplier){
-          taxAmt= 0;
-          totalPenaltyDAmount = 0;
-        }
-        //emd region
 
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].TaxAmt = taxAmt;
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].VatAmt = vatAmt;
@@ -703,16 +697,6 @@ export class CommissionV2XComponent implements OnInit {
       //this.ListAppCommHObj[idxStart].TotalCommissionAfterTaxAmt -= (totalTaxAmount + totalVATAmount);
       this.ListAppCommHObj[idxStart].TotalCommissionAmt = totalAllocationAmount;
       this.ListAppCommHObj[idxStart].TotalCommissionAfterTaxAmt = totalCommissionAmtAfterTax;
-      
-      //region 2.1.2
-      if(this.pph23&&identifier==this.identifierSupplier){
-        totalPenaltyAmt=0;
-        totalTaxAmount=0;
-        HoldingTaxWithPenalty=0
-        this.ListAppCommHObj[idxStart].TaxAmt = 0;
-        this.ListAppCommHObj[idxStart].PenaltyAmt = 0;
-      }
-      //end region
 
       this.CommissionForm.controls[identifier]["controls"][i].patchValue({
         MrIdTypeCode: tempRespTaxObj.MrIdTypeCode,

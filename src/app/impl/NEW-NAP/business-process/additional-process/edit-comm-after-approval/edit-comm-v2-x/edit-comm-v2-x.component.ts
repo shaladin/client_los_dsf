@@ -738,13 +738,6 @@ export class EditCommV2XComponent implements OnInit {
           }
         }
 
-        //region 2.1.4 DSF-7303
-        if(identifier==this.identifierSupplier &&this.pph23){
-          HoldingTaxWithPenalty =0
-          totalTaxAmount=0
-          totalPenaltyAmt= 0
-        }
-        //end region
 
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].TaxAmt = taxAmt;
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].VatAmt = vatAmt;
@@ -761,13 +754,6 @@ export class EditCommV2XComponent implements OnInit {
         //   CommissionAmtAfterTax: commissionAmtAfterTax
         // });
       }
-      //region 2.1.4 DSF-7303
-      if(identifier==this.identifierSupplier &&this.pph23){
-        HoldingTaxWithPenalty =0
-        totalTaxAmount=0
-        totalPenaltyAmt= 0
-      }
-      //end region
       this.ListAppCommHObj[idxStart].MrTaxKindCode = tempRespTaxObj.MrTaxKindCode;
       this.ListAppCommHObj[idxStart].MrTaxCalcMethodCode = tempRespTaxObj.MrTaxCalcMethodCode;
       this.ListAppCommHObj[idxStart].TaxpayerNo = tempRespTaxObj.TaxpayerNo;
