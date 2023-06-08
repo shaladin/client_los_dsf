@@ -41,10 +41,10 @@ export class NewLeadInputPageDsfComponent implements OnInit {
   isDmsReady: boolean = false;
   isDmsData: boolean;
 
-  constructor(private route: ActivatedRoute, 
-              private http: HttpClient, 
-              private router: Router, 
-              private componentFactoryResolver: ComponentFactoryResolver, 
+  constructor(private route: ActivatedRoute,
+              private http: HttpClient,
+              private router: Router,
+              private componentFactoryResolver: ComponentFactoryResolver,
               private cookieService: CookieService,
               private claimTaskService: ClaimTaskService,
               private toastr: NGXToastrService) {
@@ -147,7 +147,7 @@ export class NewLeadInputPageDsfComponent implements OnInit {
     else {
       modeName = this.pageType;
     }
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_MAIN_INFO_DSF], { LeadId: this.LeadId, mode: modeName });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_MAIN_INFO_DSF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, mode: modeName });
   }
 
   cancelHandler() {

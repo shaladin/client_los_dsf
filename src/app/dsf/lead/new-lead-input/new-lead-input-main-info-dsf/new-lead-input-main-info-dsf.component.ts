@@ -550,7 +550,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "CopyFrom": this.leadIdExist } });
             }
             else {
-              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "WfTaskListId": this.WfTaskListId, "mode": this.pageType } });
             }
           }
         );
