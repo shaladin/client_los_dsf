@@ -44,12 +44,12 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   leadDsfObj: LeadDsfObj;
   getLeadObj: LeadObj;
   cmoNameLookUpObj: InputLookupObj;
-  surveyorNameLookUpObj: InputLookupObj;
+  supplierNameLookUpObj: InputLookupObj;
   salesNameLookUpObj: InputLookupObj;
   agencyLookUpObj: InputLookupObj;
   //Self Custom
   tempCmoUsername: string = "";
-  tempSurveyorUsername: string = "";
+  tempSupplierName: string = "";
   tempSalesUsername: string = "";
   tempAgencyCode: string = "";
   //End Self Custom
@@ -65,8 +65,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   leadPersonalLookUpObj: InputLookupObj;
   cmoObj: RefEmpForLookupObj;
   returnCmoObj: RefEmpForLookupObj;
-  surveyorObj: RefEmpForLookupObj;
-  returnSurveyorObj: RefEmpForLookupObj;
+  supplierObj: RefEmpForLookupObj;
   salesObj: RefEmpForLookupObj;
   returnSalesObj: RefEmpForLookupObj;
   leadIdExist: number;
@@ -77,8 +76,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   returnVendorExistObj: VendorObj;
   cmoExistObj: RefEmpForLookupObj;
   returnCmoExistObj: RefEmpForLookupObj;
-  surveyorExistObj: RefEmpForLookupObj;
-  returnSurveyorExistObj: RefEmpForLookupObj;
+  supllierExistObj: RefEmpForLookupObj;
   salesExistObj: RefEmpForLookupObj;
   returnSalesExistObj: RefEmpForLookupObj;
   leadExistObj: LeadObj;
@@ -95,6 +93,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
   WfTaskListId: any;
   isCopyButtonDisabled: boolean = true;
   reqAddLeadDsf:{LeadId:number, SubmissionReceiptDate:Date};
+  reqUpdateLeadStepDsf:{LeadId:number};
   reqGetLeadDsf:{LeadId:number};
 
   constructor(
@@ -239,7 +238,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
           // this.salesNameLookUpObj.nameSelect = this.returnLead.TeleMarketingUsername;
           // this.salesNameLookUpObj.jsonSelect = this.returnLead;
           this.tempCmoUsername = this.returnLead.CmoUsername;
-          this.tempSurveyorUsername = this.returnLead.SurveyorUsername;
+          this.tempSupplierName = this.returnLead.SurveyorUsername;
           this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
 
           this.cmoObj = new RefEmpForLookupObj();
@@ -251,13 +250,13 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               this.cmoNameLookUpObj.jsonSelect = this.returnCmoObj;
             });
 
-          this.surveyorObj = new RefEmpForLookupObj();
-          this.surveyorObj.Username = this.returnLead.SurveyorUsername;
-          this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.surveyorObj).subscribe(
-            (response: RefEmpForLookupObj) => {
-              this.returnSurveyorObj = response;
-              this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.Username;
-              this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorObj;
+          this.supplierObj = new RefEmpForLookupObj();
+          this.supplierObj.Username = this.returnLead.SurveyorUsername;
+          this.http.post(URLConstant.GetVendorByVendorCode, { Code : this.supplierObj.Username }).subscribe(
+            (response: any) => {
+              this.vendorObj = response;
+              this.supplierNameLookUpObj.nameSelect = this.vendorObj.VendorName;
+              this.supplierNameLookUpObj.jsonSelect = this.vendorObj;
             });
 
           this.salesObj = new RefEmpForLookupObj();
@@ -294,8 +293,8 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     this.tempCmoUsername = event.Username;
   }
 
-  getLookUpSurveyorName(event) {
-    this.tempSurveyorUsername = event.Username;
+  getLookUpSupplierName(event) {
+    this.tempSupplierName = event.VendorCode;
   }
 
   getLookUpSalesName(event) {
@@ -369,7 +368,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
         // this.salesNameLookUpObj.nameSelect = this.returnExistLead.TeleMarketingUsername;
         // this.salesNameLookUpObj.jsonSelect = this.returnExistLead;
         this.tempCmoUsername = this.returnExistLead.CmoUsername;
-        this.tempSurveyorUsername = this.returnExistLead.SurveyorUsername;
+        this.tempSupplierName = this.returnExistLead.SurveyorUsername;
         this.tempSalesUsername = this.returnExistLead.TeleMarketingUsername;
 
         this.cmoExistObj = new RefEmpForLookupObj();
@@ -382,13 +381,13 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
           });
 
-        this.surveyorExistObj = new RefEmpForLookupObj();
-        this.surveyorExistObj.Username = this.returnExistLead.SurveyorUsername;
-        this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.surveyorExistObj).subscribe(
-          (response: RefEmpForLookupObj) => {
-            this.returnSurveyorExistObj = response;
-            this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorExistObj.Username;
-            this.surveyorNameLookUpObj.jsonSelect = this.returnSurveyorExistObj;
+        this.supllierExistObj = new RefEmpForLookupObj();
+        this.supllierExistObj.Username = this.returnExistLead.SurveyorUsername;
+        this.http.post(URLConstant.GetVendorByVendorCode, { Code : this.supllierExistObj.Username }).subscribe(
+          (response: any) => {
+            this.vendorObj = response;
+            this.supplierNameLookUpObj.nameSelect = this.vendorObj.VendorName;
+            this.supplierNameLookUpObj.jsonSelect = this.vendorObj;
           });
 
         this.salesExistObj = new RefEmpForLookupObj();
@@ -412,10 +411,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
     this.agencyLookUpObj = new InputLookupObj();
     this.agencyLookUpObj.isRequired = false;
-    this.agencyLookUpObj.urlJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.urlJson = "./assets/dsf/uclookup/lookupAgencyDsf.json";
     this.agencyLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.agencyLookUpObj.pagingJson = "./assets/uclookup/lookupAgency.json";
-    this.agencyLookUpObj.genericJson = "./assets/uclookup/lookupAgency.json";
+    this.agencyLookUpObj.pagingJson = "./assets/dsf/uclookup/lookupAgencyDsf.json";
+    this.agencyLookUpObj.genericJson = "./assets/dsf/uclookup/lookupAgencyDsf.json";
 
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
@@ -424,12 +423,12 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
     this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
 
-    this.surveyorNameLookUpObj = new InputLookupObj();
-    this.surveyorNameLookUpObj.isRequired = false;
-    this.surveyorNameLookUpObj.urlJson = "./assets/uclookup/lookupSurveyor.json";
-    this.surveyorNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.surveyorNameLookUpObj.pagingJson = "./assets/uclookup/lookupSurveyor.json";
-    this.surveyorNameLookUpObj.genericJson = "./assets/uclookup/lookupSurveyor.json";
+    this.supplierNameLookUpObj = new InputLookupObj();
+    this.supplierNameLookUpObj.isRequired = false;
+    this.supplierNameLookUpObj.urlJson = "./assets/dsf/uclookup/lookupSupplierDsf.json";
+    this.supplierNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
+    this.supplierNameLookUpObj.pagingJson = "./assets/dsf/uclookup/lookupSupplierDsf.json";
+    this.supplierNameLookUpObj.genericJson = "./assets/dsf/uclookup/lookupSupplierDsf.json";
 
     this.salesNameLookUpObj = new InputLookupObj();
     this.salesNameLookUpObj.isRequired = false;
@@ -497,7 +496,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
     this.leadObj.LeadStep = CommonConstant.LeadStatNewSmpl;
     this.leadObj.AgencyCode = this.tempAgencyCode;
     this.leadObj.CmoUsername = this.tempCmoUsername;
-    this.leadObj.SurveyorUsername = this.tempSurveyorUsername;
+    this.leadObj.SurveyorUsername = this.tempSupplierName;
     this.leadObj.TeleMarketingUsername = this.tempSalesUsername;
     this.leadObj.MrLeadTypeCode = CommonConstant.MrLeadTypeCodeSimpleLead;
     this.leadDsfObj.SubmissionReceiptDate = this.MainInfoForm.controls["SubmissionReceiptDate"].value;
@@ -529,13 +528,17 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               SubmissionReceiptDate: this.MainInfoForm.controls["SubmissionReceiptDate"].value
             }
 
+            this.reqUpdateLeadStepDsf = {
+              LeadId: this.leadObj.LeadId
+            }
+
             this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
             (response2) => {
               // this.toastr.successMessage(response2["message"]);
             });
 
             if(this.pageType == "update"){
-              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqAddLeadDsf).subscribe(
+              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqUpdateLeadStepDsf).subscribe(
                 (response3) => {
                   // this.toastr.successMessage(response3["message"]);
                 });
@@ -547,7 +550,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "CopyFrom": this.leadIdExist } });
             }
             else {
-              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "WfTaskListId": this.WfTaskListId, "mode": this.pageType } });
             }
           }
         );
@@ -606,13 +609,18 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
               SubmissionReceiptDate: this.MainInfoForm.controls["SubmissionReceiptDate"].value
             }
 
+            this.reqUpdateLeadStepDsf = {
+              LeadId: this.leadObj.LeadId
+            }
+
             this.http.post(URLConstantDsf.UpdateLeadDsf, this.reqAddLeadDsf).subscribe(
             (response2) => {
               // this.toastr.successMessage(response2["message"]);
             });
 
+
             if(this.pageType == "update"){
-              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqAddLeadDsf).subscribe(
+              this.http.post(URLConstantDsf.UpdateLeadStep, this.reqUpdateLeadStepDsf).subscribe(
                 (response3) => {
                   // this.toastr.successMessage(response3["message"]);
                 });
