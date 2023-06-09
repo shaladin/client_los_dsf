@@ -141,8 +141,7 @@ export class CommissionV2XComponent implements OnInit {
     {
       "requestDateTime": new Date(),
       "rowVersion": "",
-      "supplierNo": this.supplierCode//nanti ganti ke nomor asli klo udh ada
-      //"supplierNo": "ZIO ZIO ZIO" //ini buat tes yang ada pph23
+      "supplierNo": this.supplierCode
     }
     await this.http.post(URLConstantX.GetPph23BySupplierNo,reqPphObj).toPromise().then(
       (response) => {
@@ -151,8 +150,11 @@ export class CommissionV2XComponent implements OnInit {
         this.pph23To = response["ReturnObject"].SkbEndDt
         this.BusinessDate = response["ReturnObject"].BusinessDate
       });
-    if(this.BusinessDate>this.pph23From && this.BusinessDate<this.pph23To){
+    if(this.BusinessDate>=this.pph23From && this.BusinessDate<=this.pph23To){
       this.pph23 = true;
+    }
+    else{
+      this.pph23 = false;
     } 
       
     console.log(this.pph23)

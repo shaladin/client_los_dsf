@@ -576,13 +576,7 @@ export class FormCommissionGenerateXComponent implements OnInit {
       });
     }
 
-    //region DSF-7303
-    if(this.pph23 && this.identifier==this.supplier){
-      appCommObj.TaxAmt =0
-      TotalPenaltyAmt = 0
-      console.log("di nol kan")
-    }
-    //end region
+
 
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
       HoldingTaxWithPenalty: (appCommObj.TaxAmt + TotalPenaltyAmt)

@@ -137,7 +137,6 @@ export class EditCommV2XComponent implements OnInit {
 
   taxOfficeCode: string = '';
 
-  //region pph23 2.1.4
   pph23:boolean=false
   pph23No:string
   pph23From:Date
@@ -151,22 +150,22 @@ export class EditCommV2XComponent implements OnInit {
       "requestDateTime": new Date(),
       "rowVersion": "",
       "supplierNo": this.supplierCode
-      //"supplierNo": "ZIO ZIO ZIO"
     }
     await this.http.post(URLConstantX.GetPph23BySupplierNo,reqPphObj).toPromise().then(
       (response) => {
         this.pph23No = response["ReturnObject"].SkbNo
         this.pph23From = response["ReturnObject"].SkbStartDt
         this.pph23To = response["ReturnObject"].SkbEndDt
-        //this.pph23To = new Date("2019-01-26") //buat ngecek kalo kondisi false
         this.CurrentDate =response["ReturnObject"].BusinessDate
         console.log("sudah dicek di API")
       });
       if(this.CurrentDate>=this.pph23From && this.CurrentDate<=this.pph23To){
         this.pph23 = true
       }
+      else{
+        this.pph23 = false
+      }
   }
-  //end region 2.1.4
 
   async BindDDLReason() {
     this.DDLReason = [];
