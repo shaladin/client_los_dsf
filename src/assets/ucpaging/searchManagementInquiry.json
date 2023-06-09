@@ -94,7 +94,7 @@
     },
     {
       "type": "textbox",
-      "name": "VATH.NODE",
+      "name": "VATH_CURR_LEVEL.CURR_NODE",
       "id": "levelId",
       "value": "",
       "label": "Group Level Approval",
@@ -102,7 +102,7 @@
     },
     {
       "type": "datepicker",
-      "name": "VATH.ACTION_DATE_TIME",
+      "name": "APP_AGR.APV_DT",
       "id": "apvDtgte",
       "value": "",
       "label": "Approval Date >=",
@@ -111,7 +111,7 @@
     },
     {
       "type": "datepicker",
-      "name": "VATH.ACTION_DATE_TIME",
+      "name": "APP_AGR.APV_DT",
       "id": "apvDtlte",
       "value": "",
       "label": "Approval Date <=",
