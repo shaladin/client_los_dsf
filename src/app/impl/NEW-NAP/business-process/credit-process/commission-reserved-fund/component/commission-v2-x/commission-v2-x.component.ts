@@ -228,6 +228,7 @@ export class CommissionV2XComponent implements OnInit {
     await this.bindDDLReasonReturn();
     await this.bindTaskObj();
     this.GetTaxOffice();
+    this.pph23 = false;
   }
   DictCalcMethod: { [id: string]: string } = {};
   GetCalcMethod() {

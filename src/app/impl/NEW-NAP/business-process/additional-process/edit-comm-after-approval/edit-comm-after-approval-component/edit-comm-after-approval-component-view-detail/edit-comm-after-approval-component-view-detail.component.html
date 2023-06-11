@@ -83,6 +83,9 @@
                 <label class="adInsLabel" translate>Total {{ConditionString}} Tax Amount</label>
               </div>
               <div class="col-md-6" style="text-align: right;">
+                <label *ngIf="TotalSupplier.totalTaxAmt==0 " style="color: red;">
+                  *0% PPh 23 (SKB) 
+                </label>
                 <label class="adInsLabel"> {{TotalSupplier.totalTaxAmt | number:'.2':'en-US'}} </label>
               </div>
             </div>
