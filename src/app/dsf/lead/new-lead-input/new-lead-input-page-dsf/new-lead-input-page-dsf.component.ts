@@ -98,7 +98,7 @@ export class NewLeadInputPageDsfComponent implements OnInit {
     else if(this.WfTaskListId > 0) {
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
-    this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.viewLeadHeaderMainInfo.viewInput = "./assets/dsf/ucgridview/viewLeadHeaderDsf.json";
     this.viewLeadHeaderMainInfo.ddlEnvironments = [
       {
         name: "LeadNo",
