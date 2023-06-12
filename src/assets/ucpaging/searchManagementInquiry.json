@@ -66,6 +66,14 @@
       "ddlType": "all",
       "items": [
         {
+          "key": "DRAFT",
+          "value": "Draft"
+        },
+        {
+          "key": "WAITING APPROVAL",
+          "value": "Waiting Approval"
+        },
+        {
           "key": "APPROVED",
           "value": "Approved"
         },
@@ -73,10 +81,7 @@
           "key": "DISBURSE",
           "value": "Disburse"
         },
-        {
-          "key": "DRAFT",
-          "value": "Draft"
-        },
+        
         {
           "key": "REJECT",
           "value": "Reject"
@@ -84,16 +89,12 @@
         {
           "key": "RETURN",
           "value": "Return"
-        },
-        {
-          "key": "WAITING APPROVAL",
-          "value": "Waiting Approval"
         }
       ]
     },
     {
       "type": "textbox",
-      "name": "VATH.NODE",
+      "name": "VATH_CURR_LEVEL.CURR_NODE",
       "id": "levelId",
       "value": "",
       "label": "Group Level Approval",
@@ -101,7 +102,7 @@
     },
     {
       "type": "datepicker",
-      "name": "VATH.ACTION_DATE_TIME",
+      "name": "APP_AGR.APV_DT",
       "id": "apvDtgte",
       "value": "",
       "label": "Approval Date >=",
@@ -110,7 +111,7 @@
     },
     {
       "type": "datepicker",
-      "name": "VATH.ACTION_DATE_TIME",
+      "name": "APP_AGR.APV_DT",
       "id": "apvDtlte",
       "value": "",
       "label": "Approval Date <=",
@@ -159,9 +160,9 @@
     },
     {
       "type": "sort",
-      "position": "center",
-      "label": "Customer No",
-      "name": "MAX(AC.CUST_NO)"
+      "position": "left",
+      "label": "Office Name",
+      "name": "MAX(APP_AGR.ORI_OFFICE_NAME)"
     },
     {
       "type": "sort",
@@ -225,15 +226,15 @@
       "key": "agreement"
     },
     {
-      "type": "callback",
-      "position": "center",
-      "property": "CustNo",
-      "key": "customer"
-    },
-    {
       "type": "text",
       "position": "left",
-      "property": "CustName"
+      "property": "OriOfficeName"
+    },
+    {
+      "type": "callback",
+      "position": "left",
+      "property": "CustName",
+      "key": "customer"
     },
     {
       "type": "callback",
