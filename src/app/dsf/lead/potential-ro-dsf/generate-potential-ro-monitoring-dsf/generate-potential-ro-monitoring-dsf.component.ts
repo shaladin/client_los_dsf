@@ -21,8 +21,9 @@ export class GeneratePotentialRoMonitoringDsfComponent implements OnInit {
     this.uploadObj.TemplateName = "Upload_PotentialRO_Template";
     this.uploadObj.FileErrorName = "Upload_PotentialRO_ErrorDownload";
     this.uploadObj.pagingJson = "./assets/dsf/ucpaging/searchPotentialROMonitoringDsf.json";
+    this.uploadObj.formatsAllowed = ".xls, .xlsx";
+    this.uploadObj.maxSize = 5;
     if (!environment.isCore) {
-      this.uploadObj.formatsAllowed = ".xls, .xlsx";
       this.uploadObj.url = URLConstantX.UploadFileV2;
     }
   }
