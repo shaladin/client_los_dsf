@@ -47,7 +47,7 @@
     "@adins/ucmoduleselection": "^1.0.4",
     "@adins/ucpaging": "^2.3.0",
     "@adins/ucreport": "^2.2.1",
-    "@adins/ucsearch": "^2.12.1",
+    "@adins/ucsearch": "^2.15.1",
     "@adins/ucthingstodo": "^1.1.2",
     "@adins/ucupload": "^1.9.1",
     "@adins/ucviewgeneric": "^2.3.1",
