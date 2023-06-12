@@ -1,0 +1,89 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "MainInformationId",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Lead No.",
+          "property": "LeadNo",
+          "name": "LeadNo",
+          "environment": "LOSR3WEB",
+          "path": "VIEW_LEAD",
+          "target" : "_blank",
+          "param": [
+            {
+              "type": "LeadId",
+              "property": "LeadId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "link",
+          "label": "Copy From",
+          "property": "LeadCopyNo",
+          "name": "LeadCopyNo",
+          "path": "VIEW_LEAD",
+          "target" : "_blank",
+          "param": [
+            {
+              "type": "LeadId",
+              "property": "LeadCopyId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Office Name",
+          "property": "OfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Order No.",
+          "property": "OrderNo"
+        },
+        {
+          "type": "text",
+          "label": "LOB Code",
+          "property": "LobCode"
+        },
+        {
+          "type": "text",
+          "label": "Lead Source",
+          "property": "MrLeadSourceCode"
+        },
+        {
+          "type": "text",
+          "label": "Referantor",
+          "property": "AgencyName"
+        },
+        {
+          "type": "text",
+          "label": "CMO Username",
+          "property": "CmoUsername"
+        },
+        {
+          "type": "text",
+          "label": "Supplier Name",
+          "property": "SurveyorUsername"
+        },
+        {
+          "type": "text",
+          "label": "Tele Sales Username",
+          "property": "TeleMarketingUsername"
+        }
+      ],
+      "querystring": {
+        "name": "viewLeadHeaderDsf"
+      }
+    }
+  ]
+}
