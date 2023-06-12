@@ -26,7 +26,7 @@ export class LeadViewComponent implements OnInit {
   dmsObj: DMSObj;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private route: ActivatedRoute) { 
+  constructor(private http: HttpClient, private cookieService: CookieService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -35,7 +35,7 @@ export class LeadViewComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
+    this.viewGenericObj.viewInput = "./assets/dsf/ucgridview/viewLeadHeaderDsf.json";
     await this.getLeadNo();
     await this.InitDms();
   }
@@ -44,7 +44,7 @@ export class LeadViewComponent implements OnInit {
     this.ReqByIdObj.Id = this.LeadId;
     await this.http.post(URLConstant.GetLeadByLeadId, this.ReqByIdObj).toPromise().then(
       response => {
-        this.LeadNo = response["LeadNo"];      
+        this.LeadNo = response["LeadNo"];
       });
   }
 
