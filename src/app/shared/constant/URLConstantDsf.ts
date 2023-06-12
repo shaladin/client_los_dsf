@@ -64,4 +64,10 @@ export class URLConstantDsf {
     public static UpdateLeadDsf = environment.losUrl + "/v1" + "/LeadX/UpdateLeadDsf";
     public static UpdateLeadStep = environment.losUrl + "/v1" + "/LeadX/UpdateLeadStep";
     public static GetLeadDsfByLeadId = environment.losUrl + "/v1" + "/LeadX/GetLeadDsfByLeadId";
+    public static GetListAppLoanPurposeDsfByAppId = environment.losUrl + "/AppLoanPurposeDsf/GetListAppLoanPurposeDsfByAppId";
+    public static GetAppLoanPurposeDsfByAppLoanPurposeId = environment.losUrl + "/AppLoanPurposeDsf/GetAppLoanPurposeDsfByAppLoanPurposeId";
+    public static DeleteAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/DeleteAppLoanPurposeDsf";
+    public static AddAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/AddAppLoanPurposeDsf";
+    public static EditAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/EditAppLoanPurposeDsf";
+  
 }

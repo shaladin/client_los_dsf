@@ -9,7 +9,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppObj } from 'app/shared/model/app/app.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { AppLoanPurposeObj } from 'app/shared/model/app-loan-purpose.model';
@@ -18,6 +18,8 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
+import { AppLoanPurposeDsfObj } from 'app/dsf/model/AppLoanPurposeDsfObj.Model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-loan-object-x-dsf',
@@ -36,8 +38,10 @@ export class LoanObjectXDsfComponent implements OnInit {
   AppLoanPurposeId: number;
   supplierInputLookupObj: InputLookupObj;
   title: string = "Add Loan Object";
-  objEdit: AppLoanPurposeObj;
-  AppLoanPurposeObj: AppLoanPurposeObj = new AppLoanPurposeObj();
+  // Self Custom Changes
+  objEdit: AppLoanPurposeDsfObj;
+  AppLoanPurposeObj: AppLoanPurposeDsfObj = new AppLoanPurposeDsfObj();
+  // End Self Custom Changes
   IsDisburseToCust: boolean;
   AppObj: AppObj;
   OfficeCode: string;
@@ -51,8 +55,14 @@ export class LoanObjectXDsfComponent implements OnInit {
     BudgetPlanAmount: ['', [Validators.required, Validators.min(1)]],
     SelfFinancing: ['', [Validators.required, Validators.min(-1)]],
     FinancingAmount: ['']
+    // Self Custom Changes
+    , DetailLoanObject: ['']
+    // End Self Custom Changes
   })
-  resultData: Array<AppLoanPurposeObj>;
+  // Self Custom Changes
+  resultData: Array<AppLoanPurposeDsfObj>;
+  RefProdCmptWof: ProdOfferingDObj;
+  // End Self Custom Changes
   closeResult: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private modalService: NgbModal) {
@@ -85,7 +95,9 @@ export class LoanObjectXDsfComponent implements OnInit {
     this.title = "Edit Loan Object";
     this.MainInfoForm.controls.FinancingAmount.disable();
 
-    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, { Id: this.AppLoanPurposeId }).toPromise().then((response: AppLoanPurposeObj) => {
+    // Self Custom Changes
+    await this.http.post(URLConstantDsf.GetAppLoanPurposeDsfByAppLoanPurposeId, { Id: this.AppLoanPurposeId }).toPromise().then((response: AppLoanPurposeDsfObj) => {
+    // End Self Custom Changes
       this.objEdit = response;
       this.MainInfoForm.patchValue({
         IsDisburseToCust: response["IsDisburseToCust"],
@@ -95,6 +107,9 @@ export class LoanObjectXDsfComponent implements OnInit {
         MrLoanPurposeCode: response["MrLoanPurposeCode"],
         SupplierCode: response["SupplCode"],
         SupplierName: response["SupplName"]
+        // Self Custom Changes
+        , DetailLoanObject: response["DetailLoanObject"]
+        // End Self Custom Changes
       });
       this.AppLoanPurposeObj.MrLoanPurposeCode = this.objEdit.MrLoanPurposeCode;
       this.AppLoanPurposeObj.SupplCode = this.objEdit.SupplCode;
@@ -125,6 +140,9 @@ export class LoanObjectXDsfComponent implements OnInit {
       FinancingAmount: 0,
       MrLoanPurposeCode: "",
       SupplierCode: "",
+      // Self Custom Changes
+      DetailLoanObject: "",
+      // End Self Custom Changes
     });
 
 
@@ -217,6 +235,25 @@ export class LoanObjectXDsfComponent implements OnInit {
               console.log(error);
             }
           );
+
+          // Self Custom Changes
+          var objWof: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+          objWof.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+          objWof.RefProdCompntCode = CommonConstant.RefProdCompntCodeWayOfFinancing;
+          objWof.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+          this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objWof).toPromise().then(
+            (response: ProdOfferingDObj) => {
+              if (response && response["StatusCode"] == "200") {
+                this.RefProdCmptWof = response;
+              }
+            }
+          ).catch(
+            (error) => {
+              console.log(error);
+            }
+          );          
+          // End Self Custom Changes
         }
         if (this.AppObj.BizTemplateCode == CommonConstant.CFRFN4W) {
           this.MainInfoForm.controls.IsDisburseToCust.setValue(true);
@@ -231,10 +268,12 @@ export class LoanObjectXDsfComponent implements OnInit {
 
   setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
-    this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
+    // Self Custom Changes
+    this.loanObjectInputLookupObj.urlJson = "./assets/dsf/uclookup/lookupLoanObjectDsf.json";
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
-    this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
+    this.loanObjectInputLookupObj.pagingJson = "./assets/dsf/uclookup/lookupLoanObject.json";
+    this.loanObjectInputLookupObj.genericJson = "./assets/dsf/uclookup/lookupLoanObject.json";
+    // End Self Custom Changes
 
     this.supplierInputLookupObj = new InputLookupObj();
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
@@ -249,6 +288,16 @@ export class LoanObjectXDsfComponent implements OnInit {
     critloanObjectSchmObj.value = '1';
     this.loanObjectInputLookupObj.addCritInput.push(critloanObjectSchmObj);
     // End Self Custom Changes CR Enh MPF FD
+    // Self Custom Changes CR Doc Printing FD FMU Phase 2
+    var critloanObjectSchmObj2 = new CriteriaObj();
+    var LoanPurposeType = this.AppObj.LobCode;
+    if (this.AppObj.LobCode == "FD") LoanPurposeType = this.RefProdCmptWof.CompntValue;
+    critloanObjectSchmObj2.DataType = 'text';
+    critloanObjectSchmObj2.restriction = AdInsConstant.RestrictionEq;
+    critloanObjectSchmObj2.propName = 'REF_MASTER_TYPE_CODE';
+    critloanObjectSchmObj2.value = 'LOAN_PURPOSE_' + LoanPurposeType;
+    this.loanObjectInputLookupObj.addCritInput.push(critloanObjectSchmObj2);
+    // End Self Custom Changes CR Doc Printing FD FMU Phase 2
 
     if (this.isCollateral) {
       this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
@@ -306,6 +355,9 @@ export class LoanObjectXDsfComponent implements OnInit {
     this.AppLoanPurposeObj.BudgetPlanAmt = this.MainInfoForm.controls.BudgetPlanAmount.value;
     this.AppLoanPurposeObj.SelfFinancingAmt = this.MainInfoForm.controls.SelfFinancing.value;
     this.AppLoanPurposeObj.FinancingAmt = this.MainInfoForm.controls.FinancingAmount.value;
+    // Self Custom Changes
+    this.AppLoanPurposeObj.DetailLoanObject = this.MainInfoForm.controls.DetailLoanObject.value;
+    // End Self Custom Changes
 
     if (this.mode == "edit") {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
@@ -320,6 +372,10 @@ export class LoanObjectXDsfComponent implements OnInit {
           //(response) => {
             this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
               (response) => {
+                // Self Custom Changes
+                this.http.post(URLConstantDsf.EditAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
+                  (response) => {});
+                // End Self Custom Changes
                 this.modal.close();
                 this.toastr.successMessage(response["message"]);
                 enjiForm.reset();
@@ -330,6 +386,10 @@ export class LoanObjectXDsfComponent implements OnInit {
       } else {
         this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
+            // Self Custom Changes
+            this.http.post(URLConstantDsf.EditAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
+              (response) => {});
+            // End Self Custom Changes
             this.modal.close();
             this.toastr.successMessage(response["message"]);
             enjiForm.reset();
@@ -348,6 +408,12 @@ export class LoanObjectXDsfComponent implements OnInit {
           //(response) => {
             this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
               (response) => {
+                // Self Custom Changes
+                console.log(response["AppLoanPurposeId"]);
+                this.AppLoanPurposeObj.AppLoanPurposeId = response["AppLoanPurposeId"];
+                this.http.post(URLConstantDsf.AddAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
+                  (response) => {});
+                // End Self Custom Changes
                 this.modal.close();
                 this.toastr.successMessage(response["message"]);
                 enjiForm.reset();
@@ -357,6 +423,12 @@ export class LoanObjectXDsfComponent implements OnInit {
       } else {
         this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
+            // Self Custom Changes
+            console.log(response["AppLoanPurposeId"]);
+            this.AppLoanPurposeObj.AppLoanPurposeId = response["AppLoanPurposeId"];
+            this.http.post(URLConstantDsf.AddAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
+              (response) => {});
+            // End Self Custom Changes
             this.modal.close();
             this.toastr.successMessage(response["message"]);
             enjiForm.reset();
@@ -373,6 +445,9 @@ export class LoanObjectXDsfComponent implements OnInit {
       };
 
       this.http.post(URLConstant.DeleteAppLoanPurpose, obj).subscribe(response => {
+        // Self Custom Changes
+        this.http.post(URLConstantDsf.DeleteAppLoanPurposeDsf, obj).subscribe(response => {});
+        // End Self Custom Changes
         this.toastr.successMessage(response["Message"]);
         this.loadDataTable();
       });
@@ -380,8 +455,10 @@ export class LoanObjectXDsfComponent implements OnInit {
   }
 
   loadDataTable() {
-    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).subscribe(
-      (response) => {
+    // Self Custom Changes
+    this.http.post(URLConstantDsf.GetListAppLoanPurposeDsfByAppId, { Id: this.AppId }).subscribe(
+    // End Self Custom Changes
+    (response) => {
         this.resultData = response["listResponseAppLoanPurpose"];
       });
   }
