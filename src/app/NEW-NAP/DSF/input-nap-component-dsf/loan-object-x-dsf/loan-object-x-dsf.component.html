@@ -10,6 +10,9 @@
     <thead>
     <tr class="table-header">
       <th class="text-left"><span translate class="thead-header" name='LoanObjectName'>Loan Object Name</span></th>
+      <!-- Self Custom Changes -->
+      <th class="text-left"><span translate class="thead-header" name='DetailLoanObject'>Detail Loan Object</span></th>
+      <!-- End Self Custom Changes -->
       <th class="text-left" *ngIf="!IsDisburseToCust"><span translate class="thead-header" name='SupplierName'>Supplier Name</span></th>
       <th class="text-right"><span translate class="thead-header" name='BudgetPlanAmount'>Budget Plan Amount</span>
       </th>
@@ -23,6 +26,9 @@
     <tbody>
     <tr *ngFor="let item of resultData">
       <td class="text-left">{{item.MrLoanPurposeDescr}}</td>
+      <!-- Self Custom Changes -->
+      <td class="text-left">{{item.DetailLoanObject}}</td>
+      <!-- End Self Custom Changes -->
       <td class="text-left" *ngIf="!IsDisburseToCust">{{item.SupplName}}</td>
       <td currencyMask>{{item.BudgetPlanAmt | number:'.2':'en-US'}}</td>
       <td currencyMask>{{item.SelfFinancingAmt | number:'.2':'en-US'}}</td>
@@ -76,6 +82,15 @@
               </lib-uclookupgeneric>
             </div>
           </div>
+          <!-- Self Custom Changes -->
+          <div class="form-group row">
+            <label class="col-md-3" translate>Detail Loan Object</label>
+            <div class="col-md-5">
+              <input type="text" id="DetailLoanObject" class="form-control adInsInput"
+                     formControlName="DetailLoanObject">
+            </div>
+          </div>
+          <!-- End Self Custom Changes -->
           <div class="form-group row" [hidden]="MainInfoForm.controls.IsDisburseToCust.value">
             <label class="col-md-3" [ngClass]="{ 'adins-required-label': MainInfoForm.controls.IsDisburseToCust.value == false }" translate>Supplier Name</label>
             <div class="col-md-5">
