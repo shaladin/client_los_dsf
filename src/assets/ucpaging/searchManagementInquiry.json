@@ -1,0 +1,312 @@
+{
+  "title": "Management Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "ROA.AREA_CODE",
+      "id": "areaNameId",
+      "value": "",
+      "label": "Office Area",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefOfficeArea/GetListKvpActiveRefOfficeArea",
+      "itemsUrl": [],
+      "items": [],
+      "ddlType": "all"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NO",
+      "id": "custNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "APP_AGR.APP_NO",
+      "id": "appNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AC.CUST_NAME",
+      "id": "custNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "APP_AGR.AGRMNT_NO",
+      "id": "agrmntNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "APP_AGR.PROD_OFFERING_NAME",
+      "id": "prodOfferingNameId",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "APP_AGR.APP_STAT_NEW",
+      "label": "App Status",
+      "id": "appStatusId",
+      "ddlType": "all",
+      "items": [
+        {
+          "key": "DRAFT",
+          "value": "Draft"
+        },
+        {
+          "key": "WAITING APPROVAL",
+          "value": "Waiting Approval"
+        },
+        {
+          "key": "APPROVED",
+          "value": "Approved"
+        },
+        {
+          "key": "DISBURSE",
+          "value": "Disburse"
+        },
+        
+        {
+          "key": "REJECT",
+          "value": "Reject"
+        },
+        {
+          "key": "RETURN",
+          "value": "Return"
+        }
+      ]
+    },
+    {
+      "type": "textbox",
+      "name": "VATH_CURR_LEVEL.CURR_NODE",
+      "id": "levelId",
+      "value": "",
+      "label": "Group Level Approval",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "datepicker",
+      "name": "APP_AGR.APV_DT",
+      "id": "apvDtgte",
+      "value": "",
+      "label": "Approval Date >=",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "APP_AGR.APV_DT",
+      "id": "apvDtlte",
+      "value": "",
+      "label": "Approval Date <=",
+      "restriction": "lte",
+      "datatype": "date"
+    },
+    {
+      "type": "dropdown",
+      "label": "LOB",
+      "name": "APP_AGR.LOB_CODE",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefLob/GetListKvpRefLob",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "",
+      "criteriaPropValue": ""
+    },
+    {
+      "type": "textbox",
+      "name": "VATH_CURR_USER.CURR_USER",
+      "id": "currentUserId",
+      "value": "",
+      "label": "Current Approval",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "querystring": {
+    "name": "searchManagementInquiry"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application No",
+      "name": "MAX(APP_AGR.APP_NO)"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Agreement No",
+      "name": "MAX(APP_AGR.AGRMNT_NO)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office Name",
+      "name": "MAX(APP_AGR.ORI_OFFICE_NAME)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "MAX(AC.CUST_NAME)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Product Offering Name",
+      "name": "MAX(APP_AGR.PROD_OFFERING_NAME)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "App Status",
+      "name": "MAX(APP_AGR.APP_STAT_NEW)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "NTF Amount",
+      "name": "MAX(APP_AGR.NTF_AMT)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Current Approval",
+      "name": "MAX(VATH_CURR_USER.CURR_USER)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Quantity Unit",
+      "name": "MAX(NUM_OF_ASSET)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Tenor",
+      "name": "MAX(APP_AGR.TENOR)"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "AppNo",
+      "key": "application"
+    },
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "AgrmntNo",
+      "key": "agreement"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OriOfficeName"
+    },
+    {
+      "type": "callback",
+      "position": "left",
+      "property": "CustName",
+      "key": "customer"
+    },
+    {
+      "type": "callback",
+      "position": "left",
+      "property": "ProdOfferingName",
+      "key": "product"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "AppStat"
+    },
+    {
+      "type": "decimal",
+      "position": "left",
+      "property": "NtfAmt"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CurrentUser"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "QuantityUnit"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "Tenor"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "ApvDt",
+                  "value": null,
+                  "restriction": "NEQ"
+                }
+              ],
+              "result": {
+                "type": "url",
+                "path": "VIEW_CREDIT_REVIEW",
+                "target": "_blank",
+                "icon": "ft-edit-2",
+                "param": [
+                  {
+                    "type": "AppId",
+                    "property": "AppId"
+                  },
+                  {
+                    "type": "BizTemplateCode",
+                    "property": "BizTemplateCode"
+                  },
+                  {
+                    "type": "IsView",
+                    "property": "true"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

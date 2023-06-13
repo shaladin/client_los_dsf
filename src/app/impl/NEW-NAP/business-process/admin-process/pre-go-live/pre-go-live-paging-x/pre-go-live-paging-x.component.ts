@@ -74,8 +74,16 @@ export class PreGoLivePagingXComponent implements OnInit, OnDestroy {
     var critInput = new CriteriaObj();
     this.inputPagingObj.addCritInput = new Array();
     if(environment.isCore){
-      this.inputPagingObj._url = "./assets/impl/ucpaging/searchPreGoLiveV2X.json";
-      this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchPreGoLiveV2X.json";
+      if(this.bizTemplateCode == 'CFNA')
+      {
+        this.inputPagingObj._url = "./assets/impl/ucpaging/searchPreGoLiveV2XCFNA.json";
+        this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchPreGoLiveV2XCFNA.json";
+      }else
+      {
+        this.inputPagingObj._url = "./assets/impl/ucpaging/searchPreGoLiveV2X.json";
+        this.inputPagingObj.pagingJson = "./assets/impl/ucpaging/searchPreGoLiveV2X.json";
+      }
+
       this.inputPagingObj.isJoinExAPI = true
       
       this.RequestTaskModel.ProcessKey = String.Format(CommonConstant.WF_CRP_AFT_ACT, this.bizTemplateCode);
