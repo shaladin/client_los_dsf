@@ -47,7 +47,7 @@
         },
         {
           "type": "text",
-          "label": "Order No.",
+          "label": "Lead Type",
           "property": "OrderNo"
         },
         {

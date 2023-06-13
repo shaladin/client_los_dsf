@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-body">
+    <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+    </lib-ucaddtotemp>
+    <div class="card-header">
+      <div class="text-right">
+        <button type="submit" class="btn btn-info btn-raised" (click)="SaveLeadCancel()" translate>Cancel Lead
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -69,6 +69,9 @@ import { RoPotentialViewDsfComponent } from "app/dsf/lead/potential-ro-dsf/ro-po
 import { SimpleLeadReportDsfComponent } from 'app/dsf/lead/simple-lead-report-dsf/simple-lead-report-dsf.component';
 import { LeadInquiryDsfComponent } from 'app/lead/lead-inquiry-dsf/lead-inquiry-dsf.component';
 import {NewLeadInputLeadDataXDsfComponent} from 'app/dsf/lead/new-lead-input/new-lead-input-lead-data-x-dsf/new-lead-input-lead-data-x-dsf.component';
+import {NewFraudVerifDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-dsf.component';
+import {NewFraudVerifDetailDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-detail-dsf/new-fraud-verif-detail-dsf.component';
+import {LeadCancelDsfComponent} from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-dsf/lead-cancel-dsf.component';
 
 import { UcreportModule } from '@adins/ucreport';
 
@@ -142,7 +145,10 @@ export const customCurrencyMaskConfig = {
     GeneratePotentialRoXComponent,
     SimpleLeadReportDsfComponent,
     LeadInquiryDsfComponent,
-    NewLeadInputLeadDataXDsfComponent
+    NewLeadInputLeadDataXDsfComponent,
+    NewFraudVerifDsfComponent,
+    NewFraudVerifDetailDsfComponent,
+    LeadCancelDsfComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

@@ -62,11 +62,11 @@ export class NavigationConstantDsf {
      public static NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.NAP_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/DocumentSigner/Paging'
      public static NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.NAP_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/DocumentSigner/Detail'
      //#endregion
-    //#region 
+    //#region
     public static REPORT_SURAT_KONFIRMASI_PERSETUJUAN = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_SURAT_KONFIRMASI_PERJANJIAN;
     //#endregion
 
-    //#region 
+    //#region
     public static REPORT_LTKM = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_LTKM;
     //#endregion
 
@@ -77,7 +77,7 @@ export class NavigationConstantDsf {
 
      public static NAP_MAIN_DATA_NAP1_PAGING_X = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantDsf.NAP1_PAGING_X_DSF; //"/Nap/MainData/NAP2/Paging"
      //public static NAP_MAIN_DATA_NAP2_PAGING_X = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantDsf.NAP2_PAGING_X_DSF; //"/Nap/MainData/NAP2/Paging"
-     
+
      public static NAP_MAIN_DATA_NAP1_ADD_X = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantDsf.NAP1_ADD_X_DSF; //"/Nap/MainData/NAP1/Add"
 
      public static NAP_CF4W_NAP1 = "/" + NavigationConstant.NAP_CF4W_HEADER + "/" + PathConstantDsf.NAP1_X; //"Nap/ConsumerFinance/NAP1X"
@@ -113,11 +113,12 @@ export class NavigationConstantDsf {
      public static CESSIE_PGL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.CESSIE_PGL_DETAIL; //'/Impl/Cessie/Process/PreGoLiveDsf/Detail'
      public static CESSIE_PGL_APPRVL_PAGING = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.CESSIE_PGL_APPRVL_PAGING; //'/Impl/Cessie/Process/PreGoLiveDsf/Approval/Paging'
      public static CESSIE_PGL_APPRVL_DETAIL = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.CESSIE_PGL_APPRVL_DETAIL; //'/Impl/Cessie/Process/PreGoLiveDsf/Approval/Detail'
-  
+
      public static POTENTIAL_RO_PAGING = "/" + PathConstant.LEAD + "/" + PathConstantDsf.POTENTIAL_RO_PAGING; //'/Lead/PotentialRoDsf/Paging
      public static LEAD_POTENTIAL_RO_TEL_OFFER_PAGING = "/" + PathConstant.LEAD + "/" + PathConstantDsf.POTENTIAL_RO_TEL_OFFER_PAGING; //'/Lead/PotentialRoDsf/RoTelemkOffer/Paging
      public static LEAD_POTENTIAL_RO_TEL_OFFER_VERIF = "/" + PathConstant.LEAD + "/" + PathConstantDsf.POTENTIAL_RO_TEL_OFFER_VERIF; //'/Lead/PotentialRoDsf/RoTelemkOffer/Verif
      public static LEAD_POTENTIAL_RO_VIEW = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.POTENTIAL_RO_VIEW; //'/Lead/PotentialRoDsf/View'
-  
+     public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF; //'/Lead/SimpleLeadFraudVerif/Detail'
+
 }
- 
+

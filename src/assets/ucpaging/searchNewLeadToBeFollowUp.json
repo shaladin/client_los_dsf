@@ -113,8 +113,8 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Asset Price",
-            "name": "LA.ASSET_PRICE_AMT"
+            "label": "Lead Type",
+            "name": "L.ORDER_NO"
         },
         {
             "type": "label",
@@ -164,7 +164,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "AssetPriceAmt"
+            "property": "OrderNo"
         },
         {
             "type": "action",
@@ -174,7 +174,7 @@
                     "type": "callback",
                     "key": "Edit",
                     "icon": "ft-edit-2"
-                }           
+                }
             ]
         }
     ]

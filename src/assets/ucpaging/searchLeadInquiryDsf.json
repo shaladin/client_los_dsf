@@ -50,7 +50,7 @@
             "name": "l.ORDER_NO",
             "id": "OrderNoId",
             "value": "",
-            "label": "Order No",
+            "label": "Lead Type",
             "placeholder": "Placeholder"
         },
         {
@@ -122,7 +122,7 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Order No",
+            "label": "Lead Type",
             "name": "l.ORDER_NO"
         },
         {
