@@ -103,6 +103,11 @@ export class PathConstantDsf {
     public static REPORT_SIMPLE_LEAD = "ReportSimpleLead";
     public static PRINT_REPORT_SIMPLE_LEAD = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SIMPLE_LEAD;
     public static LEAD_INQUIRY_DSF = "LeadInquiryDsf";
+    public static SIMPLE_LEAD_FRAUD_VERIF_DSF = "SimpleLeadFraudVerifDsf";
+    public static SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF = PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DSF + "/" + PathConstant.PAGING;
+    public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF = PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DSF + "/" + PathConstant.DETAIL;
+    public static SIMPLE_LEAD_CANCEL_PAGING_DSF = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstant.CANCEL;
+
     //#endregion
     public static REPORT_APP_STATUS = "ReportAppStatus";
     public static PRINT_REPORT_APP_STATUS = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_APP_STATUS;

@@ -33,7 +33,7 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
     private cookieService: CookieService
-  ) { 
+  ) {
   }
 
   ngOnInit() {
@@ -44,8 +44,8 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromSimpleLead.json";
 
     if(environment.isCore){
-      this.inputPagingObj._url="./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchAppFromSimpleLeadV2.json";
+      this.inputPagingObj._url="./assets/dsf/ucpaging/V2/searchAppFromSimpleLeadV2Dsf.json";
+      this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/V2/searchAppFromSimpleLeadV2Dsf.json";
     }
 
     this.inputPagingObj.ddlEnvironments = [

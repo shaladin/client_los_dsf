@@ -53,6 +53,9 @@ import { RoTelemkOfferVerifXDsfComponent } from 'app/dsf/lead/potential-ro-dsf/r
 import { RoPotentialViewDsfComponent } from 'app/dsf/lead/potential-ro-dsf/ro-potential-view-dsf/ro-potential-view-dsf.component';
 import { SimpleLeadReportDsfComponent } from 'app/dsf/lead/simple-lead-report-dsf/simple-lead-report-dsf.component';
 import { LeadInquiryDsfComponent } from 'app/lead/lead-inquiry-dsf/lead-inquiry-dsf.component';
+import {NewFraudVerifDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-dsf.component';
+import {NewFraudVerifDetailDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-detail-dsf/new-fraud-verif-detail-dsf.component';
+import {LeadCancelDsfComponent} from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-dsf/lead-cancel-dsf.component';
 
 const routes: Routes = [
   {
@@ -406,6 +409,27 @@ const routes: Routes = [
         component: LeadInquiryDsfComponent,
         data: {
           title: 'Lead Inquiry Dsf'
+        }
+      },
+      {
+        path: PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF,
+        component: NewFraudVerifDsfComponent,
+        data: {
+          title: 'Fraud verif paging Dsf'
+        },
+      },
+      {
+        path: PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF,
+        component: NewFraudVerifDetailDsfComponent,
+        data: {
+          title: 'Fraud verif detail Dsf'
+        },
+      },
+      {
+        path: PathConstantDsf.SIMPLE_LEAD_CANCEL_PAGING_DSF,
+        component: LeadCancelDsfComponent,
+        data: {
+          title: 'Simple Lead Cancel Dsf'
         }
       }
     ]
