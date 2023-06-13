@@ -146,7 +146,7 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
   asliRiHandler(model)
   {
     const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo+"&Token="+token+"&IsEmbedded=true";
+    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI_X + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo+"&Token="+token+"&IsEmbedded=true";
     // window.open(this.urlLink);
     this.modalContainer = this.modalService.open(model);
     this.modalContainer.result.then((result) => {
