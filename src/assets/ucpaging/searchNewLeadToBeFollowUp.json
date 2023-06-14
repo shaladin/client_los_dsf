@@ -68,7 +68,15 @@
             "value": "",
             "label": "Customer Name",
             "placeholder": "Placeholder"
-        }
+        },
+        {
+          "type": "textbox",
+          "name": "L.ORDER_NO",
+          "id": "OrderNo",
+          "value": "",
+          "label": "Lead Type",
+          "placeholder": "Placeholder"
+      }
     ],
   "querystring": {
     "name": "searchNewLeadToBeFollowUpDsf"
