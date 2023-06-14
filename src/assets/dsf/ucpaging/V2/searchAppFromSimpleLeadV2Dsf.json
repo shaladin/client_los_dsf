@@ -75,6 +75,14 @@
             "label": "Lead Source",
             "items": [],
             "itemsUrl": []
+        },
+        {
+          "type": "textbox",
+          "name": "L.ORDER_NO",
+          "id": "OrderNo",
+          "value": "",
+          "label": "Lead Type",
+          "placeholder": "Placeholder"
         }
     ],
     "querystring": {
