@@ -22,7 +22,7 @@ export class GeneratePotentialRoMonitoringDsfComponent implements OnInit {
     this.uploadObj.FileErrorName = "Upload_PotentialRO_ErrorDownload";
     this.uploadObj.pagingJson = "./assets/dsf/ucpaging/searchPotentialROMonitoringDsf.json";
     this.uploadObj.formatsAllowed = ".xls, .xlsx";
-    this.uploadObj.maxSize = 5;
+    this.uploadObj.maxSize = 2;
     if (!environment.isCore) {
       this.uploadObj.url = URLConstantX.UploadFileV2;
     }
