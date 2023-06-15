@@ -16,6 +16,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CookieService } from 'ngx-cookie';
 import { HttpClient } from '@angular/common/http';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-lead-cancel-dsf',
@@ -128,8 +129,9 @@ export class LeadCancelDsfComponent implements OnInit {
         this.tempLeadCancelObj.listWfTaskListId.push(this.listSelectedId[index].WfTaskListId);
     }
 
+    console.log("MASUK SINI");
     let params: string = this.tempLeadCancelObj.LeadIds.join(',')
     let taskListId: string = this.tempLeadCancelObj.listWfTaskListId.join(',')
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_CONFIRM_CANCEL], { "LeadIds": params, "WfTaskListIds": taskListId, "MrLeadTypeCode" : this.MrLeadTypeCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.LEAD_CONFIRM_CANCEL_DSF], { "LeadIds": params, "WfTaskListIds": taskListId, "MrLeadTypeCode" : this.MrLeadTypeCode });
   }
 }
