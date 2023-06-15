@@ -23,6 +23,7 @@ import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/workflow/claim-workflow-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-new-fraud-verif-detail-dsf',
@@ -86,7 +87,9 @@ export class NewFraudVerifDetailDsfComponent implements OnInit {
         this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
 
+    // Self Custom Changes
     this.viewGenericObj.viewInput = "./assets/dsf/ucgridview/viewLeadHeaderDsf.json";
+    // End Self Custom Changes
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "LeadNo",
@@ -156,7 +159,9 @@ export class NewFraudVerifDetailDsfComponent implements OnInit {
     this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
+        // Self Custom Changes
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF], {});
+        // End Self Custom Changes
       });
   }
 
@@ -171,7 +176,9 @@ export class NewFraudVerifDetailDsfComponent implements OnInit {
     this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
+        // Self Custom Changes
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF], {});
+        // End Self Custom Changes
       });
   }
 
@@ -195,12 +202,16 @@ export class NewFraudVerifDetailDsfComponent implements OnInit {
     this.http.post(this.urlPost, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
+        // Self Custom Changes
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF], {});
+        // End Self Custom Changes
       });
   }
 
   backHandler() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
+    // Self Custom Changes
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF], {});
+    // Self Custom Changes
   }
 
 }

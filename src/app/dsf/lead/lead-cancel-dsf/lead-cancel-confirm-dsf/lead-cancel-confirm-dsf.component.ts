@@ -13,6 +13,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericListByIdObj } from 'app/shared/model/generic/generic-list-by-id-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-lead-cancel-confirm-dsf',
@@ -64,7 +65,9 @@ export class LeadCancelConfirmDsfComponent implements OnInit {
       }
     });
     this.title = this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeLead ? CommonConstant.LeadCancelTitle : CommonConstant.SimpleLeadCancelTitle;
-    this.PagingLink = this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeLead ? NavigationConstant.LEAD_CANCEL : NavigationConstant.SIMPLE_LEAD_CANCEL;
+    // Self Custom Changes
+    this.PagingLink = this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeLead ? NavigationConstant.LEAD_CANCEL : NavigationConstantDsf.SIMPLE_LEAD_CANCEL_DSF;
+    // End Self Custom Changes
     this.reqIdListObj = { 'Ids': this.tempLeadArr.map(Number) };
     this.http.post(URLConstant.GetListLeadForLeadCancelByListLeadId, this.reqIdListObj).subscribe(
       response => {

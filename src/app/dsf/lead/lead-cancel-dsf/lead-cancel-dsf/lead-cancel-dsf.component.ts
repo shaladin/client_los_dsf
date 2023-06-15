@@ -66,8 +66,10 @@ export class LeadCancelDsfComponent implements OnInit {
       this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/V2/LeadCancelTempPagingV2.json";
 
       if(this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeSimpleLead) {
-        this.tempPagingObj.urlJson = "./assets/dsf/ucpaging/ucTempPaging/V2/SimpleLeadCancelTempPagingV2Dsf.json";
+        // Self Custom Changes
+	this.tempPagingObj.urlJson = "./assets/dsf/ucpaging/ucTempPaging/V2/SimpleLeadCancelTempPagingV2Dsf.json";
         this.tempPagingObj.pagingJson = "./assets/dsf/ucpaging/ucTempPaging/V2/SimpleLeadCancelTempPagingV2Dsf.json";
+	// End Self Custom Changes
       }
 
       this.tempPagingObj.isJoinExAPI = true
@@ -132,6 +134,8 @@ export class LeadCancelDsfComponent implements OnInit {
     console.log("MASUK SINI");
     let params: string = this.tempLeadCancelObj.LeadIds.join(',')
     let taskListId: string = this.tempLeadCancelObj.listWfTaskListId.join(',')
+    // Self Custom Changes
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.LEAD_CONFIRM_CANCEL_DSF], { "LeadIds": params, "WfTaskListIds": taskListId, "MrLeadTypeCode" : this.MrLeadTypeCode });
+    // End Self Custom Changes
   }
 }

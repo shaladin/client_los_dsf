@@ -118,8 +118,10 @@ export class NavigationConstantDsf {
      public static LEAD_POTENTIAL_RO_TEL_OFFER_PAGING = "/" + PathConstant.LEAD + "/" + PathConstantDsf.POTENTIAL_RO_TEL_OFFER_PAGING; //'/Lead/PotentialRoDsf/RoTelemkOffer/Paging
      public static LEAD_POTENTIAL_RO_TEL_OFFER_VERIF = "/" + PathConstant.LEAD + "/" + PathConstantDsf.POTENTIAL_RO_TEL_OFFER_VERIF; //'/Lead/PotentialRoDsf/RoTelemkOffer/Verif
      public static LEAD_POTENTIAL_RO_VIEW = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.POTENTIAL_RO_VIEW; //'/Lead/PotentialRoDsf/View'
-     public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF; //'/Lead/SimpleLeadFraudVerif/Detail'
+     public static SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF; //'/Lead/SimpleLeadFraudVerifDsf/Paging'
+     public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF; //'/Lead/SimpleLeadFraudVerifDsf/Detail'
      public static LEAD_CONFIRM_CANCEL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.LEAD_CONFIRM_CANCEL_DSF; //"/Lead/ConfirmCancel"
+     public static SIMPLE_LEAD_CANCEL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_CANCEL_PAGING_DSF; //'/Lead/SimpleLeadDsf/Cancel'
 
 }
 

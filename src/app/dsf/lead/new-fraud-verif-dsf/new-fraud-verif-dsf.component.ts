@@ -24,16 +24,20 @@ export class NewFraudVerifDsfComponent implements OnInit {
   constructor(private cookieService : CookieService) { }
 
   ngOnInit() {
+    //Self Custom Changes
     this.inputPagingObj._url = "./assets/dsf/ucpaging/searchSimpleFraudVerifDsf.json";
     this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchSimpleFraudVerifDsf.json";
-
+    //End Self Custom Changes
+    
     if(environment.isCore){
       let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
+      //Self Custom Changes
       this.inputPagingObj._url = "./assets/dsf/ucpaging/V2/searchSimpleFraudVerifV2Dsf.json";
       this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/V2/searchSimpleFraudVerifV2Dsf.json";
       this.inputPagingObj.isJoinExAPI = true;
       this.inputPagingObj.navigationConst = NavigationConstantDsf;
+      //End Self Custom Changes
 
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_SIMPLE_LEAD;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_FRAUD_VERIFICATION;
