@@ -72,6 +72,7 @@ import {NewLeadInputLeadDataXDsfComponent} from 'app/dsf/lead/new-lead-input/new
 import {NewFraudVerifDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-dsf.component';
 import {NewFraudVerifDetailDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-detail-dsf/new-fraud-verif-detail-dsf.component';
 import {LeadCancelDsfComponent} from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-dsf/lead-cancel-dsf.component';
+import { LeadCancelConfirmDsfComponent } from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-confirm-dsf/lead-cancel-confirm-dsf.component';
 
 import { UcreportModule } from '@adins/ucreport';
 
@@ -148,7 +149,8 @@ export const customCurrencyMaskConfig = {
     NewLeadInputLeadDataXDsfComponent,
     NewFraudVerifDsfComponent,
     NewFraudVerifDetailDsfComponent,
-    LeadCancelDsfComponent
+    LeadCancelDsfComponent,
+    LeadCancelConfirmDsfComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

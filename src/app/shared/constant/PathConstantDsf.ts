@@ -107,6 +107,7 @@ export class PathConstantDsf {
     public static SIMPLE_LEAD_FRAUD_VERIF_PAGING_DSF = PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DSF + "/" + PathConstant.PAGING;
     public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF = PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DSF + "/" + PathConstant.DETAIL;
     public static SIMPLE_LEAD_CANCEL_PAGING_DSF = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstant.CANCEL;
+    public static LEAD_CONFIRM_CANCEL_DSF = "ConfirmCancelDsf";
 
     //#endregion
     public static REPORT_APP_STATUS = "ReportAppStatus";

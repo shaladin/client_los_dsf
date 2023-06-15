@@ -56,6 +56,7 @@ import { LeadInquiryDsfComponent } from 'app/lead/lead-inquiry-dsf/lead-inquiry-
 import {NewFraudVerifDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-dsf.component';
 import {NewFraudVerifDetailDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-detail-dsf/new-fraud-verif-detail-dsf.component';
 import {LeadCancelDsfComponent} from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-dsf/lead-cancel-dsf.component';
+import { LeadCancelConfirmDsfComponent } from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-confirm-dsf/lead-cancel-confirm-dsf.component';
 
 const routes: Routes = [
   {
@@ -430,6 +431,13 @@ const routes: Routes = [
         component: LeadCancelDsfComponent,
         data: {
           title: 'Simple Lead Cancel Dsf'
+        }
+      },
+      {
+        path: PathConstantDsf.LEAD_CONFIRM_CANCEL_DSF,
+        component: LeadCancelConfirmDsfComponent,
+        data: {
+          title: 'Lead Cancel Confirm Dsf'
         }
       }
     ]
