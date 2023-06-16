@@ -122,6 +122,7 @@ export class NavigationConstantDsf {
      public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_FRAUD_VERIF_DETAIL_DSF; //'/Lead/SimpleLeadFraudVerifDsf/Detail'
      public static LEAD_CONFIRM_CANCEL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.LEAD_CONFIRM_CANCEL_DSF; //"/Lead/ConfirmCancel"
      public static SIMPLE_LEAD_CANCEL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_CANCEL_PAGING_DSF; //'/Lead/SimpleLeadDsf/Cancel'
+     public static LEAD_CANCEL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.LEAD_CANCEL_DSF; //'/Lead/SimpleLeadDsf/Cancel'
 
 }
 
