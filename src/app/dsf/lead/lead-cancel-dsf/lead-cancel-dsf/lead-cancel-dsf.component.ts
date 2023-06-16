@@ -67,9 +67,9 @@ export class LeadCancelDsfComponent implements OnInit {
 
       if(this.MrLeadTypeCode == CommonConstant.MrLeadTypeCodeSimpleLead) {
         // Self Custom Changes
-	this.tempPagingObj.urlJson = "./assets/dsf/ucpaging/ucTempPaging/V2/SimpleLeadCancelTempPagingV2Dsf.json";
+	      this.tempPagingObj.urlJson = "./assets/dsf/ucpaging/ucTempPaging/V2/SimpleLeadCancelTempPagingV2Dsf.json";
         this.tempPagingObj.pagingJson = "./assets/dsf/ucpaging/ucTempPaging/V2/SimpleLeadCancelTempPagingV2Dsf.json";
-	// End Self Custom Changes
+	      // End Self Custom Changes
       }
 
       this.tempPagingObj.isJoinExAPI = true

@@ -434,6 +434,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.LEAD_CANCEL_DSF,
+        component: LeadCancelDsfComponent,
+        data: {
+          title: 'Lead Cancel Dsf'
+        }
+      },
+      {
         path: PathConstantDsf.LEAD_CONFIRM_CANCEL_DSF,
         component: LeadCancelConfirmDsfComponent,
         data: {
