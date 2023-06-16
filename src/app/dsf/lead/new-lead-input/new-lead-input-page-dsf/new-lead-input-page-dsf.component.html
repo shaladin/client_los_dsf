@@ -61,7 +61,7 @@
         </app-new-lead-input-cust-data-dsf>
       </div>
       <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-        <app-new-lead-input-lead-data-x-dsf *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue" [showCancelButton]="true" (outputCancel)="cancelHandler()">
+        <app-new-lead-input-lead-data-x-dsf *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue" [showCancelButton]="true" (outputCancel)="backTabToCustData()">
         </app-new-lead-input-lead-data-x-dsf>
       </div>
       <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">

@@ -198,6 +198,18 @@ export class NewLeadInputPageDsfComponent implements OnInit {
     }
   }
 
+  // Self Custom Changes
+  backTabToCustData() {
+    this.EnterTab("custData");
+    this.stepper.previous();
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UcviewgenericComponent);
+    this.leadMainInfo.clear();
+    const component = this.leadMainInfo.createComponent(componentFactory);
+    component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
+  }
+  // End Self Custom Changes
+  
   backTabToLeadData() {
     this.EnterTab("leadData");
     this.stepper.previous();
