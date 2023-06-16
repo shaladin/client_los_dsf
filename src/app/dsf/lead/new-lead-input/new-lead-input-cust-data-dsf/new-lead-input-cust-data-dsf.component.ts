@@ -21,6 +21,7 @@ import { InputAddressObj } from 'app/shared/model/input-address-obj.model';
 import { InputFieldObj } from 'app/shared/model/input-field-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { LeadCustAddrObj } from 'app/shared/model/lead-cust-addr-obj.model';
 import { LeadCustCompareObj } from 'app/shared/model/lead-cust-compare-obj.model';
 import { LeadCustObj } from 'app/shared/model/lead-cust-obj.model';
@@ -29,7 +30,6 @@ import { LeadCustPersonalJobDataObj } from 'app/shared/model/lead-cust-personal-
 import { LeadCustPersonalObj } from 'app/shared/model/lead-cust-personal-obj.model';
 import { LeadCustSocmedObj } from 'app/shared/model/lead-cust-socmed-obj.model';
 import { LeadInputObj } from 'app/shared/model/lead-input-obj.model';
-import { LeadObj } from 'app/shared/model/lead.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { RefProfessionObj } from 'app/shared/model/ref-profession-obj.model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/third-party-result-h-for-fraud-chck-obj.model';
@@ -49,7 +49,9 @@ import { ElementRef, Renderer2 } from "@angular/core";
 export class NewLeadInputCustDataDsfComponent implements OnInit {
 
   @Input() LeadId: number;
+  @Input() showCancelButton: boolean = true;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
+  @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   businessDt: Date = new Date();
   CopyFrom: number;
   typePage: string;
@@ -1434,5 +1436,9 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
 
     this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
     this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
+  }
+
+  Cancel(){
+    this.outputCancel.emit();
   }
 }
