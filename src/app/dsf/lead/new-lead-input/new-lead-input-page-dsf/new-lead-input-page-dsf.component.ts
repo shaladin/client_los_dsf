@@ -98,7 +98,9 @@ export class NewLeadInputPageDsfComponent implements OnInit {
     else if(this.WfTaskListId > 0) {
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
+    // Self Custom Changes
     this.viewLeadHeaderMainInfo.viewInput = "./assets/dsf/ucgridview/viewLeadHeaderDsf.json";
+    // End Self Custom Changes
     this.viewLeadHeaderMainInfo.ddlEnvironments = [
       {
         name: "LeadNo",
@@ -147,15 +149,21 @@ export class NewLeadInputPageDsfComponent implements OnInit {
     else {
       modeName = this.pageType;
     }
+    // Self Custom Changes
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_MAIN_INFO_DSF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, mode: modeName });
+    // End Self Custom Changes
   }
 
   cancelHandler() {
     if (this.pageType == "update") {
+      // Self Custom Changes
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING_DSF], {});
+      // End Self Custom Changes
     }
     else {
+      // Self Custom Changes
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING_DSF], {});
+      // End Self Custom Changes
     }
   }
 

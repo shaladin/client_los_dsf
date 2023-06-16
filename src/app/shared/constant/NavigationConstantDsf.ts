@@ -123,6 +123,7 @@ export class NavigationConstantDsf {
      public static LEAD_CONFIRM_CANCEL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.LEAD_CONFIRM_CANCEL_DSF; //"/Lead/ConfirmCancel"
      public static SIMPLE_LEAD_CANCEL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_CANCEL_PAGING_DSF; //'/Lead/SimpleLeadDsf/Cancel'
      public static LEAD_CANCEL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.LEAD_CANCEL_DSF; //'/Lead/SimpleLeadDsf/Cancel'
-
+     public static SIMPLE_LEAD_PAGING_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLead/Paging'
+  
 }
 

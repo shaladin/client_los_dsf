@@ -7,7 +7,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { LeadObj } from 'app/shared/model/Lead.Model';
+import { LeadObj } from 'app/shared/model/lead.model';
 import { environment } from 'environments/environment';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
@@ -21,6 +21,7 @@ import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/third-party-r
 import { AssetTypeObj } from 'app/shared/model/asset-type-obj.model';
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { ElementRef, Renderer2, AfterViewInit } from "@angular/core";
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-new-lead-input-lead-data-x-dsf',
@@ -776,7 +777,9 @@ export class NewLeadInputLeadDataXDsfComponent implements OnInit {
             stepMode: "next",
             LeadInputLeadDataObj: this.leadInputLeadDataObj,
             urlPost: urlPost,
-            paging: NavigationConstant.SIMPLE_LEAD_PAGING,
+            // Self Custom Changes
+            paging: NavigationConstantDsf.SIMPLE_LEAD_PAGING_DSF,
+            // End Self Custom Changes
             typePage: this.typePage,
             originPage: this.originPage,
             resLeadAssetObj: this.resLeadAssetObj,
@@ -791,7 +794,9 @@ export class NewLeadInputLeadDataXDsfComponent implements OnInit {
             stepMode: "next",
             LeadInputLeadDataObj: this.leadInputLeadDataObj,
             urlPost: urlPost,
-            paging: NavigationConstant.SIMPLE_LEAD_PAGING,
+            // Self Custom Changes
+            paging: NavigationConstantDsf.SIMPLE_LEAD_PAGING_DSF,
+            // End Self Custom Changes
             typePage: this.typePage,
             originPage: this.originPage,
             resLeadAssetObj: this.resLeadAssetObj,
