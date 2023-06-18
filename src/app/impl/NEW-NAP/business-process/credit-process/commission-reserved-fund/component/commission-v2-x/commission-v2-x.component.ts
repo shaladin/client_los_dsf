@@ -33,7 +33,7 @@ import { TaxTrxDObj } from 'app/shared/model/tax/tax-trx-d.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/ref-reason/req-get-by-type-code-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
 import { ReqReturnHandlingCommRsvFundObj } from 'app/shared/model/app-commission-rsv-fund/req-return-handling-comm-rsv-fund-obj.model';
-import { getLocaleNumberFormat, formatNumber } from '@angular/common';
+import { getLocaleNumberFormat, formatNumber, formatDate } from '@angular/common';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { AppObj } from 'app/shared/model/app/app.model';
 import { ResGetRefTaxOfficeDetailObj } from 'app/shared/model/Response/commission/res-get-ref-tax-office-detail-obj.model';
@@ -150,7 +150,13 @@ export class CommissionV2XComponent implements OnInit {
         this.pph23To = response["ReturnObject"].SkbEndDt
         this.BusinessDate = response["ReturnObject"].BusinessDate
       });
-    if(this.BusinessDate>=this.pph23From && this.BusinessDate<=this.pph23To){
+      let bd = formatDate(this.BusinessDate, 'yyyy-MM-dd', 'en-US').toString()
+      let p23f = formatDate(this.pph23From, 'yyyy-MM-dd', 'en-US').toString()
+      let p23t = formatDate(this.pph23To, 'yyyy-MM-dd', 'en-US').toString()
+      
+      console.log(bd,p23f,p23t)
+
+    if(bd>=p23f && bd<=p23t){
       this.pph23 = true;
     }
     else{
