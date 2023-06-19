@@ -418,10 +418,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
     this.cmoNameLookUpObj = new InputLookupObj();
     this.cmoNameLookUpObj.isRequired = false;
-    this.cmoNameLookUpObj.urlJson = "./assets/uclookup/lookupCMO.json";
+    this.cmoNameLookUpObj.urlJson = "./assets/dsf/uclookup/lookupCMODsf.json";
     this.cmoNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.cmoNameLookUpObj.pagingJson = "./assets/uclookup/lookupCMO.json";
-    this.cmoNameLookUpObj.genericJson = "./assets/uclookup/lookupCMO.json";
+    this.cmoNameLookUpObj.pagingJson = "./assets/dsf/uclookup/lookupCMODsf.json";
+    this.cmoNameLookUpObj.genericJson = "./assets/dsf/uclookup/lookupCMODsf.json";
 
     this.supplierNameLookUpObj = new InputLookupObj();
     this.supplierNameLookUpObj.isRequired = false;
@@ -432,10 +432,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
     this.salesNameLookUpObj = new InputLookupObj();
     this.salesNameLookUpObj.isRequired = false;
-    this.salesNameLookUpObj.urlJson = "./assets/uclookup/lookupTeleSales.json";
+    this.salesNameLookUpObj.urlJson = "./assets/dsf/uclookup/lookupTeleSalesDsf.json";
     this.salesNameLookUpObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
-    this.salesNameLookUpObj.pagingJson = "./assets/uclookup/lookupTeleSales.json";
-    this.salesNameLookUpObj.genericJson = "./assets/uclookup/lookupTeleSales.json";
+    this.salesNameLookUpObj.pagingJson = "./assets/dsf/uclookup/lookupTeleSalesDsf.json";
+    this.salesNameLookUpObj.genericJson = "./assets/dsf/uclookup/lookupTeleSalesDsf.json";
   }
   OfficeChanged(event) {
     // this.MainInfoForm.patchValue({
