@@ -28,7 +28,7 @@ export class NewFraudVerifDsfComponent implements OnInit {
     this.inputPagingObj._url = "./assets/dsf/ucpaging/searchSimpleFraudVerifDsf.json";
     this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchSimpleFraudVerifDsf.json";
     //End Self Custom Changes
-    
+
     if(environment.isCore){
       let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 

@@ -1,6 +1,6 @@
 {
   "url": "",
-  "title":"Lookup - Lead Process By",
+  "title":"Lookup - Lead Processed By",
   "sectionTitle": "Search",
   "component": [
     {
@@ -16,7 +16,7 @@
       "name": "RE.EMP_NO",
       "id": "empNo",
       "value": "",
-      "label": "Lead Process By NO",
+      "label": "Lead Processed By No",
       "placeholder": ""
     },
     {
@@ -24,7 +24,7 @@
       "name": "RE.EMP_NAME",
       "id": "empNae",
       "value": "",
-      "label": "Lead Process By Name",
+      "label": "Lead Processed By",
       "placeholder": ""
     }
   ],
@@ -41,13 +41,13 @@
       {
           "type": "sort",
           "position": "center",
-          "label": "Lead Process By NO",
+          "label": "Lead Processed By No",
           "name": "RE.EMP_NO"
       },
       {
           "type": "sort",
           "position": "left",
-          "label": "Lead Process By Name",
+          "label": "Lead Processed By",
           "name": "RE.EMP_NAME"
       },
       {

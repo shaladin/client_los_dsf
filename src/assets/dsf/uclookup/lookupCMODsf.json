@@ -24,7 +24,7 @@
       "name": "RE.EMP_NAME",
       "id": "empNae",
       "value": "",
-      "label": "Lead Received By Name",
+      "label": "Lead Received By",
       "placeholder": ""
     }
   ],
@@ -47,7 +47,7 @@
       {
           "type": "sort",
           "position": "left",
-          "label": "Lead Received By Name",
+          "label": "Lead Received By",
           "name": "RE.EMP_NAME"
       },
       {
