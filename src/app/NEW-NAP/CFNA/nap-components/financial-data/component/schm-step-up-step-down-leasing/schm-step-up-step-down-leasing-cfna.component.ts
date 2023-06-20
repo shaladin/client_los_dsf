@@ -9,6 +9,7 @@ import { AppObj } from 'app/shared/model/app/app.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-step-up-step-down-obj-for-trial-calc.model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-leasing-cfna',
@@ -19,6 +20,7 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
   @Input() AppId: number = 0;
   @Input() ParentForm: FormGroup;
   @Input() TrialCalc: boolean = false;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -27,6 +29,8 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
+  ProdOfferingVersion: string;
+  calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
@@ -50,6 +54,9 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
           }
         });
       this.TrialCalc = false;
+    }
+    if (this.TrialCalc) {
+      this.GetProductOfferingVersion();
     }
   }
 
@@ -192,7 +199,17 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
     calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
     calcStepUpStepDownObj["InstAmt"] = 0;
 
-    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), calcStepUpStepDownObj).subscribe(
+    if (this.TrialCalc) {
+      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
+      this.calcStepUpStepDownObjForTrialCalc["IsRecalculate"] = false;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
+      this.calcStepUpStepDownObjForTrialCalc["InstAmt"] = 0;
+    }
+
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), this.TrialCalc ? this.calcStepUpStepDownObjForTrialCalc : calcStepUpStepDownObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.listAppInstStepSchm = response.AppInstStepSchmObjs;
@@ -308,5 +325,12 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
 
   test() {
     
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }
