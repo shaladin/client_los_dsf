@@ -30,6 +30,7 @@ export class NavigationConstant {
   public static APP_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstantX.APP_INQUIRY; //'/Inquiry/AppInquiryX'
   public static APP_AGR_CANCELLATION_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_AGR_CANCELLATION_INQUIRY; //'/Inquiry/AppAgrCancellationInquiry'
   public static PURCHASE_TRACKING_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.PURCHASE_TRACKING_INQUIRY; //'/Inquiry/PurchaseTrackingInquiry'
+  public static MANAGEMENT_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.MANAGEMENT_INQUIRY; //'/Inquiry/ManagementInquiry'
   //#endregion
 
   //#region NAP
@@ -289,6 +290,7 @@ export class NavigationConstant {
   public static VIEW_PHN_VERIF = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PHN_VERIF; //"/View/PhoneVerifView"
   public static VIEW_SRVY = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_SRVY; //'/View/SurveyView'
   public static VIEW_AUTO_DEBIT_REGIS = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_AUTO_DEBIT_REGIS; //'/View/AutoDebitRegisView'
+  public static VIEW_CREDIT_REVIEW = "/" + PathConstant.VIEW + "/" + PathConstantX.VIEW_CREDIT_REVIEW; //'/View/CreditReviewView/X'
   //#endregion
 
   //#region FOU-VIEW
@@ -409,7 +411,7 @@ export class NavigationConstant {
   public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_DETAIL; //'/Ltkm/Verify/DetailX'
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
   public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
-  public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
+  public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
   public static LTKM_RTN_HANDLING_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_DETAIL; //'/Ltkm/ReturnHandling/Detail'
   //#endregion
 

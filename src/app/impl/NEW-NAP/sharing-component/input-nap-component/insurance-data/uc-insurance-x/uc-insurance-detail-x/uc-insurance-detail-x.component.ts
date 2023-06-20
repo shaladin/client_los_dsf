@@ -942,7 +942,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
     switch (this.ruleObj.AdminFeeToCustBhv) {
       case CommonConstant.InsFeeBhvDef:
         //set default jika pertama kali create
-        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustStampDutyFeeAmt: this.ruleObj.CustStampdutyFeeToCust });
+        if (this.appInsObjObj == null) this.InsuranceDataForm.patchValue({ CustAdminFeeAmt: this.ruleObj.AdminFeeToCust });
         break;
       case CommonConstant.InsFeeBhvMin:
         CustAdminFeeAmtValidator.push(Validators.min(this.ruleObj.AdminFeeToCust));
@@ -1866,12 +1866,18 @@ export class UcInsuranceDetailXComponent implements OnInit {
                 InscoAddPremiAmt: currAddCvg.AddPremiToInscoAmt
               });
 
-              this.discRuleObj.AdditionalCoverageType.forEach((x) => {
-                if(x == this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["MrAddCvgTypeCode"].value)
-                {
-                  addCvgDisc += this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["CustAddPremiAmt"].value;
-                }
-              });
+
+              if ((this.InsuranceDataForm.controls.PayPeriodToInsco.value == CommonConstantX.PayPeriodAnnualy && i == 0) || (this.InsuranceDataForm.controls.PayPeriodToInsco.value != CommonConstantX.PayPeriodAnnualy)){
+                this.discRuleObj.AdditionalCoverageType.forEach((x) => {
+                
+                  if(x == this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["MrAddCvgTypeCode"].value)
+                  {
+                    addCvgDisc += this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"]["CustAddPremiAmt"].value;
+                  }
+                });
+              }
+
+
             } else {
               let sumInsuredAmt = null;
               if (this.groupAddCvrSumInsuredDropDown[i][currAddCvgType]) {

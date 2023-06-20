@@ -168,8 +168,38 @@ public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: Http
     window.open(environment.losR3Web + NavigationConstant.VIEW_CUST_EXPSR + "?CrdRvwExposureHId=" + CrdRvwExposureHId + "&Token=" + token, '_blank');
   }
 
-  public static OpenPefindoView(CustNo: string, IsLos: boolean) {
+  public static OpenPefindoView(CustNo: string, IsLos: boolean, Token: string = "") {
+    if (Token != "")
+    {
+      window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos + "&Token=" + Token, '_blank');
+      return;
+    }
+
     window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos);
+  }
+
+  public static OpenPefindoViewV2(CustNo: string, IsLos: boolean, Token: string = "", IsCtpg: boolean, TrxNo: string, MrCustTypeCode: string) {
+    if (Token != "")
+    {
+      if(IsCtpg)
+      {
+        window.open(environment.FoundationR3Web + "/View/Pefindo?GroupTrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode + "&IsLos=" + IsLos + "&Token=" + Token, '_blank');
+      }
+      else
+      {
+        window.open(environment.FoundationR3Web + "/View/Pefindo?TrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode + "&IsLos=" + IsLos + "&Token=" + Token, '_blank');
+      }
+      return;
+    }
+
+    if(IsCtpg)
+    {
+      window.open(environment.FoundationR3Web + "/View/Pefindo?GroupTrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode + "&IsLos=" + IsLos);
+    }
+    else
+    {
+      window.open(environment.FoundationR3Web + "/View/Pefindo?TrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode + "&IsLos=" + IsLos);
+    }
   }
 
   public static CreateUserAccess(response) {

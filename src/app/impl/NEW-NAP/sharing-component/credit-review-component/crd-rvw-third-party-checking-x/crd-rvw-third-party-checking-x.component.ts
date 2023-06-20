@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -43,7 +44,8 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private modalService: NgbModal,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private toastr: NGXToastrService) { }
 
   async ngOnInit() : Promise<void> {
     await this.GetIsUseDigitalization();
@@ -105,13 +107,41 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
         PefindoBasicRole = response.GsValue;
       }
     )
-    let Roles = PefindoBasicRole.split(',');
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    if (Roles.includes(this.user.RoleCode)) {
-      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false);
-    } else {
-      AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true);
-    }
+       
+    await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
+      (response) => {
+        let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
+        let ThirdPartyRsltHGroupNo = response["ThirdPartyGroupTrxNo"]
+        let TrxNo : string = "";
+        let MrCustTypeCode : string = response["MrCustTypeCode"];
+        let IsCtpg : boolean = false;
+
+        if(ThirdPartyRsltHGroupNo != null && ThirdPartyRsltHGroupNo != undefined && ThirdPartyRsltHGroupNo != "")
+        {
+          IsCtpg = true;
+          TrxNo = ThirdPartyRsltHGroupNo;
+        }
+        else if(thirdPartyTrxNo != null && thirdPartyTrxNo != undefined && thirdPartyTrxNo != "")
+        {
+          IsCtpg = false;
+          TrxNo = thirdPartyTrxNo;
+        }
+        else
+        {
+          this.toastr.warningMessage("Please request Pefindo first!");
+          return;
+        }
+        let Roles = PefindoBasicRole.split(',');
+        this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+        if (Roles.includes(this.user.RoleCode)) {
+          // AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false, token);
+          AdInsHelper.OpenPefindoViewV2(this.CrdRvwCustInfoObj.CustNo, false, token, IsCtpg, TrxNo, MrCustTypeCode);
+        } else {
+          // AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
+          AdInsHelper.OpenPefindoViewV2(this.CrdRvwCustInfoObj.CustNo, true, token, IsCtpg, TrxNo, MrCustTypeCode);
+        }
+    })
   }
 
   closeResult: any;
@@ -132,7 +162,8 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
   
   asliRiHandler(model)
   {
-    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI_X + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo;
+    const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI_X + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo+"&Token="+token+"&IsEmbedded=true";
     // window.open(this.urlLink);
     this.modalContainer = this.modalService.open(model);
     this.modalContainer.result.then((result) => {

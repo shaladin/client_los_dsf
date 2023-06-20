@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -15,6 +16,7 @@ import { ThirdPartyRapindoRsltObj } from 'app/shared/model/third-party-data/thir
 import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
 import { ThirdPartySlikRsltObj } from 'app/shared/model/third-party-data/third-party-slik-rslt-obj.model';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-crd-rvw-third-party-checking',
@@ -39,7 +41,9 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private cookieService: CookieService,
+    private toastr: NGXToastrService) { }
 
   async ngOnInit(): Promise<void> {
     await this.GetIsUseDigitalization();
@@ -94,8 +98,19 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
     )
   }
 
-  pefindoHandler() {
-    AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true);
+  async pefindoHandler() {
+    await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
+      (response) => {
+        let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
+        if (thirdPartyTrxNo == null || thirdPartyTrxNo == "")
+        {
+          this.toastr.warningMessage("Please request Pefindo first!");
+          return;
+        }
+
+        const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+        AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
+      })
   }
 
   closeResult: any;
@@ -116,7 +131,8 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
 
   asliRiHandler(model)
   {
-    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo;
+    const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_ASLI_RI + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo+"&Token="+token+"&IsEmbedded=true";
     // window.open(this.urlLink);
     this.modalContainer = this.modalService.open(model);
     this.modalContainer.result.then((result) => {

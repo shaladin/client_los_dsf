@@ -1,4 +1,4 @@
-<div formGroupName="{{identifier}}">
+<!-- <div formGroupName="{{identifier}}">
 
   <div *ngIf="!isLockMode" class="pull-right">
       <button type="button" class="addButton" translate (click)="GetFinData(ListLtkmCustCoyFinData.length)"><i
@@ -57,7 +57,9 @@
                           </lib-uc-show-errors>
                       </div>
                   </div>
-                  <!-- <div class="form-group row">
+
+                  BATAS COMEN ATAS
+                  <div class="form-group row">
                       <label class="col-md-4" translate>Return Of Investment(%)</label>
                       <div class="col-md-8">
                           <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
@@ -121,7 +123,10 @@
                               [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                       </div>
-                  </div>-->
+                  </div>
+                  BATAS KOMEN BAWAH
+
+
                   <div class="form-group row">
                       <label class="col-md-4" translate>Other Monthly Installment</label>
                       <div class="col-md-8">
@@ -135,7 +140,9 @@
                           </lib-uc-show-errors>
                       </div>
                   </div>
-                  <!--<div class="form-group row">
+
+                  BATAS KOMEN ATAS
+                  <div class="form-group row">
                       <label class="col-md-4" translate>Revenue</label>
                       <div class="col-md-8">
                           <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
@@ -198,10 +205,14 @@
                               [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                       </div>
-                  </div> -->
+                  </div>
+                  BATAS KOMEN BAWAH
+
               </div>
               <div class="col-md-6">
-                  <!-- <div class="form-group row">
+
+                BATAS KOMEN ATAS
+                  <div class="form-group row">
                       <label class="col-md-4" translate>Monthly Expense</label>
                       <div class="col-md-8">
                           <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
@@ -278,7 +289,9 @@
                               [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                       </div>
-                  </div> -->
+                  </div>
+                  BATAS KOMEN BAWAH
+
                   <div class="form-group row">
                       <label class="col-md-4" translate>Operational Cost</label>
                       <div class="col-md-8">
@@ -291,7 +304,9 @@
                           </lib-uc-show-errors>
                       </div>
                   </div>
-                  <!-- <div class="form-group row">
+
+                  BATAS KOMEN ATAS
+                  <div class="form-group row">
                       <label class="col-md-4" translate>Current Asset</label>
                       <div class="col-md-8">
                           <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
@@ -339,7 +354,9 @@
                               [submit]="enjiForm.submitted">
                           </lib-uc-show-errors>
                       </div>
-                  </div> -->
+                  </div>
+                  BATAS KOMEN BAWAH
+
                   <div class="form-group row adins-required">
                       <label class="col-md-4 adInsLabel" for="DateAsOf" translate>Date As Of</label>
                       <div class="col-md-8">
@@ -374,4 +391,73 @@
               class="btn btn-raised btn-primary"><i class="far fa-check-square"></i>&nbsp;<span translate>Save</span></button>
       </div>
   </ng-template>
+</div> -->
+
+<div>
+    <div class="pull-right">
+        <button *ngIf="IsShowDetailCustFin" type="button" class="backButton" (click)="hideDetailCustFinData()">
+            <i class="fa fa-arrow-left"></i>&nbsp;<span translate>Back</span>
+        </button>
+    </div>
+    <lib-ucSubsection [id]="'MainInfo'" [title]="'Financial Data '+TitleCustFinSuffix" [panel]="'FinId'">
+    </lib-ucSubsection>
+    <form class="form form-horizontal" id="FinId">
+
+        <div id="ListCustFinData" class="mb-3 mt-3" *ngIf="!IsShowDetailCustFin" style="overflow-x: auto;">
+            <table class="table table-stripped table-bordered" id="FinId">
+                <thead>
+                    <tr class="table-header">
+                        <th class="text-center" translate>Date</th>
+                        <th class="text-center" translate>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ListLtkmCustCoyFinData; let i = index">
+                        <td class="text-center">{{item.DateAsOf | date: 'dd-MMM-yyyy'}}</td>
+                        <td class="text-center"><a href="javascript:;" (click)="showDetailCustFinData(i)"><i
+                                    class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+                    </tr>
+                    <tr *ngIf="ListLtkmCustCoyFinData?.length <= 0">
+                        <td class="text-center" colspan="2" translate>No Data Available</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-body mb-3" *ngIf="IsShowDetailCustFin">
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Gross Monthly Income Amount</label>
+                <label class="col-md-3 adInsLabel"
+                    *ngIf="CustCoyFinData.GrossMonthlyIncomeAmt != 0">{{CustCoyFinData.GrossMonthlyIncomeAmt |
+                    number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyIncomeAmt == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Operation Cost</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost != 0">{{CustCoyFinData.OprCost |
+                    number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost == 0">-</label>
+      
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Total Monthly Installment DSF Amount</label>
+                <label class="col-md-3 adInsLabel"
+                    *ngIf="CustCoyFinData.OtherMonthlyInstallmentDsf != 0">{{CustCoyFinData.OtherMonthlyInstallmentDsf
+                    | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OtherMonthlyInstallmentDsf == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Total Monthly Installment Other Amount</label>
+                <label class="col-md-3 adInsLabel"
+                    *ngIf="CustCoyFinData.OthMonthlyInstAmt != null">{{CustCoyFinData.OthMonthlyInstAmt |
+                    number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OthMonthlyInstAmt == null">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Net Income Amount</label>
+                <label class="col-md-3 adInsLabel" *ngIf="NettIncomeAmtCoy != 0">{{NettIncomeAmtCoy |
+                    number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="NettIncomeAmtCoy == 0">-</label>
+            </div>
+        </div>
+    </form>
 </div>

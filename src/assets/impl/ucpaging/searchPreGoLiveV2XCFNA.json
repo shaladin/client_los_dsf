@@ -69,7 +69,7 @@
       }
     ],
     "querystring": {
-      "name": "searchPreGoLiveV2X"
+      "name": "searchPreGoLiveV2XCFNA"
     },
     "orderby": {
       "key": "app.APP_NO",
@@ -128,7 +128,7 @@
         "type": "sort",
         "position": "center",
         "label": "Insurance Order",
-        "name": "CASE WHEN ispx.INS_SPPA_POLICY_X_ID IS NOT NULL THEN 'INCOMPLETE' ELSE 'COMPLETED' END"
+        "name": "'COMPLETED'"
       },
       {
         "type": "label",
