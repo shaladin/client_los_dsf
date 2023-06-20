@@ -199,6 +199,30 @@ public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: Http
     window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos);
   }
 
+  public static OpenPefindoViewV2(CustNo: string, IsLos: boolean, Token: string = "", IsCtpg: boolean, TrxNo: string, MrCustTypeCode: string) {
+    if (Token != "")
+    {
+      if(IsCtpg)
+      {
+        window.open(environment.FoundationR3Web + "/View/Pefindo?GroupTrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode + "&IsLos=" + IsLos + "&Token=" + Token, '_blank');
+      }
+      else
+      {
+        window.open(environment.FoundationR3Web + "/View/Pefindo?TrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode + "&IsLos=" + IsLos + "&Token=" + Token, '_blank');
+      }
+      return;
+    }
+
+    if(IsCtpg)
+    {
+      window.open(environment.FoundationR3Web + "/View/Pefindo?GroupTrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode + "&IsLos=" + IsLos);
+    }
+    else
+    {
+      window.open(environment.FoundationR3Web + "/View/Pefindo?TrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode + "&IsLos=" + IsLos);
+    }
+  }
+
   public static CreateUserAccess(response) {
     // unused
   }
