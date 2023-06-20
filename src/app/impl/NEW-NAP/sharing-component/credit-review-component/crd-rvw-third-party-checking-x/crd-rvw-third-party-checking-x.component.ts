@@ -107,11 +107,26 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
         PefindoBasicRole = response.GsValue;
       }
     )
-         
+       
     await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
       (response) => {
         let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
-        if (thirdPartyTrxNo == null || thirdPartyTrxNo == "")
+        let ThirdPartyRsltHGroupNo = response["ThirdPartyGroupTrxNo"]
+        let TrxNo : string = "";
+        let MrCustTypeCode : string = response["MrCustTypeCode"];
+        let IsCtpg : boolean = false;
+
+        if(ThirdPartyRsltHGroupNo != null && ThirdPartyRsltHGroupNo != undefined && ThirdPartyRsltHGroupNo != "")
+        {
+          IsCtpg = true;
+          TrxNo = ThirdPartyRsltHGroupNo;
+        }
+        else if(thirdPartyTrxNo != null && thirdPartyTrxNo != undefined && thirdPartyTrxNo != "")
+        {
+          IsCtpg = false;
+          TrxNo = thirdPartyTrxNo;
+        }
+        else
         {
           this.toastr.warningMessage("Please request Pefindo first!");
           return;
@@ -120,10 +135,12 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
         this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
         if (Roles.includes(this.user.RoleCode)) {
-          AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false, token);
+          // AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, false, token);
+          AdInsHelper.OpenPefindoViewV2(this.CrdRvwCustInfoObj.CustNo, false, token, IsCtpg, TrxNo, MrCustTypeCode);
         } else {
-          AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
-        }    
+          // AdInsHelper.OpenPefindoView(this.CrdRvwCustInfoObj.CustNo, true, token);
+          AdInsHelper.OpenPefindoViewV2(this.CrdRvwCustInfoObj.CustNo, true, token, IsCtpg, TrxNo, MrCustTypeCode);
+        }
     })
   }
 
