@@ -67,7 +67,7 @@
         },
         {
           "type": "text",
-          "label": "CMO Username",
+          "label": "Lead Received By",
           "property": "CmoUsername"
         },
         {
@@ -77,7 +77,7 @@
         },
         {
           "type": "text",
-          "label": "Tele Sales Username",
+          "label": "Lead Processed By",
           "property": "TeleMarketingUsername"
         }
       ],
