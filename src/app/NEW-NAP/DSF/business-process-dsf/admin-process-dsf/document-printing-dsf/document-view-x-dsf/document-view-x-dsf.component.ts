@@ -9,7 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { map, mergeMap } from 'rxjs/operators';
-import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
 import { forkJoin } from 'rxjs';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -167,7 +167,7 @@ export class DocumentViewXDsfComponent implements OnInit {
 
   GetListAgrmntDocByAgrmntId() {
     var obj = { Id: this.AgrmntId }
-    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB || this.WOF == CommonConstantDsf.WOF_SP) 
+    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB || this.WOF == CommonConstantDsf.WOF_SP || this.WOF == CommonConstantDsf.FD || this.WOF == CommonConstantDsf.FMU) 
     {
       this.http.post(URLConstantDsf.GetListAgrmntDocByAgrmntIdDsf, obj).subscribe(
         (response) => {
@@ -191,7 +191,7 @@ export class DocumentViewXDsfComponent implements OnInit {
     this.agrmntDocPrintObj.RowVersion = "";
     this.agrmntDocPrintObj.AgrmntDocId = agrmntDocId;
 
-    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB || this.WOF == CommonConstantDsf.WOF_SP)
+    if (this.WOF == CommonConstantDsf.WOF_IF || this.WOF == CommonConstantDsf.WOF_LB || this.WOF == CommonConstantDsf.WOF_SP || this.WOF == CommonConstantDsf.FD || this.WOF == CommonConstantDsf.FMU)
     {
       this.http.post(URLConstantDsf.AddAgrmntDocPrintDsf, this.agrmntDocPrintObj).subscribe(
         () => {
