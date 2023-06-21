@@ -58,7 +58,7 @@
         {
           "type": "text",
           "label": "Lead Source",
-          "property": "MrLeadSourceCode"
+          "property": "LeadSourceName"
         },
         {
           "type": "text",
@@ -79,6 +79,11 @@
           "type": "text",
           "label": "Lead Processed By",
           "property": "TeleMarketingUsername"
+        },
+        {
+          "type": "text",
+          "label": "Submission Receipt Date",
+          "property": "SubmissionReceiptDate"
         }
       ],
       "querystring": {

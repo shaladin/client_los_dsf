@@ -98,7 +98,7 @@
         }
     ],
     "querystring": {
-        "name": "searchSimpleLeadUpdate"
+        "name": "searchSimpleLeadUpdateDsf"
     },
     "headerList": [
         {
@@ -141,7 +141,7 @@
             "type": "sort",
             "position": "left",
             "label": "Lead Source",
-            "name": "VRAS.APP_SRC_NAME"
+            "name": "VRM.DESCR"
         },
         {
             "type": "sort",
