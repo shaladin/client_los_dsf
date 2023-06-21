@@ -9,6 +9,7 @@ import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { AppAttrContentObj } from 'app/shared/model/app-attr-content/app-attr-content-obj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-master-code-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-tab-application-x',
@@ -135,10 +136,12 @@ export class TabApplicationXComponent implements OnInit {
 
   async GetLoanObjData() {
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridLoanObj.json";
+    // Self Custom Changes
+    this.inputGridObj.pagingJson = "./assets/dsf/ucgridview/gridLoanObjDsf.json";
 
-    await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).toPromise().then(
-      (response) => {
+    await this.http.post(URLConstantDsf.GetListAppLoanPurposeDsfByAppId, { Id: this.appId }).toPromise().then(
+    // End Self Custom Changes
+    (response) => {
         this.inputGridObj.resultData = {
           Data: ""
         }
