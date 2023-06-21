@@ -19,6 +19,8 @@ import { ThirdPartyRapindoRsltObj } from 'app/shared/model/third-party-data/thir
 import { ThirdPartySlikRsltObj } from 'app/shared/model/third-party-data/third-party-slik-rslt-obj.model';
 import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { ThirdPartyDataRobotObj } from 'app/shared/model/third-party-data/ThirdPartyDataRobotObj.Model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-crd-rvw-third-party-checking-x',
@@ -60,6 +62,9 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
   ThirdPartyProfindRsltObj: ThirdPartyProfindRsltObj = new ThirdPartyProfindRsltObj();
   ListThirdPartyRapindoRsltObj: Array<ThirdPartyRapindoRsltObj> = new Array<ThirdPartyRapindoRsltObj>();
   ThirdPartySlikRsltObj: ThirdPartySlikRsltObj = new ThirdPartySlikRsltObj();
+  //Self Custom Change
+  dataRobotInfoObj:  ThirdPartyDataRobotObj = new ThirdPartyDataRobotObj();
+  //End Self Custom Change
 
   RapindoDataObj: {
     DataExist: number,
@@ -88,6 +93,15 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
         }
       }
     )
+
+    //Self Custom Change
+    this.dataRobotInfoObj.AppNo = this.AppNo;
+    await this.http.post<ThirdPartyDataRobotObj>(URLConstantDsf.GetCrdRvwDataRobot, this.dataRobotInfoObj).toPromise().then(
+      (response) => {
+        this.dataRobotInfoObj = response;
+      }
+    )
+    //End Self Custom Change
   }
 
   async GetIsUseDigitalization() {
