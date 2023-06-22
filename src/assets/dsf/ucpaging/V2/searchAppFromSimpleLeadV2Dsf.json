@@ -123,7 +123,7 @@
             "type": "sort",
             "position": "center",
             "label": "Lead Source",
-            "name": "RAS.APP_SRC_NAME"
+            "name": "ISNULL(VRM.DESCR,'')"
         },
         {
           "type": "sort",
