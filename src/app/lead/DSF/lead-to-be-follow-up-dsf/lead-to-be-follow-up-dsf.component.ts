@@ -21,8 +21,11 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/searchNewLeadToBeFollowUp.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewLeadToBeFollowUp.json";
+
+    // Self Custom Changes:
+    this.inputPagingObj._url = "./assets/dsf/ucpaging/searchNewLeadToBeFollowUpDsf.json";
+    this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchNewLeadToBeFollowUpDsf.json";
+    // End of Self Custom Changes
 
     this.inputPagingObj.ddlEnvironments = [
       {

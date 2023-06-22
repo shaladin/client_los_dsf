@@ -44,8 +44,12 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromSimpleLead.json";
 
     if(environment.isCore){
+
+      // Self Custom Changes
       this.inputPagingObj._url="./assets/dsf/ucpaging/V2/searchAppFromSimpleLeadV2Dsf.json";
       this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/V2/searchAppFromSimpleLeadV2Dsf.json";
+      // End Self Custom Changes
+
     }
 
     this.inputPagingObj.ddlEnvironments = [

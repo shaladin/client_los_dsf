@@ -129,7 +129,7 @@
             "type": "sort",
             "position": "left",
             "label": "Lead Source",
-            "name": "l.MR_LEAD_SOURCE_CODE"
+            "name": "ISNULL(VRM.DESCR,'')"
         },
         {
             "type": "sort",
@@ -198,7 +198,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrLeadSourceCode"
+            "property": "LeadSourceName"
         },
         {
             "type": "text",
