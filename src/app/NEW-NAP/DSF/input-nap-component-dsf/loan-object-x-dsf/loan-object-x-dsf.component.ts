@@ -374,12 +374,13 @@ export class LoanObjectXDsfComponent implements OnInit {
               (response) => {
                 // Self Custom Changes
                 this.http.post(URLConstantDsf.EditAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
-                  (response) => {});
+                  (response) => {
+                    this.modal.close();
+                    this.toastr.successMessage(response["message"]);
+                    enjiForm.reset();
+                    this.loadDataTable();    
+                  });
                 // End Self Custom Changes
-                this.modal.close();
-                this.toastr.successMessage(response["message"]);
-                enjiForm.reset();
-                this.loadDataTable();
               });
           //},
           //(error) => { return; });
@@ -388,12 +389,13 @@ export class LoanObjectXDsfComponent implements OnInit {
           (response) => {
             // Self Custom Changes
             this.http.post(URLConstantDsf.EditAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
-              (response) => {});
+              (response) => {
+                this.modal.close();
+                this.toastr.successMessage(response["message"]);
+                enjiForm.reset();
+                this.loadDataTable();    
+              });
             // End Self Custom Changes
-            this.modal.close();
-            this.toastr.successMessage(response["message"]);
-            enjiForm.reset();
-            this.loadDataTable();
           });
       }
     }
@@ -412,12 +414,13 @@ export class LoanObjectXDsfComponent implements OnInit {
                 console.log(response["AppLoanPurposeId"]);
                 this.AppLoanPurposeObj.AppLoanPurposeId = response["AppLoanPurposeId"];
                 this.http.post(URLConstantDsf.AddAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
-                  (response) => {});
+                  (response) => {
+                    this.modal.close();
+                    this.toastr.successMessage(response["message"]);
+                    enjiForm.reset();
+                    this.loadDataTable();
+                  });
                 // End Self Custom Changes
-                this.modal.close();
-                this.toastr.successMessage(response["message"]);
-                enjiForm.reset();
-                this.loadDataTable();
               });
           //},(error) => { return; });
       } else {
@@ -427,12 +430,13 @@ export class LoanObjectXDsfComponent implements OnInit {
             console.log(response["AppLoanPurposeId"]);
             this.AppLoanPurposeObj.AppLoanPurposeId = response["AppLoanPurposeId"];
             this.http.post(URLConstantDsf.AddAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
-              (response) => {});
+              (response) => {
+                this.modal.close();
+                this.toastr.successMessage(response["message"]);
+                enjiForm.reset();
+                this.loadDataTable();    
+              });
             // End Self Custom Changes
-            this.modal.close();
-            this.toastr.successMessage(response["message"]);
-            enjiForm.reset();
-            this.loadDataTable();
           });
       }
     }
