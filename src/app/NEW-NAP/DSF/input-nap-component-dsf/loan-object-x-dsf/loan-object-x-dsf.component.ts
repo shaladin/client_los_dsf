@@ -18,6 +18,8 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
+import { AppLoanPurposeDsfObj } from 'app/dsf/model/AppLoanPurposeDsfObj.Model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-loan-object-x-dsf',
@@ -127,7 +129,9 @@ export class LoanObjectXDsfComponent implements OnInit {
       SupplierCode: "",
     });
 
-
+    // Self Custom Changes
+    this.MainInfoForm.controls.FinancingAmount.disable();
+    // End Self Custom Changes
     this.modal = this.modalService.open(content);
     this.modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -233,8 +237,9 @@ export class LoanObjectXDsfComponent implements OnInit {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
-    this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
+    this.loanObjectInputLookupObj.pagingJson = "./assets/dsf/uclookup/lookupLoanObjectDsf.json";
+    this.loanObjectInputLookupObj.genericJson = "./assets/dsf/uclookup/lookupLoanObjectDsf.json";
+    // End Self Custom Changes
 
     this.supplierInputLookupObj = new InputLookupObj();
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url + "/v1";
