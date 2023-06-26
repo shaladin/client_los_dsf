@@ -320,20 +320,30 @@ export class LoanObjectXDsfComponent implements OnInit {
           //(response) => {
             this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
               (response) => {
-                this.modal.close();
-                this.toastr.successMessage(response["message"]);
-                enjiForm.reset();
-                this.loadDataTable();
+                // Self Custom Changes
+                this.http.post(URLConstantDsf.EditAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
+                  (response) => {
+                    this.modal.close();
+                    this.toastr.successMessage(response["message"]);
+                    enjiForm.reset();
+                    this.loadDataTable();    
+                  });
+                // End Self Custom Changes
               });
           //},
           //(error) => { return; });
       } else {
         this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
-            this.modal.close();
-            this.toastr.successMessage(response["message"]);
-            enjiForm.reset();
-            this.loadDataTable();
+            // Self Custom Changes
+            this.http.post(URLConstantDsf.EditAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
+              (response) => {
+                this.modal.close();
+                this.toastr.successMessage(response["message"]);
+                enjiForm.reset();
+                this.loadDataTable();    
+              });
+            // End Self Custom Changes
           });
       }
     }
@@ -348,19 +358,33 @@ export class LoanObjectXDsfComponent implements OnInit {
           //(response) => {
             this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
               (response) => {
-                this.modal.close();
-                this.toastr.successMessage(response["message"]);
-                enjiForm.reset();
-                this.loadDataTable();
+                // Self Custom Changes
+                console.log(response["AppLoanPurposeId"]);
+                this.AppLoanPurposeObj.AppLoanPurposeId = response["AppLoanPurposeId"];
+                this.http.post(URLConstantDsf.AddAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
+                  (response) => {
+                    this.modal.close();
+                    this.toastr.successMessage(response["message"]);
+                    enjiForm.reset();
+                    this.loadDataTable();
+                  });
+                // End Self Custom Changes
               });
           //},(error) => { return; });
       } else {
         this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
-            this.modal.close();
-            this.toastr.successMessage(response["message"]);
-            enjiForm.reset();
-            this.loadDataTable();
+            // Self Custom Changes
+            console.log(response["AppLoanPurposeId"]);
+            this.AppLoanPurposeObj.AppLoanPurposeId = response["AppLoanPurposeId"];
+            this.http.post(URLConstantDsf.AddAppLoanPurposeDsf, this.AppLoanPurposeObj).subscribe(
+              (response) => {
+                this.modal.close();
+                this.toastr.successMessage(response["message"]);
+                enjiForm.reset();
+                this.loadDataTable();    
+              });
+            // End Self Custom Changes
           });
       }
     }
