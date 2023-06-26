@@ -145,7 +145,9 @@ export class LoanObjectXDsfComponent implements OnInit {
       // End Self Custom Changes
     });
 
-
+    // Self Custom Changes
+    this.MainInfoForm.controls.FinancingAmount.disable();
+    // End Self Custom Changes
     this.modal = this.modalService.open(content);
     this.modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -271,8 +273,8 @@ export class LoanObjectXDsfComponent implements OnInit {
     // Self Custom Changes
     this.loanObjectInputLookupObj.urlJson = "./assets/dsf/uclookup/lookupLoanObjectDsf.json";
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl + "/v1";
-    this.loanObjectInputLookupObj.pagingJson = "./assets/dsf/uclookup/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.genericJson = "./assets/dsf/uclookup/lookupLoanObject.json";
+    this.loanObjectInputLookupObj.pagingJson = "./assets/dsf/uclookup/lookupLoanObjectDsf.json";
+    this.loanObjectInputLookupObj.genericJson = "./assets/dsf/uclookup/lookupLoanObjectDsf.json";
     // End Self Custom Changes
 
     this.supplierInputLookupObj = new InputLookupObj();
