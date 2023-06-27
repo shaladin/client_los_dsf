@@ -117,6 +117,7 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
         let TrxNo : string = "";
         let MrCustTypeCode : string = response["MrCustTypeCode"];
         let IsCtpg : boolean = false;
+        let exitMethod = false;
 
         if(ThirdPartyRsltHGroupNo != null && ThirdPartyRsltHGroupNo != undefined && ThirdPartyRsltHGroupNo != "")
         {
@@ -133,17 +134,22 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
           reqObj.SvcTypeCode = CommonConstant.DigitalizationSvcTypePefindo;
           await this.http.post(URLConstantX.GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX, reqObj).toPromise().then(
             async (response) => {
-              if (response == null) {
+              if (response["TrxNo"] == null) {
                 this.toastr.warningMessage("Please request Pefindo first!");
-                return;   
+                exitMethod = true;
               }
           })
         }
         else
         {
           this.toastr.warningMessage("Please request Pefindo first!");
+          exitMethod = true;;
+        }
+
+        if(exitMethod){
           return;
         }
+
         let Roles = PefindoBasicRole.split(',');
         this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
