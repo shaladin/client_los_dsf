@@ -19,6 +19,8 @@ import { ThirdPartyRapindoRsltObj } from 'app/shared/model/third-party-data/thir
 import { ThirdPartySlikRsltObj } from 'app/shared/model/third-party-data/third-party-slik-rslt-obj.model';
 import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ReqThirdPartyRsltHByTrxNoAndSvcTypeCodeXObj } from 'app/impl/shared/model/ReqThirdPartyRsltHByTrxNoAndSvcTypeCodeXObj';
 
 @Component({
   selector: 'app-crd-rvw-third-party-checking-x',
@@ -109,7 +111,7 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
     )
        
     await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
-      (response) => {
+      async (response) => {
         let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
         let ThirdPartyRsltHGroupNo = response["ThirdPartyGroupTrxNo"]
         let TrxNo : string = "";
@@ -125,6 +127,17 @@ export class CrdRvwThirdPartyCheckingXComponent implements OnInit {
         {
           IsCtpg = false;
           TrxNo = thirdPartyTrxNo;
+
+          let reqObj = new ReqThirdPartyRsltHByTrxNoAndSvcTypeCodeXObj();
+          reqObj.TrxNo = TrxNo;
+          reqObj.SvcTypeCode = CommonConstant.DigitalizationSvcTypePefindo;
+          await this.http.post(URLConstantX.GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX, reqObj).toPromise().then(
+            async (response) => {
+              if (response == null) {
+                this.toastr.warningMessage("Please request Pefindo first!");
+                return;   
+              }
+          })
         }
         else
         {
