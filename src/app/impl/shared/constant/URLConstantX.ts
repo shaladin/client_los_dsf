@@ -358,4 +358,7 @@ export class URLConstantX {
 
   public static GetInsuranceDataByAppAssetIdXForView = environment.losUrl + "/v1" + "/AppInsX/GetInsDataByAppAssetIdForView";
   public static GetAssetCategoryNameByAssetCategoryCode = environment.losUrl + "/v1" + "/AppInsX/GetAssetCategoryNameByAssetCategoryCode";
+
+  // DigitalizationX
+  public static GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX = environment.FoundationR3Url + "/v1" + "/DigitalizationX/GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX";
 }
