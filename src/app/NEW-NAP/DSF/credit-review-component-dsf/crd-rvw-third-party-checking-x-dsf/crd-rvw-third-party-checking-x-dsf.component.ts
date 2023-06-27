@@ -20,6 +20,8 @@ import { ThirdPartyRapindoRsltObj } from 'app/shared/model/third-party-data/thir
 import { ThirdPartySlikRsltObj } from 'app/shared/model/third-party-data/third-party-slik-rslt-obj.model';
 import { ThirdPartyResultHObj } from 'app/shared/model/third-party-data/third-party-result-h.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { ReqThirdPartyRsltHByTrxNoAndSvcTypeCodeXObj } from 'app/impl/shared/model/ReqThirdPartyRsltHByTrxNoAndSvcTypeCodeXObj';
 import { ThirdPartyDataRobotObj } from 'app/shared/model/third-party-data/ThirdPartyDataRobotObj.Model';
 
 @Component({
@@ -124,12 +126,13 @@ export class CrdRvwThirdPartyCheckingXDsfComponent implements OnInit {
     )
 
     await this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.CrdRvwCustInfoObj.CustNo }).toPromise().then(
-      (response) => {
+      async (response) => {
         let thirdPartyTrxNo = response["ThirdPartyTrxNo"]
         let ThirdPartyRsltHGroupNo = response["ThirdPartyGroupTrxNo"]
         let TrxNo : string = "";
         let MrCustTypeCode : string = response["MrCustTypeCode"];
         let IsCtpg : boolean = false;
+        let exitMethod = false;
 
         if(ThirdPartyRsltHGroupNo != null && ThirdPartyRsltHGroupNo != undefined && ThirdPartyRsltHGroupNo != "")
         {
@@ -140,12 +143,27 @@ export class CrdRvwThirdPartyCheckingXDsfComponent implements OnInit {
         {
           IsCtpg = false;
           TrxNo = thirdPartyTrxNo;
+          let reqObj = new ReqThirdPartyRsltHByTrxNoAndSvcTypeCodeXObj();
+          reqObj.TrxNo = TrxNo;
+          reqObj.SvcTypeCode = CommonConstant.DigitalizationSvcTypePefindo;
+          await this.http.post(URLConstantX.GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX, reqObj).toPromise().then(
+            async (response) => {
+              if (response["TrxNo"] == null) {
+                this.toastr.warningMessage("Please request Pefindo first!");
+                exitMethod = true;
+              }
+          })
         }
         else
         {
           this.toastr.warningMessage("Please request Pefindo first!");
+          exitMethod = true;;
+        }
+
+        if(exitMethod){
           return;
         }
+
         let Roles = PefindoBasicRole.split(',');
         this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
             const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
