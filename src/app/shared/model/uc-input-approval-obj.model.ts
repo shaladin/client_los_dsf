@@ -16,6 +16,7 @@ export class UcInputApprovalObj {
     PathUrlContinueToLevel: string;
     PathUrlGetHistory : string;
     OfficeCodes: Array<string>;
+    DisableRequiredNotesList : Array<string> = [];
     
     constructor() { 
         this.TaskId = 0;
@@ -31,6 +32,7 @@ export class UcInputApprovalObj {
         this.PathUrlReturnToLevel= URLConstant.ReturnLevel;
         this.PathUrlContinueToLevel= URLConstant.ContinueToLevel;
         this.PathUrlGetHistory = URLConstant.GetTaskHistory;
+        this.DisableRequiredNotesList = [];
         this.OfficeCodes = new Array<string>();
     }
 }  
