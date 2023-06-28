@@ -236,6 +236,13 @@
               <lib-uc-show-errors [control]="InsuranceDataForm.controls.Notes" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
+            <label class="col-md-2 adins-required-label" for="insLength" translate>Asset Category</label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric [lookupInput]="InputLookupAssetCategoryObj" [parentForm]='InsuranceDataForm'
+                [enjiForm]='enjiForm' [identifier]="'lookupAssetCategory'" 
+                (lookup)="getLookupAssetCategory($event)">
+              </lib-uclookupgeneric>
+            </div>  
           </div>
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-primary" (click)="generateInsurance()">

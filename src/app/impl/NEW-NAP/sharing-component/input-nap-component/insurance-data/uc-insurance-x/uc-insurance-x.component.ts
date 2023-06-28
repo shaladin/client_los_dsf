@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { InsuranceDataXObj } from 'app/impl/shared/model/insurance-data-x-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -63,6 +64,7 @@ export class UcInsuranceXComponent implements OnInit {
   subsidyRuleObj: ResultSubsidySchmRuleObj;
   calcInsObj: ResultCalcInsObj;
   saveObj: InsuranceDataObj;
+  saveXObj: InsuranceDataXObj;
 
   minInsLength: number = 1;
   maxInsLength: number = 9999;
@@ -314,10 +316,10 @@ export class UcInsuranceXComponent implements OnInit {
       });
   }
 
-  SaveForm(saveObj: InsuranceDataObj) {
+  SaveForm(saveXObj: InsuranceDataXObj) {
     let obj = {
       Action : "SaveDetail",
-      InsuranceData : saveObj
+      InsuranceData : saveXObj
     }
     this.outputTab.emit(obj);
   }

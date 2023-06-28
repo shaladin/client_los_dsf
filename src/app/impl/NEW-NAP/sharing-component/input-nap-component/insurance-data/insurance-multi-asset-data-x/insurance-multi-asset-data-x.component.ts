@@ -6,6 +6,7 @@ import { UcInsuranceComponent } from 'app/NEW-NAP/sharing-component/input-nap-co
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputInsuranceObj } from 'app/shared/model/input-insurance-obj.model';
 import { UcInsuranceXComponent } from '../uc-insurance-x/uc-insurance-x.component';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-insurance-multi-asset-data-x',
@@ -42,8 +43,8 @@ export class InsuranceMultiAssetDataXComponent implements OnInit {
 
   async SaveForm(event) {
     if(event.Action == "SaveDetail"){
-      let url = URLConstant.EditInsuranceDataMultiAsset;
-      if (event.InsuranceData.AppInsObjObj.AppInsObjId == 0) url = URLConstant.AddInsuranceDataMultiAsset;
+      let url = URLConstantX.EditInsuranceDataMultiAssetX;
+      if (event.InsuranceData.InsuranceDataObj.AppInsObjObj.AppInsObjId == 0) url = URLConstantX.AddInsuranceDataMultiAssetX;
       this.http.post(url, event.InsuranceData).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
