@@ -31,6 +31,10 @@ export class CommonConstantX {
     public static GsCodeAutoDebitBca = "AUTO_DEBIT_BCA";
     public static GsCodeMinTenorAssetFL = "MIN_TENOR_ASSET_FL";
     public static GsCodeMapPofWofFL = "MAP_POF_WOF_FL";
+    public static GsCodeHideLifeInsCapitalized = "HIDE_LIFE_INS_CAPITALIZED";
+
+    //General Setting Value
+    public static GsValueOfHideLifeInsCapitalized = "1";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
