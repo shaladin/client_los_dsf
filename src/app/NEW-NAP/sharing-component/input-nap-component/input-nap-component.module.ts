@@ -147,7 +147,6 @@ import { UcInsurancePagingComponent } from "./insurance-data/uc-insurance/uc-ins
 import { UcInsuranceXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/uc-insurance-x/uc-insurance-x.component";
 import { UcInsuranceDetailXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/uc-insurance-x/uc-insurance-detail-x/uc-insurance-detail-x.component";
 import { TcDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/tc-data/tc-data-x.component";
-import { LifeInsuranceDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/life-insurance-data/life-insurance-data-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -183,7 +182,6 @@ export const customCurrencyMaskConfig = {
     GuarantorPersonalComponent,
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
-    LifeInsuranceDataXComponent,
     ApplicationDataComponent,
     ApplicationDataOplComponent,
     ApplicationDataRefinancingComponent,
@@ -328,7 +326,6 @@ export const customCurrencyMaskConfig = {
     GuarantorPersonalComponent,
     GuarantorCompanyComponent,
     LifeInsuranceDataComponent,
-    LifeInsuranceDataXComponent,
     ApplicationDataComponent,
     ApplicationDataOplComponent,
     ApplicationDataRefinancingComponent,
