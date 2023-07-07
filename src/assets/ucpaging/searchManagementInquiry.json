@@ -135,7 +135,7 @@
     },
     {
       "type": "textbox",
-      "name": "VATH_CURR_USER.CURR_USER",
+      "name": "ISNULL( ISNULL( VATH_CURR_LEVEL.CURR_USER + ' (' + VATH_CURR_LEVEL.CURR_NODE + ')', VATH_CURR_LEVEL.FINAL_USER + ' (' + VATH_CURR_LEVEL.FINAL_NODE + ')' ), '' )",
       "id": "currentUserId",
       "value": "",
       "label": "Current Approval",
