@@ -346,7 +346,7 @@
                 *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'STCM'"
                 [ParentForm]="TrialForm" [TrialCalc]="TrialCalc" [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-step-up-step-down-cummulative-FL4W>
               <app-schm-balloon-FL4W *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'BL'"
-                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc">
+                [ParentForm]="TrialForm" (RefreshSubsidy)="RefreshSubsidy($event)" [TrialCalc]="TrialCalc" [ProductOfferingCode]="this.ProdOfferingCode">
               </app-schm-balloon-FL4W>
               <app-schm-even-principal-FL4W
                 *ngIf="BizTmpltCode == 'FL4W' && TrialForm.controls.MrInstSchemeCode.value == 'EP'"
