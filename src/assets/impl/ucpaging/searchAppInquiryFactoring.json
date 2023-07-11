@@ -66,7 +66,8 @@
         "value": "",
         "label": "Application Date >=",
         "restriction": "gte",
-        "datatype": "date"
+        "datatype": "date",
+        "datepickerPair": "appdate"
       },
       {
         "type": "datepicker",
@@ -75,7 +76,8 @@
         "value": "",
         "label": "Application Date <=",
         "restriction": "lte",
-        "datatype": "date"
+        "datatype": "date",
+        "datepickerPair": "appdate"       
       },
       {
         "type": "dropdown",
