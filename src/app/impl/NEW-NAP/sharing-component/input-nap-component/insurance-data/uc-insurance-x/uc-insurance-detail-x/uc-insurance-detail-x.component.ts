@@ -39,10 +39,6 @@ import { ResAddCvgDiscRuleObj } from 'app/shared/model/rule/res-add-cvg-disc-rul
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
 import { environment } from 'environments/environment';
-import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { InsuranceDataInsRateRuleReqbyCategoryXObj } from 'app/impl/shared/model/insurance-data-ins-rate-rule-reqby-category-x-obj.model';
-import { InsuranceDataXObj } from 'app/impl/shared/model/insurance-data-x-obj.model';
 
 @Component({
   selector: 'app-uc-insurance-detail-x',
@@ -87,6 +83,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
   defaultInsAssetRegion: string = "";
   pageState: string = "AddInsurance";
   AssetCategoryCode : string = "";  
+  AssetCategoryName : string = "";  
   readonly editInsurance: string = "EditInsurance";
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly defInsPaidBy: string = CommonConstant.InsPaidByCustomer;
@@ -94,7 +91,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
 
   appAssetObj: AppAssetObj;
   saveObj: InsuranceDataObj;
-  saveXObj: InsuranceDataXObj;
   appInsObjObj: AppInsObjObj;
   appInsuranceObj: AppInsuranceObj;
   appCollateralObj: AppCollateralObj;
@@ -105,7 +101,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
   subsidyRuleObj: ResultSubsidySchmRuleObj = new ResultSubsidySchmRuleObj();
   discRuleObj: ResAddCvgDiscRuleObj = new ResAddCvgDiscRuleObj();
   InputLookupAssetCategoryObj: InputLookupObj;
-  critObj: CriteriaObj = new CriteriaObj();
   AssetCategoryExistingObj : Object = new Object()
 
   listYear: Array<number> = new Array();
@@ -124,7 +119,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
   appInsMainCvgObj: Array<AppInsMainCvgObj> = new Array<AppInsMainCvgObj>();
   listRuleNotComplete: Array<{ index: number, AddCvg: string }> = new Array();
   paidByBhv: Array<{ PaidByYearNo: number, PaidBy: string, PaidByBhv: string }>;
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
 
   businessDt: Date = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
 
@@ -182,31 +176,9 @@ export class UcInsuranceDetailXComponent implements OnInit {
     let AssetCategoryCodeObj = {Code: this.appAssetObj.AssetCategoryCode};
     await this.http.post(URLConstant.GetAssetCategoryByAssetCategoryCode, AssetCategoryCodeObj).toPromise().then(
       async (response) => {
-        this.AssetCategoryExistingObj = response;
+        this.AssetCategoryName = response["AssetCategoryName"];
       }
     );
-  }
-
-  async makeLookupAssetCategoryObj(){
-
-    this.InputLookupAssetCategoryObj = new InputLookupObj();
-    this.InputLookupAssetCategoryObj.urlJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-    this.InputLookupAssetCategoryObj.urlEnviPaging = environment.FoundationR3Url + '/v1'
-    this.InputLookupAssetCategoryObj.pagingJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-    this.InputLookupAssetCategoryObj.genericJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-
-    this.critObj.restriction = AdInsConstant.RestrictionEq;
-    this.critObj.propName = 'IS_ACTIVE';
-    this.critObj.value = '1'; 
-    this.arrCrit.push(this.critObj);
-    this.InputLookupAssetCategoryObj.addCritInput = this.arrCrit;
-
-    this.critObj.restriction = AdInsConstant.RestrictionLike;
-    this.critObj.propName = 'ASSET_TYPE_ID';
-    this.critObj.value = this.AssetCategoryExistingObj["AssetTypeId"];
-    this.arrCrit.push(this.critObj);
-    this.InputLookupAssetCategoryObj.addCritInput = this.arrCrit;
-    this.InputLookupAssetCategoryObj.jsonSelect = { AssetCategoryName : this.AssetCategoryExistingObj["AssetCategoryName"]};
   }
 
   async loadDDL() {
@@ -613,8 +585,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
         )
 
         await this.getAssetCategoryExisting();
-        await this.makeLookupAssetCategoryObj();
-
         if (this.appInsObjObj != undefined && this.appInsObjObj != null) {
           if (this.appInsObjObj.InsAssetCoveredBy == CommonConstant.InsuredByCompany || this.appInsObjObj.InsAssetCoveredBy == CommonConstant.InsuredByCustomerCompany) {
             await this.getVendorParent(this.appInsObjObj.InscoBranchCode);
@@ -828,18 +798,15 @@ export class UcInsuranceDetailXComponent implements OnInit {
       return;
     }
 
-    let reqObj = new InsuranceDataInsRateRuleReqbyCategoryXObj();
+    let reqObj = new InsuranceDataInsRateRuleObj();
     reqObj.InscoHoCode = this.inscoHoCode === null ? "":this.inscoHoCode;
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     reqObj.AppId = this.appObj.AppId;
     reqObj.AppAssetId = this.appAssetId;
     reqObj.AppCollateralId = this.appCollateralId;
-    if(this.AssetCategoryCode != ""){
-      reqObj.AssetCategoryForReqbyCategory = this.AssetCategoryCode
-    }
     
-    await this.http.post(URLConstantX.ExecuteInsRateRuleV2ByRequestCategory, reqObj).toPromise().then(
+    await this.http.post(URLConstant.ExecuteInsRateRuleV2, reqObj).toPromise().then(
       async (response) => {
         this.ruleObj = response["Result"];
         if (this.ruleObj.InsAssetCategory == "") {
@@ -2020,16 +1987,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
         return;
       }
     }
-
-    this.saveXObj = new InsuranceDataXObj();
-    if (this.AssetCategoryCode != ""){
-      this.saveXObj.AppAssetCategoryCode = this.AssetCategoryCode;
-    }
-    this.saveXObj.AppAssetId = this.appAssetObj.AppAssetId;
-    this.saveXObj.InsuranceDataObj = this.saveObj;
-
-    this.outputTab.emit(this.saveXObj);
-
+    this.outputTab.emit(this.saveObj);
     if(this.isMultiAsset) formDirective.resetForm();
   }
 
@@ -2308,6 +2266,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
     }
   }
 
+
   cancel() {
     this.outputCancel.emit();
   }
@@ -2364,11 +2323,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
         });
         break;
     }
-  }
-
-  getLookupAssetCategory(ev){
-    this.AssetCategoryCode = ev.AssetCategoryCode
-    this.isGenerate = false
   }
 
   async getGeneralSetting(GsCode: string){

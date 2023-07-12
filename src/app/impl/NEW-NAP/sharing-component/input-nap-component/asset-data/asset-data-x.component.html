@@ -291,6 +291,23 @@
                       </div>
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <label class="col-md-4" translate>Is Asset Category Changed</label>
+                    <div class="col-md-8">
+                      <!-- <input class="border-primary" type="checkbox" formControlName="IsAssetCategoryChange" (change)="getIsAssetCategoryChange($event)" [checked]="IsAssetCategoryChange" [disabled]="isAssetCategory"/> -->
+                      <input class="border-primary" type="checkbox" (change)="getCheckboxAssetCategoryChange($event)" [checked]="IsAssetCategoryChange" [disabled]="!isAssetCategoryReady"/>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4" translate>Asset Category</label>
+                    <div class="col-md-8">
+                      <label *ngIf="!IsAssetCategoryChange">{{assetCategoryName}}</label>
+                      <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetCategoryObj"
+                                           [identifier]="'lookupAssetCategory'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
+                                           (lookup)="getLookupAssetCategory($event)" *ngIf="IsAssetCategoryChange">
+                      </lib-uclookupgeneric>
+                    </div>
+                  </div>
                 </div>
 
               </div>
