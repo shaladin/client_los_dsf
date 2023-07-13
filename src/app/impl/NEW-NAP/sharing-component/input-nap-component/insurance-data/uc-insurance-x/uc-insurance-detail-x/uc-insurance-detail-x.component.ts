@@ -37,8 +37,6 @@ import { ResponseAppCollateralAttrObj } from 'app/shared/model/app-collateral-at
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { ResAddCvgDiscRuleObj } from 'app/shared/model/rule/res-add-cvg-disc-rule-obj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-uc-insurance-detail-x',
@@ -82,7 +80,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
   loadingFeeCountType: string = "";
   defaultInsAssetRegion: string = "";
   pageState: string = "AddInsurance";
-  AssetCategoryCode : string = "";  
   AssetCategoryName : string = "";  
   readonly editInsurance: string = "EditInsurance";
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
@@ -100,8 +97,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
   ruleObj: ResultInsRateRuleObj = new ResultInsRateRuleObj();
   subsidyRuleObj: ResultSubsidySchmRuleObj = new ResultSubsidySchmRuleObj();
   discRuleObj: ResAddCvgDiscRuleObj = new ResAddCvgDiscRuleObj();
-  InputLookupAssetCategoryObj: InputLookupObj;
-  AssetCategoryExistingObj : Object = new Object()
 
   listYear: Array<number> = new Array();
   groupedAddCvgType: Array<string> = new Array<string>();
@@ -172,7 +167,6 @@ export class UcInsuranceDetailXComponent implements OnInit {
   }
 
   async getAssetCategoryExisting(){
-    this.AssetCategoryCode = "";
     let AssetCategoryCodeObj = {Code: this.appAssetObj.AssetCategoryCode};
     await this.http.post(URLConstant.GetAssetCategoryByAssetCategoryCode, AssetCategoryCodeObj).toPromise().then(
       async (response) => {
