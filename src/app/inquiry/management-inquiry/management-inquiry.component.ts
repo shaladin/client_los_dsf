@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
 import { AdInsHelperService } from 'app/shared/services/AdInsHelper.service';
@@ -15,20 +17,38 @@ import { environment } from 'environments/environment';
 export class ManagementInquiryComponent implements OnInit {
   InputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
+  isReady: boolean = false;
 
   constructor(private http: HttpClient, private adInsHelperService: AdInsHelperService) { }
 
-  ngOnInit() {
-    this.SetUcPaging();
+  async ngOnInit() {
+    await this.SetUcPaging();
   }
 
-  SetUcPaging(){
+  async SetUcPaging(){
     this.InputPagingObj._url = "./assets/ucpaging/searchManagementInquiry.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/searchManagementInquiry.json";
 
     this.InputPagingObj.enviromentUrl = environment.losUrl + "/v1";
     this.InputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQLForManagementInquiry;
+
+    let keyLob = new Array<string>();
+    await this.http.post(URLConstant.GetManagementInquiryLob, {}).toPromise().then(
+      (response) => {
+        response["ReturnObject"].forEach(x => {
+          keyLob.push(x.Key)
+        });
+      });
+
+    this.InputPagingObj.addCritInput = new Array();
+
+    var critLobObj = new CriteriaObj();
+    critLobObj.restriction = AdInsConstant.RestrictionIn;
+    critLobObj.propName = 'APP_AGR.LOB_CODE';
+    critLobObj.listValue = keyLob;
+    this.InputPagingObj.addCritInput.push(critLobObj)
     
+    this.isReady = true;
   }
 
   getEvent(event) {

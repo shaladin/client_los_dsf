@@ -70,6 +70,7 @@ export class URLConstant {
   public static AddNap1FromLeadV2 = environment.losUrl + "/v2" + "/Application/AddNap1FromLead";
   public static UpdateAppNumOfAsset = environment.losUrl + "/v2" + "/Application/UpdateAppNumOfAsset";
   public static GetPagingObjectBySQLForManagementInquiry = "/Application/GetPagingObjectBySQLForManagementInquiry"; //sengaja ga ada environment.losUrl karena untuk override paging
+  public static GetManagementInquiryLob = environment.losUrl + "/v1" + "/Application/GetManagementInquiryLob";
 
   public static CalculatePlafondAgrmnt = environment.losUrl + "/v1" + "/ApplicationX/CalculatePlafondAgrmnt";
   public static CheckIsMouFreeze = environment.losUrl + "/v1" + "/MouCust/CheckIsMouFreeze";
