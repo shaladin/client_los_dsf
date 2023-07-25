@@ -1,0 +1,124 @@
+<div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="px-0">
+            <form class="form form-horizontal" [formGroup]="LifeInsForm" #enjiForm="ngForm" (ngSubmit)="LifeInsForm.valid && SaveForm()">
+              <div class="form-body">
+                <lib-ucSubsection [id]="'lifeinsInfoId'" [title]="'Life Insurance Info'" [panel]="'lifeinsInfo'">
+                </lib-ucSubsection>
+                <div id="lifeinsInfo">
+                  <div class="form-group row">
+                    <label class="col-md-6 adins-required-label" translate>Is Cover Life Insurance</label>
+                    <div class="col-md-6">
+                      <mat-checkbox color="primary" formControlName="IsChecked" (change)="checked()">
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                  <div *ngIf='show'>
+                    <div class="class=form-group row adins-required">
+                      <label class="col-md-6 adInsLabel" translate>Life Insco Branch Name </label>
+                      <div class="col-md-6">
+                        <select class="form-control adInsInput" formControlName="LifeInscoBranchName" style="width:50%" (change)="InscoBranchChanged($event)">
+                          <option value="">-Select One-</option>
+                          <option *ngFor="let it of LifeInscoBranchName" [value]="it.VendorCode">
+                            {{it.VendorName}}
+                          </option>
+                        </select>
+                        <lib-uc-show-errors [control]="LifeInsForm.controls.LifeInscoBranchName" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="class=form-group row adins-required">
+                      <label class="col-md-6 adins-required-label" translate>Premium Payment Method</label>
+                      <div class="col-md-6">
+                        <select class="form-control adInsInput" style="width:50%"
+                                formControlName="MrLifeInsPaidMethodCode" (change)="PremiMethodChanged($event)">
+                          <option value="">-Select One-</option>
+                          <option *ngFor="let it of MrLifeInsPaidMethodCode" [value]="it.Key">
+                            {{it.Value}}
+                          </option>
+                        </select>
+                        <lib-uc-show-errors [control]="LifeInsForm.controls.MrLifeInsPaidMethodCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="class=form-group row adins-required">
+                      <label class="col-md-6 adInsLabel" translate>Capitalized Premium Percentage </label>
+                      <div class="col-md-5">
+                        <input *ngIf="LifeInsForm.controls.MrLifeInsPaidMethodCode.value == 'IN_ADV_CPTLZ_MIX'" type="" currencyMask id="paidInAdvPrcnt" [min]="1" [max]="99" [options]="CurrencyMaskPrct" class="form-control" formControlName="PaidInAdvPrcnt" style="width:25%">
+                        <input *ngIf="LifeInsForm.controls.MrLifeInsPaidMethodCode.value != 'IN_ADV_CPTLZ_MIX'" type="" currencyMask id="paidInAdvPrcnt" [options]="CurrencyMaskPrct" class="form-control" formControlName="PaidInAdvPrcnt" style="width:25%" readonly>
+                        <lib-uc-show-errors [control]="LifeInsForm.controls.PaidInAdvPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="form-group row">
+                      <label class="col-md-6 adInsLabel" translate>Notes </label>
+                      <div class="col-md-6">
+                        <textarea class="form-control adInsInput width-75-per" formControlName="NewCoverNotes">
+                        </textarea>
+                        <lib-uc-show-errors [control]="LifeInsForm.controls.NewCoverNotes" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf='show'>
+                  <lib-ucSubsection [id]="'lifeInsObjId'" [title]="'Life Insurance Subject'" [panel]="'lifeInsObj'">
+                  </lib-ucSubsection>
+                  <div id="lifeInsObj">
+                    <div id="gridLifeInsD" [hidden]="ListObj?.length < 1" style="overflow-x: auto;">
+                      <table class="table table-responsive-md text-center table-hover">
+                        <thead>
+                          <tr class="table-header">
+                            <th style="text-align: left;"><span translate class="thead-header">Name</span>
+                            </th>
+                            <th style="text-align: center;">
+                              <span translate class="thead-header" name='Age'>Age</span>
+                            </th>
+                            <th style="text-align: left;">
+                              <span translate class="thead-header" name='ObjectType'>Subject Type</span>
+                            </th>
+                            <th style="text-align: center;">
+                              <span translate class="thead-header" name='IsDefault'>Check</span>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of ListObj; let i = index">
+                            <td style="text-align: left;">{{item.InsuredName}}</td>
+                            <td style="text-align: center;">{{item.Age}}</td>
+                            <td style="text-align: left;">{{item.MrCustTypeCode}}</td>
+                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" [(ngModel)]="item.IsChecked" [ngModelOptions]="{standalone: true}" (change)="ObjSelected($event,i)"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <lib-ucSubsection [id]="'lifeInsFeeId'" [title]="'Life Insurance Fee'" [panel]="'lifeInsFee'">
+                  </lib-ucSubsection>
+                  <div id="lifeInsFee">
+                    <div class="class=form-group row adins-required">
+                      <label class="col-md-6 adInsLabel" translate>Admin Fee Amount </label>
+                      <div class="col-md-4">
+                        <input type="" class="form-control full-width" currencyMask id="CustAdminFeeAmt" formControlName="CustAdminFeeAmt">
+                        <lib-uc-show-errors [control]="LifeInsForm.controls.CustAdminFeeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-actions right">
+                  <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+                  </button>
+                  <button type="submit" class="btn btn-raised btn-primary">
+                    <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
