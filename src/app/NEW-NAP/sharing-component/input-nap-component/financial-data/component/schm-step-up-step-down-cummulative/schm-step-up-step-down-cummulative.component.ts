@@ -178,7 +178,7 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     }
   }
 
-  SetNeedReCalculate(value) {
+  SetNeedReCalculate(value, overrideIsNotRecalculate = false) {
     if (this.GracePeriodAfterCalc != this.ParentForm.getRawValue().GracePeriod
       || this.GracePeriodTypeAfterCalc != this.ParentForm.getRawValue().MrGracePeriodTypeCode) {
       this.ParentForm.patchValue({
@@ -209,6 +209,8 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
+
+    if (overrideIsNotRecalculate) this.ParentForm.patchValue({ IsReCalculate: false });
   }
 
   Calculate() {
