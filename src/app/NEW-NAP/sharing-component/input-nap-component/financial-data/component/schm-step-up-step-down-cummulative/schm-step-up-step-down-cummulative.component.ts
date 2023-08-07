@@ -227,8 +227,8 @@ export class SchmStepUpStepDownCummulativeComponent implements OnInit {
     if (this.ValidateFee() == false) {
       return;
     }
-    if (this.ParentForm.controls.CummulativeTenor.value <= 0) {
-      this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '0.');
+    if (this.ParentForm.controls.CummulativeTenor.value <= 1) {
+      this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '1.');
       return;
     }
     /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
