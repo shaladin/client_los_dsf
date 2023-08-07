@@ -285,7 +285,7 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="number" class="form-control full-width" formControlName="CummulativeTenor"
-                (change)="SetNeedReCalculate(true)"
+                (change)="SetNeedReCalculate(true,true)"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CummulativeTenor.invalid}">
               <lib-uc-show-errors [control]="ParentForm.controls.CummulativeTenor" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
