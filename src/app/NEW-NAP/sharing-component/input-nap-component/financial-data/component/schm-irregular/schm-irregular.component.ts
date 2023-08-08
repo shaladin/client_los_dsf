@@ -172,6 +172,12 @@ export class SchmIrregularComponent implements OnInit {
     }
     if (!this.IsTrialCalc) {
       this.calcIrregularObj = this.ParentForm.value;
+
+      //BEGIN RTHREE-614 - Fix Recalculate Irregular
+      if (this.calcIrregularObj.IsReCalculate && this.listInstallment && this.listInstallment[this.listInstallment.length-1]) 
+        this.calcIrregularObj.InstAmt = this.listInstallment[this.listInstallment.length-1]['InstAmt'];
+      //END RTHREE-614
+
       this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregular, this.calcIrregularObj).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
@@ -179,6 +185,11 @@ export class SchmIrregularComponent implements OnInit {
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
           this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
           this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
+
+          //BEGIN RTHREE-614 - Fix Recalculate Irregular
+          if (this.calcIrregularObj.IsReCalculate && this.listInstallment && this.listInstallment[0]) 
+            response.InstAmt = this.listInstallment[0]['InstAmt'];
+          //END RTHREE-614
 
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
