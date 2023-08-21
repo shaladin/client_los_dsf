@@ -1,0 +1,114 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-header header-title" style="margin-bottom: 10px;"> 
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" id="horz-layout-colored-controls" translate> CUSTOMER MAIN DATA
+            </h4>
+          </div>
+        </div>
+      </div> 
+      <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
+      <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:10px">
+        <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()" translate>
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+      </div>
+      <div class="px-3">
+        <div class="card" *ngIf="ReturnHandlingHId > 0">
+          <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
+            <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
+              #enjiForm="ngForm">
+              <div class="form-body">
+                <div class="form-group row">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel" translate>Return Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel" translate>Return Execution Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
+                    <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj" *ngIf="IsCustAllowedContinue"></lib-ucgridview>
+        
+        <div class="alert alert-danger text-center mt-3" *ngIf="!IsCustAllowedContinue" translate>
+          <h5 class="card-title mt-2">Unable to continue, because customer is registered as Negative Customer.</h5>
+        </div>
+
+        <!-- START SLIK VALIDATION -->
+        <div *ngIf="!ResSlikValidation.IsValid">
+          <lib-ucSubsection [id]="'slikValidationId'" [title]="'SLIK Validation'" [panel]="'slikValidation'">
+          </lib-ucSubsection>
+          <div id="slikValidation">
+            <div class="alert alert-danger text-center" style="color: white!important; background-color: #fe0000!important;">
+              <b>
+                <i class="ft-alert-triangle mr-2"></i> <span translate>Unable to continue, because following SLIK validation.</span> <i class="ft-alert-triangle ml-2"></i>
+              </b>
+            </div>
+            <table class="table table-hover" >
+              <thead>
+                <tr class="table-header">
+                  <th translate>Customer Name</th>                
+                  <th translate class="text-center">Customer No</th>
+                  <th translate>Invalid Data</th>                
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of ResSlikValidation.ListAppCustValidationObj">
+                  <tr *ngIf="item.ValidationErrorObj && item.ValidationErrorObj.length > 0">
+                    <td>{{item.CustName}}</td>
+                    <td class="text-center">{{item.CustNo}}</td>
+                    <td>
+                      <ul class="pl-3">
+                        <li *ngFor="let errMsg of item.ValidationErrorObj">{{errMsg.Value}}</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- END SLIK VALIDATION -->
+        <!-- Add by Self Custom -->
+        <div *ngIf="!ResGeneralValidation.IsValid">
+          <lib-ucSubsection [id]="'GeneralValidationId'" [title]="'General Validation'" [panel]="'generalValidation'">
+          </lib-ucSubsection>
+          <div id="generalValidation">
+            <ng-container *ngFor="let item of ResGeneralValidation.ListErrorMessageObj">
+              <div class="alert alert-danger text-center" style="color: white!important; background-color: #fe0000!important;">
+                <b>
+                  <i class="ft-alert-triangle mr-2"></i> <span translate>{{item}}</span> <i class="ft-alert-triangle ml-2"></i>
+                </b>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- End Add by Self Custom -->
+        <div class="text-right py-2">
+          <button *ngIf="ReturnHandlingHId == 0 && IsCustAllowedContinue" type="button" class="btn btn-raised btn-primary" (click)="buttonSubmitOnClick()" translate>
+            Submit
+          </button>
+          <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()"
+            class="btn btn-raised btn-primary" translate>
+            <i class="far fa-check-square"></i> Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

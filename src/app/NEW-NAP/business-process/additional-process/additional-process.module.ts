@@ -87,6 +87,8 @@ import { AutoDebitRegistrationInquiryComponent } from "app/impl/NEW-NAP/business
 import { AutoDebitRegistrationCancelComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component";
 import { AutoDebitTestComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component";
 import { ReturnHandlingNewEditAppPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-new-edit-app-paging-dsf/return-handling-new-edit-app-paging-dsf.component";
+import { ReturnHandlingPagingXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-paging-x-dsf/return-handling-paging-x-dsf.component";
+import { ReturnHandlingDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-detail-dsf/return-handling-detail-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -130,7 +132,9 @@ export const customCurrencyMaskConfig = {
     OutstandingTcPagingComponent,
     OutstandingTcDetailComponent,
     ReturnHandlingPagingComponent,
+    ReturnHandlingPagingXDsfComponent,
     ReturnHandlingDetailComponent,
+    ReturnHandlingDetailDsfComponent,
     PagingComponent,
     ListPersonalComponent,
     ListCompanyComponent,

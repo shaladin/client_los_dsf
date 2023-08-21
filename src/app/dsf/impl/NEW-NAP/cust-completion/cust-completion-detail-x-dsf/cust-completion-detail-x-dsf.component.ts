@@ -1,0 +1,353 @@
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { FormBuilder } from '@angular/forms';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppObj } from 'app/shared/model/app/app.model';
+import { ExceptionConstantX } from 'app/impl/shared/constant/ExceptionConstantX';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { ResReturnHandlingDObj } from 'app/shared/model/response/return-handling/res-return-handling-d-obj.model';
+import { AppCustBankAccObj } from 'app/shared/model/app-cust-bank-acc-obj.model';
+import { AppCustCompletionObj } from 'app/shared/model/cust-completion/app-cust-completion-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { SubmitNapObj } from 'app/shared/model/generic/submit-nap-obj.model';
+import { environment } from 'environments/environment';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
+import { ResSlikValidationAppObjX } from 'app/impl/shared/model/Response/SlikValidation/res-slik-validation-app-obj-x.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { ResGeneralValidationAppDsfObjX } from 'app/dsf/model/ResGeneralValidationAppDsfObjX.model';
+
+@Component({
+  selector: 'app-cust-completion-detail-x-dsf',
+  templateUrl: './cust-completion-detail-x-dsf.component.html'
+})
+export class CustCompletionDetailXDsfComponent implements OnInit {
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  inputGridObj: InputGridObj = new InputGridObj();
+  AppId: number;
+  wfTaskListId: any;
+  BizTemplateCode: string;
+  addObj: object = {};
+  FormReturnObj = this.fb.group({
+    ReturnExecNotes: ['']
+  });
+  ReturnHandlingHId: number = 0;
+  ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
+  OnFormReturnInfo: boolean = false;
+  IsDataReady: boolean = false;
+  LobCode: string;
+  AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
+  ListAppCustCompletion: Array<AppCustCompletionObj> = new Array();
+  AppObj: AppObj = new AppObj();
+  IsDisburseToCust: boolean = false;
+  ResSlikValidation: ResSlikValidationAppObjX = new ResSlikValidationAppObjX();
+  IsCustAllowedContinue: boolean = true;
+  // Add by Self Custom
+  ResGeneralValidation: ResGeneralValidationAppDsfObjX = new ResGeneralValidationAppDsfObjX();
+  // End Add by Self Custom
+
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router,
+    private toastr: NGXToastrService,
+    private fb: FormBuilder,
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
+    this.route.queryParams.subscribe(params => {
+      if (params['AppId'] != null) {
+        this.AppId = params['AppId'];
+      }
+      if (params["WfTaskListId"] != null) {
+        this.wfTaskListId = params["WfTaskListId"];
+      }
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem(CommonConstant.BIZ_TEMPLATE_CODE, this.BizTemplateCode);
+      }
+      if (params["ReturnHandlingHId"] != null) {
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
+      }
+    });
+  }
+
+  async ngOnInit() {
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionData.json";
+
+    this.inputGridObj = new InputGridObj();
+    if (this.ReturnHandlingHId != 0) {
+      this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridCustCompletionDataRtnX.json";
+      this.MakeViewReturnInfoObj();
+      this.addObj["ReturnHandlingHId"] = this.ReturnHandlingHId;
+    }
+    else {
+      this.inputGridObj.pagingJson = "./assets/impl/ucgridview/gridCustCompletionDataX.json";
+      await this.checkIsCustAllowedContinue();
+    }
+    this.addObj["WfTaskListId"] = this.wfTaskListId;
+    this.addObj["BizTemplateCode"] = this.BizTemplateCode;
+
+    this.loadCustCompletionListData();
+    this.claimTask();
+    this.IsDataReady = true;
+  }
+
+  MakeViewReturnInfoObj() {
+    if (this.ReturnHandlingHId > 0) {
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditNAP4;
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
+          this.ResponseReturnInfoObj = response;
+          this.FormReturnObj.patchValue({
+            ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
+          });
+          this.OnFormReturnInfo = true;
+        });
+    }
+  }
+
+  async loadCustCompletionListData() {
+    await this.http.post(URLConstant.GetListAppCustCompletion, { Id: this.AppId }).toPromise().then(
+      async (response) => {
+        this.ListAppCustCompletion = response[CommonConstant.ReturnObj];
+
+        for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
+          await this.GetAppCustBankAcc(this.ListAppCustCompletion[i].AppCustId);
+
+          if (!this.AppCustBankAccList.length && this.LobCode == "SLB") {
+            this.ListAppCustCompletion[i].IsCompletion = false;
+          }
+
+          if (!this.AppCustBankAccList.length && (this.LobCode == "MPF" || this.LobCode == "FD")) {
+            await this.GetIsDisburseToCust();
+            if (this.IsDisburseToCust === true) {
+              this.ListAppCustCompletion[i].IsCompletion = false;
+            }
+          }
+        }
+
+        this.inputGridObj.resultData = {
+          Data: ""
+        }
+        this.inputGridObj.resultData["Data"] = new Array();
+        this.inputGridObj.resultData.Data = this.ListAppCustCompletion;
+      }
+    );
+  }
+
+  async GetAppCustBankAcc(AppCustId) {
+    await this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { Id: AppCustId }).toPromise().then(
+      (response) => {
+        this.AppCustBankAccList = response["AppCustBankAccList"];
+      }
+    );
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response) => {
+        this.LobCode = response.LobCode;
+      }
+    );
+  }
+
+  async GetIsDisburseToCust() {
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      async (response: AppObj) => {
+        this.AppObj = response;
+        var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+        objIsDisburse.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+        objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+        objIsDisburse.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+        await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
+          (response) => {
+            if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
+              this.IsDisburseToCust = response["CompntValue"] == 'Y' ? true : false;
+            }
+          }
+        );
+      }
+    );
+  }
+
+  buttonBackOnClick() {
+    // Modify By Self Custom
+    let url: string = NavigationConstantDsf.NAP_CUST_COMPL_PAGING_DSF
+    // End Modify By Self Custom
+    if(this.ReturnHandlingHId > 0){
+      url = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING;
+    }
+    AdInsHelper.RedirectUrl(this.router, [url], { BizTemplateCode: this.BizTemplateCode });
+  }
+
+  async buttonSubmitOnClick() {
+    
+    // Modify by Self Custom
+    //if (!await this.checkSlikValidation()) return;
+    var isCheckSlik :boolean = await this.checkSlikValidation();
+    var isCheckGeneral :boolean = await this.checkGeneralValidation();
+
+    if (!isCheckSlik || !isCheckGeneral) return;
+    // End Modify by Self Custom   
+    if (!await this.checkNap4Validation()) return;
+
+    let reqObj: SubmitNapObj = new SubmitNapObj();
+    reqObj.AppId = this.AppId;
+    reqObj.WfTaskListId = this.wfTaskListId;
+
+    // for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
+    //   if (this.ListAppCustCompletion[i].IsCompletion === false) {
+    //     this.toastr.warningMessage(ExceptionConstantX.PLEASE_COMPLETE_DATA_CUSTOMER + " {" + this.ListAppCustCompletion[i].CustName + "}");
+    //     return;
+    //   }
+    // }
+
+    let SubmitAppCustCompletionUrl = environment.isCore ? URLConstant.SubmitAppCustCompletionV21 : URLConstant.SubmitAppCustCompletion;
+    this.http.post(SubmitAppCustCompletionUrl, reqObj).subscribe(
+      response => {
+        this.toastr.successMessage(response["Message"]);
+        this.buttonBackOnClick();
+      }
+    );
+  }
+
+  GetCallback(event) {
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
+  }
+
+  async Submit() {
+    if (this.ReturnHandlingHId > 0) {
+
+      // Modify by Self Custom
+      //if (!await this.checkSlikValidation()) return;
+      var isCheckSlik :boolean = await this.checkSlikValidation();
+      var isCheckGeneral :boolean = await this.checkGeneralValidation();
+
+      if (!isCheckSlik || !isCheckGeneral) return;
+      // End Modify by Self Custom   
+      if (!await this.checkNap4Validation()) return;
+      
+      // for (let i = 0; i < this.ListAppCustCompletion.length; i++) {
+      //   if (this.ListAppCustCompletion[i].IsCompletion === false) {
+      //     this.toastr.warningMessage(ExceptionConstantX.PLEASE_COMPLETE_DATA_CUSTOMER + " {" + this.ListAppCustCompletion[i].CustName + "}");
+      //     return;
+      //   }
+      // }
+
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+
+      let EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: this.BizTemplateCode });
+        }
+      )
+    }
+  }
+
+  claimTask(){
+    if(environment.isCore){
+      if(this.wfTaskListId!= "" && this.wfTaskListId!= undefined){
+        this.claimTaskService.ClaimTaskV2(this.wfTaskListId);
+        }
+    }
+    else if (this.wfTaskListId> 0) {
+        this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
+  }
+
+  async checkIsCustAllowedContinue()
+  {
+    await this.http.post(URLConstant.CheckIsNegCustAllowedCreateAppByAppId, { Id: this.AppId }).toPromise().then(
+      (res) => {
+        if(res == undefined) this.IsCustAllowedContinue = false;
+      }
+    );
+  }
+  
+  async checkSlikValidation(){
+    await this.http.post(URLConstant.ValidateSlikByAppId, {"id": this.AppId}).toPromise().then(
+      (response:ResSlikValidationAppObjX) => {
+        this.ResSlikValidation = response;
+      }
+    );
+    return this.ResSlikValidation.IsValid;
+  }
+  // Add by Self Custom
+  async checkGeneralValidation(){
+    await this.http.post(URLConstantDsf.ValidateGeneralByAppId, {"id": this.AppId}).toPromise().then(
+      (response:ResGeneralValidationAppDsfObjX) => {
+        this.ResGeneralValidation = response;
+      }
+    );
+    return this.ResGeneralValidation.IsValid;
+  }
+  // End Add by Self Custom
+
+  async checkNap4Validation()
+  {
+    var isNap4Valid = true;
+    var inCompletedCust = "";
+    var inCompletedStep = "";
+    var listExcludeCust: Array<string> = [];
+
+    //get GenSet exculde checking
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstantX.GsCodeCustCompletionByPass}).toPromise().then(
+      (response) => {
+        listExcludeCust = response && response["GsValue"] ? response["GsValue"].toUpperCase().split(';') : [17];
+      }
+    );
+
+    //Check per Cust
+    for (let i = 0; i < this.ListAppCustCompletion.length; i++) 
+    {
+      var cust = this.ListAppCustCompletion[i];
+
+      if(cust.SubjectDescr.toUpperCase() == CommonConstantX.SubjRelationFamily && listExcludeCust.findIndex(x => x == CommonConstantX.CustSubjFamily) >= 0) 
+        continue;
+
+      if(cust.SubjectDescr.toUpperCase() == CommonConstantX.SubjRelationShrholder && listExcludeCust.findIndex(x => x == CommonConstantX.CustSubjShareholder) >= 0) 
+        continue;
+
+      if(cust.SubjectDescr.toUpperCase() == CommonConstantX.SubjRelationGuarantor && listExcludeCust.findIndex(x => x == CommonConstantX.CustSubjGuarantor) >= 0) 
+        continue;
+
+      await this.http.post(URLConstantX.SaveAppCustCompletion, { Id: cust.AppCustId }).toPromise().then(
+        (response) => {
+          isNap4Valid = response["IsCompleted"];
+          cust.IsCompletion = response["IsCompleted"];
+          if (!isNap4Valid) {
+            inCompletedCust = cust.CustName;
+            inCompletedStep = response["InCompletedStep"];
+          }
+        }         
+      )
+      if (!isNap4Valid) {
+        this.toastr.warningMessage("Data Customer \""+inCompletedCust+"\" on step \""+inCompletedStep+"\" is Incomplete");
+        break;
+      }
+    };
+    return isNap4Valid;
+  }
+}

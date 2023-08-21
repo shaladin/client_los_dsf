@@ -190,4 +190,9 @@ export class PathConstantDsf {
     public static POTENTIAL_RO_TEL_OFFER_PAGING = PathConstantDsf.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.PAGING
     public static POTENTIAL_RO_TEL_OFFER_VERIF = PathConstantDsf.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.VERIF;
     public static POTENTIAL_RO_VIEW = PathConstantDsf.POTENTIAL_RO + "/" + PathConstant.VIEW;
+
+    public static RETURN_HANDLING = "ReturnHandlingDsf";
+    public static RETURN_HANDLING_PAGING = PathConstantDsf.RETURN_HANDLING + "/" + PathConstantX.PAGING;
+    public static RETURN_HANDLING_DETAIL = PathConstantDsf.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
+
 }

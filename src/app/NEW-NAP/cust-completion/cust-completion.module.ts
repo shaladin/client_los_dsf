@@ -20,11 +20,14 @@ import { CustCompletionDetailPersonalXComponent } from 'app/impl/NEW-NAP/cust-co
 import { CustCompletionDetailCompanyXComponent } from 'app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-company/cust-completion-detail-company-x.component';
 import { CustCompletionDetailXComponent } from 'app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-x.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { CustCompletionPagingDsfComponent } from "app/dsf/impl/NEW-NAP/cust-completion/cust-completion-paging-dsf/cust-completion-paging-dsf.component";
+import { CustCompletionDetailXDsfComponent } from "app/dsf/impl/NEW-NAP/cust-completion/cust-completion-detail-x-dsf/cust-completion-detail-x-dsf.component";
 
 
 @NgModule({
     declarations: [
         CustCompletionPagingComponent,
+        CustCompletionPagingDsfComponent,
         CustCompletionDetailComponent,
         CustCompletionDetailPersonalComponent,
         CustCompletionDetailCompanyComponent,
@@ -33,7 +36,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
         CustCompletionOplDetailPersonalComponent,
         CustCompletionDetailPersonalXComponent,
         CustCompletionDetailCompanyXComponent,
-        CustCompletionDetailXComponent
+        CustCompletionDetailXComponent,
+        CustCompletionDetailXDsfComponent
     ],
     imports: [
         CommonModule,

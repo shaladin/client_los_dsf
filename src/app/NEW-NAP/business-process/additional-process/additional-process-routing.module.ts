@@ -67,6 +67,8 @@ import { AutoDebitRegistrationCancelComponent } from 'app/impl/NEW-NAP/business-
 import { AutoDebitTestComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { ReturnHandlingNewEditAppPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-new-edit-app-paging-dsf/return-handling-new-edit-app-paging-dsf.component';
+import { ReturnHandlingPagingXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-paging-x-dsf/return-handling-paging-x-dsf.component';
+import { ReturnHandlingDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-detail-dsf/return-handling-detail-dsf.component';
 
 
 const routes: Routes = [
@@ -130,8 +132,22 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.RETURN_HANDLING_PAGING,
+        component: ReturnHandlingPagingXDsfComponent,
+        data: {
+          title: 'Return Handling Paging'
+        }
+      },
+      {
         path: PathConstant.RETURN_HANDLING_DETAIL,
         component: ReturnHandlingDetailComponent,
+        data: {
+          title: 'Return Handling Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.RETURN_HANDLING_DETAIL,
+        component: ReturnHandlingDetailDsfComponent,
         data: {
           title: 'Return Handling Detail'
         }
