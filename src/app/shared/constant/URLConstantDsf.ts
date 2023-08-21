@@ -69,5 +69,7 @@ export class URLConstantDsf {
     public static DeleteAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/DeleteAppLoanPurposeDsf";
     public static AddAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/AddAppLoanPurposeDsf";
     public static EditAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/EditAppLoanPurposeDsf";
+    public static ValidateGeneralByAppId = environment.losUrl + "/AppDsf/ValidateGeneralByAppIdDsf";
+
   
 }
