@@ -89,9 +89,9 @@ export class ReturnHandlingDetailDsfComponent implements OnInit {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
   }
 
-  SubmitAll() {
+  async SubmitAll() {
     // Add by Self Custom
-    if (!this.checkGeneralValidation()) return;
+    if (!await this.checkGeneralValidation()) return;
     else 
     {
     // End Add by Self Custom
@@ -124,9 +124,9 @@ export class ReturnHandlingDetailDsfComponent implements OnInit {
     );
   }
 
-  Submit(item, i) {
+  async Submit(item, i) {
     // Add by Self Custom
-    if (!this.checkGeneralValidation()) return;
+    if (!await this.checkGeneralValidation()) return;
     else
     {
    // End Add by Self Custom
