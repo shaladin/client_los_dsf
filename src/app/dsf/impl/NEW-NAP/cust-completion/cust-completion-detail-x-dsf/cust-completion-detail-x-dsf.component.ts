@@ -187,7 +187,9 @@ export class CustCompletionDetailXDsfComponent implements OnInit {
     let url: string = NavigationConstantDsf.NAP_CUST_COMPL_PAGING_DSF
     // End Modify By Self Custom
     if(this.ReturnHandlingHId > 0){
-      url = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING;
+      // Modify By Self Custom
+      url = NavigationConstantDsf.NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING;
+      // End Modify By Self Custom
     }
     AdInsHelper.RedirectUrl(this.router, [url], { BizTemplateCode: this.BizTemplateCode });
   }
@@ -260,7 +262,10 @@ export class CustCompletionDetailXDsfComponent implements OnInit {
       this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: this.BizTemplateCode });
+          // Modify by Self Custom
+          //AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING], { BizTemplateCode: this.BizTemplateCode });
+          // End Modify by Self Custom
         }
       )
     }

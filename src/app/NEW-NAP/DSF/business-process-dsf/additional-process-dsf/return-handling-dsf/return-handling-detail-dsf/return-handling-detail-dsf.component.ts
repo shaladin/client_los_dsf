@@ -89,24 +89,22 @@ export class ReturnHandlingDetailDsfComponent implements OnInit {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
   }
 
+  // Modify by Self Custom
   async SubmitAll() {
     // Add by Self Custom
     if (!await this.checkGeneralValidation()) return;
-    else 
-    {
     // End Add by Self Custom
-      var reqObj = new ReturnHandlingHObj();
-      reqObj.WfTaskListId = this.wfTaskListId;
-      reqObj.ReturnHandlingHId = this.returnHandlingHId;
+    var reqObj = new ReturnHandlingHObj();
+    reqObj.WfTaskListId = this.wfTaskListId;
+    reqObj.ReturnHandlingHId = this.returnHandlingHId;
 
-      let ResumeReturnHandlingUrl = environment.isCore ? URLConstant.ResumeReturnHandlingV2 : URLConstant.ResumeReturnHandling;
-      this.http.post(ResumeReturnHandlingUrl, reqObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.lobCode });
-        }
-      );
-    }
+    let ResumeReturnHandlingUrl = environment.isCore ? URLConstant.ResumeReturnHandlingV2 : URLConstant.ResumeReturnHandling;
+    this.http.post(ResumeReturnHandlingUrl, reqObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.lobCode });
+      }
+    );
   }
 
   AddTask() {
@@ -124,29 +122,23 @@ export class ReturnHandlingDetailDsfComponent implements OnInit {
     );
   }
 
-  async Submit(item, i) {
-    // Add by Self Custom
-    if (!await this.checkGeneralValidation()) return;
-    else
-    {
-   // End Add by Self Custom
-      if (confirm("Are you sure to submit this record?")) {
-        var reqObj = new ReturnHandlingDObj();
-        reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
-        reqObj.ReturnHandlingHId = this.returnHandlingHId;
-        reqObj.ReturnStat = CommonConstant.ReturnStatRequest;
-        reqObj.MrReturnTaskCode = item.MrReturnTaskCode;
-        reqObj.AppId = this.appId;
-        reqObj.RowVersion = item.RowVersion;
+  Submit(item, i) {
+    if (confirm("Are you sure to submit this record?")) {
+      var reqObj = new ReturnHandlingDObj();
+      reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
+      reqObj.ReturnHandlingHId = this.returnHandlingHId;
+      reqObj.ReturnStat = CommonConstant.ReturnStatRequest;
+      reqObj.MrReturnTaskCode = item.MrReturnTaskCode;
+      reqObj.AppId = this.appId;
+      reqObj.RowVersion = item.RowVersion;
 
-        let RequestReturnTaskUrl = environment.isCore ? URLConstant.RequestReturnTaskV2 : URLConstant.RequestReturnTask;
-        this.http.post(RequestReturnTaskUrl, reqObj).subscribe(
-          (response) => {
-            this.GetListReturnHandlingDByReturnHandlingHId();
-            this.toastr.successMessage(response["message"]);
-          }
-        );
-      }
+      let RequestReturnTaskUrl = environment.isCore ? URLConstant.RequestReturnTaskV2 : URLConstant.RequestReturnTask;
+      this.http.post(RequestReturnTaskUrl, reqObj).subscribe(
+        (response) => {
+          this.GetListReturnHandlingDByReturnHandlingHId();
+          this.toastr.successMessage(response["message"]);
+        }
+      );
     }
   }
 

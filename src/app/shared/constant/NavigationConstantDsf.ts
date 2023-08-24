@@ -130,6 +130,8 @@ export class NavigationConstantDsf {
      public static NAP_CUST_COMPL_DETAIL_DSF = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstantDsf.DETAIL_X; //"Nap/CustCompletion/DetailXDsf";
      public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_PAGING; //'/Nap/AddProcess/ReturnHandlingDsf/PagingX'
      public static NAP_ADD_PRCS_RETURN_HANDLING_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_DETAIL; //'/Nap/AddProcess/ReturnHandlingDsf/Detail'
+     public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_NAP4; //"/Nap/AddProcess/ReturnHandlingDsf/NAP4"
+  
 
 }
 

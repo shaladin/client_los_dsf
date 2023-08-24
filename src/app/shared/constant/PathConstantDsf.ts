@@ -194,5 +194,6 @@ export class PathConstantDsf {
     public static RETURN_HANDLING = "ReturnHandlingDsf";
     public static RETURN_HANDLING_PAGING = PathConstantDsf.RETURN_HANDLING + "/" + PathConstantX.PAGING;
     public static RETURN_HANDLING_DETAIL = PathConstantDsf.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
+    public static RETURN_HANDLING_NAP4 = PathConstantDsf.RETURN_HANDLING + "/" + PathConstant.NAP4;
 
 }
