@@ -92,18 +92,21 @@ export class ReturnHandlingDetailDsfComponent implements OnInit {
   SubmitAll() {
     // Add by Self Custom
     if (!this.checkGeneralValidation()) return;
+    else 
+    {
     // End Add by Self Custom
-    var reqObj = new ReturnHandlingHObj();
-    reqObj.WfTaskListId = this.wfTaskListId;
-    reqObj.ReturnHandlingHId = this.returnHandlingHId;
+      var reqObj = new ReturnHandlingHObj();
+      reqObj.WfTaskListId = this.wfTaskListId;
+      reqObj.ReturnHandlingHId = this.returnHandlingHId;
 
-    let ResumeReturnHandlingUrl = environment.isCore ? URLConstant.ResumeReturnHandlingV2 : URLConstant.ResumeReturnHandling;
-    this.http.post(ResumeReturnHandlingUrl, reqObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.lobCode });
-      }
-    );
+      let ResumeReturnHandlingUrl = environment.isCore ? URLConstant.ResumeReturnHandlingV2 : URLConstant.ResumeReturnHandling;
+      this.http.post(ResumeReturnHandlingUrl, reqObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.lobCode });
+        }
+      );
+    }
   }
 
   AddTask() {
@@ -124,23 +127,26 @@ export class ReturnHandlingDetailDsfComponent implements OnInit {
   Submit(item, i) {
     // Add by Self Custom
     if (!this.checkGeneralValidation()) return;
-    // End Add by Self Custom
-    if (confirm("Are you sure to submit this record?")) {
-      var reqObj = new ReturnHandlingDObj();
-      reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
-      reqObj.ReturnHandlingHId = this.returnHandlingHId;
-      reqObj.ReturnStat = CommonConstant.ReturnStatRequest;
-      reqObj.MrReturnTaskCode = item.MrReturnTaskCode;
-      reqObj.AppId = this.appId;
-      reqObj.RowVersion = item.RowVersion;
+    else
+    {
+   // End Add by Self Custom
+      if (confirm("Are you sure to submit this record?")) {
+        var reqObj = new ReturnHandlingDObj();
+        reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
+        reqObj.ReturnHandlingHId = this.returnHandlingHId;
+        reqObj.ReturnStat = CommonConstant.ReturnStatRequest;
+        reqObj.MrReturnTaskCode = item.MrReturnTaskCode;
+        reqObj.AppId = this.appId;
+        reqObj.RowVersion = item.RowVersion;
 
-      let RequestReturnTaskUrl = environment.isCore ? URLConstant.RequestReturnTaskV2 : URLConstant.RequestReturnTask;
-      this.http.post(RequestReturnTaskUrl, reqObj).subscribe(
-        (response) => {
-          this.GetListReturnHandlingDByReturnHandlingHId();
-          this.toastr.successMessage(response["message"]);
-        }
-      );
+        let RequestReturnTaskUrl = environment.isCore ? URLConstant.RequestReturnTaskV2 : URLConstant.RequestReturnTask;
+        this.http.post(RequestReturnTaskUrl, reqObj).subscribe(
+          (response) => {
+            this.GetListReturnHandlingDByReturnHandlingHId();
+            this.toastr.successMessage(response["message"]);
+          }
+        );
+      }
     }
   }
 
