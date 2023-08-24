@@ -88,8 +88,8 @@ export class ReturnHandlingEditNap4DsfComponent implements OnInit, OnDestroy {
 
     if(environment.isCore){
       // Modify by Self Custom
-      this.inputPagingObj._url = "./assets/ucpaging/V2/searchReturnHandlingEditNAP4V2Dsf.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/V2/searchReturnHandlingEditNAP4V2Dsf.json";
+      this.inputPagingObj._url = "./assets/dsf/ucpaging/V2/searchReturnHandlingEditNAP4V2Dsf.json";
+      this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/V2/searchReturnHandlingEditNAP4V2Dsf.json";
       // End Modify by Self Custom
 
       this.inputPagingObj.isJoinExAPI = true
