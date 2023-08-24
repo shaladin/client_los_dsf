@@ -69,6 +69,7 @@ import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { ReturnHandlingNewEditAppPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-new-edit-app-paging-dsf/return-handling-new-edit-app-paging-dsf.component';
 import { ReturnHandlingPagingXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-paging-x-dsf/return-handling-paging-x-dsf.component';
 import { ReturnHandlingDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-detail-dsf/return-handling-detail-dsf.component';
+import { ReturnHandlingEditNap4DsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component';
 
 
 const routes: Routes = [
@@ -169,6 +170,13 @@ const routes: Routes = [
       {
         path: PathConstant.RETURN_HANDLING_NAP4,
         component: ReturnHandlingEditNap4Component,
+        data: {
+          title: 'Return Handling Edit NAP 4'
+        },
+      },
+      {
+        path: PathConstantDsf.RETURN_HANDLING_NAP4,
+        component: ReturnHandlingEditNap4DsfComponent,
         data: {
           title: 'Return Handling Edit NAP 4'
         },

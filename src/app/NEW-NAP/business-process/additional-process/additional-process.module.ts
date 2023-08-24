@@ -89,6 +89,7 @@ import { AutoDebitTestComponent } from "app/impl/NEW-NAP/business-process/additi
 import { ReturnHandlingNewEditAppPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-new-edit-app-paging-dsf/return-handling-new-edit-app-paging-dsf.component";
 import { ReturnHandlingPagingXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-paging-x-dsf/return-handling-paging-x-dsf.component";
 import { ReturnHandlingDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-detail-dsf/return-handling-detail-dsf.component";
+import { ReturnHandlingEditNap4DsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -157,6 +158,7 @@ export const customCurrencyMaskConfig = {
     DupCheckMdSubjListComponent,
     DupCheckMdSubjMatchComponent,
     ReturnHandlingEditNap4Component,
+    ReturnHandlingEditNap4DsfComponent,
     ReturnHandlingNewEditAppPagingComponent,
     ReturnHandlingNewEditAppPagingDsfComponent,
     AdditionalTcPagingComponent,
