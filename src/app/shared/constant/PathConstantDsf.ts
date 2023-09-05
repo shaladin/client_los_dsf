@@ -196,4 +196,8 @@ export class PathConstantDsf {
     public static RETURN_HANDLING_DETAIL = PathConstantDsf.RETURN_HANDLING + "/" + PathConstantX.DETAIL_X;
     public static RETURN_HANDLING_NAP4 = PathConstantDsf.RETURN_HANDLING + "/" + PathConstant.NAP4;
 
+    public static PLAFOND_INSTALLMENT_SIMULATION = "PlafondInstallmentSimulationDsf";
+    public static PLAFOND_INSTALLMENT_SIMULATION_PAGING = PathConstantDsf.PLAFOND_INSTALLMENT_SIMULATION + "/" + PathConstant.PAGING;
+    public static PLAFOND_INSTALLMENT_SIMULATION_DETAIL = "PlafondInstallmentSimulationDsf" + "/" + PathConstant.DETAIL;
+
 }

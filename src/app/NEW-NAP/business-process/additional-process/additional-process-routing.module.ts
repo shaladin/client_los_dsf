@@ -70,6 +70,8 @@ import { ReturnHandlingNewEditAppPagingDsfComponent } from 'app/NEW-NAP/DSF/busi
 import { ReturnHandlingPagingXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-paging-x-dsf/return-handling-paging-x-dsf.component';
 import { ReturnHandlingDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-detail-dsf/return-handling-detail-dsf.component';
 import { ReturnHandlingEditNap4DsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component';
+import { PlafondInstallmentSimulationPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-paging-dsf/plafond-installment-simulation-paging-dsf.component';
+import { PlafondInstallmentSimulationDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component';
 
 
 const routes: Routes = [
@@ -193,6 +195,20 @@ const routes: Routes = [
         component: ReturnHandlingNewEditAppPagingDsfComponent,
         data: {
           title: 'Return Handling Edit NAP2 Paging'
+        },
+      },
+      {
+        path: PathConstantDsf.PLAFOND_INSTALLMENT_SIMULATION_PAGING,
+        component: PlafondInstallmentSimulationPagingDsfComponent,
+        data: {
+          title: 'Plafond Installment Simulation Paging'
+        },
+      },
+      {
+        path: PathConstantDsf.PLAFOND_INSTALLMENT_SIMULATION_DETAIL,
+        component: PlafondInstallmentSimulationDetailDsfComponent,
+        data: {
+          title: 'Plafond Installment Simulation Detail'
         },
       },
       {

@@ -37,6 +37,7 @@ export class URLConstantDsf {
 
     public static CheckIfCustHasOngoingAppDsf = environment.losUrl + "/AppDsf/CheckIfCustHasOngoingAppDsf";
     public static CheckIfAgrmntParentHasOngoingAppDsf = environment.losUrl + "/AppDsf/CheckIfAgrmntParentHasOngoingAppDsf";
+    public static CheckIfAgrmntParentHasOngoingAppV2Dsf = environment.losUrl + "/AppDsf/CheckIfAgrmntParentHasOngoingAppV2Dsf";
     public static GetListAgrmntParentDsf = environment.losUrl + "/AppDsf/ListAgrmntParentDsf";
     public static GetListAgrmntParentUsedDsf = environment.losUrl + "/AppDsf/ListAgrmntParentUsedDsf";
 
@@ -71,5 +72,8 @@ export class URLConstantDsf {
     public static EditAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/EditAppLoanPurposeDsf";
     public static ValidateGeneralByAppId = environment.losUrl + "/AppDsf/ValidateGeneralByAppIdDsf";
 
-  
+    public static GetAgrmntMasterList = environment.losUrl + "/AppDsf/GetAgrmntMasterList";
+    public static CheckLMSR2APIConnection = environment.losUrl + "/AppDsf/CheckLMSR2APIConnection";
+    public static GetAgrmntMasterXByAgrmntParentId = environment.losUrl + "/AppDsf/GetAgrmntMasterXByAgrmntParentId";
+    public static GetInitFinDataForTrialCalcX = environment.losUrl + "/AppDsf/GetOrInitFinDataForTrialCalcDsf";
 }

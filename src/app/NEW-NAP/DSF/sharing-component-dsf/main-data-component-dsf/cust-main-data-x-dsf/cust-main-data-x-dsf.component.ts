@@ -1756,16 +1756,16 @@ export class CustMainDataXDsfComponent implements OnInit {
         //   return;
         // }
 
-        // let isOverdue: boolean = false;
-        // await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
-        //   (response: any) => {
-        //     if (response.IsOverdue) isOverdue = true;
-        //   }
-        // );
-        // if(isOverdue){
-        //   this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
-        //   return;
-        // }
+        let isOverdue: boolean = false;
+        await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+          (response: any) => {
+            if (response.IsOverdue) isOverdue = true;
+          }
+        );
+        if(isOverdue){
+          this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
+          return;
+        }
 
         let isHaveAgrmntParent : boolean = false;
         await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
