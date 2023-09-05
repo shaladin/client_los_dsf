@@ -153,6 +153,13 @@ import { UcInsuranceDetailXComponent } from "app/impl/NEW-NAP/sharing-component/
 import { LoanObjectXDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/loan-object-x-dsf/loan-object-x-dsf.component";
 import { TcDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/tc-data/tc-data-x.component";
 import { LifeInsuranceDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/life-insurance-data/life-insurance-data-x.component";
+import { SchmRegulerFixXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-reguler-fix-x-dsf/schm-reguler-fix-x-dsf.component";
+import { SchmIrregularXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-irregular-x-dsf/schm-irregular-x-dsf.component";
+import { SchmStepUpStepDownNormalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-step-up-step-down-normal-x-dsf/schm-step-up-step-down-normal-x-dsf.component";
+import { SchmStepUpStepDownLeasingXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-step-up-step-down-leasing-x-dsf/schm-step-up-step-down-leasing-x-dsf.component";
+import { SchmStepUpStepDownCummulativeXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-step-up-step-down-cummulative-x-dsf/schm-step-up-step-down-cummulative-x-dsf.component";
+import { SchmBalloonXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-balloon-x-dsf/schm-balloon-x-dsf.component";
+import { SchmEvenPrincipalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-even-principal-x-dsf/schm-even-principal-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -287,12 +294,19 @@ export const customCurrencyMaskConfig = {
     FinancialDataXComponent,
     FeeXComponent,
     SchmBalloonXComponent,
+    SchmBalloonXDsfComponent,
     SchmEvenPrincipalXComponent,
+    SchmEvenPrincipalXDsfComponent,
     SchmIrregularXComponent,
+    SchmIrregularXDsfComponent,
     SchmRegulerFixXComponent,
+    SchmRegulerFixXDsfComponent,
     SchmStepUpStepDownCummulativeXComponent,
+    SchmStepUpStepDownCummulativeXDsfComponent,
     SchmStepUpStepDownLeasingXComponent,
+    SchmStepUpStepDownLeasingXDsfComponent,
     SchmStepUpStepDownNormalXComponent,
+    SchmStepUpStepDownNormalXDsfComponent,
     ViewSubsidyXComponent,
     MultiAssetDataXComponent,
     AssetDataPagingXComponent,
@@ -440,12 +454,19 @@ export const customCurrencyMaskConfig = {
     FinancialDataXComponent,
     FeeXComponent,
     SchmBalloonXComponent,
+    SchmBalloonXDsfComponent,
     SchmEvenPrincipalXComponent,
+    SchmEvenPrincipalXDsfComponent,
     SchmIrregularXComponent,
+    SchmIrregularXDsfComponent,
     SchmRegulerFixXComponent,
+    SchmRegulerFixXDsfComponent,
     SchmStepUpStepDownCummulativeXComponent,
+    SchmStepUpStepDownCummulativeXDsfComponent,
     SchmStepUpStepDownLeasingXComponent,
+    SchmStepUpStepDownLeasingXDsfComponent,
     SchmStepUpStepDownNormalXComponent,
+    SchmStepUpStepDownNormalXDsfComponent,
     ViewSubsidyXComponent,
     MultiAssetDataXComponent,
     AssetDataPagingXComponent,
