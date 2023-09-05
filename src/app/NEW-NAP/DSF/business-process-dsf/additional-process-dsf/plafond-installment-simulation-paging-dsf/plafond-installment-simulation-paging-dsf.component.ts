@@ -46,6 +46,17 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
 
   async ngOnInit() {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
+    //LMS R2 API Up Validation
+    await this.http.post(URLConstantDsf.CheckLMSR2APIConnection, null).toPromise().then(
+      (response: boolean) => {
+        if (!response)
+        {
+          this.toastr.warningMessage(ExceptionConstantDsf.CHECK_API_LMS_R2_UP);
+          return false;
+        }
+      }
+    );
   }
 
   async Search()
@@ -67,6 +78,11 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
           this.masterAgrmntList[i].RequestedPlafond = (this.currencyFormatter(this.masterAgrmntList[i].RequestedPlafond.toString()));
           this.masterAgrmntList[i].RemainingPlafond = (this.currencyFormatter(this.masterAgrmntList[i].RemainingPlafond.toString()));
         }
+
+        this.SimulationForm.patchValue({
+          CustNo: this.masterAgrmntList[0].CustNo,
+          CustName: this.masterAgrmntList[0].CustName,
+        });
       }
     );
     
@@ -107,17 +123,6 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     //Customer Age Validation
     await this.getMinMaxAgeCustPersonalFromGenSet();
     await this.validateCustPersonalAge();
-
-    //LMS R2 API Up Validation
-    await this.http.post(URLConstantDsf.CheckLMSR2APIConnection, null).toPromise().then(
-      (response: boolean) => {
-        if (!response)
-        {
-          this.toastr.warningMessage(ExceptionConstantDsf.CHECK_API_LMS_R2_UP);
-          return false;
-        }
-      }
-    );
         
     this.isInit = false;
   }
