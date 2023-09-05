@@ -5,13 +5,13 @@ export class MasterAgrmntDsfObj {
     MrCustTypeCode: string;
     AgrmntParentId: number;
     AgrmntParentNo: string;
-    AssetPriceDepreciation: number;
-    OSARParentAgrmnt: number;
-    OSNIChildAgrmnt: number;
+    AssetPriceDepreciation: string;
+    OSARParentAgrmnt: string;
+    OSNIChildAgrmnt: string;
     EligibleTenor: number;
-    PlafondAgrmntParent: number;
-    RequestedPlafond: number;
-    RemainingPlafond: number;
+    PlafondAgrmntParent: string;
+    RequestedPlafond: string;
+    RemainingPlafond: string;
     MaturityDt: Date;
     GoLiveDt: Date;
     constructor() {}
