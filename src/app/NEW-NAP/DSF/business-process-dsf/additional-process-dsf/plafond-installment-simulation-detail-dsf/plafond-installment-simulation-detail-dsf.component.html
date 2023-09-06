@@ -152,6 +152,7 @@
         </div>
 
         <br>
+        <div *ngIf="!isInit">
         <lib-ucSubsection [id]="'SummaryInfoId'" [title]="'Summary'" [panel]="'SummaryInfo'">
         </lib-ucSubsection>
         <div id="SummaryInfo" class="row">
@@ -191,6 +192,7 @@
               <label class="col-md-7 adInsLabel" translate>-/-</label>
             </div>
           </div>
+        </div>
         </div>
       </div>
 

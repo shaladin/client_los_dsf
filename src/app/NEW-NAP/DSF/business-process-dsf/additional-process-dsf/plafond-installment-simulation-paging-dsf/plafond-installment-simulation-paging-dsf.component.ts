@@ -39,6 +39,8 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
   UserAccess: Object;
   isInit: boolean = true;
   masterAgrmntList: Array<MasterAgrmntDsfObj>;
+  CustNo: string;
+  CustName: string;
   SimulationForm = this.fb.group({
     CustNo: ['', [Validators.maxLength(500)]],
     CustName: ['', [Validators.maxLength(500)]]
@@ -59,33 +61,24 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     );
   }
 
-  async Search()
+  async Reset()
   {
-    var searchParam = {
-      CustNo : this.SimulationForm.controls["CustNo"].value,
-      CustName : this.SimulationForm.controls["CustName"].value
-    }
+    this.masterAgrmntList = new Array<MasterAgrmntDsfObj>();
+    this.CustName = "";
+    this.CustNo = "";
 
-    await this.http.post(URLConstantDsf.GetAgrmntMasterList, searchParam).toPromise().then(
-      (response) => {
-        this.masterAgrmntList = response as MasterAgrmntDsfObj[];
-        for (var i = 0; i < this.masterAgrmntList.length; i++)
-        {
-          this.masterAgrmntList[i].AssetPriceDepreciation = (this.currencyFormatter(this.masterAgrmntList[i].AssetPriceDepreciation.toString()));
-          this.masterAgrmntList[i].OSARParentAgrmnt = (this.currencyFormatter(this.masterAgrmntList[i].OSARParentAgrmnt.toString()));
-          this.masterAgrmntList[i].OSNIChildAgrmnt = (this.currencyFormatter(this.masterAgrmntList[i].OSNIChildAgrmnt.toString()));
-          this.masterAgrmntList[i].PlafondAgrmntParent = (this.currencyFormatter(this.masterAgrmntList[i].PlafondAgrmntParent.toString()));
-          this.masterAgrmntList[i].RequestedPlafond = (this.currencyFormatter(this.masterAgrmntList[i].RequestedPlafond.toString()));
-          this.masterAgrmntList[i].RemainingPlafond = (this.currencyFormatter(this.masterAgrmntList[i].RemainingPlafond.toString()));
-        }
-
-        this.SimulationForm.patchValue({
-          CustNo: this.masterAgrmntList[0].CustNo,
-          CustName: this.masterAgrmntList[0].CustName,
-        });
+    this.SimulationForm.patchValue(
+      {
+        CustNo: "",
+        CustName: ""
       }
     );
-    
+
+    this.isInit = true;
+  }
+
+  async Search()
+  {
     //Search Validation
     if (this.SimulationForm.controls["CustNo"].value == "" && this.SimulationForm.controls["CustName"].value == "")
     {
@@ -119,6 +112,29 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstantDsf.CUST_NOT_HAVE_AGR_PARENT);
       return false;
     }
+
+    var searchParam = {
+      CustNo : this.SimulationForm.controls["CustNo"].value,
+      CustName : this.SimulationForm.controls["CustName"].value
+    }
+
+    await this.http.post(URLConstantDsf.GetAgrmntMasterList, searchParam).toPromise().then(
+      (response) => {
+        this.masterAgrmntList = response as MasterAgrmntDsfObj[];
+        for (var i = 0; i < this.masterAgrmntList.length; i++)
+        {
+          this.masterAgrmntList[i].AssetPriceDepreciation = (this.currencyFormatter(this.masterAgrmntList[i].AssetPriceDepreciation.toString()));
+          this.masterAgrmntList[i].OSARParentAgrmnt = (this.currencyFormatter(this.masterAgrmntList[i].OSARParentAgrmnt.toString()));
+          this.masterAgrmntList[i].OSNIChildAgrmnt = (this.currencyFormatter(this.masterAgrmntList[i].OSNIChildAgrmnt.toString()));
+          this.masterAgrmntList[i].PlafondAgrmntParent = (this.currencyFormatter(this.masterAgrmntList[i].PlafondAgrmntParent.toString()));
+          this.masterAgrmntList[i].RequestedPlafond = (this.currencyFormatter(this.masterAgrmntList[i].RequestedPlafond.toString()));
+          this.masterAgrmntList[i].RemainingPlafond = (this.currencyFormatter(this.masterAgrmntList[i].RemainingPlafond.toString()));
+        }
+
+        this.CustNo = this.masterAgrmntList[0].CustNo;
+        this.CustName = this.masterAgrmntList[0].CustName;
+      }
+    );
 
     //Customer Age Validation
     await this.getMinMaxAgeCustPersonalFromGenSet();

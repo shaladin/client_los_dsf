@@ -1,6 +1,6 @@
 <div class="container col-md-12">
   <form class="form form-horizontal" [formGroup]="SimulationForm" #enjiForm="ngForm">
-    <div class="col-md-12 bg-white rounded px-3 py-3">
+  <div class="col-md-12 bg-white rounded px-3 py-3">
     <div class="form-group row">
       <div class="col-md-12">
         <h4 class="form-section card-title" translate>Plafond & Installment Simulation</h4>
@@ -18,20 +18,26 @@
             [ngClass]="{ 'is-invalid': enjiForm.submitted && SimulationForm.controls.CustName.invalid }">
         </div>
     </div>
-    <div class="form-group row">
-        <div class="col-md-3">
-          <button class="btn btn-raised btn-primary margin-r-5" translate type="button" (click)="Search()">
-            Search
-          </button>
-        </div>
-    </div>
-    </div>
+
     <br>
-    <div *ngIf="!isInit" class="bg-white rounded col-md-12 px-3 py-3">
-    <div class="form-group row bg-white rounded">
-      <div class="px-3">
+    <div class="form-group row">
+      <div class="col-md-12 text-right">
+        <button class="btn btn-raised btn-warning margin-r-5" translate type="button" (click)="Reset()">
+          <i class="fa fa-times">&nbsp;</i>
+          <span>Reset</span>
+        </button>
+        <button class="btn btn-raised btn-primary margin-r-5" translate type="button" (click)="Search()">
+          <i class="fa fa-search">&nbsp;</i>
+          <span>Search</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <br>
+    <div class="col-md-12 table-responsive px-0 py-0" *ngIf="!isInit">
+      <div>
         <div id="simulation">
-            <table class="table table-responsive-md text-center table-hover">
+            <table class="table text-center table-hover col-md-12">
                 <thead>
                 <tr class="table-header">
                     <th class="text-center">Customer No</th>
@@ -74,7 +80,6 @@
             </table>
         </div>
       </div>
-    </div>
     </div>
   </form>
 </div>

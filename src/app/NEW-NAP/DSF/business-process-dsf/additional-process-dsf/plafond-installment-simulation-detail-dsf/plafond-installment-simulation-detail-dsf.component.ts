@@ -47,6 +47,7 @@ export class PlafondInstallmentSimulationDetailDsfComponent implements OnInit {
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   BizTmpltCode: string;
   user: CurrentUserContext;
+  isInit: boolean = true;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -197,6 +198,7 @@ export class PlafondInstallmentSimulationDetailDsfComponent implements OnInit {
   ChangeLoanAmount()
   {
     this.IsGenerate = false;
+    this.isInit = true;
   }
 
   changeNumOfInstallmentTenor() {
@@ -207,6 +209,7 @@ export class PlafondInstallmentSimulationDetailDsfComponent implements OnInit {
     }
 
     this.IsGenerate = false;
+    this.isInit = true;
   }
 
   ChangeNumOfInstallmentPayFreq(ev) {
@@ -224,6 +227,7 @@ export class PlafondInstallmentSimulationDetailDsfComponent implements OnInit {
     }
 
     this.IsGenerate = false;
+    this.isInit = true;
   }
 
   ChooseInstScheme(ev) {
@@ -237,6 +241,7 @@ export class PlafondInstallmentSimulationDetailDsfComponent implements OnInit {
     });
 
     this.IsGenerate = false;
+    this.isInit = true;
   }
 
   ChooseFirstInstType(ev) {
@@ -250,6 +255,7 @@ export class PlafondInstallmentSimulationDetailDsfComponent implements OnInit {
     });
 
     this.IsGenerate = false;
+    this.isInit = true;
   }
 
   getDropdownValue(refProdCompntCode: string) {
@@ -347,6 +353,7 @@ export class PlafondInstallmentSimulationDetailDsfComponent implements OnInit {
       }
 
       this.IsGenerate = true;
+      this.isInit = false;
       this.LoadFinData();
       this.SimulationDetailForm.patchValue({
         Tenor: this.SimulationDetailForm.controls.Tenor.value,
