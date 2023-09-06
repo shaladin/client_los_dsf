@@ -83,12 +83,26 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     if (this.SimulationForm.controls["CustNo"].value == "" && this.SimulationForm.controls["CustName"].value == "")
     {
       this.toastr.warningMessage(ExceptionConstantDsf.SEARCH_CUSTOMER_VALIDATION);
+      this.isInit = true;
       return false;
     }
 
+    //Check Customer
+    var searchParam = {
+      CustNo : this.SimulationForm.controls["CustNo"].value,
+      CustName : this.SimulationForm.controls["CustName"].value
+    }
+
+    await this.http.post(URLConstantDsf.GetCustforAgrmntMasterDsf, searchParam).toPromise().then(
+      (response: any) => {
+        this.CustNo = response.CustNo;
+        this.CustName = response.CustName;
+      }
+    );
+
     //Overdue Validation
     let isOverdue: boolean = false;
-    await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.SimulationForm.controls["CustNo"].value }).toPromise().then(
+    await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustNo }).toPromise().then(
       (response: any) => {
         if (response.IsOverdue) isOverdue = true;
       }
@@ -96,12 +110,13 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     
     if(isOverdue){
       this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
+      this.isInit = true;
       return false;
     }
 
     //Parent Agrmnt Available Validation
     let isHaveAgrmntParent : boolean = false;
-      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.SimulationForm.controls["CustNo"].value }).toPromise().then(
+      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
         (response) => {
           if (response && response.length > 0) isHaveAgrmntParent = true;
         }
@@ -110,15 +125,16 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     if (!isHaveAgrmntParent)
     {
       this.toastr.warningMessage(ExceptionConstantDsf.CUST_NOT_HAVE_AGR_PARENT);
+      this.isInit = true;
       return false;
     }
 
-    var searchParam = {
-      CustNo : this.SimulationForm.controls["CustNo"].value,
-      CustName : this.SimulationForm.controls["CustName"].value
+    var searchAgrmntMasterParam = {
+      CustNo : this.CustNo,
+      CustName : this.CustName
     }
 
-    await this.http.post(URLConstantDsf.GetAgrmntMasterList, searchParam).toPromise().then(
+    await this.http.post(URLConstantDsf.GetAgrmntMasterList, searchAgrmntMasterParam).toPromise().then(
       (response) => {
         this.masterAgrmntList = response as MasterAgrmntDsfObj[];
         for (var i = 0; i < this.masterAgrmntList.length; i++)
@@ -220,12 +236,14 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     if(this.maxCustPerAge > 0 && (birthDt > this.minCustPerAgeDt || birthDt < this.maxCustPerAgeDt))
     {
       this.toastr.warningMessage(String.Format(ExceptionConstant.CUST_AGE_BETWEEN, this.minCustPerAge, this.maxCustPerAge));
+      this.isInit = true;
       return false;
     }
 
     if(birthDt > this.minCustPerAgeDt)
     {
       this.toastr.warningMessage(String.Format(ExceptionConstant.CUST_AGE_MIN, this.minCustPerAge));
+      this.isInit = true;
       return false;
     }
 

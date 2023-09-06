@@ -72,6 +72,7 @@ export class URLConstantDsf {
     public static EditAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/EditAppLoanPurposeDsf";
     public static ValidateGeneralByAppId = environment.losUrl + "/AppDsf/ValidateGeneralByAppIdDsf";
 
+    public static GetCustforAgrmntMasterDsf = environment.losUrl + "/AppDsf/GetCustforAgrmntMasterDsf";
     public static GetAgrmntMasterList = environment.losUrl + "/AppDsf/GetAgrmntMasterList";
     public static CheckLMSR2APIConnection = environment.losUrl + "/AppDsf/CheckLMSR2APIConnection";
     public static GetAgrmntMasterXByAgrmntParentId = environment.losUrl + "/AppDsf/GetAgrmntMasterXByAgrmntParentId";
