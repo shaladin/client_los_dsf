@@ -13,6 +13,7 @@ import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { CustomerAgrmntMasterDsfObj } from 'app/shared/model/customer-agrmnt-master-dsf-obj.model';
 import { MasterAgrmntDsfObj } from 'app/shared/model/master-agrmnt-dsf-obj.model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
@@ -37,8 +38,10 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
   minCustPerAgeDt: Date;
   maxCustPerAgeDt: Date;
   UserAccess: Object;
-  isInit: boolean = true;
+  isCustomerReady: boolean = false;
+  isAgrmntReady: boolean = false;
   masterAgrmntList: Array<MasterAgrmntDsfObj>;
+  customerMasterAgrmntList: Array<CustomerAgrmntMasterDsfObj>;
   CustNo: string;
   CustName: string;
   SimulationForm = this.fb.group({
@@ -74,35 +77,40 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
       }
     );
 
-    this.isInit = true;
+    this.isCustomerReady = false;
+    this.isAgrmntReady = false;
   }
-
-  async Search()
+  
+  async SearchCustomer()
   {
     //Search Validation
-    if (this.SimulationForm.controls["CustNo"].value == "" && this.SimulationForm.controls["CustName"].value == "")
+    if (this.SimulationForm.controls.CustNo.value == "" && this.SimulationForm.controls.CustName.value == "")
     {
       this.toastr.warningMessage(ExceptionConstantDsf.SEARCH_CUSTOMER_VALIDATION);
-      this.isInit = true;
+      this.isCustomerReady = false;
       return false;
     }
 
     //Check Customer
     var searchParam = {
-      CustNo : this.SimulationForm.controls["CustNo"].value,
-      CustName : this.SimulationForm.controls["CustName"].value
+      CustNo : this.SimulationForm.controls.CustNo.value,
+      CustName : this.SimulationForm.controls.CustName.value
     }
 
     await this.http.post(URLConstantDsf.GetCustforAgrmntMasterDsf, searchParam).toPromise().then(
       (response: any) => {
-        this.CustNo = response.CustNo;
-        this.CustName = response.CustName;
+        this.customerMasterAgrmntList = response as CustomerAgrmntMasterDsfObj[];
       }
     );
 
+    this.isCustomerReady = true;
+  }
+
+  async viewDetailAgrmntMaster(CustomerNo: string = "", CustomerName: string = "")
+  {
     //Overdue Validation
     let isOverdue: boolean = false;
-    await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: this.CustNo }).toPromise().then(
+    await this.http.post(URLConstantX.CheckAgrmntParentOverdueByCustNo, { CustNo: CustomerNo }).toPromise().then(
       (response: any) => {
         if (response.IsOverdue) isOverdue = true;
       }
@@ -110,13 +118,13 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     
     if(isOverdue){
       this.toastr.warningMessage(ExceptionConstantX.AGRMNT_PARENT_OVERDUE_EXIST);
-      this.isInit = true;
+      this.isAgrmntReady = false;
       return false;
     }
 
     //Parent Agrmnt Available Validation
     let isHaveAgrmntParent : boolean = false;
-      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: this.CustNo }).toPromise().then(
+      await this.http.post<Array<AgrParentObjX>>(URLConstantX.GetListAgrmntParentByCustNoX, { CustNo: CustomerNo }).toPromise().then(
         (response) => {
           if (response && response.length > 0) isHaveAgrmntParent = true;
         }
@@ -125,13 +133,13 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     if (!isHaveAgrmntParent)
     {
       this.toastr.warningMessage(ExceptionConstantDsf.CUST_NOT_HAVE_AGR_PARENT);
-      this.isInit = true;
+      this.isAgrmntReady = false;
       return false;
     }
 
     var searchAgrmntMasterParam = {
-      CustNo : this.CustNo,
-      CustName : this.CustName
+      CustNo : CustomerNo,
+      CustName : CustomerName
     }
 
     await this.http.post(URLConstantDsf.GetAgrmntMasterList, searchAgrmntMasterParam).toPromise().then(
@@ -146,9 +154,6 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
           this.masterAgrmntList[i].RequestedPlafond = (this.currencyFormatter(this.masterAgrmntList[i].RequestedPlafond.toString()));
           this.masterAgrmntList[i].RemainingPlafond = (this.currencyFormatter(this.masterAgrmntList[i].RemainingPlafond.toString()));
         }
-
-        this.CustNo = this.masterAgrmntList[0].CustNo;
-        this.CustName = this.masterAgrmntList[0].CustName;
       }
     );
 
@@ -156,7 +161,7 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     await this.getMinMaxAgeCustPersonalFromGenSet();
     await this.validateCustPersonalAge();
         
-    this.isInit = false;
+    this.isAgrmntReady = true;
   }
 
   async viewDetailPlafondInstallment(AgrmntParentNo: string, AgrmntParentId: number, CustNo: string, GoLiveDt?: Date, MaturityDt?: Date)
@@ -236,14 +241,14 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     if(this.maxCustPerAge > 0 && (birthDt > this.minCustPerAgeDt || birthDt < this.maxCustPerAgeDt))
     {
       this.toastr.warningMessage(String.Format(ExceptionConstant.CUST_AGE_BETWEEN, this.minCustPerAge, this.maxCustPerAge));
-      this.isInit = true;
+      this.isAgrmntReady = false;
       return false;
     }
 
     if(birthDt > this.minCustPerAgeDt)
     {
       this.toastr.warningMessage(String.Format(ExceptionConstant.CUST_AGE_MIN, this.minCustPerAge));
-      this.isInit = true;
+      this.isAgrmntReady = false;
       return false;
     }
 
