@@ -42,8 +42,15 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
   isAgrmntReady: boolean = false;
   masterAgrmntList: Array<MasterAgrmntDsfObj>;
   customerMasterAgrmntList: Array<CustomerAgrmntMasterDsfObj>;
+  currentItemsCustomerToShow: Array<CustomerAgrmntMasterDsfObj>;
+  currentItemsMasterAgrmntToShow: Array<MasterAgrmntDsfObj>;
   CustNo: string;
   CustName: string;
+  pageSize: number = 10;
+  pageSizeAgrmnt: number = 10;
+  pageIndex: number = 1;
+  pageIndexAgrmnt: number = 1;
+  isError: boolean = false;
   SimulationForm = this.fb.group({
     CustNo: ['', [Validators.maxLength(500)]],
     CustName: ['', [Validators.maxLength(500)]]
@@ -57,6 +64,7 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
       (response: boolean) => {
         if (!response)
         {
+          this.isError = true;
           this.toastr.warningMessage(ExceptionConstantDsf.CHECK_API_LMS_R2_UP);
           return false;
         }
@@ -83,6 +91,21 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
   
   async SearchCustomer()
   {
+    if (this.isError)
+    {
+      //LMS R2 API Up Validation
+      await this.http.post(URLConstantDsf.CheckLMSR2APIConnection, null).toPromise().then(
+        (response: boolean) => {
+          if (!response)
+          {
+            this.isError = true;
+            this.toastr.warningMessage(ExceptionConstantDsf.CHECK_API_LMS_R2_UP);
+            return false;
+          }
+        }
+      );
+    }
+
     //Search Validation
     if (this.SimulationForm.controls.CustNo.value == "" && this.SimulationForm.controls.CustName.value == "")
     {
@@ -103,6 +126,7 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
       }
     );
 
+    this.currentItemsCustomerToShow =  this.customerMasterAgrmntList.slice(0, ((this.pageIndex-1)*this.pageSize) + this.pageSize)
     this.isCustomerReady = true;
   }
 
@@ -308,6 +332,34 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
 
   currencyFormatter(value: string) {
     return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  onPageCustomerChange($event) {
+    this.pageIndex = Number($event);
+    this.currentItemsCustomerToShow =  this.customerMasterAgrmntList.slice((this.pageIndex-1)*this.pageSize, ((this.pageIndex-1)*this.pageSize) + this.pageSize);
+    this.currentItemsCustomerToShow;
+  }
+
+  onChangePageSize(pageSize)
+  {
+    this.pageSize = Number(pageSize);
+    this.pageIndex = 1;
+    this.currentItemsCustomerToShow =  this.customerMasterAgrmntList.slice(0, ((this.pageIndex-1)*this.pageSize) + this.pageSize)
+    this.isCustomerReady = true;
+  }
+
+  onPageAgrmntChange($event) {
+    this.pageIndexAgrmnt = Number($event);
+    this.currentItemsMasterAgrmntToShow =  this.masterAgrmntList.slice((this.pageIndexAgrmnt-1)*this.pageSizeAgrmnt, ((this.pageIndexAgrmnt-1)*this.pageSizeAgrmnt) + this.pageSizeAgrmnt);
+    this.currentItemsMasterAgrmntToShow;
+  }
+
+  onChangePageSizeAgrmnt(pageSize)
+  {
+    this.pageSizeAgrmnt = Number(pageSize);
+    this.pageIndexAgrmnt = 1;
+    this.currentItemsMasterAgrmntToShow =  this.masterAgrmntList.slice(0, ((this.pageIndexAgrmnt-1)*this.pageSizeAgrmnt) + this.pageSizeAgrmnt);
+    this.isAgrmntReady = true;
   }
 
 }
