@@ -87,6 +87,10 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
 
     this.isCustomerReady = false;
     this.isAgrmntReady = false;
+    this.pageSize = 10;
+    this.pageIndex = 1;
+    this.pageSizeAgrmnt = 10;
+    this.pageIndexAgrmnt = 1;
   }
   
   async SearchCustomer()
