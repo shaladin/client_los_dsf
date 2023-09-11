@@ -132,6 +132,7 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
 
     this.currentItemsCustomerToShow =  this.customerMasterAgrmntList.slice(0, ((this.pageIndex-1)*this.pageSize) + this.pageSize)
     this.isCustomerReady = true;
+    this.isAgrmntReady = false;
   }
 
   async viewDetailAgrmntMaster(CustomerNo: string = "", CustomerName: string = "")
