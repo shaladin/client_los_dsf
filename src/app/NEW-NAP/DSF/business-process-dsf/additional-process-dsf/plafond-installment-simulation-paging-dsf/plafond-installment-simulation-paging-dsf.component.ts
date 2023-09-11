@@ -198,18 +198,30 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     await this.getMinMaxAgeCustPersonalFromGenSet();
     await this.validateCustPersonalAge();
         
+    if (this.pageIndexAgrmnt == 1)
+    {
+      this.currentItemsMasterAgrmntToShow =  this.masterAgrmntList.slice(0, ((this.pageIndexAgrmnt-1)*this.pageSizeAgrmnt) + this.pageSizeAgrmnt);
+    }
+
+    if (this.pageIndexAgrmnt > 1)
+    {
+      this.currentItemsMasterAgrmntToShow =  this.masterAgrmntList.slice(((this.pageIndexAgrmnt-1)*this.pageSizeAgrmnt), ((this.pageIndexAgrmnt-1)*this.pageSizeAgrmnt) + this.pageSizeAgrmnt);
+    }
     this.isAgrmntReady = true;
-    this.pageSize;
-    this.pageIndex;
   }
 
   async viewDetailPlafondInstallment(AgrmntParentNo: string, AgrmntParentId: number, CustNo: string, GoLiveDt?: Date, MaturityDt?: Date)
   {
+    var isGoLiveValid = true;
+    var isMaturityValid = true;
+    var isAppInProgress = true;
+
     //GoLiveDt Validation
     await this.validateGoLiveDtAgrmntParent(GoLiveDt);
     if (!this.isAgrmntParentGoLiveDtValid)
     {
       this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_GO_LIVE_DT_VALID, this.monthFromGoLiveDt));
+      isGoLiveValid = false;
       return false;
     }
 
@@ -218,6 +230,7 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     if (!this.isAgrmntParentMaturityDtValid)
     {
       this.toastr.warningMessage(String.Format(ExceptionConstantX.IS_AGRMNT_PARENT_MATURITY_DT_VALID, this.monthFromMaturyityDateDt));
+      isMaturityValid = false;
       return false;
     }
 
@@ -231,13 +244,17 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
         if(!ResponseObj.IsAvailable)
         {
           this.toastr.warningMessage(ExceptionConstantDsf.SLC_AGR_PARENT_NOT_AVAILABLE);
+          isAppInProgress = false;
           return false;
         }
       }
     )
 
-    this.linkUrl = environment.losR3Web + "/Nap/AddProcess/" + PathConstantDsf.PLAFOND_INSTALLMENT_SIMULATION_DETAIL + "?AgrmntParentId=" + AgrmntParentId + "&CustNo=" + CustNo;
-    window.open(this.linkUrl, '_blank');
+    if (isGoLiveValid && isMaturityValid && isAppInProgress)
+    {
+      this.linkUrl = environment.losR3Web + "/Nap/AddProcess/" + PathConstantDsf.PLAFOND_INSTALLMENT_SIMULATION_DETAIL + "?AgrmntParentId=" + AgrmntParentId + "&CustNo=" + CustNo;
+      window.open(this.linkUrl, '_blank');
+    }
   }
 
   async getMinMaxAgeCustPersonalFromGenSet()
