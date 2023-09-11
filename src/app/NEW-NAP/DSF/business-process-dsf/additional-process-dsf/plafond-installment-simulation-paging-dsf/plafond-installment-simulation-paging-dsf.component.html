@@ -117,13 +117,13 @@
                     <th class="text-center">Action</th>
                 </tr>
                 </thead>
-                <tbody *ngIf = "masterAgrmntList?.length == 0">
+                <tbody *ngIf = "currentItemsMasterAgrmntToShow?.length == 0">
                     <tr>
                         <td colspan="100%">No Data Available</td>
                     </tr>
                 </tbody>
-                <tbody *ngIf = "masterAgrmntList?.length != 0">
-                  <ng-container *ngFor="let item of masterAgrmntList; let i=index">
+                <tbody *ngIf = "currentItemsMasterAgrmntToShow?.length != 0">
+                  <ng-container *ngFor="let item of currentItemsMasterAgrmntToShow; let i=index">
                     <tr>
                         <td class="text-left">{{item.CustNo}}</td>
                         <td class="text-left">{{item.CustName}}</td>
@@ -153,7 +153,7 @@
           </select>
         </div>
         <div class="justify-content-center col-md-5 col-xs-12">
-          <ngb-pagination [collectionSize]="masterAgrmntList.length" [pageSize]="pageSizeAgrmnt" [(page)]="pageSizeAgrmnt" (pageChange)="onPageAgrmntChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="true"
+          <ngb-pagination [collectionSize]="masterAgrmntList.length" [pageSize]="pageSizeAgrmnt" [(page)]="pageIndexAgrmnt" (pageChange)="onPageAgrmntChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="true"
           [boundaryLinks]="false"></ngb-pagination>
         </div>
         <div class="col-md-3 col-xs-12" style="font-weight: bold; text-align: right;" translate>Total Data : {{masterAgrmntList?.length}}</div>
