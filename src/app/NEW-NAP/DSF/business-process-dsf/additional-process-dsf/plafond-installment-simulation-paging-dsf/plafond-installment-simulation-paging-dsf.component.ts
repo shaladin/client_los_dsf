@@ -130,7 +130,15 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
       }
     );
 
-    this.currentItemsCustomerToShow =  this.customerMasterAgrmntList.slice(0, ((this.pageIndex-1)*this.pageSize) + this.pageSize)
+    if (this.pageIndex == 1)
+    {
+      this.currentItemsCustomerToShow =  this.customerMasterAgrmntList.slice(0, ((this.pageIndex-1)*this.pageSize) + this.pageSize);
+    }
+
+    if (this.pageIndex > 1)
+    {
+      this.currentItemsCustomerToShow =  this.customerMasterAgrmntList.slice(((this.pageIndex-1)*this.pageSize), ((this.pageIndex-1)*this.pageSize) + this.pageSize);
+    }
     this.isCustomerReady = true;
     this.isAgrmntReady = false;
   }
@@ -191,6 +199,8 @@ export class PlafondInstallmentSimulationPagingDsfComponent implements OnInit {
     await this.validateCustPersonalAge();
         
     this.isAgrmntReady = true;
+    this.pageSize;
+    this.pageIndex;
   }
 
   async viewDetailPlafondInstallment(AgrmntParentNo: string, AgrmntParentId: number, CustNo: string, GoLiveDt?: Date, MaturityDt?: Date)
