@@ -234,7 +234,7 @@ export class DocSignerDetailComponent implements OnInit {
   }
   
   async setDefaultShareholder() {
-    if (this.mode = "edit") return;
+    if (this.mode == "edit") return;
     this.inputLookupAppCustCompanyShareHolder1Obj.isReady = false;
     await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId, IsShareholder: true }).toPromise().then(
       (response : ResListCustMainDataObj) => {
