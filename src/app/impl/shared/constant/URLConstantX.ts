@@ -88,6 +88,7 @@ export class URLConstantX {
   public static GetAllAssetDataForPOByAsset = environment.losUrl + "/v1" + "/AppAssetX/GetAllAssetDataForPOByAsset";
   public static AddEditAllAssetDataX = environment.losUrl + "/v1" + "/AppAssetX/AddEditAllAssetData";
   public static GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppIdV2 = environment.losUrl + "/v2" + "/AppAssetX/GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId";
+  public static ValidateAppCollateralDocByAppId = environment.losUrl + "/v1" + "/AppCollateralDocX/ValidateAppCollateralDocByAppId"
 
   //Edit App Aft Apv
   public static GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId = environment.losUrl + "/v1" + "/EditAppAftApvX/GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId";
@@ -360,4 +361,7 @@ export class URLConstantX {
 
   public static GetInsuranceDataByAppAssetIdXForView = environment.losUrl + "/v1" + "/AppInsX/GetInsDataByAppAssetIdForView";
   public static GetAssetCategoryNameByAssetCategoryCode = environment.losUrl + "/v1" + "/AppInsX/GetAssetCategoryNameByAssetCategoryCode";
+
+  // DigitalizationX
+  public static GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX = environment.FoundationR3Url + "/v1" + "/DigitalizationX/GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX";
 }

@@ -31,6 +31,9 @@ export class CommonConstantX {
     public static GsCodeAutoDebitBca = "AUTO_DEBIT_BCA";
     public static GsCodeMinTenorAssetFL = "MIN_TENOR_ASSET_FL";
     public static GsCodeMapPofWofFL = "MAP_POF_WOF_FL";
+    public static GsCodeHideLifeInsCapitalized = "HIDE_LIFE_INS_CAPITALIZED";
+    //General Setting Value
+    public static GsValueOfHideLifeInsCapitalized = "1";
 
     //Ref Reason Type Code
     public static RefReasonTypeCodeCessiePreGoLive = "CESSIE_PREGOLIVE";
@@ -103,6 +106,8 @@ export class CommonConstantX {
     public static ALLRISK_OTR = "ALLRISK_OTR";
     public static ALL_RISK_OTHER = "ALL RISK OTHER";
 
+    //Life Insurance
+    public static PAID_IN_ADV = "PAID_IN_ADV";
     //Survey Verification
     public static ACT_CODE_SURVEY_VERIF = "SURVEY_"
     public static APP_STEP_SURVEY_VERIF = "SRVY_VRF"

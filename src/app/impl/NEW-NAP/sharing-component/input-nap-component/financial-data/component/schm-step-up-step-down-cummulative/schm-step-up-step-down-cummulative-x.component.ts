@@ -178,7 +178,7 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
     }
   }
 
-  SetNeedReCalculate(value) {
+  SetNeedReCalculate(value, overrideIsNotRecalculate = false) {
     if (this.GracePeriodAfterCalc != this.ParentForm.getRawValue().GracePeriod
       || this.GracePeriodTypeAfterCalc != this.ParentForm.getRawValue().MrGracePeriodTypeCode) {
       this.ParentForm.patchValue({
@@ -209,6 +209,7 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
     this.ParentForm.patchValue({
       NeedReCalculate: value
     });
+    if (overrideIsNotRecalculate) this.ParentForm.patchValue({ IsReCalculate: false });
   }
 
   Calculate() {
@@ -227,8 +228,8 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
     if (this.ValidateFee() == false) {
       return;
     }
-    if (this.ParentForm.controls.CummulativeTenor.value <= 0) {
-      this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '0.');
+    if (this.ParentForm.controls.CummulativeTenor.value <= 1) {
+      this.toastr.warningMessage(ExceptionConstant.CUMMULATIVE_TENOR_MUST_HIGHER_THAN + '1.');
       return;
     }
     /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
@@ -240,7 +241,7 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
     if (!this.IsTrialCalc) {
       this.calcStepUpStepDownObj = this.ParentForm.getRawValue();
       this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
-
+      
       this.http.post(URLConstantX.CalculateInstallmentStepUpStepDownX, this.calcStepUpStepDownObj).subscribe(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled

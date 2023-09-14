@@ -126,8 +126,8 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
-      "environment": "FOU",
-      "path": "/RefLob/GetListKvpRefLob",
+      "environment": "LOS",
+      "path": "/Application/GetManagementInquiryLob",
       "items": [],
       "itemsUrl": [],
       "criteriaPropName": "",
@@ -135,10 +135,10 @@
     },
     {
       "type": "textbox",
-      "name": "VATH_CURR_USER.CURR_USER",
+      "name": "CASE WHEN APP_AGR.AGRMNT_STAT= N'LIV' THEN '' ELSE ISNULL( ISNULL( VATH_CURR_LEVEL.CURR_USER + ' (' + VATH_CURR_LEVEL.CURR_NODE + ')', VATH_CURR_LEVEL.FINAL_USER + ' (' + VATH_CURR_LEVEL.FINAL_NODE + ')' ), '' ) END",
       "id": "currentUserId",
       "value": "",
-      "label": "Current Approval",
+      "label": "LAST CREDIT APPROVAL",
       "placeholder": "Placeholder"
     }
   ],
@@ -191,8 +191,8 @@
     {
       "type": "sort",
       "position": "left",
-      "label": "Current Approval",
-      "name": "MAX(ISNULL(ISNULL( VATH_CURR_LEVEL.CURR_USER + VATH_CURR_LEVEL.CURR_NODE, VATH_CURR_LEVEL.FINAL_USER + VATH_CURR_LEVEL.FINAL_NODE ),''))"
+      "label": "LAST CREDIT APPROVAL",
+      "name": "MAX(IIF(APP_AGR.AGRMNT_STAT=N'LIV', '', ISNULL(ISNULL( VATH_CURR_LEVEL.CURR_USER + VATH_CURR_LEVEL.CURR_NODE, VATH_CURR_LEVEL.FINAL_USER + VATH_CURR_LEVEL.FINAL_NODE ),'')))"
     },
     {
       "type": "sort",

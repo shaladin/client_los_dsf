@@ -12,6 +12,8 @@ import { ResponseCalculateObjX } from 'app/impl/shared/model/AppFinData/Response
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { CalcIrregularObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-irregular-obj-for-trial-calc.model';
 import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
+import { CalcIrregularObj } from 'app/shared/model/app-fin-data/calc-irregular-obj.model';
+import { ResponseCalculateObj } from 'app/shared/model/app-fin-data/response-calculate-obj.model';
 
 @Component({
   selector: 'app-schm-irregular-x',
@@ -27,7 +29,7 @@ export class SchmIrregularXComponent implements OnInit {
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcIrregularObj: CalcIrregularObjX = new CalcIrregularObjX();
+  calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
   calcIrregularObjForTrialCalc: CalcIrregularObjForTrialCalc = new CalcIrregularObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
@@ -173,7 +175,12 @@ export class SchmIrregularXComponent implements OnInit {
       return;
     }
     if (!this.IsTrialCalc) {
+      this.ParentForm.patchValue({ IsReCalculate: false });
       this.calcIrregularObj = this.ParentForm.value;
+      //BEGIN RTHREE-614 - Fix Recalculate Irregular
+      if (this.calcIrregularObj.IsReCalculate && this.listInstallment && this.listInstallment[this.listInstallment.length-1]) 
+      this.calcIrregularObj.InstAmt = this.listInstallment[this.listInstallment.length-1]['InstAmt'];
+      //END RTHREE-614
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateIrregularX, this.calcIrregularObj).subscribe(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
@@ -184,7 +191,10 @@ export class SchmIrregularXComponent implements OnInit {
           this.FlatRateAfterCalc = response.FlatRatePrcnt;
           this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
           this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
-
+          //BEGIN RTHREE-614 - Fix Recalculate Irregular
+          if (this.calcIrregularObj.IsReCalculate && this.listInstallment && this.listInstallment[0]) 
+          response.InstAmt = this.listInstallment[0]['InstAmt'];
+          //END RTHREE-614
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
             TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
