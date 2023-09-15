@@ -1,0 +1,27 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "callback",
+          "key": "Customer",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Model",
+          "property": "MrCustModelDescr"
+        }
+      ],
+      "querystring": {
+        "name": "viewNapAppMainInformationCrX"
+      }
+    }
+  ]
+}
+

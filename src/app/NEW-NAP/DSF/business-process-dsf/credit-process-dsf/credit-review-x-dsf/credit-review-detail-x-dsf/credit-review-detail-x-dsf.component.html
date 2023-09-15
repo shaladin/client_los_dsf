@@ -11,8 +11,8 @@
         </app-asset-accessory-info>
         <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-additional-coll>
-        <app-crd-rvw-cust-info-x *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
-        </app-crd-rvw-cust-info-x>
+        <app-crd-rvw-cust-info-x-dsf *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat">
+        </app-crd-rvw-cust-info-x-dsf>
         <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId">
         </app-crd-rvw-legal-doc>
         <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">

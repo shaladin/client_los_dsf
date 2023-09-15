@@ -1,0 +1,16 @@
+<div class="modal-body">
+    <div class="pl-3 mb-2 mt-2">
+        <h4 class="card-title ucSearch-title" translate> Customer Group History Data View </h4>
+    </div>
+    
+    <app-crd-rvw-grp-hist-info-dsf [AppId]="AppId" [CustNo]="CustNo" *ngIf="IsViewReady"></app-crd-rvw-grp-hist-info-dsf>
+
+    <!-- <mat-tab-group (selectedTabChange)="MatTabChangeEvent" >  -->
+    <mat-tab-group>    
+        <mat-tab *ngFor="let Cust of GroupObj" [label]="Cust.CustName">
+            <ng-template matTabContent>
+                <app-crd-rvw-grp-hist-detail-dsf [CustNo]="Cust.CustNo" *ngIf="IsViewReady"></app-crd-rvw-grp-hist-detail-dsf>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
