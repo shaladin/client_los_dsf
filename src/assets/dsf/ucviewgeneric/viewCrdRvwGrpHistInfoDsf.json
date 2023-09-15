@@ -9,13 +9,13 @@
         {
           "type": "callback",
           "key": "Customer",
-          "label": "Customer No",
-          "property": "CustNo"
+          "label": "Customer Name",
+          "property": "CustName"
         },
         {
           "type": "text",
-          "label": "Customer Name",
-          "property": "CustName"
+          "label": "Customer Model",
+          "property": "MrCustModelDescr"
         }
       ],
       "querystring": {

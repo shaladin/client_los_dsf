@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { UcviewgenericComponent } from "@adins/ucviewgeneric";
 import { URLConstant } from "app/shared/constant/URLConstant";
@@ -37,6 +38,10 @@ export class CrdRvwGrpHistInfoDsfComponent implements OnInit {
     console.log(this.CustNo)
   }
 
+  ReloadUcViewGeneric() {
+    this.viewGeneric.initiateForm();
+  }
+
   GetCallBack(ev: any) {
     if (ev.Key == "Customer") {
       var custObj = {
@@ -58,5 +63,28 @@ export class CrdRvwGrpHistInfoDsfComponent implements OnInit {
           }
         });
     }
+    // else if (ev.Key == "ViewProdOffering") {
+    //   AdInsHelper.OpenProdOfferingViewByCodeAndVersion(
+    //     ev.ViewObj.ProdOfferingCode,
+    //     ev.ViewObj.ProdOfferingVersion
+    //   );
+    // } else if (ev.Key == "HighlightComment") {
+    //   var custObj = { CustNo: ev.ViewObj.CustNo };
+    //   this.http
+    //     .post(URLConstant.GetCustByCustNo, custObj)
+    //     .subscribe((response) => {
+    //       if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
+    //         this.adInsHelperService.OpenCustomerViewByCustId(
+    //           response["CustId"]
+    //         );
+    //       } else if (
+    //         response["MrCustTypeCode"] == CommonConstant.CustTypeCompany
+    //       ) {
+    //         this.adInsHelperService.OpenCustomerCoyViewByCustId(
+    //           response["CustId"]
+    //         );
+    //       }
+    //     });
+    // }
   }
 }

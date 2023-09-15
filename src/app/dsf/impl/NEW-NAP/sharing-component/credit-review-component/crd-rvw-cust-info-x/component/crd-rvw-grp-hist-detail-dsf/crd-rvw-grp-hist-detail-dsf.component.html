@@ -43,6 +43,43 @@
             </th>
           </tr>
         </thead>
+        <!-- <thead>
+          <tr class="table-header">
+            <th>
+              <span translate class="thead-header">No</span>
+            </th>
+            <th>
+              <span style="float: left;" translate class="thead-header" name='AgrmntNo'>Agreement No</span>
+            </th>
+            <th>
+              <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product Offering</span>
+            </th>
+            <th>
+              <span style="float: left;" translate class="thead-header" name='NtfAmount'>NTF Amount</span>
+            </th>
+            <th>
+              <span style="float: right;" translate class="thead-header" name='Installment'>Installment</span>
+            </th>
+            <th>
+              <span style="float: center;" translate  class="thead-header" name='NumOfAsset'>#Asset</span>
+            </th>
+            <th>
+              <span style="float: left;"  translate class="thead-header" name='AssetType'>Asset Type</span>
+            </th>
+            <th>
+              <span style="float: center;"  translate class="thead-header" name='Periode'>Periode</span>
+            </th>
+            <th>
+              <span style="float: center;"  translate class="thead-header" name='MaxOverdue'>Max Overdue</span>
+            </th>
+            <th>
+              <span style="float: center;"  translate class="thead-header" name='DocPending'>BPKB Pending</span>
+            </th>
+            <th>
+              <span style="float: center;" translate  class="thead-header" name='Status'>Status</span>
+            </th>
+          </tr>
+        </thead> -->
         <tbody>
           <tr *ngIf="ExstAgrmnt == undefined || ExstAgrmnt?.length == 0">
             <td align="center" colspan="11">No data found</td>
@@ -153,6 +190,25 @@
             </th>
           </tr>
         </thead>
+        <!-- <thead>
+          <tr class="table-header">
+            <th>
+              <span translate class="thead-header">No</span>
+            </th>
+            <th>
+              <span translate class="thead-header" name='AgrmntNo'>Application No</span>
+            </th>
+            <th>
+              <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product Offering</span>
+            </th>
+            <th>
+              <span style="float: left;"  translate class="thead-header" name='GoLiveDt'>Sales</span>
+            </th>
+            <th>
+              <span style="float: right;" translate class="thead-header" name='InstallmentAmt'>Total Principal</span>
+            </th>
+          </tr>
+        </thead> -->
         <tbody>
           <tr *ngIf="AppRjct == undefined || AppRjct?.length == 0">
             <td align="center" colspan="8">No data found</td>
@@ -239,6 +295,28 @@
             </th>
           </tr>
         </thead>
+        <!-- <thead>
+          <tr class="table-header">
+            <th>
+              <span translate class="thead-header">No</span>
+            </th>
+            <th>
+              <span translate class="thead-header" name='AgrmntNo'>Application No</span>
+            </th>
+            <th>
+              <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product Offering</span>
+            </th>
+            <th>
+              <span style="float: left;" translate class="thead-header" name='GoLiveDt'>Sales</span>
+            </th>
+            <th>
+              <span style="float: right;" translate class="thead-header" name='InstallmentAmt'>Total Principal</span>
+            </th>
+            <th>
+              <span translate class="thead-header" name='OSAR'>Application Step</span>
+            </th>
+          </tr>
+        </thead> -->
         <tbody>
           <tr *ngIf="AppPrcs == undefined || AppPrcs?.length == 0">
             <td align="center" colspan="8">No data found</td>

@@ -2,7 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { Component, Input, OnInit } from "@angular/core";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { MatTabChangeEvent } from "@angular/material";
 import { GenericObj } from "app/shared/model/generic/generic-obj.model";
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "app-crd-rvw-grp-hist-data-dsf",
@@ -12,6 +14,7 @@ import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 export class CrdRvwGrpHistDataDsfComponent implements OnInit {
   @Input() AppId: number = 0;
 
+  BizTemplateCode: string = "";
   IsViewReady: boolean = false;
 
   CustNo: any;
@@ -20,7 +23,14 @@ export class CrdRvwGrpHistDataDsfComponent implements OnInit {
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) {}
 
+  // tabChangeEvent(tabChangeEvent: MatTabChangeEvent) {
+  //   if (tabChangeEvent.index == 0) {
+  //   }
+  // }
+
   async ngOnInit() {
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+
     this.http
       .post(URLConstant.GetCustDataByAppId, { Id: this.AppId })
       .subscribe((response) => {
@@ -40,6 +50,8 @@ export class CrdRvwGrpHistDataDsfComponent implements OnInit {
               .post(URLConstant.GetListCustGrpForCustViewById, reqById)
               .subscribe((response) => {
                 this.GroupObj = [response["ParentCustGrp"], ...response["ChildCustGrp"]]
+                console.log(this.GroupObj)
+
                 this.IsViewReady = true;
               });
           });
