@@ -28,6 +28,7 @@ import { UcTestingComponent } from './uc-testing/uc-testing.component';
 import { UcTestComponent } from './uc-test/uc-test.component';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 import { UcDirectiveUpperCaseModule } from '@adins/uc-directive-upper-case';
+import { UcDirectiveValidateDateModule } from '@adins/uc-directive-validate-date';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { RefAttrModule } from '../sharing-components/ref-attr/ref-attr.module';
 import { TextSearchPipe } from './uc-testing/text-search.pipe';
@@ -54,6 +55,7 @@ export const customCurrencyMaskConfig = {
     ],
     exports: [
         UcDirectiveUpperCaseModule,
+        UcDirectiveValidateDateModule,
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
@@ -84,6 +86,7 @@ export const customCurrencyMaskConfig = {
     ],
     imports: [
         UcDirectiveUpperCaseModule,
+        UcDirectiveValidateDateModule,
         CommonModule,
         NgbModule,
         FormsModule,
