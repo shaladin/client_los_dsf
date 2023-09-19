@@ -27,6 +27,7 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
   TotalOSPrincipal: number = 0;
   TotalAR: number = 0;
   TotalOSAR: number = 0;
+
   ReturnAgrmnt: any;
   ReturnApp: any;
 
@@ -34,6 +35,7 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
   TotalProcessPrincipal: number = 0;
   TotalProcessAR: number = 0;
   TotalProcessInstallment: number = 0;
+
   TotalRejectedAsset: number = 0;
   TotalRejectedPrincipal: number = 0;
   TotalRejectedAR: number = 0;
@@ -42,7 +44,6 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
   TotalExpiredAsset: number = 0;
   TotalExpiredPrincipal: number = 0;
   TotalExpiredAR: number = 0;
-  TotalExpiredInstallment: number = 0;
 
   constructor(private http: HttpClient, private toastr: NGXToastrService) {}
 
@@ -139,10 +140,6 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
 
   async GetRejectedGrandTotal() {
     if (this.AppRjct != undefined && this.AppRjct.length != 0) {
-      this.TotalRejectedAsset = 0;
-      this.TotalRejectedPrincipal = 0;
-      this.TotalRejectedAR = 0;
-      this.TotalRejectedInstallment = 0;
       this.AppRjct.forEach((element) => {
         this.TotalRejectedAsset += element.NumOfAsset;
         this.TotalRejectedPrincipal += element.TotalNTF;

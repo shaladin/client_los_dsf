@@ -8,7 +8,7 @@
     <div class="card-body">
       <div class="px-3" *ngIf="isShow">
         <app-asset-accessory-info *ngIf="isShow  && BizTemplateCode != 'CFNA'" [AppId]="appId"></app-asset-accessory-info>
-        <app-crd-rvw-cust-info-x *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat"></app-crd-rvw-cust-info-x>
+        <app-crd-rvw-cust-info-x-dsf *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [crdRvwAppObj]="crdRvwAppObj" [captureStat]="captureStat"></app-crd-rvw-cust-info-x-dsf>
         <app-crd-rvw-result-analysis [appId]="appId"></app-crd-rvw-result-analysis>
         <app-crd-rvw-fam-guar [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-fam-guar>
 
