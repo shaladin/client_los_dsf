@@ -87,7 +87,7 @@ import { CrdRvwCustHistDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-co
         CrdRvwGrpHistDataDsfComponent,
         CrdRvwCustInfoXDsfComponent,
         CrdRvwCustHistDataXDsfComponent,
-        CrdRvwCustInfoXDsfComponent
+        CrdRvwCustHistDataXDsfComponent
     ],
     imports: [
         CommonModule,
@@ -144,7 +144,7 @@ import { CrdRvwCustHistDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-co
         CrdRvwCustPersonalInfoXDsfComponent,
         CrdRvwCustCompanyInfoXDsfComponent,
         CrdRvwCustHistDataXDsfComponent,
-        CrdRvwCustCompanyInfoXDsfComponent
+        CrdRvwCustHistDataXDsfComponent
     ],
     providers: [
         NGXToastrService
