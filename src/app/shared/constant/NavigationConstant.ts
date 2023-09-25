@@ -484,10 +484,10 @@ export class NavigationConstant {
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
 
-  //public static SETTING_APP_SOURCE_PAGING_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_PAGING_X; //'/Setting/AppSource/PagingX'
-  //public static SETTING_APP_SOURCE_DETAIL_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_DETAIL_X; //'/Setting/AppSource/DetailX'
-  //public static SETTING_APP_SOURCE_OFFICE_MBR_PAGING_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_OFFICE_MBR_PAGING_X; //'/Setting/AppSource/OfficeMember/PagingX'
-  //public static SETTING_APP_SOURCE_OFFICE_MBR_ADD_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_OFFICE_MBR_ADD_X; //'/Setting/AppSource/OfficeMember/AddX'
+  public static SETTING_APP_SOURCE_PAGING_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_PAGING_X; //'/Setting/AppSource/PagingX'
+  public static SETTING_APP_SOURCE_DETAIL_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_DETAIL_X; //'/Setting/AppSource/DetailX'
+  public static SETTING_APP_SOURCE_OFFICE_MBR_PAGING_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_OFFICE_MBR_PAGING_X; //'/Setting/AppSource/OfficeMember/PagingX'
+  public static SETTING_APP_SOURCE_OFFICE_MBR_ADD_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_OFFICE_MBR_ADD_X; //'/Setting/AppSource/OfficeMember/AddX'
   //EndSettings
 
   //Cessie

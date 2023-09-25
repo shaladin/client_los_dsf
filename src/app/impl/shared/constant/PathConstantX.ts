@@ -258,11 +258,11 @@ export class PathConstantX {
   //#endregion product
 
   //#region setting
-  //public static OFFICE_MBR = "OfficeMember";
-  //public static APP_SRC_PAGING_X = PathConstant.APP_SRC_PAGING + PathConstantX.X;
-  //public static APP_SRC_DETAIL_X = PathConstant.APP_SRC + "/" + PathConstant.DETAIL + PathConstantX.X;
-  //public static APP_SRC_OFFICE_MBR_PAGING_X = PathConstant.APP_SRC + "/" + PathConstantX.OFFICE_MBR + "/" + PathConstantX.PAGING_X;
-  //public static APP_SRC_OFFICE_MBR_ADD_X = PathConstant.APP_SRC + "/" + PathConstantX.OFFICE_MBR + "/" + PathConstant.ADD + PathConstantX.X;
+  public static OFFICE_MBR = "OfficeMember";
+  public static APP_SRC_PAGING_X = PathConstant.APP_SRC_PAGING + PathConstantX.X;
+  public static APP_SRC_DETAIL_X = PathConstant.APP_SRC + "/" + PathConstant.DETAIL + PathConstantX.X;
+  public static APP_SRC_OFFICE_MBR_PAGING_X = PathConstant.APP_SRC + "/" + PathConstantX.OFFICE_MBR + "/" + PathConstantX.PAGING_X;
+  public static APP_SRC_OFFICE_MBR_ADD_X = PathConstant.APP_SRC + "/" + PathConstantX.OFFICE_MBR + "/" + PathConstant.ADD + PathConstantX.X;
   //#endregion setting
 }
 
