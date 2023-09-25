@@ -26,6 +26,11 @@ import { ProdOfferingPagingComponent } from './product-offering/prod-offering-pa
 import { ProdOfferingReturnPagingComponent } from './product-offering/prod-offering-return-paging/prod-offering-return-paging.component';
 import { ProdOfferingRvwDetailComponent } from './product-offering/prod-offering-review/prod-offering-rvw-detail/prod-offering-rvw-detail.component';
 import { ProdOfferingRvwPagingComponent } from './product-offering/prod-offering-review/prod-offering-rvw-paging/prod-offering-rvw-paging.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
+import { ProdHoPagingXComponent } from 'app/impl/product/product-ho/prod-ho-paging-x/prod-ho-paging-x.component';
+import { ProdHoAddXComponent } from 'app/impl/product/product-ho/prod-ho-add-x/prod-ho-add-x.component';
+import { ProdHoAddDetailXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/prod-ho-add-detail-x.component';
+import { ProdHoReturnPagingXComponent } from 'app/impl/product/product-ho/prod-ho-return-paging-x/prod-ho-return-paging-x.component';
 
 const routes: Routes = [
   {
@@ -204,6 +209,35 @@ const routes: Routes = [
       component: UnauthorizedPageComponent,
       data: {
         title: 'Product Offering Review Paging'
+      }
+    },
+    // X
+    {
+      path: PathConstantX.HO_PAGING_X,
+      component: ProdHoPagingXComponent,
+      data: {
+          title: 'Product HO Paging'
+      }
+    },
+    {
+      path: PathConstantX.HO_ADD_X,
+      component: ProdHoAddXComponent,
+      data: {
+          title: 'Product HO Add'
+      }
+    },
+    {
+      path: PathConstantX.HO_ADD_DETAIL_X,
+      component: ProdHoAddDetailXComponent,
+      data: {
+          title: 'Product HO Add Detail'
+      }
+    },
+    {
+      path: PathConstantX.HO_RTN_PAGING_X,
+      component: ProdHoReturnPagingXComponent,
+      data: {
+          title: 'Product HO Return'
       }
     },
   ]

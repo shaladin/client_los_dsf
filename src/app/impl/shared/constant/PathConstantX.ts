@@ -249,6 +249,21 @@ export class PathConstantX {
   public static RTN_HANDLING_PAGING = PathConstant.RTN_HANDLING + "/" + PathConstantX.PAGING;
 
   public static FL4W_VIEW_INS_X = "ViewInsuranceX";
+
+  //#region product
+  public static HO_PAGING_X = PathConstant.HO_PAGING + PathConstantX.X;
+  public static HO_ADD_X = PathConstant.HO_ADD + PathConstantX.X;
+  public static HO_ADD_DETAIL_X = PathConstant.HO_ADD_DETAIL + PathConstantX.X;
+  public static HO_RTN_PAGING_X = PathConstant.HO_RTN_PAGING + PathConstantX.X;
+  //#endregion product
+
+  //#region setting
+  //public static OFFICE_MBR = "OfficeMember";
+  //public static APP_SRC_PAGING_X = PathConstant.APP_SRC_PAGING + PathConstantX.X;
+  //public static APP_SRC_DETAIL_X = PathConstant.APP_SRC + "/" + PathConstant.DETAIL + PathConstantX.X;
+  //public static APP_SRC_OFFICE_MBR_PAGING_X = PathConstant.APP_SRC + "/" + PathConstantX.OFFICE_MBR + "/" + PathConstantX.PAGING_X;
+  //public static APP_SRC_OFFICE_MBR_ADD_X = PathConstant.APP_SRC + "/" + PathConstantX.OFFICE_MBR + "/" + PathConstant.ADD + PathConstantX.X;
+  //#endregion setting
 }
 
 
