@@ -24,6 +24,7 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
   @Input() InstAmt: number;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -34,6 +35,7 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -62,6 +64,7 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -277,6 +280,8 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
       );
     } else {
       this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.value;
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.calcStepUpStepDownObjForTrialCalc["IsRecalculate"] = false;
       this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
       this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
@@ -420,5 +425,11 @@ export class SchmStepUpStepDownLeasingXComponent implements OnInit {
   test() {
   }
 
-
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
+  }
+  
 }
