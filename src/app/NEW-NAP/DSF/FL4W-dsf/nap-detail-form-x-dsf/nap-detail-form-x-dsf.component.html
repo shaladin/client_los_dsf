@@ -3,7 +3,7 @@
     <div class="px-3">
       <div class="form-action pull-right">
         <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
+                [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
           <i class="ft-x"></i> Cancel
         </button>
       </div>
@@ -17,7 +17,7 @@
           </lib-ucSubsection>
           <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
             <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
-              #enjiForm="ngForm">
+                  #enjiForm="ngForm">
               <div class="form-body">
                 <div class="form-group row">
                   <div class="form-group col-md-2">
@@ -31,7 +31,7 @@
                   </div>
                   <div class="col-md-4">
                     <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
                     <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -112,45 +112,45 @@
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady && IsShowMultiReferantor == 0" [appId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+                                   [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
               <app-referantor-data-new *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady && IsShowMultiReferantor == 1" [appId]="appId"
                                        [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-x-FL4W-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady"
-                [AppId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-              </app-application-data-x-FL4W-dsf>
+              <app-application-data-FL4W-x *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady"
+                                           [AppId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
+              </app-application-data-FL4W-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data-x *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady"
                                       [AppId]="appId" [showCancel]="showCancel" [BizTemplateCode]="BizTemplateCode" (OutputMultiAsset)="NextStep('INS')"
-                (outputCancel)="Cancel()">
+                                      (outputCancel)="Cancel()">
               </app-multi-asset-data-x>
             </div>
             <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-multi-asset-data-x *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady"
-                [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
+                                                [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
               </app-insurance-multi-asset-data-x>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
               <app-life-insurance-data-x *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL' && IsDataReady"
-                [AppId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()"
-                [showCancel]="'true'">
+                                       [AppId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()"
+                                       [showCancel]="'true'">
               </app-life-insurance-data-x>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <!-- <app-financial-data-FL4W *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL'" [AppId]="appId"
                                        [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-financial-data-FL4W> -->
-              <app-financial-data-x *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('TC')" [AppObj]="NapObj" (outputCancel)="Cancel()">
-              </app-financial-data-x>
+              <app-financial-data-x-dsf *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
+                                    [showCancel]="showCancel" (outputTab)="NextStep('TC')" [AppObj]="NapObj" (outputCancel)="Cancel()">
+              </app-financial-data-x-dsf>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data-x *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="'true'">
+                           [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-tc-data-x>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
@@ -225,35 +225,35 @@
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady && IsShowMultiReferantor == 0" [appId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
+                                   [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
               <app-referantor-data-new *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady && IsShowMultiReferantor == 1" [appId]="appId"
                                        [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-x-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
-                [BizTemplateCode]="BizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')"
-                (outputCancel)="Cancel()">
-              </app-application-data-x-dsf>
+              <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
+                                      [BizTemplateCode]="BizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')"
+                                      (outputCancel)="Cancel()">
+              </app-application-data-x>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data-x *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
-                [showCancel]="showCancel" (OutputMultiAsset)="NextStep('INS')" (outputCancel)="Cancel()">
+                                      [showCancel]="showCancel" (OutputMultiAsset)="NextStep('INS')" (outputCancel)="Cancel()">
               </app-multi-asset-data-x>
             </div>
             <div id="insurance-tab" class="content  " role="tabpanel" aria-labelledby="insurance-tab-trigger">
               <app-insurance-multi-asset-data-x *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY' && IsDataReady"
-                [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
+                                                [appId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
               </app-insurance-multi-asset-data-x>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
               <!-- <app-financial-data-FL4W *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY'" [AppId]="appId"
                                        [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data-FL4W> -->
-              <app-financial-data-x *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
-                [showCancel]="showCancel" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
-              </app-financial-data-x>
+              <app-financial-data-x-dsf *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
+                                    [showCancel]="showCancel" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              </app-financial-data-x-dsf>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data-x *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
@@ -279,7 +279,7 @@
       <div class="px-3">
         <div class="form-action pull-right">
           <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary" translate>
+                  class="btn btn-raised btn-primary" translate>
             <i class="far fa-check-square"></i> Submit
           </button>
         </div>

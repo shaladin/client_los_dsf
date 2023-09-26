@@ -153,13 +153,14 @@ import { UcInsuranceDetailXComponent } from "app/impl/NEW-NAP/sharing-component/
 import { LoanObjectXDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/loan-object-x-dsf/loan-object-x-dsf.component";
 import { TcDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/tc-data/tc-data-x.component";
 import { LifeInsuranceDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/life-insurance-data/life-insurance-data-x.component";
-import { SchmRegulerFixXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-reguler-fix-x-dsf/schm-reguler-fix-x-dsf.component";
-import { SchmIrregularXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-irregular-x-dsf/schm-irregular-x-dsf.component";
-import { SchmStepUpStepDownNormalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-step-up-step-down-normal-x-dsf/schm-step-up-step-down-normal-x-dsf.component";
-import { SchmStepUpStepDownLeasingXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-step-up-step-down-leasing-x-dsf/schm-step-up-step-down-leasing-x-dsf.component";
-import { SchmStepUpStepDownCummulativeXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-step-up-step-down-cummulative-x-dsf/schm-step-up-step-down-cummulative-x-dsf.component";
-import { SchmBalloonXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-balloon-x-dsf/schm-balloon-x-dsf.component";
-import { SchmEvenPrincipalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/component/schm-even-principal-x-dsf/schm-even-principal-x-dsf.component";
+import { FinancialDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/financial-data-x-dsf.component";
+import { SchmBalloonXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-balloon-x-dsf/schm-balloon-x-dsf.component";
+import { SchmEvenPrincipalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-even-principal-x-dsf/schm-even-principal-x-dsf.component";
+import { SchmIrregularXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-irregular-x-dsf/schm-irregular-x-dsf.component";
+import { SchmRegulerFixXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-reguler-fix-x-dsf/schm-reguler-fix-x-dsf.component";
+import { SchmStepUpStepDownCummulativeXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-cummulative-x-dsf/schm-step-up-step-down-cummulative-x-dsf.component";
+import { SchmStepUpStepDownLeasingXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-leasing-x-dsf/schm-step-up-step-down-leasing-x-dsf.component";
+import { SchmStepUpStepDownNormalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-normal-x-dsf/schm-step-up-step-down-normal-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -292,6 +293,7 @@ export const customCurrencyMaskConfig = {
     FeeFctrXComponent,
     FeeDlfnXComponent,
     FinancialDataXComponent,
+    FinancialDataXDsfComponent,
     FeeXComponent,
     SchmBalloonXComponent,
     SchmBalloonXDsfComponent,
@@ -452,6 +454,7 @@ export const customCurrencyMaskConfig = {
     FeeFctrXComponent,
     FeeDlfnXComponent,
     FinancialDataXComponent,
+    FinancialDataXDsfComponent,
     FeeXComponent,
     SchmBalloonXComponent,
     SchmBalloonXDsfComponent,

@@ -8,18 +8,17 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { CalcStepUpStepDownObjX } from 'app/impl/shared/model/AppFinData/CalcStepUpStepDownObjX.Model';
 import { ResponseCalculateObjX } from 'app/impl/shared/model/AppFinData/ResponseCalculateObjX.Model';
-import { String } from 'typescript-string-operations';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-step-up-step-down-obj-for-trial-calc.model';
 import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
 import { AppInstStepSchmObj } from 'app/shared/model/app-inst-step-schm/app-inst-step-schm-obj.model';
 
 @Component({
-  selector: 'app-schm-step-up-step-down-normal-x-dsf',
-  templateUrl: './schm-step-up-step-down-normal-x-dsf.component.html',
-  styleUrls: ['./schm-step-up-step-down-normal-x-dsf.component.css']
+  selector: 'app-schm-step-up-step-down-leasing-x-dsf',
+  templateUrl: './schm-step-up-step-down-leasing-x-dsf.component.html',
+  styleUrls: ['./schm-step-up-step-down-leasing-x-dsf.component.css']
 })
-export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
+export class SchmStepUpStepDownLeasingXDsfComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
@@ -27,6 +26,9 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
   @Input() TrialCalc: boolean;
   @Input() InstAmt: number;
   @Output() RefreshSummary = new EventEmitter();
+  // Self Custom CR Automation Subsidy Dealer
+  @Input() DealerSubsidyLock: boolean;
+  // End Self Custom CR Automation Subsidy Dealer
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -37,7 +39,9 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
-  ListExistingAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
+  // Self Custom CR Automation Subsidy Dealer
+  IsDealerSubsidyLock: boolean = false;
+  // End Self Custom CR Automation Subsidy Dealer
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -62,20 +66,6 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
         (response) => {
           this.listInstallment = response['InstallmentTable'];
         });
-
-      this.http.post(URLConstant.GetAppInsStepSchmForSUSDByAppId, { Id: this.AppId }).subscribe(
-        (response) => {
-          if (response["ListAppInstStepSchm"] != 0) {
-            this.ListExistingAppInstStepSchm = response["ListAppInstStepSchm"];
-            this.ParentForm.patchValue({
-              NumOfStep: this.ListExistingAppInstStepSchm.length,
-              StepUpStepDownInputType: CommonConstant.InputTypeAmt
-            });
-
-            this.SetEntryInstallment(true);
-          }
-        });
-
       this.IsTrialCalc = false;
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
@@ -86,6 +76,12 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
         InstAmt: this.InstAmt
       });
     }
+    // Self Custom CR Automation Subsidy Dealer
+    if (this.DealerSubsidyLock)
+    {
+      this.IsDealerSubsidyLock = true;
+    }
+    // End Self Custom CR Automation Subsidy Dealer
   }
 
   LoadDDLRateType() {
@@ -136,22 +132,6 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
     }
   }
 
-  InputTypeChanged() {
-    for (let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++) {
-      this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
-        InstAmt: 0
-      });
-      if (this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt)
-        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].setValidators([Validators.max(100)]);
-      else
-        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].clearValidators();
-
-      this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].updateValueAndValidity();
-    }
-
-    this.SetNeedReCalculate(true);
-  }
-
   SetInstallmentTable() {
     var ctrInstallment = this.ParentForm.get("InstallmentTable");
     if (!ctrInstallment) {
@@ -186,37 +166,44 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
     });
   }
 
-  SetEntryInstallment(IsExisting: boolean = false) {
+  InputTypeChanged() {
+    for (let i = 0; i < (this.ParentForm.controls.ListEntryInst as FormArray).length; i++) {
+      this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
+        InstAmt: 0
+      });
+      if (this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt)
+        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].setValidators([Validators.max(100)]);
+      else
+        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].clearValidators();
+
+      this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].updateValueAndValidity();
+    }
+
+    this.SetNeedReCalculate(true);
+  }
+
+  SetEntryInstallment() {
     if (this.ParentForm.get("NumOfStep").value < 1) {
-      this.toastr.warningMessage(ExceptionConstant.NUM_OF_STEP_MUST_HIGHER + '0.');
+      this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
     if (this.ParentForm.controls.StepUpStepDownInputType.value == "") {
       this.toastr.warningMessage(ExceptionConstant.STEP_UP_STEP_DOWN_TYPE);
       return;
     }
+
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    if (IsExisting) {
-      for (let i = 0; i < this.ParentForm.controls.NumOfStep.value - 1; i++) {
-        const group = this.fb.group({
-          InstSeqNo: i + 1,
-          NumOfInst: [this.ListExistingAppInstStepSchm[i].NumOfInst],
-          InstAmt: [this.ListExistingAppInstStepSchm[i].InstAmt]
-        });
-        (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
-      }
-    } else {
-      for (let i = 0; i < this.ParentForm.controls.NumOfStep.value - 1; i++) {
-        const group = this.fb.group({
-          InstSeqNo: i + 1,
-          NumOfInst: [0],
-          InstAmt: [0, this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt ? [Validators.max(100)] : []]
-        });
-        (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
-      }
+    for (let i = 0; i < this.ParentForm.controls.NumOfStep.value - 1; i++) {
+      const group = this.fb.group({
+        InstSeqNo: i + 1,
+        NumOfInst: [0],
+        InstAmt: [0, this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt ? [Validators.max(100)] : []]
+      });
+      (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
     }
+
     this.SetNeedReCalculate(true);
   }
 
@@ -247,25 +234,13 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (InstAmtKosong + 1));
       return;
     }
-    for (let i = 0; i < this.calcStepUpStepDownObj.ListEntryInst.length; i++) {
-      let indexI = this.calcStepUpStepDownObj.ListEntryInst[i].InstAmt;
-      for (let j = 0; j < this.calcStepUpStepDownObj.ListEntryInst.length; j++) {
-        if (i != j) {
-          let indexJ = this.calcStepUpStepDownObj.ListEntryInst[j].InstAmt;
-          if (indexI == indexJ) {
-            this.toastr.warningMessage(String.Format(ExceptionConstant.INPUT_INST_AMOUNT_SUSD, i + 1, j + 1));
-            return;
-          }
-        }
-      }
-    }
 
     if (!this.IsTrialCalc) {
+      this.calcStepUpStepDownObj = this.ParentForm.value;
       this.calcStepUpStepDownObj["IsRecalculate"] = false;
       this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
       this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
       this.calcStepUpStepDownObj["InstAmt"] = 0;
-
 
       this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentStepUpStepDownX, this.calcStepUpStepDownObj).subscribe(
         (response) => {
@@ -293,9 +268,6 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
             TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
             LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
-            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-            DownPaymentNettAmt: response.DownPaymentNettAmt,
-
             CurrGrossYieldAmt: response.CurrGrossYieldAmt,
             StdGrossYieldAmt: response.StdGrossYieldAmt,
             DiffGrossYieldAmt: response.DiffGrossYieldAmt,
@@ -303,7 +275,8 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
             //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
             AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
             //End SITDSFCFRTHREE-171
-          });
+
+          })
           //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
           if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
             this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
@@ -314,17 +287,14 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
           this.SetInstallmentTable();
           this.SetInstStepSchm();
           this.SetNeedReCalculate(false);
-          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
-          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
         }
       );
     } else {
-      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.value;
       this.calcStepUpStepDownObjForTrialCalc["IsRecalculate"] = false;
       this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
       this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
       this.calcStepUpStepDownObjForTrialCalc["InstAmt"] = 0;
-
 
       await this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).toPromise().then(
         (response) => {
@@ -352,13 +322,11 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
             TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
             LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
-            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-            DownPaymentNettAmt: response.DownPaymentNettAmt,
-
             //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
             AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
             //End SITDSFCFRTHREE-171
-          });
+
+          })
           //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
           if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
             this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
@@ -371,9 +339,9 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
           this.SetNeedReCalculate(false);
         }
       );
-      
-      this.RefreshSummary.emit();
+
     }
+    this.RefreshSummary.emit();
   }
 
   SaveAndContinue() {
@@ -424,41 +392,34 @@ export class SchmStepUpStepDownNormalXDsfComponent implements OnInit {
   }
 
   EffectiveRatePrcntInput_FocusOut() {
+    var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
     this.ParentForm.patchValue({
-      SubsidyAmtFromDiffRate: 0,
-      CommissionAmtFromDiffRate: 0
+      AppSupplEffectiveRatePrcnt: this.ParentForm.get("EffectiveRatePrcnt").value
     });
-    this.SetSubsidyAmtFromDiffRateInput(0);
-    this.SetCommissionAmtFromDiffRateInput(0);
+    var SupplEffectiveRatePrcnt = this.ParentForm.get("AppSupplEffectiveRatePrcnt").value
+    var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
+    var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
+
+    var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
+    if (diffRate < DiffRateAmtStd) {
+      this.ParentForm.patchValue({
+        DiffRateAmt: 0
+      });
+    }
+    else if (DiffRateAmtStd < 0) {
+      this.ParentForm.patchValue({
+        DiffRateAmt: 0,
+      });
+    }
+    else {
+      this.ParentForm.patchValue({
+        DiffRateAmt: DiffRateAmtStd
+      });
+    }
+
     this.SetNeedReCalculate(true);
   }
 
-  SetSubsidyAmtFromDiffRateInput(subsidyAmtFromDiffRate) {
-    if (subsidyAmtFromDiffRate > 0) {
-      this.ParentForm.patchValue({
-        CommissionAmtFromDiffRate: 0
-      });
-      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
-    }
-    else {
-      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
-        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
-      }
-    }
-  }
-
-  SetCommissionAmtFromDiffRateInput(commissionAmtFromDiffRate) {
-    if (commissionAmtFromDiffRate > 0) {
-      this.ParentForm.patchValue({
-        SubsidyAmtFromDiffRate: 0
-      });
-      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
-        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
-      }
-    }
-  }
 
   ValidateFee() {
     for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {

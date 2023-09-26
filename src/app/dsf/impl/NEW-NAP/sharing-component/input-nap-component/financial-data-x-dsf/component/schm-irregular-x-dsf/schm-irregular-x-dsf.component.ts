@@ -29,6 +29,9 @@ export class SchmIrregularXDsfComponent implements OnInit {
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
   @Output() RefreshSummary = new EventEmitter();
+  // Self Custom CR Automation Subsidy Dealer
+  @Input() DealerSubsidyLock: boolean;
+  // End Self Custom CR Automation Subsidy Dealer
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -41,6 +44,9 @@ export class SchmIrregularXDsfComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  // Self Custom CR Automation Subsidy Dealer
+  IsDealerSubsidyLock: boolean = false;
+  // End Self Custom CR Automation Subsidy Dealer
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -90,7 +96,12 @@ export class SchmIrregularXDsfComponent implements OnInit {
       (response) => {
         this.listInstallment = response['InstallmentTable'];
       });
-
+    // Self Custom CR Automation Subsidy Dealer
+    if (this.DealerSubsidyLock)
+    {
+      this.IsDealerSubsidyLock = true;
+    }
+    // End Self Custom CR Automation Subsidy Dealer
 
   }
 

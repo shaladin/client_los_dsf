@@ -77,4 +77,6 @@ export class URLConstantDsf {
     public static CheckLMSR2APIConnection = environment.losUrl + "/AppDsf/CheckLMSR2APIConnection";
     public static GetAgrmntMasterXByAgrmntParentId = environment.losUrl + "/AppDsf/GetAgrmntMasterXByAgrmntParentId";
     public static GetInitFinDataForTrialCalcX = environment.losUrl + "/AppDsf/GetOrInitFinDataForTrialCalcDsf";
+
+    public static GetDealerSubsidyAuto = environment.losUrl + "/AppFinDataDsf/GetDealerSubsidyAutoDsf";
 }

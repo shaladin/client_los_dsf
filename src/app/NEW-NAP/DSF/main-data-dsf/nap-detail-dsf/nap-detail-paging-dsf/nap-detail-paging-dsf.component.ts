@@ -272,7 +272,7 @@ export class NapDetailPagingDsfComponent implements OnInit, OnDestroy {
       }
       switch (this.bizTemplateCode) {
         case CommonConstant.CF4W:
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP2_X], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.CFRFN4W:
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
@@ -281,7 +281,7 @@ export class NapDetailPagingDsfComponent implements OnInit, OnDestroy {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.FL4W:
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_FL4W_NAP2_X], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
           break;
         // Self Custom CR MPF Validation
         case CommonConstant.CFNA:
