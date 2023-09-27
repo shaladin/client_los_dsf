@@ -470,6 +470,10 @@ export class NavigationConstant {
   public static PROD_OFFERING_RTN_PAGING = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_RTN_PAGING; //'/Product/ProdOffering/ReturnPaging'
   public static PROD_HO_UNAUTHORIZED = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.UNAUTHORIZED; //'/Product/Unauthorized'
 
+  public static PRODUCT_HO_PAGING_X = "/" + PathConstant.LR_PRODUCT + "/" + PathConstantX.HO_PAGING_X; //'/Product/HOPagingX'
+  public static PRODUCT_HO_ADD_X = "/" + PathConstant.LR_PRODUCT + "/" + PathConstantX.HO_ADD_X; //'/Product/HOAddX'
+  public static PRODUCT_HO_ADD_DETAIL_X = "/" + PathConstant.LR_PRODUCT + "/" + PathConstantX.HO_ADD_DETAIL_X; //'/Product/HOAddDetailX'
+  public static PRODUCT_HO_RTN_PAGING_X = "/" + PathConstant.LR_PRODUCT + "/" + PathConstantX.HO_RTN_PAGING_X; //'/Product/HOReturnPagingX'
   //#region TRIAL
   public static TRIAL_CALC = "/" + PathConstant.LR_TRIAL_CALC + "/" + PathConstantX.TRIAL_CALC_X; //'/TrialCalculation/Trial-Calculation'
 
@@ -479,6 +483,11 @@ export class NavigationConstant {
 
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
+
+  public static SETTING_APP_SOURCE_PAGING_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_PAGING_X; //'/Setting/AppSource/PagingX'
+  public static SETTING_APP_SOURCE_DETAIL_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_DETAIL_X; //'/Setting/AppSource/DetailX'
+  public static SETTING_APP_SOURCE_OFFICE_MBR_PAGING_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_OFFICE_MBR_PAGING_X; //'/Setting/AppSource/OfficeMember/PagingX'
+  public static SETTING_APP_SOURCE_OFFICE_MBR_ADD_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_OFFICE_MBR_ADD_X; //'/Setting/AppSource/OfficeMember/AddX'
   //EndSettings
 
   //Cessie

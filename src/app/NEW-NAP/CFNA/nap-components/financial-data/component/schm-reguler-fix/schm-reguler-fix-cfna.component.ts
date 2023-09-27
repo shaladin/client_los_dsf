@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { CalcRegularFixObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-regular-fix-obj-for-trial-calc.model';
 
 @Component({
   selector: 'app-schm-reguler-fix-cfna',
@@ -21,13 +22,16 @@ export class SchmRegulerFixCFNAComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
   @Input() TrialCalc: boolean = false;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
+  calcRegFixObjForTrialCalc: CalcRegularFixObjForTrialCalc = new CalcRegularFixObjForTrialCalc();
   listInstallment: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
@@ -51,6 +55,9 @@ export class SchmRegulerFixCFNAComponent implements OnInit {
           }
         });
       this.TrialCalc = false;
+    }
+    if (this.TrialCalc) {
+      this.GetProductOfferingVersion();
     }
   }
 
@@ -117,7 +124,12 @@ export class SchmRegulerFixCFNAComponent implements OnInit {
       return;
     }
 
-    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), this.ParentForm.getRawValue()).subscribe(
+    if (this.TrialCalc) {
+      this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcRegFixObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcRegFixObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
+    }
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), this.TrialCalc ? this.calcRegFixObjForTrialCalc : this.ParentForm.getRawValue()).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -271,5 +283,12 @@ export class SchmRegulerFixCFNAComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }

@@ -20,6 +20,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Input() NumOfInst: number;
   @Input() TrialCalc: boolean;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -29,6 +30,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string= "Asset Price";
   IsTrialCalc: boolean = false;
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -54,6 +56,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
   }
 
@@ -159,6 +162,8 @@ export class SchmIrregularFL4WComponent implements OnInit {
     );
   } else {
       this.calcIrregularObjForTrialCalc = this.ParentForm.value;
+      this.calcIrregularObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcIrregularObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.calcIrregularObjForTrialCalc["IsRecalculate"] = false;
       this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregularForTrialCalc, this.calcIrregularObjForTrialCalc).subscribe(
         (response) => {
@@ -231,5 +236,12 @@ export class SchmIrregularFL4WComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }

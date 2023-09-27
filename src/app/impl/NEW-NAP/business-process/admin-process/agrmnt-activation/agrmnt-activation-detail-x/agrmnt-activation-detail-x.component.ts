@@ -265,7 +265,6 @@ export class AgrmntActivationDetailXComponent implements OnInit {
       }
     }
   }
-
   markFormTouched(group: FormGroup | FormArray) {
     Object.keys(group.controls).forEach((key: string) => {
       const control = group.controls[key];

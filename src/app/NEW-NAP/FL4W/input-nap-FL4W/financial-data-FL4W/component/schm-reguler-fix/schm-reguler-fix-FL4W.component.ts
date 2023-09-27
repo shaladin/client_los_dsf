@@ -22,6 +22,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
   @Input() TrialCalc: boolean;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
@@ -32,6 +33,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -61,6 +63,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
   }
 
@@ -170,6 +173,8 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
     );
   } else {
       this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcRegFixObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcRegFixObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFixForTrialCalc, this.calcRegFixObjForTrialCalc).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
@@ -342,5 +347,12 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }
