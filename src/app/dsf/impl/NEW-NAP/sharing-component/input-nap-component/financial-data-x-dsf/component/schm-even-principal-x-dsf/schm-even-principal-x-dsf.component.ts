@@ -1,40 +1,41 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { String } from 'typescript-string-operations';
-import { CalcBalloonObjX } from 'app/impl/shared/model/AppFinData/CalcBalloonObjX.Model';
+import { CalcEvenPrincipleObjX } from 'app/impl/shared/model/AppFinData/CalcEvenPrincipleObjX.Model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ResponseCalculateObjX } from 'app/impl/shared/model/AppFinData/ResponseCalculateObjX.Model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
-import { CalcBalloonObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-balloon-obj-for-trial-calc.model';
+import { CalcEvenPrincipleObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-even-principle-obj-for-trial-calc.model';
 import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { String } from 'typescript-string-operations';
 
 @Component({
-  selector: 'app-schm-balloon-x-dsf',
-  templateUrl: './schm-balloon-x-dsf.component.html',
-  styleUrls: ['./schm-balloon-x-dsf.component.css']
+  selector: 'app-schm-even-principal-x-dsf',
+  templateUrl: './schm-even-principal-x-dsf.component.html',
+  styleUrls: ['./schm-even-principal-x-dsf.component.css']
 })
-export class SchmBalloonXDsfComponent implements OnInit {
+export class SchmEvenPrincipalXDsfComponent implements OnInit {
 
-  @Input() InstAmt: number;
-  @Input() TrialCalc: boolean;
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
-  @Output() RefreshSubsidy = new EventEmitter();
   @Input() BizTemplateCode: string;
+  @Input() TrialCalc: boolean;
   @Output() RefreshSummary = new EventEmitter();
+  // Self Custom CR Automation Subsidy Dealer
+  @Input() DealerSubsidyLock: boolean;
+  // End Self Custom CR Automation Subsidy Dealer
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
-  calcBalloonObj: CalcBalloonObjX = new CalcBalloonObjX();
-  calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
+  calcEvenPrincipleObj: CalcEvenPrincipleObjX = new CalcEvenPrincipleObjX();
+  calcEvenPrincipleObjForTrialCalc: CalcEvenPrincipleObjForTrialCalc = new CalcEvenPrincipleObjForTrialCalc();
   listInstallment: Array<InstallmentObj>;
   PriceLabel: string = CommonConstant.FinancialPriceLabel;
   IsTrialCalc: boolean = false;
@@ -43,6 +44,9 @@ export class SchmBalloonXDsfComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  // Self Custom CR Automation Subsidy Dealer
+  IsDealerSubsidyLock: boolean = false;
+  // End Self Custom CR Automation Subsidy Dealer
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -54,13 +58,11 @@ export class SchmBalloonXDsfComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
-
     this.ParentForm.get("FlatRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
     this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
-    this.ParentForm.get("AppSupplEffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
     this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
-    this.ParentForm.get("AppSupplEffectiveRatePrcnt").updateValueAndValidity();
+
     if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
       this.PriceLabel = "Financing Amount";
     }
@@ -74,17 +76,18 @@ export class SchmBalloonXDsfComponent implements OnInit {
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
     }
-    if (this.InstAmt != 0) {
-      this.ParentForm.patchValue({
-        InstAmt: this.InstAmt
-      });
-    }
     if (this.ParentForm.getRawValue().ExistingFinData) {
       this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
       this.FlatRateAfterCalc = this.ParentForm.getRawValue().FlatRatePrcnt;
       this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
       this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
     }
+    // Self Custom CR Automation Subsidy Dealer
+    if (this.DealerSubsidyLock)
+    {
+      this.IsDealerSubsidyLock = true;
+    }
+    // End Self Custom CR Automation Subsidy Dealer
   }
 
   LoadDDLRateType() {
@@ -95,14 +98,21 @@ export class SchmBalloonXDsfComponent implements OnInit {
     );
   }
 
+  LoadDDLGracePeriodType() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
+      (response) => {
+        this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
   LoadCalcBaseType() {
     let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeFinDataCalcBaseOn, MappingCode: null };
     this.http.post(URLConstant.GetListActiveRefMaster, tempReq).subscribe(
       (response) => {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions.sort((a,b) => a.SeqNo - b.SeqNo);
-        this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmBalloon) !== -1);
-
+        this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmEvenPrincipal) !== -1);
         if (this.CalcBaseOptions.length > 0) {
           if (this.ParentForm.get("EffectiveRateBhv").value == this.BhvLock) {
             this.ParentForm.patchValue({
@@ -129,221 +139,6 @@ export class SchmBalloonXDsfComponent implements OnInit {
     );
   }
 
-  LoadDDLGracePeriodType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
-      (response) => {
-        this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
-      }
-    );
-  }
-
-  async Calculate() {
-    if (this.ParentForm.getRawValue().RateType == '') {
-      this.toastr.warningMessage(ExceptionConstant.CHOOSE_RATE_TYPE);
-      return;
-    }
-    if (this.ParentForm.getRawValue().CalcBase == '') {
-      this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
-      return;
-    }
-    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.value.InstAmt <= 0) {
-      this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
-      return;
-    }
-
-    /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
-    if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
-      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
-      return;
-    }
-    */
-
-    // if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
-    //   && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-    //   && this.ParentForm.controls.IsSubsidyRateExist.value == false
-    //   && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
-    //   this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
-    //   return;
-    // }
-
-    // Penghapusan validasi DSF
-    // if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
-    //   && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-    //   && this.ParentForm.controls.IsSubsidyRateExist.value == false
-    //   && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
-    //   this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
-    // }
-
-    if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
-      && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-      && this.ParentForm.controls.IsSubsidyRateExist.value == true
-      && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
-      this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
-      return;
-    }
-    if (this.ValidateFee() == false) {
-      return;
-    }
-    if (this.ParentForm.get("BalloonValueAmt").value < 1) {
-      this.toastr.warningMessage(ExceptionConstant.BALLOON_AMOUNT_MUST_HIGHER_THAN + '0.');
-      return;
-    }
-
-    if (!this.IsTrialCalc) {
-      this.calcBalloonObj = this.ParentForm.getRawValue();
-      this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentBalloonX, this.calcBalloonObj).subscribe(
-        (response: ResponseCalculateObjX) => {
-          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
-          response.CommissionAmtFromDiffRate = 0;
-          //End SITDSFCFRTHREE-169
-          this.listInstallment = response.InstallmentTable;
-          this.EffRateAfterCalc = response.EffectiveRatePrcnt;
-          this.FlatRateAfterCalc = response.FlatRatePrcnt;
-          this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
-          this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
-          this.ParentForm.patchValue({
-            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-            FlatRatePrcnt: response.FlatRatePrcnt,
-            InstAmt: response.InstAmt,
-
-            GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-            TotalInterestAmt: response.TotalInterestAmt,
-            TotalAR: response.TotalARAmt,
-
-            NtfAmt: response.NtfAmt,
-            DiffRateAmt: response.DiffRateAmt,
-            ApvAmt: response.ApvAmt,
-
-            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
-
-            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-            DownPaymentNettAmt: response.DownPaymentNettAmt,
-
-            SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
-            CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-
-            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
-            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt,
-            //End SITDSFCFRTHREE-171
-
-            CurrGrossYieldAmt: response.CurrGrossYieldAmt,
-            StdGrossYieldAmt: response.StdGrossYieldAmt,
-            DiffGrossYieldAmt: response.DiffGrossYieldAmt
-
-          })
-          this.ParentForm.patchValue({
-            IsReCalculate: true
-          });
-          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
-          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
-            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
-            this.SetNeedReCalculate(true);
-            return;
-          }
-          //End Issue Non Jira
-          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
-          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
-          this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
-          this.SetInstallmentTable();
-          this.SetNeedReCalculate(false);
-
-          if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
-            this.RefreshSubsidy.emit();
-          }
-
-          // if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
-          //   && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-          //   && this.ParentForm.controls.IsSubsidyRateExist.value == false
-          //   && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
-          //   this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
-          //   return;
-          // }
-
-          // Penghapusan validasi DSF
-          // if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
-          //   && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-          //   && this.ParentForm.controls.IsSubsidyRateExist.value == false
-          //   && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
-          //   this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE);
-          // }
-
-          if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
-            && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-            && this.ParentForm.controls.IsSubsidyRateExist.value == true
-            && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
-            this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
-            return;
-          }
-
-          this.SetNeedReCalculate(false);
-        }
-      );
-    } else {
-      this.calcBalloonObjForTrialCalc = this.ParentForm.getRawValue();
-      await this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentBalloonForTrialCalc, this.calcBalloonObjForTrialCalc).toPromise().then(
-        (response) => {
-          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
-          response.CommissionAmtFromDiffRate = 0;
-          //End SITDSFCFRTHREE-169
-          this.listInstallment = response.InstallmentTable;
-          this.ParentForm.patchValue({
-            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-            FlatRatePrcnt: response.FlatRatePrcnt,
-            InstAmt: response.InstAmt,
-
-            GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-            TotalInterestAmt: response.TotalInterestAmt,
-            TotalAR: response.TotalARAmt,
-
-            NtfAmt: response.NtfAmt,
-            DiffRateAmt: response.DiffRateAmt,
-            ApvAmt: response.ApvAmt,
-
-            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
-
-            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-            DownPaymentNettAmt: response.DownPaymentNettAmt,
-
-            SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
-            CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-
-            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
-            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
-            //End SITDSFCFRTHREE-171
-
-          })
-          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
-          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
-            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
-            this.SetNeedReCalculate(true);
-            return;
-          }
-          //End Issue Non Jira
-          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
-          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
-          this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
-          this.SetInstallmentTable();
-          this.SetNeedReCalculate(false);
-
-          if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
-            this.RefreshSubsidy.emit();
-          }
-        }
-      );
-      this.RefreshSummary.emit();
-    }
-  }
-
   SetInstallmentTable() {
     var ctrInstallment = this.ParentForm.get("InstallmentTable");
     if (!ctrInstallment) {
@@ -367,97 +162,151 @@ export class SchmBalloonXDsfComponent implements OnInit {
     }
   }
 
-  EffectiveRatePrcntInput_FocusOut() {
-    this.ParentForm.patchValue({
-      SubsidyAmtFromDiffRate: 0,
-      CommissionAmtFromDiffRate: 0,
-      AppSupplEffectiveRatePrcnt: this.ParentForm.get("EffectiveRatePrcnt").value
-    });
-    this.SetSubsidyAmtFromDiffRateInput(0);
-    this.SetCommissionAmtFromDiffRateInput(0);
-    this.SetNeedReCalculate(true);
-  }
 
-  Rate_Keyup(event: KeyboardEvent) {
-    this.SetNeedReCalculate(true);
-    if (event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
-      this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
-  }
-
-  Rate_Paste(event: ClipboardEvent) {
-    this.SetNeedReCalculate(true);
-    this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
-  }
-
-  SupplEffectiveRatePrcnt_FocusOut() {
-    this.SetCommissionAmtFromDiffRateInput(0);
-    this.SetNeedReCalculate(true);
-  }
-
-  SupplRate_Keyup(event: KeyboardEvent) {
-    this.SetNeedReCalculate(true);
-    if (event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
-      this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
-  }
-
-  SupplRate_Paste(event: ClipboardEvent) {
-    this.SetNeedReCalculate(true);
-    this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
-  }
-
-  InstallmentAmount_Keyup(event: KeyboardEvent) {
-    this.SetNeedReCalculate(true);
-    if (event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
-      this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
-  }
-
-  InstallmentAmount_Paste(event: ClipboardEvent) {
-    this.SetNeedReCalculate(true);
-    this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
-  }
-
-  SubsidyAmtFromDiffRate_FocusOut(event) {
-    this.SetSubsidyAmtFromDiffRateInput(this.ParentForm.get("SubsidyAmtFromDiffRate").value);
-    this.SetNeedReCalculate(true);
-  }
-
-  SetSubsidyAmtFromDiffRateInput(subsidyAmtFromDiffRate) {
-    if (subsidyAmtFromDiffRate > 0) {
-      this.ParentForm.patchValue({
-        CommissionAmtFromDiffRate: 0
-      });
-      this.ParentForm.get("CommissionAmtFromDiffRate").disable();
-    } else {
-      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
-        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
-      }
+  async Calculate() {
+    if (this.ParentForm.getRawValue().RateType == '') {
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_RATE_TYPE);
+      return;
     }
-  }
-
-  CommissionAmtFromDiffRate_FocusOut(event) {
-    this.SetCommissionAmtFromDiffRateInput(this.ParentForm.get("CommissionAmtFromDiffRate").value);
-    this.SetSupplEffectiveRateInput(this.ParentForm.get("CommissionAmtFromDiffRate").value);
-    this.SetNeedReCalculate(true);
-  }
-
-  SetCommissionAmtFromDiffRateInput(commissionAmtFromDiffRate) {
-    if (commissionAmtFromDiffRate > 0) {
-      this.ParentForm.patchValue({
-        SubsidyAmtFromDiffRate: 0
-      });
-      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
-        //SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
-        this.ParentForm.get("CommissionAmtFromDiffRate").disable();
-      }
+    if (this.ParentForm.getRawValue().CalcBase == '') {
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
+      return;
     }
-  }
 
-  SetSupplEffectiveRateInput(commissionAmtFromDiffRate) {
-    if (commissionAmtFromDiffRate > 0) {
-      this.ParentForm.get("AppSupplEffectiveRatePrcnt").disable();
+    // if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
+    //   && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+    //   && this.ParentForm.controls.IsSubsidyRateExist.value == false
+    //   && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt) {
+    //   this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_SUPPL_RATE, this.ParentForm.getRawValue().AppSupplEffectiveRatePrcnt));
+    // }
+
+    // if (this.ParentForm.getRawValue().RateType == CommonConstant.RateTypeEffective
+    //   && this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+    //   && this.ParentForm.controls.IsSubsidyRateExist.value == true
+    //   && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
+    //   this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
+    //   return;
+    // }
+
+    if (this.ValidateFee() == false) {
+      return;
+    }
+    /* //Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+    if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+      return;
+    }
+    */
+    if (!this.IsTrialCalc) {
+      this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
+
+      this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentEvenPrincipalX, this.calcEvenPrincipleObj).subscribe(
+        (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
+          this.listInstallment = response.InstallmentTable;
+          this.EffRateAfterCalc = response.EffectiveRatePrcnt;
+          this.FlatRateAfterCalc = response.FlatRatePrcnt;
+          this.GracePeriodAfterCalc = this.ParentForm.getRawValue().GracePeriod;
+          this.GracePeriodTypeAfterCalc = this.ParentForm.getRawValue().MrGracePeriodTypeCode;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
+
+            
+            CurrGrossYieldAmt: response.CurrGrossYieldAmt,
+            StdGrossYieldAmt: response.StdGrossYieldAmt,
+            DiffGrossYieldAmt: response.DiffGrossYieldAmt,
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
+
+          })
+          this.ParentForm.patchValue({
+            IsReCalculate: true
+          });
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+
+        }
+      );
     } else {
-      this.ParentForm.get("AppSupplEffectiveRatePrcnt").enable();
+      this.calcEvenPrincipleObjForTrialCalc = this.ParentForm.getRawValue();
+
+      await this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentEvenPrincipalForTrialCalc, this.calcEvenPrincipleObjForTrialCalc).toPromise().then(
+        (response) => {
+          //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
+          response.CommissionAmtFromDiffRate = 0;
+          //End SITDSFCFRTHREE-169
+          this.listInstallment = response.InstallmentTable;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
+
+            //Start SITDSFCFRTHREE-171 : Suppl Rate di DSF selalu sama dng Effective rate
+            AppSupplEffectiveRatePrcnt: response.EffectiveRatePrcnt
+            //End SITDSFCFRTHREE-171
+          })
+          //Start Issue Non Jira 2021-01-28: Validasi TDP Paid at MF dipindah setelah dapat TDP nya
+          if (this.ParentForm.controls.TotalDownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+            this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "TDP");
+            this.SetNeedReCalculate(true);
+            return;
+          }
+          //End Issue Non Jira
+
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+
+        }
+      );
+
+      this.RefreshSummary.emit();
     }
   }
 
@@ -488,7 +337,7 @@ export class SchmBalloonXDsfComponent implements OnInit {
     }
   }
 
-  SetNeedReCalculate(value) {
+  SetNeedReCalculate(value: boolean) {
     if (this.GracePeriodAfterCalc != this.ParentForm.getRawValue().GracePeriod
       || this.GracePeriodTypeAfterCalc != this.ParentForm.getRawValue().MrGracePeriodTypeCode) {
       this.ParentForm.patchValue({
@@ -521,6 +370,83 @@ export class SchmBalloonXDsfComponent implements OnInit {
     });
   }
 
+  SaveAndContinue() {
+    var isValidGrossYield = this.ValidateGrossYield();
+    var isValidGracePeriod = this.ValidateGracePeriode();
+
+    if (isValidGrossYield && isValidGracePeriod) {
+    }
+  }
+
+  ValidateGracePeriode() {
+    var valid: boolean = true;
+    var gracePeriodType = this.ParentForm.get("MrGracePeriodTypeCode").value
+    var gracePeriod = this.ParentForm.get("GracePeriod").value
+
+    if (gracePeriodType != "") {
+      if (gracePeriod == 0) {
+        valid = false;
+        this.toastr.warningMessage(ExceptionConstant.GRACE_PERIOD_MUST_SET);
+      }
+    }
+
+    return valid;
+  }
+
+  ValidateGrossYield() {
+    this.ParentForm.patchValue({
+      GrossYieldPrcnt: 10
+    });
+    var GrossYieldBhv = this.ParentForm.get("GrossYieldBhv").value
+    var StdGrossYieldPrcnt = this.ParentForm.get("StdGrossYieldPrcnt").value
+    var GrossYieldPrcnt = this.ParentForm.get("GrossYieldPrcnt").value
+    var valid: boolean = true;
+
+    if (GrossYieldBhv == 'MIN') {
+      if (GrossYieldPrcnt < StdGrossYieldPrcnt) {
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_LESS_THAN + StdGrossYieldPrcnt + "%");
+        valid = false;
+      }
+    }
+    else {
+      if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN + StdGrossYieldPrcnt + "%");
+        valid = false;
+      }
+    }
+    return valid;
+  }
+
+  EffectiveRatePrcntInput_FocusOut() {
+    var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
+    this.ParentForm.patchValue({
+      AppSupplEffectiveRatePrcnt: this.ParentForm.get("EffectiveRatePrcnt").value
+    });
+    var SupplEffectiveRatePrcnt = this.ParentForm.get("AppSupplEffectiveRatePrcnt").value
+    var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
+    var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
+
+    var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
+    if (diffRate < DiffRateAmtStd) {
+      this.ParentForm.patchValue({
+        DiffRateAmt: 0,
+      });
+    }
+    else if (DiffRateAmtStd < 0) {
+      this.ParentForm.patchValue({
+        DiffRateAmt: 0,
+      });
+    }
+    else {
+      this.ParentForm.patchValue({
+        DiffRateAmt: DiffRateAmtStd
+      });
+    }
+
+    this.SetNeedReCalculate(true);
+  }
+
+
   ValidateFee() {
     for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
       if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
@@ -530,6 +456,9 @@ export class SchmBalloonXDsfComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  test() {
   }
 
 }
