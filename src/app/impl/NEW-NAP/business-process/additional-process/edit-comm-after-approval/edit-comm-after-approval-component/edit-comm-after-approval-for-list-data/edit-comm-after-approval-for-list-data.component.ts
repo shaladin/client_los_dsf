@@ -9,9 +9,11 @@ export class EditCommAfterApprovalForListDataComponent implements OnInit {
   @Input() FormInputObj;
   @Input() DictCalcMethod: { [id: string]: string } = {};
   @Input() Condition:string="";
+  @Input() pph23:boolean
   constructor() { }
 
   ngOnInit() {
+    console.log("pph23",this.pph23)
   }
 
 }

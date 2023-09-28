@@ -21,6 +21,8 @@ export class CalcStepUpStepDownObjForTrialCalc {
     FlatRatePrcnt: number;
     Fees: Array<AppFeeObj> = new Array<AppFeeObj>();
     ListEntryInst: Array<EntryInstObj> = new Array<EntryInstObj>();
+    ProdOfferingCode: string;
+    ProdOfferingVersion: string;
 
     constructor() {
     }

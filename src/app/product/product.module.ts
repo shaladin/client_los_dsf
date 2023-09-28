@@ -53,6 +53,14 @@ import { UcviewgenericModule } from '@adins/ucviewgeneric';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 import { UnauthorizedModule } from 'app/unauthorized/unauthorized.module';
+import { ProdHoPagingXComponent } from 'app/impl/product/product-ho/prod-ho-paging-x/prod-ho-paging-x.component';
+import { ProdHoAddXComponent } from 'app/impl/product/product-ho/prod-ho-add-x/prod-ho-add-x.component';
+import { ProdHoAddDetailXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/prod-ho-add-detail-x.component';
+import { HoGeneralDataXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/ho-general-data-x/ho-general-data-x.component';
+import { HoProdCompntXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/ho-prod-compnt-x/ho-prod-compnt-x.component';
+import { HoOfficeMbrXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/ho-office-mbr-x/ho-office-mbr-x.component';
+import { HoListOfficeMbrXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/ho-office-mbr-x/ho-list-office-mbr-x/ho-list-office-mbr-x.component';
+import { ProdHoReturnPagingXComponent } from 'app/impl/product/product-ho/prod-ho-return-paging-x/prod-ho-return-paging-x.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +102,15 @@ import { UnauthorizedModule } from 'app/unauthorized/unauthorized.module';
     ProdOfferingDeactApvPagingComponent,
     ProdOfferingDeactDetailComponent,
     ProdOfferingDeactPagingComponent,
-    OfferingSearchOfficeComponent
+    OfferingSearchOfficeComponent,
+    ProdHoPagingXComponent,
+    ProdHoAddXComponent,
+    ProdHoAddDetailXComponent,
+    HoGeneralDataXComponent,
+    HoProdCompntXComponent,
+    HoOfficeMbrXComponent,
+    HoListOfficeMbrXComponent,
+    ProdHoReturnPagingXComponent
   ],
   imports: [
     CommonModule,

@@ -9,6 +9,7 @@ import { AppObj } from 'app/shared/model/app/app.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CalcIrregularObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-irregular-obj-for-trial-calc.model';
 
 @Component({
   selector: 'app-schm-irregular-cfna',
@@ -19,12 +20,15 @@ export class SchmIrregularCFNAComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Input() NumOfInst: number;
   @Input() TrialCalc: boolean = false;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   listInstallment: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
+  ProdOfferingVersion: string;
+  calcIrregularObjForTrialCalc: CalcIrregularObjForTrialCalc = new CalcIrregularObjForTrialCalc();
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
@@ -48,6 +52,9 @@ export class SchmIrregularCFNAComponent implements OnInit {
           }
         });
       this.TrialCalc = false;
+    }
+    if (this.TrialCalc) {
+      this.GetProductOfferingVersion();
     }
   }
 
@@ -118,7 +125,14 @@ export class SchmIrregularCFNAComponent implements OnInit {
     if (this.ValidateFee() == false) {
       return;
     }
-    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), calcIrregularObj).subscribe(
+
+    if (this.TrialCalc) {
+      this.calcIrregularObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcIrregularObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcIrregularObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
+      this.calcIrregularObjForTrialCalc["IsRecalculate"] = false;
+    }
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), this.TrialCalc ? this.calcIrregularObjForTrialCalc : calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
 
@@ -193,5 +207,12 @@ export class SchmIrregularCFNAComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }
