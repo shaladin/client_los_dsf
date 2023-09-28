@@ -28,7 +28,7 @@ export class SchmBalloonXDsfComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
   @Input() BizTemplateCode: string;
-  @Output() RefreshSummary = new EventEmitter();
+  @Input() ProductOfferingCode: string;
   // Self Custom CR Automation Subsidy Dealer
   @Input() DealerSubsidyLock: boolean;
   // End Self Custom CR Automation Subsidy Dealer
@@ -46,6 +46,7 @@ export class SchmBalloonXDsfComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
   // Self Custom CR Automation Subsidy Dealer
   IsDealerSubsidyLock: boolean = false;
   // End Self Custom CR Automation Subsidy Dealer
@@ -67,10 +68,10 @@ export class SchmBalloonXDsfComponent implements OnInit {
     this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
     this.ParentForm.get("AppSupplEffectiveRatePrcnt").updateValueAndValidity();
-    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
-      this.PriceLabel = "Financing Amount";
-    }
     if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
       this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
         (response) => {
           this.listInstallment = response['InstallmentTable'];
@@ -79,6 +80,7 @@ export class SchmBalloonXDsfComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -297,6 +299,8 @@ export class SchmBalloonXDsfComponent implements OnInit {
       );
     } else {
       this.calcBalloonObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcBalloonObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcBalloonObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       await this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentBalloonForTrialCalc, this.calcBalloonObjForTrialCalc).toPromise().then(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
@@ -352,7 +356,6 @@ export class SchmBalloonXDsfComponent implements OnInit {
           }
         }
       );
-      this.RefreshSummary.emit();
     }
   }
 
@@ -542,6 +545,13 @@ export class SchmBalloonXDsfComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 
 }

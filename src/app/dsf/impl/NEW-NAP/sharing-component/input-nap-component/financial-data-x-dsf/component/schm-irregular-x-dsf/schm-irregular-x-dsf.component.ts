@@ -28,7 +28,7 @@ export class SchmIrregularXDsfComponent implements OnInit {
   @Input() NumOfInst: number;
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
-  @Output() RefreshSummary = new EventEmitter();
+  @Input() ProductOfferingCode: string;
   // Self Custom CR Automation Subsidy Dealer
   @Input() DealerSubsidyLock: boolean;
   // End Self Custom CR Automation Subsidy Dealer
@@ -44,6 +44,7 @@ export class SchmIrregularXDsfComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
   // Self Custom CR Automation Subsidy Dealer
   IsDealerSubsidyLock: boolean = false;
   // End Self Custom CR Automation Subsidy Dealer
@@ -61,12 +62,10 @@ export class SchmIrregularXDsfComponent implements OnInit {
     this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
     this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
-
-    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
-      this.PriceLabel = "Financing Amount";
-    }
-
     if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
       this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
         (response) => {
           this.listInstallment = response['InstallmentTable'];
@@ -76,7 +75,8 @@ export class SchmIrregularXDsfComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
-      this.SetEntryInstallment()
+      this.SetEntryInstallment();
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -257,6 +257,8 @@ export class SchmIrregularXDsfComponent implements OnInit {
       );
     } else {
       this.calcIrregularObjForTrialCalc = this.ParentForm.value;
+      this.calcIrregularObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcIrregularObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       await this.http.post<ResponseCalculateObjX>(environment.losUrl + "/v1" + "/AppFinData/CalculateIrregularForTrialCalc", this.calcIrregularObjForTrialCalc).toPromise().then(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
@@ -306,8 +308,6 @@ export class SchmIrregularXDsfComponent implements OnInit {
         }
       );
     }
-
-    this.RefreshSummary.emit();
   }
 
   EffectiveRatePrcntInput_FocusOut() {
@@ -379,6 +379,13 @@ export class SchmIrregularXDsfComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 
 }
