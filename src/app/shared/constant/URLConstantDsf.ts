@@ -79,4 +79,5 @@ export class URLConstantDsf {
     public static GetInitFinDataForTrialCalcX = environment.losUrl + "/AppDsf/GetOrInitFinDataForTrialCalcDsf";
 
     public static GetDealerSubsidyAuto = environment.losUrl + "/AppFinDataDsf/GetDealerSubsidyAutoDsf";
+    public static GetAppFinDataByAppIdDsf = environment.losUrl + "/AppFinDataDsf/GetAppFinDataByAppIdDsf";
 }

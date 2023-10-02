@@ -175,7 +175,7 @@ export class FinancialDataXDsfComponent implements OnInit {
 
   // Self Custom CR Automation Subsidy Dealer
   async LoadAppFinData() {
-    this.http.post<AppSubsidyDealerObj>(URLConstantDsf.GetDealerSubsidyAuto, { Id: this.AppId }).subscribe(
+    await this.http.post<AppSubsidyDealerObj>(URLConstantDsf.GetDealerSubsidyAuto, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.appSubsidyDealerObj = response;
       });
@@ -261,17 +261,20 @@ export class FinancialDataXDsfComponent implements OnInit {
         });
         this.setValidator(this.appFinDataObj.MrInstSchemeCode);
         this.IsParentLoaded = true;
+      }
+    );
 
-        // Self Custom CR Automation Subsidy Dealer
-        if (response.TotalInterestAmt == 0)
+    // Self Custom CR Automation Subsidy Dealer
+    await this.http.post<AppFinDataObjX>(URLConstantDsf.GetAppFinDataByAppIdDsf, { Id: this.AppId }).toPromise().then(
+      (response) => {
+        if (response.NtfAmt == 0)
         {
           this.FinDataForm.patchValue({
             SubsidyAmtFromDiffRate: this.appSubsidyDealerObj.SubsidyAmount
           });
         }
-        // End Self Custom CR Automation Subsidy Dealer
-      }
-    );
+      });
+    // End Self Custom CR Automation Subsidy Dealer
   }
 
   SaveAndContinue() {
