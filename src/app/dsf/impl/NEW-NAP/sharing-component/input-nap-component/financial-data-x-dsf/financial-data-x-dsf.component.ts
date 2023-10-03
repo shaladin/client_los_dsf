@@ -273,6 +273,14 @@ export class FinancialDataXDsfComponent implements OnInit {
             SubsidyAmtFromDiffRate: this.appSubsidyDealerObj.SubsidyAmount
           });
         }
+        else
+        {
+          this.FinDataForm.patchValue(
+            {
+              SubsidyAmtFromDiffRate: Math.abs(this.appFinDataObj.DiffRateAmt)
+            }
+          )
+        }
       });
     // End Self Custom CR Automation Subsidy Dealer
   }
