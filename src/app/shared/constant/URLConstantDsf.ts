@@ -80,4 +80,5 @@ export class URLConstantDsf {
 
     public static GetDealerSubsidyAuto = environment.losUrl + "/AppFinDataDsf/GetDealerSubsidyAutoDsf";
     public static GetAppFinDataByAppIdDsf = environment.losUrl + "/AppFinDataDsf/GetAppFinDataByAppIdDsf";
+    public static SaveNtfAmtAppFinDataDsf = environment.losUrl + "/AppFinDataDsf/SaveNtfAmtAppFinDataDsf";
 }

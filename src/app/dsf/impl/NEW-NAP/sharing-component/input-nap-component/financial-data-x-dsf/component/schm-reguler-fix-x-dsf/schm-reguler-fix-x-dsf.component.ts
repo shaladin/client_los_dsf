@@ -19,6 +19,8 @@ import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.mo
 import { InputReportObj } from 'app/shared/model/library/input-report-obj.model';
 import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/rdlc-report-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { AppFinDataObjX } from 'app/impl/shared/model/AppFinDataObjX.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-schm-reguler-fix-x-dsf',
@@ -445,6 +447,18 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
           this.SetNeedReCalculate(false);
         }
       );
+
+      // Self Custom CR Automation Subsidy Dealer
+      var appFinData = new AppFinDataObjX();
+      appFinData.AppId = this.AppId;
+      appFinData.DiffRateAmt = this.ParentForm.getRawValue().SubsidyAmtFromDiffRate;
+
+      await this.http.post<AppFinDataObjX>(URLConstantDsf.SaveNtfAmtAppFinDataDsf, appFinData).toPromise().then(
+        (response: AppFinDataObjX) => {
+
+        }
+      )
+      // Self Custom CR Automation Subsidy Dealer
       
     } else {
       this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();

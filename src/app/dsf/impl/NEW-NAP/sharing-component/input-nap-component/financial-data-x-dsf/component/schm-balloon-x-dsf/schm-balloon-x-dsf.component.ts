@@ -14,6 +14,8 @@ import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { CalcBalloonObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-balloon-obj-for-trial-calc.model';
 import { InstallmentObj } from 'app/shared/model/app-fin-data/installment-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { AppFinDataObjX } from 'app/impl/shared/model/AppFinDataObjX.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-schm-balloon-x-dsf',
@@ -205,7 +207,7 @@ export class SchmBalloonXDsfComponent implements OnInit {
 
     if (!this.IsTrialCalc) {
       this.calcBalloonObj = this.ParentForm.getRawValue();
-      this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentBalloonX, this.calcBalloonObj).subscribe(
+      await this.http.post<ResponseCalculateObjX>(URLConstantX.CalculateInstallmentBalloonX, this.calcBalloonObj).toPromise().then(
         (response: ResponseCalculateObjX) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
           response.CommissionAmtFromDiffRate = 0;
@@ -297,6 +299,18 @@ export class SchmBalloonXDsfComponent implements OnInit {
           this.SetNeedReCalculate(false);
         }
       );
+
+      // Self Custom CR Automation Subsidy Dealer
+      var appFinData = new AppFinDataObjX();
+      appFinData.AppId = this.AppId;
+      appFinData.DiffRateAmt = this.ParentForm.getRawValue().SubsidyAmtFromDiffRate;
+
+      await this.http.post<AppFinDataObjX>(URLConstantDsf.SaveNtfAmtAppFinDataDsf, appFinData).toPromise().then(
+        (response: AppFinDataObjX) => {
+
+        }
+      )
+      // Self Custom CR Automation Subsidy Dealer
     } else {
       this.calcBalloonObjForTrialCalc = this.ParentForm.getRawValue();
       this.calcBalloonObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
