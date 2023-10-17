@@ -556,6 +556,7 @@ export class DoAssetDetailXComponent implements OnInit {
   }
 
   GenerateAppAssetAttrForm() {
+    this.ListAttrAnswer = [];
     if (this.AppAssetAttrObj != null) {
       this.appAssetAttrObjs = new Array<AppAssetAttrCustomObj>();
       for (let i = 0; i < this.AppAssetAttrObj.length; i++) {

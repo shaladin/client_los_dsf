@@ -22,7 +22,7 @@ import { ReturnHandlingSurveyComponent } from './return-handling/return-handling
 import { ReturnHandlingCollateralDetailComponent } from "./return-handling/return-handling-collateral-detail/return-handling-collateral-detail.component";
 import { ReturnHandlingCollateralEditComponent } from "./return-handling/return-handling-collateral-edit/return-handling-collateral-edit.component";
 import { ReturnHandlingCollateralPagingComponent } from "./return-handling/return-handling-collateral-paging/return-handling-collateral-paging.component";
-import { MatCheckboxModule, MatRadioModule, MatTabsModule } from "@angular/material";
+import { MatCheckboxModule, MatPaginatorModule, MatRadioModule, MatTabsModule } from "@angular/material";
 import { ReturnHandlingComRsvfundPagingComponent } from "./return-handling/return-handling-com-rsvfund-paging/return-handling-com-rsvfund-paging.component";
 import { CopyCancelledApplicationComponent } from './copy-cancelled-application/copy-cancelled-application.component';
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
@@ -87,6 +87,11 @@ import { AutoDebitRegistrationInquiryComponent } from "app/impl/NEW-NAP/business
 import { AutoDebitRegistrationCancelComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component";
 import { AutoDebitTestComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component";
 import { ReturnHandlingNewEditAppPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-new-edit-app-paging-dsf/return-handling-new-edit-app-paging-dsf.component";
+import { ReturnHandlingPagingXDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-paging-x-dsf/return-handling-paging-x-dsf.component";
+import { ReturnHandlingDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-detail-dsf/return-handling-detail-dsf.component";
+import { PlafondInstallmentSimulationPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-paging-dsf/plafond-installment-simulation-paging-dsf.component";
+import { ReturnHandlingEditNap4DsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component";
+import { PlafondInstallmentSimulationDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -122,7 +127,8 @@ export const customCurrencyMaskConfig = {
     InputNapComponentModule,
     ProcessComponentModule,
     MatRadioModule,
-    MainDataComponentModule
+    MainDataComponentModule,
+    MatPaginatorModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,
@@ -130,7 +136,9 @@ export const customCurrencyMaskConfig = {
     OutstandingTcPagingComponent,
     OutstandingTcDetailComponent,
     ReturnHandlingPagingComponent,
+    ReturnHandlingPagingXDsfComponent,
     ReturnHandlingDetailComponent,
+    ReturnHandlingDetailDsfComponent,
     PagingComponent,
     ListPersonalComponent,
     ListCompanyComponent,
@@ -153,6 +161,7 @@ export const customCurrencyMaskConfig = {
     DupCheckMdSubjListComponent,
     DupCheckMdSubjMatchComponent,
     ReturnHandlingEditNap4Component,
+    ReturnHandlingEditNap4DsfComponent,
     ReturnHandlingNewEditAppPagingComponent,
     ReturnHandlingNewEditAppPagingDsfComponent,
     AdditionalTcPagingComponent,
@@ -194,7 +203,9 @@ export const customCurrencyMaskConfig = {
     AutoDebitRegistrationPagingComponent,
     AutoDebitRegistrationInquiryComponent,
     AutoDebitRegistrationCancelComponent,
-    AutoDebitTestComponent
+    AutoDebitTestComponent,
+    PlafondInstallmentSimulationPagingDsfComponent,
+    PlafondInstallmentSimulationDetailDsfComponent
   ],
   providers: [
     NGXToastrService

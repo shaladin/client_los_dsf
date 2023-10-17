@@ -1,0 +1,248 @@
+<div class="container col-md-12">
+  <form class="form form-horizontal" [formGroup]="SimulationDetailForm"
+              (ngSubmit)="SimulationDetailForm.valid && ClickSave()" #enjiForm="ngForm">
+  <div class="card">
+    <div class="col-md-12 bg-white rounded px-3 py-3">
+      <div class="row">
+        <div class="col-md-12">
+          <h4 class="form-section card-title" translate>Plafond & Installment Simulation</h4>
+        </div>
+      </div>
+    
+      <br>
+      <div class="form-body" id="agreementParentSection">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-5 adInsLabel" translate>Customer No</label>
+              <label class="col-md-7 adInsLabel" translate>{{CustNo}}</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-5 adInsLabel" translate>Plafond Parent Agreement</label>
+              <label class="col-md-7 adInsLabel" translate>{{MaxPlafondMasterAgreement | number:'.2':'en-US'}}</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-5 adInsLabel" translate>Customer Name</label>
+              <label class="col-md-7 adInsLabel" translate>{{CustName}}</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-5 adInsLabel" translate>Max Tenor</label>
+              <label class="col-md-7 adInsLabel" translate>{{MaxTenor}}</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-5 adInsLabel" translate>Agreement Parent No</label>
+              <label class="col-md-7 adInsLabel" translate>{{AgrmntParentNo}}</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row" *ngIf="RequestedPlafond > 0">
+              <label class="col-md-5 adInsLabel" translate>Requested Plafond</label>
+              <label class="col-md-7 adInsLabel" translate>{{RequestedPlafond | number:'.2':'en-US'}}</label>
+            </div>
+            <div class="form-group row" *ngIf="RequestedPlafond == 0">
+              <label class="col-md-5 adInsLabel" translate>Requested Plafond</label>
+              <label class="col-md-7 adInsLabel" translate>-</label>
+            </div>
+          </div>
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <div class="form-group row" *ngIf="RemainingPlafond > 0">
+              <label class="col-md-5 adInsLabel" translate>Remaining Plafond</label>
+              <label class="col-md-7 adInsLabel" translate>{{RemainingPlafond | number:'.2':'en-US'}}</label>
+            </div>
+            <div class="form-group row" *ngIf="RemainingPlafond == 0">
+              <label class="col-md-5 adInsLabel" translate>Remaining Plafond</label>
+              <label class="col-md-7 adInsLabel" translate>-</label>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <lib-ucSubsection [id]="'AppInfoId'" [title]="'Application Information'" [panel]="'AppInfo'">
+        </lib-ucSubsection>
+        <div id="AppInfo" class="row">
+          <div class="col-md-6">
+            <div class="form-group row adins-required">
+              <label class="col-md-5 adInsLabel" translate>Loan Amount</label>
+              <div class="col-md-7">
+                <input type="" currencyMask class="form-control adInsInput" style="width: 50%" formControlName="TotalAssetPriceAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && SimulationDetailForm.controls.TotalAssetPriceAmt.invalid }"
+                      (focusout)="ChangeLoanAmount()">
+                <lib-uc-show-errors [control]="SimulationDetailForm.controls.TotalAssetPriceAmt" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row adins-required">
+              <label class="col-md-5 adInsLabel">Payment Frequency</label>
+              <div class="col-md-7">
+                <select class="form-control adInsInput" style="width: 50%" formControlName="PayFreqCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && SimulationDetailForm.controls.PayFreqCode.invalid }"
+                        (focusout)="ChangeNumOfInstallmentPayFreq($event)">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of applicationDDLitems['PAYFREQ']" value="{{it.Key}}">
+                    {{it.Value}}
+                  </option>
+                </select>
+                <lib-uc-show-errors [control]="SimulationDetailForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row adins-required">
+              <label class="col-md-5 adInsLabel">Tenor</label>
+              <div class="col-md-7">
+                <input type="number" class="form-control adInsInput number text-right" style="width: 50%" formControlName="Tenor" min="0"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && SimulationDetailForm.controls.Tenor.invalid }"
+                      (focusout)="changeNumOfInstallmentTenor()">
+                <lib-uc-show-errors [control]="SimulationDetailForm.controls.Tenor" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <div class="form-group col-md-5 adins-required">
+                <label class="adInsLabel">Installment Scheme</label>
+              </div>
+              <div class="col-md-7">
+                <select class="form-control adInsInput" style="width: 50%" formControlName="MrInstSchemeCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && SimulationDetailForm.controls.MrInstSchemeCode.invalid }"
+                        (focusout)="ChooseInstScheme($event)">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of applicationDDLitems['INST_SCHM']" value="{{it.Key}}">
+                    {{it.Value}}
+                  </option>
+                </select>
+                <lib-uc-show-errors [control]="SimulationDetailForm.controls.MrInstSchemeCode" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row"></div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row adins-required">
+              <label class="col-md-5 adInsLabel"> First Installment Type </label>
+              <div class="col-md-7">
+                <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && SimulationDetailForm.controls.MrFirstInstTypeCode.invalid }"
+                        (focusout)="ChooseFirstInstType($event)">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
+                    {{it.Value}}
+                  </option>
+                </select>
+                <lib-uc-show-errors [control]="SimulationDetailForm.controls.MrFirstInstTypeCode" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <div *ngIf="!isInit">
+        <lib-ucSubsection [id]="'SummaryInfoId'" [title]="'Summary'" [panel]="'SummaryInfo'">
+        </lib-ucSubsection>
+        <div id="SummaryInfo" class="row">
+          <div class="col-md-6">
+            <div class="form-group row" *ngIf="InstAmt > 0">
+              <label class="col-md-5 adInsLabel" translate>Installment Amount</label>
+              <label class="col-md-7 adInsLabel" translate>{{InstAmt | number:'.2':'en-US'}}</label>
+            </div>
+            <div class="form-group row" *ngIf="InstAmt == 0">
+              <label class="col-md-5 adInsLabel" translate>Installment Amount</label>
+              <label class="col-md-7 adInsLabel" translate>-</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row"></div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row" *ngIf="Tenor > 0">
+              <label class="col-md-5 adInsLabel" translate>Tenor</label>
+              <label class="col-md-7 adInsLabel" translate>{{Tenor}}</label>
+            </div>
+            <div class="form-group row" *ngIf="Tenor == 0">
+              <label class="col-md-5 adInsLabel" translate>Tenor</label>
+              <label class="col-md-7 adInsLabel" translate>-</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row"></div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row" *ngIf="EffRate > 0 || FlatRate > 0">
+              <label class="col-md-5 adInsLabel" translate>Effective/Flat Rate</label>
+              <label class="col-md-7 adInsLabel" translate>{{EffRate | number:'.1':'en-US'}} % / {{FlatRate | number:'.1':'en-US'}} %</label>
+            </div>
+            <div class="form-group row" *ngIf="EffRate == 0 && FlatRate == 0">
+              <label class="col-md-5 adInsLabel" translate>Effective/Flat Rate</label>
+              <label class="col-md-7 adInsLabel" translate>-/-</label>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div class="form-inline-right">
+        <button class="btn btn-raised btn-primary margin-r-5" translate type="button" (click)="Generate()">
+          Generate Financial
+        </button>
+      </div>
+
+      <!--FINANCIAL DATA & FEES-->
+      <div *ngIf="IsGenerate">
+
+        <app-schm-reguler-fix-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'RF'"
+                                [ParentForm]="SimulationDetailForm"
+                                [BizTemplateCode]="BizTmpltCode"
+                                [TrialCalc]="TrialCalc"
+                                (RefreshSummary)="RefreshSummary($event)"></app-schm-reguler-fix-x-dsf>
+        <app-schm-irregular-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'IR'"
+                              [ParentForm]="SimulationDetailForm"
+                              [TrialCalc]="TrialCalc"
+                              [BizTemplateCode]="BizTmpltCode"
+                              (RefreshSummary)="RefreshSummary($event)"></app-schm-irregular-x-dsf>
+        <app-schm-step-up-step-down-normal-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'STNM'"
+                                             [ParentForm]="SimulationDetailForm"
+                                             [BizTemplateCode]="BizTmpltCode"
+                                             [TrialCalc]="TrialCalc"
+                                             (RefreshSummary)="RefreshSummary($event)"></app-schm-step-up-step-down-normal-x-dsf>
+        <app-schm-step-up-step-down-leasing-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'STLS'"
+                                              [ParentForm]="SimulationDetailForm"
+                                              [BizTemplateCode]="BizTmpltCode"
+                                              [TrialCalc]="TrialCalc"
+                                              (RefreshSummary)="RefreshSummary($event)"></app-schm-step-up-step-down-leasing-x-dsf>
+        <app-schm-step-up-step-down-cummulative-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'STCM'"
+                                                  [ParentForm]="SimulationDetailForm"
+                                                  [BizTemplateCode]="BizTmpltCode"
+                                                  [TrialCalc]="TrialCalc"
+                                                  (RefreshSummary)="RefreshSummary($event)"></app-schm-step-up-step-down-cummulative-x-dsf>
+        <app-schm-balloon-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'BL'"
+                            [ParentForm]="SimulationDetailForm"
+                            [TrialCalc]="TrialCalc"
+                            [BizTemplateCode]="BizTmpltCode"
+                            (RefreshSummary)="RefreshSummary($event)"></app-schm-balloon-x-dsf>
+        <app-schm-even-principal-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'EP'"
+                                   [ParentForm]="SimulationDetailForm"
+                                   [BizTemplateCode]="BizTmpltCode"
+                                   [TrialCalc]="TrialCalc"
+                                   (RefreshSummary)="RefreshSummary($event)"></app-schm-even-principal-x-dsf>
+      </div>
+      <!--END FINANCIAL DATA & FEES-->
+    </div>
+  </div>
+  </form>
+</div>

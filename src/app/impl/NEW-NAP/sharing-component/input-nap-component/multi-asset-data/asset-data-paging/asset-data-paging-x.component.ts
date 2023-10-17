@@ -20,6 +20,7 @@ import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.m
 import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model';
 import { ResAssetTypeObj } from 'app/shared/model/app-asset-type/app-asset-type-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-asset-data-paging-x',
@@ -346,6 +347,20 @@ export class AssetDataPagingXComponent implements OnInit {
     this.outputValue.emit({ mode: 'edit', AddrId: custAddrObj.CustAddrId });
   }
 
+  async checkValidityCollateralDoc() {
+
+    let reqObj = {
+      Id: this.AppId
+    }
+
+    await this.http.post(URLConstantX.ValidateAppCollateralDocByAppId, reqObj).toPromise().then(
+      (response) => {
+        if (response["StatusCode"] != "200") return;
+      }
+    );
+
+  }
+
   async checkValidityAssetUsed() {
     let listAsset: Array<AppAssetObj> = this.gridAssetDataObj.resultData.Data;
     let flag: boolean = false;
@@ -402,6 +417,7 @@ export class AssetDataPagingXComponent implements OnInit {
     }
     // if (await this.checkValidityAssetUsed()) return;
 
+    await this.checkValidityCollateralDoc();
     // region: additional validation transaction leasseback
     let isAlreadyHasAsset: boolean = false;
     let allAssetName: string[] = []

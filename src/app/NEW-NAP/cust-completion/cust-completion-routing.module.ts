@@ -12,6 +12,9 @@ import { CustCompletionDetailCompanyXComponent } from "app/impl/NEW-NAP/cust-com
 import { CustCompletionDetailPersonalXComponent } from "app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-personal/cust-completion-detail-personal-x.component";
 import { PathConstantX } from "app/impl/shared/constant/PathConstantX";
 import { CustCompletionDetailXComponent } from "app/impl/NEW-NAP/cust-completion/cust-completion-detail-x/cust-completion-detail-x.component";
+import { CustCompletionDetailXDsfComponent } from "app/dsf/impl/NEW-NAP/cust-completion/cust-completion-detail-x-dsf/cust-completion-detail-x-dsf.component";
+import { PathConstantDsf } from "app/shared/constant/PathConstantDsf";
+import { CustCompletionPagingDsfComponent } from "app/dsf/impl/NEW-NAP/cust-completion/cust-completion-paging-dsf/cust-completion-paging-dsf.component";
 
 const routes: Routes = [
   {
@@ -20,6 +23,13 @@ const routes: Routes = [
       {
         path: PathConstant.PAGING,
         component: CustCompletionPagingComponent,
+        data: {
+          title: 'Cust Completion Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.PAGING_X,
+        component: CustCompletionPagingDsfComponent,
         data: {
           title: 'Cust Completion Paging'
         }
@@ -83,6 +93,13 @@ const routes: Routes = [
       {
         path: PathConstantX.DETAIL_X,
         component: CustCompletionDetailXComponent,
+        data: {
+          title: 'Cust Completion Detail X'
+        }
+      },
+      {
+        path: PathConstantDsf.DETAIL_X,
+        component: CustCompletionDetailXDsfComponent,
         data: {
           title: 'Cust Completion Detail X'
         }

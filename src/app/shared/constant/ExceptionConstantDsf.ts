@@ -11,5 +11,8 @@ export class ExceptionConstantDsf {
     public static EXCEEDED_FROM_PLAFOND_MASTER = "Loan Object must be Equal or Lower than Max Plafond Master Agreement";
     public static EXCEEDED_FROM_REMAINING_PLAFOND = "Loan Object must be Equal or Lower than Remaining Plafond";
     public static EXCEEDED_FROM_REQUESTED_PLAFOND = "Loan Object must be Equal or Lower than Requested Plafond";
+
+    public static SEARCH_CUSTOMER_VALIDATION = "Please fill Customer Name or Customer No for seacrhing Agreement Parent!";
+    public static CHECK_API_LMS_R2_UP = "Connection error, please try again in a minute";
 }
 
