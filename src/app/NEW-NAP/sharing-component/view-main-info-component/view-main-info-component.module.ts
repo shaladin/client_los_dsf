@@ -14,6 +14,8 @@ import { DocSignerMainInfoXComponent } from "app/impl/NEW-NAP/sharing-component/
 import { AppMainInfoXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { AppMainInfoCrXComponent } from "app/impl/NEW-NAP/sharing-component/view-main-info-component/app-main-info-cr-x/app-main-info-cr-x.component";
+import { CrdRvwGrpHistDetailDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-grp-hist-detail-dsf/crd-rvw-grp-hist-detail-dsf.component";
+import { CrdRvwGrpHistInfoDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-grp-hist-info-dsf/crd-rvw-grp-hist-info-dsf.component";
 
 @NgModule({
   exports: [
@@ -23,7 +25,9 @@ import { AppMainInfoCrXComponent } from "app/impl/NEW-NAP/sharing-component/view
     DocSignerMainInfoComponent,
     DocSignerMainInfoXComponent,
     AppMainInfoComponentXComponent,
-    AppMainInfoCrXComponent
+    AppMainInfoCrXComponent,
+    CrdRvwGrpHistDetailDsfComponent,
+    CrdRvwGrpHistInfoDsfComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +46,9 @@ import { AppMainInfoCrXComponent } from "app/impl/NEW-NAP/sharing-component/view
     DocSignerMainInfoComponent,
     DocSignerMainInfoXComponent,
     AppMainInfoComponentXComponent,
-    AppMainInfoCrXComponent
+    AppMainInfoCrXComponent,
+    CrdRvwGrpHistDetailDsfComponent,
+    CrdRvwGrpHistInfoDsfComponent
   ],
 
   providers: [

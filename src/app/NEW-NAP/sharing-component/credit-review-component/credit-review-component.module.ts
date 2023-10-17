@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
-import { MatRadioModule } from "@angular/material";
+import { MatRadioModule, MatTabsModule } from "@angular/material";
 import { CrdRvwCustInfoComponent } from "./crd-rvw-cust-info/crd-rvw-cust-info.component";
 import { CrdRvwFamGuarComponent } from "./crd-rvw-fam-guar/crd-rvw-fam-guar.component";
 import { CrdRvwThirdPartyCheckingComponent } from "./crd-rvw-third-party-checking/crd-rvw-third-party-checking.component";
@@ -46,6 +46,11 @@ import { CrdRvwFinancialDataComponent } from "app/impl/NEW-NAP/sharing-component
 import { CrdRvwAppFinInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-fin-info/crd-rvw-app-fin-info-x.component";
 import { CrdRvwAppAppInfoXComponent } from "app/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-app-app-info/crd-rvw-app-app-info-x.component";
 import { CrdRvwAppPlafondInfoXDsfComponent } from "app/NEW-NAP/DSF/sharing-component-dsf/credit-review-component-dsf/crd-rvw-app-plafond-info-x-dsf/crd-rvw-app-plafond-info-x-dsf.component";
+import { CrdRvwGrpHistDataDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-grp-hist-data-dsf/crd-rvw-grp-hist-data-dsf.component";
+import { CrdRvwCustInfoXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-info-x-dsf.component";
+import { CrdRvwCustPersonalInfoXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-personal-info-x/crd-rvw-cust-personal-info-x-dsf.component";
+import { CrdRvwCustCompanyInfoXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-company-info-x/crd-rvw-cust-company-info-x-dsf.component";
+import { CrdRvwCustHistDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-cust-hist-data-x-dsf/crd-rvw-cust-hist-data-x-dsf.component";
 
 @NgModule({
     exports: [
@@ -78,7 +83,10 @@ import { CrdRvwAppPlafondInfoXDsfComponent } from "app/NEW-NAP/DSF/sharing-compo
         CrdRvwResultAnalysisComponent,
         CrdRvwFinancialDataComponent,
         CrdRvwAppFinInfoXComponent,
-        CrdRvwAppAppInfoXComponent
+        CrdRvwAppAppInfoXComponent,
+        CrdRvwGrpHistDataDsfComponent,
+        CrdRvwCustInfoXDsfComponent,
+        CrdRvwCustHistDataXDsfComponent
     ],
     imports: [
         CommonModule,
@@ -86,7 +94,8 @@ import { CrdRvwAppPlafondInfoXDsfComponent } from "app/NEW-NAP/DSF/sharing-compo
         ViewMainInfoComponentModule,
         AdInsSharedModule,
         SharedModule,
-        MatRadioModule
+        MatRadioModule,
+        MatTabsModule
     ],
     declarations: [
         CrdRvwCustInfoComponent,
@@ -128,7 +137,12 @@ import { CrdRvwAppPlafondInfoXDsfComponent } from "app/NEW-NAP/DSF/sharing-compo
         CrdRvwResultAnalysisComponent,
         CrdRvwFinancialDataComponent,
         CrdRvwAppFinInfoXComponent,
-        CrdRvwAppAppInfoXComponent
+        CrdRvwAppAppInfoXComponent,
+        CrdRvwGrpHistDataDsfComponent,
+        CrdRvwCustInfoXDsfComponent,
+        CrdRvwCustPersonalInfoXDsfComponent,
+        CrdRvwCustCompanyInfoXDsfComponent,
+        CrdRvwCustHistDataXDsfComponent
     ],
     providers: [
         NGXToastrService
