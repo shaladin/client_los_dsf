@@ -135,10 +135,6 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   resultPattern: Array<KeyValueObj>;
   Max17YO: Date;
   context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-  ogCustName: string;
-  ogIdNo: string;
-  ogBirthDt: string;
-  ogMobilePhnNo1: string;
 
   constructor(
     private regexService: RegexService,
@@ -535,8 +531,6 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
       }
       await this.http.post(URLConstant.GetLeadCustByLeadId, obj).toPromise().then(
         (response: LeadCustObj) => {
-          this.ogCustName = this.resLeadCustObj.CustName
-          this.ogIdNo = this.resLeadCustObj.IdNo
           this.resLeadCustObj = response;
 
           if (this.resLeadCustObj.LeadId != 0) {
@@ -673,8 +667,6 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
                 if(this.typePage == "update" && this.resLeadCustPersonalObj.BirthPlace == ""){
                   this.resLeadCustPersonalObj.BirthPlace = "-";
                 }
-                this.ogBirthDt = formatDate(this.resLeadCustPersonalObj.BirthDt, 'yyyy-MM-dd', 'en-US')
-                this.ogMobilePhnNo1 = this.resLeadCustPersonalObj.MobilePhnNo1
 
                 this.CustomerDataForm.patchValue({
                   Gender: this.resLeadCustPersonalObj.MrGenderCode,
@@ -1064,14 +1056,6 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
         }
       }
     }else if(this.typePage =="update"){
-      if (this.ogCustName != this.CustomerDataForm.controls.CustName.value
-          && this.ogIdNo != this.CustomerDataForm.controls.IdNo.value
-          && this.ogBirthDt != this.CustomerDataForm.controls.BirthDate.value
-          && this.ogMobilePhnNo1 != this.CustomerDataForm.controls.MobilePhone1.value)
-      {
-        this.toastr.warningMessage('Can not process Simple lead Update, Please do cancel lead and reinput on simple lead input');
-        return;
-      }
       this.leadInputObj = new LeadInputObj();
         this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
