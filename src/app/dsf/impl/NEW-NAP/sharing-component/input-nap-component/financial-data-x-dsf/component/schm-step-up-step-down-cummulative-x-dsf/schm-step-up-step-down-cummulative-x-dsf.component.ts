@@ -27,6 +27,7 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
   @Input() TrialCalc: boolean;
   @Input() InstAmt: number;
   @Output() RefreshSummary = new EventEmitter();
+  @Input() ProductOfferingCode: string;
   // Self Custom CR Automation Subsidy Dealer
   @Input() DealerSubsidyLock: boolean;
   // End Self Custom CR Automation Subsidy Dealer
@@ -45,6 +46,7 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
   // Self Custom CR Automation Subsidy Dealer
   IsDealerSubsidyLock: boolean = false;
   // End Self Custom CR Automation Subsidy Dealer
@@ -64,10 +66,10 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
     this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
 
-    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
-      this.PriceLabel = "Financing Amount";
-    }
     if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
       this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
         (response) => {
           this.listInstallment = response['InstallmentTable'];
@@ -76,6 +78,7 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -316,6 +319,8 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
       );
     } else {
       this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
 
       await this.http.post(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).toPromise().then(
@@ -364,8 +369,6 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
           this.SetNeedReCalculate(false);
         }
       );
-
-      this.RefreshSummary.emit();
     }
   }
 
@@ -485,6 +488,13 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
   }
 
   test() {
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 
 }

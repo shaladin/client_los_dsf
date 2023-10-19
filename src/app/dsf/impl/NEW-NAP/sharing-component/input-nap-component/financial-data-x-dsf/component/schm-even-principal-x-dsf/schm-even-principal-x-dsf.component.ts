@@ -27,6 +27,7 @@ export class SchmEvenPrincipalXDsfComponent implements OnInit {
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
   @Output() RefreshSummary = new EventEmitter();
+  @Input() ProductOfferingCode: string;
   // Self Custom CR Automation Subsidy Dealer
   @Input() DealerSubsidyLock: boolean;
   // End Self Custom CR Automation Subsidy Dealer
@@ -44,6 +45,7 @@ export class SchmEvenPrincipalXDsfComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
   // Self Custom CR Automation Subsidy Dealer
   IsDealerSubsidyLock: boolean = false;
   // End Self Custom CR Automation Subsidy Dealer
@@ -63,10 +65,10 @@ export class SchmEvenPrincipalXDsfComponent implements OnInit {
     this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
 
-    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
-      this.PriceLabel = "Financing Amount";
-    }
     if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
       this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
         (response) => {
           this.listInstallment = response['InstallmentTable'];
@@ -75,6 +77,7 @@ export class SchmEvenPrincipalXDsfComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     if (this.ParentForm.getRawValue().ExistingFinData) {
       this.EffRateAfterCalc = this.ParentForm.getRawValue().EffectiveRatePrcnt;
@@ -259,7 +262,8 @@ export class SchmEvenPrincipalXDsfComponent implements OnInit {
       );
     } else {
       this.calcEvenPrincipleObjForTrialCalc = this.ParentForm.getRawValue();
-
+      this.calcEvenPrincipleObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcEvenPrincipleObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       await this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentEvenPrincipalForTrialCalc, this.calcEvenPrincipleObjForTrialCalc).toPromise().then(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
@@ -305,8 +309,6 @@ export class SchmEvenPrincipalXDsfComponent implements OnInit {
 
         }
       );
-
-      this.RefreshSummary.emit();
     }
   }
 
@@ -459,6 +461,13 @@ export class SchmEvenPrincipalXDsfComponent implements OnInit {
   }
 
   test() {
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 
 }

@@ -29,6 +29,11 @@ export class FormEditCommGenerateXComponent implements OnInit {
   @Input() DictCalcMethod: { [id: string]: string } = {};
   @Input() SectionPosition: boolean = false;
   @Output() outputChangeEmp: EventEmitter<number> = new EventEmitter<any>();
+
+  //region DSF-7303 2.1.4
+  @Input() pph23:boolean
+  supplier:string = CommonConstant.CommissionIdentifierSupplier
+  //end region
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -560,10 +565,18 @@ export class FormEditCommGenerateXComponent implements OnInit {
       });
     }
 
+    //region DSF-7303 2.1.4
+    if(this.pph23 && this.identifier ==this.supplier){
+      this.parentForm.controls[this.identifier]["controls"][indexFormObj].HoldingTaxWithPenalty.value = 0;
+      appCommObj.TaxAmt = 0
+      TotalPenaltyAmt = 0
+    }
+    //end region
 
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
       HoldingTaxWithPenalty: (appCommObj.TaxAmt + TotalPenaltyAmt)
     });
+
 
     //this.ReCalcListAllocated(indexFormObj);
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({

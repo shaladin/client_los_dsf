@@ -36,6 +36,7 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
   @Output() RefreshSummary = new EventEmitter();
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
+  @Input() ProductOfferingCode: string;
   // Self Custom CR Automation Subsidy Dealer
   @Input() DealerSubsidyLock: boolean;
   // End Self Custom CR Automation Subsidy Dealer
@@ -60,6 +61,7 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
   // Self Custom CR Automation Subsidy Dealer
   IsDealerSubsidyLock: boolean = false;
   // End Self Custom CR Automation Subsidy Dealer
@@ -83,11 +85,10 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
     this.ParentForm.get("AppSupplEffectiveRatePrcnt").updateValueAndValidity();
 
-    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
-      this.PriceLabel = "Financing Amount";
-    }
-
     if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
       this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
         (response) => {
           this.listInstallment = response['InstallmentTable'];
@@ -96,6 +97,7 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -153,7 +155,7 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
       const OtherFee = obj.AppFee.find(x => x.MrFeeTypeCode == "OTHER");
 
       this.reportParameters = [
-        { ParamKey: 'ProductOffering', ParamValue: "" },
+        { ParamKey: 'ProductOffering', ParamValue: obj.lookupProductOffering.value },
         { ParamKey: 'CustName', ParamValue: obj.CustName },
         { ParamKey: 'Addr', ParamValue: obj.Addr },
         { ParamKey: 'MobilePhone', ParamValue: obj.MobilePhone },
@@ -461,6 +463,8 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
       
     } else {
       this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcRegFixObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcRegFixObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       await this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentRegularFixForTrialCalc, this.calcRegFixObjForTrialCalc).toPromise().then(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
@@ -511,14 +515,13 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
           this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
-          this.showGenerateReportBtn = false;
+          this.showGenerateReportBtn = true;
           this.setReportData();
           if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
             this.RefreshSubsidy.emit();
           }
         }
       );
-      this.RefreshSummary.emit();
     }
   }
 
@@ -715,6 +718,13 @@ export class SchmRegulerFixXDsfComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 
 }

@@ -21,7 +21,7 @@
                                          [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod"
                                          [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier"
                                          [maxAllocatedAmount]="maxAllocAmt"
-                                         [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos"
+                                         [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" [pph23]="pph23"
                                          (outputChangeEmp)="ChangeEmpPos($event)">
           </app-form-edit-comm-generate-x>
           <app-form-edit-comm-generate-x #Form2 *ngIf="OnForm2 && !HideForm2" [hidden]="HideForm2"
@@ -114,7 +114,7 @@
         </div>
         <div class="form-actions right">
           <button type="button" (click)="NewCalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>
-            <i class="far fa-check-square"></i> Calculate
+            <i class="far fa-check-square"></i> Calculate 
           </button>
         </div>
         <!-- Summary -->

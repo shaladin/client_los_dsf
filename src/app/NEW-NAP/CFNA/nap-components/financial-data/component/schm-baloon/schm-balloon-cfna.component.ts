@@ -22,6 +22,7 @@ export class SchmBalloonCFNAComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
   @Input() TrialCalc: boolean = false;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -31,6 +32,7 @@ export class SchmBalloonCFNAComponent implements OnInit {
   listInstallment: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
@@ -55,6 +57,9 @@ export class SchmBalloonCFNAComponent implements OnInit {
           }
         });
       this.TrialCalc = false;
+    }
+    if (this.TrialCalc) {
+      this.GetProductOfferingVersion();
     }
   }
 
@@ -122,7 +127,14 @@ export class SchmBalloonCFNAComponent implements OnInit {
       return;
     }
     this.calcBalloonObj = this.ParentForm.getRawValue();
-    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), this.calcBalloonObj).subscribe(
+
+    if (this.TrialCalc) {
+      this.calcBalloonObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcBalloonObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcBalloonObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
+    }
+      
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), this.TrialCalc ? this.calcBalloonObjForTrialCalc :this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -273,5 +285,12 @@ export class SchmBalloonCFNAComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }

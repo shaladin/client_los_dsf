@@ -16,6 +16,8 @@ export class CalcEvenPrincipleObjForTrialCalc {
     EffectiveRatePrcnt: number;
     FlatRatePrcnt: number;
     Fees: Array<AppFeeObj> = new Array<AppFeeObj>()
+    ProdOfferingCode: string;
+    ProdOfferingVersion: string;
 
     constructor() {
     }

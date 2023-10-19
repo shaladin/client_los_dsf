@@ -21,6 +21,10 @@ import { AppSourceOfficeMemberAddComponent } from './app-source/app-source-offic
 import { UcaddressModule } from '@adins/ucaddress';
 import { AdInsModule } from 'app/components/adins-module/adins.module';
 import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
+import { AppSourcePagingXComponent } from 'app/impl/setting/app-source/app-source-paging-x/app-source-paging-x.component';
+import { AppSourceAddEditXComponent } from 'app/impl/setting/app-source/app-source-add-edit-x/app-source-add-edit-x.component';
+import { AppSourceOfficeMemberPagingXComponent } from 'app/impl/setting/app-source/app-source-office-member/app-source-office-member-paging-x/app-source-office-member-paging-x.component';
+import { AppSourceOfficeMemberAddXComponent } from 'app/impl/setting/app-source/app-source-office-member/app-source-office-member-add-x/app-source-office-member-add-x.component';
 
 
 @NgModule({
@@ -49,7 +53,11 @@ import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.modu
     AppSourceAddEditComponent,
     AppSourcePagingComponent,
     AppSourceOfficeMemberPagingComponent,
-    AppSourceOfficeMemberAddComponent
+    AppSourceOfficeMemberAddComponent,
+    AppSourcePagingXComponent,
+    AppSourceAddEditXComponent,
+    AppSourceOfficeMemberPagingXComponent,
+    AppSourceOfficeMemberAddXComponent
   ],
   providers: [
     NGXToastrService

@@ -209,27 +209,27 @@
                                 [ParentForm]="SimulationDetailForm"
                                 [BizTemplateCode]="BizTmpltCode"
                                 [TrialCalc]="TrialCalc"
-                                (RefreshSummary)="RefreshSummary($event)"></app-schm-reguler-fix-x-dsf>
+                                [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-reguler-fix-x-dsf>
         <app-schm-irregular-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'IR'"
                               [ParentForm]="SimulationDetailForm"
                               [TrialCalc]="TrialCalc"
                               [BizTemplateCode]="BizTmpltCode"
-                              (RefreshSummary)="RefreshSummary($event)"></app-schm-irregular-x-dsf>
+                              [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-irregular-x-dsf>
         <app-schm-step-up-step-down-normal-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'STNM'"
                                              [ParentForm]="SimulationDetailForm"
                                              [BizTemplateCode]="BizTmpltCode"
                                              [TrialCalc]="TrialCalc"
-                                             (RefreshSummary)="RefreshSummary($event)"></app-schm-step-up-step-down-normal-x-dsf>
+                                             [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-step-up-step-down-normal-x-dsf>
         <app-schm-step-up-step-down-leasing-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'STLS'"
                                               [ParentForm]="SimulationDetailForm"
                                               [BizTemplateCode]="BizTmpltCode"
                                               [TrialCalc]="TrialCalc"
-                                              (RefreshSummary)="RefreshSummary($event)"></app-schm-step-up-step-down-leasing-x-dsf>
+                                              [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-step-up-step-down-leasing-x-dsf>
         <app-schm-step-up-step-down-cummulative-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'STCM'"
                                                   [ParentForm]="SimulationDetailForm"
                                                   [BizTemplateCode]="BizTmpltCode"
                                                   [TrialCalc]="TrialCalc"
-                                                  (RefreshSummary)="RefreshSummary($event)"></app-schm-step-up-step-down-cummulative-x-dsf>
+                                                  [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-step-up-step-down-cummulative-x-dsf>
         <app-schm-balloon-x-dsf *ngIf="SimulationDetailForm.controls.MrInstSchemeCode.value == 'BL'"
                             [ParentForm]="SimulationDetailForm"
                             [TrialCalc]="TrialCalc"

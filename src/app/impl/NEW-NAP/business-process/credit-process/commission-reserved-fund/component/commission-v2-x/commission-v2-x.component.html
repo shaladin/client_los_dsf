@@ -11,13 +11,13 @@
               <div class="col-md-8">
                 <select style="width:50%" class="form-control" formControlName="AllocType" (change)="inputTypeChange()">
                   <option value="{{AllocTypeAmt}}">Amount</option>
-                  <option value="{{AllocTypePerc}}">Percentage</option>
+                  <option value="{{AllocTypePerc}}">Percentage </option>
                 </select>
               </div>
             </div>
             <app-form-commission-generate-x #Form1 *ngIf="OnForm1 && !HideForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier" [maxAllocatedAmount] = "maxAllocAmt"
-              [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" (outputChangeEmp)="ChangeEmpPos($event)">
+              [SectionPosition]="SectionPosition" [ListSupplEmpPos]="ListSupplEmpPos" [pph23]="pph23" (outputChangeEmp)="ChangeEmpPos($event)" (supplierCode)="GetSupplierCode($event)">
             </app-form-commission-generate-x>
             <app-form-commission-generate-x #Form2 *ngIf="OnForm2 && !HideForm2" [hidden]="HideForm2" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [DictCalcMethod]="DictCalcMethod" [identifier]="identifierSupplierEmp" [FormInputObj]="FormInputObjSupplierEmp" [maxAllocatedAmount] = "maxAllocAmt" 
@@ -30,7 +30,7 @@
           </div>
           <div class="form-actions right" *ngIf="BizTemplateCode == 'CFNA'">
           <button type="button" (click)="NewCalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>
-            <i class="far fa-check-square"></i> Calculate
+            <i class="far fa-check-square"></i> Calculate 
           </button>
           </div>
           <!-- Summary -->
