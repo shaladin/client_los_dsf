@@ -134,6 +134,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   customPattern: Array<CustomPatternObj>;
   resultPattern: Array<KeyValueObj>;
   Max17YO: Date;
+  custNo: string = "";
   context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(
@@ -931,6 +932,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
   setLeadCust() {
     this.leadInputObj.LeadCustObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
     this.leadInputObj.LeadCustObj.LeadId = this.LeadId;
+    this.leadInputObj.LeadCustObj.CustNo = this.custNo;
     this.leadInputObj.LeadCustObj.CustName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustObj.MrIdTypeCode = this.CustomerDataForm.controls["MrIdTypeCode"].value;
     this.leadInputObj.LeadCustObj.MrCustModelCode = this.CustomerDataForm.controls["CustModel"].value;
@@ -1131,6 +1133,7 @@ export class NewLeadInputCustDataDsfComponent implements OnInit {
             IdNo: this.resLeadCustObj.IdNo,
             Npwp: this.resLeadCustObj.TaxIdNo,
           });
+          this.custNo = this.resLeadCustObj.CustNo;
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           let obj = {
