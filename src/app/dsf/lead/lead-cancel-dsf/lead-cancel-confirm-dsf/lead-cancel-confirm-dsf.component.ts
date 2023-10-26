@@ -7,6 +7,7 @@ import { LeadConfirmCancelObj } from 'app/shared/model/request/lead/lead-confirm
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -118,6 +119,7 @@ export class LeadCancelConfirmDsfComponent implements OnInit {
 
       this.http.post(urlPost, leadObj).subscribe(
         response => {
+          this.http.post(URLConstantDsf.UpdateLeadStepStatBulkByLeadId, { listLeadId:  tempId}).subscribe(() => {})
           this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [this.PagingLink], {"MrLeadTypeCode" : this.MrLeadTypeCode});
         }
