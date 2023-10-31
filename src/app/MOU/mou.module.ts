@@ -160,6 +160,7 @@ import { ChangeMouDetailHistoryXComponent } from 'app/impl/MOU/change-mou/change
 import { MouCustCompanyMainXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-company-main/mou-cust-company-main-x.component';
 import { MouCustPersonalMainXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-personal-main/mou-cust-personal-main-x.component';
 import { MouCustMgmntShrholderXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mou-cust-mgmnt-shrholder-x.component';
+import { MouCustMgmntShrholderPublicXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -264,6 +265,7 @@ export const customCurrencyMaskConfig = {
     MouCustMgmntShrholderComponent,
     MouCustMgmntShrholderXComponent,
     MouCustMgmntShrholderPublicComponent,
+    MouCustMgmntShrholderPublicXComponent,
     SimilarMouPersonalDataComponent,
     SimilarMouCompanyDataComponent,
     MouDupCheckPagingComponent,
