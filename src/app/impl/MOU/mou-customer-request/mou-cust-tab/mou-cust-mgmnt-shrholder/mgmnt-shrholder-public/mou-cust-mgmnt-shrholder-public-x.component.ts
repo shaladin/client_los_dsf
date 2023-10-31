@@ -16,12 +16,12 @@ import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
-    selector: 'app-mou-cust-mgmnt-shrholder-public',
-    templateUrl: './mou-cust-mgmnt-shrholder-public.component.html',
+    selector: 'app-mou-cust-mgmnt-shrholder-public-x',
+    templateUrl: './mou-cust-mgmnt-shrholder-public-x.component.html',
     viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 
-export class MouCustMgmntShrholderPublicComponent implements OnInit {
+export class MouCustMgmntShrholderPublicXComponent implements OnInit {
 
     @Input() MouCustCompanyId: number = 0;
     @Input() MouCustCompanyMgmntShrholderId: number = 0;
