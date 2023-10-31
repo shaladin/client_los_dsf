@@ -53,6 +53,7 @@ export class MouCustPersonalMainXComponent implements OnInit {
   MaxDate: Date;
   npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
   isReadOnly:boolean = false
+  isReadOnlyForIdNo:boolean = false
   constructor(
     private regexService: RegexService,
     private fb: FormBuilder,
@@ -135,7 +136,7 @@ export class MouCustPersonalMainXComponent implements OnInit {
       this.InputLookupCustomerObj.jsonSelect = { CustName: response["CustObj"].CustName };
       this.selectedCustNo = response["CustObj"].CustNo;
       this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
-      this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
+      this.isReadOnlyForIdNo = true
       this.isReadOnly = true
     }
 
@@ -228,7 +229,7 @@ export class MouCustPersonalMainXComponent implements OnInit {
       if(this.custDataPersonalObj.MouCustObj.CustName != null || this.custDataPersonalObj.MouCustObj.CustName != "" || this.custDataPersonalObj.MouCustObj.CustName != undefined)
       {
         this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
-        this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
+        this.isReadOnlyForIdNo = true
         this.isReadOnly = true
       }
       this.selectedCustNo = this.custDataPersonalObj.MouCustObj.CustNo;
@@ -309,6 +310,10 @@ export class MouCustPersonalMainXComponent implements OnInit {
     if(this.npwpOrKtp.includes(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value)){
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValue(this.parentForm.controls[this.identifier]['controls'].IdNo.value)
     }
+  }
+
+  onChangeIdNo(){
+    this.npwpKtpChecking()
   }
 
   async bindAllRefMasterObj() {
