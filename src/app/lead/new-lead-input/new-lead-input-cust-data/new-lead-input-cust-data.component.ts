@@ -267,7 +267,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     );
     this.genderType = new RefMasterObj();
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).toPromise().then(
       (response) => {
         this.tempGender = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ Gender: this.tempGender[0].Key });
@@ -276,7 +276,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
     this.idTypeCode = new RefMasterObj();
     this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).toPromise().then(
       (response) => {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -284,7 +284,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
     this.maritalStatCode = new RefMasterObj();
     this.maritalStatCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).toPromise().then(
       (response) => {
         this.tempMrMaritalStatCode = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -294,7 +294,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.custModel = new RefMasterObj();
     this.custModel.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
     this.custModel.MappingCode = CommonConstant.CustTypePersonal;
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).toPromise().then(
       (response) => {
         this.listCustModel = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });
