@@ -102,6 +102,13 @@ export class MouCustPersonalMainXComponent implements OnInit {
     await this.initLookup();
     await this.initLookupCountry();
     await this.bindCustData();
+
+    if(this.npwpOrKtp.includes(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value)){
+      this.isReadOnly = true
+    }
+    else{
+      this.isReadOnly = false
+    }
   }
 
   CopyCustomerEvent(event) {
@@ -434,6 +441,13 @@ export class MouCustPersonalMainXComponent implements OnInit {
     }
     idExpiredDate.updateValueAndValidity();
     this.setValidatorPattern();
+    
+    if(this.npwpOrKtp.includes(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value)){
+      this.isReadOnly = true
+    }
+    else{
+      this.isReadOnly = false
+    }
   }
 
   isLocal: boolean = true;
