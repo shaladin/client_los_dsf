@@ -424,6 +424,7 @@ export class MouCustPersonalMainXComponent implements OnInit {
       this.parentForm.controls[this.identifier].patchValue({
         IdExpiredDt: '',
       });
+      this.npwpKtpChecking()
     }
     if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == this.MrIdTypeCodeNPWP) {
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
