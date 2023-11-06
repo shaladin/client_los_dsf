@@ -70,4 +70,5 @@ export class URLConstantDsf {
     public static AddAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/AddAppLoanPurposeDsf";
     public static EditAppLoanPurposeDsf = environment.losUrl + "/AppLoanPurposeDsf/EditAppLoanPurposeDsf";
   
+    public static UpdateLeadStepStatBulkByLeadId = environment.losUrl + "/v1" + "/PubSubDsf/UpdateLeadStepStatBulkByLeadId";
 }
