@@ -334,6 +334,9 @@ export class CustMainDataXComponent implements OnInit {
     if(this.MrCustTypeCode == this.CustTypePersonal){
       this.npwpKtpChecking()
     }
+    else if (this.MrCustTypeCode == this.CustTypeCompany){
+      this.isReadOnly = true
+    }
   }
 
   async getAddrTypeOwnershipRequired(){
