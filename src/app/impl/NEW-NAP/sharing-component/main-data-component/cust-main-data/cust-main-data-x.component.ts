@@ -1050,8 +1050,8 @@ export class CustMainDataXComponent implements OnInit {
       this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
+          this.isReadOnly = true 
         });
-        this.isReadOnly = true 
     }
     await this.disableInput();
   }

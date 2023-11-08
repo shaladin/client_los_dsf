@@ -580,7 +580,7 @@
                   <label class="col-md-1"></label>
                   <label class="col-md-2 adins-required-label" translate>Owner Id No</label>
                   <div class="col-md-3">
-                    <input type="text" class="form-control" formControlName="OwnerIdNo" required
+                    <input type="text" class="form-control" [readOnly]="isReadOnly" formControlName="OwnerIdNo" required 
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerIdNo.invalid }">
                     <lib-uc-show-errors [control]="AddCollForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>

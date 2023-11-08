@@ -589,10 +589,10 @@ export class CollateralAddEditXComponent implements OnInit {
     this.AddCollForm.controls.OwnerName.disable();
     this.AddCollForm.controls.SelfOwner.disable();
     this.AddCollForm.controls.OwnerMobilePhn.disable();
-    this.AddCollForm.controls.OwnerIdNo.disable();
     this.AddCollForm.controls.MrIdTypeCode.disable();
     this.inputAddressObjForColl.isReadonly = true;
     this.inputAddressObjForLoc.isReadonly = true;
+    this.isReadOnly = true
 
     for(let i = 0; i < this.AddCollForm.controls.items["controls"].length; i++){
       let formGroupItem = this.AddCollForm.controls.items["controls"][i] as FormGroup;
@@ -629,6 +629,7 @@ export class CollateralAddEditXComponent implements OnInit {
     this.inputAddressObjForColl.isReadonly = false;
     this.inputAddressObjForLoc.isReadonly = false;
     this.AddCollForm.controls.collOwnerAddress.enable();
+    this.isReadOnly = false
   }
 
   async collateralTypeHandler(isOnInit: boolean = false) {
@@ -752,27 +753,28 @@ export class CollateralAddEditXComponent implements OnInit {
           this.AddCollForm.controls.OwnerRelationship.disable();
           this.AddCollForm.controls.OwnerMobilePhn.disable();
           this.AddCollForm.controls.MrIdTypeCode.disable();
-          this.isReadOnly = true
           this.AddCollForm.controls.collOwnerAddress.disable();
           this.AddCollForm.controls.OwnerProfessionCode.disable();
           this.AddCollForm.controls.MrOwnerTypeCode.disable();
-
+          
           this.ChangeMrIdTypeCode(this.AppCustObj.MrIdTypeCode)
+          this.isReadOnly = true
         }
         )
     }else {
+      console.log("kampret")
+      this.isReadOnly = false
       this.AddCollForm.controls.OwnerName.enable();
       this.AddCollForm.controls.OwnerRelationship.enable();
       this.AddCollForm.controls.OwnerMobilePhn.enable();
       this.AddCollForm.controls.MrIdTypeCode.enable();
-      this.isReadOnly = false
       this.AddCollForm.controls.collOwnerAddress.enable();
       this.AddCollForm.controls.OwnerProfessionCode.enable();
       this.AddCollForm.controls.MrOwnerTypeCode.enable();
       this.InputLookupProfessionObj.isDisable = false;
       this.OwnerTypeChange(this.AddCollForm.get('MrOwnerTypeCode').value, true);
+      this.ChangeMrIdTypeCode(this.AppCustObj.MrIdTypeCode)
     }
-    this.ChangeMrIdTypeCode(this.AppCustObj.MrIdTypeCode)
   }
 
   copyToLocationAddr() {
@@ -944,7 +946,7 @@ export class CollateralAddEditXComponent implements OnInit {
             this.AddCollForm.controls.OwnerRelationship.disable();
             this.AddCollForm.controls.OwnerMobilePhn.disable();
             this.AddCollForm.controls.MrIdTypeCode.disable();
-            this.AddCollForm.controls.OwnerIdNo.disable();
+            this.isReadOnly = true
             this.AddCollForm.controls.collOwnerAddress.disable();
             this.AddCollForm.controls.OwnerProfessionCode.disable();
             this.AddCollForm.controls.MrOwnerTypeCode.disable();
