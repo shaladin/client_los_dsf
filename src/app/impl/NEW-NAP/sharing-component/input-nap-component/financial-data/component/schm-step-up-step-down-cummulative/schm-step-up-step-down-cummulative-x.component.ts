@@ -25,6 +25,7 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
   @Input() InstAmt: number;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
@@ -40,6 +41,7 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -68,6 +70,7 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -302,6 +305,8 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
       );
     } else {
       this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
 
       this.http.post(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).subscribe(
@@ -472,5 +477,11 @@ export class SchmStepUpStepDownCummulativeXComponent implements OnInit {
   test() {
   }
 
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
+  }
 
 }

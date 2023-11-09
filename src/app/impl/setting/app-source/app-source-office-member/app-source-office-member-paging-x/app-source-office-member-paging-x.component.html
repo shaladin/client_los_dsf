@@ -1,0 +1,12 @@
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"> </lib-ucviewgeneric>
+<div class="ucSearch-Button-Right">
+  <span class="mr-1">
+      <button type="button" class="backButton" [routerLink]="['/Setting/AppSource/PagingX']">
+        <i class="fa fa-arrow-left"> </i>&nbsp;<span translate>Back</span>
+      </button>
+      <button type="button" class="addButton" [routerLink]="['/Setting/AppSource/OfficeMember/AddX']" [queryParams]="{RefAppSrcId:this.RefAppSrcId}">
+        <i class="ft-plus-circle"></i>&nbsp;<span translate>Add</span>
+      </button>
+  </span>
+</div>
+<lib-ucpaging id="memberUcPaging" [searchObj]="inputPagingObj"></lib-ucpaging>

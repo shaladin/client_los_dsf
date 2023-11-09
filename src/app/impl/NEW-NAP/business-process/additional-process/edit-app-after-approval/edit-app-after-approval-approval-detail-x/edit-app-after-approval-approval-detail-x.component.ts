@@ -33,7 +33,7 @@ export class EditAppAfterApprovalApprovalDetailXComponent implements OnInit {
   isViewReady: boolean = false;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   RefMasterUsageCode = [];
-
+  
   constructor(private router: Router, 
     private route: ActivatedRoute, 
     private toastr: NGXToastrService,

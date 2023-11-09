@@ -26,6 +26,7 @@ export class SchmIrregularXComponent implements OnInit {
   @Input() NumOfInst: number;
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -38,6 +39,7 @@ export class SchmIrregularXComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -67,6 +69,7 @@ export class SchmIrregularXComponent implements OnInit {
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
       this.SetEntryInstallment()
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -242,6 +245,8 @@ export class SchmIrregularXComponent implements OnInit {
       );
     } else {
       this.calcIrregularObjForTrialCalc = this.ParentForm.value;
+      this.calcIrregularObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcIrregularObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.http.post<ResponseCalculateObjX>(environment.losUrl + "/v1" + "/AppFinData/CalculateIrregularForTrialCalc", this.calcIrregularObjForTrialCalc).subscribe(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
@@ -362,6 +367,13 @@ export class SchmIrregularXComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 
 }

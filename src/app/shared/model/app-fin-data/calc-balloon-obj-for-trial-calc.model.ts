@@ -19,6 +19,8 @@ export class CalcBalloonObjForTrialCalc {
     EffectiveRatePrcnt: number;
     FlatRatePrcnt: number;
     BalloonValueAmt: number;
+    ProdOfferingCode: string;
+    ProdOfferingVersion: string;
 
     Fees: Array<AppFeeObj> = new Array<AppFeeObj>()
 

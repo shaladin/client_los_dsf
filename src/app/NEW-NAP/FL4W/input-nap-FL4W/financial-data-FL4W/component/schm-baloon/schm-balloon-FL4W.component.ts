@@ -22,6 +22,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
   @Input() TrialCalc: boolean;
+  @Input() ProductOfferingCode: string;
 
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -31,6 +32,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
   calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
   listInstallment: any;
   IsTrialCalc: boolean = false;
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -50,6 +52,7 @@ export class SchmBalloonFL4WComponent implements OnInit {
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
     if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     else
     {
@@ -168,6 +171,8 @@ export class SchmBalloonFL4WComponent implements OnInit {
     );
   } else {
       this.calcBalloonObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcBalloonObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcBalloonObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloonForTrialCalc, this.calcBalloonObjForTrialCalc).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
@@ -339,4 +344,10 @@ export class SchmBalloonFL4WComponent implements OnInit {
     return true;
   }
 
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
+  }
 }

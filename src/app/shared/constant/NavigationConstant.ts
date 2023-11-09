@@ -68,8 +68,11 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_ADD_TC_PAGING; //'/Nap/AddProcess/ReturnHandlingAddTc/Paging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_ADD_TC_DETAIL; //'/Nap/AddProcess/ReturnHandlingAddTc/Detail'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_PAGING; //'/Nap/AddProcess/ReturnHandlingCollateral/Paging'
+  public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING_X = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.RETURN_HANDLING_COLL_PAGING; //'/Nap/AddProcess/ReturnHandlingCollateral/PagingX'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_EDIT; //'/Nap/AddProcess/ReturnHandlingCollateral/Edit'
+  public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT_X = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.RETURN_HANDLING_COLL_EDIT; //'/Nap/AddProcess/ReturnHandlingCollateral/EditX'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_DETAIL; //'/Nap/AddProcess/ReturnHandlingCollateral/Detail'
+  public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_DETAIL_X = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.RETURN_HANDLING_COLL_DETAIL; //'/Nap/AddProcess/ReturnHandlingCollateral/Detail'
   public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantX.RETURN_HANDLING_PAGING; //'/Nap/AddProcess/ReturnHandling/PagingX'
   public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_APP_PAGING; //'Nap/AddProcess/ReturnHandling/EditAppPaging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_CUST_PAGING; //'Nap/AddProcess/ReturnHandling/editcustpaging'
@@ -412,7 +415,7 @@ export class NavigationConstant {
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
   public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
   public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
-  public static LTKM_RTN_HANDLING_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_DETAIL; //'/Ltkm/ReturnHandling/Detail'
+  public static LTKM_RTN_HANDLING_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstantX.RTN_HANDLING_DETAIL; //'/Ltkm/ReturnHandling/Detail'
   //#endregion
 
   //#region Task Reassignment
@@ -470,6 +473,10 @@ export class NavigationConstant {
   public static PROD_OFFERING_RTN_PAGING = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_RTN_PAGING; //'/Product/ProdOffering/ReturnPaging'
   public static PROD_HO_UNAUTHORIZED = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.UNAUTHORIZED; //'/Product/Unauthorized'
 
+  public static PRODUCT_HO_PAGING_X = "/" + PathConstant.LR_PRODUCT + "/" + PathConstantX.HO_PAGING_X; //'/Product/HOPagingX'
+  public static PRODUCT_HO_ADD_X = "/" + PathConstant.LR_PRODUCT + "/" + PathConstantX.HO_ADD_X; //'/Product/HOAddX'
+  public static PRODUCT_HO_ADD_DETAIL_X = "/" + PathConstant.LR_PRODUCT + "/" + PathConstantX.HO_ADD_DETAIL_X; //'/Product/HOAddDetailX'
+  public static PRODUCT_HO_RTN_PAGING_X = "/" + PathConstant.LR_PRODUCT + "/" + PathConstantX.HO_RTN_PAGING_X; //'/Product/HOReturnPagingX'
   //#region TRIAL
   public static TRIAL_CALC = "/" + PathConstant.LR_TRIAL_CALC + "/" + PathConstantX.TRIAL_CALC_X; //'/TrialCalculation/Trial-Calculation'
 
@@ -479,6 +486,11 @@ export class NavigationConstant {
 
   //Setting
   public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
+
+  public static SETTING_APP_SOURCE_PAGING_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_PAGING_X; //'/Setting/AppSource/PagingX'
+  public static SETTING_APP_SOURCE_DETAIL_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_DETAIL_X; //'/Setting/AppSource/DetailX'
+  public static SETTING_APP_SOURCE_OFFICE_MBR_PAGING_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_OFFICE_MBR_PAGING_X; //'/Setting/AppSource/OfficeMember/PagingX'
+  public static SETTING_APP_SOURCE_OFFICE_MBR_ADD_X = "/" + PathConstant.SETTING + "/" + PathConstantX.APP_SRC_OFFICE_MBR_ADD_X; //'/Setting/AppSource/OfficeMember/AddX'
   //EndSettings
 
   //Cessie

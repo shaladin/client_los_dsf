@@ -26,6 +26,7 @@ export class SchmBalloonXComponent implements OnInit {
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
   @Input() BizTemplateCode: string;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -40,6 +41,7 @@ export class SchmBalloonXComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -70,6 +72,7 @@ export class SchmBalloonXComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -282,6 +285,8 @@ export class SchmBalloonXComponent implements OnInit {
       );
     } else {
       this.calcBalloonObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcBalloonObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcBalloonObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentBalloonForTrialCalc, this.calcBalloonObjForTrialCalc).subscribe(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
@@ -526,6 +531,13 @@ export class SchmBalloonXComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 
 }
