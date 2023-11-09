@@ -87,7 +87,7 @@
       },
       {
         "type": "dropdown",
-        "name": "CASE WHEN DATEDIFF(second,sadrl.DTM_CRT,GETDATE()) > CONVERT(INT,(SELECT GS_VALUE FROM FOUNDATION_QA.dbo.GENERAL_SETTING WHERE GS_CODE = 'AUTO_DEBIT_DIFF_TIME')) THEN 'YES' ELSE 'NO' END",
+        "name": "CASE WHEN DATEDIFF(second,sadrl.DTM_CRT,GETDATE()) > CONVERT(INT,(SELECT GS_VALUE  FROM V_GENERAL_SETTING WHERE GS_CODE = 'AUTO_DEBIT_DIFF_TIME')) THEN 'YES' ELSE 'NO' END",
         "id": "IsExpiredId",
         "value": "",
         "placeholder": "Placeholder",
@@ -157,7 +157,7 @@
         "type": "sort",
         "position": "center",
         "label": "Is Expired",
-        "name": "CASE WHEN DATEDIFF(second,sadrl.DTM_CRT,GETDATE()) > CONVERT(INT,(SELECT GS_VALUE FROM FOUNDATION_QA.dbo.GENERAL_SETTING WHERE GS_CODE = 'AUTO_DEBIT_DIFF_TIME')) THEN 'YES' ELSE 'NO' END"
+        "name": "CASE WHEN DATEDIFF(second,sadrl.DTM_CRT,GETDATE()) > CONVERT(INT,(SELECT GS_VALUE FROM V_GENERAL_SETTING WHERE GS_CODE = 'AUTO_DEBIT_DIFF_TIME')) THEN 'YES' ELSE 'NO' END"
       },
       {
         "type": "label",
