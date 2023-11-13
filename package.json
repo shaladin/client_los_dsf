@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "5.15.5-1",
+  "version": "5.15.7-1",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -26,6 +26,7 @@
   "dependencies": {
     "@adins/uc-attribute": "^1.0.3",
     "@adins/uc-directive-upper-case": "^1.1.1",
+    "@adins/uc-directive-validate-date": "1.0.5",
     "@adins/uc-show-errors": "^1.0.8",
     "@adins/uc-subsection": "^1.0.5",
     "@adins/ucaddress": "^1.1.6",
@@ -120,7 +121,7 @@
     "ngx-spinner": "^7.1.4",
     "ngx-toastr": "9.1.1",
     "ngx-ui-switch": "7.0.1",
-    "node-sass": "4.13.1",
+    "node-sass": "4.14.1",
     "nouislider": "12.0.0",
     "npm": "^6.14.15",
     "primeicons": "^1.0.0",
