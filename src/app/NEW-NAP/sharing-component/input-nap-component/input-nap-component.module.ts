@@ -148,6 +148,7 @@ import { UcInsuranceXComponent } from "app/impl/NEW-NAP/sharing-component/input-
 import { UcInsuranceDetailXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data/uc-insurance-x/uc-insurance-detail-x/uc-insurance-detail-x.component";
 import { TcDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/tc-data/tc-data-x.component";
 import { LifeInsuranceDataXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/life-insurance-data/life-insurance-data-x.component";
+import { CollateralAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -211,6 +212,7 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditComponent,
     AssetDataAddEditXComponent,
     CollateralAddEditComponent,
+    CollateralAddEditXComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
     FinancialDataFctrComponent,
@@ -355,6 +357,7 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditComponent,
     AssetDataAddEditXComponent,
     CollateralAddEditComponent,
+    CollateralAddEditXComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
     FinancialDataFctrComponent,

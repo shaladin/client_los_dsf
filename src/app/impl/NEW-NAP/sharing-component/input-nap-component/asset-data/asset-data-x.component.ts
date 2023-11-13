@@ -106,6 +106,9 @@ export class AssetDataXComponent implements OnInit {
   readonly CF4W = CommonConstant.CF4W;
   readonly FL4W = CommonConstant.FL4W;
 
+  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
+  isReadOnly:boolean = false;
+
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
     FullAssetName: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -1538,7 +1541,7 @@ export class AssetDataXComponent implements OnInit {
       this.InputLookupProfessionObj.isDisable = true;
       this.AssetDataForm.controls["OwnerName"].disable();
       this.AssetDataForm.controls["MrIdTypeCode"].disable();
-      this.AssetDataForm.controls["OwnerIdNo"].disable();
+      this.isReadOnly = true
       this.AssetDataForm.controls["MrOwnerRelationshipCode"].disable();
       this.AssetDataForm.controls["OwnerMobilePhnNo"].disable();
       this.AssetDataForm.controls["ownerData"].disable();
@@ -1550,13 +1553,15 @@ export class AssetDataXComponent implements OnInit {
       this.InputLookupProfessionObj.isDisable = false;
       this.AssetDataForm.controls["OwnerName"].enable();
       this.AssetDataForm.controls["MrIdTypeCode"].enable();
-      this.AssetDataForm.controls["OwnerIdNo"].enable();
+      this.isReadOnly = false
       this.AssetDataForm.controls["MrOwnerRelationshipCode"].enable();
       this.AssetDataForm.controls["OwnerMobilePhnNo"].enable();
       this.AssetDataForm.controls["ownerData"].enable();
       this.AssetDataForm.controls["OwnerAddrType"].enable();
       this.AssetDataForm.controls["MrOwnerTypeCode"].enable();
     };
+
+    this.ChangeMrIdTypeCode(this.AssetDataForm.controls["MrIdTypeCode"].value);
   }
 
   async getAllAssetData() {
@@ -2964,7 +2969,7 @@ export class AssetDataXComponent implements OnInit {
   }
 
   ChangeMrIdTypeCode(MrIdTypeCode: string) {
-    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+    if (this.npwpOrKtp.includes(MrIdTypeCode)) {
       this.AssetDataForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
     }

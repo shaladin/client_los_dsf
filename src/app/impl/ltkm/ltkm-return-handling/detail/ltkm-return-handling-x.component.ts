@@ -62,6 +62,8 @@ import { AddressService } from 'app/shared/services/custAddr.service';
 import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
 import { AppObj } from 'app/shared/model/app/app.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { LtkmCustPersonalMainDataXComponent } from '../../ltkm-request/additional-component/cust-personal-main-data/cust-personal-main-data-x.component';
+import { LtkmCustCompanyMainDataXComponent } from '../../ltkm-request/additional-component/company/cust-company-main-data/cust-company-main-data-x.component';
 @Component({
     selector: 'app-ltkm-return-handling-x',
     templateUrl: './ltkm-return-handling-x.component.html',
@@ -69,7 +71,7 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 })
 
 export class LtkmReturnHandlingXComponent implements OnInit {
-    @ViewChild(LtkmCustPersonalMainDataComponent) mainDataComponent;
+    @ViewChild(LtkmCustPersonalMainDataXComponent) mainDataComponent;
     @ViewChild(CustPersonalContactInformationComponent) custContactInformationComponent;
     @ViewChild(LtkmCustJobDataXComponent) custJobDataComponent;
     @ViewChild(LtkmCustGrpMemberComponent) custGrpMemberComponent;
@@ -79,7 +81,7 @@ export class LtkmReturnHandlingXComponent implements OnInit {
     @ViewChild(LtkmLegalDocComponent) custCompanyLegalDocComponent;
     @ViewChild(LtkmMgmntShrholderComponent) custCompanyManagementShareholderComponent;
     @ViewChild(LtkmBankSectionComponent) custLtkmBankSectionComponent;
-    @ViewChild(LtkmCustCompanyMainDataComponent) LtkmCustCompanyMainDataComponent;
+    @ViewChild(LtkmCustCompanyMainDataXComponent) LtkmCustCompanyMainDataComponent;
     @ViewChild(LtkmEmergencyContactComponent) LtkmEmergencyContactComponent;
     @ViewChild(LtkmFamilyMainDataPagingComponent) LtkmFamilyMainDataPagingComponent;
 
