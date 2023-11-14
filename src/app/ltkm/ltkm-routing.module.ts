@@ -87,7 +87,7 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.RTN_HANDLING_DETAIL,
+        path: PathConstantX.RTN_HANDLING_DETAIL,
         component: LtkmReturnHandlingXComponent,
         data: {
           title: 'LTKM Return Handling Detail'

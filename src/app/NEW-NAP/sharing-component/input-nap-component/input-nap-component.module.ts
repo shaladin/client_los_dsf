@@ -162,6 +162,7 @@ import { SchmStepUpStepDownCummulativeXDsfComponent } from "app/dsf/impl/NEW-NAP
 import { SchmStepUpStepDownLeasingXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-leasing-x-dsf/schm-step-up-step-down-leasing-x-dsf.component";
 import { SchmStepUpStepDownNormalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-normal-x-dsf/schm-step-up-step-down-normal-x-dsf.component";
 
+import { CollateralAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -225,6 +226,7 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditComponent,
     AssetDataAddEditXComponent,
     CollateralAddEditComponent,
+    CollateralAddEditXComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
     FinancialDataFctrComponent,
@@ -386,6 +388,7 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditComponent,
     AssetDataAddEditXComponent,
     CollateralAddEditComponent,
+    CollateralAddEditXComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
     FinancialDataFctrComponent,
