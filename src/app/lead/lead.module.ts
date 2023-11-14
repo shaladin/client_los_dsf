@@ -75,6 +75,7 @@ import {LeadCancelDsfComponent} from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-d
 import { LeadCancelConfirmDsfComponent } from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-confirm-dsf/lead-cancel-confirm-dsf.component';
 
 import { UcreportModule } from '@adins/ucreport';
+import { NewLeadInputCustDataXComponent } from "app/impl/lead/new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -139,6 +140,7 @@ export const customCurrencyMaskConfig = {
     NewLeadInputPageDsfComponent,
     NewLeadInputCustDataDsfComponent,
     NewLeadInputPageXComponent,
+    NewLeadInputCustDataXComponent,
     NewLeadInputLeadDataXComponent,
     NewLeadUpdateDsfComponent,
     NewLeadInputDsfComponent,
