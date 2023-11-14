@@ -238,7 +238,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else {
-      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([ Validators.maxLength(50)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
   }
