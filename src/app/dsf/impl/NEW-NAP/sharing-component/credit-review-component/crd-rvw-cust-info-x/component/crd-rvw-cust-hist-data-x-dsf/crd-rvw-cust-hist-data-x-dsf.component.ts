@@ -300,12 +300,12 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
             (response: any) => {
                 if (this.ExstAgrmntSummary != undefined && this.ExstAgrmntSummary.length != 0) {
                     if (response != undefined && response.length != 0) {
-                        response.forEach(element => {
+                        response.resAgrmntObjX.forEach(element => {
                         this.ExstAgrmntSummary.push(element);
                     });
                 }
                 } else {
-                    this.ExstAgrmntSummary = response;
+                    this.ExstAgrmntSummary = response.resAgrmntObjX;
                 }
             }
         );
@@ -358,12 +358,12 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
             (response: any) => {
                 if (this.AppPrcsSummary != undefined && this.AppPrcsSummary.length != 0) {
                     if (response != undefined && response.length != 0) {
-                        response.forEach(element => {
+                        response.resAppXV2Obj.forEach(element => {
                         this.AppPrcsSummary.push(element);
                     });
                 }
                 } else {
-                    this.AppPrcsSummary = response;
+                    this.AppPrcsSummary = response.resAppXV2Obj;
                 }
             }
         );
@@ -377,12 +377,12 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
             (response: any) => {
                 if (this.ExpiredAppSummary != undefined && this.ExpiredAppSummary.length != 0) {
                     if (response != undefined && response.length != 0) {
-                        response.forEach(element => {
+                        response.resAgrmntExpiredObjX.forEach(element => {
                         this.ExpiredAppSummary.push(element);
                     });
                 }
                 } else {
-                    this.ExpiredAppSummary = response;
+                    this.ExpiredAppSummary = response.resAgrmntExpiredObjX;
                 }
             }
         );
