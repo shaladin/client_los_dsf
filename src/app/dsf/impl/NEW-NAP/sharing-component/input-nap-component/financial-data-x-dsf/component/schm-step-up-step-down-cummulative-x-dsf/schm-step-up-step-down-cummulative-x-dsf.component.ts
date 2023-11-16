@@ -27,6 +27,7 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
   @Input() InstAmt: number;
+  @Output() RefreshSummary = new EventEmitter();
   @Input() ProductOfferingCode: string;
   // Self Custom CR Automation Subsidy Dealer
   @Input() DealerSubsidyLock: boolean;
@@ -65,6 +66,7 @@ export class SchmStepUpStepDownCummulativeXDsfComponent implements OnInit {
     this.ParentForm.get("EffectiveRatePrcnt").setValidators([Validators.min(0.00), Validators.max(100.00)]);
     this.ParentForm.get("FlatRatePrcnt").updateValueAndValidity();
     this.ParentForm.get("EffectiveRatePrcnt").updateValueAndValidity();
+
     if (this.AppId != null) {
       if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
         this.PriceLabel = "Financing Amount";
