@@ -51,6 +51,7 @@
               <thead>
                 <tr class="table-header">
                   <th class="text-center"><span class="thead-header">Transaction Date</span></th>
+                  <th class="text-center"><span class="thead-header">Requestor</span></th>
                   <th class="text-center"><span class="thead-header">SKPR ID</span></th>
                   <th class="text-center"><span class="thead-header">Account No</span></th>
                   <th class="text-center"><span class="thead-header">Active Date</span></th>
@@ -69,7 +70,8 @@
                 <ng-container *ngFor="let item of listResAutoDebitRegAndSkprForViewObj">
                   <tr>
                     <td class="text-center">{{item.TransactionDate | date:'dd-MMM-yyyy'}}</td>
-
+                    <td *ngIf="item.SkprId != undefined || item.SkprId != null" class="text-center">{{item.Requestor}}</td>
+                    <td *ngIf="item.SkprId == undefined || item.SkprId == null" class="text-center">-</td>
                     <td *ngIf="item.SkprId == undefined || item.SkprId == null" class="text-center">-</td>
                     <td *ngIf="item.SkprId != undefined && item.SkprId != null" class="text-center">{{item.SkprId }}</td>
 

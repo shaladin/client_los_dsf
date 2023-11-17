@@ -5,4 +5,5 @@ export class ResAutoDebitRegAndSkprForViewObj {
     ActiveDt: Date;
     FailedDt: Date;
     Status: string;
+    Requestor:string;
 }
