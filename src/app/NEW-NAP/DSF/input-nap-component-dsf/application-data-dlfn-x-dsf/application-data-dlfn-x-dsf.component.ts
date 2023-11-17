@@ -234,7 +234,7 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeNPWP) {
-      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else {
