@@ -14,6 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericListByIdObj } from 'app/shared/model/generic/generic-list-by-id-obj.model';
 import { KeyValueObj } from 'app/shared/model/key-value/key-value-obj.model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-lead-cancel-confirm-dsf',
@@ -118,6 +119,7 @@ export class LeadCancelConfirmDsfComponent implements OnInit {
 
       this.http.post(urlPost, leadObj).subscribe(
         response => {
+          this.http.post(URLConstantDsf.UpdateLeadStepStatBulkByLeadId, { listLeadId:  tempId}).subscribe(() => {})
           this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [this.PagingLink], {"MrLeadTypeCode" : this.MrLeadTypeCode});
         }
