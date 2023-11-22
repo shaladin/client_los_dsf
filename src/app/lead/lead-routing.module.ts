@@ -57,6 +57,7 @@ import {NewFraudVerifDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fr
 import {NewFraudVerifDetailDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/new-fraud-verif-detail-dsf/new-fraud-verif-detail-dsf.component';
 import {LeadCancelDsfComponent} from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-dsf/lead-cancel-dsf.component';
 import { LeadCancelConfirmDsfComponent } from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-confirm-dsf/lead-cancel-confirm-dsf.component';
+import { NewLeadInputPageXDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input-page-x-dsf/new-lead-input-page-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -319,6 +320,13 @@ const routes: Routes = [
         component: NewLeadInputPageXComponent,
         data: {
           title: 'Lead Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.SIMPLE_LEAD_DETAIL_X,
+        component: NewLeadInputPageXDsfComponent,
+        data: {
+          title: 'Lead Detail X Dsf'
         }
       },
       {
