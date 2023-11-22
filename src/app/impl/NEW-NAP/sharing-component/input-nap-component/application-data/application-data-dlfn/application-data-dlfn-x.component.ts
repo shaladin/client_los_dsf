@@ -216,27 +216,27 @@ export class ApplicationDataDlfnXComponent implements OnInit {
 
   checkIdNoType() {
     if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
-      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.required,Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstantX.MrIdTypeCodePassport) {
-      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[a-zA-Z0-9]+$"), Validators.minLength(8), Validators.maxLength(10)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.required,Validators.pattern("^[a-zA-Z0-9]+$"), Validators.minLength(8), Validators.maxLength(10)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstantX.MrIdTypeCodeNIB) {
-      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(12), Validators.maxLength(100)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.required,Validators.pattern("^[0-9]+$"), Validators.minLength(12), Validators.maxLength(100)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstantX.MrIdTypeCodeTDPNIB) {
-      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(12), Validators.maxLength(100)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.required,Validators.pattern("^[0-9]+$"), Validators.minLength(12), Validators.maxLength(100)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeNPWP) {
-      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.required,Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else {
-      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([ Validators.maxLength(50)]);
+      this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([ Validators.required,Validators.maxLength(50)]);
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
   }
