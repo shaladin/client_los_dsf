@@ -98,7 +98,9 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     BirthDate: ['', [Validators.required]],
     MrIdTypeCode: [''],
     MotherName: [''],
-    IdNo: [''],
+    // Rework Self Custom by CR Batch DSL 037
+    IdNo: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16), Validators.required]],
+    // Rework Self Custom by CR Batch DSL 037
     MrMaritalStatCode: [''],
     Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]],
     Email: ['', [Validators.pattern(CommonConstant.regexEmail)]],
@@ -178,9 +180,9 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showOwnership = false;
 
-    // if (this.typePage != "update") {
-    //   this.inputAddressObjForLegalAddr.isRequired = false;
-    // }
+    // Rework Self Custom by CR Batch DSL 037
+    this.inputAddressObjForLegalAddr.isRequired = false;
+    // Rework Self Custom by CR Batch DSL 037
 
     this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isRequired = false;
 
