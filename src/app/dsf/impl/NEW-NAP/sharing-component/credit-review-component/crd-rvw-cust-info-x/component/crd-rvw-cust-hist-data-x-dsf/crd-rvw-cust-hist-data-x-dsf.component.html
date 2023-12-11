@@ -1,6 +1,6 @@
 <div class="modal-body">
   <div class="pl-3 mb-2 mt-2">
-    <h4 class="card-title ucSearch-title" translate> Customer History Data View DSF</h4>
+    <h4 class="card-title ucSearch-title" translate> Customer History Data View </h4>
   </div>
   <app-app-main-info-cr-x [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-cr-x>
   <lib-ucSubsection [id]="'existAgrId'" [title]="'Existing Agreement'" [panel]="'existAgr'">
@@ -90,7 +90,7 @@
         </tr>
         <tr *ngFor="let item of ExstAgrmnt.resAgrmntObjX; let i = index">
           <td>{{i+1}}</td>
-          <td style="text-align: left;" *ngIf="item.AgreementNo!=null &&item.ContractStatus!='GO LIVE' ">
+          <td style="text-align: left;" *ngIf="item.AgreementNo!=null &&item.ContractStatus!='GO LIVE'">
             <a class="link" (click)="ClickLinkAgrmntNo(item.AgreementNo)">{{item.AgreementNo}}</a>
           </td>
           <td style="text-align: left;" *ngIf="item.ContractStatus=='GO LIVE'">
@@ -497,9 +497,9 @@
     </div>
   </div>
 
-  <lib-ucSubsection [id]="'expiredAppId'" [title]="'Application Expired'" [panel]="'expiredAppId'">
+  <lib-ucSubsection [id]="'expiredAppId'" [title]="'Application Expired'" [panel]="'expiredApp'">
   </lib-ucSubsection>
-  <div id="expiredAppId">
+  <div id="expiredApp">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -547,17 +547,17 @@
         </tr>
         <tr *ngFor="let item of ExpiredApp.resAgrmntExpiredObjX; let i = index">
           <td>{{i+1}}</td>
-
-          <td style="text-align: left;" *ngIf="item.ApplicationNo!=null &&item.ApplicationNo!='-'">
+          <td style="text-align: left;" *ngIf="item.ApplicationNo!=null &&item.ApplicationNo!='-'" >
             <a class="link" (click)="ClickLinkAppNoByAppNo(item.ApplicationNo)">{{item.ApplicationNo}}</a>
           </td>
           <td *ngIf="item.ApplicationNo==null||item.ApplicationNo=='-'"> - </td>
 
-          <td style="text-align: left;" *ngIf="item.AgreementNo!=null&&item.ApplicationNo!='-'">
+          <td *ngIf="item.ApplicationNo==null"> - </td>
+          <td style="text-align: left;" *ngIf="item.AgreementNo!=null &&item.ApplicationNo!='-'">
             <a class="link" (click)="ClickLinkAgrmntNo(item.AgreementNo)">{{item.AgreementNo}}</a>
           </td>
           <td *ngIf="item.ApplicationNo==null||item.ApplicationNo=='-' && item.AgreementNo!=null"> {{item.AgreementNo}} </td>
-          
+
           <td *ngIf="item.AgreementNo==null"> - </td>
           <td style="text-align: left;" *ngIf="item.AssetType!=null">{{item.AssetType}}</td>
           <td style="text-align: left;" *ngIf="item.AssetType==null"> - </td>
