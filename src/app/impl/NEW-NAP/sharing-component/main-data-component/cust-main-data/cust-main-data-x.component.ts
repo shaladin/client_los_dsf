@@ -179,9 +179,6 @@ export class CustMainDataXComponent implements OnInit {
   isDisableCustType: boolean = false;
   existShrHolder: boolean = false;
 
-  isReadOnly:boolean = false;
-  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
-
   constructor(
     private regexService: RegexService,
     private fb: FormBuilder,
@@ -210,7 +207,7 @@ export class CustMainDataXComponent implements OnInit {
     MrIdTypeCode: ['', Validators.required],
     IdNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     IdExpiredDt: [''],
-    TaxIdNo: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]],
+    TaxIdNo: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
@@ -330,12 +327,6 @@ export class CustMainDataXComponent implements OnInit {
     if(this.MrCustTypeCode == CommonConstant.CustTypePersonal && this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder){
       await this.getGsJobPostIsOwner();
       this.CheckJobPostionIsOwner();
-    }
-    if(this.MrCustTypeCode == this.CustTypePersonal){
-      this.npwpKtpChecking()
-    }
-    else if (this.MrCustTypeCode == this.CustTypeCompany){
-      this.isReadOnly = true
     }
   }
 
@@ -782,17 +773,7 @@ export class CustMainDataXComponent implements OnInit {
       }
     );
   }
-  npwpKtpChecking(){
-    this.isReadOnly=false
 
-    if(this.npwpOrKtp.includes(this.CustMainDataForm.get("MrIdTypeCode").value)){
-      this.isReadOnly=true
-      this.CustMainDataForm.get("TaxIdNo").setValue(this.CustMainDataForm.get("IdNo").value)
-    }
-  }
-  onChangeIdNo(){
-    this.npwpKtpChecking()
-  }
 
   async getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
@@ -931,7 +912,7 @@ export class CustMainDataXComponent implements OnInit {
       // endregion
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     } else {
       if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
@@ -939,7 +920,7 @@ export class CustMainDataXComponent implements OnInit {
           IsSigner: false,
         });
       }
-      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
 
       this.CustMainDataForm.controls.MrCompanyTypeCode.setValidators(Validators.required);
@@ -1050,9 +1031,8 @@ export class CustMainDataXComponent implements OnInit {
       this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
-          this.isReadOnly = true 
         });
-    }
+      }
     await this.disableInput();
   }
 
@@ -1072,7 +1052,6 @@ export class CustMainDataXComponent implements OnInit {
   }
 
   ChangeIdType(IdType: string) {
-    this.npwpKtpChecking();
     this.setValidatorPattern();
   }
 
@@ -1119,7 +1098,6 @@ export class CustMainDataXComponent implements OnInit {
         MrCompanyTypeCode: "",
         MrCustModelCode: ""
       });
-      this.isReadOnly = false
     }
 
     /*START X DSF Issue Non Jira, Syafiudin : Disamakan dengan FSD DSF bagian Shareholder => START WORKING DATE tidak mandatory
@@ -1252,7 +1230,6 @@ export class CustMainDataXComponent implements OnInit {
     }
 
     this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
-    this.npwpKtpChecking()
   }
 
   setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj, CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {
@@ -2286,8 +2263,7 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required]);
     }
     else {
-      this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
-      this.npwpKtpChecking()
+      this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
     }
     this.CustMainDataForm.get("TaxIdNo").updateValueAndValidity();
   }

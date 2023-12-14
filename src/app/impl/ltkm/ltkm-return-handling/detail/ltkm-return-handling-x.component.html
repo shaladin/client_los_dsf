@@ -33,12 +33,12 @@
                 (ngSubmit)="CustDataForm.valid && !EditAddressIsDetail && SaveForm() " #enjiForm="ngForm">
                 <div class="form-body">
                   <div *ngIf="isBindDataDone == true">
-                    <app-ltkm-cust-personal-main-data-x [isLockLookupCust]="isLockLookupCust" [isLockMode]="isLockMode"
+                    <app-ltkm-cust-personal-main-data [isLockLookupCust]="isLockLookupCust" [isLockMode]="isLockMode"
                       (callbackCopyCust)="CopyCustomer($event)" (spouseObj)="GenderChanged($event)"
                       (isMarried)="MaritalChanged($event)" [appId]="appId" [IsSpouseExist]="IsSpouseExist"
                       [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
                       [bizTemplateCode]="bizTemplateCode" [identifier]="'personalMainData'">
-                    </app-ltkm-cust-personal-main-data-x>
+                    </app-ltkm-cust-personal-main-data>
                     <lib-ucSubsection [id]="'AddrId'" [title]="'Customer Address'" [panel]="'address-tab'">
                     </lib-ucSubsection>
                     <div id="address-tab">
@@ -236,11 +236,11 @@
                 (ngSubmit)="CustDataCompanyForm.valid && !EditAddressIsDetail && SaveForm()" #enjiFormCompany="ngForm">
                 <div class="form-body">
                   <div *ngIf="isBindDataDone == true">
-                    <app-ltkm-cust-company-main-data-x [isLockMode]="isLockMode" [isLockLookupCust]="isLockLookupCust"
+                    <app-ltkm-cust-company-main-data [isLockMode]="isLockMode" [isLockLookupCust]="isLockLookupCust"
                       (callbackCopyCust)="CopyCustomerCompany($event)" [custDataCompanyObj]="custDataCompanyObj"
                       [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
                       [bizTemplateCode]="bizTemplateCode"
-                      [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data-x>
+                      [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data>
                     <lib-ucSubsection [id]="'AddrId'" [title]="'Customer Address'" [panel]="'address-tab'">
                     </lib-ucSubsection>
                     <div id="address-tab">

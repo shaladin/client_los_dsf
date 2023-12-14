@@ -86,9 +86,6 @@ import { AutoDebitRegistrationPagingComponent } from "app/impl/NEW-NAP/business-
 import { AutoDebitRegistrationInquiryComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component";
 import { AutoDebitRegistrationCancelComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component";
 import { AutoDebitTestComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component";
-import { ReturnHandlingCollateralPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component";
-import { ReturnHandlingCollateralEditXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component";
-
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -145,9 +142,7 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingPhoneVerifPagingComponent,
     ReturnHandlingSurveyComponent,
     ReturnHandlingCollateralPagingComponent,
-    ReturnHandlingCollateralPagingXComponent,
     ReturnHandlingCollateralEditComponent,
-    ReturnHandlingCollateralEditXComponent,
     ReturnHandlingCollateralDetailComponent,
     CopyCancelledApplicationComponent,
     ReturnHandlingAdditionalTcPagingComponent,
