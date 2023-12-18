@@ -547,10 +547,10 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
 
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit") {
-              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_X_DSF], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "CopyFrom": this.leadIdExist } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "mode": this.pageType, "CopyFrom": this.leadIdExist } });
             }
             else {
-              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_X_DSF], { queryParams: { "LeadId": this.LeadId, "WfTaskListId": this.WfTaskListId, "mode": this.pageType } });
+              this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "WfTaskListId": this.WfTaskListId, "mode": this.pageType } });
             }
           }
         );
@@ -576,7 +576,7 @@ export class NewLeadInputMainInfoDsfComponent implements OnInit {
             // End Self Custom
 
             this.toastr.successMessage(response["message"]);
-            this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_X_DSF], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
+            this.router.navigate([NavigationConstant.SIMPLE_LEAD_DETAIL_DSF], { queryParams: { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist } });
           }
         );
       }
