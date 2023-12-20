@@ -65,9 +65,6 @@ import { AutoDebitRegistrationPagingComponent } from 'app/impl/NEW-NAP/business-
 import { AutoDebitRegistrationInquiryComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component';
 import { AutoDebitRegistrationCancelComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component';
 import { AutoDebitTestComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component';
-import { CollateralAddEditXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component';
-import { ReturnHandlingCollateralPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component';
-import { ReturnHandlingCollateralEditXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component';
 
 
 const routes: Routes = [
@@ -222,21 +219,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.RETURN_HANDLING_COLL_PAGING,
-        component: ReturnHandlingCollateralPagingXComponent,
-        data: {
-          title: 'Return Handling Collateral'
-        }
-      },
-      {
         path: PathConstant.RETURN_HANDLING_COLL_EDIT,
         component: ReturnHandlingCollateralEditComponent,
-        data: {
-          title: 'Return Handling Collateral Edit'
-        }
-      },      {
-        path: PathConstantX.RETURN_HANDLING_COLL_EDIT,
-        component: ReturnHandlingCollateralEditXComponent,
         data: {
           title: 'Return Handling Collateral Edit'
         }
@@ -244,13 +228,6 @@ const routes: Routes = [
       {
         path: PathConstant.RETURN_HANDLING_COLL_DETAIL,
         component: CollateralAddEditComponent,
-        data: {
-          title: 'Return Handling Collateral Detail'
-        }
-      },
-      {
-        path: PathConstantX.RETURN_HANDLING_COLL_DETAIL,
-        component: CollateralAddEditXComponent,
         data: {
           title: 'Return Handling Collateral Detail'
         }

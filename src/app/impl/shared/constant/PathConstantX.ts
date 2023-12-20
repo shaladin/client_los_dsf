@@ -24,7 +24,6 @@ export class PathConstantX {
   public static NAP1_X = 'NAP1X';
   public static VIEW = 'ViewX';
   public static REQ_X = "RequestX";
-  public static EDIT = "EditX";
   //#endregion
 
   public static NAP2 = "NAP2X";
@@ -61,9 +60,6 @@ export class PathConstantX {
   public static CRD_REVIEW_CR_DETAIL_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.DETAIL_X;
   public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstantX.DETAIL_X;
   public static CRD_REVIEW_CR_DETAIL_HISTORY_X = PathConstant.CRD_REVIEW_CR_HISTORY + "/" + PathConstantX.DETAIL_X;
-  public static RETURN_HANDLING_COLL_DETAIL = PathConstant.RETURN_HANDLING_COLL + "/" + PathConstantX.DETAIL_X;
-  public static RETURN_HANDLING_COLL_PAGING = PathConstant.RETURN_HANDLING_COLL + "/" + PathConstantX.PAGING;
-  public static RETURN_HANDLING_COLL_EDIT = PathConstant.RETURN_HANDLING_COLL + "/" + PathConstantX.EDIT;
   //#endregion
 
   //#region Nap-Main-Data
@@ -251,7 +247,6 @@ export class PathConstantX {
   public static VERIFY_APV_DETAIL = PathConstant.VERIFY_APV_DETAIL + PathConstantX.X;
   public static RTN_HANDLING = "ReturnHandling";
   public static RTN_HANDLING_PAGING = PathConstant.RTN_HANDLING + "/" + PathConstantX.PAGING;
-  public static RTN_HANDLING_DETAIL = PathConstant.RTN_HANDLING + "/" + PathConstantX.DETAIL_X;
 
   public static FL4W_VIEW_INS_X = "ViewInsuranceX";
 
