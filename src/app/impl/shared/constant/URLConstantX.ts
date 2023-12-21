@@ -311,6 +311,8 @@ export class URLConstantX {
   //ltkm cust personal main data
   public static GetCustPersonalForLtkmCopyByCustIdX = environment.FoundationR3Url + "/v1" + "/CustX/GetCustPersonalForLtkmCopyByCustId";
 
+  //ltkm summary
+  public static GetSummaryByLtkmCustId = environment.losUrl + "/v1" + "/LtkmX/GetSummaryByLtkmCustId";
   //ltkm return handling
   public static SaveLtkmReturnHandlingPersonalV2 = environment.losUrl + "/v2" + "/LtkmCustomerDataX/SaveLtkmReturnHandlingPersonal";
   public static SaveLtkmReturnHandlingCompanyV2 = environment.losUrl + "/v2" + "/LtkmCustomerDataX/SaveLtkmReturnHandlingCompany";
