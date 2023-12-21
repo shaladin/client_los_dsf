@@ -295,12 +295,12 @@
                 (ngSubmit)="CustDataCompanyForm.valid && SaveForm()" #enjiFormCompany="ngForm">
                 <div class="form-body">
                   <div *ngIf="isBindDataDone == true">
-                    <app-ltkm-cust-company-main-data-x [isLockMode]="isLockMode"  
+                    <app-ltkm-cust-company-main-data [isLockMode]="isLockMode"  
                     [isLockLookupCust]="isLockLookupCust"
                       (callbackCopyCust)="CopyCustomerCompany($event)" 
                        [custDataCompanyObj]="custDataCompanyObj"
                       [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
-                      [bizTemplateCode]="bizTemplateCode" [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data-x>
+                      [bizTemplateCode]="bizTemplateCode" [identifier]="'companyMainData'"></app-ltkm-cust-company-main-data>
 
                       <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Address'" [panel]="'CustAddress'">
                       </lib-ucSubsection>
