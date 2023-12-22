@@ -196,6 +196,9 @@ export class URLConstantX {
   //APP INSURANCE X
   public static GetListAppInsObjByAgrmntIdForViewX = environment.losUrl + '/v1' + '/AppInsX/GetListAppInsObjByAgrmntIdForView';
   public static GetAddCvgDiscRule = environment.losUrl + '/v1' + '/AppInsX/GetAddCvgDiscRule';
+  public static ExecuteInsRateRuleV2ByRequestCategory = environment.losUrl + "/v2" + "/AppInsX/ExecuteInsRateRuleV2ByRequestCategory";
+  public static EditInsuranceDataMultiAssetX = environment.losUrl + "/v1" + "/AppInsX/EditInsuranceDataMultiAssetX";
+  public static AddInsuranceDataMultiAssetX = environment.losUrl + "/v1" + "/AppInsX/AddInsuranceDataMultiAssetX";
 
   //PO
   public static GetAppCustBankAccsByAppIdX = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";
