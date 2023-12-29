@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {NGXToastrService} from 'app/components/extra/toastr/toastr.service';
 import {ActivatedRoute} from '@angular/router';
@@ -13,6 +13,7 @@ import {KeyValueObj} from 'app/shared/model/key-value/key-value-obj.model';
 import {CalcRegularFixObj} from 'app/shared/model/app-fin-data/calc-regular-fix-obj.model';
 import {AppSubsidyObj} from 'app/shared/model/app-subsidy-obj.model';
 import {environment} from 'environments/environment';
+import { AppSubsidyProfitablityXObj } from 'app/impl/shared/model/AppSubsidyProfitablityXObj.model';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class FinancialDataXComponent implements OnInit {
   AppData: AppObj;
   isReady: boolean = false;
   instAmt: number;
+  AppSubsidyProfitabilityXes: Array<AppSubsidyProfitablityXObj> = new Array<AppSubsidyProfitablityXObj>();
 
   constructor(
     private fb: FormBuilder,
@@ -166,10 +168,11 @@ export class FinancialDataXComponent implements OnInit {
   LoadAppFinData() {
     // note rework: Url V2 belum ditambahin di X, baru ada di Core doank. PERLU DITAMBAHIN !
     // let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdV2X : URLConstantX.GetInitAppFinDataByAppIdX;
-    let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdX : URLConstantX.GetInitAppFinDataByAppIdX;
+    let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdXV2 : URLConstantX.GetInitAppFinDataByAppIdXV2;
     this.http.post<AppFinDataObjX>(InitAppFinDataUrl, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
+        this.AppSubsidyProfitabilityXes = response['AppSubsidyProfitabilityXes'];
         this.instAmt = response['InstAmt'];
         if (this.appFinDataObj.MrInstSchemeCode != CommonConstant.InstSchmRegularFix) {
           this.FinDataForm.get("RateType").disable();
@@ -254,13 +257,16 @@ export class FinancialDataXComponent implements OnInit {
 
     var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
 
-    if (NeedReCalculate) {
+    let reqObj = this.FinDataForm.getRawValue();
+    reqObj.AppSubsidyProfitabilityXes = this.AppSubsidyProfitabilityXes;
+
+        if (NeedReCalculate) {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
       return;
     }
     if (isValidGracePeriod) {
       this.SetDiffRateAmt();
-      this.http.post(URLConstantX.SaveAppFinDataX, this.FinDataForm.getRawValue()).subscribe(
+      this.http.post(URLConstantX.SaveAppFinDataX, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();
