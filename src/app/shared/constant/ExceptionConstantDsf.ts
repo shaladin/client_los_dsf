@@ -14,5 +14,8 @@ export class ExceptionConstantDsf {
 
     public static SEARCH_CUSTOMER_VALIDATION = "Please fill Customer Name or Customer No for seacrhing Agreement Parent!";
     public static CHECK_API_LMS_R2_UP = "Connection error, please try again in a minute";
+
+    public static VALIDATE_MIN_PLAFOND = "Max Plafond Master Agreement is Not Yet Sufficient Plafond Limit";
+    public static VALIDATE_TENOR_LIMIT = "Minimum Tenor is Not Yet Sufficient";
 }
 
