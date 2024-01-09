@@ -283,6 +283,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
   returnGeneralPlafondSettingObj: GeneralSettingObj;
   isOverMinimumPlafod: boolean = false;
   isOverTenor: boolean = false;
+  businessDt: any;
   //End Self Custom CR MPF & FD Validation
 
   constructor(private fb: FormBuilder,
@@ -2503,8 +2504,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
   monthDiff(agrmntDate: Date)
   {
-    const monthDiff = new Date().getMonth() - agrmntDate.getMonth();
-    const yearDiff = new Date().getFullYear() - agrmntDate.getFullYear();
+    this.businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    const monthDiff = this.businessDt.getMonth() - agrmntDate.getMonth();
+    const yearDiff = this.businessDt.getFullYear() - agrmntDate.getFullYear();
 
     return monthDiff + yearDiff * 12;
   }
