@@ -281,7 +281,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
   isActiveMode: boolean = false;
   generalSettingPlafondObj: GeneralSettingObj;
   returnGeneralPlafondSettingObj: GeneralSettingObj;
-  isOverMinimumPlafod: boolean = false;
+  isOverMinimumPlafod: boolean = true;
   isOverTenor: boolean = false;
   businessDt: any;
   //End Self Custom CR MPF & FD Validation
@@ -1338,17 +1338,11 @@ export class ApplicationDataXDsfComponent implements OnInit {
           await this.http.post(URLConstant.GetGeneralSettingByCode, obj).toPromise().then(
             (response: GeneralSettingObj) => {
               this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue) <= this.MaxPlafondMasterAgreement)
+              if (parseInt(this.returnGeneralPlafondSettingObj.GsValue) >= this.MaxPlafondMasterAgreement)
               {
-                this.isOverMinimumPlafod = true;
+                this.isOverMinimumPlafod = false;
               }
           });
-
-          if (!this.isOverMinimumPlafod)
-          {
-            this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_MIN_PLAFOND);
-            return false;
-          }
 
           let runningTenor = this.monthDiff(this.agrParent.AgrmntDt);
           this.generalSettingPlafondObj = new GeneralSettingObj();
@@ -1364,12 +1358,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
                 this.isTenorValid = true;
               }
           });
-
-          if (!this.isTenorValid)
-          {
-            this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_TENOR_LIMIT);
-            return false;
-          }
     }
     // End Self Custom CR MPF & FD Validation
 
@@ -1561,6 +1549,18 @@ export class ApplicationDataXDsfComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       // Self Custom CR MPF & FD Validation
       await this.validateRequestedPlafond();
+      if (!this.isOverMinimumPlafod)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_MIN_PLAFOND);
+        return false;
+      }
+
+      if (!this.isTenorValid)
+      {
+        this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_TENOR_LIMIT);
+        return false;
+      }
+
       if (this.IsRequestedPlafondExceed)
       {
         this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_REQUESTED_PLAFOND);
@@ -2505,8 +2505,8 @@ export class ApplicationDataXDsfComponent implements OnInit {
   monthDiff(agrmntDate: Date)
   {
     this.businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
-    const monthDiff = this.businessDt.getMonth() - agrmntDate.getMonth();
-    const yearDiff = this.businessDt.getFullYear() - agrmntDate.getFullYear();
+    const monthDiff = this.businessDt.getMonth() - new Date(agrmntDate).getMonth();
+    const yearDiff = this.businessDt.getFullYear() - new Date(agrmntDate).getFullYear();
 
     return monthDiff + yearDiff * 12;
   }
