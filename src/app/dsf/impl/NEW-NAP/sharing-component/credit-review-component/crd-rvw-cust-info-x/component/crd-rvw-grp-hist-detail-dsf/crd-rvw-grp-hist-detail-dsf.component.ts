@@ -4,6 +4,7 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 import { URLConstantX } from "app/impl/shared/constant/URLConstantX";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsHelper } from "app/shared/AdInsHelper";
+import { URLConstantDsf } from "app/shared/constant/URLConstantDsf";
 
 @Component({
   selector: "app-crd-rvw-grp-hist-detail-dsf",
@@ -45,6 +46,11 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
   TotalExpiredPrincipal: number = 0;
   TotalExpiredAR: number = 0;
 
+  TotalCSPPercentage: number = 0;
+  TotalRjcCSPPercentage: number = 0;
+  TotalPrcsCSPPercentage: number = 0;
+  TotalExpCSPPercentage: number = 0;
+
   constructor(private http: HttpClient, private toastr: NGXToastrService) {}
 
   async ngOnInit() {
@@ -72,6 +78,7 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
             }
           }
           await this.GetGrandTotal();
+          await this.GetListApp();
         });
 
       let reqObjIsAppInitDone = {
@@ -99,6 +106,7 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
             }
           }
           await this.GetProcessGrandTotal();
+          await this.GetPrcListApp();
         });
 
       let reqObjAppStat = {
@@ -121,6 +129,7 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
                 this.AppRjct.push(element);
               });
               await this.GetRejectedGrandTotal();
+              await this.GetRjcListApp();
             });
         });
 
@@ -148,6 +157,7 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
             }
           }
           await this.GetExpiredGrandTotal();
+          await this.GetExpListApp();
         });
     }
   }
@@ -236,4 +246,111 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
         }
       });
   }
+
+  //#region Self Custom
+  async GetListApp() {
+    if (this.ExstAgrmnt.resAgrmntObjX != undefined && this.ExstAgrmnt.resAgrmntObjX.length > 0) {
+      await this.http.post(
+        URLConstantDsf.GetAppListForCustHistDsf,
+        {
+          listAppNo: this.ExstAgrmnt.resAgrmntObjX.map(item => item.ApplicationNo)
+        }
+      ).subscribe(
+          (response: any) => {
+            if (response != undefined) {
+              this.ExstAgrmnt.resAgrmntObjX = this.MergeListApp(this.ExstAgrmnt.resAgrmntObjX, "ApplicationNo", response.resAppListForCustHistDsf)
+              this.TotalCSPPercentage = this.GetTotalCSP(this.ExstAgrmnt.resAgrmntObjX)
+            }
+          }
+        );
+    }
+  }
+
+  async GetRjcListApp() {
+    if (this.AppRjct != undefined && this.AppRjct.length > 0) {
+      await this.http.post(
+        URLConstantDsf.GetAppListForCustHistDsf,
+        {
+          listAppNo: this.AppRjct.map(item => item.AppNo)
+        }
+      ).subscribe(
+          (response: any) => {
+            if (response != undefined) {
+              this.AppRjct = this.MergeListApp(this.AppRjct, "AppNo", response.resAppListForCustHistDsf)
+              this.TotalRjcCSPPercentage = this.GetTotalCSP(this.AppRjct)
+            }
+          }
+        );
+    }
+  }
+
+  async GetPrcListApp() {
+    if (this.AppPrcs.resAppXV2Obj != undefined && this.AppPrcs.resAppXV2Obj.length > 0) {
+      await this.http.post(
+        URLConstantDsf.GetAppListForCustHistDsf,
+        {
+          listAppNo: this.AppPrcs.resAppXV2Obj.map(item => item.AppNo)
+        }
+      ).subscribe(
+          (response: any) => {
+            if (response != undefined) {
+              this.AppPrcs.resAppXV2Obj = this.MergeListApp(this.AppPrcs.resAppXV2Obj, "AppNo", response.resAppListForCustHistDsf)
+              this.TotalPrcsCSPPercentage = this.GetTotalCSP(this.AppPrcs.resAppXV2Obj)
+            }
+          }
+        );
+    }
+  }
+
+  async GetExpListApp() {
+    if (this.ExpiredApp.resAgrmntExpiredObjX != undefined && this.ExpiredApp.resAgrmntExpiredObjX.length > 0) {
+      await this.http.post(
+        URLConstantDsf.GetAppListForCustHistDsf,
+        {
+          listAppNo: this.ExpiredApp.resAgrmntExpiredObjX.map(item => item.ApplicationNo)
+        }
+      ).subscribe(
+          (response: any) => {
+            if (response != undefined) {
+              this.ExpiredApp.resAgrmntExpiredObjX = this.MergeListApp(this.ExpiredApp.resAgrmntExpiredObjX, "ApplicationNo", response.resAppListForCustHistDsf)
+              this.TotalExpCSPPercentage = this.GetTotalCSP(this.ExpiredApp.resAgrmntExpiredObjX)
+            }
+          }
+        );
+    }
+  }
+
+  MergeListApp(objRes: any, objResProp: string, objSrc: any): any {
+    const map = new Map()
+    objRes.forEach(item => map.set(item[objResProp], item))
+    objSrc.forEach(item => {
+      if (map.has(item.ApplicationNo)) {
+        map.set(item.ApplicationNo, { ...map.get(item.ApplicationNo), ...item })
+      }
+    })
+
+    return Array.from(map.values());
+  }
+
+  GetTotalCSP(listApp: any): number {
+    let totalAssetPrice = 0
+    let totalAssetDP = 0
+    let totalAccPrice = 0
+    let totalAccDP = 0
+    if (listApp != undefined && listApp.length != 0) {
+      listApp.forEach(item => {
+        totalAssetDP += item.AssetDP || 0
+        totalAccDP += item.AccDP || 0
+        totalAssetPrice += item.AssetPrice || 0
+        totalAccPrice += item.AccPrice || 0
+      });
+    }
+
+    if (totalAssetPrice + totalAccPrice === 0) {
+      return 0
+    }
+
+    return (totalAccDP + totalAssetDP) / (totalAccPrice + totalAssetPrice) * 100
+  }
+  //#endregion
 }
