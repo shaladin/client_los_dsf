@@ -82,4 +82,5 @@ export class URLConstantDsf {
     public static GetAppFinDataByAppIdDsf = environment.losUrl + "/AppFinDataDsf/GetAppFinDataByAppIdDsf";
     public static SaveNtfAmtAppFinDataDsf = environment.losUrl + "/AppFinDataDsf/SaveNtfAmtAppFinDataDsf";
     public static UpdateLeadStepStatBulkByLeadId = environment.losUrl + "/v1" + "/PubSubDsf/UpdateLeadStepStatBulkByLeadId";
+    public static GetAppListForCustHistDsf = environment.losUrl + "/AppDsf/GetAppListForCustHistDsf" 
 }
