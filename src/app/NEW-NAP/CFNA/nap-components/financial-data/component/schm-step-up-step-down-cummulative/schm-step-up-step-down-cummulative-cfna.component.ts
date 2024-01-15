@@ -11,6 +11,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/ref-master/req-ref-master-by-type-code-and-mapping-code-obj.model';
+import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/app-fin-data/calc-step-up-step-down-obj-for-trial-calc.model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-cummulative-cfna',
@@ -21,6 +22,7 @@ export class SchmStepUpStepDownCummulativeCFNAComponent implements OnInit {
   @Input() AppId: number = 0;
   @Input() ParentForm: FormGroup;
   @Input() TrialCalc: boolean = false;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
@@ -29,6 +31,8 @@ export class SchmStepUpStepDownCummulativeCFNAComponent implements OnInit {
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
+  ProdOfferingVersion: string;
+  calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(private fb: FormBuilder,
@@ -52,6 +56,9 @@ export class SchmStepUpStepDownCummulativeCFNAComponent implements OnInit {
           }
         });
       this.TrialCalc = false;
+    }
+    if (this.TrialCalc) {
+      this.GetProductOfferingVersion();
     }
   }
 
@@ -162,7 +169,14 @@ export class SchmStepUpStepDownCummulativeCFNAComponent implements OnInit {
     var calcStepUpStepDownObj = this.ParentForm.getRawValue();
     calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
 
-    this.http.post(this.GetUrlCalc(), calcStepUpStepDownObj).subscribe(
+    if (this.TrialCalc) {
+      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcStepUpStepDownObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.getRawValue().MrInstSchemeCode;
+    }
+
+    this.http.post(this.GetUrlCalc(), this.TrialCalc ? this.calcStepUpStepDownObjForTrialCalc : calcStepUpStepDownObj).subscribe(
       (response) => {
         this.listInstallment = response["InstallmentTable"];
         this.listAppInstStepSchm = response["AppInstStepSchmObjs"];
@@ -304,5 +318,12 @@ export class SchmStepUpStepDownCummulativeCFNAComponent implements OnInit {
 
   test() {
 
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }

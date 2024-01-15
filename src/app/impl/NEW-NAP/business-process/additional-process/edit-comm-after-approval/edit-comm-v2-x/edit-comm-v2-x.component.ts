@@ -42,6 +42,7 @@ import {UcapprovalcreateComponent} from '@adins/ucapprovalcreate';
 import { AgreementCommissionHXObj } from 'app/impl/shared/model/AgreementCommission/AgreementCommissionHObjX';
 import { FormEditCommGenerateXComponent } from './form-edit-comm-generate-x/form-edit-comm-generate-x.component';
 import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { ReqAppCommissionHXObj} from 'app/impl/shared/model/reqAppCommisionHXObj/reqAppCommisionHXObj.model';
 
 @Component({
   selector: 'edit-comm-v2-x',
@@ -136,6 +137,35 @@ export class EditCommV2XComponent implements OnInit {
 
   taxOfficeCode: string = '';
 
+  pph23:boolean=false
+  pph23No:string
+  pph23From:Date
+  pph23To:Date
+  CurrentDate:Date
+  supplierCode:string
+
+  async checkPph23(){
+    let reqPphObj= 
+    {
+      "requestDateTime": new Date(),
+      "rowVersion": "",
+      "supplierNo": this.supplierCode
+    }
+    await this.http.post(URLConstantX.GetPph23BySupplierNo,reqPphObj).toPromise().then(
+      (response) => {
+        this.pph23No = response["ReturnObject"].SkbNo
+        this.pph23From = response["ReturnObject"].SkbStartDt
+        this.pph23To = response["ReturnObject"].SkbEndDt
+        this.CurrentDate =response["ReturnObject"].BusinessDate
+        console.log("sudah dicek di API")
+      });
+      if(this.CurrentDate>=this.pph23From && this.CurrentDate<=this.pph23To){
+        this.pph23 = true
+      }
+      else{
+        this.pph23 = false
+      }
+  }
 
   async BindDDLReason() {
     this.DDLReason = [];
@@ -244,6 +274,7 @@ export class EditCommV2XComponent implements OnInit {
     await this.GetAppCust();
     await this.EmpPositionSectValidate();
     await this.GetContentData();
+    //await this.checkPph23();//DSF-7303
     await this.GetRuleDataForForm();
     await this.GetExistingAppCommData();
     await this.bindTaskObj();
@@ -251,6 +282,7 @@ export class EditCommV2XComponent implements OnInit {
     await this.BindDDLReason();
     await this.initInputApprovalObj();
     this.isReady = true;
+
   }
 
   DictCalcMethod: { [id: string]: string } = {};
@@ -355,6 +387,12 @@ export class EditCommV2XComponent implements OnInit {
         if (response.ListAppAssetObj.length != 0) {
           this.GetDDLContent(response.ListAppAssetObj, CommonConstant.ContentSupplier);
           this.GetDDLContent(response.ListAppAssetSupplEmpObj, CommonConstant.ContentSupplierEmp);
+          //region DSF-7303
+          for(let i =0 ;i<=response.ListAppAssetObj.length-1;i++){
+            
+          }
+          this.supplierCode = response.ListAppAssetObj[0].SupplCode
+          //end region
         }
       });
 
@@ -604,7 +642,6 @@ export class EditCommV2XComponent implements OnInit {
       return;
     }
 
-
     let obj: ReqTaxObjX = {
       AppId: this.AppId,
       VendorCode: listVendorCode,
@@ -620,6 +657,8 @@ export class EditCommV2XComponent implements OnInit {
     if (this.TotalInput > this.maxAllocAmt) {
       return this.toastr.warningMessage('Total Input Commission (' + formatNumber(this.TotalInput, 'en-US', '.2') + ') Exceeded Remaining Allocation Amount (' + formatNumber(this.maxAllocAmt, 'en-US', '.2') + ')');
     }
+
+    await this.checkPph23();//DSF-7303
 
     await this.http.post<ResponseTaxDetailObj>(URLConstantX.GetAppCommissionTaxAndCalcGrossYieldX, obj).toPromise().then(
       (response) => {
@@ -697,6 +736,7 @@ export class EditCommV2XComponent implements OnInit {
             totalVATAmount += TaxTrxDObjData[k].TaxAmt;
           }
         }
+
 
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].TaxAmt = taxAmt;
         this.ListAppCommHObj[idxStart].ListappCommissionDObj[j].VatAmt = vatAmt;
@@ -785,6 +825,12 @@ export class EditCommV2XComponent implements OnInit {
 
     let listAppCommissionHAddObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
     let listAppCommissionHEditObj: Array<AppCommissionHObjX> = new Array<AppCommissionHObjX>();
+    //region DSF-7303
+    let reqAppCommissionHXObj:ReqAppCommissionHXObj=new ReqAppCommissionHXObj();// DSF-7303
+    reqAppCommissionHXObj.SkbNo = this.pph23No
+    reqAppCommissionHXObj.SkbStartDt = this.pph23From
+    reqAppCommissionHXObj.SkbEndDt = this.pph23To
+    //end region
     for (let i = 0; i < this.ListAppCommHObj.length; i++) {
       if (this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt == null || isNaN(this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt)) {
         this.ListAppCommHObj[i].TotalCommissionAfterTaxAmt = 0;
@@ -802,7 +848,10 @@ export class EditCommV2XComponent implements OnInit {
       MaxAllocAmt: this.maxAllocAmt, //END UATDSFCF-911
       CurrentOfficeCode: currentUserContext[CommonConstant.OFFICE_CODE],
       Notes: this.CommissionForm.controls.Notes.value,
-      RequestRFAObj: this.RFAInfo
+      RequestRFAObj: this.RFAInfo,
+      //start DSF-7303
+      reqAppCommissionHXObj:reqAppCommissionHXObj
+      //end DSF-7303
     };
 
     this.http.post(URLConstantX.SubmitEditCommAfterApvDataReqV2, obj).subscribe(

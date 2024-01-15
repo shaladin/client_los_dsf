@@ -2549,6 +2549,7 @@ export class AssetDataAddEditXComponent implements OnInit {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
       }
     );
+
   }
 
   OwnerRelationObj: Array<KeyValueObj> = new Array();

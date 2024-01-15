@@ -129,6 +129,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
   customPattern: Array<CustomPatternObj>;
   resultPattern: Array<KeyValueObj>;
   Max17YO: Date;
+  custNo: string = "";
   context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(
@@ -266,7 +267,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     );
     this.genderType = new RefMasterObj();
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).toPromise().then(
       (response) => {
         this.tempGender = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ Gender: this.tempGender[0].Key });
@@ -275,7 +276,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
     this.idTypeCode = new RefMasterObj();
     this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).toPromise().then(
       (response) => {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -283,7 +284,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
 
     this.maritalStatCode = new RefMasterObj();
     this.maritalStatCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).toPromise().then(
       (response) => {
         this.tempMrMaritalStatCode = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -293,7 +294,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.custModel = new RefMasterObj();
     this.custModel.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
     this.custModel.MappingCode = CommonConstant.CustTypePersonal;
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).toPromise().then(
       (response) => {
         this.listCustModel = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -903,6 +904,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
   setLeadCust() {
     this.leadInputObj.LeadCustObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
     this.leadInputObj.LeadCustObj.LeadId = this.LeadId;
+    this.leadInputObj.LeadCustObj.CustNo = this.custNo;
     this.leadInputObj.LeadCustObj.CustName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustObj.MrIdTypeCode = this.CustomerDataForm.controls["MrIdTypeCode"].value;
     this.leadInputObj.LeadCustObj.MrCustModelCode = this.CustomerDataForm.controls["CustModel"].value;
@@ -1085,6 +1087,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
             IdNo: this.resLeadCustObj.IdNo,
             Npwp: this.resLeadCustObj.TaxIdNo,
           });
+          this.custNo = this.resLeadCustObj.CustNo;
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           let obj = {

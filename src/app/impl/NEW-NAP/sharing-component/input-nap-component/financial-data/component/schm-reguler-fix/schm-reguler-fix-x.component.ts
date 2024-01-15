@@ -31,6 +31,7 @@ export class SchmRegulerFixXComponent implements OnInit {
   @Output() RefreshSubsidy = new EventEmitter();
   @Input() BizTemplateCode: string;
   @Input() TrialCalc: boolean;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
@@ -52,6 +53,7 @@ export class SchmRegulerFixXComponent implements OnInit {
   FlatRateAfterCalc: number = -1;
   GracePeriodAfterCalc: number = -1;
   GracePeriodTypeAfterCalc: string = "empty";
+  ProdOfferingVersion: string;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
   constructor(private fb: FormBuilder,
@@ -85,6 +87,7 @@ export class SchmRegulerFixXComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
     if (this.InstAmt != 0) {
       this.ParentForm.patchValue({
@@ -432,6 +435,8 @@ export class SchmRegulerFixXComponent implements OnInit {
       
     } else {
       this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcRegFixObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcRegFixObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
       this.http.post<ResponseCalculateObjX>(URLConstant.CalculateInstallmentRegularFixForTrialCalc, this.calcRegFixObjForTrialCalc).subscribe(
         (response) => {
           //Start SITDSFCFRTHREE-169 : di DSF ga ada upping rate, jadi commission diff rate = 0 & disabled
@@ -685,5 +690,12 @@ export class SchmRegulerFixXComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }

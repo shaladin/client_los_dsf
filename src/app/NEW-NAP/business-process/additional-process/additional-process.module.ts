@@ -87,7 +87,6 @@ import { AutoDebitRegistrationInquiryComponent } from "app/impl/NEW-NAP/business
 import { AutoDebitRegistrationCancelComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component";
 import { AutoDebitTestComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component";
 
-
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: false,

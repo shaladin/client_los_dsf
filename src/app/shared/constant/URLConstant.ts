@@ -1384,6 +1384,7 @@ export class URLConstant {
   public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.losUrl + "/v1" + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
   public static GetProdStatByProdOffCodeAndVersion = environment.losUrl + "/v1" + "/ProductOffering/GetProdStatByProdOffCodeAndVersion";
   public static GetProdOfferingHByCode = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingHByCode";
+  public static GetProdOfferingHByProdOfferingCode = environment.losUrl + "/v1" + "/ProductOffering/GetProdOfferingHByProdOfferingCode";
 
   //Ref Pay Freq
   public static GetPayFreqByProdOfferingCodeandRefProdCompntCode = environment.FoundationR3Url + "/v1" + "/RefPayFreq/GetPayFreqByProdOfferingCodeandRefProdCompntCode";
@@ -1562,6 +1563,7 @@ export class URLConstant {
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetAssetCategoryById";
   public static GetListAssetCategoryAndAssetTypeForAssetUsageMap = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetListAssetCategoryAndAssetTypeForAssetUsageMap";
+  public static GetAssetCategoryByAssetCategoryCode = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetAssetCategoryByCode";
 
   //Agrmnt Rsv Fund
   public static GetListAgrmntReservedFundByAgrmntId = environment.losUrl + "/v1" + "/AgrmntReservedFund/GetListAgrmntReservedFundByAgrmntId";

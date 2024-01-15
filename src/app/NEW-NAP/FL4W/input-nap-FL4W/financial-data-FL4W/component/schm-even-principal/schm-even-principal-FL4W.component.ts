@@ -22,6 +22,7 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Input() TrialCalc: boolean;
+  @Input() ProductOfferingCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
@@ -32,6 +33,7 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;
+  ProdOfferingVersion: string;
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly BhvLock = CommonConstant.ProductBehaviourLock;
@@ -61,6 +63,7 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
     }
     else if (this.TrialCalc != null && this.TrialCalc) {
       this.IsTrialCalc = true;
+      this.GetProductOfferingVersion();
     }
   }
 
@@ -167,6 +170,8 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
     );
   }else {
       this.calcEvenPrincipleObjForTrialCalc = this.ParentForm.getRawValue();
+      this.calcEvenPrincipleObjForTrialCalc.ProdOfferingCode = this.ProductOfferingCode;
+      this.calcEvenPrincipleObjForTrialCalc.ProdOfferingVersion = this.ProdOfferingVersion;
 
       this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipalForTrialCalc, this.calcEvenPrincipleObjForTrialCalc).subscribe(
         (response) => {
@@ -289,5 +294,12 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
 
   test() {
 
+  }
+
+  GetProductOfferingVersion() {
+    this.http.post(URLConstant.GetProdOfferingHByProdOfferingCode, { Code: this.ProductOfferingCode }).subscribe(
+      (response: any) => {
+        this.ProdOfferingVersion = response.ProdOfferingVersion
+      });
   }
 }

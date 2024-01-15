@@ -230,31 +230,38 @@
               <app-schm-reguler-fix-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'RF'"
                                       [ParentForm]="TrialForm"
                                       [BizTemplateCode]="BizTmpltCode"
-                                      [TrialCalc]="TrialCalc"></app-schm-reguler-fix-x>
+                                      [TrialCalc]="TrialCalc"
+                                      [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-reguler-fix-x>
               <app-schm-irregular-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'IR'"
                                     [ParentForm]="TrialForm"
                                     [TrialCalc]="TrialCalc"
-                                    [BizTemplateCode]="BizTmpltCode"></app-schm-irregular-x>
+                                    [BizTemplateCode]="BizTmpltCode"
+                                    [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-irregular-x>
               <app-schm-step-up-step-down-normal-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'STNM'"
                                                    [ParentForm]="TrialForm"
                                                    [BizTemplateCode]="BizTmpltCode"
-                                                   [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-normal-x>
+                                                   [TrialCalc]="TrialCalc"
+                                                   [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-step-up-step-down-normal-x>
               <app-schm-step-up-step-down-leasing-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'STLS'"
                                                     [ParentForm]="TrialForm"
                                                     [BizTemplateCode]="BizTmpltCode"
-                                                    [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-leasing-x>
+                                                    [TrialCalc]="TrialCalc"
+                                                    [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-step-up-step-down-leasing-x>
               <app-schm-step-up-step-down-cummulative-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'STCM'"
                                                         [ParentForm]="TrialForm"
                                                         [BizTemplateCode]="BizTmpltCode"
-                                                        [TrialCalc]="TrialCalc"></app-schm-step-up-step-down-cummulative-x>
+                                                        [TrialCalc]="TrialCalc"
+                                                        [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-step-up-step-down-cummulative-x>
               <app-schm-balloon-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'BL'"
                                   [ParentForm]="TrialForm"
                                   [TrialCalc]="TrialCalc"
-                                  [BizTemplateCode]="BizTmpltCode"></app-schm-balloon-x>
+                                  [BizTemplateCode]="BizTmpltCode"
+                                  [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-balloon-x>
               <app-schm-even-principal-x *ngIf="TrialForm.controls.MrInstSchemeCode.value == 'EP'"
                                          [ParentForm]="TrialForm"
                                          [BizTemplateCode]="BizTmpltCode"
-                                         [TrialCalc]="TrialCalc"></app-schm-even-principal-x>
+                                         [TrialCalc]="TrialCalc"
+                                         [ProductOfferingCode]="this.ProdOfferingCode"></app-schm-even-principal-x>
             </div>
             <!--END FINANCIAL DATA & FEES-->
 
