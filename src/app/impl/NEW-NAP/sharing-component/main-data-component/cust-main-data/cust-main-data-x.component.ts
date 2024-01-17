@@ -774,6 +774,7 @@ export class CustMainDataXComponent implements OnInit {
     );
   }
 
+
   async getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -1025,12 +1026,13 @@ export class CustMainDataXComponent implements OnInit {
             this.checkIsAddressKnown = true;
           }
         });
+
     } else {
       this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).toPromise().then(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
-    }
+      }
     await this.disableInput();
   }
 
@@ -1109,7 +1111,6 @@ export class CustMainDataXComponent implements OnInit {
       this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
     }
     END X DSF Issue Non Jira*/
-
     this.enableInput();
 
     this.SetCustModel();

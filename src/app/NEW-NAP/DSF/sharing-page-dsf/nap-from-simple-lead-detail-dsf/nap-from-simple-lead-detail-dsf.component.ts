@@ -263,6 +263,7 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
         console.log(urlPost);
         this.http.post(urlPost, napAppObj).subscribe(
           (response) => {
+            this.http.post(URLConstantDsf.UpdateLeadStepStatBulkByLeadId, { listLeadId: [this.leadId] }).subscribe(() => {});
     
             this.toastr.successMessage(response["message"]);
             if (this.bizTemplateCode == CommonConstant.CF4W) {

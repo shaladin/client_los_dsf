@@ -58,6 +58,19 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
         .post(URLConstantX.GetAgrmntHistByListCustNo, reqObjListCustNo)
         .subscribe(async (response) => {
           this.ExstAgrmnt = response;
+          if (this.ExstAgrmnt.resAgrmntObjX.length > 0) {
+            if (this.ExstAgrmnt["result"] == 1) {
+              this.toastr.successMessageTitle(
+                "Agreement Live",
+                this.ExstAgrmnt["MessageFromIFin"]
+              );
+            } else {
+              this.toastr.errorMessageTitle(
+                "Agreement Live",
+                this.ExstAgrmnt["MessageFromIFin"]
+              );
+            }
+          }
           await this.GetGrandTotal();
         });
 
@@ -72,6 +85,19 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
         )
         .subscribe(async (response) => {
           this.AppPrcs = response;
+          if (this.AppPrcs.resAppXV2Obj.length > 0) {
+            if (this.AppPrcs["result"] == 1) {
+              this.toastr.successMessageTitle(
+                "App In Process",
+                this.AppPrcs["MessageFromIFin"]
+              );
+            } else {
+              this.toastr.errorMessageTitle(
+                "App In Process",
+                this.AppPrcs["MessageFromIFin"]
+              );
+            }
+          }
           await this.GetProcessGrandTotal();
         });
 
@@ -108,14 +134,27 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
         )
         .subscribe(async (response) => {
           this.ExpiredApp = response;
+          if (this.ExpiredApp.resAgrmntExpiredObjX.length > 0) {
+            if (this.ExpiredApp["result"] == 1) {
+              this.toastr.successMessageTitle(
+                "Agreement Expired",
+                this.ExpiredApp["MessageFromIFin"]
+              );
+            } else {
+              this.toastr.errorMessageTitle(
+                "Agreement Expired",
+                this.ExpiredApp["MessageFromIFin"]
+              );
+            }
+          }
           await this.GetExpiredGrandTotal();
         });
     }
   }
 
   async GetGrandTotal() {
-    if (this.ExstAgrmnt != undefined && this.ExstAgrmnt.length != 0) {
-      var existingAgreement = this.ExstAgrmnt;
+    if (this.ExstAgrmnt.resAgrmntObjX != undefined && this.ExstAgrmnt.resAgrmntObjX.length != 0) {
+      var existingAgreement = this.ExstAgrmnt.resAgrmntObjX;
       existingAgreement.forEach((element) => {
         this.TotalNTF = this.TotalNTF + element.NTFAmount;
         this.TotalUnit = this.TotalUnit + element.NumOfAsset;
@@ -128,8 +167,8 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
   }
 
   async GetProcessGrandTotal() {
-    if (this.AppPrcs != undefined && this.AppPrcs.length != 0) {
-      this.AppPrcs.forEach((element) => {
+    if (this.AppPrcs.resAppXV2Obj != undefined && this.AppPrcs.resAppXV2Obj.length != 0) {
+      this.AppPrcs.resAppXV2Obj.forEach((element) => {
         this.TotalProcessAsset += element.NumOfAsset;
         this.TotalProcessPrincipal += element.TotalNTF;
         this.TotalProcessAR += element.TotalAR;
@@ -150,8 +189,8 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
   }
 
   async GetExpiredGrandTotal() {
-    if (this.ExpiredApp != undefined && this.ExpiredApp.length != 0) {
-      var expiredApp = this.ExpiredApp;
+    if (this.ExpiredApp.resAgrmntExpiredObjX != undefined && this.ExpiredApp.resAgrmntExpiredObjX.length != 0) {
+      var expiredApp = this.ExpiredApp.resAgrmntExpiredObjX;
       expiredApp.forEach((element) => {
         this.TotalExpiredPrincipal += element.NTFAmount;
         this.TotalExpiredAsset += element.NumOfAsset;

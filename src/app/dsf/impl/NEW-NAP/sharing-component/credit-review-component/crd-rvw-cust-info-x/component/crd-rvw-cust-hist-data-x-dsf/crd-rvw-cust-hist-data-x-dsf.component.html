@@ -1,6 +1,6 @@
 <div class="modal-body">
   <div class="pl-3 mb-2 mt-2">
-    <h4 class="card-title ucSearch-title" translate> Customer History Data View DSF</h4>
+    <h4 class="card-title ucSearch-title" translate> Customer History Data View </h4>
   </div>
   <app-app-main-info-cr-x [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info-cr-x>
   <lib-ucSubsection [id]="'existAgrId'" [title]="'Existing Agreement'" [panel]="'existAgr'">
@@ -168,7 +168,7 @@
 
   <lib-ucSubsection [id]="'existAgrSmryId'" [title]="'Summary Existing Agreement Customer Group'" [panel]="'existAgrSmry'">
   </lib-ucSubsection>
-  <div id="existAgrSmry" *ngIf="IsSummaryReady">
+  <div id="existAgrSmry">
     <div class="row">
       <div class="col-md-3">
         <label class="label-control" translate> Total #Asset</label>
@@ -321,7 +321,7 @@
 
   <lib-ucSubsection [id]="'appRjcSmryId'" [title]="'Summary Application Reject Customer Group'" [panel]="'appRjcSmry'">
   </lib-ucSubsection>
-  <div id="appRjcSmry" *ngIf="IsSummaryReady">
+  <div id="appRjcSmry">
     <div class="row">
       <div class="col-md-3">
         <label class="label-control" translate>Total #Asset</label>
@@ -466,7 +466,7 @@
 
   <lib-ucSubsection [id]="'appPrcSmryId'" [title]="'Summary Application In Process Customer Group'" [panel]="'appPrcSmry'">
   </lib-ucSubsection>
-  <div id="appPrcSmry" *ngIf="IsSummaryReady">
+  <div id="appPrcSmry">
     <div class="row">
       <div class="col-md-3">
         <label class="label-control" translate>Total #Asset</label>
@@ -497,9 +497,9 @@
     </div>
   </div>
 
-  <lib-ucSubsection [id]="'expiredAppId'" [title]="'Application Expired'" [panel]="'expiredAppId'">
+  <lib-ucSubsection [id]="'expiredAppId'" [title]="'Application Expired'" [panel]="'expiredApp'">
   </lib-ucSubsection>
-  <div id="expiredAppId">
+  <div id="expiredApp">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -557,6 +557,7 @@
             <a class="link" (click)="ClickLinkAgrmntNo(item.AgreementNo)">{{item.AgreementNo}}</a>
           </td>
           <td *ngIf="item.ApplicationNo==null||item.ApplicationNo=='-' && item.AgreementNo!=null"> {{item.AgreementNo}} </td>
+
           <td *ngIf="item.AgreementNo==null"> - </td>
           <td style="text-align: left;" *ngIf="item.AssetType!=null">{{item.AssetType}}</td>
           <td style="text-align: left;" *ngIf="item.AssetType==null"> - </td>
@@ -608,7 +609,7 @@
 
   <lib-ucSubsection [id]="'expiredAppSmryId'" [title]="'Summary Application Expired Customer Group'" [panel]="'expiredAppSmry'">
   </lib-ucSubsection>
-  <div id="expiredAppSmry" *ngIf="IsSummaryReady">
+  <div id="expiredAppSmry">
     <div class="row">
       <div class="col-md-3">
         <label class="label-control" translate> Total #Asset</label>
