@@ -86,6 +86,7 @@ import { CrdRvwCustHistDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-co
         CrdRvwAppAppInfoXComponent,
         CrdRvwGrpHistDataDsfComponent,
         CrdRvwCustInfoXDsfComponent,
+        CrdRvwCustHistDataXDsfComponent,
         CrdRvwCustHistDataXDsfComponent
     ],
     imports: [
@@ -142,6 +143,7 @@ import { CrdRvwCustHistDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-co
         CrdRvwCustInfoXDsfComponent,
         CrdRvwCustPersonalInfoXDsfComponent,
         CrdRvwCustCompanyInfoXDsfComponent,
+        CrdRvwCustHistDataXDsfComponent,
         CrdRvwCustHistDataXDsfComponent
     ],
     providers: [
