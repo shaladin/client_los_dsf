@@ -196,6 +196,9 @@ export class URLConstantX {
   //APP INSURANCE X
   public static GetListAppInsObjByAgrmntIdForViewX = environment.losUrl + '/v1' + '/AppInsX/GetListAppInsObjByAgrmntIdForView';
   public static GetAddCvgDiscRule = environment.losUrl + '/v1' + '/AppInsX/GetAddCvgDiscRule';
+  public static ExecuteInsRateRuleV2ByRequestCategory = environment.losUrl + "/v2" + "/AppInsX/ExecuteInsRateRuleV2ByRequestCategory";
+  public static EditInsuranceDataMultiAssetX = environment.losUrl + "/v1" + "/AppInsX/EditInsuranceDataMultiAssetX";
+  public static AddInsuranceDataMultiAssetX = environment.losUrl + "/v1" + "/AppInsX/AddInsuranceDataMultiAssetX";
 
   //PO
   public static GetAppCustBankAccsByAppIdX = environment.losUrl + '/v1' + "/AppCustBankAccX/GetAppCustBankAccsByAppId";
@@ -224,6 +227,7 @@ export class URLConstantX {
 
   //App Fin Data-Fee X
   public static GetInitAppFinDataByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataByAppId";
+  public static GetInitAppFinDataByAppIdXV2 = environment.losUrl + "/v2" + "/AppFinDataX/GetInitAppFinDataByAppId";
   public static GetInitFinDataForTrialCalcX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitFinDataForTrialCalc";
   public static GetInitAppFinDataFctrByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataFctrByAppId";
   public static GetInitAppFinDataDFByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataDFByAppId";
@@ -311,6 +315,8 @@ export class URLConstantX {
   //ltkm cust personal main data
   public static GetCustPersonalForLtkmCopyByCustIdX = environment.FoundationR3Url + "/v1" + "/CustX/GetCustPersonalForLtkmCopyByCustId";
 
+  //ltkm summary
+  public static GetSummaryByLtkmCustId = environment.losUrl + "/v1" + "/LtkmX/GetSummaryByLtkmCustId";
   //ltkm return handling
   public static SaveLtkmReturnHandlingPersonalV2 = environment.losUrl + "/v2" + "/LtkmCustomerDataX/SaveLtkmReturnHandlingPersonal";
   public static SaveLtkmReturnHandlingCompanyV2 = environment.losUrl + "/v2" + "/LtkmCustomerDataX/SaveLtkmReturnHandlingCompany";

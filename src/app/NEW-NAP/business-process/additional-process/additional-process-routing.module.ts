@@ -73,7 +73,6 @@ import { ReturnHandlingEditNap4DsfComponent } from 'app/NEW-NAP/DSF/business-pro
 import { PlafondInstallmentSimulationPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-paging-dsf/plafond-installment-simulation-paging-dsf.component';
 import { PlafondInstallmentSimulationDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component';
 
-
 const routes: Routes = [
   {
     path: '',

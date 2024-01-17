@@ -15,6 +15,7 @@ import {AppSubsidyObj} from 'app/shared/model/app-subsidy-obj.model';
 import {environment} from 'environments/environment';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AppSubsidyDealerObj } from 'app/impl/shared/model/AppSubsidyDealerObj.model';
+import { AppSubsidyProfitablityXObj } from 'app/impl/shared/model/AppSubsidyProfitablityXObj.model';
 
 @Component({
   selector: 'app-financial-data-x-dsf',
@@ -45,6 +46,7 @@ export class FinancialDataXDsfComponent implements OnInit {
   AppData: AppObj;
   isReady: boolean = false;
   instAmt: number;
+  AppSubsidyProfitabilityXes: Array<AppSubsidyProfitablityXObj> = new Array<AppSubsidyProfitablityXObj>();
   // Self Custom CR Automation Subsidy Dealer
   appSubsidyDealerObj: AppSubsidyDealerObj = new AppSubsidyDealerObj();
   // End Self Custom CR Automation Subsidy Dealer
@@ -182,10 +184,11 @@ export class FinancialDataXDsfComponent implements OnInit {
   // End Self Custom CR Automation Subsidy Dealer
     // note rework: Url V2 belum ditambahin di X, baru ada di Core doank. PERLU DITAMBAHIN !
     // let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdV2X : URLConstantX.GetInitAppFinDataByAppIdX;
-    let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdX : URLConstantX.GetInitAppFinDataByAppIdX;
+    let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdXV2 : URLConstantX.GetInitAppFinDataByAppIdXV2;
     await this.http.post<AppFinDataObjX>(InitAppFinDataUrl, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.appFinDataObj = response;
+        this.AppSubsidyProfitabilityXes = response['AppSubsidyProfitabilityXes'];
         this.instAmt = response['InstAmt'];
         if (this.appFinDataObj.MrInstSchemeCode != CommonConstant.InstSchmRegularFix) {
           this.FinDataForm.get("RateType").disable();
@@ -290,13 +293,16 @@ export class FinancialDataXDsfComponent implements OnInit {
 
     var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
 
+    let reqObj = this.FinDataForm.getRawValue();
+    reqObj.AppSubsidyProfitabilityXes = this.AppSubsidyProfitabilityXes;
+
     if (NeedReCalculate) {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
       return;
     }
     if (isValidGracePeriod) {
       this.SetDiffRateAmt();
-      this.http.post(URLConstantX.SaveAppFinDataX, this.FinDataForm.getRawValue()).subscribe(
+      this.http.post(URLConstantX.SaveAppFinDataX, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();
