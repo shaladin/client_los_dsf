@@ -279,10 +279,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
   IsOnProgress: boolean = false;
   IsLOBNotMatch: boolean = false;
   isActiveMode: boolean = false;
-  generalSettingPlafondObj: GeneralSettingObj;
-  returnGeneralPlafondSettingObj: GeneralSettingObj;
-  isOverMinimumPlafod: boolean = false;
-  isOverTenor: boolean = false;
   //End Self Custom CR MPF & FD Validation
 
   constructor(private fb: FormBuilder,
@@ -1328,47 +1324,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
           });
 
           this.RemainingPlafond = this.RequestedPlafond - this.agrParent.OsNiMpfDtAmt;
-
-          this.generalSettingPlafondObj = new GeneralSettingObj();
-          this.generalSettingPlafondObj.GsCode = "MIN_PLAFOND_PARENT_AGR";
-          let obj = {
-            Code: this.generalSettingPlafondObj.GsCode
-          }
-          await this.http.post(URLConstant.GetGeneralSettingByCode, obj).toPromise().then(
-            (response: GeneralSettingObj) => {
-              this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue) <= this.MaxPlafondMasterAgreement)
-              {
-                this.isOverMinimumPlafod = true;
-              }
-          });
-
-          if (!this.isOverMinimumPlafod)
-          {
-            this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_MIN_PLAFOND);
-            return false;
-          }
-
-          let runningTenor = this.monthDiff(this.agrParent.AgrmntDt);
-          this.generalSettingPlafondObj = new GeneralSettingObj();
-          this.generalSettingPlafondObj.GsCode = "TENOR_LIMIT";
-          let objTenor = {
-            Code: this.generalSettingPlafondObj.GsCode
-          }
-          await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
-            (response: GeneralSettingObj) => {
-              this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor <= runningTenor)
-              {
-                this.isTenorValid = true;
-              }
-          });
-
-          if (!this.isTenorValid)
-          {
-            this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_TENOR_LIMIT);
-            return false;
-          }
     }
     // End Self Custom CR MPF & FD Validation
 
@@ -2499,14 +2454,6 @@ export class ApplicationDataXDsfComponent implements OnInit {
         this.IsRequestedPlafondExceed = true;
       } 
     }
-  }
-
-  monthDiff(agrmntDate: Date)
-  {
-    const monthDiff = new Date().getMonth() - agrmntDate.getMonth();
-    const yearDiff = new Date().getFullYear() - agrmntDate.getFullYear();
-
-    return monthDiff + yearDiff * 12;
   }
   // End Self Custom CR MPF & FD Validation
 }
