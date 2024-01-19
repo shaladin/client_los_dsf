@@ -282,7 +282,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
   generalSettingPlafondObj: GeneralSettingObj;
   returnGeneralPlafondSettingObj: GeneralSettingObj;
   isOverMinimumPlafod: boolean = true;
-  isOverTenor: boolean = true;
+  isOverTenor: boolean = false;
   businessDt: any;
   //End Self Custom CR MPF & FD Validation
 
@@ -1344,7 +1344,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
               }
           });
 
-          const runningTenor = this.monthDiff(this.agrParent.AgrmntDt);
+          let runningTenor = this.monthDiff(this.agrParent.AgrmntDt);
           this.generalSettingPlafondObj = new GeneralSettingObj();
           this.generalSettingPlafondObj.GsCode = "TENOR_LIMIT";
           let objTenor = {
@@ -1353,41 +1353,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
               this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
+              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor <= runningTenor)
               {
-                this.isOverTenor = false;
-              }
-          });
-    }
-
-    if (task == 0)
-    {
-      this.generalSettingPlafondObj = new GeneralSettingObj();
-          this.generalSettingPlafondObj.GsCode = "MIN_PLAFOND_PARENT_AGR";
-          let obj = {
-            Code: this.generalSettingPlafondObj.GsCode
-          }
-          await this.http.post(URLConstant.GetGeneralSettingByCode, obj).toPromise().then(
-            (response: GeneralSettingObj) => {
-              this.returnGeneralPlafondSettingObj = response;
-              if (parseInt(this.returnGeneralPlafondSettingObj.GsValue) >= this.MaxPlafondMasterAgreement)
-              {
-                this.isOverMinimumPlafod = false;
-              }
-          });
-
-          const runningTenor = this.monthDiff(this.agrParent.AgrmntDt);
-          this.generalSettingPlafondObj = new GeneralSettingObj();
-          this.generalSettingPlafondObj.GsCode = "TENOR_LIMIT";
-          let objTenor = {
-            Code: this.generalSettingPlafondObj.GsCode
-          }
-          await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
-            (response: GeneralSettingObj) => {
-              this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
-              {
-                this.isOverTenor = false;
+                this.isTenorValid = true;
               }
           });
     }
@@ -1587,7 +1555,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
         return false;
       }
 
-      if (!this.isOverTenor)
+      if (!this.isTenorValid)
       {
         this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_TENOR_LIMIT);
         return false;
@@ -2540,7 +2508,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
     const monthDiff = this.businessDt.getMonth() - new Date(agrmntDate).getMonth();
     const yearDiff = this.businessDt.getFullYear() - new Date(agrmntDate).getFullYear();
 
-    return ((yearDiff * 12) + monthDiff);
+    return monthDiff + yearDiff * 12;
   }
   // End Self Custom CR MPF & FD Validation
 }
