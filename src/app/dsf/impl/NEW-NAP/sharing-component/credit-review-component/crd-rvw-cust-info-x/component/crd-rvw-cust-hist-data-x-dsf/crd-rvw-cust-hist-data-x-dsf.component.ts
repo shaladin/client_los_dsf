@@ -124,7 +124,7 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
                 }
               }
               await this.GetGrandTotal();
-              await this.GetListApp(); //Self Custom
+              await this.GetListAgrmnt(); //Self Custom
             }
           );
 
@@ -194,7 +194,7 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
                 }
                }
               await this.GetExpiredGrandTotal();
-              await this.GetExpListApp(); //Self Custom
+              await this.GetExpListAgrmnt(); //Self Custom
             }
           );
         }
@@ -287,10 +287,10 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
   async GetSummary(){
     await this.GetSummaryData()
 
-    await this.GetListAppSummary()
+    await this.GetListAgrmntSummary()
     await this.GetRjcListAppSummary()
     await this.GetPrcListAppSummary()
-    await this.GetExpListAppSummary()
+    await this.GetExpListAgrmntSummary()
 
     this.GetGrandTotalSummary()
     this.GetRejectedGrandTotalSummary()
@@ -480,21 +480,21 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
   }
 
   //#region Add %CSP
-  async GetListApp() {
+  async GetListAgrmnt() {
     if (this.ExstAgrmnt.resAgrmntObjX != undefined && this.ExstAgrmnt.resAgrmntObjX.length > 0) {
       await this.http.post(
-        URLConstantDsf.GetAppListForCustHistDsf,
+        URLConstantDsf.GetAgrmntListForCustHistDsf,
         {
-          listAppNo: this.ExstAgrmnt.resAgrmntObjX.map(item => item.ApplicationNo)
+          listAgrmntNo: this.ExstAgrmnt.resAgrmntObjX.map(item => item.AgreementNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.ExstAgrmnt.resAgrmntObjX = this.MergeListApp(this.ExstAgrmnt.resAgrmntObjX, "ApplicationNo", response.resAppListForCustHistDsf)
-              this.TotalCSPPercentage = this.GetTotalCSP(this.ExstAgrmnt.resAgrmntObjX)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.ExstAgrmnt.resAgrmntObjX = this.MergeListAgrmnt(this.ExstAgrmnt.resAgrmntObjX, "AgreementNo", response.resAgrmntListForCustHistDsf)
+            this.TotalCSPPercentage = this.GetTotalCSP(this.ExstAgrmnt.resAgrmntObjX)
           }
-        );
+        }
+      );
     }
   }
 
@@ -506,13 +506,13 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
           listAppNo: this.AppRjct.map(item => item.AppNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.AppRjct = this.MergeListApp(this.AppRjct, "AppNo", response.resAppListForCustHistDsf)
-              this.TotalRjcCSPPercentage = this.GetTotalCSP(this.AppRjct)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.AppRjct = this.MergeListApp(this.AppRjct, "AppNo", response.resAppListForCustHistDsf)
+            this.TotalRjcCSPPercentage = this.GetTotalCSP(this.AppRjct)
           }
-        );
+        }
+      );
     }
   }
 
@@ -524,49 +524,49 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
           listAppNo: this.AppPrcs.resAppXV2Obj.map(item => item.AppNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.AppPrcs.resAppXV2Obj = this.MergeListApp(this.AppPrcs.resAppXV2Obj, "AppNo", response.resAppListForCustHistDsf)
-              this.TotalPrcsCSPPercentage = this.GetTotalCSP(this.AppPrcs.resAppXV2Obj)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.AppPrcs.resAppXV2Obj = this.MergeListApp(this.AppPrcs.resAppXV2Obj, "AppNo", response.resAppListForCustHistDsf)
+            this.TotalPrcsCSPPercentage = this.GetTotalCSP(this.AppPrcs.resAppXV2Obj)
           }
-        );
+        }
+      );
     }
   }
 
-  async GetExpListApp() {
+  async GetExpListAgrmnt() {
     if (this.ExpiredApp.resAgrmntExpiredObjX != undefined && this.ExpiredApp.resAgrmntExpiredObjX.length > 0) {
       await this.http.post(
-        URLConstantDsf.GetAppListForCustHistDsf,
+        URLConstantDsf.GetAgrmntListForCustHistDsf,
         {
-          listAppNo: this.ExpiredApp.resAgrmntExpiredObjX.map(item => item.ApplicationNo)
+          listAgrmntNo: this.ExpiredApp.resAgrmntExpiredObjX.map(item => item.AgreementNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.ExpiredApp.resAgrmntExpiredObjX = this.MergeListApp(this.ExpiredApp.resAgrmntExpiredObjX, "ApplicationNo", response.resAppListForCustHistDsf)
-              this.TotalExpCSPPercentage = this.GetTotalCSP(this.ExpiredApp.resAgrmntExpiredObjX)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.ExpiredApp.resAgrmntExpiredObjX = this.MergeListAgrmnt(this.ExpiredApp.resAgrmntExpiredObjX, "AgreementNo", response.resAgrmntListForCustHistDsf)
+            this.TotalExpCSPPercentage = this.GetTotalCSP(this.ExpiredApp.resAgrmntExpiredObjX)
           }
-        );
+        }
+      );
     }
   }
 
-  async GetListAppSummary() {
+  async GetListAgrmntSummary() {
     if (this.ExstAgrmntSummary != undefined && this.ExstAgrmntSummary.length > 0) {
       await this.http.post(
-        URLConstantDsf.GetAppListForCustHistDsf,
+        URLConstantDsf.GetAgrmntListForCustHistDsf,
         {
-          listAppNo: this.ExstAgrmntSummary.map(item => item.ApplicationNo)
+          listAgrmntNo: this.ExstAgrmntSummary.map(item => item.AgreementNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.ExstAgrmntSummary = this.MergeListApp(this.ExstAgrmntSummary, "ApplicationNo", response.resAppListForCustHistDsf)
-              this.TotalCSPPercentageSummary = this.GetTotalCSP(this.ExstAgrmntSummary)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.ExstAgrmntSummary = this.MergeListAgrmnt(this.ExstAgrmntSummary, "AgreementNo", response.resAgrmntListForCustHistDsf)
+            this.TotalCSPPercentageSummary = this.GetTotalCSP(this.ExstAgrmntSummary)
           }
-        );
+        }
+      );
     }
   }
 
@@ -578,13 +578,13 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
           listAppNo: this.AppRjctSummary.map(item => item.AppNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.AppRjctSummary = this.MergeListApp(this.AppRjctSummary, "AppNo", response.resAppListForCustHistDsf)
-              this.TotalRjcCSPPercentageSummary = this.GetTotalCSP(this.AppRjctSummary)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.AppRjctSummary = this.MergeListApp(this.AppRjctSummary, "AppNo", response.resAppListForCustHistDsf)
+            this.TotalRjcCSPPercentageSummary = this.GetTotalCSP(this.AppRjctSummary)
           }
-        );
+        }
+      );
     }
   }
 
@@ -596,31 +596,31 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
           listAppNo: this.AppPrcsSummary.map(item => item.AppNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.AppPrcsSummary = this.MergeListApp(this.AppPrcsSummary, "AppNo", response.resAppListForCustHistDsf)
-              this.TotalPrcsCSPPercentageSummary = this.GetTotalCSP(this.AppPrcsSummary)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.AppPrcsSummary = this.MergeListApp(this.AppPrcsSummary, "AppNo", response.resAppListForCustHistDsf)
+            this.TotalPrcsCSPPercentageSummary = this.GetTotalCSP(this.AppPrcsSummary)
           }
-        );
+        }
+      );
     }
   }
 
-  async GetExpListAppSummary() {
+  async GetExpListAgrmntSummary() {
     if (this.ExpiredAppSummary != undefined && this.ExpiredAppSummary.length > 0) {
       await this.http.post(
-        URLConstantDsf.GetAppListForCustHistDsf,
+        URLConstantDsf.GetAgrmntListForCustHistDsf,
         {
-          listAppNo: this.ExpiredAppSummary.map(item => item.ApplicationNo)
+          listAgrmntNo: this.ExpiredAppSummary.map(item => item.AgreementNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.ExpiredAppSummary = this.MergeListApp(this.ExpiredAppSummary, "ApplicationNo", response.resAppListForCustHistDsf)
-              this.TotalExpCSPPercentageSummary = this.GetTotalCSP(this.ExpiredAppSummary)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.ExpiredAppSummary = this.MergeListAgrmnt(this.ExpiredAppSummary, "AgreementNo", response.resAgrmntListForCustHistDsf)
+            this.TotalExpCSPPercentageSummary = this.GetTotalCSP(this.ExpiredAppSummary)
           }
-        );
+        }
+      );
     }
   }
 
@@ -630,6 +630,18 @@ export class CrdRvwCustHistDataXDsfComponent implements OnInit {
     objSrc.forEach(item => {
       if (map.has(item.ApplicationNo)) {
         map.set(item.ApplicationNo, { ...map.get(item.ApplicationNo), ...item })
+      }
+    })
+
+    return Array.from(map.values());
+  }
+
+  MergeListAgrmnt(objRes: any, objResProp: string, objSrc: any): any {
+    const map = new Map()
+    objRes.forEach(item => map.set(item[objResProp], item))
+    objSrc.forEach(item => {
+      if (map.has(item.AgreementNo)) {
+        map.set(item.AgreementNo, { ...map.get(item.AgreementNo), ...item })
       }
     })
 
