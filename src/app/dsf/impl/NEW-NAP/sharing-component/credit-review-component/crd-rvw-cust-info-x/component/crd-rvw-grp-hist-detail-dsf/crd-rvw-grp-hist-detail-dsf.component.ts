@@ -78,7 +78,7 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
             }
           }
           await this.GetGrandTotal();
-          await this.GetListApp();
+          await this.GetListAgrmnt();
         });
 
       let reqObjIsAppInitDone = {
@@ -157,7 +157,7 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
             }
           }
           await this.GetExpiredGrandTotal();
-          await this.GetExpListApp();
+          await this.GetExpListAgrmnt();
         });
     }
   }
@@ -248,21 +248,21 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
   }
 
   //#region Self Custom
-  async GetListApp() {
+  async GetListAgrmnt() {
     if (this.ExstAgrmnt.resAgrmntObjX != undefined && this.ExstAgrmnt.resAgrmntObjX.length > 0) {
       await this.http.post(
-        URLConstantDsf.GetAppListForCustHistDsf,
+        URLConstantDsf.GetAgrmntListForCustHistDsf,
         {
-          listAppNo: this.ExstAgrmnt.resAgrmntObjX.map(item => item.ApplicationNo)
+          listAgrmntNo: this.ExstAgrmnt.resAgrmntObjX.map(item => item.AgreementNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.ExstAgrmnt.resAgrmntObjX = this.MergeListApp(this.ExstAgrmnt.resAgrmntObjX, "ApplicationNo", response.resAppListForCustHistDsf)
-              this.TotalCSPPercentage = this.GetTotalCSP(this.ExstAgrmnt.resAgrmntObjX)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.ExstAgrmnt.resAgrmntObjX = this.MergeListAgrmnt(this.ExstAgrmnt.resAgrmntObjX, "AgreementNo", response.resAgrmntListForCustHistDsf)
+            this.TotalCSPPercentage = this.GetTotalCSP(this.ExstAgrmnt.resAgrmntObjX)
           }
-        );
+        }
+      );
     }
   }
 
@@ -274,13 +274,13 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
           listAppNo: this.AppRjct.map(item => item.AppNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.AppRjct = this.MergeListApp(this.AppRjct, "AppNo", response.resAppListForCustHistDsf)
-              this.TotalRjcCSPPercentage = this.GetTotalCSP(this.AppRjct)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.AppRjct = this.MergeListApp(this.AppRjct, "AppNo", response.resAppListForCustHistDsf)
+            this.TotalRjcCSPPercentage = this.GetTotalCSP(this.AppRjct)
           }
-        );
+        }
+      );
     }
   }
 
@@ -292,32 +292,44 @@ export class CrdRvwGrpHistDetailDsfComponent implements OnInit {
           listAppNo: this.AppPrcs.resAppXV2Obj.map(item => item.AppNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.AppPrcs.resAppXV2Obj = this.MergeListApp(this.AppPrcs.resAppXV2Obj, "AppNo", response.resAppListForCustHistDsf)
-              this.TotalPrcsCSPPercentage = this.GetTotalCSP(this.AppPrcs.resAppXV2Obj)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.AppPrcs.resAppXV2Obj = this.MergeListApp(this.AppPrcs.resAppXV2Obj, "AppNo", response.resAppListForCustHistDsf)
+            this.TotalPrcsCSPPercentage = this.GetTotalCSP(this.AppPrcs.resAppXV2Obj)
           }
-        );
+        }
+      );
     }
   }
 
-  async GetExpListApp() {
+  async GetExpListAgrmnt() {
     if (this.ExpiredApp.resAgrmntExpiredObjX != undefined && this.ExpiredApp.resAgrmntExpiredObjX.length > 0) {
       await this.http.post(
-        URLConstantDsf.GetAppListForCustHistDsf,
+        URLConstantDsf.GetAgrmntListForCustHistDsf,
         {
-          listAppNo: this.ExpiredApp.resAgrmntExpiredObjX.map(item => item.ApplicationNo)
+          listAgrmntNo: this.ExpiredApp.resAgrmntExpiredObjX.map(item => item.AgreementNo)
         }
       ).subscribe(
-          (response: any) => {
-            if (response != undefined) {
-              this.ExpiredApp.resAgrmntExpiredObjX = this.MergeListApp(this.ExpiredApp.resAgrmntExpiredObjX, "ApplicationNo", response.resAppListForCustHistDsf)
-              this.TotalExpCSPPercentage = this.GetTotalCSP(this.ExpiredApp.resAgrmntExpiredObjX)
-            }
+        (response: any) => {
+          if (response != undefined) {
+            this.ExpiredApp.resAgrmntExpiredObjX = this.MergeListAgrmnt(this.ExpiredApp.resAgrmntExpiredObjX, "AgreementNo", response.resAgrmntListForCustHistDsf)
+            this.TotalExpCSPPercentage = this.GetTotalCSP(this.ExpiredApp.resAgrmntExpiredObjX)
           }
-        );
+        }
+      );
     }
+  }
+
+  MergeListAgrmnt(objRes: any, objResProp: string, objSrc: any): any {
+    const map = new Map()
+    objRes.forEach(item => map.set(item[objResProp], item))
+    objSrc.forEach(item => {
+      if (map.has(item.AgreementNo)) {
+        map.set(item.AgreementNo, { ...map.get(item.AgreementNo), ...item })
+      }
+    })
+
+    return Array.from(map.values());
   }
 
   MergeListApp(objRes: any, objResProp: string, objSrc: any): any {
