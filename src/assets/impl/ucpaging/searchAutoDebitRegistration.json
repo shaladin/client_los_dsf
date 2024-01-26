@@ -68,6 +68,14 @@
           {
             "key": "FLD",
             "value": "FAILED"
+          },
+          {
+            "key": "CAN",
+            "value": "CANCEL"
+          },
+          {
+            "key": "SCS",
+            "value": "SUCCESS"
           }
         ],
         "itemsUrl": []
@@ -86,6 +94,27 @@
         "path": "/AutoDebitRegistration/GetListRefBankIsAutoDebit",
         "label": "Bank Name",
         "items": [],
+        "itemsUrl": []
+      },
+      {
+        "type": "dropdown",
+        "name": "CASE WHEN DATEDIFF(second,sadrl.DTM_CRT,GETDATE()) > CONVERT(INT,(SELECT GS_VALUE FROM V_GENERAL_SETTING WHERE GS_CODE = 'AUTO_DEBIT_DIFF_TIME')) THEN 'YES' ELSE 'NO'END",
+        "id": "IsExpiredId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": false,
+        "ddlType": "all",
+        "label": "Is Expired",
+        "items": [
+          {
+            "key": "YES",
+            "value": "YES"
+          },
+          {
+            "key": "NO",
+            "value": "NO"
+          }
+        ],
         "itemsUrl": []
       }
     ],
@@ -134,6 +163,12 @@
         "position": "center",
         "label": "Status",
         "name": "rsl.DESCR"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Is Expired",
+        "name": "CASE WHEN DATEDIFF(second,sadrl.DTM_CRT,GETDATE()) > CONVERT(INT,(SELECT GS_VALUE  FROM V_GENERAL_SETTING WHERE GS_CODE = 'AUTO_DEBIT_DIFF_TIME')) THEN 'YES' ELSE 'NO' END"
       },
       {
         "type": "label",
@@ -198,6 +233,11 @@
         "type": "text",
         "position": "center",
         "property": "StatusDescr"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "IsExpired"
       },
       {
         "type": "action",

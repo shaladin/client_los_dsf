@@ -51,21 +51,41 @@
               <thead>
                 <tr class="table-header">
                   <th class="text-center"><span class="thead-header">Transaction Date</span></th>
+                  <th class="text-center"><span class="thead-header">Requestor</span></th>
+                  <th class="text-center"><span class="thead-header">SKPR ID</span></th>
+                  <th class="text-center"><span class="thead-header">Account No</span></th>
+                  <th class="text-center"><span class="thead-header">Active Date</span></th>
+                  <th class="text-center"><span class="thead-header">Failed Date</span></th>
                   <th class="text-center"><span class="thead-header">Status</span></th>
                 </tr>
               </thead>
 
-              <tbody *ngIf="listStgAutoDebitRegisLog?.length == 0">
+              <tbody *ngIf="listResAutoDebitRegAndSkprForViewObj?.length == 0">
                 <tr>
                   <td colspan="100%">No Data Available</td>
                 </tr>
               </tbody>
 
               <tbody>
-                <ng-container *ngFor="let item of listStgAutoDebitRegisLog">
+                <ng-container *ngFor="let item of listResAutoDebitRegAndSkprForViewObj">
                   <tr>
-                    <td class="text-center">{{item.TrxDt | date:'dd-MMM-yyyy'}}</td>
-                    <td class="text-center">{{item.Status}}</td>
+                    <td class="text-center">{{item.TransactionDate | date:'dd-MMM-yyyy'}}</td>
+                    <td *ngIf="item.SkprId != undefined || item.SkprId != null" class="text-center">{{item.Requestor}}</td>
+                    <td *ngIf="item.SkprId == undefined || item.SkprId == null" class="text-center">-</td>
+                    <td *ngIf="item.SkprId == undefined || item.SkprId == null" class="text-center">-</td>
+                    <td *ngIf="item.SkprId != undefined && item.SkprId != null" class="text-center">{{item.SkprId }}</td>
+
+                    <td *ngIf="item.BankAccount == undefined || item.BankAccount == null" class="text-center">-</td>
+                    <td *ngIf="item.BankAccount != undefined && item.BankAccount != null" class="text-center">{{item.BankAccount}}</td>
+
+                    <td *ngIf="item.ActiveDt == undefined || item.ActiveDt == null" class="text-center">-</td>
+                    <td *ngIf="item.ActiveDt != undefined && item.ActiveDt != null " class="text-center">{{item.ActiveDt | date:'dd-MMM-yyyy'}}</td>
+
+                    <td *ngIf="item.FailedDt == undefined || item.FailedDt == null" class="text-center">-</td>
+                    <td *ngIf="item.FailedDt != undefined && item.FailedDt != null" class="text-center">{{item.FailedDt | date:'dd-MMM-yyyy'}}</td>
+                    
+                    <td *ngIf="item.Status == undefined || item.Status == null" class="text-center">-</td>
+                    <td *ngIf="item.Status != undefined && item.Status != null" class="text-center">{{item.Status}}</td>
                   </tr>
                 </ng-container>
               </tbody>
