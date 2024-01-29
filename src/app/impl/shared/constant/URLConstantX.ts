@@ -317,6 +317,7 @@ export class URLConstantX {
 
   //ltkm summary
   public static GetSummaryByLtkmCustId = environment.losUrl + "/v1" + "/LtkmX/GetSummaryByLtkmCustId";
+
   //ltkm return handling
   public static SaveLtkmReturnHandlingPersonalV2 = environment.losUrl + "/v2" + "/LtkmCustomerDataX/SaveLtkmReturnHandlingPersonal";
   public static SaveLtkmReturnHandlingCompanyV2 = environment.losUrl + "/v2" + "/LtkmCustomerDataX/SaveLtkmReturnHandlingCompany";
@@ -357,6 +358,7 @@ export class URLConstantX {
   //#region Auto Debit Registration
   public static GetAutoDebitRegistrationById = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetAutoDebitRegistrationById";
   public static GetAutoDebitRegistrationByNo = environment.losUrl + "/v1" + "/AutoDebitRegistration/GetAutoDebitRegistrationByNo";
+  public static ProcessAutoDebitAccInquiry =environment.losUrl + "/v1" + "/AutoDebitRegistration/ProcessAutoDebitAccInquiry";
   public static InsertIntoAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/InsertIntoAutoDebitRegistration";
   public static AutoDebitRegistrationCancellation = environment.losUrl + "/v1" + "/AutoDebitRegistration/AutoDebitRegistrationCancellation";
   public static ProcessAutoDebitRegistration = environment.losUrl + "/v1" + "/AutoDebitRegistration/ProcessAutoDebitRegistration";
