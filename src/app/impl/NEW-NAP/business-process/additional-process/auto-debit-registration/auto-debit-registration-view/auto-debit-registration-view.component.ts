@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { ResAutoDebitRegAndSkprForViewObj } from 'app/impl/shared/model/auto-debit-inquiry/ResAutoDebitRegAndSkprForViewObj';
 import { AutoDebitRegistrationObj } from 'app/impl/shared/model/auto-debit-registration/AutoDebitRegistrationObj.model';
 import { StgAutoDebitRegisLogObj } from 'app/impl/shared/model/auto-debit-registration/StgAutoDebitRegisLogObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -27,8 +26,6 @@ export class AutoDebitRegistrationViewComponent implements OnInit {
   reason: string = "";
   listStgAutoDebitRegisLog: Array<StgAutoDebitRegisLogObj> = new Array();
   RefStats: Array<KeyValueObj> = new Array();
-
-  listResAutoDebitRegAndSkprForViewObj:Array<ResAutoDebitRegAndSkprForViewObj> = new Array<ResAutoDebitRegAndSkprForViewObj>();
 
   readonly Cancel = CommonConstantX.AUTO_DEBIT_STATUS_CAN;
   constructor(
@@ -83,8 +80,12 @@ export class AutoDebitRegistrationViewComponent implements OnInit {
 
         this.http.post(URLConstantX.GetListStgAutoDebitRegisLogForView, {TrxNo : this.autoDebitRegistrationObj.TransactionNo}).toPromise().then(
           (response) => {
-            this.listResAutoDebitRegAndSkprForViewObj = response['ReturnObject'];
-            console.log(this.listResAutoDebitRegAndSkprForViewObj)
+            this.listStgAutoDebitRegisLog = response['ReturnObject'];
+
+            for(let i = 0; i < this.listStgAutoDebitRegisLog.length; i++)
+            {
+              this.listStgAutoDebitRegisLog[i].Status = this.RefStats.find(x => x.Key == this.listStgAutoDebitRegisLog[i].Status).Value;
+            }
           }
         )
       }
