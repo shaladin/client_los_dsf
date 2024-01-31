@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { StgAutoDebitRegisLogObj } from 'app/impl/shared/model/auto-debit-registration/StgAutoDebitRegisLogObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/uc-paging-obj.model';
@@ -20,8 +17,7 @@ export class AutoDebitRegistrationInquiryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private adInsHelperService: AdInsHelperService,
-    private toastr: NGXToastrService
+    private adInsHelperService: AdInsHelperService
     ) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -58,21 +54,5 @@ export class AutoDebitRegistrationInquiryComponent implements OnInit {
         }
       );
     }
-
-    else if (e.Key == "Request"){
-      if (confirm("Are You Sure You Want To Process This Data ?")) {
-        //get auto debit regis berdasarkan trxno
-        this.http.post(URLConstantX.ProcessAutoDebitAccInquiry, { TrxNo: e.RowObj.TransactionNo }).subscribe(
-          response => {
-            if(response["StatusCode"]=="200"){
-              this.toastr.successMessage(response["Message"]);
-            }
-
-
-          }
-        )
-      }
-    }
-
   }
 }
