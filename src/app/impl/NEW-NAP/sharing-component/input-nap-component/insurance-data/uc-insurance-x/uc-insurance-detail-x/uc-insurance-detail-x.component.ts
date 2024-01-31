@@ -80,6 +80,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
   loadingFeeCountType: string = "";
   defaultInsAssetRegion: string = "";
   pageState: string = "AddInsurance";
+  AssetCategoryName : string = "";  
   readonly editInsurance: string = "EditInsurance";
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   readonly defInsPaidBy: string = CommonConstant.InsPaidByCustomer;
@@ -163,6 +164,15 @@ export class UcInsuranceDetailXComponent implements OnInit {
     await this.loadGeneralSetting();
     await this.loadDDL();
     await this.getInsuranceData();
+  }
+
+  async getAssetCategoryExisting(){
+    let AssetCategoryCodeObj = {Code: this.appAssetObj.AssetCategoryCode};
+    await this.http.post(URLConstant.GetAssetCategoryByAssetCategoryCode, AssetCategoryCodeObj).toPromise().then(
+      async (response) => {
+        this.AssetCategoryName = response["AssetCategoryName"];
+      }
+    );
   }
 
   async loadDDL() {
@@ -568,6 +578,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
           }
         )
 
+        await this.getAssetCategoryExisting();
         if (this.appInsObjObj != undefined && this.appInsObjObj != null) {
           if (this.appInsObjObj.InsAssetCoveredBy == CommonConstant.InsuredByCompany || this.appInsObjObj.InsAssetCoveredBy == CommonConstant.InsuredByCustomerCompany) {
             await this.getVendorParent(this.appInsObjObj.InscoBranchCode);
@@ -782,13 +793,13 @@ export class UcInsuranceDetailXComponent implements OnInit {
     }
 
     let reqObj = new InsuranceDataInsRateRuleObj();
-    reqObj.InscoHoCode = this.inscoHoCode;
+    reqObj.InscoHoCode = this.inscoHoCode === null ? "":this.inscoHoCode;
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     reqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     reqObj.AppId = this.appObj.AppId;
     reqObj.AppAssetId = this.appAssetId;
     reqObj.AppCollateralId = this.appCollateralId;
-
+    
     await this.http.post(URLConstant.ExecuteInsRateRuleV2, reqObj).toPromise().then(
       async (response) => {
         this.ruleObj = response["Result"];
@@ -1312,7 +1323,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
     }
 
     let ReqObj = new InsuranceDataInsRateCvgRuleObj();
-    ReqObj.InscoHoCode = this.inscoHoCode;
+    ReqObj.InscoHoCode = this.inscoHoCode === null ? "" : this.inscoHoCode;
     ReqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
     ReqObj.RegionCode = this.InsuranceDataForm.controls.InsAssetRegion.value;
     ReqObj.MainCoverageType = MainCoverageType;
@@ -1925,7 +1936,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
       }
 
 
-      if (this.isGenerate == false) {
+      if (!this.isGenerate) {
         this.toastr.warningMessage(ExceptionConstant.CLICK_GENERATE_INSURANCE);
         return;
       }
@@ -2248,6 +2259,7 @@ export class UcInsuranceDetailXComponent implements OnInit {
       this.saveObj.AppInsObjObj.RowVersion = this.appInsObjObj.RowVersion;
     }
   }
+
 
   cancel() {
     this.outputCancel.emit();

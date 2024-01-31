@@ -39,6 +39,7 @@ import { EditCommAfterApprovalPagingXComponent } from "./NEW-NAP/business-proces
 import { EditCommV2XComponent } from "./NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-v2-x/edit-comm-v2-x.component";
 import { FormEditCommGenerateXComponent } from "./NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-v2-x/form-edit-comm-generate-x/form-edit-comm-generate-x.component";
 import { CrdRvwListAssetComponent } from './new-nap/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-list-asset/crd-rvw-list-asset.component';
+
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
