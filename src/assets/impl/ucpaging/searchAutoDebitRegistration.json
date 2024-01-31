@@ -1,267 +1,227 @@
 {
-    "title": "Auto Debit Registration Paging",
-    "exportExcel": false,
-    "component": [
-      {
-        "type": "dropdown",
-        "datatype": "text",
-        "name": "a.OFFICE_CODE",
-        "id": "OfficeNameId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "ddlType": "all",
-        "isQueryIn": true,
-        "url": "",
-        "environment": "FOU",
-        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-        "label": "Office Name",
-        "items": [],
-        "itemsUrl": []
-      },
-      {
-        "type": "textbox",
-        "name": "a.CUST_NO",
-        "id": "CustNoId",
-        "value": "",
-        "label": "Customer No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "adr.TRANSACTION_NO",
-        "id": "TransactionNoId",
-        "value": "",
-        "label": "Transaction No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "a.CUST_NAME",
-        "id": "CustNameId",
-        "value": "",
-        "label": "Customer Name",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "textbox",
-        "name": "adr.AGRMNT_NO",
-        "id": "AgreementNoId",
-        "value": "",
-        "label": "Agreement No",
-        "placeholder": "Placeholder"
-      },
-      {
-        "type": "dropdown",
-        "name": "adr.STATUS",
-        "id": "StatusId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": false,
-        "ddlType": "all",
-        "label": "Status",
-        "items": [
-          {
-            "key": "REQ",
-            "value": "REQUEST"
-          },
-          {
-            "key": "FLD",
-            "value": "FAILED"
-          },
-          {
-            "key": "CAN",
-            "value": "CANCEL"
-          },
-          {
-            "key": "SCS",
-            "value": "SUCCESS"
-          }
-        ],
-        "itemsUrl": []
-      },
-      {
-        "type": "dropdown",
-        "datatype": "text",
-        "name": "adr.BANK_CODE",
-        "id": "BankCodeId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": true,
-        "ddlType": "all",
-        "url": "",
-        "environment": "LOS",
-        "path": "/AutoDebitRegistration/GetListRefBankIsAutoDebit",
-        "label": "Bank Name",
-        "items": [],
-        "itemsUrl": []
-      },
-      {
-        "type": "dropdown",
-        "name": "CASE WHEN DATEDIFF(second,sadrl.DTM_CRT,GETDATE()) > CONVERT(INT,(SELECT GS_VALUE FROM V_GENERAL_SETTING WHERE GS_CODE = 'AUTO_DEBIT_DIFF_TIME')) THEN 'YES' ELSE 'NO'END",
-        "id": "IsExpiredId",
-        "value": "",
-        "placeholder": "Placeholder",
-        "isFromURL": false,
-        "ddlType": "all",
-        "label": "Is Expired",
-        "items": [
-          {
-            "key": "YES",
-            "value": "YES"
-          },
-          {
-            "key": "NO",
-            "value": "NO"
-          }
-        ],
-        "itemsUrl": []
-      }
-    ],
-    "querystring": {
-      "name": "searchAutoDebitRegistration"
+  "title": "Auto Debit Registration Paging",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "a.OFFICE_CODE",
+      "id": "OfficeNameId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "isQueryIn": true,
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "items": [],
+      "itemsUrl": []
     },
-    "headerList": [
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "OFFICE",
-        "name": "a.OFFICE_NAME"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Transaction No",
-        "name": "adr.TRANSACTION_NO"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Agreement No",
-        "name": "adr.AGRMNT_NO"
-      }, 
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Customer No",
-        "name": "a.CUST_NO"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Customer Name",
-        "name": "a.CUST_NAME"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Bank Name",
-        "name": "rbl.BANK_NAME"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Status",
-        "name": "rsl.DESCR"
-      },
-      {
-        "type": "sort",
-        "position": "center",
-        "label": "Is Expired",
-        "name": "CASE WHEN DATEDIFF(second,sadrl.DTM_CRT,GETDATE()) > CONVERT(INT,(SELECT GS_VALUE  FROM V_GENERAL_SETTING WHERE GS_CODE = 'AUTO_DEBIT_DIFF_TIME')) THEN 'YES' ELSE 'NO' END"
-      },
-      {
-        "type": "label",
-        "position": "center",
-        "label": "Action"
-      }
-    ],
-  
-    "bodyList": [
-      {
-        "type": "text",
-        "position": "left",
-        "property": "OfficeName"
-      },
-      {
-        "type": "link",
-        "position": "center",
-        "property": "TransactionNo",
-        "name": "TransactionNo",
-        "environment": "LOSR3WEB",
-        "path": "VIEW_AUTO_DEBIT_REGIS",
-        "target": "_blank",
-        "param": [
+    {
+      "type": "textbox",
+      "name": "a.CUST_NO",
+      "id": "CustNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "adr.TRANSACTION_NO",
+      "id": "TransactionNoId",
+      "value": "",
+      "label": "Transaction No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "a.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "adr.AGRMNT_NO",
+      "id": "AgreementNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "adr.STATUS",
+      "id": "StatusId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": false,
+      "ddlType": "all",
+      "label": "Status",
+      "items": [
+        {
+          "key": "REQ",
+          "value": "REQUEST"
+        },
+        {
+          "key": "FLD",
+          "value": "FAILED"
+        }
+      ],
+      "itemsUrl": []
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "adr.BANK_CODE",
+      "id": "BankCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "LOS",
+      "path": "/AutoDebitRegistration/GetListRefBankIsAutoDebit",
+      "label": "Bank Name",
+      "items": [],
+      "itemsUrl": []
+    }
+  ],
+  "querystring": {
+    "name": "searchAutoDebitRegistration"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "OFFICE",
+      "name": "a.OFFICE_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Transaction No",
+      "name": "adr.TRANSACTION_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Agreement No",
+      "name": "adr.AGRMNT_NO"
+    }, 
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer No",
+      "name": "a.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer Name",
+      "name": "a.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Bank Name",
+      "name": "rbl.BANK_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Status",
+      "name": "rsl.DESCR"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OfficeName"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "TransactionNo",
+      "name": "TransactionNo",
+      "environment": "LOSR3WEB",
+      "path": "VIEW_AUTO_DEBIT_REGIS",
+      "target": "_blank",
+      "param": [
+        {
+          "type": "AutoDebitRegistrationId",
+          "property": "AutoDebitRegistrationId"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "label": "Agreement No",
+      "property": "AgrmntNo",
+      "name": "AgrmntNo",
+      "environment": "LOSR3WEB",
+      "path": "VIEW_AGRMNT",
+      "target": "_blank",
+      "param": [
+        {
+          "type": "AgrmntId",
+          "property": "AgrmntId"
+        }
+      ]
+    },
+    {
+      "type": "callback",
+      "key": "Customer",
+      "position": "center",
+      "property": "CustNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "BankName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "StatusDescr"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
           {
-            "type": "AutoDebitRegistrationId",
-            "property": "AutoDebitRegistrationId"
-          }
-        ]
-      },
-      {
-        "type": "link",
-        "label": "Agreement No",
-        "property": "AgrmntNo",
-        "name": "AgrmntNo",
-        "environment": "LOSR3WEB",
-        "path": "VIEW_AGRMNT",
-        "target": "_blank",
-        "param": [
+            "type": "callback",
+            "key": "Request",
+            "position": "center",
+            "icon": "ft-edit-2"
+          },
           {
-            "type": "AgrmntId",
-            "property": "AgrmntId"
+            "type": "edit",
+            "position": "center",
+            "path": "NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_CANCEL",
+            "param": [
+              {
+                "type": "AutoDebitRegistrationId",
+                "property": "AutoDebitRegistrationId"
+              }
+            ],
+            "icon": "ft-x-circle"
           }
-        ]
-      },
-      {
-        "type": "callback",
-        "key": "Customer",
-        "position": "center",
-        "property": "CustNo"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "CustName"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "BankName"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "StatusDescr"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "IsExpired"
-      },
-      {
-        "type": "action",
-        "position": "center",
-        "action": [
-            {
-              "type": "callback",
-              "key": "Request",
-              "position": "center",
-              "icon": "ft-edit-2"
-            },
-            {
-              "type": "edit",
-              "position": "center",
-              "path": "NAP_ADD_PRCS_AUTO_DEBIT_REGISTRATION_CANCEL",
-              "param": [
-                {
-                  "type": "AutoDebitRegistrationId",
-                  "property": "AutoDebitRegistrationId"
-                }
-              ],
-              "icon": "ft-x-circle"
-            }
-        ]
-      }
-    ]
+      ]
+    }
+  ]
 }  
