@@ -12,11 +12,13 @@ import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+
 @Component({
     selector: "view-ltkm-summary-app-x",
     templateUrl: "./ltkm-summary-data-x.component.html",
     providers: [NGXToastrService]
 })
+
 export class ViewLtkmSummaryDataXComponent implements OnInit {
     @Input() LtkmCustId: number = 0;
     SummaryLtkmObj: any;
@@ -38,8 +40,10 @@ export class ViewLtkmSummaryDataXComponent implements OnInit {
     Age: number = 0;
     MrCustTypeCode: string = '';
     RefMaster: any = '';
+
     constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     }
+
     calculateAge(sqlString) {
         let string = sqlString
         let slicedString = string.slice(0, 10);
@@ -52,6 +56,7 @@ export class ViewLtkmSummaryDataXComponent implements OnInit {
         let finalresult = Math.abs(year - 1970);
         return finalresult;
     }
+
     ngOnInit() {
         this.http.post(URLConstantX.GetSummaryByLtkmCustId, { Id: this.LtkmCustId }).pipe()
             .subscribe(
