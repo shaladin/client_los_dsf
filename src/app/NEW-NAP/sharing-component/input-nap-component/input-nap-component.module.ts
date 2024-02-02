@@ -161,6 +161,7 @@ import { SchmRegulerFixXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-compon
 import { SchmStepUpStepDownCummulativeXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-cummulative-x-dsf/schm-step-up-step-down-cummulative-x-dsf.component";
 import { SchmStepUpStepDownLeasingXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-leasing-x-dsf/schm-step-up-step-down-leasing-x-dsf.component";
 import { SchmStepUpStepDownNormalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-normal-x-dsf/schm-step-up-step-down-normal-x-dsf.component";
+import { FeeXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/fee-x-dsf/fee-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -295,6 +296,7 @@ export const customCurrencyMaskConfig = {
     FinancialDataXComponent,
     FinancialDataXDsfComponent,
     FeeXComponent,
+    FeeXDsfComponent,
     SchmBalloonXComponent,
     SchmBalloonXDsfComponent,
     SchmEvenPrincipalXComponent,
@@ -456,6 +458,7 @@ export const customCurrencyMaskConfig = {
     FinancialDataXComponent,
     FinancialDataXDsfComponent,
     FeeXComponent,
+    FeeXDsfComponent,
     SchmBalloonXComponent,
     SchmBalloonXDsfComponent,
     SchmEvenPrincipalXComponent,
