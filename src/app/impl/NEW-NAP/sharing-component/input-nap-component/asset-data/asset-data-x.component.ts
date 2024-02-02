@@ -9,8 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-// import { AppObj } from 'app/shared/model/App/App.Model';
-import { AppObj } from 'app/shared/model/app/app.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 import { environment } from 'environments/environment';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
@@ -53,7 +52,7 @@ import { ResponseJobDataPersonalObj } from 'app/shared/model/response-job-data-p
 import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
- 
+
 @Component({
   selector: 'app-asset-data-x',
   templateUrl: './asset-data-x.component.html',
@@ -82,12 +81,6 @@ export class AssetDataXComponent implements OnInit {
   isUsed: boolean = false;
   isAssetAttrReady: boolean = false;
   originalAppAssetAccessory: Array<AppAssetAccessoryObj>;
-  critObj: CriteriaObj = new CriteriaObj();
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
-  assetCategoryForLookupObj : any = ''
-  assetCategoryName : string = ''
-  isAssetCategoryReady : boolean = false
-  IsAssetCategoryChange : boolean = false;
   salesSupervisor: string;
   priceAfterDiscount: number = 0;
   isListAsset: boolean = false;
@@ -112,7 +105,6 @@ export class AssetDataXComponent implements OnInit {
   readonly SD = CommonConstantX.SD;
   readonly CF4W = CommonConstant.CF4W;
   readonly FL4W = CommonConstant.FL4W;
-
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -273,7 +265,6 @@ export class AssetDataXComponent implements OnInit {
   InputLookupAccObj: InputLookupObj;
   InputLookupAccSupObj: InputLookupObj;
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
-  InputLookupAssetCategoryObj: InputLookupObj;
 
   EmpObj: Array<VendorEmpObj>;
   AdminHeadObj: any;
@@ -384,7 +375,6 @@ export class AssetDataXComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.isListAsset = true;
-    this.isAssetCategoryReady = false;
 
     this.inputAddressObjForOwner = new InputAddressObj();
     this.inputAddressObjForOwner.showSubsection = false;
@@ -1264,20 +1254,6 @@ export class AssetDataXComponent implements OnInit {
         this.SetDpValue();
       }
     }
-    this.getAssetCategoryForLookup(event.AssetCategoryCode)
-  }
-
-  async getAssetCategoryForLookup(assetCategoryCode : string){
-    let AssetCategoryCodeObj = {Code: assetCategoryCode};
-    await this.http.post(URLConstant.GetAssetCategoryByAssetCategoryCode, AssetCategoryCodeObj).toPromise().then(
-      async (response) => {
-        this.assetCategoryForLookupObj = response;
-        this.makeLookupAssetCategoryObj(this.assetCategoryForLookupObj.AssetTypeId, this.assetCategoryForLookupObj.AssetCategoryCode, this.assetCategoryForLookupObj.AssetCategoryName)
-        this.IsAssetCategoryChange = false
-        this.isAssetCategoryReady = true
-        this.assetCategoryName = this.assetCategoryForLookupObj.AssetCategoryName
-      }
-    );
   }
 
   SalesPersonChanged(event) {
@@ -1731,8 +1707,7 @@ export class AssetDataXComponent implements OnInit {
     this.GetProvDistrict();
     this.bindAccessories();
     this.updateValueDownPaymentPrctg();
-    this.getAssetCategoryForLookup(this.returnAppAssetObj.AssetCategoryCode);
-  
+
     if (this.appAssetObj != null) {
       for (var i = 0; i < this.items.length; i++) {
         if (this.items.controls[i] != null) {
@@ -1740,35 +1715,6 @@ export class AssetDataXComponent implements OnInit {
         }
       }
     }
-  }
-
-  async makeLookupAssetCategoryObj(assetType : string, assetCategoryCode : string, assetCategoryName : string){
-
-    this.InputLookupAssetCategoryObj = new InputLookupObj();
-    this.InputLookupAssetCategoryObj.urlJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-    this.InputLookupAssetCategoryObj.urlEnviPaging = environment.FoundationR3Url + '/v1'
-    this.InputLookupAssetCategoryObj.pagingJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-    this.InputLookupAssetCategoryObj.genericJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-    
-    this.critObj.restriction = AdInsConstant.RestrictionEq;
-    this.critObj.propName = 'IS_ACTIVE';
-    this.critObj.value = '1'; 
-    this.arrCrit.push(this.critObj);
-    this.InputLookupAssetCategoryObj.addCritInput = this.arrCrit;
-
-    this.critObj.propName = 'ASSET_TYPE_ID';
-    this.critObj.restriction = AdInsConstant.RestrictionEq;
-    this.critObj.value = assetType;
-    this.arrCrit.push(this.critObj);
-    this.InputLookupAssetCategoryObj.addCritInput = this.arrCrit;
-    this.InputLookupAssetCategoryObj.jsonSelect = "";
-    this.InputLookupAssetCategoryObj.jsonSelect = { AssetCategoryName : assetCategoryName};
-  }
-
-  getLookupAssetCategory(ev){
-    this.AssetDataForm.patchValue({
-      AssetCategoryCode: ev.AssetCategoryCode
-    });
   }
 
   async getListAllAssetData() {
@@ -1989,13 +1935,6 @@ export class AssetDataXComponent implements OnInit {
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.isReady = true;
-
-    this.InputLookupAssetCategoryObj = new InputLookupObj();
-    this.InputLookupAssetCategoryObj.urlJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-    this.InputLookupAssetCategoryObj.urlEnviPaging = environment.FoundationR3Url + '/v1'
-    this.InputLookupAssetCategoryObj.pagingJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-    this.InputLookupAssetCategoryObj.genericJson = "./assets/impl/uclookup/lookupAssetCategory.json";
-
   }
 
   initLookupAcc() {
@@ -2344,6 +2283,7 @@ export class AssetDataXComponent implements OnInit {
           FullAssetCode: this.AssetMasterObj.FullAssetCode,
           FullAssetName: this.AssetMasterObj.FullAssetName,
           AssetTypeCode: this.AssetMasterObj.AssetTypeCode,
+          AssetCategoryCode: this.AssetMasterObj.AssetCategoryCode
         });
         if (!isFromSave) {
           this.InputLookupAssetObj.jsonSelect = this.AssetMasterObj;
@@ -3482,12 +3422,5 @@ export class AssetDataXComponent implements OnInit {
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.listAssetMasterDetailFromR2Obj.AssetRegistration.LocationZipcode };
     this.inputAddressObjForLoc.default = this.locationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-  }
-  getCheckboxAssetCategoryChange(ev){
-    if(ev.target.checked){      
-        this.IsAssetCategoryChange = true
-    }else{
-      this.IsAssetCategoryChange = false
-    }
   }
 }

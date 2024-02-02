@@ -1,5 +1,4 @@
 import { ResultRefundObj } from "app/shared/model/app-fin-data/result-refund.model";
-import { AppSubsidyProfitablityXObj } from "./AppSubsidyProfitablityXObj.model";
 
 
 export class AppFinDataObjX {
@@ -107,7 +106,6 @@ export class AppFinDataObjX {
     CommissionAmtFromDiffRate: number;
     SubsidyAmtFromDiffRate: number;
     ExistingFinData: boolean;
-    AppSubsidyProfitabilityXes: Array<AppSubsidyProfitablityXObj>;
     constructor() {
     }
 }
