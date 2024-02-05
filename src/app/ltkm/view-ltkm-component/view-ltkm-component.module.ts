@@ -27,7 +27,6 @@ import { LtkmViewComponentX } from "app/impl/ltkm/view-ltkm-component/ltkm-view-
 import { ViewLtkmAppSummaryDataXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-app-summary-data/ltkm-app-summary-data-x.component";
 import { ViewLtkmSummaryDataXComponent } from "app/impl/ltkm/view-ltkm-component/ltkm-summary-data-x/ltkm-summary-data-x.component";
 
-
 @NgModule({
   exports: [
     //Ltkm view
