@@ -59,6 +59,10 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
 
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   MaxDate: Date;
+
+  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
+  isReadOnly:boolean = false
+
   constructor(
     private regexService: RegexService,
     private fb: FormBuilder, 
@@ -160,7 +164,6 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
       this.selectedCustNo = response["CustObj"].CustNo;
       this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
       this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
-      this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].disable();
     }
     
     if(response["CustPersonalObj"] != undefined){
@@ -311,7 +314,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
       });
     }
     if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "NPWP") {
-      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.required]);
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.clearValidators();
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     else {
@@ -568,6 +571,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
     if (pattern != undefined) {
       if(!this.isLockMode)
       {
+        this.isReadOnly = false
         this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].setValidators([Validators.required, Validators.pattern(pattern)]);
         this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].updateValueAndValidity();
       }
