@@ -224,6 +224,7 @@ export class URLConstantX {
 
   //App Fin Data-Fee X
   public static GetInitAppFinDataByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataByAppId";
+  public static GetInitAppFinDataByAppIdXV2 = environment.losUrl + "/v2" + "/AppFinDataX/GetInitAppFinDataByAppId";
   public static GetInitFinDataForTrialCalcX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitFinDataForTrialCalc";
   public static GetInitAppFinDataFctrByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataFctrByAppId";
   public static GetInitAppFinDataDFByAppIdX = environment.losUrl + "/v1" + "/AppFinDataX/GetInitAppFinDataDFByAppId";
