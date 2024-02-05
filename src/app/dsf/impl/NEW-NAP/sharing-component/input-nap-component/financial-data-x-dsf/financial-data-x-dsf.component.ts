@@ -184,7 +184,7 @@ export class FinancialDataXDsfComponent implements OnInit {
   // End Self Custom CR Automation Subsidy Dealer
     // note rework: Url V2 belum ditambahin di X, baru ada di Core doank. PERLU DITAMBAHIN !
     // let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdV2X : URLConstantX.GetInitAppFinDataByAppIdX;
-    let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdX : URLConstantX.GetInitAppFinDataByAppIdX;
+    let InitAppFinDataUrl = environment.isCore ? URLConstantX.GetInitAppFinDataByAppIdXV2 : URLConstantX.GetInitAppFinDataByAppIdXV2;
     await this.http.post<AppFinDataObjX>(InitAppFinDataUrl, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.appFinDataObj = response;
