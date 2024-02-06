@@ -1564,7 +1564,7 @@ export class URLConstant {
   public static GetAssetCategoryById = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetAssetCategoryById";
   public static GetListAssetCategoryAndAssetTypeForAssetUsageMap = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetListAssetCategoryAndAssetTypeForAssetUsageMap";
   public static GetAssetCategoryByAssetCategoryCode = environment.FoundationR3Url + "/v1" + "/AssetCategory/GetAssetCategoryByCode";
-
+  
   //Agrmnt Rsv Fund
   public static GetListAgrmntReservedFundByAgrmntId = environment.losUrl + "/v1" + "/AgrmntReservedFund/GetListAgrmntReservedFundByAgrmntId";
 
