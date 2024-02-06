@@ -46,6 +46,7 @@ export class FeeXDsfComponent implements OnInit {
       await this.LoadAppFeeDataForTrialCalc(this.ProdOfferingCode);
     }
     // this.LoadCalcBaseDDL();
+    await this.InitProvisionFeePrcntg(this.AppId);
     this.CalculateTotalFeeAndCaptlzAmt();
   }
 
