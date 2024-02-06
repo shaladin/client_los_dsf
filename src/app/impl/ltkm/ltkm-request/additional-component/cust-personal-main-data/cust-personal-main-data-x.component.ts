@@ -136,7 +136,6 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
     await this.bindAllRefMasterObj();
     this.bindCustData();
   }
- 
 
   CopyCustomerEvent(event) {
     this.selectedCustNo = event.CustNo;
