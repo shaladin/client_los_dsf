@@ -63,10 +63,15 @@
                     <label>{{ParentForm.controls[identifier].value[i].FeeTypeName}} Calculation Base</label>
                   </div>
                   <div class="col-md-3 margin-b-5">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="FeeSource" [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls[identifier].value[i].FeeSource.invalid }" (change)="CalcBase_OnChange($event);" [readonly]="IsBaseCalculationLock">
+                    <select class="form-control adInsInput" style="width: auto" formControlName="FeeSource" [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls[identifier].value[i].FeeSource.invalid }" (change)="CalcBase_OnChange($event);">
                       <option *ngFor="let it of TempProvisionSource" value="{{it.Key}}">{{it.Value}}</option>
                     </select>
                   </div>
+                  <!-- <div class="col-md-3 margin-b-5" *ngIf="IsBaseCalculationLock">
+                    <input type="text" class="form-control" formControlName="FeeSource"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AppFeeForm.controls[identifier].controls.FeeSource.invalid}"
+                        [readonly]=" IsLock">
+                  </div> -->
                   <div class="col-md-6"></div>
                 <!-- </ng-container> -->
                   <div class="col-md-3 form-inline margin-b-5">

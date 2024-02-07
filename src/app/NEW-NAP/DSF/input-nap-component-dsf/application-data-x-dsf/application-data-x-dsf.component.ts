@@ -1581,13 +1581,13 @@ export class ApplicationDataXDsfComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       // Self Custom CR MPF & FD Validation
       await this.validateRequestedPlafond();
-      if (!this.isOverMinimumPlafod)
+      if (!this.isOverMinimumPlafod && this.isAddMode)
       {
         this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_MIN_PLAFOND);
         return false;
       }
 
-      if (!this.isOverTenor)
+      if (!this.isOverTenor && this.isAddMode)
       {
         this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_TENOR_LIMIT);
         return false;
