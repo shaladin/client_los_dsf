@@ -60,9 +60,6 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   MaxDate: Date;
 
-  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
-  isReadOnly:boolean = false
-
   constructor(
     private regexService: RegexService,
     private fb: FormBuilder, 
@@ -572,7 +569,6 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
     if (pattern != undefined) {
       if(!this.isLockMode)
       {
-        this.isReadOnly = false
         this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].setValidators([Validators.required, Validators.pattern(pattern)]);
         this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].updateValueAndValidity();
       }
