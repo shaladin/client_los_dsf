@@ -28,9 +28,9 @@ export class FeeXDsfComponent implements OnInit {
   isSubmitted: boolean;
   TempProvisionSource: Array<KeyValueObj>;
   ReqByIdObj: GenericObj = new GenericObj();
-  ResultProvisionFee: any;
   IsBaseCalculationLock: boolean = false;
   IsLock: boolean = false;
+  IsAddProvisionMode: boolean = true;
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
   constructor(
     private fb: FormBuilder,
@@ -46,7 +46,10 @@ export class FeeXDsfComponent implements OnInit {
       await this.LoadAppFeeDataForTrialCalc(this.ProdOfferingCode);
     }
     // this.LoadCalcBaseDDL();
-    await this.InitProvisionFeePrcntg(this.AppId);
+    if (this.IsAddProvisionMode)
+    {
+      await this.InitProvisionFeePrcntg(this.AppId);
+    }
     this.CalculateTotalFeeAndCaptlzAmt();
   }
 
@@ -55,26 +58,24 @@ export class FeeXDsfComponent implements OnInit {
     this.ReqByIdObj.Id = AppId;
     await this.http.post(URLConstantDsf.GetProvisionFeeByAppId, this.ReqByIdObj).toPromise().then(
         (response) => {
-            this.ResultProvisionFee = response;
+        
+        var fb_provision = this.GetProvisionFormGroup();
+        if(fb_provision) // X DSF : Penjagaan jika memang tidak ada settingan rule fee untuk LOB nya
+        {
+          fb_provision.patchValue({
+            FeeSource: response["BaseCalculation"],
+            AppFeePrcnt: response["ProvisionFeePrcnt"]
+          });
+        }
 
-            if(response == null)
-            {
-                this.fb.group({
-                    FeeSource: "NTF_WITHOUT_CAP"
-                  })
-            }
-
-            else
-            {
-                this.fb.group({
-                  FeeSource: response["FeeSource"],
-                  AppFeePrcnt: [response["AppFeePrcnt"], [Validators.min(0.00), Validators.max(100.00)]],
-                })
-
-                this.IsLock = response["IsLock"];
-                this.IsBaseCalculationLock = response["IsBaseCalculationLock"];
-                this.CalculateProvisionFee();
-            }
+        this.IsLock = response["IsLock"];
+        this.IsBaseCalculationLock = response["IsBaseCalculationLock"];
+        if (this.IsBaseCalculationLock)
+        {
+          var fb_provision = this.GetProvisionFormGroup();
+          fb_provision.get("FeeSource").disable();
+        }
+        this.CalculateProvisionFee();
         }
     )
   }
@@ -125,6 +126,11 @@ export class FeeXDsfComponent implements OnInit {
           var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
           fa_AppFee.push(this.addFeeControl(this.listAppFeeObj[i]));
           // this.AppFeeForm.push(this.addFeeControl(this.listAppFeeObj[i]));
+
+          if (this.listAppFeeObj[i].MrFeeTypeCode == "PROVISION" && this.listAppFeeObj[i].AppFeeAmt > 0 && this.listAppFeeObj[i].AppFeePrcnt > 0)
+          {
+            this.IsAddProvisionMode = false;
+          }
         }
 
         this.PatchProvisionFeeValue();
