@@ -282,7 +282,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
   generalSettingPlafondObj: GeneralSettingObj;
   returnGeneralPlafondSettingObj: GeneralSettingObj;
   isOverMinimumPlafod: boolean = true;
-  isOverTenor: boolean = true;
+  isOverRunningTenor: boolean = true;
   businessDt: any;
   //End Self Custom CR MPF & FD Validation
 
@@ -1353,9 +1353,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
               this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
+              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor > runningTenor)
               {
-                this.isOverTenor = false;
+                this.isOverRunningTenor = false;
               }
           });
     }
@@ -1385,9 +1385,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
               this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
+              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor > runningTenor)
               {
-                this.isOverTenor = false;
+                this.isOverRunningTenor = false;
               }
           });
     }
@@ -1587,7 +1587,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
         return false;
       }
 
-      if (!this.isOverTenor && this.isAddMode)
+      if (!this.isOverRunningTenor && this.isAddMode)
       {
         this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_TENOR_LIMIT);
         return false;
