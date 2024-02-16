@@ -424,6 +424,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           }
           else
           {
+            this.isAddMode = true;
             this.isRequestedPlafondAvailable = false;
           }
         })
@@ -445,10 +446,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
                 RequestedPlafond: this.RequestedPlafond
               });
 
+              this.isAddMode = false;
               this.isActiveMode = true;
             }
             else
             {
+              this.isAddMode = true;
               this.isActiveMode = false;
             }
           })
@@ -1259,6 +1262,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
               })
             this.Status = response["Status"];
             this.isActiveMode = false;
+            this.isAddMode = false;
 
             if (this.MasterAgreementNo != response["MasterAgreementNo"])
             {
@@ -1271,6 +1275,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           }
           else
           {
+            this.isAddMode = true;
             this.isRequestedPlafondAvailable = false;
             this.RequestedPlafond = 0;
             this.NapAppModelForm.patchValue(
@@ -1300,10 +1305,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
                 RequestedPlafond: this.RequestedPlafond
               });
 
+              this.isAddMode = false;
               this.isActiveMode = true;
             }
             else
             {
+              this.isAddMode = true;
               this.isActiveMode = false;
             }
           })
