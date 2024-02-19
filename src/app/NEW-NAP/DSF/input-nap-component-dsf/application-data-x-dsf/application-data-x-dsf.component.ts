@@ -282,7 +282,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
   generalSettingPlafondObj: GeneralSettingObj;
   returnGeneralPlafondSettingObj: GeneralSettingObj;
   isOverMinimumPlafod: boolean = true;
-  isOverTenor: boolean = true;
+  isOverRunningTenor: boolean = true;
   businessDt: any;
   //End Self Custom CR MPF & FD Validation
 
@@ -424,6 +424,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           }
           else
           {
+            this.isAddMode = true;
             this.isRequestedPlafondAvailable = false;
           }
         })
@@ -445,10 +446,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
                 RequestedPlafond: this.RequestedPlafond
               });
 
+              this.isAddMode = false;
               this.isActiveMode = true;
             }
             else
             {
+              this.isAddMode = true;
               this.isActiveMode = false;
             }
           })
@@ -1259,6 +1262,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
               })
             this.Status = response["Status"];
             this.isActiveMode = false;
+            this.isAddMode = false;
 
             if (this.MasterAgreementNo != response["MasterAgreementNo"])
             {
@@ -1271,6 +1275,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           }
           else
           {
+            this.isAddMode = true;
             this.isRequestedPlafondAvailable = false;
             this.RequestedPlafond = 0;
             this.NapAppModelForm.patchValue(
@@ -1300,10 +1305,12 @@ export class ApplicationDataXDsfComponent implements OnInit {
                 RequestedPlafond: this.RequestedPlafond
               });
 
+              this.isAddMode = false;
               this.isActiveMode = true;
             }
             else
             {
+              this.isAddMode = true;
               this.isActiveMode = false;
             }
           })
@@ -1353,9 +1360,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
               this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
+              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor > runningTenor)
               {
-                this.isOverTenor = false;
+                this.isOverRunningTenor = false;
               }
           });
     }
@@ -1385,9 +1392,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
               this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
+              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor > runningTenor)
               {
-                this.isOverTenor = false;
+                this.isOverRunningTenor = false;
               }
           });
     }
@@ -1581,13 +1588,13 @@ export class ApplicationDataXDsfComponent implements OnInit {
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       // Self Custom CR MPF & FD Validation
       await this.validateRequestedPlafond();
-      if (!this.isOverMinimumPlafod)
+      if (!this.isOverMinimumPlafod && this.isAddMode)
       {
         this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_MIN_PLAFOND);
         return false;
       }
 
-      if (!this.isOverTenor)
+      if (!this.isOverRunningTenor && this.isAddMode)
       {
         this.toastr.warningMessage(ExceptionConstantDsf.VALIDATE_TENOR_LIMIT);
         return false;
