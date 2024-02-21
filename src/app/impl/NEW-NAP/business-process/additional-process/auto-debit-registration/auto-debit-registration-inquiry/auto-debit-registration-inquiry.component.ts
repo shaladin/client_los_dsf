@@ -65,7 +65,10 @@ export class AutoDebitRegistrationInquiryComponent implements OnInit {
         this.http.post(URLConstantX.ProcessAutoDebitAccInquiry, { TrxNo: e.RowObj.TransactionNo }).subscribe(
           response => {
             if(response["StatusCode"]=="200"){
-              this.toastr.successMessage(response["Message"]);
+              this.toastr.successMessageTitle(response["StatusCode"],response["Message"]);
+            }
+            else{
+              this.toastr.errorMessageTitle(response["StatusCode"],response["Message"])
             }
 
 
