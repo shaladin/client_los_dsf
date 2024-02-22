@@ -19,6 +19,7 @@ import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { MouCustFctrObj } from 'app/shared/model/mou-cust-fctr-obj.model';
 import { MouCustListedCustFctrObj } from 'app/shared/model/mou-cust-listed-cust-fctr-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 
 @Component({
   selector: 'app-mou-detail-factoring-x',
@@ -96,7 +97,7 @@ export class MouDetailFactoringXComponent implements OnInit {
     rmRecourseType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeRecourseType;
     let getRecourseType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
     var rmWop = new RefMasterObj();
-    rmWop.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
+    rmWop.RefMasterTypeCode = CommonConstantX.REF_MASTER_WOP_FCTR;
     let getWop = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmWop);
     var rmPaidBy = new RefMasterObj();
     rmPaidBy.RefMasterTypeCode = CommonConstant.RefMasterTypeCodePaidBy;
