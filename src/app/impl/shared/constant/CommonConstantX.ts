@@ -165,6 +165,8 @@ export class CommonConstantX {
     public static AUTO_DEBIT_STATUS_FLD = "FLD";
 
     public static GS_CODE_MAX_DIFF_DAYS = "MAX_DIFF_DAYS";
+
+    public static GS_CODE_AUTO_DEBIT_BCA_WEBVIEW_DOMAIN = 'AUTO_DEBIT_BCA_WEBVIEW_DOMAIN'
     //#endregion
 
 }
