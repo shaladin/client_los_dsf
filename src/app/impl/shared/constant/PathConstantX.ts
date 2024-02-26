@@ -255,6 +255,9 @@ export class PathConstantX {
   public static HO_ADD_X = PathConstant.HO_ADD + PathConstantX.X;
   public static HO_ADD_DETAIL_X = PathConstant.HO_ADD_DETAIL + PathConstantX.X;
   public static HO_RTN_PAGING_X = PathConstant.HO_RTN_PAGING + PathConstantX.X;
+
+  public static HO_APPRV_X = 'HOApprovalX';
+  public static HO_APPRV_DETAIL_X = PathConstantX.HO_APPRV_X + "/" + PathConstantX.DETAIL_X;
   //#endregion product
 
   //#region setting

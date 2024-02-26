@@ -61,6 +61,8 @@ import { HoProdCompntXComponent } from 'app/impl/product/product-ho/prod-ho-add-
 import { HoOfficeMbrXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/ho-office-mbr-x/ho-office-mbr-x.component';
 import { HoListOfficeMbrXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/ho-office-mbr-x/ho-list-office-mbr-x/ho-list-office-mbr-x.component';
 import { ProdHoReturnPagingXComponent } from 'app/impl/product/product-ho/prod-ho-return-paging-x/prod-ho-return-paging-x.component';
+import { ProdHoApvPagingXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-paging-x/prod-ho-apv-paging-x.component';
+import { ProdHoApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-detail-x/prod-ho-apv-detail-x.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,9 @@ import { ProdHoReturnPagingXComponent } from 'app/impl/product/product-ho/prod-h
     HoProdCompntXComponent,
     HoOfficeMbrXComponent,
     HoListOfficeMbrXComponent,
-    ProdHoReturnPagingXComponent
+    ProdHoReturnPagingXComponent,
+    ProdHoApvPagingXComponent, 
+    ProdHoApvDetailXComponent, 
   ],
   imports: [
     CommonModule,

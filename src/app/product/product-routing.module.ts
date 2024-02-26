@@ -31,6 +31,8 @@ import { ProdHoPagingXComponent } from 'app/impl/product/product-ho/prod-ho-pagi
 import { ProdHoAddXComponent } from 'app/impl/product/product-ho/prod-ho-add-x/prod-ho-add-x.component';
 import { ProdHoAddDetailXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/prod-ho-add-detail-x.component';
 import { ProdHoReturnPagingXComponent } from 'app/impl/product/product-ho/prod-ho-return-paging-x/prod-ho-return-paging-x.component';
+import { ProdHoApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-detail-x/prod-ho-apv-detail-x.component';
+import { ProdHoApvPagingXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-paging-x/prod-ho-apv-paging-x.component';
 
 const routes: Routes = [
   {
@@ -107,15 +109,15 @@ const routes: Routes = [
       }
     },
     {
-      path: PathConstant.HO_APPRV,
-      component: ProdHoApvPagingComponent,
+      path: PathConstantX.HO_APPRV_X,
+      component: ProdHoApvPagingXComponent,
       data: {
         title: 'Product HO Approval'
       }
     },
     {
-      path: PathConstant.HO_APPRV_DETAIL,
-      component: ProdHoApvDetailComponent,
+      path: PathConstantX.HO_APPRV_DETAIL_X,
+      component: ProdHoApvDetailXComponent,
       data: {
         title: 'Product HO Approval Detail'
       }
