@@ -63,6 +63,9 @@ import { HoListOfficeMbrXComponent } from 'app/impl/product/product-ho/prod-ho-a
 import { ProdHoReturnPagingXComponent } from 'app/impl/product/product-ho/prod-ho-return-paging-x/prod-ho-return-paging-x.component';
 import { ProdHoApvPagingXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-paging-x/prod-ho-apv-paging-x.component';
 import { ProdHoApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-detail-x/prod-ho-apv-detail-x.component';
+import { ProdHoDeactApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-deact-apv/prod-ho-deact-apv-detail/prod-ho-deact-apv-detail-x.component';
+import { ProdOfferingApvDetailXComponent } from 'app/impl/product/product-offering/prod-offering-apv-detail/prod-offering-apv-detail-x.component';
+import { ProdOfferingDeactApvDetailXComponent } from 'app/impl/product/product-offering/prod-offering-deact-apv/prod-offering-deact-apv-detail/prod-offering-deact-apv-detail-x.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +80,8 @@ import { ProdHoApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-a
     HoListOfficeMbrComponent, 
     HoGeneralDataComponent, 
     ProdHoApvDetailComponent, 
-    ProdHoDeactApvDetailComponent, 
+    ProdHoDeactApvDetailComponent,
+    ProdHoDeactApvDetailXComponent,
     ProdHoDeactPagingComponent, 
     ProdHoRvwPagingComponent, 
     ProdHoDeactDetailComponent, 
@@ -99,8 +103,10 @@ import { ProdHoApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-a
     UcProdOfferingCompComponent,
     ProdOfferingAddDetailComponent,
     ProdOfferingApvDetailComponent,
+    ProdOfferingApvDetailXComponent,
     ProdOfferingApvPagingComponent,
     ProdOfferingDeactApvDetailComponent,
+    ProdOfferingDeactApvDetailXComponent,
     ProdOfferingDeactApvPagingComponent,
     ProdOfferingDeactDetailComponent,
     ProdOfferingDeactPagingComponent,

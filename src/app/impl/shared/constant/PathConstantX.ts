@@ -60,6 +60,7 @@ export class PathConstantX {
   public static CRD_REVIEW_CR_DETAIL_X = PathConstant.CRD_REVIEW_CR + '/' + PathConstantX.DETAIL_X;
   public static CRD_APPRV_CR_DETAIL = PathConstant.CRD_APPRV_CR + "/" + PathConstantX.DETAIL_X;
   public static CRD_REVIEW_CR_DETAIL_HISTORY_X = PathConstant.CRD_REVIEW_CR_HISTORY + "/" + PathConstantX.DETAIL_X;
+  public static CRD_APPR_RES_EXT_APPRVL_DETAIL = PathConstant.CRD_APPR_RES_EXT_APPRVL + "/" + PathConstantX.DETAIL_X;
   //#endregion
 
   //#region Nap-Main-Data
@@ -90,6 +91,7 @@ export class PathConstantX {
   public static AUTO_DEBIT_REGISTRATION_PAGING = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.PAGING;
   public static AUTO_DEBIT_REGISTRATION_INQUIRY = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.INQUIRY;
   public static AUTO_DEBIT_REGISTRATION_CANCEL = PathConstantX.AUTO_DEBIT_REGISTRATION + '/' + PathConstant.CANCEL;
+  public static OFFERING_VALIDITY_APPRV_DETAIL = PathConstant.OFFERING_VALIDITY_APPRV + "/" + PathConstantX.DETAIL_X;
 
   //#endregion
 
@@ -130,6 +132,8 @@ export class PathConstantX {
 
   public static MOU_CUST_APPRV_X = PathConstant.MOU_CUST + "/ApprovalX";
 
+  public static MOU_FREEZE_APV_DETAIL = PathConstant.MOU_FREEZE_APV + "/" + PathConstantX.DETAIL_X;
+
   //#endregion
 
   //#region Change mou
@@ -152,7 +156,10 @@ export class PathConstantX {
   public static CHANGE_MOU_APV_PAGING_X = PathConstant.CHANGE_MOU + "/ApvPagingX";
   //#endregion
 
+
+
   //region New Approval
+  public static PGL_APPRVL_DETAIL_X = PathConstant.PGL + "/" + PathConstant.APPRV + "/" + PathConstantX.DETAIL_X;
   public static END_DATE_GO_LIVE_APV_X = 'EndDtGoLiveApvX';
   public static END_DATE_GO_LIVE_APV_PAGING_X = PathConstantX.END_DATE_GO_LIVE_APV_X + '/' + PathConstantX.PAGING;
   public static END_DATE_GO_LIVE_APV_DETAIL_X = PathConstantX.END_DATE_GO_LIVE_APV_X + '/' + PathConstantX.DETAIL_X;
@@ -258,7 +265,17 @@ export class PathConstantX {
 
   public static HO_APPRV_X = 'HOApprovalX';
   public static HO_APPRV_DETAIL_X = PathConstantX.HO_APPRV_X + "/" + PathConstantX.DETAIL_X;
+  public static HO_DEACTIVATE_APPRV_DETAIL = PathConstant.HO_DEACTIVATE_APPRV + "/" + PathConstantX.DETAIL_X;
   //#endregion product
+
+  //#region product offering
+  public static OFFERING_APPRV_DETAIL = PathConstant.OFFERING_APPRV + "/" + PathConstantX.DETAIL_X;
+  public static OFFERING_DEACTIVATE_APPRV_DETAIL = PathConstant.OFFERING_DEACTIVATE_APPRV + "/" + PathConstantX.DETAIL_X;
+  //#endregion product offering
+
+  //#region task reassignment
+  public static TASK_REASSIGN_APV_DETAIL = PathConstant.TASK_REASSIGN_APV + "/" + PathConstantX.DETAIL_X;
+  //#endregion
 
   //#region setting
   public static OFFICE_MBR = "OfficeMember";

@@ -33,6 +33,9 @@ import { ProdHoAddDetailXComponent } from 'app/impl/product/product-ho/prod-ho-a
 import { ProdHoReturnPagingXComponent } from 'app/impl/product/product-ho/prod-ho-return-paging-x/prod-ho-return-paging-x.component';
 import { ProdHoApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-detail-x/prod-ho-apv-detail-x.component';
 import { ProdHoApvPagingXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-paging-x/prod-ho-apv-paging-x.component';
+import { ProdHoDeactApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-deact-apv/prod-ho-deact-apv-detail/prod-ho-deact-apv-detail-x.component';
+import { ProdOfferingApvDetailXComponent } from 'app/impl/product/product-offering/prod-offering-apv-detail/prod-offering-apv-detail-x.component';
+import { ProdOfferingDeactApvDetailXComponent } from 'app/impl/product/product-offering/prod-offering-deact-apv/prod-offering-deact-apv-detail/prod-offering-deact-apv-detail-x.component';
 
 const routes: Routes = [
   {
@@ -137,6 +140,13 @@ const routes: Routes = [
       }
     },
     {
+      path: PathConstantX.OFFERING_APPRV_DETAIL,
+      component: ProdOfferingApvDetailXComponent,
+      data: {
+        title: 'Product Offering Approval Detail'
+      }
+    },
+    {
       path: PathConstant.HO_DEACTIVATE_APPRV,
       component: ProdHoDeactApvPagingComponent,
       data: {
@@ -146,6 +156,13 @@ const routes: Routes = [
     {
       path: PathConstant.HO_DEACTIVATE_APPRV_DETAIL,
       component: ProdHoDeactApvDetailComponent,
+      data: {
+        title: 'Product HO Deactivate Approval Detail'
+      }
+    },
+    {
+      path: PathConstantX.HO_DEACTIVATE_APPRV_DETAIL,
+      component: ProdHoDeactApvDetailXComponent,
       data: {
         title: 'Product HO Deactivate Approval Detail'
       }
@@ -174,6 +191,13 @@ const routes: Routes = [
     {
       path: PathConstant.OFFERING_DEACTIVATE_APPRV_DETAIL,
       component: ProdOfferingDeactApvDetailComponent,
+      data: {
+        title: 'Product Offering Deactivate Approval Detail'
+      }
+    },
+    {
+      path: PathConstantX.OFFERING_DEACTIVATE_APPRV_DETAIL,
+      component: ProdOfferingDeactApvDetailXComponent,
       data: {
         title: 'Product Offering Deactivate Approval Detail'
       }
