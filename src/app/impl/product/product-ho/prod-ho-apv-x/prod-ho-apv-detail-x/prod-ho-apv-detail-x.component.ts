@@ -14,6 +14,7 @@ import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ApprovalTaskService } from 'app/shared/services/ApprovalTask.service';
 import { CookieService } from 'ngx-cookie';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 @Component({
   selector: 'app-prod-ho-apv-detail-x',
   templateUrl: './prod-ho-apv-detail-x.component.html'
@@ -76,7 +77,7 @@ export class ProdHoApvDetailXComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV_X], {});
       }
     )
   }
@@ -88,14 +89,14 @@ export class ProdHoApvDetailXComponent implements OnInit {
       Tasks: event.Tasks
     }
 
-    this.http.post(URLConstant.ProdHOApproval, reqProdHoApvCustomObj).subscribe(
+    this.http.post(URLConstantX.ProdHOApproval, reqProdHoApvCustomObj).subscribe(
       () => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_APPRV],{ });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_APPRV_X],{ });
       }
     );
   }
   
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV_X], {});
   }
 }
