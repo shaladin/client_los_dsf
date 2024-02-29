@@ -1059,7 +1059,22 @@ export class CustMainDataXDsfComponent implements OnInit {
       }
     );
   }
-
+  
+  //#region Self Custom Changes CR Validate Negative Customer
+  async checkNegativeCustomerFamilyOrShareholder(){
+    if(this.CustMainDataForm.controls.CustNo.value == null)
+    {
+      this.IsCustAllowedContinue = true;
+      return;
+    }
+    
+    await this.http.post(URLConstantDsf.CheckIsNegCustAllowedCreateAppDsf, { Code: this.CustMainDataForm.controls.CustNo.value }).toPromise().then(
+      (res) => {
+        res == undefined? this.IsCustAllowedContinue = false : this.IsCustAllowedContinue = true;
+      }
+    );
+  }
+  //#endregion
   ChangeIdType(IdType: string) {
     this.setValidatorPattern();
   }
@@ -1722,6 +1737,11 @@ export class CustMainDataXDsfComponent implements OnInit {
     {
       await this.checkIsCustAllowedContinue();
       if(!this.IsCustAllowedContinue) return;
+
+      //#region Self Custom Changes CR Validate Negative Customer
+      await this.checkNegativeCustomerFamilyOrShareholder()
+      if(!this.IsCustAllowedContinue) return;
+      //#endregion
     }
     let obj = {
       CustNo: this.CustMainDataForm.controls.CustNo.value,
