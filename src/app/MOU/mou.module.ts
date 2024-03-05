@@ -157,6 +157,9 @@ import { ChangeMouHistoryVersionXComponent } from 'app/impl/MOU/change-mou/chang
 import { ChangeMouViewModule } from 'app/view-enhancing/change-mou-view/change-mou-view.module';
 import { ChangeMouAddcollHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history-x.component';
 import { ChangeMouDetailHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-detail-history/change-mou-detail-history-x.component';
+import { MouCustomerRequestXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-x-dsf/mou-customer-request-x-dsf.component';
+import { MouCustomerDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-detail-x-dsf/mou-customer-detail-x-dsf.component';
+import { MouCustomerRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-detail-x-dsf/mou-customer-request-detail-x-dsf.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -299,10 +302,12 @@ export const customCurrencyMaskConfig = {
     MouUnfreezeInquiryComponent,
     MouUnfreezeViewComponent,
     MouCustomerDetailXComponent,
+    MouCustomerDetailXDsfComponent,
     MouRequestAddcollXComponent,
     ChangeMouRequestDetailCustomerXComponent,
     ChangeMouRequestAddcollXComponent,
     MouCustomerRequestDetailXComponent,
+    MouCustomerRequestDetailXDsfComponent,
     MouReviewDlfnXComponent,
     MouReviewFactoringXComponent,
     MouApprovalGeneralXComponent,
@@ -339,6 +344,7 @@ export const customCurrencyMaskConfig = {
     ChangeMouDetailHistoryComponent,
     ChangeMouHistoryVersionComponent,
     MouCustomerRequestXComponent,
+    MouCustomerRequestXDsfComponent,
     MouCustomerInquiryXComponent,
     ChangeMouRequestPagingXComponent,
     ChangeMouHistoryVersionXComponent,

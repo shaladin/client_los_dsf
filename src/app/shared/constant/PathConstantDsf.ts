@@ -206,4 +206,6 @@ export class PathConstantDsf {
     public static DO_MULTI_ASSET_DETAIL_X_DSF = PathConstantDsf.DO_MULTI_ASSET_DSF + '/' + PathConstantX.DETAIL_X;
     public static DO_MULTI_ASSET_PAGING_DSF = PathConstantDsf.DO_MULTI_ASSET_DSF + "/" + PathConstant.PAGING;
     
+    public static MOU_REQ_PAGING_X_DSF = PathConstant.MOU_REQ + "/" + PathConstantDsf.PAGING_X;
+    public static MOU_REQ_DETAIL_X_DSF = PathConstant.MOU_REQ + '/' + PathConstantDsf.DETAIL_X;
 }
