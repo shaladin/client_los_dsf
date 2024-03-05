@@ -92,6 +92,10 @@ import { MouCustomerInquiryXComponent } from 'app/impl/MOU/mou-customer/mou-cust
 import { ChangeMouRequestPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-paging/change-mou-request-paging-x.component';
 import {ChangeMouApprovalPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-paging/change-mou-approval-paging-x.component';
 import {MouCustomerApprovalXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-customer-approval-x.component';
+import { MouCustomerRequestXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-x-dsf/mou-customer-request-x-dsf.component';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { MouCustomerDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-detail-x-dsf/mou-customer-detail-x-dsf.component';
+import { MouCustomerRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-detail-x-dsf/mou-customer-request-detail-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -133,6 +137,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.MOU_REQ_DETAIL_X_DSF,
+        component: MouCustomerRequestDetailXDsfComponent,
+        data: {
+          title: 'MOU Customer Request Detail X DSF'
+        }
+      },
+      {
         path: PathConstant.DETAIL,
         component: MouCustomerDetailComponent,
         data: {
@@ -144,6 +155,13 @@ const routes: Routes = [
         component: MouCustomerDetailXComponent,
         data: {
           title: 'MOU Customer Detail X'
+        }
+      },
+      {
+        path: PathConstantDsf.DETAIL_X,
+        component: MouCustomerDetailXDsfComponent,
+        data: {
+          title: 'MOU Customer Detail X DSF'
         }
       },
       {
@@ -740,6 +758,13 @@ const routes: Routes = [
         component: MouCustomerRequestXComponent,
         data: {
           title: 'MOU Customer Request Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.MOU_REQ_PAGING_X_DSF,
+        component: MouCustomerRequestXDsfComponent,
+        data: {
+          title: 'MOU Customer Request Paging Dsf'
         }
       },
       {

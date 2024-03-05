@@ -490,6 +490,9 @@ export class NavigationConstant {
   //#region Self Custom
   public static REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
   public static NAP_ADM_PRCS_AGRMNT_CANCEL_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.AGRMNT_CANCEL_DETAIL; //'/Nap/AdminProcess/AgreementCancellation/Detail'
+  public static MOU_REQ_PAGING_X_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_REQ_PAGING_X_DSF; //"/Mou/Request/PagingX"
+  public static MOU_REQ_DETAIL_X_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_REQ_DETAIL_X_DSF; //'/Mou/Request/DetailX'
+  public static MOU_DETAIL_X_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.DETAIL_X; //"/Mou/DetailX"
   //#endregion
 
   //Setting

@@ -86,4 +86,9 @@ export class URLConstantDsf {
     public static GetAppListForCustHistDsf = environment.losUrl + "/AppDsf/GetAppListForCustHistDsf";
 
     public static GetProvisionFeeByAppId = environment.losUrl + "/AppDsf/GetAppProvisionFeeByAppIdDsf";
+
+    public static GetMouMainInfoByIdXDsf = environment.losUrl + "/MouCustXDsf/GetMouMainInfoByIdXDsf";
+    public static GetMouCustXDsf = environment.losUrl + '/MouCustXDsf/GetMouCust';
+    public static AddMouCustXDsf = environment.losUrl + '/MouCustXDsf/AddMouCust';
+    public static EditMouCustXDsf = environment.losUrl + '/MouCustXDsf/EditMouCust';
 }
