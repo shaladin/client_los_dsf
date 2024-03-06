@@ -1724,7 +1724,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
             this.http.post(URLConstantX.EditAppAddAppCrossX, obj).subscribe(
               (response) => {
                 // Self Custom CR MPF & FD Validation
-                if (this.isAddMode)
+                if (this.isAddMode || this.isActiveMode)
                 {
                   this.AgrmntMasterXDsf = new AgrmntMasterXDsfObj();
                   this.AgrmntMasterXDsf.MasterAgreementNo = this.MasterAgreementNo;
