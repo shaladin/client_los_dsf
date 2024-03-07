@@ -1360,7 +1360,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
               this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor > runningTenor)
+              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
               {
                 this.isOverRunningTenor = false;
               }
@@ -1392,7 +1392,7 @@ export class ApplicationDataXDsfComponent implements OnInit {
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
               this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor > runningTenor)
+              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
               {
                 this.isOverRunningTenor = false;
               }
