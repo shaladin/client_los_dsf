@@ -280,7 +280,9 @@ export class ApplicationDataXDsfComponent implements OnInit {
   IsLOBNotMatch: boolean = false;
   isActiveMode: boolean = false;
   generalSettingPlafondObj: GeneralSettingObj;
+  generalSettingTenorObj: GeneralSettingObj;
   returnGeneralPlafondSettingObj: GeneralSettingObj;
+  returnGeneralTenorSettingObj: GeneralSettingObj;
   isOverMinimumPlafod: boolean = true;
   isOverRunningTenor: boolean = true;
   businessDt: any;
@@ -1352,15 +1354,15 @@ export class ApplicationDataXDsfComponent implements OnInit {
           });
 
           const runningTenor = this.monthDiff(this.agrParent.AgrmntDt);
-          this.generalSettingPlafondObj = new GeneralSettingObj();
-          this.generalSettingPlafondObj.GsCode = "TENOR_LIMIT";
+          this.generalSettingTenorObj = new GeneralSettingObj();
+          this.generalSettingTenorObj.GsCode = "TENOR_LIMIT";
           let objTenor = {
-            Code: this.generalSettingPlafondObj.GsCode
+            Code: this.generalSettingTenorObj.GsCode
           }
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
-              this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
+              this.returnGeneralTenorSettingObj = response;
+              if ((Number(this.returnGeneralTenorSettingObj.GsValue)*this.agrParent.Tenor) > runningTenor)
               {
                 this.isOverRunningTenor = false;
               }
@@ -1384,15 +1386,15 @@ export class ApplicationDataXDsfComponent implements OnInit {
           });
 
           const runningTenor = this.monthDiff(this.agrParent.AgrmntDt);
-          this.generalSettingPlafondObj = new GeneralSettingObj();
-          this.generalSettingPlafondObj.GsCode = "TENOR_LIMIT";
+          this.generalSettingTenorObj = new GeneralSettingObj();
+          this.generalSettingTenorObj.GsCode = "TENOR_LIMIT";
           let objTenor = {
-            Code: this.generalSettingPlafondObj.GsCode
+            Code: this.generalSettingTenorObj.GsCode
           }
           await this.http.post(URLConstant.GetGeneralSettingByCode, objTenor).toPromise().then(
             (response: GeneralSettingObj) => {
-              this.returnGeneralPlafondSettingObj = response;
-              if (Number(this.returnGeneralPlafondSettingObj.GsValue)*this.agrParent.Tenor >= runningTenor)
+              this.returnGeneralTenorSettingObj = response;
+              if ((Number(this.returnGeneralTenorSettingObj.GsValue)*this.agrParent.Tenor) > runningTenor)
               {
                 this.isOverRunningTenor = false;
               }
