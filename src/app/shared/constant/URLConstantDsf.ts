@@ -86,4 +86,6 @@ export class URLConstantDsf {
     public static GetAppListForCustHistDsf = environment.losUrl + "/AppDsf/GetAppListForCustHistDsf";
 
     public static GetProvisionFeeByAppId = environment.losUrl + "/AppDsf/GetAppProvisionFeeByAppIdDsf";
+
+    public static CheckIsNegCustAllowedCreateAppDsf = environment.FoundationR3Url + "/CustDsf/CheckIsNegCustAllowedCreateAppDsf"
 }
