@@ -103,6 +103,8 @@ import { InvoiceDataXComponent } from "app/impl/NEW-NAP/business-process/admin-p
 import { InvoiceDataDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data-detail/invoice-data-detail-x.component";
 import { PreGoLiveApprovalPagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-paging-x/pre-go-live-approval-paging-x.component";
 import { PreGoLivePagingXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-paging-x/pre-go-live-paging-x.component";
+import { PreGoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail-x.component";
+import { OfferingValidityCheckingApprovalDetailXComponent } from "app/impl/NEW-NAP/admin-process/offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -151,6 +153,7 @@ export const customCurrencyMaskConfig = {
     PreGoLiveComponent,
     PreGoLiveRequestForApprovalComponent,
     PreGoLiveApprovalDetailComponent,
+    PreGoLiveApprovalDetailXComponent,
     PreGoLiveApprovalPagingComponent,
     PreGoLiveApprovalPagingXComponent,
     ApplicationAgreementCancellationPagingComponent,
@@ -159,6 +162,7 @@ export const customCurrencyMaskConfig = {
     AgrmntActivationDetailComponent,
     OfferingValidityCheckingApprovalPagingComponent,
     OfferingValidityCheckingApprovalDetailComponent,
+    OfferingValidityCheckingApprovalDetailXComponent,
     OfferingValidityCheckingRequestPagingComponent,
     OfferingValidityCheckingRequestDetailComponent,
     DocSignerDetailComponent,

@@ -17,6 +17,7 @@ import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 @Component({
   selector: 'app-mou-approval-general-x',
   templateUrl: './mou-approval-general-x.component.html'
@@ -109,7 +110,7 @@ export class MouApprovalGeneralXComponent implements OnInit {
       Tasks: event.Tasks
     }
 
-    this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
+    this.http.post(URLConstantX.MouApproval, ReqMouApvCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MrMouTypeCode});
       }

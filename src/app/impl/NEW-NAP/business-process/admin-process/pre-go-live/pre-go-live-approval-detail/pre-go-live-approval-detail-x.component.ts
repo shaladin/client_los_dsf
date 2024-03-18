@@ -2,38 +2,48 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
+import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
-import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
-import { NapAppModel } from 'app/shared/model/nap-app.model';
-import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { OutstandingTcObj } from 'app/shared/model/outstanding-tc-obj.model';
+import { ListAppTCObj } from 'app/shared/model/list-app-tc-obj.model';
+import { AppTCObj } from 'app/shared/model/app-tc-obj.model';
 import { UcInputApprovalObj } from 'app/shared/model/uc-input-approval-obj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-history-obj.model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
-import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/request/product/req-get-prod-offering-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/request/nap/pre-go-live/req-get-rfa-log-by-trx-no-and-apv-category-obj.model';
-import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
-import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
+import { AgrmntMasterXObj } from 'app/shared/model/agrmnt-master-x-obj.model';
+import { RfaObj } from 'app/shared/model/approval/rfa-obj.model';
+import { AgrmntObj } from 'app/shared/model/agrmnt/agrmnt.model';
+import { ProdOfferingDObj } from 'app/shared/model/product/prod-offering-d-obj.model';
+import { NapAppModel } from 'app/shared/model/nap-app.model';
+import { DeliveryOrderHObj } from 'app/shared/model/delivery-order-h-obj.model';
+import { AgrmntFinDataObj } from 'app/shared/model/agrmnt-fin-data.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
-  selector: 'app-go-live-approval-detail-x',
-  templateUrl: './go-live-approval-detail-x.component.html'
+  selector: 'app-pre-go-live-approval-detail-x',
+  templateUrl: './pre-go-live-approval-detail-x.component.html'
 })
-export class GoLiveApprovalDetailXComponent implements OnInit {
+export class PreGoLiveApprovalDetailXComponent implements OnInit {
   viewObj: string;
   TrxNo: string;
   AgrmntNo: string;
   result: AgrmntObj;
   result4: NapAppModel;
   arrValue = [];
+  TCList: any;
   identifier: string = "TCList";
   IsApvReady: boolean = false;
-  viewAgrmnt: UcViewGenericObj = new UcViewGenericObj();
+  listAppTCObj: ListAppTCObj;
+  appTC: AppTCObj;
   count1: number = 0;
   ListRfaLogObj: any;
   listPreGoLiveAppvrObj: Array<any> = new Array<any>();
@@ -66,13 +76,7 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
-    if (this.bizTemplateCode != CommonConstant.DF) {
-      this.viewAgrmnt.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntDataAfterPreGoLiveX.json";
-    } else {
-      this.viewAgrmnt.viewInput = "./assets/impl/ucviewgeneric/viewAgrmntDataAfterPreGoLiveDlfnX.json";
-    }
-    
+  ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     let reqGetRfaLogByTrxNoAndApvCategoryObj = new ReqGetRfaLogByTrxNoAndApvCategoryObj();
     reqGetRfaLogByTrxNoAndApvCategoryObj.TrxNo = this.TrxNo;
@@ -91,7 +95,10 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
         this.IsApvReady = true;
       });
 
-    await this.getGsDisableRequiredNotes();
+    this.http.post(URLConstant.GetListAgrmntTcbyAgrmntId, { Id: this.AgrmntId }).subscribe(
+      (response) => {
+        this.TCList = response["ReturnObject"];
+      });
 
     this.initInputApprovalObj();
   }
@@ -101,7 +108,7 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
       () => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.GO_LIVE_APV_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
@@ -111,20 +118,19 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-
     let ReqPreGoLiveApvCustomObj = {
-      Tasks: event.Tasks,
+      Tasks: event.Tasks
     }
 
-    this.http.post(URLConstantX.GoLiveApprovalV2X, ReqPreGoLiveApvCustomObj).subscribe(
+    this.http.post(URLConstantX.PreGoLiveApprovalV2X, ReqPreGoLiveApvCustomObj).subscribe(
       () => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.GO_LIVE_APV_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.GO_LIVE_APV_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   initInputApprovalObj() {
@@ -140,18 +146,6 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo = this.TrxNo;
     this.InputApvObj.RequestId = this.ApvReqId;
-    this.InputApvObj.EnableRequiredNotes = false;
-    this.InputApvObj.DisableRequiredNotesList = this.ListGsDisableRequiredNotes;
     this.IsReady = true;
-  }
-
-  ListGsDisableRequiredNotes : Array<string> = new Array<string>();
-  async getGsDisableRequiredNotes(){
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstantX.GSCodeDisableRequiredNotesApvAct }).toPromise().then(
-      (response: GeneralSettingObj) => {
-        let x = response.GsValue;
-        this.ListGsDisableRequiredNotes = x.split(';');
-      }
-    )
   }
 }

@@ -65,6 +65,7 @@ import { AutoDebitRegistrationPagingComponent } from 'app/impl/NEW-NAP/business-
 import { AutoDebitRegistrationInquiryComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component';
 import { AutoDebitRegistrationCancelComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component';
 import { AutoDebitTestComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component';
+import { CreditApprovalResultExtensionApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/credit-apv-result-ext/approval/detail/detail-x.component';
 
 
 const routes: Routes = [
@@ -102,6 +103,13 @@ const routes: Routes = [
       {
         path: PathConstant.CRD_APPR_RES_EXT_APPRVL_DETAIL,
         component: CreditApprovalResultExtensionApprovalDetailComponent,
+        data: {
+          title: 'Credit Approval Result Extension Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.CRD_APPR_RES_EXT_APPRVL_DETAIL,
+        component: CreditApprovalResultExtensionApprovalDetailXComponent,
         data: {
           title: 'Credit Approval Result Extension Approval Detail'
         }

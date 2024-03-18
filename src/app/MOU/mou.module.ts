@@ -157,6 +157,7 @@ import { ChangeMouHistoryVersionXComponent } from 'app/impl/MOU/change-mou/chang
 import { ChangeMouViewModule } from 'app/view-enhancing/change-mou-view/change-mou-view.module';
 import { ChangeMouAddcollHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history-x.component';
 import { ChangeMouDetailHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-detail-history/change-mou-detail-history-x.component';
+import { MouUnfreezeApvDetailXComponent } from 'app/impl/MOU/mou-unfreeze/mou-unfreeze-apv-detail/mou-unfreeze-apv-detail-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -293,6 +294,7 @@ export const customCurrencyMaskConfig = {
     ChangeMouDetailComponent,
     MouDetailFinancingComponent,
     MouUnfreezeApvDetailComponent,
+    MouUnfreezeApvDetailXComponent,
     MouUnfreezeApvPagingComponent,
     MouUnfreezePagingComponent,
     MouUnfreezeDetailComponent,

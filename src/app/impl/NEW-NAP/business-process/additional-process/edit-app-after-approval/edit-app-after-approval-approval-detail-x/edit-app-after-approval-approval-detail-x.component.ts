@@ -130,7 +130,7 @@ export class EditAppAfterApprovalApprovalDetailXComponent implements OnInit {
     let ReqEditAppAfterApprovalCustomObj = {
       Tasks: event.Tasks
     }
-    this.http.post(URLConstant.EditAppAfterApproval, ReqEditAppAfterApprovalCustomObj).subscribe(
+    this.http.post(URLConstantX.EditAppAfterApproval, ReqEditAppAfterApprovalCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING],{BizTemplateCode: this.BizTemplateCode});
       }
