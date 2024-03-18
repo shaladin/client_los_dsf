@@ -109,7 +109,7 @@ export class EditCommAfterApprovalApprovalDetailXComponent implements OnInit {
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
-    this.InputApvObj = new UcInputApprovalObj();y
+    this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.RequestId = this.ApvReqId;
 
