@@ -109,7 +109,7 @@ export class EditCommAfterApprovalApprovalDetailXComponent implements OnInit {
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
-    this.InputApvObj = new UcInputApprovalObj();
+    this.InputApvObj = new UcInputApprovalObj();y
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.RequestId = this.ApvReqId;
 
@@ -127,7 +127,7 @@ export class EditCommAfterApprovalApprovalDetailXComponent implements OnInit {
     //     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_PGL_APPRVL_PAGING], {});
     //   }
     // );
-    this.http.post(URLConstantX.NewApprovalV2X, ReqApvCustomObj).subscribe(
+    this.http.post(URLConstantX.NewApproval, ReqApvCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.EDIT_COMM_AFT_APV_APPRV_PAGING],{BizTemplateCode: this.BizTemplateCode});
       }

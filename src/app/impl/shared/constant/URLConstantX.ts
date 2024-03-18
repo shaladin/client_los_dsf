@@ -93,7 +93,7 @@ export class URLConstantX {
 
   //Edit App Aft Apv
   public static GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId = environment.losUrl + "/v1" + "/EditAppAftApvX/GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId";
-  public static EditAppAfterApproval = environment.losUrl + "/v1" + "/ApprovalX/EditAppAfterApproval";
+  public static EditAppAfterApproval = environment.losUrl + "/v2" + "/ApprovalX/EditAppAfterApproval";
   // Cessie
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
   public static UploadFileV2 = environment.FoundationR3Url + "/v2" + "/UploadX/UploadFileV2";
@@ -169,7 +169,7 @@ export class URLConstantX {
   public static EndDateGoLiveApprovalX = environment.losUrl + "/v1" + "/ApprovalX/EndDateGoLiveApproval";
   public static GoLiveApprovalX = environment.losUrl + "/v1" + "/ApprovalX/GoLiveApproval";
   public static GoLiveApprovalV2X = environment.losUrl + "/v2" + "/ApprovalX/GoLiveApproval";
-  public static CreditApprovalX = environment.losUrl + "/v1" + "/ApprovalX/CreditApproval";
+  public static CreditApprovalX = environment.losUrl + "/v2" + "/ApprovalX/CreditApproval";
   public static NewApprovalV2X = environment.losUrl + "/v2" + "/ApprovalX/Approval";
   public static ResultExpiredDaysApprovalX = environment.losUrl + "/v1" + "/ApprovalX/ResultExpiredDaysApproval";
   //CUST MAIN DATA

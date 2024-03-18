@@ -65,7 +65,7 @@ export class CessiePreGoLiveApprovalDetailComponent implements OnInit {
       Tasks: event.Tasks
     }
 
-    this.http.post(URLConstantX.NewApprovalV2X, ReqApvCustomObj).subscribe(
+    this.http.post(URLConstantX.NewApproval, ReqApvCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CESSIE_PGL_APPRVL_PAGING], {});
       }
