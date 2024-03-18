@@ -86,6 +86,7 @@ import { AutoDebitRegistrationPagingComponent } from "app/impl/NEW-NAP/business-
 import { AutoDebitRegistrationInquiryComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component";
 import { AutoDebitRegistrationCancelComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component";
 import { AutoDebitTestComponent } from "app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component";
+import { CreditApprovalResultExtensionApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/credit-apv-result-ext/approval/detail/detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -167,6 +168,7 @@ export const customCurrencyMaskConfig = {
     EditAppAfterApprovalAssetDataXComponent,
     EditAppAfterApprovalPurchaseOrderDataComponent,
     CreditApprovalResultExtensionApprovalDetailComponent,
+    CreditApprovalResultExtensionApprovalDetailXComponent,
     CreditApprovalResultExtensionApprovalPagingComponent,
     CopyCanAppMultiBlComponent,
     CopyCanAppMultiBlDetailComponent,
