@@ -14,6 +14,7 @@ export class URLConstantX {
   public static AddPreGoLiveXV3 = environment.losUrl+ "/v3" + "/PreGoLiveX/AddPreGoLive";
   public static BackToDeliveryOrderCustConfirm = environment.losUrl+ "/v1" + "/PreGoLiveX/BackToDeliveryOrderCustConfirm";
   public static BackToDeliveryOrderCustConfirmV2 = environment.losUrl+ "/v2" + "/PreGoLiveX/BackToDeliveryOrderCustConfirm";
+  public static PreGoLiveApprovalV2X = environment.losUrl + "/v2" + "/ApprovalX/PreGoLiveApproval";
 
   public static AddAppFromCopyCancledApp = environment.losUrl + "/v1" + "/AppX/AddAppFromCopyCancledApp";
   public static AddAppFromCopyCancledAppV2 = environment.losUrl + "/v2" + "/AppX/AddAppFromCopyCancledApp";
@@ -92,7 +93,7 @@ export class URLConstantX {
 
   //Edit App Aft Apv
   public static GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId = environment.losUrl + "/v1" + "/EditAppAftApvX/GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId";
-
+  public static EditAppAfterApproval = environment.losUrl + "/v2" + "/ApprovalX/EditAppAfterApproval";
   // Cessie
   public static UploadFile = environment.FoundationR3Url + "/v1" + "/UploadX/UploadFile";
   public static UploadFileV2 = environment.FoundationR3Url + "/v2" + "/UploadX/UploadFileV2";
@@ -121,6 +122,7 @@ export class URLConstantX {
 
   public static CheckMouActiveR2 = environment.losUrl + '/v1' + "/MouCustX/CheckMouActiveR2";
   public static MouCustExecutionHumanActivityXV2 = environment.losUrl + "/v2" + "/MouCustX/MouCustExecutionHumanActivity";
+  public static MouApproval = environment.losUrl + "/v1" + "/ApprovalX/MouApproval";
 
   // MOU CUST FCTR X
   public static GetMouCustFctrXByMouCustNoX = environment.losUrl + '/v1' + "/MouCustFctrX/GetMouCustFctrXByMouCustNo";
@@ -166,6 +168,10 @@ export class URLConstantX {
   public static NewApproval = environment.losUrl + "/v1" + "/ApprovalX/Approval";
   public static EndDateGoLiveApprovalX = environment.losUrl + "/v1" + "/ApprovalX/EndDateGoLiveApproval";
   public static GoLiveApprovalX = environment.losUrl + "/v1" + "/ApprovalX/GoLiveApproval";
+  public static GoLiveApprovalV2X = environment.losUrl + "/v2" + "/ApprovalX/GoLiveApproval";
+  public static CreditApprovalX = environment.losUrl + "/v2" + "/ApprovalX/CreditApproval";
+  public static NewApprovalV2X = environment.losUrl + "/v2" + "/ApprovalX/Approval";
+  public static ResultExpiredDaysApprovalX = environment.losUrl + "/v1" + "/ApprovalX/ResultExpiredDaysApproval";
   //CUST MAIN DATA
   public static AddAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/AddAppCustBankAccAndStmntX";
   public static EditAppCustBankAccAndStmnt = environment.losUrl + '/v1' + "/AppCustBankAccX/EditAppCustBankAccAndStmntX";
@@ -311,6 +317,7 @@ export class URLConstantX {
   public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
   public static GetLtkmCustBankAccAndStatementForViewWithOrderedMonthAndYear = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetLtkmCustBankAccAndStatementForViewWithOrderedMonthAndYear";
   public static GetCustDataByLtkmCustId = environment.losUrl + "/v1" + "/LtkmCustomerDataX/GetCustDataByLtkmCustId";
+  public static LtkmApproval = environment.losUrl + "/v1" + "/ApprovalX/LtkmApproval";
   
   //ltkm cust personal main data
   public static GetCustPersonalForLtkmCopyByCustIdX = environment.FoundationR3Url + "/v1" + "/CustX/GetCustPersonalForLtkmCopyByCustId";
@@ -368,6 +375,13 @@ export class URLConstantX {
   public static GetInsuranceDataByAppAssetIdXForView = environment.losUrl + "/v1" + "/AppInsX/GetInsDataByAppAssetIdForView";
   public static GetAssetCategoryNameByAssetCategoryCode = environment.losUrl + "/v1" + "/AppInsX/GetAssetCategoryNameByAssetCategoryCode";
 
+  //TaskReassignment
+  public static TaskReassignmentApproval = environment.losUrl + "/v1" + "/ApprovalX/TaskReassignmentApproval";
+  //PROD HO 
+  public static ProdHOApproval = environment.losUrl + "/v1" + "/ApprovalX/ProdHOApproval";
+
+  //prod offering
+  public static ProdOfferingApproval = environment.losUrl + "/v1" + "/ApprovalX/ProdOfferingApproval";
   // DigitalizationX
   public static GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX = environment.FoundationR3Url + "/v1" + "/DigitalizationX/GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX";
 }

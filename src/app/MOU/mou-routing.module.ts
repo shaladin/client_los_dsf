@@ -92,6 +92,7 @@ import { MouCustomerInquiryXComponent } from 'app/impl/MOU/mou-customer/mou-cust
 import { ChangeMouRequestPagingXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-request-paging/change-mou-request-paging-x.component';
 import {ChangeMouApprovalPagingXComponent} from 'app/impl/MOU/change-mou/change-mou-approval/change-mou-approval-paging/change-mou-approval-paging-x.component';
 import {MouCustomerApprovalXComponent} from 'app/impl/MOU/mou-customer/mou-customer-approval/mou-customer-approval-x.component';
+import { MouUnfreezeApvDetailXComponent } from 'app/impl/MOU/mou-unfreeze/mou-unfreeze-apv-detail/mou-unfreeze-apv-detail-x.component';
 
 const routes: Routes = [
   {
@@ -409,6 +410,13 @@ const routes: Routes = [
       {
         path: PathConstant.MOU_FREEZE_APV_DETAIL,
         component: MouUnfreezeApvDetailComponent,
+        data: {
+          title: "Mou Freeze Unfreeze Approval Detail"
+        }
+      },
+      {
+        path: PathConstantX.MOU_FREEZE_APV_DETAIL,
+        component: MouUnfreezeApvDetailXComponent,
         data: {
           title: "Mou Freeze Unfreeze Approval Detail"
         }
