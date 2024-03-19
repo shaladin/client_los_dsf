@@ -96,6 +96,7 @@ import { MouCustomerRequestXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-r
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { MouCustomerDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-detail-x-dsf/mou-customer-detail-x-dsf.component';
 import { MouCustomerRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-detail-x-dsf/mou-customer-request-detail-x-dsf.component';
+import { MouRequestAddcollXDsfComponent } from 'app/dsf/impl/MOU/mou-request-addcoll-x-dsf/mou-request-addcoll-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -709,6 +710,13 @@ const routes: Routes = [
         component: MouRequestAddcollXComponent,
         data: {
           title: 'MOU Collateral X'
+        }
+      },
+      {
+        path: PathConstantDsf.MOU_CUST_REQ_ADD_COLL_X_DSF,
+        component: MouRequestAddcollXDsfComponent,
+        data: {
+          title: 'MOU Collateral X Dsf'
         }
       },
       {
