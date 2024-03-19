@@ -25,7 +25,6 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/ref-mas
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/uc-dropdown-list-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { ReqMouCustObjX } from 'app/impl/shared/model/mou-cust-obj-x.model';
-import { ResMouMainInfoObjXDsf } from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjXDsf.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 
@@ -54,7 +53,6 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
   user: CurrentUserContext;
   returnRefOffices: Array<KeyValueObj> = new Array<KeyValueObj>();
   MrMouCustFctrTypeList: Array<KeyValueObj> = [];
-  ResMouMainInfoObjXDsf: ResMouMainInfoObjXDsf = new ResMouMainInfoObjXDsf();
   ReqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
 
   MOUMainInfoForm = this.fb.group({
@@ -111,9 +109,9 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
 
   // CR Change Self Custom
   async ngOnInit() {
-    await this.httpClient.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouCustXDsf, { Id: this.mouCustId }).toPromise().then(
+    await this.httpClient.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.mouCustId }).toPromise().then(
       (response) => {
-        this.ResMouMainInfoObjXDsf = response;
+        this.ReqMouCustDsfObj = response;
       }
     )
   // CR Change Self Custom
@@ -276,7 +274,7 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
     if (this.pageType == "add") {
       // CR Change Self Custom
       this.ReqMouCustDsfObj.MouCustId = this.mouCustId;
-      this.ReqMouCustDsfObj.IsNetworth = this.MOUMainInfoForm.getRawValue().IsNetworth;
+      this.ReqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
       await this.httpClient.post(URLConstantDsf.AddMouCustXDsf, ReqMouCustDsfObj).toPromise().then(
         (response: GenericObj) => {
         }
@@ -293,7 +291,7 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
     else if (this.pageType == "edit" || this.pageType == "return") {
       // CR Change Self Custom
       this.ReqMouCustDsfObj.MouCustId = this.mouCustId;
-      this.ReqMouCustDsfObj.IsNetworth = this.MOUMainInfoForm.getRawValue().IsNetworth;
+      this.ReqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
       await this.httpClient.post(URLConstantDsf.EditMouCustXDsf, ReqMouCustDsfObj).toPromise().then(
         (response: GenericObj) => {
         }

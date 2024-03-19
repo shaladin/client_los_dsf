@@ -160,6 +160,7 @@ import { ChangeMouDetailHistoryXComponent } from 'app/impl/MOU/change-mou/change
 import { MouCustomerRequestXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-x-dsf/mou-customer-request-x-dsf.component';
 import { MouCustomerDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-detail-x-dsf/mou-customer-detail-x-dsf.component';
 import { MouCustomerRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-detail-x-dsf/mou-customer-request-detail-x-dsf.component';
+import { MouRequestAddcollXDsfComponent } from 'app/dsf/impl/MOU/mou-request-addcoll-x-dsf/mou-request-addcoll-x-dsf.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -304,6 +305,7 @@ export const customCurrencyMaskConfig = {
     MouCustomerDetailXComponent,
     MouCustomerDetailXDsfComponent,
     MouRequestAddcollXComponent,
+    MouRequestAddcollXDsfComponent,
     ChangeMouRequestDetailCustomerXComponent,
     ChangeMouRequestAddcollXComponent,
     MouCustomerRequestDetailXComponent,

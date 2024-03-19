@@ -172,8 +172,8 @@
   
                 <div id="collateral-data-tab" class="content" role="tabpanel"
                   aria-labelledby="collateral-data-tab-trigger">
-                  <app-mou-request-addcoll-x *ngIf="currentStepIndex == 4" [MouCustId]="mouCustId"
-                    (ResponseMouAddColl)="stepHandlerFactoring($event)"></app-mou-request-addcoll-x>
+                  <app-mou-request-addcoll-x-dsf *ngIf="currentStepIndex == 4" [MouCustId]="mouCustId"
+                    (ResponseMouAddColl)="stepHandlerFactoring($event)"></app-mou-request-addcoll-x-dsf>
                 </div>
   
                 <div id="tc-data-tab" class="content" role="tabpanel" aria-labelledby="tc-data-tab-trigger">
