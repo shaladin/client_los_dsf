@@ -209,4 +209,10 @@ export class PathConstantDsf {
     public static MOU_REQ_PAGING_X_DSF = PathConstant.MOU_REQ + "/" + PathConstantDsf.PAGING_X;
     public static MOU_REQ_DETAIL_X_DSF = PathConstant.MOU_REQ + '/' + PathConstantDsf.DETAIL_X;
     public static MOU_CUST_REQ_ADD_COLL_X_DSF = PathConstant.MOU_CUST + '/RequestAddCollXDsf';
+    public static MOU_CUST_RVW_PAGING_DSF = PathConstant.MOU_CUST + "/ReviewPagingDsf";
+    public static MOU_CUST_RVW_FCTR_X_DSF = PathConstant.MOU_CUST + '/ReviewFactoringXDsf';
+    public static MOU_EXECUTION_DETAIL_X_DSF = PathConstant.MOU_EXECUTION + '/' + PathConstantDsf.DETAIL_X;
+    public static MOU_EXECUTION_PAGING_X_DSF = PathConstant.MOU_EXECUTION + "/" + PathConstantDsf.PAGING_X;
+    public static MOU_CUST_APPRV_X_DSF = PathConstant.MOU_CUST + "/ApprovalXDsf";
+    public static MOU_CUST_APPRV_FCTR_X_DSF = PathConstant.MOU_CUST + '/ApprovalFactoringXDsf';
 }

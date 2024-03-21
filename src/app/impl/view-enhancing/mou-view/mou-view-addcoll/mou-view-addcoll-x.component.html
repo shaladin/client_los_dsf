@@ -58,4 +58,88 @@
     </div>
     <app-mou-view-addcoll-detail-x [MouCustCollateralId]="MouCustCollateralId"></app-mou-view-addcoll-detail-x>
   </div>
+    <!-- CR Change Self Custom -->
+    <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'">
+    </lib-ucSubsection>
+    <div id="NewCalculation" style="overflow-x: auto;">
+      <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'">
+        <div id="NewCalculationInfo">
+          <div class="form-group row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4 adins-required-label" translate>Total Collateral Active</label>
+                <div class="col-md-8">
+                  {{ ReqMouCustDsfObj.TotalCollateralActive }}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Dealer Equity</label>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-12">
+                      {{ ReqMouCustDsfObj.DealerEquity }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 adins-required-label" translate>Adj. Equity (%)</label>
+                <div class="col-md-8">
+                  {{ ReqMouCustDsfObj.AdjEquity }}%
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 adins-required-label" translate>Net Dealer Equity</label>
+                <div class="col-md-8">
+                  {{ ReqMouCustDsfObj.NetDealerEquity }}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 adins-label" translate>Notes</label>
+                <div class="col-md-8">
+                  {{ ReqMouCustDsfObj.Notes }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4 adins-required-label" translate>Dealer Grading</label>
+                <label class="col-md-8">{{ReqMouCustDsfObj.DealerGrading}} / {{ReqMouCustDsfObj.DealerGradingMultiplier}}%</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Networth (%)</label>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-12">
+                      {{ ReqMouCustDsfObj.Networth }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Ceiling by Collateral</label>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-12">
+                      {{ ReqMouCustDsfObj.CeilingCollateral }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Ceiling by Networth</label>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-12">
+                      {{ ReqMouCustDsfObj.CeilingNetworth }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </lib-ucSubsection>
+    </div>
+    <!-- CR Change Self Custom -->
 </form>

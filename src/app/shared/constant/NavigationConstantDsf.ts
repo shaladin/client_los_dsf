@@ -133,6 +133,10 @@ export class NavigationConstantDsf {
      public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_NAP4; //"/Nap/AddProcess/ReturnHandlingDsf/NAP4"
   
      public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.DO_MULTI_ASSET_PAGING_DSF; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
-  
-}
+
+     public static MOU_CUST_RVW_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_RVW_PAGING_DSF; //'/Mou/Cust/ReviewPaging'
+     public static MOU_EXECUTION_DETAIL_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EXECUTION_DETAIL_X_DSF; //"/Mou/Execution/DetailX"
+     public static MOU_EXECUTION_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EXECUTION_PAGING_X_DSF; //"/Mou/Execution/PagingX"
+     public static MOU_CUST_APPRV_FCTR_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_APPRV_FCTR_X_DSF; //'/Mou/Cust/ApprovalFactoringX'
+    }
 

@@ -97,6 +97,12 @@ import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { MouCustomerDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-detail-x-dsf/mou-customer-detail-x-dsf.component';
 import { MouCustomerRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-detail-x-dsf/mou-customer-request-detail-x-dsf.component';
 import { MouRequestAddcollXDsfComponent } from 'app/dsf/impl/MOU/mou-request-addcoll-x-dsf/mou-request-addcoll-x-dsf.component';
+import { MouReviewPagingDsfComponent } from 'app/dsf/impl/MOU/mou-review-paging-dsf/mou-review-paging-dsf.component';
+import { MouExecutionDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-execution-detail-x-dsf/mou-execution-detail-x-dsf.component';
+import { MouExecutionPagingXDsfComponent } from 'app/dsf/impl/MOU/mou-execution-paging-x-dsf/mou-execution-paging-x-dsf.component';
+import { MouReviewFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-review-factoring-x-dsf/mou-review-factoring-x-dsf.component';
+import { MouCustomerApprovalXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-approval-x-dsf/mou-customer-approval-x-dsf.component';
+import { MouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-approval-factoring-x-dsf/mou-approval-factoring-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -208,6 +214,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.MOU_CUST_RVW_PAGING_DSF,
+        component: MouReviewPagingDsfComponent,
+        data: {
+          title: 'MOU Review Paging Dsf'
+        }
+      },
+      {
         path: PathConstant.MOU_CUST_RVW_GENERAL,
         component: MouReviewGeneralComponent,
         data: {
@@ -257,6 +270,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.MOU_CUST_RVW_FCTR_X_DSF,
+        component: MouReviewFactoringXDsfComponent,
+        data: {
+          title: 'MOU Review Factoring X Dsf'
+        }
+      },
+      {
         path: PathConstant.MOU_EDIT_CUST_PAGING,
         component: EditMouCustomerComponent,
         data: {
@@ -275,6 +295,13 @@ const routes: Routes = [
         component: MouCustomerApprovalXComponent,
         data: {
           title: 'MOU Customer Approval'
+        }
+      },
+      {
+        path: PathConstantDsf.MOU_CUST_APPRV_X_DSF,
+        component: MouCustomerApprovalXDsfComponent,
+        data: {
+          title: 'MOU Customer Approval Dsf'
         }
       },
       {
@@ -303,6 +330,13 @@ const routes: Routes = [
         component: MouApprovalFactoringXComponent,
         data: {
           title: 'MOU Approval Factoring X'
+        }
+      },
+      {
+        path: PathConstantDsf.MOU_CUST_APPRV_FCTR_X_DSF,
+        component: MouApprovalFactoringXDsfComponent,
+        data: {
+          title: 'MOU Approval Factoring X Dsf'
         }
       },
       {
@@ -367,6 +401,13 @@ const routes: Routes = [
         component: MouExecutionDetailXComponent,
         data: {
           title: "Mou Execution Detail X"
+        }
+      },
+      {
+        path: PathConstantDsf.MOU_EXECUTION_DETAIL_X_DSF,
+        component: MouExecutionDetailXDsfComponent,
+        data: {
+          title: "Mou Execution Detail X Dsf"
         }
       },
       {
@@ -759,6 +800,13 @@ const routes: Routes = [
         component: MouExecutionPagingXComponent,
         data: {
           title: "Mou Execution Paging"
+        }
+      },
+      {
+        path: PathConstantDsf.MOU_EXECUTION_PAGING_X_DSF,
+        component: MouExecutionPagingXDsfComponent,
+        data: {
+          title: "Mou Execution Paging Dsf"
         }
       },
       {

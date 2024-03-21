@@ -60,7 +60,7 @@ import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-comp
 import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
 import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-company/existing-mou-company.component';
 import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { MouViewComponentsModule } from 'app/components/general/mou-view/mou-view.components.module';
 import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
@@ -161,6 +161,12 @@ import { MouCustomerRequestXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-r
 import { MouCustomerDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-detail-x-dsf/mou-customer-detail-x-dsf.component';
 import { MouCustomerRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-detail-x-dsf/mou-customer-request-detail-x-dsf.component';
 import { MouRequestAddcollXDsfComponent } from 'app/dsf/impl/MOU/mou-request-addcoll-x-dsf/mou-request-addcoll-x-dsf.component';
+import { MouReviewPagingDsfComponent } from 'app/dsf/impl/MOU/mou-review-paging-dsf/mou-review-paging-dsf.component';
+import { MouExecutionDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-execution-detail-x-dsf/mou-execution-detail-x-dsf.component';
+import { MouExecutionPagingXDsfComponent } from 'app/dsf/impl/MOU/mou-execution-paging-x-dsf/mou-execution-paging-x-dsf.component';
+import { MouReviewFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-review-factoring-x-dsf/mou-review-factoring-x-dsf.component';
+import { MouCustomerApprovalXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-approval-x-dsf/mou-customer-approval-x-dsf.component';
+import { MouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-approval-factoring-x-dsf/mou-approval-factoring-x-dsf.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -188,6 +194,7 @@ export const customCurrencyMaskConfig = {
     MatTabsModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ReactiveFormsModule,
+    FormsModule,
     SharingComponentModule,
     MatCheckboxModule,
     MatRadioModule,
@@ -213,6 +220,7 @@ export const customCurrencyMaskConfig = {
     CustomerDocPrintingPagingComponent,
     DocSignerComponent,
     MouReviewPagingComponent,
+    MouReviewPagingDsfComponent,
     MouReviewFactoringComponent,
     MouDetailGeneralComponent,
     MouDetailFactoringComponent,
@@ -230,6 +238,7 @@ export const customCurrencyMaskConfig = {
     LegalReviewDetailComponent,
     MouCustomerApprovalComponent,
     MouCustomerApprovalXComponent,
+    MouCustomerApprovalXDsfComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouReviewGeneralComponent,
@@ -312,9 +321,12 @@ export const customCurrencyMaskConfig = {
     MouCustomerRequestDetailXDsfComponent,
     MouReviewDlfnXComponent,
     MouReviewFactoringXComponent,
+    MouReviewFactoringXDsfComponent,
     MouApprovalGeneralXComponent,
     MouApprovalFactoringXComponent,
+    MouApprovalFactoringXDsfComponent,
     MouExecutionDetailXComponent,
+    MouExecutionDetailXDsfComponent,
     ChangeMouRequestDetailXComponent,
     ChangeMouReviewFactoringXComponent,
     ChangeMouReviewFinancingXComponent,
@@ -330,6 +342,7 @@ export const customCurrencyMaskConfig = {
     ChangeMouDetailXComponent,
     ChangeMouReviewPagingXComponent,
     MouExecutionPagingXComponent,
+    MouExecutionPagingXDsfComponent,
     MouCustFeeXComponent,
     MouDetailFactoringXComponent,
     MouCustListedCustFctrXComponent,
@@ -361,6 +374,7 @@ export const customCurrencyMaskConfig = {
     MouCustAssetDetailComponent,
     MouCustomerApprovalComponent,
     MouCustomerApprovalXComponent,
+    MouCustomerApprovalXDsfComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,

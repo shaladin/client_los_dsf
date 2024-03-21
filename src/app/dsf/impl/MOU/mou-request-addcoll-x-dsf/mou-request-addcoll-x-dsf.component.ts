@@ -48,6 +48,7 @@ import { RefAttrSettingObj } from 'app/shared/model/ref-attr-setting-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ResMouMainInfoObjXDsf } from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjXDsf.model';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
+import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll-x-dsf',
@@ -158,8 +159,6 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
   collateralUsedPrcnt: number;
   maxPrcnt: number = 100;
   isEdit: boolean = false;
-  AddCollDataForm = this.fb.group({
-  })
 
   AddCollForm = this.fb.group({
     MouCustCollateralId: [''],
@@ -220,6 +219,10 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
   dealerRating: number;
   // CR Change Self Custom
   isAddNetworthMode: boolean = true;
+  IsDealerEquityManual: boolean = false;
+  IsNetworthManual: boolean = false;
+  IsCeilingCollateralManual: boolean = false;
+  IsCeilingNetworthManual: boolean = false;
   // CR Change Self Custom
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
@@ -257,47 +260,6 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.isRequired = false;
     this.InputLookupProfessionObj.isReady = true;
-
-    // CR Change Self Custom
-    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
-      (response) => {
-        if (response.TotalCollateralActive > 0)
-        {
-          this.isAddNetworthMode = false;
-
-          this.AddCollForm.patchValue({
-            TotalCollateralActive: response.TotalCollateralActive,
-            DealerEquity: response.DealerEquity,
-            IsDealerEquityManual: response.IsDealerEquityManual,
-            AdjEquity: response.AdjEquity,
-            NetDealerEquity: response.NetDealerEquity,
-            NotesNewCalculation: response.Notes,
-            DealerGrading: response.DealerGrading,
-            DealerGradingMultiplier: response.DealerGradingMultiplier,
-            Networth: response.Networth,
-            IsNetworthManual: response.IsNetworthManual,
-            CeilingCollateral: response.CeilingCollateral,
-            IsCeilingCollateralManual: response.IsCeilingCollateralManual,
-            CeilingNetworth: response.CeilingNetworth,
-            IsCeilingNetworthManual: response.IsCeilingNetworthManual
-          });
-        }
-
-        else
-        {
-          this.AddCollForm.patchValue({
-            TotalCollateralActive: response.TotalCollateralActive,
-            DealerEquity: response.DealerEquity,
-            DealerGrading: response.DealerGrading,
-            DealerGradingMultiplier: response.DealerGradingMultiplier,
-            Networth: response.Networth,
-            CeilingCollateral: response.CeilingCollateral,
-            CeilingNetworth: response.CeilingNetworth,
-          });
-        }
-      }
-    )
-    // CR Change Self Custom
   }
 
   bindUcAddToTempData() {
@@ -432,6 +394,47 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
         });
         this.setValidatorPattern(this.IdTypeList[0].Key);
       })
+
+      // CR Change Self Custom
+    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+      (response) => {
+        if (response.TotalCollateralActive > 0)
+        {
+          this.isAddNetworthMode = false;
+
+          this.AddCollForm.patchValue({
+            TotalCollateralActive: response.TotalCollateralActive,
+            DealerEquity: response.DealerEquity,
+            IsDealerEquityManual: response.IsDealerEquityManual,
+            AdjEquity: response.AdjEquity,
+            NetDealerEquity: response.NetDealerEquity,
+            NotesNewCalculation: response.Notes,
+            DealerGrading: response.DealerGrading,
+            DealerGradingMultiplier: response.DealerGradingMultiplier,
+            Networth: response.Networth,
+            IsNetworthManual: response.IsNetworthManual,
+            CeilingCollateral: response.CeilingCollateral,
+            IsCeilingCollateralManual: response.IsCeilingCollateralManual,
+            CeilingNetworth: response.CeilingNetworth,
+            IsCeilingNetworthManual: response.IsCeilingNetworthManual
+          });
+        }
+
+        else
+        {
+          this.AddCollForm.patchValue({
+            TotalCollateralActive: response.TotalCollateralActive,
+            DealerEquity: response.DealerEquity,
+            DealerGrading: response.DealerGrading,
+            DealerGradingMultiplier: response.DealerGradingMultiplier,
+            Networth: response.Networth,
+            CeilingCollateral: response.CeilingCollateral,
+            CeilingNetworth: response.CeilingNetworth,
+          });
+        }
+      }
+    )
+    // CR Change Self Custom
 
   }
 
@@ -1740,6 +1743,30 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     //   this.UpdatePlafondAmt(sumCollateralValue);
     // }
     this.UpdatePlafondAmt(sumCollateralValue);
+
+    // CR Change Self Custom
+    let mouCustDsf = new ReqMouCustDsfObj();
+    mouCustDsf.AdjEquity = this.AddCollForm.controls.AdjEquity.value;
+    mouCustDsf.CeilingCollateral = this.AddCollForm.controls.CeilingCollateral.value;
+    mouCustDsf.CeilingNetworth = this.AddCollForm.controls.CeilingNetworth.value;
+    mouCustDsf.DealerEquity = this.AddCollForm.controls.DealerEquity.value;
+    mouCustDsf.DealerGrading = this.AddCollForm.controls.DealerGrading.value;
+    mouCustDsf.DealerGradingMultiplier = this.AddCollForm.controls.DealerGradingMultiplier.value;
+    mouCustDsf.IsCeilingCollateralManual = this.AddCollForm.controls.IsCeilingCollateralManual.value;
+    mouCustDsf.IsCeilingNetworthManual = this.AddCollForm.controls.IsCeilingNetworthManual.value;
+    mouCustDsf.IsDealerEquityManual = this.AddCollForm.controls.IsDealerEquityManual.value;
+    mouCustDsf.IsNetworthManual = this.AddCollForm.controls.IsNetworthManual.value;
+    mouCustDsf.MouCustId = this.MouCustId;
+    mouCustDsf.NetDealerEquity = this.AddCollForm.controls.NetDealerEquity.value;
+    mouCustDsf.Networth = this.AddCollForm.controls.Networth.value;
+    mouCustDsf.Notes = this.AddCollForm.controls.NotesNewCalculation.value;
+    mouCustDsf.TotalCollateralActive = this.AddCollForm.controls.TotalCollateralActive.value;
+
+    this.http.post(URLConstantDsf.EditMouCustXDsf, ReqMouCustDsfObj).subscribe(
+      (response: GenericObj) => {
+      }
+    )
+    // CR Change Self Custom
   }
 
   UpdatePlafondAmt(sumCollateralValue: number) {
@@ -2055,6 +2082,77 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
       temp.clearValidators();
     }
     temp.updateValueAndValidity();
+  }
+
+  DealerEquityManualChange()
+  {
+    this.AddCollForm.patchValue({
+      NetDealerEquity: this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value,
+      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value) * this.AddCollForm.controls.Networth.value
+    });
+  }
+
+  AdjEquityManualChange()
+  {
+    this.AddCollForm.patchValue({
+      NetDealerEquity: this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value,
+      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value) * this.AddCollForm.controls.Networth.value
+    });
+  }
+
+  NetworthManualChange()
+  {
+    this.AddCollForm.patchValue({
+      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value) * this.AddCollForm.controls.Networth.value
+    });
+  }
+
+  IsDealerEquityManualChange()
+  {
+    if (this.IsDealerEquityManual)
+    {
+      this.IsDealerEquityManual = false;
+    }
+    else
+    {
+      this.IsDealerEquityManual = true;
+    }
+  }
+
+  IsNetworthManualChange()
+  {
+    if (this.IsNetworthManual)
+    {
+      this.IsNetworthManual = false;
+    }
+    else
+    {
+      this.IsNetworthManual = true;
+    }
+  }
+
+  IsCeilingCollateralManualChange()
+  {
+    if (this.IsCeilingCollateralManual)
+    {
+      this.IsCeilingCollateralManual = false;
+    }
+    else
+    {
+      this.IsCeilingCollateralManual = true;
+    }
+  }
+
+  IsCeilingNetworthManualChange()
+  {
+    if (this.IsCeilingNetworthManual)
+    {
+      this.IsCeilingNetworthManual = false;
+    }
+    else
+    {
+      this.IsCeilingNetworthManual = true;
+    }
   }
 
 }
