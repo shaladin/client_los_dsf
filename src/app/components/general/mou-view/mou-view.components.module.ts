@@ -17,6 +17,8 @@ import { ShrCompMouModule } from 'app/components/sharing-components/shr-comp-mou
 import { MouTabViewAddcollXComponent } from 'app/impl/components/general/mou-view/mou-tab-view-addcoll/mou-tab-view-addcoll-x.component';
 import { MouViewModule } from 'app/view-enhancing/mou-view/mou-view.module';
 import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
+import { MouTabViewAddcollXDsfComponent } from 'app/dsf/impl/MOU/mou-tab-view-addcoll-x-dsf/mou-tab-view-addcoll-x-dsf.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -27,7 +29,9 @@ import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.modu
         UcgridviewModule,
         ShrCompMouModule,
         UcapprovalgeneralinfoModule,
-        MouViewModule
+        MouViewModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     declarations: [
         MouTabViewAddcollComponent,
@@ -39,7 +43,8 @@ import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.modu
         MouViewSurveyComponent,
         MouViewTcComponent,
         MouViewAnalysisResultComponent,
-        MouTabViewAddcollXComponent
+        MouTabViewAddcollXComponent,
+        MouTabViewAddcollXDsfComponent
     ],
     exports: [
         MouTabViewAddcollComponent,
@@ -51,7 +56,8 @@ import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.modu
         MouViewSurveyComponent,
         MouViewTcComponent,
         MouViewAnalysisResultComponent,
-        MouTabViewAddcollXComponent
+        MouTabViewAddcollXComponent,
+        MouTabViewAddcollXDsfComponent
     ]
 })
 export class MouViewComponentsModule { }

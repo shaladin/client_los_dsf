@@ -1,0 +1,204 @@
+<form form class="form form-horizontal" [formGroup]="AddCollForm" #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Collateral'" [panel]="'AddCollData'">
+  </lib-ucSubsection>
+  <div class="form-body" id="AddCollData" style="overflow-x: auto;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+      <tr class="table-header">
+        <th><span class="thead-header" name='CollNo' translate>COLLATERAL NO.</span>
+        </th>
+        <th><span style="float: left;" class="thead-header" name='CollName' translate>COLLATERAL NAME</span>
+        </th>
+        <th><span style="float: left;" class="thead-header" name='MouCustName' translate>CURRENT OWNER NAME</span>
+        </th>
+        <th><span style="float: center;" class="thead-header" name='CollStat' translate>COLLATERAL STATUS</span>
+        </th>
+        <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
+        </th>
+        <th><span style="float: center;" class="thead-header" name='ViewDetail' translate>VIEW DETAIL</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody *ngIf="listCollateralData.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr *ngFor="let item of listCollateralData; let i = index">
+        <td>{{item.CollateralNo}}</td>
+        <td align="left">{{item.FullAssetName}}</td>
+        <td align="left">{{item.OwnerName}}</td>
+        <td align="center">{{item.CollateralStat}}</td>
+        <td align="right">{{item.CollateralValueAmt | number}}</td>
+        <td align="center">
+          <a class="success p-0" (click)="ViewColl(item.MouCustCollateralId)">
+            <i class="ft-edit-2 font-medium-3 mr-2"></i>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="form-body" id="AddCollDetailData" *ngIf="isView">
+    <div class="ucSearch-Button-Right">
+      <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
+        <i class="fa fa-check-square-o"></i> Back
+      </button>
+    </div>
+    <app-mou-view-addcoll-detail-x [MouCustCollateralId]="MouCustCollateralId"></app-mou-view-addcoll-detail-x>
+  </div>
+  <!-- CR Change Self Custom -->
+  <!-- <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'">
+  </lib-ucSubsection>
+  <div id="NewCalculation" style="overflow-x: auto;">
+    <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'">
+      <div id="NewCalculationInfo">
+        <div class="form-group row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Total Collateral Active</label>
+              <div class="col-md-8">
+                <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="TotalCollateralActive"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.TotalCollateralActive.invalid }" disabled>
+                <lib-uc-show-errors [control]="AddCollForm.controls.TotalCollateralActive" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4" translate>Dealer Equity</label>
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-2">
+                    <input type="checkbox" class="border-primary" formControlName="IsDealerEquityManual" disabled>
+                  </div>
+                  <div class="col-md-10" *ngIf="IsDealerEquityManual">
+                    <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="DealerEquity"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.DealerEquity.invalid }" (change)="DealerEquityManualChange()" disabled>
+                    <lib-uc-show-errors [control]="AddCollForm.controls.DealerEquity" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <div class="col-md-10" *ngIf="!IsDealerEquityManual">
+                    <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="DealerEquity"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.DealerEquity.invalid }" disabled>
+                    <lib-uc-show-errors [control]="AddCollForm.controls.DealerEquity" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Adj. Equity (%)</label>
+              <div class="col-md-8">
+                <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="AdjEquity"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AdjEquity.invalid }" (change)="AdjEquityManualChange()" disabled>
+                <lib-uc-show-errors [control]="AddCollForm.controls.AdjEquity" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-required-label" translate>Net Dealer Equity</label>
+              <div class="col-md-8">
+                <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="NetDealerEquity"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.NetDealerEquity.invalid }" disabled>
+                <lib-uc-show-errors [control]="AddCollForm.controls.NetDealerEquity" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 adins-label" translate>Notes</label>
+              <div class="col-md-8">
+                <textarea type="textarea" row="5" class="form-control" formControlName="NotesNewCalculation"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.NotesNewCalculation.invalid}" disabled></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row" *ngIf="returnMouCust.MrMouTypeCode != 'GENERAL'">
+              <label class="col-md-4 adins-required-label" translate>Dealer Grading</label>
+              <label class="col-md-8">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4" translate>Networth (%)</label>
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-2">
+                    <input type="checkbox" class="border-primary" formControlName="IsNetworthManual" disabled>
+                  </div>
+                  <div class="col-md-10" *ngIf="IsNetworthManual">
+                    <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="Networth"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Networth.invalid }" (change)="NetworthManualChange()" disabled>
+                    <lib-uc-show-errors [control]="AddCollForm.controls.Networth" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <div class="col-md-10" *ngIf="!IsNetworthManual">
+                    <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="Networth"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Networth.invalid }" disabled>
+                    <lib-uc-show-errors [control]="AddCollForm.controls.Networth" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4" translate>Ceiling by Collateral</label>
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-2">
+                    <input type="checkbox" class="border-primary" formControlName="IsCeilingCollateralManual" disabled>
+                  </div>
+                  <div class="col-md-10" *ngIf="IsCeilingCollateralManual">
+                    <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="CeilingCollateral"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CeilingCollateral.invalid }" disabled>
+                    <lib-uc-show-errors [control]="AddCollForm.controls.CeilingCollateral" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <div class="col-md-10" *ngIf="!IsCeilingCollateralManual">
+                    <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="CeilingCollateral"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CeilingCollateral.invalid }" disabled>
+                    <lib-uc-show-errors [control]="AddCollForm.controls.CeilingCollateral" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4" translate>Ceiling by Networth</label>
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-2">
+                    <input type="checkbox" class="border-primary" formControlName="IsCeilingNetworthManual" disabled>
+                  </div>
+                  <div class="col-md-10" *ngIf="IsCeilingNetworthManual">
+                    <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="CeilingNetworth"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CeilingNetworth.invalid }" disabled>
+                    <lib-uc-show-errors [control]="AddCollForm.controls.CeilingNetworth" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <div class="col-md-10" *ngIf="!IsCeilingNetworthManual">
+                    <input type="text" currencyMask class="form-control adInsInput text-right"
+                      formControlName="CeilingNetworth"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CeilingNetworth.invalid }" disabled>
+                    <lib-uc-show-errors [control]="AddCollForm.controls.CeilingNetworth" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </lib-ucSubsection>
+  </div> -->
+  <!-- CR Change Self Custom -->
+</form>
