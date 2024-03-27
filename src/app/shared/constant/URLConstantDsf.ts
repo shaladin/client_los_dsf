@@ -82,6 +82,10 @@ export class URLConstantDsf {
     public static GetAppFinDataByAppIdDsf = environment.losUrl + "/AppFinDataDsf/GetAppFinDataByAppIdDsf";
     public static SaveNtfAmtAppFinDataDsf = environment.losUrl + "/AppFinDataDsf/SaveNtfAmtAppFinDataDsf";
     public static UpdateLeadStepStatBulkByLeadId = environment.losUrl + "/v1" + "/PubSubDsf/UpdateLeadStepStatBulkByLeadId";
+    public static GetAgrmntListForCustHistDsf = environment.losUrl + "/AgrmntDsf/GetAgrmntListForCustHistDsf"; 
+    public static GetAppListForCustHistDsf = environment.losUrl + "/AppDsf/GetAppListForCustHistDsf";
+
+    public static GetProvisionFeeByAppId = environment.losUrl + "/AppDsf/GetAppProvisionFeeByAppIdDsf";
     public static GetListRunnerActivationDsf = environment.losUrl + "/AppAssetDsf/GetListRunnerActivationDsf";
     public static AddEditAppAssetDsf = environment.losUrl + "/AppAssetDsf/AddEditAppAssetDsf";
     public static DeleteAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteAppAssetDsf";
