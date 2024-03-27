@@ -86,6 +86,13 @@ export class URLConstantDsf {
     public static GetAppListForCustHistDsf = environment.losUrl + "/AppDsf/GetAppListForCustHistDsf";
 
     public static GetProvisionFeeByAppId = environment.losUrl + "/AppDsf/GetAppProvisionFeeByAppIdDsf";
-
+    
     public static CheckIsNegCustAllowedCreateAppDsf = environment.FoundationR3Url + "/CustDsf/CheckIsNegCustAllowedCreateAppDsf"
+    public static GetListRunnerActivationDsf = environment.losUrl + "/AppAssetDsf/GetListRunnerActivationDsf";
+    public static AddEditAppAssetDsf = environment.losUrl + "/AppAssetDsf/AddEditAppAssetDsf";
+    public static DeleteAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteAppAssetDsf";
+    public static DeleteListAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteListAppAssetDsf";
+    public static GetAppAssetByAppAssetIdDsf = environment.losUrl + "/AppAssetDsf/GetAppAssetByAppAssetIdDsf";
+    public static GetListAppAssetForCopyByAppIdDsf = environment.losUrl + "/AppAssetDsf/GetListAppAssetForCopyByAppIdDsf";
+    public static CopyAppAssetDsf = environment.losUrl + "/AppAssetDsf/CopyAppAssetDsf";
 }
