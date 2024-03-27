@@ -103,6 +103,8 @@ import { MouExecutionPagingXDsfComponent } from 'app/dsf/impl/MOU/mou-execution-
 import { MouReviewFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-review-factoring-x-dsf/mou-review-factoring-x-dsf.component';
 import { MouCustomerApprovalXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-approval-x-dsf/mou-customer-approval-x-dsf.component';
 import { MouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-approval-factoring-x-dsf/mou-approval-factoring-x-dsf.component';
+import { EditMouCustomerDsfComponent } from 'app/dsf/impl/MOU/edit-mou-customer-dsf/edit-mou-customer-dsf.component';
+import { ChangeMouRequestPagingXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-paging-x-dsf/change-mou-request-paging-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -281,6 +283,13 @@ const routes: Routes = [
         component: EditMouCustomerComponent,
         data: {
           title: 'Edit MOU Customer Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.MOU_EDIT_CUST_PAGING_DSF,
+        component: EditMouCustomerDsfComponent,
+        data: {
+          title: 'Edit MOU Customer Paging Dsf'
         }
       },
       {
@@ -835,6 +844,13 @@ const routes: Routes = [
         component: ChangeMouRequestPagingXComponent,
         data: {
           title: "Change MOU Request Paging"
+        }
+      },
+      {
+        path: PathConstantDsf.CHANGE_MOU_REQ_PAGING_X_DSF,
+        component: ChangeMouRequestPagingXDsfComponent,
+        data: {
+          title: "Change MOU Request Paging Dsf"
         }
       },
     ]
