@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { RefProfessionObj } from 'app/shared/model/ref-profession-obj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'view-asset-data-detail-x',
@@ -18,6 +19,9 @@ export class ViewAssetDataDetailXComponent implements OnInit {
   @Input() BizTemplateCode: string;
   @Input() AppCollateralId: number;
   appAsset: any;
+  // Self Custom Changes CR Runner KTB 398912
+  appAssetDsf: any;
+  // End Self Custom Changes CR Runner KTB 398912
   appAssetSupplEmp: any;
   appCollateralRegistration: any;
   AssetTypeObj: any;
@@ -34,13 +38,21 @@ export class ViewAssetDataDetailXComponent implements OnInit {
     this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/gridAppAssetAccessoryFL4W.json";
     this.isOtherEmpPosCode = false;
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { Id: this.AppAssetId });
+    // Self Custom Changes CR Runner KTB 398912
+    let getAppAssetDsf = this.httpClient.post(URLConstantDsf.GetAppAssetByAppAssetIdDsf, { Id: this.AppAssetId });
+    // End Self Custom Changes CR Runner KTB 398912
     let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { Id: this.AppAssetId });
     let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, { Id: this.AppCollateralId });
-    await forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).toPromise().then(
+    // Self Custom Changes CR Runner KTB 398912
+    await forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg, getAppAssetDsf]).toPromise().then(
+    // End Self Custom Changes CR Runner KTB 398912
       (response: any) => {
         this.appAsset = response[0];
         this.appAssetSupplEmp = response[1];
         this.appCollateralRegistration = response[2];
+        // Self Custom Changes CR Runner KTB 398912
+        this.appAssetDsf = response[3];
+        // End Self Custom Changes CR Runner KTB 398912
         this.GetRefProfession();
 
         for (const item of this.appAssetSupplEmp.ReturnObject) {
