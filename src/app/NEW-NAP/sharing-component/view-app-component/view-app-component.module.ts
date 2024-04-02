@@ -50,6 +50,7 @@ import { HttpClient } from "@angular/common/http";
 import { ViewSumamryAppCfnaDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/view-app-component-dsf/view-sumamry-app-cfna-dsf/view-sumamry-app-cfna-dsf.component";
 import { ViewAppScoreGradeDatarobotDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/view-app-component-dsf/view-app-score-grade-datarobot-dsf/view-app-score-grade-datarobot-dsf.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { ViewAssetDataDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/view-nap-component/view-asset-data-dsf/view-asset-data-dsf.component";
 
 @NgModule({
   exports: [
@@ -61,6 +62,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     ListDataCommissionComponent,
     TabAnalysisResultComponent,
     ViewAssetDataComponent,
+    ViewAssetDataDsfComponent,
     ViewPhoneVerifComponent,
     TabApplicationComponent,
     LifeInsuranceComponent,
@@ -117,6 +119,7 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     ViewInsuranceComponent,
     ViewPhoneVerifComponent,
     ViewAssetDataComponent,
+    ViewAssetDataDsfComponent,
     TabApplicationComponent,
     TabAnalysisResultComponent,
     AppAssetDataComponent,
