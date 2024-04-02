@@ -201,4 +201,9 @@ export class PathConstantDsf {
     public static PLAFOND_INSTALLMENT_SIMULATION_PAGING = PathConstantDsf.PLAFOND_INSTALLMENT_SIMULATION + "/" + PathConstant.PAGING;
     public static PLAFOND_INSTALLMENT_SIMULATION_DETAIL = "PlafondInstallmentSimulationDsf" + "/" + PathConstant.DETAIL;
 
+    public static NAP_VIEW_ASSET_DSF = "ViewAssetDsf";
+    public static DO_MULTI_ASSET_DSF = "DeliveryOrderMultiAssetDsf";
+    public static DO_MULTI_ASSET_DETAIL_X_DSF = PathConstantDsf.DO_MULTI_ASSET_DSF + '/' + PathConstantX.DETAIL_X;
+    public static DO_MULTI_ASSET_PAGING_DSF = PathConstantDsf.DO_MULTI_ASSET_DSF + "/" + PathConstant.PAGING;
+    
 }

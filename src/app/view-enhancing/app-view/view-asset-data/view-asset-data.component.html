@@ -81,6 +81,10 @@
             <div class="row">
               <label class="col-md-2  adInsLabel" translate>Notes</label>
               <label class="col-md-4  adinslabel" translate>{{AppAssetObj?.ResponseAppAssetObj?.AssetNotes}}</label>
+              <!-- Self Custom Changes CR Runner KTB 398912 -->
+              <label class="col-md-2  adInsLabel" *ngIf="AppAssetDsfObj?.RunnerActivation !== ''" translate>Runner Activation</label>
+              <label class="col-md-4  adinslabel" *ngIf="AppAssetDsfObj?.RunnerActivation !== ''" translate>{{AppAssetDsfObj?.RunnerActivation}}</label>
+              <!-- End Self Custom Changes CR Runner KTB 398912 -->
             </div>
           </div>
   

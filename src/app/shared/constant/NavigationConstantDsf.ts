@@ -132,6 +132,7 @@ export class NavigationConstantDsf {
      public static NAP_ADD_PRCS_RETURN_HANDLING_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_DETAIL; //'/Nap/AddProcess/ReturnHandlingDsf/Detail'
      public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_NAP4; //"/Nap/AddProcess/ReturnHandlingDsf/NAP4"
   
-
+     public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.DO_MULTI_ASSET_PAGING_DSF; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
+  
 }
 
