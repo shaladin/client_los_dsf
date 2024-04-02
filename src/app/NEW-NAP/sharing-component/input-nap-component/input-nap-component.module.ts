@@ -495,6 +495,7 @@ export const customCurrencyMaskConfig = {
     CollateralDataCfnaXComponent,
     CollateralDataCfnaPagingXComponent,
     InsuranceMultiAssetDataXComponent,
+    InsuranceMultiAssetDataXDsfComponent,
     ApplicationDataDlfnXComponent,
     FinancialDataDlfnXComponent,
     SingleInstDlfnXComponent,
