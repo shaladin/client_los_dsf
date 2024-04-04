@@ -1,28 +1,26 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AppCollateralObj } from 'app/shared/model/app-collateral-obj.model';
-import { AppCollateralDocObj } from 'app/shared/model/app-collateral-doc-obj.model';
-import { ActivatedRoute } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
-import { AppCollateralAccessoryObj } from 'app/shared/model/app-collateral-accessory-obj.model';
-import { AppCollateralAttrObj } from 'app/shared/model/app-collateral-attr-obj.model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
-import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { HttpClient } from "@angular/common/http";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
+import { URLConstant } from "app/shared/constant/URLConstant";
+import { URLConstantDsf } from "app/shared/constant/URLConstantDsf";
+import { AppCollateralAccessoryObj } from "app/shared/model/app-collateral-accessory-obj.model";
+import { AppCollateralAttrObj } from "app/shared/model/app-collateral-attr-obj.model";
+import { AppCollateralDocObj } from "app/shared/model/app-collateral-doc-obj.model";
+import { AppCollateralObj } from "app/shared/model/app-collateral-obj.model";
+import { InputGridObj } from "app/shared/model/input-grid-obj.model";
+import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
 
 @Component({
-  selector: 'app-view-collateral-data',
-  templateUrl: './view-collateral-data.component.html'
+  selector: 'app-view-collateral-data-dsf',
+  templateUrl: './view-collateral-data-dsf.component.html'
 })
-export class ViewCollateralDataComponent implements OnInit {
+export class ViewCollateralDataDsfComponent implements OnInit {
   viewUOLObj: UcViewGenericObj = new UcViewGenericObj();
   
   AppId: number;  @Input() appId: number = 0;
   @Input() AppCollateralId: number = 0;
   AppCollateralObj: AppCollateralObj = new AppCollateralObj();
-  AppCollateral: any;
-  SerialNoLabelCollateralList: Array<string> = [];
   AppCollateralDocs: Array<AppCollateralDocObj> = new Array<AppCollateralDocObj>();
   IsHidden: boolean = true;
   arrValue = [];
@@ -32,6 +30,8 @@ export class ViewCollateralDataComponent implements OnInit {
   AppCollateralAttrObjs : Array<AppCollateralAttrObj> = new Array<AppCollateralAttrObj>();
   AppCollateralAccessoryObjs : Array<AppCollateralAccessoryObj> = new Array<AppCollateralAccessoryObj>();
   inputGridObj: InputGridObj = new InputGridObj();
+  AppCollateral: any;
+  SerialNoLabelCollateralList: Array<string> = [];
   // Self Custom Changes CR Runner KTB 398912
   AppAssetDsf: any;
   // End Self Custom Changes CR Runner KTB 398912
@@ -57,10 +57,10 @@ export class ViewCollateralDataComponent implements OnInit {
     }else{
       await this.http.post<AppCollateralObj>(URLConstant.GetAppCollateralByAppId, {Id: this.AppId}).toPromise().then(
         (response) => {
-          this.AppCollateralObj = response;
+          this.AppCollateralObj = response;        
           this.arrValue.push(this.AppCollateralObj.AppCollateralId);
           this.viewUOLObj.whereValue = this.arrValue;
-          this.IsReady = true;        
+          this.IsReady = false;
           this.AppCollateralId = this.AppCollateralObj.AppCollateralId;
           this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralObj.AppCollateralId }).subscribe(
             (response) => {
@@ -134,4 +134,5 @@ export class ViewCollateralDataComponent implements OnInit {
     );
   }
   // End Self Custom Changes CR Runner KTB 398912
+
 }

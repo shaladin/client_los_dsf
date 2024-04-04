@@ -2,6 +2,8 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { ViewAssetDataComponent } from "./sharing-component/view-app-component/view-asset-data/view-asset-data.component";
 import { PathConstant } from "app/shared/constant/PathConstant";
+import { ViewAssetDataDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/view-nap-component/view-asset-data-dsf/view-asset-data-dsf.component";
+import { PathConstantDsf } from "app/shared/constant/PathConstantDsf";
 
 const routes: Routes = [
   {
@@ -64,6 +66,13 @@ const routes: Routes = [
         component: ViewAssetDataComponent,
         data: {
           title: 'View Asset Data'
+        }
+      },
+      {
+        path: PathConstantDsf.NAP_VIEW_ASSET_DSF,
+        component: ViewAssetDataDsfComponent,
+        data: {
+          title: 'View Asset Data Dsf'
         }
       },
       {

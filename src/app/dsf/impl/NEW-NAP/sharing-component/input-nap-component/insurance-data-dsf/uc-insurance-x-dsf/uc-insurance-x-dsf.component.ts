@@ -139,7 +139,7 @@ export class UcInsuranceXDsfComponent implements OnInit {
 
   async ngOnInit() {
     // Self Custom Changes CR Runner KTB 398912
-    this.gridAssetDataObj.pagingJson = "./assets/dsf/ucgridview/gridAssetDataView.json";
+    this.gridAssetDataObj.pagingJson = "./assets/dsf/ucgridview/gridAssetDataViewDsf.json";
     // End Self Custom Changes CR Runner KTB 398912
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateralInsurance.json";
     await this.BindMultiInsGridData();

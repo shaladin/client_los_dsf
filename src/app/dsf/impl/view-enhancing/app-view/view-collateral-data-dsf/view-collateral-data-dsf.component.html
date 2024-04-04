@@ -1,16 +1,14 @@
 <div class="card">
   <div class="card-body">
-    <div class="px-3 mt-3">
+    <div class="px-3">
       <div *ngIf="isMulti">
         <span>
-          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
-            <i class="ft-arrow-left"></i>&nbsp;<span translate>Back</span>
-          </button>
+          <button type="button" class="btn btn-raised btn-warning mr-1 mt-3" (click)="Back()" translate><i class="ft-arrow-left"></i>&nbsp;<span translate>Back</span></button>
         </span>
       </div>
     </div>
     <div class="px-3">
-      <lib-ucSubsection [id]="'appCollateralId'" [title]="'Collateral Information'" [panel]="'asset'">
+      <lib-ucSubsection [id]="'appCollateralId'" [title]="'Collateral Information'" [panel]="'collateral'">
       </lib-ucSubsection>
       <div id="asset">
         <div class="row">
@@ -84,13 +82,13 @@
                   No
                 </td>
                 <td>
-                  {{item.DocNo != ""? item.DocNo : "-"}}
+                  {{item.DocNo}}
                 </td>
                 <td>
-                  {{item.ExpiredDt != null? (item.ExpiredDt | date: 'yyyy-MM-dd') : "-"}}
+                  {{item.ExpiredDt | date: 'yyyy-MM-dd'}}
                 </td>
                 <td>
-                  {{item.DocNotes != ""? item.DocNotes : "-"}}
+                  {{item.DocNotes}}
                 </td>
               </tr>
             </tbody>
@@ -106,7 +104,7 @@
             <div class="col-md-12" *ngFor="let item of this.AppCollateralAttrObjs;">
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel"> {{item.CollateralAttrName}} </label>
-                <label class="col-md-9 adInsLabel"> {{item.AttrValue != ""? item.AttrValue : "-"}} </label>
+                <label class="col-md-9 adInsLabel"> {{item.AttrValue}} </label>
               </div>
             </div>
           </div> 

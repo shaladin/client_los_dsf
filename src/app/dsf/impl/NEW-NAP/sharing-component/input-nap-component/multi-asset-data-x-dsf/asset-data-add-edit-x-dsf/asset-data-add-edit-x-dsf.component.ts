@@ -1139,9 +1139,6 @@ export class AssetDataAddEditXDsfComponent implements OnInit {
     this.GetEditData();
     this.GetAssetFromR2();
     await this.SetRefAttrSettingObj();
-    // Self Custom Changes CR Runner KTB 398912
-    await this.setRunnerActivation();
-    // End Self Custom Changes CR Runner KTB 398912
   }
 
   async GetEditData() {
@@ -1409,13 +1406,16 @@ export class AssetDataAddEditXDsfComponent implements OnInit {
     }
 
     var appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
-    for (let i = 0; i < this.allAssetDataObj.AppCollateralAttrObj.length; i++) {
-      appAttrObjs.controls[i].patchValue({
-        AttrValue: this.allAssetDataObj.AppCollateralAttrObj[i].AttrValue
-      });
-    }
-
     // Self Custom Changes CR Runner KTB 398912
+    console.log(this.allAssetDataObj);
+    if (this.allAssetDataObj != null)
+    {
+      for (let i = 0; i < this.allAssetDataObj.AppCollateralAttrObj.length; i++) {
+        appAttrObjs.controls[i].patchValue({
+          AttrValue: this.allAssetDataObj.AppCollateralAttrObj[i].AttrValue
+        });
+      }
+    }
     await this.setRunnerActivation();
     this.AssetDataForm.patchValue({
       selectedRunnerActivation: this.returnAppAssetDsfObj.RunnerActivation
