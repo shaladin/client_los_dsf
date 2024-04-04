@@ -128,5 +128,7 @@
   </div>
 </div>
 <div *ngIf="!IsHidden">
-  <app-view-collateral-data [AppCollateralId]="AppCollateralId" (outputTab)="getValue($event)" [isMulti]="true"></app-view-collateral-data>
+  <!-- Self Custom Changes CR Runner KTB 398912 --> 
+  <app-view-collateral-data-dsf [AppCollateralId]="AppCollateralId" (outputTab)="getValue($event)" [isMulti]="true"></app-view-collateral-data-dsf>
+  <!-- End Self Custom Changes CR Runner KTB 398912 --> 
 </div>
