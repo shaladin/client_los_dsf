@@ -214,4 +214,5 @@ export class PathConstantDsf {
     public static CHANGE_MOU_REQ_PAGING_X_DSF = PathConstant.CHANGE_MOU_REQ + "/" + PathConstantDsf.PAGING_X;
     public static CHANGE_MOU_REQ_DETAIL_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL_X;
     public static CHANGE_MOU_REQ_DETAIL_CUST_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X;
+    public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X + '/:MOUType';
 }
