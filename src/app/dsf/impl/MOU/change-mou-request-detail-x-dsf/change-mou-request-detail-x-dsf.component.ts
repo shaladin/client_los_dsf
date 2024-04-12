@@ -19,6 +19,7 @@ import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
 import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 import { ReqMouCustDsfObj } from "app/shared/model/mou-cust-dsf-obj.model";
 import { URLConstantDsf } from "app/shared/constant/URLConstantDsf";
+import { NavigationConstantDsf } from "app/shared/constant/NavigationConstantDsf";
 
 @Component({
   selector: 'app-change-mou-request-detail-x-dsf',
@@ -428,6 +429,15 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
     this.refOfficeId = userContext.OfficeId;
     this.businessDt = userContext.BusinessDt;
 
+    // CR Change Self Custom
+    this.ReqMouCustDsfObj.MouCustId = this.mouCustId;
+    this.ReqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
+    await this.httpClient.post(URLConstantDsf.EditMouCustXDsf, ReqMouCustDsfObj).toPromise().then(
+      (response: GenericObj) => {
+      }
+    )
+    // CR Change Self Custom
+
     if (this.MOUMainInfoForm.controls.EndDt.value <= this.datePipe.transform(this.businessDt, "yyyy-MM-dd") && this.MOUMainInfoForm.controls.MrChangeMouTypeCode.value == CommonConstant.CHANGE_MOU_TRX_TYPE_CHANGE_MOU) {
       this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
       return;
@@ -454,6 +464,22 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
             if (mouCustFormData["TrxType"] == CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP) {
               this.location.back();
             } else {
+
+              //CR Change Self Custome
+              if (this.MOUMainInfoForm.controls.MrMouTypeCode.value == "FACTORING")
+              {
+                this.router.navigate(
+                  [
+                    NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF,
+                    this.MOUMainInfoForm.controls.MrMouTypeCode.value,
+                  ],
+                  { queryParams: { mouCustId: this.mouCustId, mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, ChangeMouCustId: this.ChangeMouCustId, ChangeMouStatus: this.ChangeMouStatus, WfTaskListId: this.WfTaskListId } }
+                );
+              }
+              //CR Change Self Custome
+
+              else
+              {
               this.router.navigate(
                 [
                   NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
@@ -461,6 +487,7 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
                 ],
                 { queryParams: { mouCustId: this.mouCustId, mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, ChangeMouCustId: this.ChangeMouCustId, ChangeMouStatus: this.ChangeMouStatus, WfTaskListId: this.WfTaskListId } }
               );
+              }
             }
           });
       }
@@ -476,6 +503,20 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
             this.ChangeMouStatus = response["Status"];
             this.ChangeMouTrxId = response["ChangeMouTrxId"];
 
+            //CR Change Self Custome
+            if (this.MOUMainInfoForm.controls.MrMouTypeCode.value == "FACTORING")
+            {
+              this.router.navigate(
+                [
+                  NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF,
+                  this.MOUMainInfoForm.controls.MrMouTypeCode.value,
+                ],
+                { queryParams: { mouCustId: this.mouCustId, mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, ChangeMouCustId: this.ChangeMouCustId, ChangeMouStatus: this.ChangeMouStatus, WfTaskListId: this.WfTaskListId } }
+              );
+            }
+            //CR Change Self Custome
+
+            else {
             this.router.navigate(
               [
                 NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
@@ -483,6 +524,7 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
               ],
               { queryParams: { mouCustId: this.mouCustId, mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, ChangeMouCustId: this.ChangeMouCustId, ChangeMouStatus: this.ChangeMouStatus, WfTaskListId: this.WfTaskListId } }
             );
+            }
           });
       }
 
@@ -493,9 +535,21 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
         .subscribe((response) => {
           this.toastr.successMessage(response["Message"]);
           this.changeMouTrxNo = response["ChangeMouTrxNo"];
+
+          //CR Change Self Custome
+          if (this.MOUMainInfoForm.controls.MrMouTypeCode.value == "FACTORING")
+          {
+            this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],
+              { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, mode: this.pageType, WfTaskListId: this.WfTaskListId, ChangeMouCustId: this.ChangeMouCustId } }
+            );
+          }
+          //CR Change Self Custome
+
+          else {
           this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],
             { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, mode: this.pageType, WfTaskListId: this.WfTaskListId, ChangeMouCustId: this.ChangeMouCustId } }
           );
+          }
         });
     }
   }

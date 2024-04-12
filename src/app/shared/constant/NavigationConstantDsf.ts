@@ -137,5 +137,6 @@ export class NavigationConstantDsf {
      public static MOU_EXECUTION_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EXECUTION_PAGING_X_DSF; //"/Mou/Execution/PagingX"
      public static MOU_CUST_APPRV_FCTR_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_APPRV_FCTR_X_DSF; //'/Mou/Cust/ApprovalFactoringX'
      public static CHANGE_MOU_REQ_DETAIL_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_DETAIL_X_DSF; //"/Mou/ChangeMouRequest/DetailX"
+     public static CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_DETAIL_CUST_X_DSF; //"/Mou/ChangeMouRequest/Detail/CustomerX"
     }
 
