@@ -16,9 +16,9 @@ import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
 import { NavigationConstantDsf } from "app/shared/constant/NavigationConstantDsf";
 
 @Component({
-  selector: 'app-app-change-mou-request-paging-x-dsf',
-  templateUrl: './app-change-mou-request-paging-x-dsf.component.html',
-  styleUrls: ['./app-change-mou-request-paging-x-dsf.component.css']
+  selector: 'app-change-mou-request-paging-x-dsf',
+  templateUrl: './change-mou-request-paging-x-dsf.component.html',
+  styleUrls: ['./change-mou-request-paging-x-dsf.component.css']
 })
 export class ChangeMouRequestPagingXDsfComponent implements OnInit {
 

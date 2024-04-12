@@ -105,6 +105,8 @@ import { MouCustomerApprovalXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-
 import { MouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-approval-factoring-x-dsf/mou-approval-factoring-x-dsf.component';
 import { EditMouCustomerDsfComponent } from 'app/dsf/impl/MOU/edit-mou-customer-dsf/edit-mou-customer-dsf.component';
 import { ChangeMouRequestPagingXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-paging-x-dsf/change-mou-request-paging-x-dsf.component';
+import { ChangeMouRequestDetailCustomerXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-detail-customer-x-dsf/change-mou-request-detail-customer-x-dsf.component';
+import { ChangeMouRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-detail-x-dsf/change-mou-request-detail-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -553,6 +555,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CHANGE_MOU_REQ_DETAIL_X_DSF,
+        component: ChangeMouRequestDetailXDsfComponent,
+        data: {
+          title: "Change MOU Request Detail X Dsf"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_REQ_DETAIL_CUST_TYPE,
         component: ChangeMouRequestDetailCustomerComponent,
         data: {
@@ -564,6 +573,13 @@ const routes: Routes = [
         component: ChangeMouRequestDetailCustomerXComponent,
         data: {
           title: "Change MOU Request Customer Detail X"
+        }
+      },
+      {
+        path: PathConstantDsf.CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X_DSF,
+        component: ChangeMouRequestDetailCustomerXDsfComponent,
+        data: {
+          title: "Change MOU Request Customer Detail X Dsf"
         }
       },
       {

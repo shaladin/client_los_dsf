@@ -13,13 +13,13 @@ import { CookieService } from "ngx-cookie";
 import { ClaimTaskService } from "app/shared/claimTask.service";
 import { environment } from "environments/environment";
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import {CommonConstantX} from '../../../../shared/constant/CommonConstantX';
 import { InputLookupObj } from "app/shared/model/input-lookup-obj.model";
 import { KeyValueObj } from "app/shared/model/key-value/key-value-obj.model";
 import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 import { ReqMouCustDsfObj } from "app/shared/model/mou-cust-dsf-obj.model";
 import { URLConstantDsf } from "app/shared/constant/URLConstantDsf";
 import { NavigationConstantDsf } from "app/shared/constant/NavigationConstantDsf";
+import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
 
 @Component({
   selector: 'app-change-mou-request-detail-x-dsf',
