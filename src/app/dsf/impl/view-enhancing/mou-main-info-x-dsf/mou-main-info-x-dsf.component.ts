@@ -55,7 +55,7 @@ export class MouMainInfoXDsfComponent implements OnInit {
       //   CR Self Custom Change
       await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, { Id: this.MouCustId }).toPromise().then(
         (response) => {
-            this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
+            if (response != null) this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
         }
       )
       //   CR Self Custom Change

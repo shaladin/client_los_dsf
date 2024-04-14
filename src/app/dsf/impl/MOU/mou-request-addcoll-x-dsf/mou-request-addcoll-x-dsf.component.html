@@ -79,21 +79,14 @@
       </div>
     </div>
   </div> -->
-  <div *ngIf="type == 'Paging'" class="col-md-12" style="padding: 0; text-align: right;">
-    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-      <i class="ft-x"></i> Cancel
-    </button>
-    <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
-      <i class="far fa-check-square"></i> Save
-    </button>
-  </div>
 
   <!-- CR Change Self Custom -->
-  <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'">
+  <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'" *ngIf="type == 'Paging'">
   </lib-ucSubsection>
-  <div id="NewCalculation" style="overflow-x: auto;">
-    <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'">
-      <div id="NewCalculationInfo">
+  <div id="NewCalculation" style="overflow-x: auto;" *ngIf="type == 'Paging'">
+    <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'" *ngIf="type == 'Paging'">
+    </lib-ucSubsection>
+      <div id="NewCalculationInfo" *ngIf="type == 'Paging'">
         <div class="form-group row">
           <div class="col-md-6">
             <div class="form-group row">
@@ -116,7 +109,7 @@
                   <div class="col-md-10" *ngIf="IsDealerEquityManual">
                     <input type="text" currencyMask class="form-control adInsInput text-right"
                       formControlName="DealerEquity"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.DealerEquity.invalid }" (change)="DealerEquityManualChange()">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.DealerEquity.invalid }" (focusout)="DealerEquityManualChange()">
                     <lib-uc-show-errors [control]="AddCollForm.controls.DealerEquity" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -131,17 +124,17 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-4 adins-required-label" translate>Adj. Equity (%)</label>
+              <label class="col-md-4" translate>Adj. Equity (%)</label>
               <div class="col-md-8">
                 <input type="text" currencyMask class="form-control adInsInput text-right"
                       formControlName="AdjEquity"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AdjEquity.invalid }" (change)="AdjEquityManualChange()">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AdjEquity.invalid }" (focusout)="AdjEquityManualChange()" [options]="CurrencyMaskPrct">
                 <lib-uc-show-errors [control]="AddCollForm.controls.AdjEquity" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-4 adins-required-label" translate>Net Dealer Equity</label>
+              <label class="col-md-4" translate>Net Dealer Equity</label>
               <div class="col-md-8">
                 <input type="text" currencyMask class="form-control adInsInput text-right"
                       formControlName="NetDealerEquity"
@@ -164,7 +157,7 @@
               <label class="col-md-8">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
             </div>
             <div class="form-group row">
-              <label class="col-md-4" translate>Networth (%)</label>
+              <label class="col-md-4 adins-required-label" translate>Networth (%)</label>
               <div class="col-md-8">
                 <div class="row">
                   <div class="col-md-2">
@@ -173,14 +166,14 @@
                   <div class="col-md-10" *ngIf="IsNetworthManual">
                     <input type="text" currencyMask class="form-control adInsInput text-right"
                       formControlName="Networth"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Networth.invalid }" (change)="NetworthManualChange()">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Networth.invalid }" (focusout)="NetworthManualChange()" [options]="CurrencyMaskPrct">
                     <lib-uc-show-errors [control]="AddCollForm.controls.Networth" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                   <div class="col-md-10" *ngIf="!IsNetworthManual">
                     <input type="text" currencyMask class="form-control adInsInput text-right"
                       formControlName="Networth"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Networth.invalid }" disabled>
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Networth.invalid }" disabled [options]="CurrencyMaskPrct">
                     <lib-uc-show-errors [control]="AddCollForm.controls.Networth" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -238,15 +231,24 @@
           </div>
         </div>
       </div>
-    </lib-ucSubsection>
   </div>
   <!-- CR Change Self Custom -->
 
+  <div *ngIf="type == 'Paging'" class="col-md-12" style="padding: 0; text-align: right;">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+      <i class="ft-x"></i> Cancel
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary" (click)="next()" translate>
+      <i class="far fa-check-square"></i> Save
+    </button>
+  </div>
 </form>
 
 <div *ngIf="type == 'AddEdit'" class="px-3">
+  <!-- CR Change Self Custom -->
   <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="AddCollForm"
-        (ngSubmit)="AddCollForm.valid && SaveForm()">
+        (ngSubmit)="SaveForm()">
+  <!-- CR Change Self Custom -->
     <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral Info'" [panel]="'AddCollInfo'">
     </lib-ucSubsection>
     <div id="AddCollInfo">
@@ -620,8 +622,10 @@
 </div>
 
 <div *ngIf="type == 'AddExisting'" class="px-3">
+  <!-- CR Change Self Custom -->
   <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="AddCollForm"
-        (ngSubmit)="AddCollForm.valid && SaveExistingCollateral()">
+        (ngSubmit)="SaveExistingCollateral()">
+  <!-- CR Change Self Custom -->
     <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral Info'" [panel]="'AddCollInfo'">
     </lib-ucSubsection>
     <div id="AddCollInfo">

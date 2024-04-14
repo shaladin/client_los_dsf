@@ -196,19 +196,19 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     CollateralReceivedDt: [''],
     CollateralReleasedDt: [''],
     // CR Change Self Custom
-    TotalCollateralActive: [0, Validators.required],
-    DealerEquity: [0],
+    TotalCollateralActive: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
+    DealerEquity: [0.000000],
     IsDealerEquityManual: [false],
-    AdjEquity: [0],
-    NetDealerEquity: [0],
+    AdjEquity: [100.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
+    NetDealerEquity: [0.000000],
     NotesNewCalculation: [''],
     DealerGrading: [''],
     DealerGradingMultiplier: [''],
-    Networth: [0],
+    Networth: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(60)]],
     IsNetworthManual: [false],
-    CeilingCollateral: [0],
+    CeilingCollateral: [0.000000],
     IsCeilingCollateralManual: [false],
-    CeilingNetworth: [0],
+    CeilingNetworth: [0.000000],
     IsCeilingNetworthManual: [false]
     // CR Change Self Custom
   })
@@ -398,6 +398,10 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
       // CR Change Self Custom
     this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
       (response) => {
+        
+        this.dealerGrading = response.DealerGrading;
+        this.dealerRating = response.DealerGradingMultiplier;
+
         if (response.TotalCollateralActive > 0)
         {
           this.isAddNetworthMode = false;
@@ -413,11 +417,16 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
             DealerGradingMultiplier: response.DealerGradingMultiplier,
             Networth: response.Networth,
             IsNetworthManual: response.IsNetworthManual,
-            CeilingCollateral: response.CeilingCollateral,
+            CeilingCollateral: response.TotalCollateralActive * response.DealerGradingMultiplier / 100,
             IsCeilingCollateralManual: response.IsCeilingCollateralManual,
-            CeilingNetworth: response.CeilingNetworth,
+            CeilingNetworth: (response.DealerEquity * response.AdjEquity / 100) * response.Networth / 100,
             IsCeilingNetworthManual: response.IsCeilingNetworthManual
           });
+
+          this.IsNetworthManual = response.IsNetworthManual;
+          this.IsCeilingCollateralManual = response.IsCeilingCollateralManual;
+          this.IsCeilingNetworthManual = response.IsCeilingNetworthManual;
+          this.IsDealerEquityManual = response.IsDealerEquityManual;
         }
 
         else
@@ -1113,7 +1122,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
 
     let mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
     mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
-
+    
     await this.submitAddEditMouCustCollateralData(custCollObj);
     this.AddCollForm.reset();
     this.ClearForm();
@@ -1742,30 +1751,38 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     // else {
     //   this.UpdatePlafondAmt(sumCollateralValue);
     // }
-    this.UpdatePlafondAmt(sumCollateralValue);
 
     // CR Change Self Custom
-    let mouCustDsf = new ReqMouCustDsfObj();
-    mouCustDsf.AdjEquity = this.AddCollForm.controls.AdjEquity.value;
-    mouCustDsf.CeilingCollateral = this.AddCollForm.controls.CeilingCollateral.value;
-    mouCustDsf.CeilingNetworth = this.AddCollForm.controls.CeilingNetworth.value;
-    mouCustDsf.DealerEquity = this.AddCollForm.controls.DealerEquity.value;
-    mouCustDsf.DealerGrading = this.AddCollForm.controls.DealerGrading.value;
-    mouCustDsf.DealerGradingMultiplier = this.AddCollForm.controls.DealerGradingMultiplier.value;
-    mouCustDsf.IsCeilingCollateralManual = this.AddCollForm.controls.IsCeilingCollateralManual.value;
-    mouCustDsf.IsCeilingNetworthManual = this.AddCollForm.controls.IsCeilingNetworthManual.value;
-    mouCustDsf.IsDealerEquityManual = this.AddCollForm.controls.IsDealerEquityManual.value;
-    mouCustDsf.IsNetworthManual = this.AddCollForm.controls.IsNetworthManual.value;
-    mouCustDsf.MouCustId = this.MouCustId;
-    mouCustDsf.NetDealerEquity = this.AddCollForm.controls.NetDealerEquity.value;
-    mouCustDsf.Networth = this.AddCollForm.controls.Networth.value;
-    mouCustDsf.Notes = this.AddCollForm.controls.NotesNewCalculation.value;
-    mouCustDsf.TotalCollateralActive = this.AddCollForm.controls.TotalCollateralActive.value;
+    if (this.AddCollForm.controls["TotalCollateralActive"].valid && this.AddCollForm.controls["Networth"].valid)
+    {
+      let mouCustDsf: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+      mouCustDsf.AdjEquity = this.AddCollForm.controls.AdjEquity.value;
+      mouCustDsf.CeilingCollateral = this.AddCollForm.controls.CeilingCollateral.value;
+      mouCustDsf.CeilingNetworth = this.AddCollForm.controls.CeilingNetworth.value;
+      mouCustDsf.DealerEquity = this.AddCollForm.controls.DealerEquity.value;
+      mouCustDsf.DealerGrading = this.AddCollForm.controls.DealerGrading.value;
+      mouCustDsf.DealerGradingMultiplier = this.AddCollForm.controls.DealerGradingMultiplier.value;
+      mouCustDsf.IsCeilingCollateralManual = this.AddCollForm.controls.IsCeilingCollateralManual.value;
+      mouCustDsf.IsCeilingNetworthManual = this.AddCollForm.controls.IsCeilingNetworthManual.value;
+      mouCustDsf.IsDealerEquityManual = this.AddCollForm.controls.IsDealerEquityManual.value;
+      mouCustDsf.IsNetworthManual = this.AddCollForm.controls.IsNetworthManual.value;
+      mouCustDsf.MouCustId = this.MouCustId;
+      mouCustDsf.NetDealerEquity = this.AddCollForm.controls.NetDealerEquity.value;
+      mouCustDsf.Networth = this.AddCollForm.controls.Networth.value;
+      mouCustDsf.Notes = this.AddCollForm.controls.NotesNewCalculation.value;
+      mouCustDsf.TotalCollateralActive = this.AddCollForm.controls.TotalCollateralActive.value;
 
-    this.http.post(URLConstantDsf.EditMouCustXDsf, ReqMouCustDsfObj).subscribe(
-      (response: GenericObj) => {
-      }
-    )
+      this.http.post(URLConstantDsf.EditMouCustXDsf, mouCustDsf).subscribe(
+        (response: GenericObj) => {
+        }
+      )
+    
+      this.UpdatePlafondAmt(sumCollateralValue);
+    }
+    else
+    {
+      this.toastr.warningMessage("Please fill form completely");
+    }
     // CR Change Self Custom
   }
 
@@ -2087,23 +2104,23 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
   DealerEquityManualChange()
   {
     this.AddCollForm.patchValue({
-      NetDealerEquity: this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value,
-      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value) * this.AddCollForm.controls.Networth.value
+      NetDealerEquity: this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value / 100,
+      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value / 100) * this.AddCollForm.controls.Networth.value / 100
     });
   }
 
   AdjEquityManualChange()
   {
     this.AddCollForm.patchValue({
-      NetDealerEquity: this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value,
-      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value) * this.AddCollForm.controls.Networth.value
+      NetDealerEquity: this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value / 100,
+      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value / 100) * this.AddCollForm.controls.Networth.value / 100
     });
   }
 
   NetworthManualChange()
   {
     this.AddCollForm.patchValue({
-      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value) * this.AddCollForm.controls.Networth.value
+      CeilingNetworth: (this.AddCollForm.controls.DealerEquity.value * this.AddCollForm.controls.AdjEquity.value / 100) * this.AddCollForm.controls.Networth.value / 100
     });
   }
 

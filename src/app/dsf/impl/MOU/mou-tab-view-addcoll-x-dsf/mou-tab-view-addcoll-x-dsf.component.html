@@ -49,21 +49,17 @@
     <app-mou-view-addcoll-detail-x [MouCustCollateralId]="MouCustCollateralId"></app-mou-view-addcoll-detail-x>
   </div>
   <!-- CR Change Self Custom -->
-  <!-- <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'">
+  <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'">
   </lib-ucSubsection>
   <div id="NewCalculation" style="overflow-x: auto;">
-    <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'">
+    <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'"></lib-ucSubsection>
       <div id="NewCalculationInfo">
         <div class="form-group row">
           <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-md-4 adins-required-label" translate>Total Collateral Active</label>
+              <label class="col-md-4" translate>Total Collateral Active</label>
               <div class="col-md-8">
-                <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="TotalCollateralActive"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.TotalCollateralActive.invalid }" disabled>
-                <lib-uc-show-errors [control]="AddCollForm.controls.TotalCollateralActive" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
+                {{AddCollForm.controls.TotalCollateralActive.value | number:'.2':'en-US'}}
               </div>
             </div>
             <div class="form-group row">
@@ -73,54 +69,34 @@
                   <div class="col-md-2">
                     <input type="checkbox" class="border-primary" formControlName="IsDealerEquityManual" disabled>
                   </div>
-                  <div class="col-md-10" *ngIf="IsDealerEquityManual">
-                    <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="DealerEquity"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.DealerEquity.invalid }" (change)="DealerEquityManualChange()" disabled>
-                    <lib-uc-show-errors [control]="AddCollForm.controls.DealerEquity" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                  <div class="col-md-10" *ngIf="!IsDealerEquityManual">
-                    <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="DealerEquity"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.DealerEquity.invalid }" disabled>
-                    <lib-uc-show-errors [control]="AddCollForm.controls.DealerEquity" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                  <div class="col-md-10">
+                      {{AddCollForm.controls.DealerEquity.value | number:'.2':'en-US'}}
                   </div>
                 </div>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-4 adins-required-label" translate>Adj. Equity (%)</label>
+              <label class="col-md-4" translate>Adj. Equity (%)</label>
               <div class="col-md-8">
-                <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="AdjEquity"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AdjEquity.invalid }" (change)="AdjEquityManualChange()" disabled>
-                <lib-uc-show-errors [control]="AddCollForm.controls.AdjEquity" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
+                {{AddCollForm.controls.AdjEquity.value | number:'.2':'en-US'}}%
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-4 adins-required-label" translate>Net Dealer Equity</label>
+              <label class="col-md-4" translate>Net Dealer Equity</label>
               <div class="col-md-8">
-                <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="NetDealerEquity"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.NetDealerEquity.invalid }" disabled>
-                <lib-uc-show-errors [control]="AddCollForm.controls.NetDealerEquity" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
+                {{AddCollForm.controls.NetDealerEquity.value | number:'.2':'en-US'}}
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-4 adins-label" translate>Notes</label>
+              <label class="col-md-4" translate>Notes</label>
               <div class="col-md-8">
-                <textarea type="textarea" row="5" class="form-control" formControlName="NotesNewCalculation"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.NotesNewCalculation.invalid}" disabled></textarea>
+                {{AddCollForm.controls.NotesNewCalculation.value}}
               </div>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="form-group row" *ngIf="returnMouCust.MrMouTypeCode != 'GENERAL'">
-              <label class="col-md-4 adins-required-label" translate>Dealer Grading</label>
+            <div class="form-group row" *ngIf="mouType != 'GENERAL'">
+              <label class="col-md-4" translate>Dealer Grading</label>
               <label class="col-md-8">{{this.dealerGrading}} / {{this.dealerRating}}%</label>
             </div>
             <div class="form-group row">
@@ -130,19 +106,8 @@
                   <div class="col-md-2">
                     <input type="checkbox" class="border-primary" formControlName="IsNetworthManual" disabled>
                   </div>
-                  <div class="col-md-10" *ngIf="IsNetworthManual">
-                    <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="Networth"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Networth.invalid }" (change)="NetworthManualChange()" disabled>
-                    <lib-uc-show-errors [control]="AddCollForm.controls.Networth" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                  <div class="col-md-10" *ngIf="!IsNetworthManual">
-                    <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="Networth"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.Networth.invalid }" disabled>
-                    <lib-uc-show-errors [control]="AddCollForm.controls.Networth" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                  <div class="col-md-10">
+                    {{AddCollForm.controls.Networth.value | number:'.2':'en-US'}}%
                   </div>
                 </div>
               </div>
@@ -154,19 +119,8 @@
                   <div class="col-md-2">
                     <input type="checkbox" class="border-primary" formControlName="IsCeilingCollateralManual" disabled>
                   </div>
-                  <div class="col-md-10" *ngIf="IsCeilingCollateralManual">
-                    <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="CeilingCollateral"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CeilingCollateral.invalid }" disabled>
-                    <lib-uc-show-errors [control]="AddCollForm.controls.CeilingCollateral" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                  <div class="col-md-10" *ngIf="!IsCeilingCollateralManual">
-                    <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="CeilingCollateral"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CeilingCollateral.invalid }" disabled>
-                    <lib-uc-show-errors [control]="AddCollForm.controls.CeilingCollateral" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                  <div class="col-md-10">
+                      {{AddCollForm.controls.CeilingCollateral.value | number:'.2':'en-US'}}
                   </div>
                 </div>
               </div>
@@ -178,19 +132,8 @@
                   <div class="col-md-2">
                     <input type="checkbox" class="border-primary" formControlName="IsCeilingNetworthManual" disabled>
                   </div>
-                  <div class="col-md-10" *ngIf="IsCeilingNetworthManual">
-                    <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="CeilingNetworth"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CeilingNetworth.invalid }" disabled>
-                    <lib-uc-show-errors [control]="AddCollForm.controls.CeilingNetworth" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                  <div class="col-md-10" *ngIf="!IsCeilingNetworthManual">
-                    <input type="text" currencyMask class="form-control adInsInput text-right"
-                      formControlName="CeilingNetworth"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.CeilingNetworth.invalid }" disabled>
-                    <lib-uc-show-errors [control]="AddCollForm.controls.CeilingNetworth" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                  <div class="col-md-10">
+                      {{AddCollForm.controls.CeilingNetworth.value | number:'.2':'en-US'}}
                   </div>
                 </div>
               </div>
@@ -198,7 +141,6 @@
           </div>
         </div>
       </div>
-    </lib-ucSubsection>
-  </div> -->
+  </div>
   <!-- CR Change Self Custom -->
 </form>

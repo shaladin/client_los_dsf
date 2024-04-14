@@ -30,8 +30,31 @@ export class MouViewAddcollXComponent implements OnInit {
   collateralRegistrationObj: any;
   CollateralStatObj: MouCustCollateralStatXObj;
   ReqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+
+  //CR Change Self Custom
   AddCollDataForm = this.fb.group({
+    // CR Change Self Custom
+    TotalCollateralActive: [0, Validators.required],
+    DealerEquity: [0],
+    IsDealerEquityManual: [false],
+    AdjEquity: [0],
+    NetDealerEquity: [0],
+    NotesNewCalculation: [''],
+    DealerGrading: [''],
+    DealerGradingMultiplier: [''],
+    Networth: [0],
+    IsNetworthManual: [false],
+    CeilingCollateral: [0],
+    IsCeilingCollateralManual: [false],
+    CeilingNetworth: [0],
+    IsCeilingNetworthManual: [false]
+    // CR Change Self Custom
   })
+
+  mouType: string;
+  dealerGrading: string;
+  dealerRating: number;
+  //CR Change Self Custom
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
@@ -45,7 +68,25 @@ export class MouViewAddcollXComponent implements OnInit {
     // CR Change Self Custom
     this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
       (response) => {
-          this.ReqMouCustDsfObj = response;
+          this.AddCollDataForm.patchValue({
+            TotalCollateralActive: response.TotalCollateralActive,
+            DealerEquity: response.DealerEquity,
+            IsDealerEquityManual: response.IsDealerEquityManual,
+            AdjEquity: response.AdjEquity,
+            NetDealerEquity: response.NetDealerEquity,
+            NotesNewCalculation: response.Notes,
+            DealerGrading: response.DealerGrading,
+            DealerGradingMultiplier: response.DealerGradingMultiplier,
+            Networth: response.Networth,
+            IsNetworthManual: response.IsNetworthManual,
+            CeilingCollateral: response.CeilingCollateral,
+            IsCeilingCollateralManual: response.IsCeilingCollateralManual,
+            CeilingNetworth: response.CeilingNetworth,
+            IsCeilingNetworthManual: response.IsCeilingNetworthManual
+          });
+
+          this.dealerGrading = response.DealerGrading;
+          this.dealerRating = response.DealerGradingMultiplier;
         }
     )
     // CR Change Self Custom

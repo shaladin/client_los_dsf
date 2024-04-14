@@ -97,7 +97,8 @@ export class URLConstantDsf {
     public static CopyAppAssetDsf = environment.losUrl + "/AppAssetDsf/CopyAppAssetDsf";
 
     public static GetMouMainInfoByIdXDsf = environment.losUrl + "/MouCustXDsf/GetMouMainInfoByIdXDsf";
-    public static GetMouCustXDsf = environment.losUrl + '/MouCustXDsf/GetMouCust';
-    public static AddMouCustXDsf = environment.losUrl + '/MouCustXDsf/AddMouCust';
-    public static EditMouCustXDsf = environment.losUrl + '/MouCustXDsf/EditMouCust';
+    public static GetMouCustXDsf = environment.losUrl + "/MouCustXDsf/GetMouCustXDsf";
+    public static AddMouCustXDsf = environment.losUrl + "/MouCustXDsf/AddMouCustXDsf";
+    public static EditMouCustXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustXDsf";
+    public static EditMouCustNewCalculationXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustNewCalculationXDsf";
 }
