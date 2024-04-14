@@ -75,7 +75,8 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
     CrtOfficeName: [''],
     IsFreeze: [''],
     // CR Change Self Custom
-    IsNetworth: [false]
+    IsNetworth: [false],
+    IsNewCalculation: [false]
     // CR Change Self Custom
   });
 
@@ -109,11 +110,17 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
 
   // CR Change Self Custom
   async ngOnInit() {
+    if (this.pageType == "edit" || this.pageType == "return")
+    {
     await this.httpClient.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.mouCustId }).toPromise().then(
       (response) => {
         this.ReqMouCustDsfObj = response;
+        this.MOUMainInfoForm.patchValue({
+          IsNewCalculation: this.ReqMouCustDsfObj.IsNewCalculation
+        });
       }
     )
+    }
   // CR Change Self Custom
 
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -272,27 +279,29 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
       reqMouCustObj.MrRevolvingTypeCode = this.MOUMainInfoForm.getRawValue().MrRevolvingTypeCode;
     }
     if (this.pageType == "add") {
-      // CR Change Self Custom
-      this.ReqMouCustDsfObj.MouCustId = this.mouCustId;
-      this.ReqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
-      await this.httpClient.post(URLConstantDsf.AddMouCustXDsf, ReqMouCustDsfObj).toPromise().then(
-        (response: GenericObj) => {
-        }
-      )
-      // CR Change Self Custom
       let AddMouCustUrl = environment.isCore ? URLConstantX.AddMouCustV2X : URLConstantX.AddMouCustX;
       await this.httpClient.post(AddMouCustUrl, reqMouCustObj).toPromise().then(
         (response: GenericObj) => {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response.Id;
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL_X_DSF],{ mouCustId: mouCustId, MOUType: this.mouType });
+          // CR Change Self Custom
+          let reqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+          reqMouCustDsfObj.MouCustId = mouCustId;
+          reqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
+          this.httpClient.post(URLConstantDsf.AddMouCustXDsf, reqMouCustDsfObj).subscribe(
+            (response: GenericObj) => {
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL_X_DSF],{ mouCustId: mouCustId, MOUType: this.mouType });
+            }
+          )
+          // CR Change Self Custom
         });
     }
     else if (this.pageType == "edit" || this.pageType == "return") {
       // CR Change Self Custom
-      this.ReqMouCustDsfObj.MouCustId = this.mouCustId;
-      this.ReqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
-      await this.httpClient.post(URLConstantDsf.EditMouCustXDsf, ReqMouCustDsfObj).toPromise().then(
+      let reqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+      reqMouCustDsfObj.MouCustId = this.mouCustId;
+      reqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
+      await this.httpClient.post(URLConstantDsf.EditMouCustNewCalculationXDsf, reqMouCustDsfObj).toPromise().then(
         (response: GenericObj) => {
         }
       )

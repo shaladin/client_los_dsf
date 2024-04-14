@@ -5,6 +5,7 @@ import { ResMouCollForMouViewObj } from 'app/shared/model/response/mou/res-mou-c
 import { FormBuilder, Validators } from '@angular/forms';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-mou-tab-view-addcoll-x-dsf',
@@ -36,9 +37,20 @@ export class MouTabViewAddcollXDsfComponent implements OnInit {
     IsCeilingNetworthManual: [false]
     // CR Change Self Custom
   })
+
+  mouType: string;
+  dealerGrading: string;
+  dealerRating: number;
   //CR Change Self Custom
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient) 
+  {
+    this.route.queryParams.subscribe(params => {
+      if (params['MrMouTypeCode'] != null) {
+        this.mouType = params['MrMouTypeCode'];
+      }
+    });
+  }
 
   ngOnInit() {
     var mouCustObj = { Id: this.MouCustId }
@@ -66,6 +78,9 @@ export class MouTabViewAddcollXDsfComponent implements OnInit {
               CeilingNetworth: response.CeilingNetworth,
               IsCeilingNetworthManual: response.IsCeilingNetworthManual
             });
+
+            this.dealerGrading = response.DealerGrading;
+            this.dealerRating = response.DealerGradingMultiplier;
           }
       )
       // CR Change Self Custom
