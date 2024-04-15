@@ -21,7 +21,7 @@ export class MouMainInfoXDsfComponent implements OnInit {
   @Input() ChangeMouTrxId: number = 0;
   MouCustObj: MouCustObj = new MouCustObj();
   CustNoObj: GenericObj = new GenericObj();
-  MouMainInfo: ResMouMainInfoObjX;
+  MouMainInfo: ResMouMainInfoObjX = new ResMouMainInfoObjX();
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -55,7 +55,7 @@ export class MouMainInfoXDsfComponent implements OnInit {
       //   CR Self Custom Change
       await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, { Id: this.MouCustId }).toPromise().then(
         (response) => {
-            if (response != null) this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
+            if (response.PlafondCollateralAmt > 0) this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
         }
       )
       //   CR Self Custom Change
@@ -76,6 +76,14 @@ export class MouMainInfoXDsfComponent implements OnInit {
 
           console.log(response);
         });
+
+        //   CR Self Custom Change
+        await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, { Id: this.MouCustId }).toPromise().then(
+          (response) => {
+              if (response.PlafondCollateralAmt > 0) this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
+          }
+        )
+        //   CR Self Custom Change
     }
 
   }

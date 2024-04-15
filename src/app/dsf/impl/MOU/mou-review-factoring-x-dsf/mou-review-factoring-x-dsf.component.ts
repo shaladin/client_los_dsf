@@ -138,7 +138,7 @@ export class MouReviewFactoringXDsfComponent implements OnInit {
     this.http.post(SubmitMouRvwUrl, submitMouReviewObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {MrMouTypeCode : this.MouType});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_CUST_RVW_PAGING_DSF], {MrMouTypeCode : this.MouType});
     })
   }
 
@@ -149,7 +149,7 @@ export class MouReviewFactoringXDsfComponent implements OnInit {
     this.http.post(ReturnMouUrl, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {MrMouTypeCode : this.MouType });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_CUST_RVW_PAGING_DSF], {MrMouTypeCode : this.MouType });
     })
   }
 

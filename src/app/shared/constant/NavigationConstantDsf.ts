@@ -140,5 +140,12 @@ export class NavigationConstantDsf {
      public static MOU_CUST_APPRV_FCTR_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_APPRV_FCTR_X_DSF; //'/Mou/Cust/ApprovalFactoringX'
      public static CHANGE_MOU_REQ_DETAIL_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_DETAIL_X_DSF; //"/Mou/ChangeMouRequest/DetailX"
      public static CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_DETAIL_CUST_X_DSF; //"/Mou/ChangeMouRequest/Detail/CustomerX"
+     public static CHANGE_MOU_REQ_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_PAGING_X_DSF; //"/Mou/ChangeMouRequest/PagingX"
+     public static CHANGE_MOU_RVW_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_RVW_PAGING_DSF; //"/Mou/ChangeMou/ReviewPagingX"
+     public static CHANGE_MOU_RTN_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_RTN_PAGING_DSF; //"/Mou/ChangeMou/ReturnPaging"
+     public static MOU_EDIT_CUST_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EDIT_CUST_PAGING_DSF; //"/Mou/EditMouCustomer/Paging"
+     public static CHANGE_MOU_APV_DETAIL_FCTR_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_APV_DETAIL_FCTR_X_DSF; //"/Mou/ChangeMou/ApvDetailFctrX"
+     public static CHANGE_MOU_APV_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_APV_PAGING_X_DSF; //"/Mou/ChangeMou/ApvPaging"
+     public static MOU_REQ_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_REQ_PAGING_X_DSF; //"/Mou/Request/PagingX"
     }
 

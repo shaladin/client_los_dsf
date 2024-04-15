@@ -77,7 +77,7 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
     ChangeMouStatus: [""],
     PlafondType: [""],
     // CR Change Self Custom
-    IsNetworth: [false]
+    IsNewCalculation: [false]
     // CR Change Self Custom
   });
 
@@ -125,6 +125,9 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
     await this.httpClient.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.mouCustId }).toPromise().then(
       (response) => {
         this.ReqMouCustDsfObj = response;
+        this.MOUMainInfoForm.patchValue({
+          IsNewCalculation: this.ReqMouCustDsfObj.IsNewCalculation
+        });
       }
     )
   // CR Change Self Custom
@@ -430,9 +433,10 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
     this.businessDt = userContext.BusinessDt;
 
     // CR Change Self Custom
-    this.ReqMouCustDsfObj.MouCustId = this.mouCustId;
-    this.ReqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
-    await this.httpClient.post(URLConstantDsf.EditMouCustXDsf, ReqMouCustDsfObj).toPromise().then(
+    let reqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+    reqMouCustDsfObj.MouCustId = this.mouCustId;
+    reqMouCustDsfObj.IsNewCalculation = this.MOUMainInfoForm.getRawValue().IsNewCalculation;
+    await this.httpClient.post(URLConstantDsf.EditMouCustNewCalculationXDsf, reqMouCustDsfObj).toPromise().then(
       (response: GenericObj) => {
       }
     )
@@ -482,7 +486,7 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
               {
               this.router.navigate(
                 [
-                  NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
+                  NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF,
                   this.MOUMainInfoForm.controls.MrMouTypeCode.value,
                 ],
                 { queryParams: { mouCustId: this.mouCustId, mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, ChangeMouCustId: this.ChangeMouCustId, ChangeMouStatus: this.ChangeMouStatus, WfTaskListId: this.WfTaskListId } }
@@ -519,7 +523,7 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
             else {
             this.router.navigate(
               [
-                NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
+                NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF,
                 this.MOUMainInfoForm.controls.MrMouTypeCode.value,
               ],
               { queryParams: { mouCustId: this.mouCustId, mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, ChangeMouCustId: this.ChangeMouCustId, ChangeMouStatus: this.ChangeMouStatus, WfTaskListId: this.WfTaskListId } }
@@ -546,7 +550,7 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
           //CR Change Self Custome
 
           else {
-          this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],
+          this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],
             { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo: this.changeMouTrxNo, mode: this.pageType, WfTaskListId: this.WfTaskListId, ChangeMouCustId: this.ChangeMouCustId } }
           );
           }

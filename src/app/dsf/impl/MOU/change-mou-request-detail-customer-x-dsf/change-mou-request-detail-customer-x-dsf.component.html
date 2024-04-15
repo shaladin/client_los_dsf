@@ -104,9 +104,9 @@
               </div>
               <div id="collateral-data-tab" class="content" role="tabpanel"
                    aria-labelledby="collateral-data-tab-trigger">
-                <app-change-mou-request-addcoll-x *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
+                <app-change-mou-request-addcoll-x-dsf *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
                                                   (ResponseMouAddColl)="stepHandlerFactoring($event)" [ChangeMouCustId]="ChangeMouCustId" [ChangeMouTrxNo]="changeMouTrxNo" [ChangeMouStatus]="ChangeMouStatus" >
-                </app-change-mou-request-addcoll-x>
+                </app-change-mou-request-addcoll-x-dsf>
               </div>
 
             </div>

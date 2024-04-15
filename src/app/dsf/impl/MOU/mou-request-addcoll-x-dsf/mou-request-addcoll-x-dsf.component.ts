@@ -2101,6 +2101,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     temp.updateValueAndValidity();
   }
 
+  // Change CR Self Custom
   DealerEquityManualChange()
   {
     this.AddCollForm.patchValue({
@@ -2171,5 +2172,6 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
       this.IsCeilingNetworthManual = true;
     }
   }
+  // Change CR Self Custom
 
 }

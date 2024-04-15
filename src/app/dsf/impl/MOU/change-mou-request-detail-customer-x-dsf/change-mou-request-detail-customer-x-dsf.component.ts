@@ -12,6 +12,7 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import {UcviewgenericComponent} from '@adins/ucviewgeneric';
 import { UcViewGenericObj } from "app/shared/model/uc-view-generic-obj.model";
 import { MouCustObj } from "app/shared/model/mou-cust-obj.model";
+import { NavigationConstantDsf } from "app/shared/constant/NavigationConstantDsf";
 
 @Component({
   selector: 'app-change-mou-request-detail-customer-x-dsf',
@@ -177,7 +178,7 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
   editMainInfoHandler() {
     if (this.pageType == "return") {
 
-      this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL], {
+      this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_DSF], {
         // queryParams: {
         //   MouCustId: this.mouCustId,
         //   mode: "return",
@@ -187,7 +188,7 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
         queryParams: { MouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: "return", MrMouTypeCode: this.mouType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId},
       });
     } else {
-      this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL], {
+      this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_DSF], {
         // queryParams: {
         //   MouCustId: this.mouCustId,
         //   mode: "edit",
@@ -202,10 +203,10 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
   cancelHandler() {
     if (this.pageType == "return") {
       this.toastr.warningMessage("Cancel From Change Mou Request");
-      this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
+      this.router.navigate([NavigationConstantDsf.CHANGE_MOU_RTN_PAGING_DSF]);
     } else {
       this.toastr.warningMessage("Cancel From Change Mou Request");
-      this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+      this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_PAGING_DSF]);
     }
   }
 
@@ -222,7 +223,7 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
 
         this.httpClient.post(urlPost, returnObj).subscribe(() => {
           this.toastr.successMessage("Success");
-          this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
+          this.router.navigate([NavigationConstantDsf.CHANGE_MOU_RTN_PAGING_DSF]);
         });
       } else {
         var reqByIdObj = { Id: this.mouCustId };
@@ -230,7 +231,7 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
 
         this.httpClient.post(urlPost, reqByIdObj).subscribe(() => {
           this.toastr.successMessage("Success");
-          this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+          this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_PAGING_DSF]);
         });
       }
     } else {
@@ -252,9 +253,9 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
 
       case "-2":
         if (this.pageType == "return") {
-          this.router.navigate([NavigationConstant.MOU_EDIT_CUST_PAGING]);
+          this.router.navigate([NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF]);
         } else {
-          this.router.navigate([NavigationConstant.MOU_REQ_PAGING]);
+          this.router.navigate([NavigationConstantDsf.MOU_REQ_PAGING_DSF]);
         }
         break;
       default:
@@ -263,10 +264,10 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
     if (this.currentStepIndex >= 3) {
       this.toastr.successMessage("Success");
       if (this.pageType == "return") {
-        this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
+        this.router.navigate([NavigationConstantDsf.CHANGE_MOU_RTN_PAGING_DSF]);
       }
       else{
-        this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+        this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_PAGING_DSF]);
       }
     }
   }
@@ -285,9 +286,9 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
 
       case "-2":
         if (this.pageType == "return") {
-          this.router.navigate([NavigationConstant.MOU_EDIT_CUST_PAGING]);
+          this.router.navigate([NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF]);
         } else {
-          this.router.navigate([NavigationConstant.MOU_REQ_PAGING]);
+          this.router.navigate([NavigationConstantDsf.MOU_REQ_PAGING_DSF]);
         }
         break;
       default:
@@ -297,10 +298,10 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
       this.toastr.successMessage("Success");
       this.toastr.successMessage("Success");
       if (this.pageType == "return") {
-        this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
+        this.router.navigate([NavigationConstantDsf.CHANGE_MOU_RTN_PAGING_DSF]);
       }
       else{
-        this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+        this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_PAGING_DSF]);
       }
     }
   }
@@ -322,9 +323,9 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
 
       case "-2":
         if (this.pageType == "return") {
-          this.router.navigate([NavigationConstant.MOU_EDIT_CUST_PAGING]);
+          this.router.navigate([NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF]);
         } else {
-          this.router.navigate([NavigationConstant.MOU_REQ_PAGING]);
+          this.router.navigate([NavigationConstantDsf.MOU_REQ_PAGING_DSF]);
         }
         break;
       default:
@@ -334,10 +335,10 @@ export class ChangeMouRequestDetailCustomerXDsfComponent implements OnInit {
       this.toastr.successMessage("Success");
       this.toastr.successMessage("Success");
       if (this.pageType == "return") {
-        this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
+        this.router.navigate([NavigationConstantDsf.CHANGE_MOU_RTN_PAGING_DSF]);
       }
       else{
-        this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+        this.router.navigate([NavigationConstantDsf.CHANGE_MOU_REQ_PAGING_DSF]);
       }
     }
   }
