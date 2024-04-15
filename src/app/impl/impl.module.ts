@@ -44,6 +44,9 @@ import { CessiePreGoLiveDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf
 import { CessiePreGoLivePagingDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component";
 import { CessiePreGoLiveApprovalDetailDsfComponent } from "app/dsf/impl/cessie/pre-go-live-dsf/pre-go-live-approval-detail-dsf/pre-go-live-approval-detail-dsf.component";
 import { CessieMonitoringDsfComponent } from "app/dsf/impl/cessie/cessie-upload-dsf/cessie-monitoring-dsf/cessie-monitoring-dsf.component";
+import { FactoringReviewPagingDsfComponent } from "app/dsf/impl/cessie/factoring-review-paging-dsf/factoring-review-paging-dsf.component";
+import { FactoringReviewDetailDsfComponent } from "app/dsf/impl/cessie/factoring-review-detail-dsf/factoring-review-detail-dsf.component";
+import { FactoringReviewAssignProductDsfComponent } from "app/dsf/impl/cessie/factoring-review-assign-product-dsf/factoring-review-assign-product-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -83,8 +86,11 @@ export const customCurrencyMaskConfig = {
     CessieMonitoringDsfComponent,
     CessieMainInfoComponent,
     FactoringReviewPagingComponent,
+    FactoringReviewPagingDsfComponent,
     FactoringReviewAssignProductComponent,
+    FactoringReviewAssignProductDsfComponent,
     FactoringReviewDetailComponent,
+    FactoringReviewDetailDsfComponent,
     CessiePreGoLivePagingComponent,
     CessiePreGoLivePagingDsfComponent,
     CessiePreGoLiveComponent,

@@ -222,4 +222,8 @@ export class PathConstantDsf {
     public static CHANGE_MOU_RTN_PAGING_DSF = PathConstant.CHANGE_MOU + "/ReturnPagingDsf";
     public static CHANGE_MOU_APV_DETAIL_FCTR_X_DSF = PathConstant.CHANGE_MOU + '/ApvDetailFctrXDsf';
     public static CHANGE_MOU_APV_PAGING_X_DSF = PathConstant.CHANGE_MOU + "/ApvPagingXDsf";
+    public static FACTORING_REVIEW_DSF = "FactoringReviewDsf";
+    public static FACTORING_REVIEW_DETAIL_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstant.DETAIL;
+    public static FACTORING_REVIEW_ASSIGN_PROD_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstantX.ASSIGN_PROD;
+    public static FACTORING_REVIEW_PAGING_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstant.PAGING;
 }
