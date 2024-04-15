@@ -213,6 +213,13 @@ export class PathConstantDsf {
     public static MOU_EDIT_CUST_PAGING_DSF = "EditMouCustomerDsf/" + PathConstantDsf.PAGING;
     public static CHANGE_MOU_REQ_PAGING_X_DSF = PathConstant.CHANGE_MOU_REQ + "/" + PathConstantDsf.PAGING_X;
     public static CHANGE_MOU_REQ_DETAIL_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL_X;
-    public static CHANGE_MOU_REQ_DETAIL_CUST_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X;
-    public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL + '/' + PathConstantX.MOU_CUSTOMER_X + '/:MOUType';
+    public static MOU_CUSTOMER_X = 'CustomerXDsf';
+    public static CHANGE_MOU_REQ_DETAIL_CUST_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL + '/' + PathConstantDsf.MOU_CUSTOMER_X;
+    public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL + '/' + PathConstantDsf.MOU_CUSTOMER_X + '/:MOUType';
+    public static CHANGE_MOU_REQ_ADD_COLL_X_DSF = PathConstant.CHANGE_MOU + '/RequestAddCollXDsf';
+    public static CHANGE_MOU_RVW_PAGING_DSF = PathConstant.CHANGE_MOU + "/ReviewPagingDsf";
+    public static CHANGE_MOU_RVW_DETAIL_FCTR_X_DSF = PathConstant.CHANGE_MOU + '/ReviewDetailFctrXDsf';
+    public static CHANGE_MOU_RTN_PAGING_DSF = PathConstant.CHANGE_MOU + "/ReturnPagingDsf";
+    public static CHANGE_MOU_APV_DETAIL_FCTR_X_DSF = PathConstant.CHANGE_MOU + '/ApvDetailFctrXDsf';
+    public static CHANGE_MOU_APV_PAGING_X_DSF = PathConstant.CHANGE_MOU + "/ApvPagingXDsf";
 }

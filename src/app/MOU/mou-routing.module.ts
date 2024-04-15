@@ -107,6 +107,12 @@ import { EditMouCustomerDsfComponent } from 'app/dsf/impl/MOU/edit-mou-customer-
 import { ChangeMouRequestPagingXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-paging-x-dsf/change-mou-request-paging-x-dsf.component';
 import { ChangeMouRequestDetailCustomerXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-detail-customer-x-dsf/change-mou-request-detail-customer-x-dsf.component';
 import { ChangeMouRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-detail-x-dsf/change-mou-request-detail-x-dsf.component';
+import { ChangeMouRequestAddcollXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-addcoll-x-dsf/change-mou-request-addcoll-x-dsf.component';
+import { ChangeMouReviewPagingDsfComponent } from 'app/dsf/impl/MOU/change-mou-review-paging-dsf/change-mou-review-paging-dsf.component';
+import { ChangeMouReviewFactoringXDsfComponent } from 'app/dsf/impl/MOU/change-mou-review-factoring-x-dsf/change-mou-review-factoring-x-dsf.component';
+import { ChangeMouReturnPagingDsfComponent } from 'app/dsf/impl/MOU/change-mou-return-paging-dsf/change-mou-return-paging-dsf.component';
+import { ChangeMouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/change-mou-approval-factoring-x-dsf/change-mou-approval-factoring-x-dsf.component';
+import { ChangeMouApprovalPagingXDsfComponent } from 'app/dsf/impl/MOU/change-mou-approval-paging-x-dsf/change-mou-approval-paging-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -604,10 +610,17 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X,
+        path: PathConstantDsf.CHANGE_MOU_REQ_ADD_COLL_X_DSF,
         component: ChangeMouRequestAddcollXComponent,
         data: {
           title: "Change MOU Req Add Collateral X"
+        }
+      },
+      {
+        path: PathConstantX.CHANGE_MOU_REQ_ADD_COLL_X,
+        component: ChangeMouRequestAddcollXDsfComponent,
+        data: {
+          title: "Change MOU Req Add Collateral X Dsf"
         }
       },
       {
@@ -646,6 +659,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CHANGE_MOU_RVW_PAGING_DSF,
+        component: ChangeMouReviewPagingDsfComponent,
+        data: {
+          title: "Change MOU Review DSF"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_RVW_DETAIL_GEN,
         component: ChangeMouReviewGeneralComponent,
         data: {
@@ -664,6 +684,13 @@ const routes: Routes = [
         component: ChangeMouReviewFactoringComponent,
         data: {
           title: "Change MOU Review Factoring"
+        }
+      },
+      {
+        path: PathConstantDsf.CHANGE_MOU_RVW_DETAIL_FCTR_X_DSF,
+        component: ChangeMouReviewFactoringXDsfComponent,
+        data: {
+          title: "Change MOU Review Factoring X DSF"
         }
       },
       {
@@ -702,6 +729,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CHANGE_MOU_APV_PAGING_X_DSF,
+        component: ChangeMouApprovalPagingXDsfComponent,
+        data: {
+          title: "Change MOU Approval Dsf"
+        }
+      },
+      {
         path: PathConstant.CHANGE_MOU_APV_DETAIL_FCTR,
         component: ChangeMouApprovalFactoringComponent,
         data: {
@@ -713,6 +747,13 @@ const routes: Routes = [
         component: ChangeMouApprovalFactoringXComponent,
         data: {
           title: "Change MOU Approval Factoring X"
+        }
+      },
+      {
+        path: PathConstantDsf.CHANGE_MOU_APV_DETAIL_FCTR_X_DSF,
+        component: ChangeMouApprovalFactoringXDsfComponent,
+        data: {
+          title: "Change MOU Approval Factoring X DSF"
         }
       },
       {
@@ -748,6 +789,13 @@ const routes: Routes = [
         component: ChangeMouReturnPagingComponent,
         data: {
           title: "Change MOU Return"
+        }
+      },
+      {
+        path: PathConstantDsf.CHANGE_MOU_RTN_PAGING_DSF,
+        component: ChangeMouReturnPagingDsfComponent,
+        data: {
+          title: "Change MOU Return Dsf"
         }
       },
       {

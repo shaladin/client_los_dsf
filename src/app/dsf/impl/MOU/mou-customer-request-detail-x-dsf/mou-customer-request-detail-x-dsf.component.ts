@@ -27,6 +27,7 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 import { ReqMouCustObjX } from 'app/impl/shared/model/mou-cust-obj-x.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-mou-customer-request-detail-x-dsf',
@@ -238,7 +239,7 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
 
   Back(): void {
     if(this.pageType == "return"){
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_EDIT_CUST_PAGING],{MrMouTypeCode : this.mouType});
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF],{MrMouTypeCode : this.mouType});
     }else{
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING_X_DSF],{MrMouTypeCode : this.mouType});
     }

@@ -17,6 +17,7 @@ import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-mou-approval-factoring-x-dsf',
@@ -92,7 +93,7 @@ export class MouApprovalFactoringXDsfComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MouType});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_CUST_APPRV_FCTR_DSF], {MrMouTypeCode : this.MouType});
       }
     )
   }
@@ -110,13 +111,13 @@ export class MouApprovalFactoringXDsfComponent implements OnInit {
 
     this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
       () => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV], {MrMouTypeCode : this.MouType});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.MOU_CUST_APPRV_FCTR_DSF], {MrMouTypeCode : this.MouType});
       }
     );
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_APPRV], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_CUST_APPRV_FCTR_DSF], {});
   }
 
   initInputApprovalObj() {

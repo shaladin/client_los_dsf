@@ -16,6 +16,7 @@ import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { CustObj } from 'app/shared/model/cust-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-mou-customer-detail-x-dsf',
@@ -220,7 +221,7 @@ export class MouCustomerDetailXDsfComponent implements OnInit, AfterViewInit {
 
   cancelHandler() {
     if (this.pageType == "return") {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {MrMouTypeCode : this.mouType});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF], {MrMouTypeCode : this.mouType});
     }
     else {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING_X_DSF], {MrMouTypeCode : this.mouType});
@@ -237,7 +238,7 @@ export class MouCustomerDetailXDsfComponent implements OnInit, AfterViewInit {
         () => {
           this.toastr.successMessage("Success");
           if (this.pageType == "return") {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {MrMouTypeCode : this.mouType});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF], {MrMouTypeCode : this.mouType});
           }
           else {
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING_X_DSF], {MrMouTypeCode : this.mouType});
@@ -263,7 +264,7 @@ export class MouCustomerDetailXDsfComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF], {});
         }
         else {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING_X_DSF], {});
@@ -292,7 +293,7 @@ export class MouCustomerDetailXDsfComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EDIT_CUST_PAGING], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF], {});
         }
         else {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_REQ_PAGING_X_DSF], {});
@@ -321,7 +322,7 @@ export class MouCustomerDetailXDsfComponent implements OnInit, AfterViewInit {
 
       case "-2":
         if (this.pageType == "return") {
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_EDIT_CUST_PAGING],{});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.MOU_EDIT_CUST_PAGING_DSF],{});
         }
         else {
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING_X_DSF],{});

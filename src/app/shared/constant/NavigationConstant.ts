@@ -352,9 +352,11 @@ export class NavigationConstant {
   //#region CHANGE MOU
   public static CHANGE_MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_PAGING_X; //"/Mou/ChangeMouRequest/PagingX"
   public static CHANGE_MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_X; //"/Mou/ChangeMouRequest/DetailX"
+  public static CHANGE_MOU_REQ_DETAIL_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_DETAIL_X_DSF; //"/Mou/ChangeMouRequest/DetailX"
   public static CHANGE_MOU_REQ_DETAIL_CUSTOMER = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_REQ_DETAIL_CUST_X; //"/Mou/ChangeMouRequest/Detail/CustomerX"
   public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_PAGING_X; //"/Mou/ChangeMou/ReviewPagingX"
   public static CHANGE_MOU_RVW_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_FCTR_X; //"/Mou/ChangeMou/ReviewDetailFctrX"
+  public static CHANGE_MOU_RVW_DETAIL_FCTR_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_RVW_DETAIL_FCTR_X_DSF; //"/Mou/ChangeMou/ReviewDetailFctrX"
   public static CHANGE_MOU_RVW_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_FIN_X; //"/Mou/ChangeMou/ReviewFinancingX"
   public static CHANGE_MOU_RVW_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstantX.CHANGE_MOU_RVW_DETAIL_GEN_X; //"/Mou/ChangeMou/ReviewDetailGenX"
   public static CHANGE_MOU_APV_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_PAGING; //"/Mou/ChangeMou/ApvPaging"
