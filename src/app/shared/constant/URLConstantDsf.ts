@@ -101,4 +101,5 @@ export class URLConstantDsf {
     public static AddMouCustXDsf = environment.losUrl + "/MouCustXDsf/AddMouCustXDsf";
     public static EditMouCustXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustXDsf";
     public static EditMouCustNewCalculationXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustNewCalculationXDsf";
+    public static SubmitReviewDsf = environment.losUrl + "/MouCustXDsf/SubmitReviewDsf";
 }
