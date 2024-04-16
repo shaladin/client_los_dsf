@@ -59,6 +59,8 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
   isDmsReady: boolean = false;
   usingDmsAdins: string;
 
+  IsShowIcaVerdict: boolean = false;
+
   private viewHighlightCommentComponent: ViewHighlightCommentComponent;
   @ViewChild(ViewHighlightCommentComponent) set content(
     content: ViewHighlightCommentComponent
@@ -271,6 +273,8 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
       if(this.BizTemplateCode == CommonConstant.CFNA && this.AppObj.LobCode == "FD"){
         this.IsFD = true;
       }
+
+      this.IsShowIcaVerdict = this.AppObj.LobCode == "CF" || this.AppObj.LobCode == "LS" || this.AppObj.LobCode == "SLB"
   }
 
   onApprovalSubmited(event) {

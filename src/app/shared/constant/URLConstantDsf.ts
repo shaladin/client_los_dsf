@@ -84,6 +84,8 @@ export class URLConstantDsf {
     public static UpdateLeadStepStatBulkByLeadId = environment.losUrl + "/v1" + "/PubSubDsf/UpdateLeadStepStatBulkByLeadId";
     public static GetAgrmntListForCustHistDsf = environment.losUrl + "/AgrmntDsf/GetAgrmntListForCustHistDsf"; 
     public static GetAppListForCustHistDsf = environment.losUrl + "/AppDsf/GetAppListForCustHistDsf";
+    public static AddEditAppCrdRvwHDsf    = environment.losUrl + "/v1/CrdRvwX/AddEditAppCrdRvwHDsf";
+    public static GetAppCrdRvwHDsfByAppId = environment.losUrl + "/v1/CrdRvwX/GetAppCrdRvwHDsfByAppId";
 
     public static GetProvisionFeeByAppId = environment.losUrl + "/AppDsf/GetAppProvisionFeeByAppIdDsf";
     
