@@ -124,7 +124,8 @@ import { MouViewDetailXDsfComponent } from "app/dsf/impl/MOU/mou-view-detail-x-d
     ],
     exports: [
         MouViewAddcollXComponent,
-        MouViewDetailXComponent
+        MouViewDetailXComponent,
+        MouViewDetailXDsfComponent
     ]
 
 })
