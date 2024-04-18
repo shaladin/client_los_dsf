@@ -17,8 +17,10 @@
             </mat-tab>
             <mat-tab label="MoU Detail">
               <ng-template matTabContent>
-                <app-mou-view-detail-x *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId"
-                  [MouType]="MrMouTypeCode"></app-mou-view-detail-x>
+                <!-- CR Change Self Custom -->
+                <app-mou-view-detail-x-dsf *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId"
+                  [MouType]="MrMouTypeCode"></app-mou-view-detail-x-dsf>
+                  <!-- CR Change Self Custom -->
               </ng-template>
             </mat-tab>
             <mat-tab label="Fee">

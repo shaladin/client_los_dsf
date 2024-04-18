@@ -81,12 +81,12 @@
   </div> -->
 
   <!-- CR Change Self Custom -->
-  <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'" *ngIf="type == 'Paging'">
+  <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'" *ngIf="type == 'Paging' && IsNewCalculation">
   </lib-ucSubsection>
   <div id="NewCalculation" style="overflow-x: auto;" *ngIf="type == 'Paging'">
-    <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'" *ngIf="type == 'Paging'">
+    <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'" *ngIf="type == 'Paging' && IsNewCalculation">
     </lib-ucSubsection>
-      <div id="NewCalculationInfo" *ngIf="type == 'Paging'">
+      <div id="NewCalculationInfo" *ngIf="type == 'Paging' && IsNewCalculation">
         <div class="form-group row">
           <div class="col-md-6">
             <div class="form-group row">
