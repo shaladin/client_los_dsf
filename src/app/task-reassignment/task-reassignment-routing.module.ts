@@ -7,6 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { TaskReassigmnetViewComponent } from './task-reassigmnet-view/task-reassigmnet-view.component';
 import { TaskReassigmnetInquiryComponent } from './task-reassigmnet-inquiry/task-reassigmnet-inquiry.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { TaskReassignmentApprovalDetailXComponent } from 'app/impl/task-reassignment/task-reassignment-approval/task-reassignment-approval-detail/task-reassignment-approval-detail/task-reassignment-approval-detail-x.component';
+import { PathConstantX } from 'app/impl/shared/constant/PathConstantX';
 
 const routes: Routes = [
     {
@@ -36,6 +38,13 @@ const routes: Routes = [
             {
                 path: PathConstant.TASK_REASSIGN_APV_DETAIL,
                 component: TaskReassignmentApprovalDetailComponent,
+                data: {
+                    title: 'Task Reassignment Approval Detail'
+                }
+            },
+            {
+                path: PathConstantX.TASK_REASSIGN_APV_DETAIL,
+                component: TaskReassignmentApprovalDetailXComponent,
                 data: {
                     title: 'Task Reassignment Approval Detail'
                 }

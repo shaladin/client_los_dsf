@@ -75,6 +75,8 @@ import { InvoiceDataDetailXComponent } from 'app/impl/NEW-NAP/business-process/a
 import { InvoiceDataXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/invoice-data/invoice-data/invoice-data-x.component';
 import { PreGoLiveApprovalPagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-paging-x/pre-go-live-approval-paging-x.component';
 import { PreGoLivePagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-paging-x/pre-go-live-paging-x.component';
+import { PreGoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail-x.component';
+import { OfferingValidityCheckingApprovalDetailXComponent } from 'app/impl/NEW-NAP/admin-process/offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail-x.component';
 
 const routes: Routes = [
   {
@@ -214,6 +216,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantX.PGL_APPRVL_DETAIL_X,
+        component: PreGoLiveApprovalDetailXComponent,
+        data: {
+          title: 'PreGoLive Detail For Approval'
+        }
+      },
+      {
         path: PathConstant.AGRMNT_CANCEL_PAGING,
         component: ApplicationAgreementCancellationPagingComponent,
         data: {
@@ -258,6 +267,13 @@ const routes: Routes = [
       {
         path: PathConstant.OFFERING_VALIDITY_APPRV_DETAIL,
         component: OfferingValidityCheckingApprovalDetailComponent,
+        data: {
+          title: 'Offering Validity Checking And Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.OFFERING_VALIDITY_APPRV_DETAIL,
+        component: OfferingValidityCheckingApprovalDetailXComponent,
         data: {
           title: 'Offering Validity Checking And Approval Detail'
         }

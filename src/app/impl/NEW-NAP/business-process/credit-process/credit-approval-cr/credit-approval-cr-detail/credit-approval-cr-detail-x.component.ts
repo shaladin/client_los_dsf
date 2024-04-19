@@ -27,6 +27,7 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/uc-input-approval-hi
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approval-general-info-obj.model';
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-credit-approval-cr-detail-x',
@@ -275,7 +276,7 @@ export class CreditApprovalCrDetailXComponent implements OnInit {
     }
     let postList = new Array<any>();
 
-    postList.push(this.http.post(URLConstant.Approval, ReqApvCustomObj));
+    postList.push(this.http.post(URLConstantX.CreditApprovalX, ReqApvCustomObj));
 
     if (this.viewHighlightCommentComponent != undefined) {
       if (!this.viewHighlightCommentComponent.checkIsEmptyOrNot()) {
