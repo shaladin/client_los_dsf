@@ -55,7 +55,11 @@ export class MouMainInfoXDsfComponent implements OnInit {
       //   CR Self Custom Change
       await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, { Id: this.MouCustId }).toPromise().then(
         (response) => {
-            if (response.PlafondCollateralAmt > 0) this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
+            if (response.PlafondCollateralAmt > 0) 
+              {
+                this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
+                this.MouMainInfo.OsPlafondAmt = response.OSPlafondAmt;
+              }
         }
       )
       //   CR Self Custom Change
@@ -80,7 +84,11 @@ export class MouMainInfoXDsfComponent implements OnInit {
         //   CR Self Custom Change
         await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, { Id: this.MouCustId }).toPromise().then(
           (response) => {
-              if (response.PlafondCollateralAmt > 0) this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
+              if (response.PlafondCollateralAmt > 0) 
+                {
+                  this.MouMainInfo.PlafondCollateralAmt = response.PlafondCollateralAmt;
+                  this.MouMainInfo.OsPlafondAmt = response.OSPlafondAmt;
+                }
           }
         )
         //   CR Self Custom Change
