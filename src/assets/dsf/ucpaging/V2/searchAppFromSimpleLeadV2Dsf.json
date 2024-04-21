@@ -19,13 +19,13 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "ddlType": "all",
-            "url": "",
-            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "Office",
-            "items": [],
             "isQueryIn": true,
-            "itemsUrl": [],
-            "environment": "FOU"
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
         },
         {
             "type": "textbox",
@@ -45,12 +45,22 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "textbox",
-            "name": "ISNULL(RL.DESCR,'')",
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "L.LOB_CODE",
             "id": "LobNameId",
             "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment": "FOU",
+            "path":"/RefLob/GetListKvpRefLob",
             "label": "Line Of Business",
-            "placeholder": "Placeholder"
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": ""
         },
         {
             "type": "datepicker",

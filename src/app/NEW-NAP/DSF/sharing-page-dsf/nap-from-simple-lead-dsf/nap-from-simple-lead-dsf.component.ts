@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -26,13 +26,16 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
   arrCrit: Array<CriteriaObj> = new Array();
   userAccess: CurrentUserContext;
   BizTemplateCode: string;
+  IsReady: boolean = false;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private elRef: ElementRef, 
+    private renderer: Renderer2
   ) {
   }
 
@@ -48,6 +51,7 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
       // Self Custom Changes
       this.inputPagingObj._url="./assets/dsf/ucpaging/V2/searchAppFromSimpleLeadV2Dsf.json";
       this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/V2/searchAppFromSimpleLeadV2Dsf.json";
+      this.IsReady = true;
       // End Self Custom Changes
 
     }
@@ -63,6 +67,25 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
       }
     ];
   }
+
+   // Self Custom Changes
+   ngAfterViewInit(){
+    if (this.IsReady)
+      {
+        if (this.userAccess.RoleCode == "DPC" && this.userAccess.OfficeCode == "1000")
+        {
+          setTimeout(() => {
+            const element1 = this.elRef.nativeElement.querySelector('select[data-name="L.ORI_OFFICE_CODE"]');
+            if (element1) {
+              element1.value = this.userAccess.OfficeCode;
+              this.renderer.setProperty(element1, "hidden", true);
+              element1.insertAdjacentHTML('afterend', '<label>' + this.userAccess.OfficeName + '</label>');
+            }
+          }, 500);
+        }
+      }
+  }
+  // Self Custom Changes
 
   AddApp(ev){
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code: this.userAccess.OfficeCode}).subscribe(
