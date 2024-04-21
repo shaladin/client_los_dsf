@@ -107,6 +107,12 @@
         },
         {
             "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "ISNULL(ACT.CLAIM_BY, '')"
+        },
+        {
+            "type": "sort",
             "position": "center",
             "label": "Lead No",
             "name": "L.LEAD_NO"
@@ -152,6 +158,11 @@
             "type": "text",
             "position": "left",
             "property": "OriOfficeName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
         },
         {
             "type": "link",

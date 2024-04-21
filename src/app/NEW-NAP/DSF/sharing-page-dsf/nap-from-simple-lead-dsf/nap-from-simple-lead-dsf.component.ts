@@ -9,6 +9,8 @@ import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { ClaimTaskLeadDsf } from 'app/shared/model/claim-task-lead-dsf-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { UcPagingObj } from 'app/shared/model/uc-paging-obj.model';
@@ -27,6 +29,7 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
   userAccess: CurrentUserContext;
   BizTemplateCode: string;
   IsReady: boolean = false;
+  ClaimTaskLeadDsf: ClaimTaskLeadDsf = new ClaimTaskLeadDsf();
 
   constructor(
     private http: HttpClient,
@@ -87,8 +90,32 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
   }
   // Self Custom Changes
 
-  AddApp(ev){
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code: this.userAccess.OfficeCode}).subscribe(
+  async AddApp(ev){
+    // CR Change Self Custom
+    this.ClaimTaskLeadDsf.LeadId = ev.RowObj.LeadId;
+    this.ClaimTaskLeadDsf.ActivityName = "NAPFromSimpleLeadTask";
+    this.ClaimTaskLeadDsf.ClaimBy = this.userAccess.UserName;
+    this.ClaimTaskLeadDsf.ClaimDt = this.userAccess.BusinessDt;
+    this.ClaimTaskLeadDsf.ClaimOffice = this.userAccess.OfficeCode;
+    this.ClaimTaskLeadDsf.ClaimRole = this.userAccess.RoleCode;
+    this.ClaimTaskLeadDsf.IsDone = false;
+    let IsValid = true;
+
+    await this.http.post(URLConstantDsf.AddClaimTaskLeadDsf, this.ClaimTaskLeadDsf).toPromise().then(
+      response => {
+        if (response["TaskStatus"] == "OnTask")
+          {
+            this.toastr.warningMessage("User already on another task Lead No: " + response["LeadNoProcessed"]);
+            IsValid = false;
+            return false;
+          }
+      }
+    )
+    // CR Change Self Custom
+
+    if (IsValid)
+    {
+    await this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code: this.userAccess.OfficeCode}).toPromise().then(
       (response) => {
         if(response["IsAllowAppCreated"] == true){
           AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_SHARING_FROM_SIMPLE_LEAD_DETAIL], { "LeadId": ev.RowObj.LeadId});
@@ -96,6 +123,7 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
       });
+    }
   }
 
 }

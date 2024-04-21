@@ -91,6 +91,12 @@
           "name": "L.LEAD_NO"
       },
       {
+        "type": "sort",
+        "position": "left",
+        "label": "Claim By",
+        "name": "ISNULL(ACT.CLAIM_BY, '')"
+    },
+      {
           "type": "sort",
           "position": "left",
           "label": "Office Name",
@@ -145,6 +151,11 @@
                   "property" : "LeadId"
               }
           ]
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ClaimBy"
       },
       {
           "type": "text",
