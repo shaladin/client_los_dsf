@@ -77,7 +77,6 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
       }
   }
 
-
   async GetCallBack(ev: any) {
     if (ev.Key == "Edit") {
       // var reqObj = { TrxNo: ev.RowObj.LeadNo };
