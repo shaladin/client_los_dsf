@@ -20,6 +20,45 @@
         "itemsUrl": []
       },
       {
+          "type": "datepicker",
+          "name": "L.LEAD_DT",
+          "id": "LeadDtId",
+          "value": "",
+          "label": "Lead Date >=",
+          "restriction": "gte",
+          "placeholder": "Placeholder"
+      },
+      {
+          "type": "dropdown",
+          "name": "CASE WHEN COALESCE(ACT.CLAIM_BY, '') <> '' THEN 'CLAIMED' ELSE 'UNCLAIMED' END",
+          "id": "ActiveStatusId",
+          "label": "Task Claim Status",
+          "value": "",
+          "placeholder": "Placeholder",
+          "isFromURL": false,
+          "isSelectOne": true,
+          "items": [
+              {
+                  "key": "CLAIMED",
+                  "value": "CLAIMED"
+              },
+              {
+                  "key": "UNCLAIMED",
+                  "value": "UNCLAIMED"
+              }
+          ],
+          "itemsUrl": []
+      },
+      {
+          "type": "datepicker",
+          "name": "L.LEAD_DT",
+          "id": "LeadDtId",
+          "value": "",
+          "label": "Lead Date <=",
+          "restriction": "lte",
+          "placeholder": "Placeholder"
+      },
+      {
           "type": "dropdown",
           "datatype": "text",
           "name": "L.MR_LEAD_SOURCE_CODE",
@@ -192,9 +231,41 @@
           "position": "center",
           "action": [
               {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
+                  "type": "switch",
+                  "case": [
+                      {
+                          "conditions": [
+                              {
+                                  "isUser": true,
+                                  "property": "ClaimBy",
+                                  "value": "",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "callback",
+                              "key": "Edit",
+                              "icon": "ft-edit-2"
+                          },
+                          "isHide": false
+                      },
+                      {
+                          "conditions": [
+                              {
+                                  "isUser": false,
+                                  "property": "ClaimBy",
+                                  "value": "",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "callback",
+                              "key": "Edit",
+                              "icon": "ft-edit-2"
+                          },
+                          "isHide": false
+                      }
+                  ]
               }
           ]
       }
