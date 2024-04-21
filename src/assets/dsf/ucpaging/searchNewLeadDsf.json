@@ -48,7 +48,7 @@
             "name": "L.ORDER_NO",
             "id": "OrderNoId",
             "value": "",
-            "label": "Order No.",
+            "label": "Lead Type",
             "placeholder": "Placeholder"
         },
         {
