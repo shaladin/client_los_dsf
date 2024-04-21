@@ -202,14 +202,49 @@
           "position": "center",
           "property": "OrderNo"
       },
-        {
-            "type": "action",
-            "position": "center",
-            "action": [
-                {
-                    "type": "callback"
-                }
-            ]
-        }
+      {
+          "type": "action",
+          "position": "center",
+          "action": [
+              {
+                  "type": "switch",
+                  "case": [
+                      {
+                          "conditions": [
+                              {
+                                  "isUser": true,
+                                  "property": "ClaimBy",
+                                  "value": "",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "callback",
+                              "key": "Edit",
+                              "icon": "ft-edit-2"
+                          },
+                          "isHide": false
+                      },
+                      {
+                          "conditions": [
+                              {
+                                  "isUser": false,
+                                  "property": "ClaimBy",
+                                  "value": "",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "callback",
+                              "key": "Edit",
+                              "icon": "ft-edit-2"
+                          },
+                          "isHide": false
+                      }
+                  ]
+              }
+          ]
+      }
+    
     ]
 }
