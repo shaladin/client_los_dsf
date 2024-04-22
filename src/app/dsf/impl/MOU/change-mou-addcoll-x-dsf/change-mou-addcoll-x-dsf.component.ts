@@ -36,6 +36,8 @@ import { RefAttrGenerateObj } from "app/shared/model/ref-attr-generate.model";
 import { ResMouCustCollateralAttrObj, MouCustCollateralAttrObj } from "app/shared/model/mou-cust-collateral-attr-obj.model";
 import { ChangeMouCustObj } from "app/shared/model/change-mou/change-mou-obj.model";
 import { ResMouCollForMouViewObjX } from "app/impl/shared/model/Response/MOU/ResMouCollForMouViewObjX.model";
+import { ReqMouCustDsfObj } from "app/shared/model/mou-cust-dsf-obj.model";
+import { URLConstantDsf } from "app/shared/constant/URLConstantDsf";
 
 @Component({
   selector: 'app-change-mou-addcoll-x-dsf',
@@ -70,6 +72,13 @@ export class ChangeMouAddcollXDsfComponent implements OnInit {
   mouType: string;
   dealerGrading: string;
   dealerRating: number;
+  IsNewCalculation: boolean = false;
+  isAddNetworthMode: boolean = true;
+  IsDealerEquityManual: boolean = false;
+  IsNetworthManual: boolean = false;
+  IsCeilingCollateralManual: boolean = false;
+  IsCeilingNetworthManual: boolean = false;
+  Networth: number;
   //CR Change Self Custom
 
   listCollateralData: Array<ResMouCollForMouViewObjX> = new Array();
@@ -84,6 +93,57 @@ export class ChangeMouAddcollXDsfComponent implements OnInit {
       (response) => {
         this.listCollateralData = response[CommonConstant.ReturnObj];
       })
+
+    // CR Change Self Custom
+    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+      (response) => {
+        
+        this.dealerGrading = response.DealerGrading;
+        this.dealerRating = response.DealerGradingMultiplier;
+        this.IsNewCalculation = response.IsNewCalculation;
+
+        if (response.TotalCollateralActive > 0)
+        {
+          this.isAddNetworthMode = false;
+
+          this.AddCollDataForm.patchValue({
+            TotalCollateralActive: response.TotalCollateralActive,
+            DealerEquity: response.DealerEquity,
+            IsDealerEquityManual: response.IsDealerEquityManual,
+            AdjEquity: response.AdjEquity,
+            NetDealerEquity: response.NetDealerEquity,
+            NotesNewCalculation: response.Notes,
+            DealerGrading: response.DealerGrading,
+            DealerGradingMultiplier: response.DealerGradingMultiplier,
+            Networth: response.Networth,
+            IsNetworthManual: response.IsNetworthManual,
+            CeilingCollateral: response.TotalCollateralActive * response.DealerGradingMultiplier / 100,
+            IsCeilingCollateralManual: response.IsCeilingCollateralManual,
+            CeilingNetworth: (response.DealerEquity * response.AdjEquity / 100) * response.Networth / 100,
+            IsCeilingNetworthManual: response.IsCeilingNetworthManual
+          });
+
+          this.IsNetworthManual = response.IsNetworthManual;
+          this.IsCeilingCollateralManual = response.IsCeilingCollateralManual;
+          this.IsCeilingNetworthManual = response.IsCeilingNetworthManual;
+          this.IsDealerEquityManual = response.IsDealerEquityManual;
+        }
+
+        else
+        {
+          this.AddCollDataForm.patchValue({
+            TotalCollateralActive: response.TotalCollateralActive,
+            DealerEquity: response.DealerEquity,
+            DealerGrading: response.DealerGrading,
+            DealerGradingMultiplier: response.DealerGradingMultiplier,
+            Networth: response.Networth,
+            CeilingCollateral: response.CeilingCollateral,
+            CeilingNetworth: response.CeilingNetworth,
+          });
+        }
+      }
+    )
+    // CR Change Self Custom
   }
 
   ChangeMouCustCollateralId: number = 0;
