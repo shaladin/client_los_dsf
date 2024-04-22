@@ -38,6 +38,8 @@ import { ChangeMouCustObj } from "app/shared/model/change-mou/change-mou-obj.mod
 import { URLConstantDsf } from "app/shared/constant/URLConstantDsf";
 import { ReqMouCustDsfObj } from "app/shared/model/mou-cust-dsf-obj.model";
 import { GenericObj } from "app/shared/model/generic/generic-obj.model";
+import { ExceptionConstantDsf } from "app/shared/constant/ExceptionConstantDsf";
+import { ResMouMainInfoObjX } from "app/impl/shared/model/Response/MOU/ResMouMainInfoObjX.model";
 
 @Component({
   selector: 'app-change-mou-request-addcoll-x-dsf',
@@ -206,6 +208,9 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
   IsNetworthManual: boolean = false;
   IsCeilingCollateralManual: boolean = false;
   IsCeilingNetworthManual: boolean = false;
+  IsNewCalculation: boolean = false;
+  Networth: number;
+  MouMainInfo: ResMouMainInfoObjX = new ResMouMainInfoObjX();
   // CR Change Self Custom
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
@@ -339,6 +344,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         
         this.dealerGrading = response.DealerGrading;
         this.dealerRating = response.DealerGradingMultiplier;
+        this.IsNewCalculation = response.IsNewCalculation;
 
         if (response.TotalCollateralActive > 0)
         {
@@ -623,10 +629,17 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
       (response) => {
         changeMouTrxId = response['ChangeMouTrxId'];
       });
-    await this.http.post(URLConstantX.GetChangeMouDealerGradingX, { Id: changeMouTrxId }).toPromise().then(
+    // await this.http.post(URLConstantX.GetChangeMouDealerGradingX, { Id: changeMouTrxId }).toPromise().then(
+    //   (response) => {
+    //     this.dealerGrading = response['DealerGrading'];
+    //     this.dealerRating = response['DealerRating'];
+    //   });
+    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
       (response) => {
-        this.dealerGrading = response['DealerGrading'];
-        this.dealerRating = response['DealerRating'];
+          
+        this.dealerGrading = response.DealerGrading;
+        this.dealerRating = response.DealerGradingMultiplier;
+        this.IsNewCalculation = response.IsNewCalculation;
       });
   }
 
@@ -1354,7 +1367,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
     }
   }
 
-  next() {
+  async next() {
     let sumCollateralValue: number = 0;
     for (let i = 0; i < this.listCollateralData.length; i++) {
       if (this.listCollateralData[i].CollateralPortionAmt != null) {
@@ -1390,6 +1403,58 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
       mouCustDsf.Notes = this.AddCollDataForm.controls.NotesNewCalculation.value;
       mouCustDsf.TotalCollateralActive = this.AddCollDataForm.controls.TotalCollateralActive.value;
 
+      await this.http.post<ResMouMainInfoObjX>(URLConstantX.GetMouMainInfoByIdX, { Id: this.MouCustId }).toPromise().then(
+        (response) => {
+          this.MouMainInfo = response;
+          if (this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
+            this.MouMainInfo.PlafondType = 'Base On Amount'
+          } else {
+            this.MouMainInfo.PlafondType = 'Base On Collateral'
+          }
+
+          if (this.MouMainInfo.IsWarning === true) {
+            this.toastr.warningMessage(this.MouMainInfo.WarningMsg);
+          }
+
+          console.log(response);
+        });
+
+      if (mouCustDsf.IsNewCalculation)
+      {
+        if (this.dealerRating == 0)
+          {
+            this.toastr.warningMessage("Dealer Grading doesn't have in rule file");
+            return
+          }
+        
+        await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
+            (response) => {
+              
+              this.Networth = response.Networth;
+            });
+  
+        if (this.AddCollForm.controls.Networth.value > this.Networth)
+          {
+            this.toastr.warningMessage("Networth (%) value greater than maximum limit " + this.Networth + " %");
+            return
+          }
+
+        if ((mouCustDsf.CeilingCollateral + mouCustDsf.CeilingNetworth) < this.MouMainInfo.UsedAmt)
+        {
+          this.toastr.warningMessage(ExceptionConstantDsf.PLAFOND_USED_GREATER);
+          return;
+        }
+      } 
+
+      if (!mouCustDsf.IsNewCalculation)
+        {
+          if ((mouCustDsf.CeilingCollateral) < this.MouMainInfo.UsedAmt)
+          {
+            this.toastr.warningMessage(ExceptionConstantDsf.PLAFOND_USED_GREATER);
+            return;
+          }
+        } 
+       
       this.http.post(URLConstantDsf.EditMouCustXDsf, mouCustDsf).subscribe(
         (response: GenericObj) => {
         }
