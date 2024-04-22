@@ -1737,7 +1737,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     }
   }
 
-  next() {
+  async next() {
     let sumCollateralValue = 0;
     let mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
     mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
@@ -1787,6 +1787,18 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
       if (this.dealerRating == 0)
         {
           this.toastr.warningMessage("Dealer Grading doesn't have in rule file");
+          return
+        }
+      
+      await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
+          (response) => {
+            
+            this.Networth = response.Networth;
+          });
+
+      if (this.AddCollForm.controls.Networth.value > this.Networth)
+        {
+          this.toastr.warningMessage("Networth (%) value greater than maximum limit " + this.Networth + " %");
           return
         }
       // CR Change Self Custom
@@ -2160,10 +2172,10 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     });
   }
 
-  NetworthManualChange()
+  async NetworthManualChange()
   {
     // CR Change Self Custom
-    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
       (response) => {
         
         this.Networth = response.Networth;
