@@ -93,4 +93,5 @@ export class URLConstantDsf {
     public static EditMouCustXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustXDsf";
     public static EditMouCustNewCalculationXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustNewCalculationXDsf";
     public static SubmitReviewDsf = environment.losUrl + "/MouCustXDsf/SubmitReviewDsf";
+    public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
 }
