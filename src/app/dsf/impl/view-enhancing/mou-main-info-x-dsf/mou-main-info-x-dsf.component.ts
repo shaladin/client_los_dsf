@@ -53,6 +53,17 @@ export class MouMainInfoXDsfComponent implements OnInit {
         });
         
       //   CR Self Custom Change
+      if (this.MouMainInfo.MouType == "FACTORING")
+      {
+        await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, { Id: this.MouCustId }).toPromise().then(
+          (response) => {
+              if (response != null && response["DealerGrading"] != null && response["DealerRating"] == 0)
+                {
+                  this.toastr.warningMessage("Dealer Grading doesn't have in rule file");
+                }
+          }
+        )
+      }
       await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, { Id: this.MouCustId }).toPromise().then(
         (response) => {
             if (response.PlafondCollateralAmt > 0) 
