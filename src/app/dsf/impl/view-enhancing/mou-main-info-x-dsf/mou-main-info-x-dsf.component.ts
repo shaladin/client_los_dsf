@@ -57,7 +57,7 @@ export class MouMainInfoXDsfComponent implements OnInit {
       {
         await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, { Id: this.MouCustId }).toPromise().then(
           (response) => {
-              if (response != null && response["DealerGrading"] != null && response["DealerRating"] == 0)
+              if (response["IsVendorAvailable"] && response["DealerRating"] == 0)
                 {
                   this.toastr.warningMessage("Dealer Grading doesn't have in rule file");
                 }

@@ -155,7 +155,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
     NotesNewCalculation: [''],
     DealerGrading: [''],
     DealerGradingMultiplier: [''],
-    Networth: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(60)]],
+    Networth: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
     IsNetworthManual: [false],
     CeilingCollateral: [0.000000],
     IsCeilingCollateralManual: [false],
@@ -629,6 +629,8 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
       (response) => {
         changeMouTrxId = response['ChangeMouTrxId'];
       });
+
+    // CR Change Self Custom
     // await this.http.post(URLConstantX.GetChangeMouDealerGradingX, { Id: changeMouTrxId }).toPromise().then(
     //   (response) => {
     //     this.dealerGrading = response['DealerGrading'];
@@ -641,6 +643,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         this.dealerRating = response.DealerGradingMultiplier;
         this.IsNewCalculation = response.IsNewCalculation;
       });
+    // CR Change Self Custom
   }
 
   ChgMouCustCollateralId: number = 0;
@@ -925,6 +928,14 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
   SaveAddEdit() {
     this.setCollateralObjForSave();
     this.listMouCustCollateralDocObj.MouCustCollateralDocObj = new Array();
+
+    // CR Change Self Custom
+    if (this.dealerRating == 0)
+      {
+        this.toastr.warningMessage("Dealer Grading doesn't have in rule file");
+        return
+      }
+    // CR Change Self Custom
 
     for (let i = 0; i < this.AddCollForm.value.ListDoc["length"]; i++) {
       this.mouCustCollateralDoc = new MouCustCollateralDocObj();
@@ -1307,6 +1318,25 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
       CollateralReceivedDt: [''],
       CollateralReleasedDt: ['']
     });
+    this.AddCollDataForm = this.fb.group({
+      // CR Change Self Custom
+      TotalCollateralActive: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
+      DealerEquity: [0.000000],
+      IsDealerEquityManual: [false],
+      AdjEquity: [100.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
+      NetDealerEquity: [0.000000],
+      NotesNewCalculation: [''],
+      DealerGrading: [''],
+      DealerGradingMultiplier: [''],
+      Networth: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
+      IsNetworthManual: [false],
+      CeilingCollateral: [0.000000],
+      IsCeilingCollateralManual: [false],
+      CeilingNetworth: [0.000000],
+      IsCeilingNetworthManual: [false]
+      // CR Change Self Custom
+    });
+    this.AddCollDataForm.updateValueAndValidity();
     this.AddCollForm.updateValueAndValidity();
 
     this.inputFieldLocationObj.inputLookupObj.nameSelect = "";
@@ -1324,6 +1354,13 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
   }
 
   SaveExistingCollateral() {
+    // CR Change Self Custom
+    if (this.dealerRating == 0)
+      {
+        this.toastr.warningMessage("Dealer Grading doesn't have in rule file");
+        return
+      }
+    // CR Change Self Custom
     let collateralPortionAmt: number = (this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value) / 100;
     let existingChangeMouCustCollateralObj = {
       ChangeMouCustCollateral: {
@@ -1821,8 +1858,21 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
     });
   }
 
-  NetworthManualChange()
+  async NetworthManualChange()
   {
+    // CR Change Self Custom
+    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
+      (response) => {
+        
+        this.Networth = response.Networth;
+      });
+    
+    if (this.AddCollDataForm.controls.Networth.value > this.Networth)
+      {
+        this.toastr.warningMessage("Networth (%) value greater than maximum limit " + this.Networth + " %");
+        return
+      }
+
     this.AddCollDataForm.patchValue({
       CeilingNetworth: (this.AddCollDataForm.controls.DealerEquity.value * this.AddCollDataForm.controls.AdjEquity.value / 100) * this.AddCollDataForm.controls.Networth.value / 100
     });
