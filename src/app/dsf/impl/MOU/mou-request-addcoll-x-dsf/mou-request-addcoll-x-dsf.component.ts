@@ -251,7 +251,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     await this.bindOwnerTypeObj();
     await this.bindCompanyTypeObj();
     await this.getInitPattern();
-    this.bindMouData();
+    await this.bindMouData();
     this.bindUcAddToTempData();
     this.tempPagingObj.isReady = true;
     this.GetGS();
@@ -401,7 +401,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
       })
 
       // CR Change Self Custom
-    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+      this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
       (response) => {
         
         this.dealerGrading = response.DealerGrading;
@@ -1589,7 +1589,23 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
       CollateralStatus: [''],
       IsRequiredStatus: [''],
       CollateralReceivedDt: [''],
-      CollateralReleasedDt: ['']
+      CollateralReleasedDt: [''],
+      // CR Change Self Custom
+      TotalCollateralActive: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
+      DealerEquity: [0.000000],
+      IsDealerEquityManual: [false],
+      AdjEquity: [100.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
+      NetDealerEquity: [0.000000],
+      NotesNewCalculation: [''],
+      DealerGrading: [''],
+      DealerGradingMultiplier: [''],
+      Networth: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
+      IsNetworthManual: [false],
+      CeilingCollateral: [0.000000],
+      IsCeilingCollateralManual: [false],
+      CeilingNetworth: [0.000000],
+      IsCeilingNetworthManual: [false]
+      // CR Change Self Custom
     })
     this.AddCollForm.updateValueAndValidity();
     this.setValidatorBpkb();
@@ -1783,6 +1799,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     //   this.UpdatePlafondAmt(sumCollateralValue);
     // }
 
+    // CR Change Self Custom
     if (this.IsNewCalculation)
     {
       if (this.dealerRating == 0)
@@ -1803,7 +1820,6 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
           return
         }
       
-      // CR Change Self Custom
       if (this.AddCollForm.controls["TotalCollateralActive"].valid && this.AddCollForm.controls["Networth"].valid)
       {
         let mouCustDsf: ReqMouCustDsfObj = new ReqMouCustDsfObj();
