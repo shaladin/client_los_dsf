@@ -36,8 +36,9 @@ import { RefAttrGenerateObj } from "app/shared/model/ref-attr-generate.model";
 import { ResMouCustCollateralAttrObj, MouCustCollateralAttrObj } from "app/shared/model/mou-cust-collateral-attr-obj.model";
 import { ChangeMouCustObj } from "app/shared/model/change-mou/change-mou-obj.model";
 import { ResMouCollForMouViewObjX } from "app/impl/shared/model/Response/MOU/ResMouCollForMouViewObjX.model";
-import { ReqMouCustDsfObj } from "app/shared/model/mou-cust-dsf-obj.model";
 import { URLConstantDsf } from "app/shared/constant/URLConstantDsf";
+import { RequestMouCustDsfObj } from "app/shared/model/req-mou-cust-dsf-obj.model";
+import { ReqMouCustDsfObj } from "app/shared/model/mou-cust-dsf-obj.model";
 
 @Component({
   selector: 'app-change-mou-addcoll-x-dsf',
@@ -79,6 +80,7 @@ export class ChangeMouAddcollXDsfComponent implements OnInit {
   IsCeilingCollateralManual: boolean = false;
   IsCeilingNetworthManual: boolean = false;
   Networth: number;
+  ReqMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
   //CR Change Self Custom
 
   listCollateralData: Array<ResMouCollForMouViewObjX> = new Array();
@@ -95,7 +97,10 @@ export class ChangeMouAddcollXDsfComponent implements OnInit {
       })
 
     // CR Change Self Custom
-    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+    this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
+    this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+    this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouTrxId;
+    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.ReqMouCustDsfObj).subscribe(
       (response) => {
         
         this.dealerGrading = response.DealerGrading;

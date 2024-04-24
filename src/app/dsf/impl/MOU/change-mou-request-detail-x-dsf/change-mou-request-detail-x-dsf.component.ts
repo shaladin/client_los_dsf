@@ -20,6 +20,7 @@ import { ReqMouCustDsfObj } from "app/shared/model/mou-cust-dsf-obj.model";
 import { URLConstantDsf } from "app/shared/constant/URLConstantDsf";
 import { NavigationConstantDsf } from "app/shared/constant/NavigationConstantDsf";
 import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
+import { RequestMouCustDsfObj } from "app/shared/model/req-mou-cust-dsf-obj.model";
 
 @Component({
   selector: 'app-change-mou-request-detail-x-dsf',
@@ -53,6 +54,7 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
   tempChangeMouCustId: number = 0;
   mouFctrType:string;
   ReqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+  RequestMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
 
   revolvingName = "";
   plafondName = "";
@@ -122,7 +124,10 @@ export class ChangeMouRequestDetailXDsfComponent implements OnInit {
 
   // CR Change Self Custom
   async ngOnInit() {
-    await this.httpClient.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.mouCustId }).toPromise().then(
+    this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+    this.RequestMouCustDsfObj.MouCustId = this.mouCustId;
+    this.RequestMouCustDsfObj.ChangeMouCustId = this.ChangeMouCustId;
+    await this.httpClient.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).toPromise().then(
       (response) => {
         this.ReqMouCustDsfObj = response;
         this.MOUMainInfoForm.patchValue({

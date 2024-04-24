@@ -28,6 +28,7 @@ import { ReqMouCustObjX } from 'app/impl/shared/model/mou-cust-obj-x.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
 
 @Component({
   selector: 'app-mou-customer-request-detail-x-dsf',
@@ -55,6 +56,7 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
   returnRefOffices: Array<KeyValueObj> = new Array<KeyValueObj>();
   MrMouCustFctrTypeList: Array<KeyValueObj> = [];
   ReqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+  RequestMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -113,7 +115,10 @@ export class MouCustomerRequestDetailXDsfComponent implements OnInit {
   async ngOnInit() {
     if (this.pageType == "edit" || this.pageType == "return")
     {
-    await this.httpClient.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.mouCustId }).toPromise().then(
+    this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+    this.RequestMouCustDsfObj.MouCustId = this.mouCustId;
+    this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+    await this.httpClient.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).toPromise().then(
       (response) => {
         this.ReqMouCustDsfObj = response;
         this.MOUMainInfoForm.patchValue({

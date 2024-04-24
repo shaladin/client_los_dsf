@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
 
 @Component({
   selector: 'app-mou-tab-view-addcoll-x-dsf',
@@ -41,6 +42,7 @@ export class MouTabViewAddcollXDsfComponent implements OnInit {
   mouType: string;
   dealerGrading: string;
   dealerRating: number;
+  RequestMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
   //CR Change Self Custom
 
   constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient) 
@@ -60,7 +62,10 @@ export class MouTabViewAddcollXDsfComponent implements OnInit {
       })
     
       // CR Change Self Custom
-      this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+      this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+      this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
+      this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+      this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).subscribe(
         (response) => {
             this.AddCollForm.patchValue({
               TotalCollateralActive: response.TotalCollateralActive,
