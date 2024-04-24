@@ -213,7 +213,7 @@ export class MouViewDetailXDsfComponent implements OnInit {
       });
 
       if(this.MouType == CommonConstant.FINANCING || this.MouType == CommonConstant.FACTORING){
-        this.getDealerGrading();
+        await this.getDealerGrading();
       }
 
 
@@ -228,7 +228,7 @@ export class MouViewDetailXDsfComponent implements OnInit {
     return PayFreq.join(', ');
   }
   
-  getDealerGrading() {
+  async getDealerGrading() {
     // CR Change Self Custom
     // this.http.post(URLConstantX.GetDealerGradingX, { Id: this.MouCustId }).subscribe(
     //   (response) => {
@@ -236,7 +236,7 @@ export class MouViewDetailXDsfComponent implements OnInit {
     //     this.dealerRating = response['DealerRating'];
     //   });
 
-    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
       (response) => {
           
         this.dealerGrading = response.DealerGrading;
