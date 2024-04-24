@@ -51,6 +51,7 @@ import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { ResMouMainInfoObjX } from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjX.model';
 import { ExceptionConstantDsf } from 'app/shared/constant/ExceptionConstantDsf';
+import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
 
 @Component({
   selector: 'app-mou-request-addcoll-x-dsf',
@@ -206,7 +207,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     NotesNewCalculation: [''],
     DealerGrading: [''],
     DealerGradingMultiplier: [''],
-    Networth: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
+    Networth: [0.000000],
     IsNetworthManual: [false],
     CeilingCollateral: [0.000000],
     IsCeilingCollateralManual: [false],
@@ -228,6 +229,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
   IsNewCalculation: boolean = false;
   Networth: number;
   MouMainInfo: ResMouMainInfoObjX = new ResMouMainInfoObjX();
+  RequestMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
   // CR Change Self Custom
 
   readonly CurrencyMaskPrct = CommonConstant.CurrencyMaskPrct;
@@ -401,7 +403,10 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
       })
 
       // CR Change Self Custom
-      this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+      this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+      this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
+      this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+      this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).subscribe(
       (response) => {
         
         this.dealerGrading = response.DealerGrading;
@@ -850,7 +855,10 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     //     this.dealerRating = response['DealerRating'];
     //   });
 
-    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+    this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+    this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
+    this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).subscribe(
       (response) => {
           
         this.dealerGrading = response.DealerGrading;
@@ -1808,7 +1816,10 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
           return
         }
       
-      await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
+      this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+      this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
+      this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+      await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).toPromise().then(
           (response) => {
             
             this.Networth = response.Networth;
@@ -2227,7 +2238,10 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
   async NetworthManualChange()
   {
     // CR Change Self Custom
-    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
+    this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+    this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
+    this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).toPromise().then(
       (response) => {
         
         this.Networth = response.Networth;

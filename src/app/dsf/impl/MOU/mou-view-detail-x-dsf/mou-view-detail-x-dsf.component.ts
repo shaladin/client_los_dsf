@@ -14,6 +14,7 @@ import { GenericListObj } from 'app/shared/model/generic/generic-list-obj.model'
 import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
+import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
 
 @Component({
   selector: 'app-mou-view-detail-x-dsf',
@@ -68,6 +69,7 @@ export class MouViewDetailXDsfComponent implements OnInit {
   MouOsPlafond: number = 0;
   // CR Change Self Custom
   IsNewCalculation: boolean = false;
+  RequestMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
   // CR Change Self Custom
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
@@ -236,7 +238,10 @@ export class MouViewDetailXDsfComponent implements OnInit {
     //     this.dealerRating = response['DealerRating'];
     //   });
 
-    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).toPromise().then(
+    this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+    this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
+    this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).toPromise().then(
       (response) => {
           
         this.dealerGrading = response.DealerGrading;

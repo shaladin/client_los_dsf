@@ -11,6 +11,7 @@ import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ResMouMainInfoObjXDsf } from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjXDsf.model';
+import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
 
 @Component({
   selector: 'app-mou-main-info-x-dsf',
@@ -22,6 +23,7 @@ export class MouMainInfoXDsfComponent implements OnInit {
   MouCustObj: MouCustObj = new MouCustObj();
   CustNoObj: GenericObj = new GenericObj();
   MouMainInfo: ResMouMainInfoObjX = new ResMouMainInfoObjX();
+  ReqMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -64,7 +66,10 @@ export class MouMainInfoXDsfComponent implements OnInit {
           }
         )
       }
-      await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, { Id: this.MouCustId }).toPromise().then(
+      this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
+      this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+      this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouTrxId;
+      await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, this.ReqMouCustDsfObj).toPromise().then(
         (response) => {
             if (response.PlafondCollateralAmt > 0) 
               {
@@ -93,7 +98,10 @@ export class MouMainInfoXDsfComponent implements OnInit {
         });
 
         //   CR Self Custom Change
-        await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, { Id: this.MouCustId }).toPromise().then(
+        this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
+      this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+      this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouTrxId;
+        await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, this.ReqMouCustDsfObj).toPromise().then(
           (response) => {
               if (response.PlafondCollateralAmt > 0) 
                 {

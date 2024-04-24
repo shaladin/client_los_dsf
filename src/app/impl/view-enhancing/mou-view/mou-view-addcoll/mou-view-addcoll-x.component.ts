@@ -11,6 +11,7 @@ import { MouCustCollateralDocObj } from 'app/shared/model/mou-cust-collateral-do
 import { MouCustCollateralObj } from 'app/shared/model/mou-cust-collateral-obj.model';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
 
 @Component({
   selector: 'app-mou-view-addcoll-x',
@@ -30,6 +31,7 @@ export class MouViewAddcollXComponent implements OnInit {
   collateralRegistrationObj: any;
   CollateralStatObj: MouCustCollateralStatXObj;
   ReqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+  RequestMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
 
   //CR Change Self Custom
   AddCollDataForm = this.fb.group({
@@ -66,7 +68,10 @@ export class MouViewAddcollXComponent implements OnInit {
       })
     
     // CR Change Self Custom
-    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, { Id: this.MouCustId }).subscribe(
+    this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+    this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
+    this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).subscribe(
       (response) => {
           this.AddCollDataForm.patchValue({
             TotalCollateralActive: response.TotalCollateralActive,
