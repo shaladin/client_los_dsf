@@ -68,7 +68,7 @@
           "name": "LC.CUST_NAME",
           "id": "CustNameId",
           "value": "",
-          "label": "Customer Name",
+          "label": "Customer Name ",
           "placeholder": "Placeholder"
       },
       {
