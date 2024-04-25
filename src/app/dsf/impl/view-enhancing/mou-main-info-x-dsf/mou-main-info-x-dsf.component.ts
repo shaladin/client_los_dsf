@@ -81,7 +81,7 @@ export class MouMainInfoXDsfComponent implements OnInit {
       //   CR Self Custom Change
 
     } else {
-      this.http.post<ResMouMainInfoObjX>(URLConstantX.GetChangeMouMainInfoByIdX, { Id: this.ChangeMouTrxId }).subscribe(
+      await this.http.post<ResMouMainInfoObjX>(URLConstantX.GetChangeMouMainInfoByIdX, { Id: this.ChangeMouTrxId }).toPromise().then(
         (response) => {
           this.MouMainInfo = response;
           if (this.MouMainInfo.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
@@ -98,9 +98,21 @@ export class MouMainInfoXDsfComponent implements OnInit {
         });
 
         //   CR Self Custom Change
+        if (this.MouMainInfo.MouType == "FACTORING")
+          {
+            await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, { Id: this.MouCustId }).toPromise().then(
+              (response) => {
+                  if (response["IsVendorAvailable"] && response["DealerRating"] == 0)
+                    {
+                      this.toastr.warningMessage("Dealer Grading doesn't have in rule file");
+                    }
+              }
+            )
+          }
+          
         this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
-      this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
-      this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouTrxId;
+        this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+        this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouTrxId;
         await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, this.ReqMouCustDsfObj).toPromise().then(
           (response) => {
               if (response.PlafondCollateralAmt > 0) 
