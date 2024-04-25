@@ -214,10 +214,16 @@ export class MouViewDetailXDsfComponent implements OnInit {
         this.listAssetData = response[CommonConstant.ReturnObj];
       });
 
+      //CR Change Self Custom
+      await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
+        (response: any) => {
+          this.MouType = response["MrMouTypeCode"];
+        });
+
       if(this.MouType == CommonConstant.FINANCING || this.MouType == CommonConstant.FACTORING){
         await this.getDealerGrading();
       }
-
+      // CR Change Self Custom
 
     this.IsReady = true;
   }

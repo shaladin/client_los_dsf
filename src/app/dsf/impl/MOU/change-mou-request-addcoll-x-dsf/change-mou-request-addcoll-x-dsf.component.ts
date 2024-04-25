@@ -246,7 +246,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
     this.initAddrObj();
     this.GetMouCustListAddrByMouCustId();
     await this.getInitPattern();
-    this.bindMouData();
+    await this.bindMouData();
     this.bindUcAddToTempData();
     this.tempPagingObj.isReady = true;
     this.InputLookupProfessionObj = new InputLookupObj();
@@ -270,8 +270,8 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
     this.tempPagingObj.addCritInput.push(addCritCustNo);
   }
 
-  bindMouData() {
-    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
+  async bindMouData() {
+    await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.returnMouCust = response;
         this.custNo = this.returnMouCust.CustNo;
@@ -280,7 +280,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         });
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship, }).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship, }).toPromise().then(
       (response) => {
         this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.OwnerRelationshipObj.length > 0) {
@@ -291,7 +291,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodePaymentType }).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodePaymentType }).toPromise().then(
       (response) => {
         this.CollateralPortionTypeObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
@@ -300,7 +300,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         this.CollateralPortionTypeChange();
       })
 
-    this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, { Id: this.ChangeMouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, { Id: this.ChangeMouCustId }).toPromise().then(
       (response: GenericListObj) => {
         if (response["ReturnObject"] != null || response["ReturnObject"].length > 0) {
           this.listCollateralData = response["ReturnObject"];
@@ -309,7 +309,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
       });
 
     let assetObj = {};
-    this.http.post(URLConstant.GetListAssetTypeByCode, assetObj).toPromise().then(
+    await this.http.post(URLConstant.GetListAssetTypeByCode, assetObj).toPromise().then(
       (response) => {
         this.CollTypeList = response["ReturnObject"];
         this.AddCollForm.patchValue({
@@ -325,7 +325,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType, }).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType, }).toPromise().then(
       (response) => {
         this.IdTypeList = response["ReturnObject"];
         this.AddCollForm.patchValue({
@@ -334,7 +334,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         this.setValidatorPattern(this.IdTypeList[0].Key);
       });
       
-    this.http.post<ChangeMouCustObj>(URLConstant.GetChangeMouCustbyChangeMouTrxNo, { Code: this.ChangeMouTrxNo }).toPromise().then(
+    await this.http.post<ChangeMouCustObj>(URLConstant.GetChangeMouCustbyChangeMouTrxNo, { Code: this.ChangeMouTrxNo }).toPromise().then(
     (response) => {
       this.ChangeMouCustObj = response;
       console.log(this.ChangeMouCustObj);
@@ -344,7 +344,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
     this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
     this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
     this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouCustId;
-    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.ReqMouCustDsfObj).subscribe(
+    await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.ReqMouCustDsfObj).toPromise().then(
       (response) => {
         
         this.dealerGrading = response.DealerGrading;
@@ -376,6 +376,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
           this.IsCeilingCollateralManual = response.IsCeilingCollateralManual;
           this.IsCeilingNetworthManual = response.IsCeilingNetworthManual;
           this.IsDealerEquityManual = response.IsDealerEquityManual;
+          this.IsNewCalculation = response.IsNewCalculation;
         }
 
         else
@@ -389,6 +390,8 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
             CeilingCollateral: response.CeilingCollateral,
             CeilingNetworth: response.CeilingNetworth,
           });
+
+          this.IsNewCalculation = response.IsNewCalculation;
         }
       }
     )
@@ -624,7 +627,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
       this.AddCollForm.controls.Notes.enable();
       this.AddCollForm.controls.ManufacturingYear.enable();
     }
-    this.getDealerGrading();
+    await this.getDealerGrading();
     this.AddCollForm.updateValueAndValidity();
   }
 
@@ -1288,7 +1291,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
     this.type = "Paging";
   }
 
-  ClearForm() {
+  async ClearForm() {
     this.AddCollForm = this.fb.group({
       MouCustCollateralId: [""],
       MouCustCollateralRegistrationId: [""],
@@ -1358,7 +1361,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
     this.InputLookupProfessionObj.isDisable = false;
     this.bindUcLookup();
     this.initAddrObj();
-    this.bindMouData();
+    await this.bindMouData();
   }
 
   SaveExistingCollateral() {
@@ -1426,7 +1429,6 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         return;
       }
     }
-    this.ResponseMouAddColl.emit({ StatusCode: "200" });
 
     // CR Change Self Custom
     if (this.AddCollDataForm.controls["TotalCollateralActive"].valid && this.AddCollDataForm.controls["Networth"].valid)
@@ -1464,7 +1466,20 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
           console.log(response);
         });
 
-      if (mouCustDsf.IsNewCalculation)
+        // CR Change Self Custom
+        this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
+        this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+        this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouCustId;
+        await this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.ReqMouCustDsfObj).toPromise().then(
+          (response) => {
+            
+            this.dealerGrading = response.DealerGrading;
+            this.dealerRating = response.DealerGradingMultiplier;
+            this.IsNewCalculation = response.IsNewCalculation;
+          });
+      // CR Change Self Custom
+
+      if (this.IsNewCalculation)
       {
         if (this.dealerRating == 0)
           {
@@ -1481,7 +1496,7 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
               this.Networth = response.Networth;
             });
   
-        if (this.AddCollForm.controls.Networth.value > this.Networth)
+        if (this.AddCollDataForm.controls.Networth.value > this.Networth)
           {
             this.toastr.warningMessage("Networth (%) value greater than maximum limit " + this.Networth + " %");
             return
@@ -1492,21 +1507,36 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
           this.toastr.warningMessage(ExceptionConstantDsf.PLAFOND_USED_GREATER);
           return;
         }
+
+        if ((mouCustDsf.CeilingCollateral) < this.MouMainInfo.UsedAmt)
+          {
+            this.toastr.warningMessage(ExceptionConstantDsf.PLAFOND_USED_GREATER);
+            return;
+          }
+
+        await this.http.post(URLConstantDsf.EditMouCustXDsf, mouCustDsf).toPromise().then(
+          (response: GenericObj) => {
+          }
+        )
+
+        this.ResponseMouAddColl.emit({ StatusCode: "200" });
       } 
 
-      if (!mouCustDsf.IsNewCalculation)
+      else
         {
           if ((mouCustDsf.CeilingCollateral) < this.MouMainInfo.UsedAmt)
           {
             this.toastr.warningMessage(ExceptionConstantDsf.PLAFOND_USED_GREATER);
             return;
           }
+
+          await this.http.post(URLConstantDsf.EditMouCustXDsf, mouCustDsf).toPromise().then(
+            (response: GenericObj) => {
+            }
+          )
+
+          this.ResponseMouAddColl.emit({ StatusCode: "200" });
         } 
-       
-      this.http.post(URLConstantDsf.EditMouCustXDsf, mouCustDsf).subscribe(
-        (response: GenericObj) => {
-        }
-      )
     }
     else
     {
