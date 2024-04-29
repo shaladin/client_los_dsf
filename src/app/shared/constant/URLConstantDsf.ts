@@ -97,4 +97,6 @@ export class URLConstantDsf {
 
     public static AddClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/AddClaimTaskLeadDsf";
     public static EditClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/EditClaimTaskLeadDsf";
+    public static SubmitWorkflowLeadQCV2Dsf = environment.losUrl + "/v2" + "/LeadX/SubmitWorkflowLeadQC";
+    public static SimpleLeadReturnDsf = environment.losUrl + "/v2" + "/LeadX/SimpleLeadReturnDsf";
 }
