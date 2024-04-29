@@ -12,6 +12,7 @@ import { MouCustCollateralObj } from 'app/shared/model/mou-cust-collateral-obj.m
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-view-addcoll-x',
@@ -39,7 +40,7 @@ export class MouViewAddcollXComponent implements OnInit {
     TotalCollateralActive: [0, Validators.required],
     DealerEquity: [0],
     IsDealerEquityManual: [false],
-    AdjEquity: [0],
+    AdjEquity: [100.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
     NetDealerEquity: [0],
     NotesNewCalculation: [''],
     DealerGrading: [''],
