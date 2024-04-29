@@ -28,10 +28,8 @@
           </div>
           <div class="col-md-4" *ngIf="isInputLookupObj">
             <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='SimpleLeadQCForm' [enjiForm]='enjiForm'
-                                 [identifier]="'employeeIdentifier'" (lookup)="getLookupEmployeeResponse($event)">
+                                 [identifier]="'Username'" (lookup)="getLookupEmployeeResponse($event)">
             </lib-uclookupgeneric>
-            <lib-uc-show-errors [control]="SimpleLeadQCForm.controls.DPCUsername" [submit]="enjiForm.submitted">
-            </lib-uc-show-errors>
           </div>
           </div>
         </div>

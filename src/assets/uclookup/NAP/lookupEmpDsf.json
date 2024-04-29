@@ -7,7 +7,7 @@
         "name": "re.EMP_NO",
         "id": "EmpNo",
         "value": "",
-        "label": "MO Code",
+        "label": "Sales Officer Code",
         "placeholder": "Sales Office Code"
       },
       {
@@ -17,6 +17,14 @@
         "value": "",
         "label": "Sales Officer Name",
         "placeholder": "Sales Officer Name"
+      },
+      {
+        "type": "textbox",
+        "name": "ru.USERNAME",
+        "id": "Username",
+        "value": "",
+        "label": "Sales Officer Username",
+        "placeholder": "Sales Officer Username"
       }
     ],
   "querystring": {
@@ -34,6 +42,12 @@
           "position": "left",
           "label": "DPC Officer Name",
           "name": "EmpName"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "DPC Officer Username",
+          "name": "Username"
         },
         {
           "type": "sort",
@@ -57,6 +71,11 @@
         "type": "text",
         "position": "left",
         "property": "EmpName"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "Username"
       },
       {
         "type": "text",
