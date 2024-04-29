@@ -78,7 +78,8 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
     DPCUsername: [''],
     LeadId: [''],
     Reason: [''],
-    Notes: ['']
+    Notes: [''],
+    value: ['']
   });
 
   async ngOnInit() {
@@ -172,10 +173,15 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
   getLookupEmployeeResponse(ev) {
     this.SimpleLeadQCForm.patchValue({
       DPCUsername: ev.Username,
-      LeadId: this.LeadId
+      LeadId: this.LeadId,
+      value: ev.Username
     });
     this.roleCode = ev.RoleCode;
     this.officeCode = ev.OfficeCode;
+  }
+
+  onChangeReason(ev) {
+
   }
 
   Return()
@@ -220,12 +226,13 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
     // CR Change Self Custom
 
     // Save Workflow
-    this.ReqLeadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-    this.ReqLeadInputLeadDataDsfObj.ReturnValue = "Approve"
+    this.ReqLeadInputLeadDataDsfObj.WfTaskListId = this.WfTaskListId;
+    this.ReqLeadInputLeadDataDsfObj.ReturnValue = "APPROVE"
     this.http.post(URLConstantDsf.SubmitWorkflowLeadQCV2Dsf, this.ReqLeadInputLeadDataDsfObj).toPromise().then(
       (response) =>
         {
           this.toastr.successMessage("Success");
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_QC_PAGING_DSF], {});
         }
     )
   }
@@ -244,12 +251,13 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
     )
 
     // Save Workflow Return
-    this.ReqLeadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
-    this.ReqLeadInputLeadDataDsfObj.ReturnValue = "Return"
+    this.ReqLeadInputLeadDataDsfObj.WfTaskListId = this.WfTaskListId;
+    this.ReqLeadInputLeadDataDsfObj.ReturnValue = "RETURN"
     this.http.post(URLConstantDsf.SubmitWorkflowLeadQCV2Dsf, this.ReqLeadInputLeadDataDsfObj).toPromise().then(
       (response) =>
         {
           this.toastr.successMessage("Success");
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_QC_PAGING_DSF], {});
         }
     )
   }
