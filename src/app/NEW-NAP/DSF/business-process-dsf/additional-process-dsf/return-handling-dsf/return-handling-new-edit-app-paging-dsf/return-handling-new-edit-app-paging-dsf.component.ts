@@ -245,12 +245,14 @@ export class ReturnHandlingNewEditAppPagingDsfComponent implements OnInit {
         return;
       }
 
+      //Self Custom Changes CR Runner KTB 398912
       if (this.BizTemplateCode == CommonConstant.CF4W) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_CF4W_NAP2_X], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
       if (this.BizTemplateCode == CommonConstant.FL4W) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_FL4W_NAP2_X], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
+      //End Self Custom Changes CR Runner KTB 398912
       if (this.BizTemplateCode == CommonConstant.CFRFN4W) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": wfTaskListIdTemp, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
