@@ -199,7 +199,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
     CollateralReceivedDt: [''],
     CollateralReleasedDt: [''],
     // CR Change Self Custom
-    TotalCollateralActive: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
+    TotalCollateralActive: [0.000000, [Validators.required]],
     DealerEquity: [0.000000],
     IsDealerEquityManual: [false],
     AdjEquity: [100.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],
@@ -1599,7 +1599,7 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
       CollateralReceivedDt: [''],
       CollateralReleasedDt: [''],
       // CR Change Self Custom
-      TotalCollateralActive: [0.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue)]],
+      TotalCollateralActive: [0.000000, [Validators.required]],
       DealerEquity: [0.000000],
       IsDealerEquityManual: [false],
       AdjEquity: [100.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(this.maxPrcnt)]],

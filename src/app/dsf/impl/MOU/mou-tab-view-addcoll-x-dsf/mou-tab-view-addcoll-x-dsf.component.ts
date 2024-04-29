@@ -7,6 +7,7 @@ import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-tab-view-addcoll-x-dsf',
@@ -25,7 +26,7 @@ export class MouTabViewAddcollXDsfComponent implements OnInit {
     TotalCollateralActive: [0, Validators.required],
     DealerEquity: [0],
     IsDealerEquityManual: [false],
-    AdjEquity: [0],
+    AdjEquity: [100.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
     NetDealerEquity: [0],
     NotesNewCalculation: [''],
     DealerGrading: [''],
