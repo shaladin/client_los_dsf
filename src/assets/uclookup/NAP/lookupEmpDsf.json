@@ -1,0 +1,77 @@
+{
+    "title": "Lookup - DPC Officer",
+    "sectionTitle": "Search",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "re.EMP_NO",
+        "id": "EmpNo",
+        "value": "",
+        "label": "MO Code",
+        "placeholder": "Sales Office Code"
+      },
+      {
+        "type": "textbox",
+        "name": "re.EMP_NAME",
+        "id": "EmpName",
+        "value": "",
+        "label": "Sales Officer Name",
+        "placeholder": "Sales Officer Name"
+      }
+    ],
+  "querystring": {
+    "name": "lookupEmployeeDsf"
+  },
+    "headerList": [
+        {
+          "type": "sort",
+          "position": "center",
+          "label": "DPC Officer Code",
+          "name": "EmpNo"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "DPC Officer Name",
+          "name": "EmpName"
+        },
+        {
+          "type": "sort",
+          "position": "left",
+          "label": "Office Name",
+          "name": "OfficeName"
+        },
+        {
+          "type": "label",
+          "position": "center",
+          "label": "Select"
+        }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "EmpNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "EmpName"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "OfficeName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "EmpName"
+          }
+        ]
+      }
+    ]
+  }

@@ -96,10 +96,13 @@ export class PathConstantDsf {
     //#region simple lead
     public static SIMPLE_LEAD = "SimpleLeadDsf";
     public static SIMPLE_LEAD_UPD = "SimpleLeadUpdateDsf";
+    public static SIMPLE_LEAD_QC = "SimpleLeadQC";
     public static SIMPLE_LEAD_PAGING = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstant.PAGING;
     public static SIMPLE_LEAD_DETAIL = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstantDsf.DETAIL;
+    public static SIMPLE_LEAD_DETAIL_QC = PathConstantDsf.SIMPLE_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_QC + "/" + PathConstantDsf.DETAIL;
     public static SIMPLE_LEAD_MAIN_INFO = PathConstantDsf.SIMPLE_LEAD + "/MainInfo";
     public static SIMPLE_LEAD_UPD_PAGING = PathConstantDsf.SIMPLE_LEAD_UPD + "/" + PathConstant.PAGING;
+    public static SIMPLE_LEAD_QC_PAGING = PathConstantDsf.SIMPLE_LEAD_QC + "/" + PathConstant.PAGING;
     public static REPORT_SIMPLE_LEAD = "ReportSimpleLead";
     public static PRINT_REPORT_SIMPLE_LEAD = PathConstantDsf.REPORT + "/" + PathConstantDsf.REPORT_SIMPLE_LEAD;
     public static LEAD_INQUIRY_DSF = "LeadInquiryDsf";

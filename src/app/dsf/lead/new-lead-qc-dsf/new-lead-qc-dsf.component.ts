@@ -15,11 +15,12 @@ import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
-  selector: 'app-new-lead-update-dsf',
-  templateUrl: './new-lead-update-dsf.component.html',
-  styleUrls: ['./new-lead-update-dsf.component.css']
+  selector: 'app-new-lead-qc-dsf',
+  templateUrl: './new-lead-qc-dsf.component.html',
+  styleUrls: ['./new-lead-qc-dsf.component.css']
 })
-export class NewLeadUpdateDsfComponent implements OnInit {
+export class NewLeadQcDsfComponent implements OnInit {
+
   inputPagingObj: UcPagingObj = new UcPagingObj();
   RequestTaskModel: RequestTaskModelObj = new RequestTaskModelObj();
   IntegrationObj: IntegrationObj = new IntegrationObj();
@@ -38,12 +39,12 @@ export class NewLeadUpdateDsfComponent implements OnInit {
     if (environment.isCore) {
       let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-      this.inputPagingObj._url = "./assets/dsf/ucpaging/searchSimpleLeadUpdateV2Dsf.json";
-      this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchSimpleLeadUpdateV2Dsf.json";
+      this.inputPagingObj._url = "./assets/dsf/ucpaging/searchSimpleLeadQCV2Dsf.json";
+      this.inputPagingObj.pagingJson = "./assets/dsf/ucpaging/searchSimpleLeadQCV2Dsf.json";
       this.inputPagingObj.isJoinExAPI = true;
 
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_SIMPLE_LEAD;
-      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_LEAD_UPD;
+      this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_SIMPLE_LEAD_QC;
       this.RequestTaskModel.OfficeRoleCodes = [UserAccess[CommonConstant.ROLE_CODE],
                                                UserAccess[CommonConstant.OFFICE_CODE],
                                                UserAccess[CommonConstant.ROLE_CODE] + "-" + UserAccess[CommonConstant.OFFICE_CODE]];
@@ -53,34 +54,6 @@ export class NewLeadUpdateDsfComponent implements OnInit {
       this.IntegrationObj.leftColumnToJoin = "LeadNo";
       this.IntegrationObj.rightColumnToJoin = "ProcessInstanceBusinessKey";
       this.inputPagingObj.integrationObj = this.IntegrationObj;
-
-      let AddCrit = new CriteriaObj();
-      AddCrit.DataType = "text";
-      AddCrit.propName = "L.LEAD_STEP";
-      AddCrit.restriction = AdInsConstant.RestrictionIn;
-      AddCrit.listValue = [CommonConstant.LeadStepLeadUpd, CommonConstant.LeadStepLeadRtn];
-      this.inputPagingObj.addCritInput.push(AddCrit);
-    }
-  }
-
-  rejectLead(event) {
-    if (confirm("Are you sure to reject this Lead?")) {
-      let urlPost = environment.isCore ? URLConstant.RejectLeadV2 : URLConstant.RejectLead;
-      let leadReject = new LeadForRejectObj;
-
-      leadReject.LeadId = event.RowObj.LeadId;
-      leadReject.LeadStat = CommonConstant.LeadStatReject;
-      leadReject.LeadStep = CommonConstant.LeadStatReject;
-      leadReject.WfTaskListId = environment.isCore ? event.RowObj.Id : event.RowObj.WfTaskListId; //Ini WF Instance GUID Versi Camunda
-
-      this.http.post(urlPost, leadReject).subscribe(
-        response => {
-          this.toastr.successMessage(response["Message"]);
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/Lead/SimpleLeadUpdateDsf/Paging']);
-          });
-        }
-      );
     }
   }
 
