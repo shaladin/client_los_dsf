@@ -22,15 +22,14 @@
         <lib-ucSubsection [id]="'NewLeadToBeFollowUpAssigneId'" [title]="'NEW LEAD TO BE FOLLOW UP ASSIGNE'" [panel]="'NewLeadToBeFollowUpAssigne'">
         </lib-ucSubsection>
         <div id="NewLeadToBeFollowUpAssigneId">
-          <div class="form-group row">
-          <div class="form-group col-md-2 adins-required">
-            <label class="adInsLabel" translate>Assigne</label>
-          </div>
-          <div class="col-md-4" *ngIf="isInputLookupObj">
-            <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='SimpleLeadQCForm' [enjiForm]='enjiForm'
-                                 [identifier]="'Username'" (lookup)="getLookupEmployeeResponse($event)">
-            </lib-uclookupgeneric>
-          </div>
+          <div class="form-group row" *ngIf="isInputLookupObj">
+            <label class="col-md-2 adins-required-label" translate>Assigne</label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric width-75-per [lookupInput]="inputLookupObj"
+                                   [identifier]="'Username'" [enjiForm]='enjiForm' [parentForm]='SimpleLeadQCForm'
+                                   (lookup)="getLookupEmployeeResponse($event)">
+              </lib-uclookupgeneric>
+            </div>
           </div>
         </div>
         <br>
