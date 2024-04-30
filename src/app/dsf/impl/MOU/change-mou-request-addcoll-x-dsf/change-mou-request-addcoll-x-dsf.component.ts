@@ -1508,12 +1508,6 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
           return;
         }
 
-        if ((mouCustDsf.CeilingCollateral) < this.MouMainInfo.UsedAmt)
-          {
-            this.toastr.warningMessage(ExceptionConstantDsf.PLAFOND_USED_GREATER);
-            return;
-          }
-
         await this.http.post(URLConstantDsf.EditMouCustXDsf, mouCustDsf).toPromise().then(
           (response: GenericObj) => {
           }
