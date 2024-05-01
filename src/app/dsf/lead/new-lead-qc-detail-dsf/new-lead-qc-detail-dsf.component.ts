@@ -79,7 +79,11 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
     LeadId: [''],
     Reason: [''],
     Notes: [''],
-    value: ['']
+    value: [''],
+    SalesOfficerNo: [''],
+    SalesOfficerName: [''],
+    SalesHeadNo: [''],
+    SalesHeadName: ['']
   });
 
   async ngOnInit() {
@@ -173,9 +177,11 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
   getLookupEmployeeResponse(ev) {
     this.SimpleLeadQCForm.patchValue({
       DPCUsername: ev.Username,
+      SalesOfficerName: ev.EmpName,
       LeadId: this.LeadId,
       value: ev.Username
     });
+    
     this.roleCode = ev.RoleCode;
     this.officeCode = ev.OfficeCode;
   }
