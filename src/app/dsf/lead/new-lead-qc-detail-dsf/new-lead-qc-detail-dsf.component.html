@@ -24,15 +24,10 @@
         <div id="NewLeadToBeFollowUpAssigneId">
           <div class="form-group row" *ngIf="isInputLookupObj">
             <label class="col-md-2 adins-required-label" translate>Assigne</label>
-            <!--div class="col-md-4">
+            <div class="col-md-4">
               <lib-uclookupgeneric width-75-per [lookupInput]="inputLookupObj"
                                    [identifier]="'Username'" [enjiForm]='enjiForm' [parentForm]='SimpleLeadQCForm'
                                    (lookup)="getLookupEmployeeResponse($event)">
-              </lib-uclookupgeneric>
-            </div-->
-            <div class="col-md-4" *ngIf="isInputLookupObj">
-              <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='SimpleLeadQCForm' [enjiForm]='enjiForm'
-                                   [identifier]="'employeeIdentifier'" (lookup)="getLookupEmployeeResponse($event)">
               </lib-uclookupgeneric>
             </div>
           </div>
