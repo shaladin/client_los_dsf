@@ -92,5 +92,7 @@
           }
         ]
       }
-    ]
+    ],
+    "propertyId": "Username",
+    "propertyName": "Username"
   }

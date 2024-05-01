@@ -106,6 +106,7 @@ export class URLConstantDsf {
     public static SubmitReviewDsf = environment.losUrl + "/MouCustXDsf/SubmitReviewDsf";
     public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
 
+    public static GetClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/GetClaimTaskLeadDsf";
     public static AddClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/AddClaimTaskLeadDsf";
     public static EditClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/EditClaimTaskLeadDsf";
     public static SubmitWorkflowLeadQCV2Dsf = environment.losUrl + "/v2" + "/LeadX/SubmitWorkflowLeadQC";
