@@ -17,6 +17,7 @@ import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
+import { RefEmpForLookupObj } from 'app/shared/model/ref-emp-for-lookup-obj.model';
 import { ReqLeadInputLeadDataDsfObj } from 'app/shared/model/request/lead/req-input-lead-data-dsf-obj.model';
 import { ReqLeadInputLeadDataObj } from 'app/shared/model/request/lead/req-input-lead-data-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
@@ -131,6 +132,25 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
 
     await this.makeLookUpObj();
     await this.BindDDLReasonReturn();
+
+    this.ClaimTaskLeadDsf.LeadId = this.LeadId;
+    this.ClaimTaskLeadDsf.ActivityName = "NewLeadToBeFollowUpTask";
+    this.http.post(URLConstantDsf.GetClaimTaskLeadDsf, this.ClaimTaskLeadDsf).subscribe(
+      (response) =>
+        {
+          if (response != null)
+            {
+              let salesExistObj = new RefEmpForLookupObj();
+              salesExistObj.Username = response["ClaimBy"];
+              this.http.post(URLConstant.GetRefEmpForLookupByUsername, salesExistObj).subscribe(
+                (response: RefEmpForLookupObj) => {
+                  let returnSalesExistObj = response;
+                  this.inputLookupObj.nameSelect = returnSalesExistObj.Username;
+                  this.inputLookupObj.jsonSelect = returnSalesExistObj;
+                });
+            }
+        }
+    )
   }
 
   async BindDDLReasonReturn() {
@@ -225,16 +245,19 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
     )
     // CR Change Self Custom
 
-    // Save Workflow
-    this.ReqLeadInputLeadDataDsfObj.WfTaskListId = this.WfTaskListId;
-    this.ReqLeadInputLeadDataDsfObj.ReturnValue = "APPROVE"
-    this.http.post(URLConstantDsf.SubmitWorkflowLeadQCV2Dsf, this.ReqLeadInputLeadDataDsfObj).toPromise().then(
-      (response) =>
-        {
-          this.toastr.successMessage("Success");
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_QC_PAGING_DSF], {});
-        }
-    )
+    if (IsValid)
+    {
+      // Save Workflow
+      this.ReqLeadInputLeadDataDsfObj.WfTaskListId = this.WfTaskListId;
+      this.ReqLeadInputLeadDataDsfObj.ReturnValue = "APPROVE"
+      this.http.post(URLConstantDsf.SubmitWorkflowLeadQCV2Dsf, this.ReqLeadInputLeadDataDsfObj).toPromise().then(
+        (response) =>
+          {
+            this.toastr.successMessage("Success");
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_QC_PAGING_DSF], {});
+          }
+      )
+    }
   }
 
   async SaveReturn()
