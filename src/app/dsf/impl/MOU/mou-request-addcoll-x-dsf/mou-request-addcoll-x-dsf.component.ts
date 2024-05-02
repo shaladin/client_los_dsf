@@ -454,6 +454,19 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
         }
       }
     )
+
+    // let sumCollateralValue = 0;
+    // let mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
+    // mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
+    // for (let i = 0; i < this.listCollateralData.length; i++) {
+    //   if (this.listCollateralData[i].CollateralPortionAmt != null) {
+    //     sumCollateralValue += this.listCollateralData[i].CollateralPortionAmt;
+    //   }
+    // }
+
+    // this.AddCollForm.patchValue({
+    //   TotalCollateralActive: sumCollateralValue
+    // })
     // CR Change Self Custom
 
   }

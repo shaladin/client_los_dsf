@@ -41,6 +41,7 @@ import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 import { ExceptionConstantDsf } from "app/shared/constant/ExceptionConstantDsf";
 import { ResMouMainInfoObjX } from "app/impl/shared/model/Response/MOU/ResMouMainInfoObjX.model";
 import { RequestMouCustDsfObj } from "app/shared/model/req-mou-cust-dsf-obj.model";
+import { MouCustObjForAddTrxData } from "app/shared/model/mou-cust-obj-for-add-trx-data.model";
 
 @Component({
   selector: 'app-change-mou-request-addcoll-x-dsf',
@@ -395,6 +396,19 @@ export class ChangeMouRequestAddcollXDsfComponent implements OnInit {
         }
       }
     )
+
+    // let sumCollateralValue = 0;
+    // let mouCustObjForAddTrxData = new MouCustObjForAddTrxData();
+    // mouCustObjForAddTrxData.MouCustObj.MouCustId = this.MouCustId;
+    // for (let i = 0; i < this.listCollateralData.length; i++) {
+    //   if (this.listCollateralData[i].CollateralPortionAmt != null) {
+    //     sumCollateralValue += this.listCollateralData[i].CollateralPortionAmt;
+    //   }
+    // }
+
+    // this.AddCollDataForm.patchValue({
+    //   TotalCollateralActive: sumCollateralValue
+    // })
     // CR Change Self Custom
   }
 

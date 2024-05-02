@@ -25,7 +25,7 @@
                       <mat-tab label="Collateral" *ngIf="TrxType != TrxTypeReqExp">
                           <ng-template matTabContent>
                               <div class="px-3">
-                              <app-change-mou-addcoll-x-dsf [ChangeMouTrxId]="changeMouTrxId"></app-change-mou-addcoll-x-dsf>
+                              <app-change-mou-addcoll-x-dsf [ChangeMouTrxId]="changeMouTrxId" [MouCustId]="MouCustId"></app-change-mou-addcoll-x-dsf>
                               </div>
                           </ng-template>
                       </mat-tab>
