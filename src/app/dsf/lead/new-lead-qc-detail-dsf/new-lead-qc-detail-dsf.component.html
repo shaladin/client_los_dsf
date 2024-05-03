@@ -19,11 +19,11 @@
           <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false" (outputTab)="endOfTab()" (outputCancel)="cancelHandler()"></app-dms-iframe>
         </div>
         <br>
-        <lib-ucSubsection [id]="'NewLeadToBeFollowUpAssigneId'" [title]="'NEW LEAD TO BE FOLLOW UP ASSIGNE'" [panel]="'NewLeadToBeFollowUpAssigne'">
+        <lib-ucSubsection [id]="'NewLeadToBeFollowUpAssigneId'" [title]="'NEW LEAD TO BE FOLLOW UP ASSIGNEE'" [panel]="'NewLeadToBeFollowUpAssigne'">
         </lib-ucSubsection>
         <div id="NewLeadToBeFollowUpAssigneId">
           <div class="form-group row" *ngIf="isInputLookupObj">
-            <label class="col-md-2 adins-required-label" translate>Assigne</label>
+            <label class="col-md-2 adins-required-label" translate>Assignee</label>
             <div class="col-md-4">
               <lib-uclookupgeneric width-75-per [lookupInput]="inputLookupObj"
                                    [identifier]="'DPCUsernameLook'" [enjiForm]='enjiForm' [parentForm]='SimpleLeadQCForm'
