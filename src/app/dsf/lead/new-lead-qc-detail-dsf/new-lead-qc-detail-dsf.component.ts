@@ -54,6 +54,8 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
   ClaimTaskLeadDsf: ClaimTaskLeadDsf = new ClaimTaskLeadDsf();
   roleCode: string;
   officeCode: string;
+  MOName: string;
+
   CurrentUserContext: any;
   ReqSimpleLeadReturnDsfObj: ReqSimpleLeadReturnDsfObj = new ReqSimpleLeadReturnDsfObj();
 
@@ -151,6 +153,7 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
             }
         }
     )
+    this.MOName = "";
   }
 
   async BindDDLReasonReturn() {
@@ -198,6 +201,7 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
     });
     this.roleCode = ev.RoleCode;
     this.officeCode = ev.OfficeCode;
+    this.MOName = ev.Username;
   }
 
   onChangeReason(ev) {
@@ -221,6 +225,11 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
 
   async Save()
   {
+    if(this.MOName == "") 
+    {
+      this.toastr.warningMessage("Assigne cannot be empty");
+      return;
+    }
     // Save Claim
     // Error Message if DPC already have Task
     // CR Change Self Custom
@@ -262,6 +271,18 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
 
   async SaveReturn()
   {
+    //Self Custom
+    if(this.SimpleLeadQCForm.controls["Reason"].value == "") 
+    {
+      this.toastr.warningMessage("Return Reason cannot be empty");
+      return;
+    }
+    if(this.SimpleLeadQCForm.controls["Notes"].value == "") 
+    {
+      this.toastr.warningMessage("Return Notes cannot be empty");
+      return;
+    }
+    //End Self Custom
     // Save Claim Return
     this.ReqSimpleLeadReturnDsfObj.LeadId = this.LeadId;
     this.ReqSimpleLeadReturnDsfObj.ReturnReason = this.SimpleLeadQCForm.controls["Reason"].value;
