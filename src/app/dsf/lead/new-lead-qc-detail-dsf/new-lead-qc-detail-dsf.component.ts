@@ -244,7 +244,7 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
 
     await this.http.post(URLConstantDsf.AddClaimTaskLeadDsf, this.ClaimTaskLeadDsf).toPromise().then(
       response => {
-        if (response["TaskStatus"] == "OnTask")
+        if (1!=1)//response["TaskStatus"] == "OnTask") Lepas Penjagaan Claim By
           {
             this.toastr.warningMessage("User already on another task Lead No: " + response["LeadNoProcessed"]);
             IsValid = false;
