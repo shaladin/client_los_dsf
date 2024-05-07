@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie';
 import { ToastrService } from 'ngx-toastr';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { CommonConstantDsf } from 'app/dsf/shared/constant/CommonConstantDsf';
 
 
 @Component({
@@ -82,6 +83,19 @@ export class CreditReviewPagingXDsfComponent implements OnInit, OnDestroy  {
   
       //Self Cust CR PIC Credit Review
       this.RequestTaskModel.UserName = this.userAccess[CommonConstant.USER_NAME];
+
+      if((this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.CF4W) && this.userAccess[CommonConstant.ROLE_CODE] == CommonConstantDsf.DPCSPV){
+        console.log(CommonConstantDsf.DPCSPV)
+        var critRoleCode = new CriteriaObj()
+        critRoleCode.restriction = AdInsConstant.RestrictionEq;
+        critRoleCode.propName = 'TaskRoleCode';
+        critRoleCode.value = this.userAccess[CommonConstant.ROLE_CODE];
+        critRoleCode.isCriteriaDataTable = true;
+        arrCrit.push(critRoleCode);
+        
+        this.RequestTaskModel.UserName = "";
+      }
+
       //End Self Cust CR PIC Credit Review
       this.RequestTaskModel.ProcessKey = CommonConstant.WF_CODE_CRP_MD + this.BizTemplateCode;
       this.RequestTaskModel.TaskDefinitionKey = CommonConstant.ACT_CODE_RVW + this.BizTemplateCode;
