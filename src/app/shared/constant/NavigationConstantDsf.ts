@@ -150,6 +150,8 @@ export class NavigationConstantDsf {
      public static CHANGE_MOU_APV_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_APV_PAGING_X_DSF; //"/Mou/ChangeMou/ApvPaging"
      public static MOU_REQ_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_REQ_PAGING_X_DSF; //"/Mou/Request/PagingX"
 
+     public static VIEW_FOU_CUST_TRUST_SOC = "/" + PathConstant.VIEW + "/" + PathConstantDsf.VIEW_FOU_CUST_TRUST_SOC; //'/View/Customer/CustTrustSocDsf'
+
      public static CESSIE_FACTORING_REVIEW_DETAIL_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_DETAIL_DSF; //'/Impl/Cessie/Process/FactoringReview/Detail'
      public static CESSIE_FACTORING_REVIEW_ASSIGN_PROD_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_ASSIGN_PROD_DSF; //'/Impl/Cessie/Process/FactoringReview/AssignProd'
      public static CESSIE_FACTORING_REVIEW_PAGING_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_PAGING_DSF; //'/Impl/Cessie/Monitoring'
