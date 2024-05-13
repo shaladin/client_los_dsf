@@ -80,8 +80,8 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
           setTimeout(() => {
             const element1 = this.elRef.nativeElement.querySelector('select[data-name="RO.OFFICE_CODE"]');
             if (element1) {
-              element1.value = this.userAccess.OfficeCode;
-              this.renderer.setProperty(element1, "hidden", true);
+              //element1.value = this.userAccess.OfficeCode;
+              this.renderer.setStyle(element1, "display", "none");
               element1.insertAdjacentHTML('afterend', '<label>ALL</label>');
             }
           }, 500);
