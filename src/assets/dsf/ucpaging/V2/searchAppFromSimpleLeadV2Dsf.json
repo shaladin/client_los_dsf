@@ -46,21 +46,21 @@
         },
         {
             "type": "dropdown",
-            "datatype": "text",
             "name": "L.LOB_CODE",
             "id": "LobNameId",
             "value": "",
             "placeholder": "Placeholder",
+            "datatype": "text",
             "isFromURL": true,
             "ddlType": "all",
             "url": "",
-            "environment": "FOU",
-            "path":"/RefLob/GetListKvpRefLob",
+            "environment":"FOU",
+            "path":"/RefMaster/GetListKeyValueActiveByCode",
             "label": "Line Of Business",
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "LOB",
             "items": [],
-            "itemsUrl": [],
-            "criteriaPropName": "",
-            "criteriaPropValue": ""
+            "itemsUrl": []
         },
         {
             "type": "datepicker",
@@ -127,7 +127,7 @@
             "type": "sort",
             "position": "center",
             "label": "Line Of Business",
-            "name": "ISNULL(RL.DESCR,'')"
+            "name": "L.LOB_CODE"
         },
         {
             "type": "sort",
