@@ -132,14 +132,16 @@ export class GoLiveApprovalDetailXDsfComponent implements OnInit {
       Tasks: event.Tasks,
     }
 
+    // Self Custom CR Change
     await this.http.post(URLConstantDsf.GoLiveApprovalX, ReqPreGoLiveApvCustomObj).toPromise().then(
       () => 
       {
 
       }
     );
+    // Self Custom CR Change
 
-    await this.http.post(URLConstantX.GoLiveApprovalX, ReqPreGoLiveApvCustomObj).toPromise().then(
+    await this.http.post(URLConstantX.GoLiveApprovalV2X, ReqPreGoLiveApvCustomObj).toPromise().then(
       () => {
         
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.GO_LIVE_APV_PAGING_DSF],{ "BizTemplateCode": this.bizTemplateCode });

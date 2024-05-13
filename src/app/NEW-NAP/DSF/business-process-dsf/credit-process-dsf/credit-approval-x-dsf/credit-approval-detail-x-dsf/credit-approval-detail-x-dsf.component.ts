@@ -30,6 +30,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/uc-input-approva
 import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-credit-approval-detail-x-dsf',
@@ -288,7 +289,7 @@ export class CreditApprovalDetailXDsfComponent implements OnInit {
       }
     );
     //End Self Custom Change
-    postList.push(this.http.post(URLConstant.Approval, ReqApvCustomObj));
+    postList.push(this.http.post(URLConstantX.CreditApprovalX, ReqApvCustomObj));
 
     if (this.viewHighlightCommentComponent != undefined) {
       if (!this.viewHighlightCommentComponent.checkIsEmptyOrNot()) {
