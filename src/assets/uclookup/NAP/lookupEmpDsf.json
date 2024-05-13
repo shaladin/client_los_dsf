@@ -7,7 +7,7 @@
         "name": "re.EMP_NO",
         "id": "EmpNo",
         "value": "",
-        "label": "Sales Officer Code",
+        "label": "DPC CODE",
         "placeholder": "Sales Office Code"
       },
       {
@@ -15,7 +15,7 @@
         "name": "re.EMP_NAME",
         "id": "EmpName",
         "value": "",
-        "label": "Sales Officer Name",
+        "label": "DPC Name",
         "placeholder": "Sales Officer Name"
       },
       {
@@ -23,7 +23,7 @@
         "name": "ru.USERNAME",
         "id": "Username",
         "value": "",
-        "label": "Sales Officer Username",
+        "label": "DPC Head Name",
         "placeholder": "Sales Officer Username"
       }
     ],
@@ -46,14 +46,8 @@
         {
           "type": "sort",
           "position": "left",
-          "label": "DPC Officer Username",
+          "label": "DPC Head Name",
           "name": "Username"
-        },
-        {
-          "type": "sort",
-          "position": "left",
-          "label": "Office Name",
-          "name": "OfficeName"
         },
         {
           "type": "label",
@@ -76,11 +70,6 @@
         "type": "text",
         "position": "left",
         "property": "Username"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "OfficeName"
       },
       {
         "type": "action",
