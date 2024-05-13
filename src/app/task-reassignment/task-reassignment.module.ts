@@ -17,6 +17,7 @@ import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { TaskReassigmnetViewComponent } from './task-reassigmnet-view/task-reassigmnet-view.component';
 import { TaskReassigmnetInquiryComponent } from "./task-reassigmnet-inquiry/task-reassigmnet-inquiry.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { TaskReassignmentApprovalDetailXComponent } from "app/impl/task-reassignment/task-reassignment-approval/task-reassignment-approval-detail/task-reassignment-approval-detail/task-reassignment-approval-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -51,6 +52,7 @@ export const customCurrencyMaskConfig = {
     TaskReassignmentDetailComponent,
     TaskReassignmentApprovalComponent,
     TaskReassignmentApprovalDetailComponent,
+    TaskReassignmentApprovalDetailXComponent,
     TaskReassigmnetViewComponent,
     TaskReassigmnetInquiryComponent
   ],

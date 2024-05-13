@@ -88,6 +88,8 @@ import { ApplicationAgreementCancellationDetailXDsfComponent } from 'app/NEW-NAP
 import { PreGoLivePagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live/pre-go-live-paging-dsf/pre-go-live-paging-dsf.component';
 import { PreGoLiveXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/pre-go-live-x/pre-go-live-x-dsf/pre-go-live-x-dsf.component';
 import { PreGoLivePagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-paging-x/pre-go-live-paging-x.component';
+import { PreGoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail-x.component';
+import { OfferingValidityCheckingApprovalDetailXComponent } from 'app/impl/NEW-NAP/admin-process/offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail-x.component';
 
 const routes: Routes = [
   {
@@ -241,8 +243,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantDsf.PGL_APPRVL_DETAIL,
-        component: PreGoLiveApprovalDetailDsfComponent,
+        path: PathConstantX.PGL_APPRVL_DETAIL_X,
+        component: PreGoLiveApprovalDetailXComponent,
         data: {
           title: 'PreGoLive Detail For Approval'
         }
@@ -299,6 +301,13 @@ const routes: Routes = [
       {
         path: PathConstant.OFFERING_VALIDITY_APPRV_DETAIL,
         component: OfferingValidityCheckingApprovalDetailComponent,
+        data: {
+          title: 'Offering Validity Checking And Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.OFFERING_VALIDITY_APPRV_DETAIL,
+        component: OfferingValidityCheckingApprovalDetailXComponent,
         data: {
           title: 'Offering Validity Checking And Approval Detail'
         }

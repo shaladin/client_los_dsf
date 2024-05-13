@@ -72,6 +72,8 @@ import { ReturnHandlingDetailDsfComponent } from 'app/NEW-NAP/DSF/business-proce
 import { ReturnHandlingEditNap4DsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component';
 import { PlafondInstallmentSimulationPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-paging-dsf/plafond-installment-simulation-paging-dsf.component';
 import { PlafondInstallmentSimulationDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component';
+import { CreditApprovalResultExtensionApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/credit-apv-result-ext/approval/detail/detail-x.component';
+
 
 const routes: Routes = [
   {
@@ -108,6 +110,13 @@ const routes: Routes = [
       {
         path: PathConstant.CRD_APPR_RES_EXT_APPRVL_DETAIL,
         component: CreditApprovalResultExtensionApprovalDetailComponent,
+        data: {
+          title: 'Credit Approval Result Extension Approval Detail'
+        }
+      },
+      {
+        path: PathConstantX.CRD_APPR_RES_EXT_APPRVL_DETAIL,
+        component: CreditApprovalResultExtensionApprovalDetailXComponent,
         data: {
           title: 'Credit Approval Result Extension Approval Detail'
         }

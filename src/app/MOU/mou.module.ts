@@ -179,6 +179,7 @@ import { ChangeMouReturnPagingDsfComponent } from 'app/dsf/impl/MOU/change-mou-r
 import { ChangeMouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/change-mou-approval-factoring-x-dsf/change-mou-approval-factoring-x-dsf.component';
 import { ChangeMouApprovalPagingXDsfComponent } from 'app/dsf/impl/MOU/change-mou-approval-paging-x-dsf/change-mou-approval-paging-x-dsf.component';
 import { ChangeMouDetailXDsfComponent } from 'app/dsf/impl/MOU/change-mou-detail-x-dsf/change-mou-detail-x-dsf.component';
+import { MouUnfreezeApvDetailXComponent } from 'app/impl/MOU/mou-unfreeze/mou-unfreeze-apv-detail/mou-unfreeze-apv-detail-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -322,6 +323,7 @@ export const customCurrencyMaskConfig = {
     ChangeMouDetailComponent,
     MouDetailFinancingComponent,
     MouUnfreezeApvDetailComponent,
+    MouUnfreezeApvDetailXComponent,
     MouUnfreezeApvPagingComponent,
     MouUnfreezePagingComponent,
     MouUnfreezeDetailComponent,

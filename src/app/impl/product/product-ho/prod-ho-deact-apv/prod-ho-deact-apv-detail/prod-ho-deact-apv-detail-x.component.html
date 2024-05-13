@@ -1,0 +1,20 @@
+<div class="row text-left">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-header header-title">
+              <div class="row">
+                  <div class="col-md-8">
+                      <h4 class="form-section card-title" translate>Product HO Deactivate Approval</h4>
+                  </div>
+              </div>
+          </div>
+          <lib-ucviewgeneric [viewGenericObj]="ViewGenericObj"> </lib-ucviewgeneric>
+          <br/>
+          <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
+          </lib-ucapprovalgeneralinfo>
+          
+          <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()">
+          </lib-ucapprovalR3>
+      </div>
+  </div>
+</div>
