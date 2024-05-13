@@ -3575,7 +3575,8 @@ export class AssetDataXDsfComponent implements OnInit {
     var requestObj = {
       FullAssetCode: this.AssetDataForm.controls.FullAssetCode.value,
       AssetCondition: this.AssetDataForm.controls.MrAssetConditionCode.value,
-      CurrAppStep: CommonConstant.AppStepTC
+      CurrAppStep: CommonConstant.AppStepTC,
+      AppNo: this.AppObj.AppNo
     }
     await this.http.post(URLConstantDsf.GetListRunnerActivationDsf, requestObj).toPromise().then(
         async (response) => {

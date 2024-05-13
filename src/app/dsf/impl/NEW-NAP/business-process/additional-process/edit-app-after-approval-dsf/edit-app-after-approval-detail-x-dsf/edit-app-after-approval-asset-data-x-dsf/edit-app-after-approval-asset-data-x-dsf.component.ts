@@ -1184,7 +1184,8 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
     var requestObj = {
       FullAssetCode: this.AppAssetObj.FullAssetCode,
       AssetCondition: this.AppAssetObj.MrAssetConditionCode,
-      CurrAppStep: CommonConstant.AppStepAgr
+      CurrAppStep: CommonConstant.AppStepAgr,
+      AppNo: this.AppObj.AppNo
     }
     await this.http.post(URLConstantDsf.GetListRunnerActivationDsf, requestObj).toPromise().then(
         async (response) => {
