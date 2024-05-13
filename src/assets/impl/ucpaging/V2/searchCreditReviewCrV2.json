@@ -14,7 +14,7 @@
             "isQueryIn": true,
             "url": "",
             "environment": "FOU",
-            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "path": "/RefOffice/GetListKvpActiveRefOffice",
             "label": "Office",
             "items": [],
             "itemsUrl": []
