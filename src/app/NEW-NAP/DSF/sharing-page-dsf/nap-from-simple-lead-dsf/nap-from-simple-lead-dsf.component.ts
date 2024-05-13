@@ -78,11 +78,11 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
         if (this.userAccess.RoleCode == "DPC" && this.userAccess.OfficeCode == "1000")
         {
           setTimeout(() => {
-            const element1 = this.elRef.nativeElement.querySelector('select[data-name="L.ORI_OFFICE_CODE"]');
+            const element1 = this.elRef.nativeElement.querySelector('select[data-name="RO.OFFICE_CODE"]');
             if (element1) {
               element1.value = this.userAccess.OfficeCode;
               this.renderer.setProperty(element1, "hidden", true);
-              element1.insertAdjacentHTML('afterend', '<label>' + this.userAccess.OfficeName + '</label>');
+              element1.insertAdjacentHTML('afterend', '<label>ALL</label>');
             }
           }, 500);
         }
