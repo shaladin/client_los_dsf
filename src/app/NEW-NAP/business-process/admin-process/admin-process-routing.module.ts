@@ -252,13 +252,6 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantDsf.PGL_APPRVL_DETAIL,
-        component: PreGoLiveApprovalDetailDsfComponent,
-        data: {
-          title: 'PreGoLive Detail For Approval'
-        }
-      },
-      {
         path: PathConstant.AGRMNT_CANCEL_PAGING,
         component: ApplicationAgreementCancellationPagingComponent,
         data: {
