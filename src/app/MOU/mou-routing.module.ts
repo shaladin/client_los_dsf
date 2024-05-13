@@ -113,6 +113,7 @@ import { ChangeMouReviewFactoringXDsfComponent } from 'app/dsf/impl/MOU/change-m
 import { ChangeMouReturnPagingDsfComponent } from 'app/dsf/impl/MOU/change-mou-return-paging-dsf/change-mou-return-paging-dsf.component';
 import { ChangeMouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/change-mou-approval-factoring-x-dsf/change-mou-approval-factoring-x-dsf.component';
 import { ChangeMouApprovalPagingXDsfComponent } from 'app/dsf/impl/MOU/change-mou-approval-paging-x-dsf/change-mou-approval-paging-x-dsf.component';
+import { MouUnfreezeApvDetailXComponent } from 'app/impl/MOU/mou-unfreeze/mou-unfreeze-apv-detail/mou-unfreeze-apv-detail-x.component';
 
 const routes: Routes = [
   {
@@ -486,6 +487,13 @@ const routes: Routes = [
       {
         path: PathConstant.MOU_FREEZE_APV_DETAIL,
         component: MouUnfreezeApvDetailComponent,
+        data: {
+          title: "Mou Freeze Unfreeze Approval Detail"
+        }
+      },
+      {
+        path: PathConstantX.MOU_FREEZE_APV_DETAIL,
+        component: MouUnfreezeApvDetailXComponent,
         data: {
           title: "Mou Freeze Unfreeze Approval Detail"
         }

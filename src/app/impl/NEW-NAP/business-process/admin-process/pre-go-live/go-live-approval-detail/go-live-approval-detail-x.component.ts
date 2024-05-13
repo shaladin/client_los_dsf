@@ -116,7 +116,7 @@ export class GoLiveApprovalDetailXComponent implements OnInit {
       Tasks: event.Tasks,
     }
 
-    this.http.post(URLConstantX.GoLiveApprovalX, ReqPreGoLiveApvCustomObj).subscribe(
+    this.http.post(URLConstantX.GoLiveApprovalV2X, ReqPreGoLiveApvCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.GO_LIVE_APV_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }

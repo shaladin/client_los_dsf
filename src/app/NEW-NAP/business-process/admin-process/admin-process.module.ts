@@ -119,6 +119,8 @@ import { DeliveryOrderMultiAssetDsfComponent } from "app/dsf/impl/NEW-NAP/busine
 import { DoAssetDetailXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/do-asset-detail-x-dsf/do-asset-detail-x-dsf.component";
 import { DeliveryOrderMultiAssetDetailXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/delivery-order-multi-asset-detail-x-dsf/delivery-order-multi-asset-detail-x-dsf.component";
 import { CreateDoMultiAssetXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/create-do-multi-asset-x-dsf/create-do-multi-asset-x-dsf.component";
+import { PreGoLiveApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail-x.component";
+import { OfferingValidityCheckingApprovalDetailXComponent } from "app/impl/NEW-NAP/admin-process/offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -168,6 +170,7 @@ export const customCurrencyMaskConfig = {
     PreGoLiveComponent,
     PreGoLiveRequestForApprovalComponent,
     PreGoLiveApprovalDetailComponent,
+    PreGoLiveApprovalDetailXComponent,
     PreGoLiveApprovalDetailDsfComponent,
     PreGoLiveApprovalPagingComponent,
     PreGoLiveApprovalPagingXComponent,
@@ -179,6 +182,7 @@ export const customCurrencyMaskConfig = {
     AgrmntActivationDetailComponent,
     OfferingValidityCheckingApprovalPagingComponent,
     OfferingValidityCheckingApprovalDetailComponent,
+    OfferingValidityCheckingApprovalDetailXComponent,
     OfferingValidityCheckingRequestPagingComponent,
     OfferingValidityCheckingRequestDetailComponent,
     DocSignerDetailComponent,

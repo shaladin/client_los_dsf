@@ -16,6 +16,7 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { LtkmReqObj } from 'app/shared/model/ltkm/ltkm-req-obj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
     selector: 'app-ltkm-approval-detail-x',
@@ -172,7 +173,7 @@ export class LtkmApprovalDetailXComponent implements OnInit {
             Tasks: event.Tasks
         }
 
-        this.http.post(URLConstant.LtkmApproval, ReqLtkmApvCustomObj).subscribe(
+        this.http.post(URLConstantX.LtkmApproval, ReqLtkmApvCustomObj).subscribe(
             () => {
                 this.toastr.successMessage("Success");
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_APV_PAGING], {});
