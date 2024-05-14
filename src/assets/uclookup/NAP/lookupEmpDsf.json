@@ -23,7 +23,7 @@
         "name": "ru.USERNAME",
         "id": "Username",
         "value": "",
-        "label": "DPC Head Name",
+        "label": "DPC Username",
         "placeholder": "Sales Officer Username"
       }
     ],
@@ -47,7 +47,7 @@
           "type": "sort",
           "position": "left",
           "label": "DPC Head Name",
-          "name": "Username"
+          "name": "SPV.USERNAME"
         },
         {
           "type": "label",
@@ -69,7 +69,7 @@
       {
         "type": "text",
         "position": "left",
-        "property": "Username"
+        "property": "SpvName"
       },
       {
         "type": "action",

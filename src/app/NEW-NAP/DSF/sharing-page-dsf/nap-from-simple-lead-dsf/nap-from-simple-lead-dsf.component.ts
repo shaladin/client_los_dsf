@@ -74,21 +74,28 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
    // Self Custom Changes
    ngAfterViewInit(){
     if (this.IsReady)
-      {
-        if (this.userAccess.RoleCode == "DPC" && this.userAccess.OfficeCode == "1000")
-        {
-          setTimeout(() => {
-            const element1 = this.elRef.nativeElement.querySelector('select[data-name="RO.OFFICE_CODE"]');
-            if (element1) {
-              //element1.value = this.userAccess.OfficeCode;
-              this.renderer.setStyle(element1, "display", "none");
-              element1.insertAdjacentHTML('afterend', '<label>ALL</label>');
-            }
-          }, 500);
-        }
-      }
+    {
+      this.SelfCustomDisableOffice();
+    }
+
+    this.renderer.listen(this.elRef.nativeElement.querySelector('button[class="btn btn-raised btn-warning mr-1"]'), 'click', (event) => {      
+      this.SelfCustomDisableOffice();
+    });
+    
   }
   // Self Custom Changes
+  SelfCustomDisableOffice() {    
+    if (this.userAccess.RoleCode == "DPC" && this.userAccess.OfficeCode == "1000")
+    {
+      setTimeout(() => {
+        const element1 = this.elRef.nativeElement.querySelector('select[data-name="RO.OFFICE_CODE"]');
+        if (element1) {
+          this.renderer.setStyle(element1, "display", "none");
+          element1.insertAdjacentHTML('afterend', '<label>ALL</label>');
+        }
+      }, 750);
+    }      
+  }
 
   async AddApp(ev){
     // CR Change Self Custom
