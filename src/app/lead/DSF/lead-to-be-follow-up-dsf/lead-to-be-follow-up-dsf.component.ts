@@ -62,9 +62,10 @@ export class LeadToBeFollowUpDsfComponent implements OnInit {
           setTimeout(() => {
             const element1 = this.elRef.nativeElement.querySelector('select[data-name="L.ORI_OFFICE_CODE"]');
             if (element1) {
-              element1.value = this.CurrentUserContext.OfficeCode;
-              this.renderer.setProperty(element1, "hidden", true);
-              //element1.insertAdjacentHTML('afterend', '<label>' + this.CurrentUserContext.OfficeName + '</label>');
+              //element1.value = this.CurrentUserContext.OfficeCode;
+              //this.renderer.setProperty(element1, "hidden", true);
+              //element1.value = this.userAccess.OfficeCode;
+              this.renderer.setStyle(element1, "display", "none");
               element1.insertAdjacentHTML('afterend', '<label>ALL</label>');
             }
           }, 500);

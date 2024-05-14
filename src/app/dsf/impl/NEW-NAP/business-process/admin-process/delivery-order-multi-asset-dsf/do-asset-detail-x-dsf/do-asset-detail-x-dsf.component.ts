@@ -798,7 +798,8 @@ export class DoAssetDetailXDsfComponent implements OnInit {
     var requestObj = {
       FullAssetCode: this.DOAssetDetail.controls.FullAssetCode.value,
       AssetCondition: this.DOAssetDetail.controls.MrAssetConditionCode.value,
-      CurrAppStep: CommonConstant.AppStepDO
+      CurrAppStep: CommonConstant.AppStepDO,
+      AppNo: this.AppObj.AppNo
     }
     await this.http.post(URLConstantDsf.GetListRunnerActivationDsf, requestObj).toPromise().then(
         async (response) => {
