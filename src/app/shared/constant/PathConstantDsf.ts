@@ -220,7 +220,7 @@ export class PathConstantDsf {
     public static MOU_EXECUTION_DETAIL_X_DSF = PathConstant.MOU_EXECUTION + '/' + PathConstantDsf.DETAIL_X;
     public static MOU_EXECUTION_PAGING_X_DSF = PathConstant.MOU_EXECUTION + "/" + PathConstantDsf.PAGING_X;
     public static MOU_CUST_APPRV_X_DSF = PathConstant.MOU_CUST + "/ApprovalXDsf";
-    public static MOU_CUST_APPRV_FCTR_X_DSF = PathConstant.MOU_CUST + '/ApprovalXDsf';
+    public static MOU_CUST_APPRV_FCTR_X_DSF = PathConstant.MOU_CUST + '/ApprovalFactoringXDsf';
     public static MOU_EDIT_CUST_PAGING_DSF = "EditMouCustomerDsf/" + PathConstantDsf.PAGING;
     public static CHANGE_MOU_REQ_PAGING_X_DSF = PathConstant.CHANGE_MOU_REQ + "/" + PathConstantDsf.PAGING_X;
     public static CHANGE_MOU_REQ_DETAIL_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL_X;
