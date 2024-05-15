@@ -66,6 +66,7 @@ export class MouTabViewAddcollXDsfComponent implements OnInit {
       this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
       this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
       this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+      this.RequestMouCustDsfObj.IsReview = true;
       this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).subscribe(
         (response) => {
             this.AddCollForm.patchValue({
