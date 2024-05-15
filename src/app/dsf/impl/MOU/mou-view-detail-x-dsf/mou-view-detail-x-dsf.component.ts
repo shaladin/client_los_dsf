@@ -15,6 +15,7 @@ import { VendorObj } from 'app/shared/model/vendor-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
+import { ResMouMainInfoObjXDsf } from 'app/impl/shared/model/Response/MOU/ResMouMainInfoObjXDsf.model';
 
 @Component({
   selector: 'app-mou-view-detail-x-dsf',
@@ -70,6 +71,7 @@ export class MouViewDetailXDsfComponent implements OnInit {
   // CR Change Self Custom
   IsNewCalculation: boolean = false;
   RequestMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
+  ReqMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
   // CR Change Self Custom
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
@@ -226,6 +228,28 @@ export class MouViewDetailXDsfComponent implements OnInit {
       // CR Change Self Custom
 
     this.IsReady = true;
+
+    //   CR Self Custom Change
+    if (this.MouType == "FACTORING")
+      {
+        await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, { Id: this.MouCustId }).toPromise().then(
+          (response) => {
+              if (response["IsVendorAvailable"] && response["DealerRating"] == 0)
+                {
+                  this.toastr.warningMessage("Dealer Grading doesn't have in rule file");
+                }
+          }
+        )
+      }
+      this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
+      this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+      this.ReqMouCustDsfObj.ChangeMouCustId = 0;
+      await this.http.post<ResMouMainInfoObjXDsf>(URLConstantDsf.GetMouMainInfoByIdXDsf, this.ReqMouCustDsfObj).toPromise().then(
+        (response) => {
+              this.MouOsPlafond = response.OSPlafondAmt;
+        }
+      )
+      //   CR Self Custom Change
   }
 
   setPayFreqMultipleInstallment(PayFreqCode: string){
