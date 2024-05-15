@@ -47,7 +47,7 @@
           "type": "sort",
           "position": "left",
           "label": "DPC Head Name",
-          "name": "SPV.USERNAME"
+          "name": "SPV.EMP_NAME"
         },
         {
           "type": "label",

@@ -75,25 +75,25 @@ export class NapFromSimpleLeadDsfComponent implements OnInit {
    ngAfterViewInit(){
     if (this.IsReady)
     {
-      this.SelfCustomDisableOffice();
+      this.SelfCustomDisableOffice(500);
     }
 
     this.renderer.listen(this.elRef.nativeElement.querySelector('button[class="btn btn-raised btn-warning mr-1"]'), 'click', (event) => {      
-      this.SelfCustomDisableOffice();
+      this.SelfCustomDisableOffice(50);
     });
     
   }
   // Self Custom Changes
-  SelfCustomDisableOffice() {    
+  SelfCustomDisableOffice(timeout) {    
     if (this.userAccess.RoleCode == "DPC" && this.userAccess.OfficeCode == "1000")
     {
       setTimeout(() => {
         const element1 = this.elRef.nativeElement.querySelector('select[data-name="RO.OFFICE_CODE"]');
-        if (element1) {
+        if (element1 && element1.display != 'none') {
           this.renderer.setStyle(element1, "display", "none");
           element1.insertAdjacentHTML('afterend', '<label>ALL</label>');
         }
-      }, 750);
+      }, timeout);
     }      
   }
 
