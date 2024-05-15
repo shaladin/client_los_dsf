@@ -428,9 +428,9 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
             DealerGradingMultiplier: response.DealerGradingMultiplier,
             Networth: response.Networth,
             IsNetworthManual: response.IsNetworthManual,
-            CeilingCollateral: response.TotalCollateralActive * response.DealerGradingMultiplier / 100,
+            CeilingCollateral: response.CeilingCollateral,
             IsCeilingCollateralManual: response.IsCeilingCollateralManual,
-            CeilingNetworth: (response.DealerEquity * response.AdjEquity / 100) * response.Networth / 100,
+            CeilingNetworth: response.CeilingNetworth,
             IsCeilingNetworthManual: response.IsCeilingNetworthManual
           });
 
@@ -448,8 +448,8 @@ export class MouRequestAddcollXDsfComponent implements OnInit {
             DealerGrading: response.DealerGrading,
             DealerGradingMultiplier: response.DealerGradingMultiplier,
             Networth: response.Networth,
-            CeilingCollateral: response.CeilingCollateral,
-            CeilingNetworth: response.CeilingNetworth,
+            CeilingCollateral: response.TotalCollateralActive * response.DealerGradingMultiplier / 100,
+            CeilingNetworth: (response.DealerEquity * response.AdjEquity / 100) * response.Networth / 100,
           });
         }
       }
