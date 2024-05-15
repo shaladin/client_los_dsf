@@ -20,10 +20,10 @@
       },
       {
         "type": "textbox",
-        "name": "ru.USERNAME",
-        "id": "Username",
+        "name": "SPV.EMP_NAME",
+        "id": "SpvName",
         "value": "",
-        "label": "DPC Username",
+        "label": "DPC Head Name",
         "placeholder": "Sales Officer Username"
       }
     ],
