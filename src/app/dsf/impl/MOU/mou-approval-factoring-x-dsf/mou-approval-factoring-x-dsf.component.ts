@@ -18,6 +18,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-
 import { ApprovalObj } from 'app/shared/model/approval/approval-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-mou-approval-factoring-x-dsf',
@@ -40,7 +41,7 @@ export class MouApprovalFactoringXDsfComponent implements OnInit {
   IsReady: boolean = false;
   dmsObj: DMSObj;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
 
       if (params["MouCustId"] != null) {
@@ -93,7 +94,7 @@ export class MouApprovalFactoringXDsfComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_CUST_APPRV_FCTR_DSF], {MrMouTypeCode : this.MouType});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_CUST_APPRV_X_DSF], {MrMouTypeCode : this.MouType});
       }
     )
   }
@@ -111,13 +112,14 @@ export class MouApprovalFactoringXDsfComponent implements OnInit {
 
     this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
       () => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.MOU_CUST_APPRV_FCTR_DSF], {MrMouTypeCode : this.MouType});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.MOU_CUST_APPRV_X_DSF], {MrMouTypeCode : this.MouType});
+        this.toastr.successMessage("Approve success");
       }
     );
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_CUST_APPRV_FCTR_DSF], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.MOU_CUST_APPRV_X_DSF], {MrMouTypeCode : this.MouType});
   }
 
   initInputApprovalObj() {
