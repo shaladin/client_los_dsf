@@ -35,13 +35,13 @@
           "type": "sort",
           "position": "center",
           "label": "DPC Officer Code",
-          "name": "EmpNo"
+          "name": "re.EMP_NO"
         },
         {
           "type": "sort",
           "position": "left",
           "label": "DPC Officer Name",
-          "name": "EmpName"
+          "name": "re.EMP_NAME"
         },
         {
           "type": "sort",
