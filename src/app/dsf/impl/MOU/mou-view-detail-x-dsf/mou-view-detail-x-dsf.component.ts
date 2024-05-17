@@ -232,7 +232,10 @@ export class MouViewDetailXDsfComponent implements OnInit {
     //   CR Self Custom Change
     if (this.MouType == "FACTORING")
       {
-        await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, { Id: this.MouCustId }).toPromise().then(
+        this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
+        this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+        this.ReqMouCustDsfObj.ChangeMouCustId = 0;
+        await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, this.ReqMouCustDsfObj).toPromise().then(
           (response) => {
               if (response["IsVendorAvailable"] && response["DealerRating"] == 0)
                 {
