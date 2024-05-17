@@ -57,7 +57,10 @@ export class MouMainInfoXDsfComponent implements OnInit {
       //   CR Self Custom Change
       if (this.MouMainInfo.MouType == "FACTORING")
       {
-        await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, { Id: this.MouCustId }).toPromise().then(
+        this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
+        this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+        this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouTrxId;
+        await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, this.ReqMouCustDsfObj).toPromise().then(
           (response) => {
               if (response["IsVendorAvailable"] && response["DealerRating"] == 0)
                 {
@@ -97,7 +100,10 @@ export class MouMainInfoXDsfComponent implements OnInit {
         //   CR Self Custom Change
         if (this.MouMainInfo.MouType == "FACTORING")
           {
-            await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, { Id: this.MouCustId }).toPromise().then(
+            this.ReqMouCustDsfObj = new RequestMouCustDsfObj();
+            this.ReqMouCustDsfObj.MouCustId = this.MouCustId;
+            this.ReqMouCustDsfObj.ChangeMouCustId = this.ChangeMouTrxId;
+            await this.http.post(URLConstantDsf.CheckVendorGradingFactoringXDsf, this.ReqMouCustDsfObj).toPromise().then(
               (response) => {
                   if (response["IsVendorAvailable"] && response["DealerRating"] == 0)
                     {
