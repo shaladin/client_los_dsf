@@ -201,4 +201,5 @@ export class PathConstantDsf {
     public static PLAFOND_INSTALLMENT_SIMULATION_PAGING = PathConstantDsf.PLAFOND_INSTALLMENT_SIMULATION + "/" + PathConstant.PAGING;
     public static PLAFOND_INSTALLMENT_SIMULATION_DETAIL = "PlafondInstallmentSimulationDsf" + "/" + PathConstant.DETAIL;
 
+    public static VIEW_FOU_CUST_TRUST_SOC = "Customer/CustTrustSocDsf";
 }
