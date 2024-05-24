@@ -41,6 +41,7 @@ import { MouCustObjForAddTrxData } from 'app/shared/model/mou-cust-obj-for-add-t
 import { ResThirdPartyRsltHObj } from 'app/shared/model/response/third-party-result/res-third-party-rslt-h-obj.model';
 import { MouCustCompanyFinDataAttrObj } from 'app/shared/model/mou-cust-fin-data-attr-content-obj.model';
 import { MouCustCompanyContactInfoComponent } from 'app/MOU/mou-customer-request/mou-cust-tab/mou-cust-company-contact-info/mou-cust-company-contact-info.component';
+import { MouCustPersonalMainXComponent } from './mou-cust-personal-main/mou-cust-personal-main-x.component';
 
 
 
@@ -49,7 +50,7 @@ import { MouCustCompanyContactInfoComponent } from 'app/MOU/mou-customer-request
   templateUrl: './mou-cust-tab-x.component.html'
 })
 export class MouCustTabXComponent implements OnInit {
-  @ViewChild(MouCustPersonalMainComponent) mainDataComponent;
+  @ViewChild(MouCustPersonalMainXComponent) mainDataComponent;
   @ViewChild(MouCustPersonalContactInfoComponent) custContactInformationComponent;
   @ViewChild(MouCustCompanyContactInfoComponent) custContactCompInformationComponent;
   @ViewChild(MouCustJobDataComponent) custJobDataComponent;
