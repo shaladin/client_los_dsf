@@ -563,7 +563,7 @@
                   </div>
                   <label class="col-md-2 adins-required-label" translate>Owner Id No </label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control" formControlName="OwnerIdNo">
+                    <input type="text" class="form-control" formControlName="OwnerIdNo" [readOnly]="isReadOnly">
                     <lib-uc-show-errors [control]="AssetDataForm.controls.OwnerIdNo"
                       [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
