@@ -1,0 +1,94 @@
+<form class="form form-horizontal" [formGroup]="SimpleLeadQCForm" #enjiForm="ngForm">
+<section id="horizontal-form-layouts">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>SIMPLE LEAD QC</h4>
+            </div>
+          </div>
+        </div>
+        <ng-template #LeadMainInfo></ng-template>
+        <br>
+        <div class="col-md-12" style="margin-left: 6px; padding-right: 23px;">
+        <lib-ucSubsection [id]="'DMSFrameId'" [title]="'UPLOAD DOCUMENT'" [panel]="'DMSFrame'">
+        </lib-ucSubsection>
+        <div id="DMSFrame">
+          <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false" (outputTab)="endOfTab()" (outputCancel)="cancelHandler()"></app-dms-iframe>
+        </div>
+        <br>
+        <lib-ucSubsection [id]="'NewLeadToBeFollowUpAssigneId'" [title]="'NEW LEAD TO BE FOLLOW UP ASSIGNEE'" [panel]="'NewLeadToBeFollowUpAssigne'">
+        </lib-ucSubsection>
+        <div id="NewLeadToBeFollowUpAssigneId">
+          <div class="form-group row" *ngIf="isInputLookupObj">
+            <label class="col-md-2 adins-required-label" translate>Assignee</label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric width-75-per [lookupInput]="inputLookupObj"
+                                   [identifier]="'DPCUsernameLook'" [enjiForm]='enjiForm' [parentForm]='SimpleLeadQCForm'
+                                   (lookup)="getLookupEmployeeResponse($event)">
+              </lib-uclookupgeneric>
+            </div>
+          </div>
+        </div>
+        <br>
+        <lib-ucSubsection *ngIf="isReturn" [id]="'ReturnSimpleLeadQCId'" [title]="'RETURN SIMPLE LEAD QC'" [panel]="'ReturnSimpleLeadQC'">
+        </lib-ucSubsection>
+        <div *ngIf="isReturn" id="ReturnSimpleLeadQCId">
+          <div class="form-group row adins-required">
+            <div class="form-group col-md-2">
+              <label class="adInsLabel">Return Reason</label>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                (change)="onChangeReason($event)"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && SimpleLeadQCForm.controls.Reason.invalid}">
+                <option value="">-Select One-</option>
+                <option *ngFor="let it of DDLReasonReturn" value="{{it.Key}}">
+                  {{it.Value}}
+                </option>
+              </select>
+              <lib-uc-show-errors [control]="SimpleLeadQCForm.controls.Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row adins-required">
+            <div class="form-group col-md-2">
+              <label class="adInsLabel">Return Notes</label>
+            </div>
+            <div class="col-md-4">
+              <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && SimpleLeadQCForm.controls.Notes.invalid}"></textarea>
+              <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="col-md-12">
+        <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5" style="text-align: right;">
+        <button *ngIf="!isReturn" type="button" class="btn btn-raised btn-danger mr-1" (click)="Return()">
+          <i class="fa fa-reply"></i>&nbsp;<span translate>Return</span>
+        </button>
+        <button *ngIf="isReturn" type="button" class="btn btn-raised btn-danger mr-1" (click)="CancelReturn()">
+          <i class="fa fa-reply"></i>&nbsp;<span translate>Cancel Return</span>
+        </button>
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+          <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+        </button>
+        <button *ngIf="!isReturn" type="button" class="btn btn-raised btn-primary" (click)="Save()">
+          <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+        </button>
+        <button *ngIf="isReturn" type="button" class="btn btn-raised btn-primary" (click)="SaveReturn()">
+          <i class="far fa-check-square"></i>&nbsp;<span translate>Confirm Return</span>
+        </button>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</form>

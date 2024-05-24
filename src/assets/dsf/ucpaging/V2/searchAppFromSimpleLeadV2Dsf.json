@@ -19,13 +19,13 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "ddlType": "all",
-            "url": "",
-            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-            "label": "Office",
-            "items": [],
             "isQueryIn": true,
-            "itemsUrl": [],
-            "environment": "FOU"
+            "url": "",
+            "environment": "FOU",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
         },
         {
             "type": "textbox",
@@ -45,12 +45,22 @@
             "placeholder": "Placeholder"
         },
         {
-            "type": "textbox",
-            "name": "ISNULL(RL.DESCR,'')",
+            "type": "dropdown",
+            "name": "L.LOB_CODE",
             "id": "LobNameId",
             "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "environment":"FOU",
+            "path":"/RefMaster/GetListKeyValueActiveByCode",
             "label": "Line Of Business",
-            "placeholder": "Placeholder"
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "LOB",
+            "items": [],
+            "itemsUrl": []
         },
         {
             "type": "datepicker",
@@ -97,6 +107,12 @@
         },
         {
             "type": "sort",
+            "position": "left",
+            "label": "Claim By",
+            "name": "ISNULL(ACT.CLAIM_BY, '')"
+        },
+        {
+            "type": "sort",
             "position": "center",
             "label": "Lead No",
             "name": "L.LEAD_NO"
@@ -111,7 +127,7 @@
             "type": "sort",
             "position": "center",
             "label": "Line Of Business",
-            "name": "ISNULL(RL.DESCR,'')"
+            "name": "L.LOB_CODE"
         },
         {
             "type": "sort",
@@ -142,6 +158,11 @@
             "type": "text",
             "position": "left",
             "property": "OriOfficeName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
         },
         {
             "type": "link",

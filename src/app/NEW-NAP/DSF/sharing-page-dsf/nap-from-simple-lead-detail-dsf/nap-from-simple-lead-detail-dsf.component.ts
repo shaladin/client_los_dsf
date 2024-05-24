@@ -12,6 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { ClaimTaskLeadDsf } from 'app/shared/model/claim-task-lead-dsf-obj.model';
 import { CriteriaObj } from 'app/shared/model/criteria-obj.model';
 import { CurrentUserContext } from 'app/shared/model/current-user-context.model';
 import { InputLookupObj } from 'app/shared/model/input-lookup-obj.model';
@@ -97,6 +98,7 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
   bizTemplateCode: string;
   refMasterObj: RefMasterObj;
   getListActiveLob: string;
+  ClaimTaskLeadDsf: ClaimTaskLeadDsf = new ClaimTaskLeadDsf();
 
   constructor(
     private fb: FormBuilder,
@@ -241,6 +243,21 @@ export class NapFromSimpleLeadDetailDsfComponent implements OnInit {
   }
 
   SaveForm() {
+    // CR Change Self Custom
+    this.ClaimTaskLeadDsf.LeadId = this.leadId;
+    this.ClaimTaskLeadDsf.ActivityName = "NAPFromSimpleLeadTask";
+    this.ClaimTaskLeadDsf.ClaimBy = this.user.UserName;
+    this.ClaimTaskLeadDsf.ClaimDt = this.user.BusinessDt;
+    this.ClaimTaskLeadDsf.ClaimOffice = this.user.OfficeCode;
+    this.ClaimTaskLeadDsf.ClaimRole = this.user.RoleCode;
+    this.ClaimTaskLeadDsf.IsDone = true;
+
+    this.http.post(URLConstantDsf.EditClaimTaskLeadDsf, this.ClaimTaskLeadDsf).subscribe(
+      response => {
+      }
+    )
+    // CR Change Self Custom
+
     var napAppObj = new NapAppModel();
     napAppObj = this.NapAppForm.value;
     napAppObj.AppCreatedDt = this.user.BusinessDt;

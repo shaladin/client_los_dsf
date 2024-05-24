@@ -88,4 +88,16 @@ export class URLConstantDsf {
     public static GetProvisionFeeByAppId = environment.losUrl + "/AppDsf/GetAppProvisionFeeByAppIdDsf";
 
     public static CheckIsNegCustAllowedCreateAppDsf = environment.FoundationR3Url + "/CustDsf/CheckIsNegCustAllowedCreateAppDsf"
+    public static GetMouMainInfoByIdXDsf = environment.losUrl + "/MouCustXDsf/GetMouMainInfoByIdXDsf";
+    public static GetMouCustXDsf = environment.losUrl + "/MouCustXDsf/GetMouCustXDsf";
+    public static AddMouCustXDsf = environment.losUrl + "/MouCustXDsf/AddMouCustXDsf";
+    public static EditMouCustXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustXDsf";
+    public static EditMouCustNewCalculationXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustNewCalculationXDsf";
+    public static SubmitReviewDsf = environment.losUrl + "/MouCustXDsf/SubmitReviewDsf";
+
+    public static GetClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/GetClaimTaskLeadDsf";
+    public static AddClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/AddClaimTaskLeadDsf";
+    public static EditClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/EditClaimTaskLeadDsf";
+    public static SubmitWorkflowLeadQCV2Dsf = environment.losUrl + "/v2" + "/LeadX/SubmitWorkflowLeadQC";
+    public static SimpleLeadReturnDsf = environment.losUrl + "/v2" + "/LeadX/SimpleLeadReturnDsf";
 }
