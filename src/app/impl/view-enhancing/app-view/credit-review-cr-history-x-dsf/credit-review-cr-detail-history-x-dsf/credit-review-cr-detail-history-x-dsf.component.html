@@ -35,6 +35,7 @@
         <app-crd-rvw-dealer-info *ngIf="isShow && !IsFD  && BizTemplateCode != 'CFNA'" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
         <app-tab-deviation-history [AppId]=appId *ngIf="!isReturnOn" (GetData)="BindManualDeviationData($event)"></app-tab-deviation-history>
+        <app-crd-rvw-ica-verdict-dsf *ngIf="IsShowIcaVerdict" [AppId]=appId [IsView]="true"></app-crd-rvw-ica-verdict-dsf>
       </div>
     </div>
   </div>

@@ -45,8 +45,13 @@
     <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
 
     <app-view-highlight-comment [appId]="appId" (outputTab)="GetCommnet($event)"></app-view-highlight-comment>
+    <div class="card-body">
+      <div class="px-3">
+        <app-crd-rvw-ica-verdict-dsf *ngIf="IsShowIcaVerdict" [AppId]=appId [IsView]="true"></app-crd-rvw-ica-verdict-dsf>
+      </div>
+    </div>
     <br />
-
+    
     <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
       (onCancel)="onCancelClick()"></lib-ucapprovalR3>
   </div>

@@ -51,6 +51,7 @@ import { CrdRvwCustInfoXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-compon
 import { CrdRvwCustPersonalInfoXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-personal-info-x/crd-rvw-cust-personal-info-x-dsf.component";
 import { CrdRvwCustCompanyInfoXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/crd-rvw-cust-company-info-x/crd-rvw-cust-company-info-x-dsf.component";
 import { CrdRvwCustHistDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-cust-hist-data-x-dsf/crd-rvw-cust-hist-data-x-dsf.component";
+import { CrdRvwIcaVerdictDsfComponent } from "app/NEW-NAP/DSF/sharing-component-dsf/credit-review-component-dsf/crd-rvw-ica-verdict-dsf/crd-rvw-ica-verdict-dsf.component";
 
 @NgModule({
     exports: [
@@ -87,7 +88,8 @@ import { CrdRvwCustHistDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-co
         CrdRvwGrpHistDataDsfComponent,
         CrdRvwCustInfoXDsfComponent,
         CrdRvwCustHistDataXDsfComponent,
-        CrdRvwCustHistDataXDsfComponent
+        CrdRvwCustHistDataXDsfComponent,
+        CrdRvwIcaVerdictDsfComponent
     ],
     imports: [
         CommonModule,
@@ -144,7 +146,8 @@ import { CrdRvwCustHistDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-co
         CrdRvwCustPersonalInfoXDsfComponent,
         CrdRvwCustCompanyInfoXDsfComponent,
         CrdRvwCustHistDataXDsfComponent,
-        CrdRvwCustHistDataXDsfComponent
+        CrdRvwCustHistDataXDsfComponent,
+        CrdRvwIcaVerdictDsfComponent
     ],
     providers: [
         NGXToastrService
