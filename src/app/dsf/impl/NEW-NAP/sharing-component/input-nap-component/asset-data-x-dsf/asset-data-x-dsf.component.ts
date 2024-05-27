@@ -117,6 +117,8 @@ export class AssetDataXDsfComponent implements OnInit {
   readonly SD = CommonConstantX.SD;
   readonly CF4W = CommonConstant.CF4W;
   readonly FL4W = CommonConstant.FL4W;
+  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
+  isReadOnly:boolean = false;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -1610,6 +1612,7 @@ export class AssetDataXDsfComponent implements OnInit {
       this.AssetDataForm.controls["ownerData"].disable();
       this.AssetDataForm.controls["OwnerAddrType"].disable();
       this.AssetDataForm.controls["MrOwnerTypeCode"].disable();
+      this.isReadOnly = true
     }
     else {
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
@@ -1622,7 +1625,9 @@ export class AssetDataXDsfComponent implements OnInit {
       this.AssetDataForm.controls["ownerData"].enable();
       this.AssetDataForm.controls["OwnerAddrType"].enable();
       this.AssetDataForm.controls["MrOwnerTypeCode"].enable();
+      this.isReadOnly = true
     };
+    this.ChangeMrIdTypeCode(this.AssetDataForm.controls["MrIdTypeCode"].value);
   }
 
   async getAllAssetData() {
@@ -3098,7 +3103,7 @@ export class AssetDataXDsfComponent implements OnInit {
   }
 
   ChangeMrIdTypeCode(MrIdTypeCode: string) {
-    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
+    if (this.npwpOrKtp.includes(MrIdTypeCode)) {
       this.AssetDataForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
     }

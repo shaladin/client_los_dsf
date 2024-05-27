@@ -219,6 +219,9 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
   checkIdNoType() {
     if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeEKTP) {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      if (this.SalesAppInfoForm.controls['MrWopCode'].value == this.wopCodeAutoDebit) {
+        this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.required,Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      }
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstantX.MrIdTypeCodePassport) {
@@ -235,10 +238,16 @@ export class ApplicationDataDlfnXDsfComponent implements OnInit {
     }
     else if (this.SalesAppInfoForm.controls.MrIdTypeOwnerBnkAcc.value == CommonConstant.MrIdTypeCodeNPWP) {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
+      if (this.SalesAppInfoForm.controls['MrWopCode'].value == this.wopCodeAutoDebit) {
+        this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.required,Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      }
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
     else {
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      if (this.SalesAppInfoForm.controls['MrWopCode'].value == this.wopCodeAutoDebit) {
+        this.SalesAppInfoForm.get("IdNoOwnerBankAcc").setValidators([Validators.required,Validators.maxLength(50)]);
+      }
       this.SalesAppInfoForm.get("IdNoOwnerBankAcc").updateValueAndValidity();
     }
   }

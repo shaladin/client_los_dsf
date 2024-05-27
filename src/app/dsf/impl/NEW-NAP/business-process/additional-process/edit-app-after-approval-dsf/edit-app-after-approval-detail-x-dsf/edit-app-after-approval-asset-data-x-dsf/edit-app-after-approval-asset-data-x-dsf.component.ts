@@ -131,6 +131,9 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
   returnAppAssetDsfObj: any;
   // End Self Custom Changes CR Runner KTB 398912
 
+  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
+  isReadOnly:boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private toastr: NGXToastrService,
@@ -203,6 +206,7 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
       }
     );
     // End Self Custom Changes CR Runner KTB 398912
+    this.onOptionsSelected()
   }
 
   async SetAssetTypeData()
@@ -338,6 +342,16 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
 
   }
 
+  onOptionsSelected(){
+    if(this.npwpOrKtp.includes(this.EditAppAssetForm.controls.MrIdTypeCode.value)){
+      this.EditAppAssetForm.controls.OwnerIdNo.setValidators([Validators.required,Validators.maxLength(16),Validators.minLength(16),Validators.pattern("^[0-9]+$")])
+    }
+    else{
+      this.EditAppAssetForm.controls.OwnerIdNo.setValidators(Validators.maxLength(50))
+    }
+    this.EditAppAssetForm.controls.OwnerIdNo.updateValueAndValidity();
+  }
+
   async GetAppData() {
     let reqGetAppById : GenericObj = new GenericObj();
     reqGetAppById.Id = this.AppId;
@@ -458,6 +472,7 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
       this.EditAppAssetForm.controls["ownerData"].disable();
       this.EditAppAssetForm.controls["OwnerAddrType"].disable();
       this.EditAppAssetForm.controls["MrOwnerTypeCode"].disable();
+      this.isReadOnly = true
     } else {
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
       this.InputLookupProfessionObj.isDisable = false;
@@ -469,6 +484,7 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
       this.EditAppAssetForm.controls["ownerData"].enable();
       this.EditAppAssetForm.controls["OwnerAddrType"].enable();
       this.EditAppAssetForm.controls["MrOwnerTypeCode"].enable();
+      this.isReadOnly = false
     };
   }
 
