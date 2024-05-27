@@ -1420,18 +1420,18 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   setValidatorForUpdate() {
     if (this.typePage == "update") {
       this.IsSimpleLeadUpdate = true;
-      // this.CustomerDataForm.controls['Gender'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['Gender'].updateValueAndValidity();
-      // this.CustomerDataForm.controls['BirthPlace'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['BirthPlace'].updateValueAndValidity();
-      // this.CustomerDataForm.controls['MrIdTypeCode'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['MrIdTypeCode'].updateValueAndValidity();
-      // this.CustomerDataForm.controls['MotherName'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['MotherName'].updateValueAndValidity();
+      this.CustomerDataForm.controls['Gender'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['Gender'].updateValueAndValidity();
+      this.CustomerDataForm.controls['BirthPlace'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['BirthPlace'].updateValueAndValidity();
+      this.CustomerDataForm.controls['MrIdTypeCode'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['MrIdTypeCode'].updateValueAndValidity();
+      this.CustomerDataForm.controls['MotherName'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['MotherName'].updateValueAndValidity();
       this.CustomerDataForm.controls['IdNo'].setValidators([Validators.required]);
       this.CustomerDataForm.controls['IdNo'].updateValueAndValidity();
-      // this.CustomerDataForm.controls['MrMaritalStatCode'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['MrMaritalStatCode'].updateValueAndValidity();
+      this.CustomerDataForm.controls['MrMaritalStatCode'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['MrMaritalStatCode'].updateValueAndValidity();
       // this.inputAddressObjForLegalAddr.isRequired = true;
     }
   }
