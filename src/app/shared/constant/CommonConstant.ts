@@ -478,6 +478,7 @@ export class CommonConstant {
   public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
   public static RefReasonTypeCodeReturnHandlingGeneral = "RTN_H_GEN";
   public static RefReasonTypeCodeOfferingValidityReqApv = "OFF_VLD_REQ_APV";
+  public static RefReasonTypeCodeSimpleLead = "SIMPLE_LEAD";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";

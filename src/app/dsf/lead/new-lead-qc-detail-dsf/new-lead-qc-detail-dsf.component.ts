@@ -157,7 +157,7 @@ export class NewLeadQcDetailDsfComponent implements OnInit {
   }
 
   async BindDDLReasonReturn() {
-    var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeSimpleLead };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
         (response) => {
             this.DDLReasonReturn = response[CommonConstant.ReturnObj];
