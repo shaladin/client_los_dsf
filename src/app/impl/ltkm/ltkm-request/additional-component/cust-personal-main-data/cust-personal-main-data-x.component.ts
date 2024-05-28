@@ -594,6 +594,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
     if (pattern != undefined) {
       if(!this.isLockMode)
       {
+        this.isReadOnly = false
         this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].setValidators([Validators.required, Validators.pattern(pattern)]);
         this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].updateValueAndValidity();
       }
