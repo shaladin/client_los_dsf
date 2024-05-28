@@ -60,6 +60,9 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   MaxDate: Date;
 
+  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
+  isReadOnly:boolean = false
+
   constructor(
     private regexService: RegexService,
     private fb: FormBuilder, 
