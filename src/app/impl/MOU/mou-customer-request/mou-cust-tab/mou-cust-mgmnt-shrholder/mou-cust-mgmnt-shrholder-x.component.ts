@@ -61,6 +61,7 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
   defaultJobPositionName: string;
   npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
   isReadOnly:boolean = false
+  isReadOnlyIdNo:boolean = false
 
 
   CustShareholderForm = this.fb.group({
@@ -174,6 +175,7 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
     this.CustShareholderForm.controls.MrCompanyTypeCode.enable();
     this.CustShareholderForm.controls.EstablishmentDt.enable();
     this.isReadOnly = false
+    this.isReadOnlyIdNo = false
     this.isCust = false;
     this.npwpKtpChecking()
   }
@@ -233,7 +235,6 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
         this.CustShareholderForm.controls.MrGenderCode.disable();
         this.CustShareholderForm.controls.MrIdTypeCode.disable();
         this.CustShareholderForm.controls.IdExpiredDt.disable();
-        this.CustShareholderForm.controls.IdNo.disable();
         this.CustShareholderForm.controls.BirthPlace.disable();
         this.CustShareholderForm.controls.BirthDt.disable();
         this.CustShareholderForm.controls.MrGenderCode.disable();
@@ -356,7 +357,7 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
             });
             this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == response["CustObj"].MrCustTypeCode).Value;
           }
-
+          
           if (response["CustPersonalObj"] != undefined) {
             this.CustShareholderForm.patchValue({
               MrGenderCode: response["CustPersonalObj"].MrGenderCode,
@@ -366,22 +367,22 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
               Email: response["CustPersonalObj"].Email1
             });
           }
-
+          
           if (response["CustPersonalJobDataObj"] != undefined) {
             this.CustShareholderForm.patchValue({
               MrJobPositionCode: response["CustPersonalJobDataObj"].MrJobPositionCode,
             });
             this.selectedJobPositionName = this.JobPositionObj.find(x => x.Key == response["CustPersonalJobDataObj"].MrJobPositionCode).Value;
           }
-
+          
           this.CustShareholderForm.controls.MrGenderCode.disable();
           this.CustShareholderForm.controls.MrIdTypeCode.disable();
           this.CustShareholderForm.controls.IdExpiredDt.disable();
-          this.CustShareholderForm.controls.IdNo.disable();
           this.CustShareholderForm.controls.BirthPlace.disable();
           this.CustShareholderForm.controls.BirthDt.disable();
           this.CustShareholderForm.controls.MrGenderCode.disable();
           this.npwpKtpChecking()
+          this.isReadOnlyIdNo=true
         }
 
         if (event.MrCustTypeCode == CommonConstant.CustTypeCompany) {
@@ -406,6 +407,7 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
           this.CustShareholderForm.controls.EstablishmentDt.disable();
           this.isCust = true;
           this.isReadOnly = true
+          this.isReadOnlyIdNo = true
         }
       },
       (error) => {
@@ -423,6 +425,11 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
         console.log(this.CustShareholderForm.controls.MrIdTypeCode.value)
         this.isReadOnly = true
         this.CustShareholderForm.controls.TaxIdNo.setValue(this.CustShareholderForm.controls.IdNo.value)
+        this.CustShareholderForm.controls.IdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      }
+      else {
+        this.isReadOnly = false
+        this.CustShareholderForm.controls.IdNo.setValidators(Validators.maxLength(50));
       }
     }
   }
@@ -625,9 +632,11 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
   }
 
   onChangeIdType() {
+    console.log(this.CustShareholderForm.value.MrIdTypeCode)
     if (this.npwpOrKtp.includes(this.CustShareholderForm.value.MrIdTypeCode)) {
       this.isReadOnly = true
       this.CustShareholderForm.controls.IdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      console.log("cek")
     }
     else {
       this.isReadOnly = false
