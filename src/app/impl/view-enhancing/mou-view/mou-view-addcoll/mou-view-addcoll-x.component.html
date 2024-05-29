@@ -59,9 +59,9 @@
     <app-mou-view-addcoll-detail-x [MouCustCollateralId]="MouCustCollateralId"></app-mou-view-addcoll-detail-x>
   </div>
     <!-- CR Change Self Custom -->
-  <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'">
+  <lib-ucSubsection [id]="'NewCalculationId'" [title]="'New Calculation'" [panel]="'NewCalculation'" *ngIf="isFactNewCalc">
   </lib-ucSubsection>
-  <div id="NewCalculation" style="overflow-x: auto;">
+  <div id="NewCalculation" style="overflow-x: auto;" *ngIf="isFactNewCalc">
     <lib-ucSubsection [id]="'NewCalculationInfoId'" [title]="'New Calculation Info'" [panel]="'NewCalculationInfo'"></lib-ucSubsection>
       <div id="NewCalculationInfo">
         <div class="form-group row">

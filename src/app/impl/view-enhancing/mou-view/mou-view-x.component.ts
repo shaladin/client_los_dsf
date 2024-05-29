@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie';
 import { MouCustObj } from 'app/shared/model/mou-cust-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-mou-view-x',
@@ -30,6 +31,11 @@ export class MouViewXComponent implements OnInit {
   Viewlink: string;
   dmsObj: DMSObj;
   MouCustNo: string;
+  //CR Change Self Custom
+  generalSettingObj: GeneralSettingObj;
+  returnGeneralSettingObj: GeneralSettingObj;
+  isFactNewCalc: boolean = false;
+  //CR Change Self Custom
   
   constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -42,6 +48,18 @@ export class MouViewXComponent implements OnInit {
   }
 
   ngOnInit() {
+    //CR Change Self Custom
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "IS_FACT_NEW_CALC";
+    let obj = {
+      Code: this.generalSettingObj.GsCode
+    }
+    this.http.post(URLConstant.GetGeneralSettingByCode, obj).subscribe(
+      (response: GeneralSettingObj) => {
+        this.returnGeneralSettingObj = response;
+        this.isFactNewCalc = Boolean(this.returnGeneralSettingObj.GsValue ?? 0);
+      });
+    //CR Change Self Custom
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
