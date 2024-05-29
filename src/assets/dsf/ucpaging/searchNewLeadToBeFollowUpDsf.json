@@ -33,7 +33,7 @@
           "name": "CASE WHEN COALESCE(ACT.CLAIM_BY, '') <> '' THEN 'CLAIMED' ELSE 'UNCLAIMED' END",
           "id": "ActiveStatusId",
           "label": "Task Claim Status",
-          "ddlType": "all",
+          "ddlType": "all",          
           "value": "",
           "placeholder": "Placeholder",
           "isFromURL": false,
@@ -240,9 +240,41 @@
           "position": "center",
           "action": [
               {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
+                  "type": "switch",
+                  "case": [
+                      {
+                          "conditions": [
+                              {
+                                  "isUser": true,
+                                  "property": "ClaimBy",
+                                  "value": "",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "callback",
+                              "key": "Edit",
+                              "icon": "ft-edit-2"
+                          },
+                          "isHide": false
+                      },
+                      {
+                          "conditions": [
+                              {
+                                  "isUser": false,
+                                  "property": "ClaimBy",
+                                  "value": "",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "callback",
+                              "key": "Edit",
+                              "icon": "ft-edit-2"
+                          },
+                          "isHide": false
+                      }
+                  ]
               }
           ]
       }
