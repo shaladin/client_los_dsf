@@ -13,6 +13,7 @@ import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-mou-view-addcoll-x',
@@ -58,10 +59,27 @@ export class MouViewAddcollXComponent implements OnInit {
   dealerGrading: string;
   dealerRating: number;
   //CR Change Self Custom
+  generalSettingObj: GeneralSettingObj;
+  returnGeneralSettingObj: GeneralSettingObj;
+  isFactNewCalc: boolean = false;
+  //CR Change Self Custom
+  //CR Change Self Custom
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
+    //CR Change Self Custom
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "IS_FACT_NEW_CALC";
+    let obj = {
+      Code: this.generalSettingObj.GsCode
+    }
+    this.http.post(URLConstant.GetGeneralSettingByCode, obj).subscribe(
+      (response: GeneralSettingObj) => {
+        this.returnGeneralSettingObj = response;
+        this.isFactNewCalc = Boolean(this.returnGeneralSettingObj.GsValue ?? 0);
+      });
+    //CR Change Self Custom
     var mouCustObj = { Id: this.MouCustId }
     this.http.post(URLConstant.GetMouCustCollateralForMouViewByMouCustId, mouCustObj).subscribe(
       (response) => {
