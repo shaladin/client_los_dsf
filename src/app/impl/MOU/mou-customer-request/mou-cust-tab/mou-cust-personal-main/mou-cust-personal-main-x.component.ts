@@ -120,6 +120,7 @@ export class MouCustPersonalMainXComponent implements OnInit {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
         this.npwpKtpChecking()
+        this.getInitPattern()
       },
       (error) => {
         console.log(error);
