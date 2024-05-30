@@ -209,7 +209,7 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
     this.clearForm();
     this.mode = "edit";
     this.currentEditedIndex = i;
-
+    this.isReadOnly = true
     if (this.listShareholder[i].MrShrholderTypeCode == CommonConstant.CustTypePersonal) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
@@ -431,6 +431,7 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
         this.isReadOnly = false
         this.CustShareholderForm.controls.IdNo.setValidators(Validators.maxLength(50));
       }
+      this.CustShareholderForm.controls.IdNo.updateValueAndValidity();
     }
   }
 
@@ -603,6 +604,10 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
           this.defaultIdType = this.IdTypeObj[0].Key
+          this.CustShareholderForm.patchValue({
+            MrIdTypeCode: this.defaultIdType
+          })
+          this.npwpKtpChecking()
         }
       }
     );
@@ -674,9 +679,7 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
         IdExpiredDt: null
       });
     }
-    if(this.npwpOrKtp.includes(this.CustShareholderForm.value.MrIdTypeCode)){
-      this.npwpKtpChecking()
-    }
+    this.npwpKtpChecking()
     this.onChangeIdType();
   }
 }
