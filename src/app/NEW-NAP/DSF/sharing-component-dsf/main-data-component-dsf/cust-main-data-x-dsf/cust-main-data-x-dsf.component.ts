@@ -63,7 +63,8 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 @Component({
   selector: 'app-cust-main-data-x-dsf',
   templateUrl: './cust-main-data-x-dsf.component.html',
-  styleUrls: ['./cust-main-data-x-dsf.component.css']
+  styleUrls: ['./cust-main-data-x-dsf.component.css'],
+  providers: [RegexService]
 })
 export class CustMainDataXDsfComponent implements OnInit {
 
@@ -1277,8 +1278,9 @@ export class CustMainDataXDsfComponent implements OnInit {
       this.setDataCustomerMgmntShrholder(CustCompanyMgmntShrholderObj)
     }
 
-    this.npwpKtpChecking()
     this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
+    this.npwpKtpChecking()
+    
   }
 
   setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj, CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {
@@ -2408,7 +2410,8 @@ export class CustMainDataXDsfComponent implements OnInit {
       this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required]);
     }
     else {
-      this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
+      this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.npwpKtpChecking()
     }
     this.CustMainDataForm.get("TaxIdNo").updateValueAndValidity();
   }
