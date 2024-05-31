@@ -81,7 +81,7 @@ export class NewLeadQcDsfComponent implements OnInit {
     if (this.CurrentUserContext.RoleCode == "DPC - SPV" && this.CurrentUserContext.OfficeCode == "1000")
       {
         setTimeout(() => {
-          const element1 = this.elRef.nativeElement.querySelector('select[data-name="L.ORI_OFFICE_CODE"]');
+          const element1 = this.elRef.nativeElement.querySelector('select[name="L.ORI_OFFICE_CODE"]');
           if (element1 && element1.display != 'none') {
             this.renderer.setStyle(element1, "display", "none");
             element1.insertAdjacentHTML('afterend', '<label>ALL</label>');
