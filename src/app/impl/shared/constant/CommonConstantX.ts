@@ -84,6 +84,7 @@ export class CommonConstantX {
     //Ref Master
     public static REF_MASTER_ASSET_CONDITION_DESCR_USED = "Used";
     public static REF_MASTER_CODE_NO_ADD_INTEREST = "NO_ADD_INTEREST";
+    public static REF_MASTER_WOP_FCTR = "WOP_FCTR";
 
     //Return Handling
     public static ReturnHandlingAddSurveyVerf = "RTN_ADD_SRVY";
