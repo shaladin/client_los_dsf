@@ -15,6 +15,7 @@ import { GenericObj } from "app/shared/model/generic/generic-obj.model";
 import { MouCustListedCustFctrObj } from "app/shared/model/mou-cust-listed-cust-fctr-obj.model";
 import { RefMasterObj } from "app/shared/model/ref-master-obj.model";
 import { environment } from "environments/environment";
+import { CommonConstantX } from "app/impl/shared/constant/CommonConstantX";
 
 @Component({
   selector: "app-change-mou-detail-factoring-x",
@@ -100,7 +101,7 @@ export class ChangeMouDetailFactoringXComponent implements OnInit {
     );
 
     var rmWop = new RefMasterObj();
-    rmWop.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWOP;
+    rmWop.RefMasterTypeCode = CommonConstantX.REF_MASTER_WOP_FCTR;
     let getWop = this.httpClient.post(
       URLConstant.GetRefMasterListKeyValueActiveByCode,
       rmWop
