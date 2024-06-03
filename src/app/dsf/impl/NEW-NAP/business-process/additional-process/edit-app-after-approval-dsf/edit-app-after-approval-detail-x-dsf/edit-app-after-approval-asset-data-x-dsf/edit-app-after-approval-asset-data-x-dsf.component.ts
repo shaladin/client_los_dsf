@@ -466,25 +466,23 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
       this.InputLookupProfessionObj.isDisable = true;
       this.EditAppAssetForm.controls["OwnerName"].disable();
       this.EditAppAssetForm.controls["MrIdTypeCode"].disable();
-      this.EditAppAssetForm.controls["OwnerIdNo"].disable();
+      this.isReadOnly = true
       this.EditAppAssetForm.controls["MrOwnerRelationshipCode"].disable();
       this.EditAppAssetForm.controls["OwnerMobilePhnNo"].disable();
       this.EditAppAssetForm.controls["ownerData"].disable();
       this.EditAppAssetForm.controls["OwnerAddrType"].disable();
       this.EditAppAssetForm.controls["MrOwnerTypeCode"].disable();
-      this.isReadOnly = true
     } else {
       this.inputFieldOwnerAddrObj.inputLookupObj.isDisable = false;
       this.InputLookupProfessionObj.isDisable = false;
       this.EditAppAssetForm.controls["OwnerName"].enable();
       this.EditAppAssetForm.controls["MrIdTypeCode"].enable();
-      this.EditAppAssetForm.controls["OwnerIdNo"].enable();
+      this.isReadOnly = false;
       this.EditAppAssetForm.controls["MrOwnerRelationshipCode"].enable();
       this.EditAppAssetForm.controls["OwnerMobilePhnNo"].enable();
       this.EditAppAssetForm.controls["ownerData"].enable();
       this.EditAppAssetForm.controls["OwnerAddrType"].enable();
       this.EditAppAssetForm.controls["MrOwnerTypeCode"].enable();
-      this.isReadOnly = false
     };
   }
 
