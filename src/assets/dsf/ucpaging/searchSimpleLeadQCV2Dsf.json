@@ -83,6 +83,10 @@
     "querystring": {
         "name": "searchSimpleLeadQCV2Dsf"
     },
+    "orderby": {
+        "key": "ROW_NUMBER() OVER (ORDER BY L.DTM_UPD ASC)",
+        "value": "true"
+    },
     "headerList": [
         {
             "type": "label",
