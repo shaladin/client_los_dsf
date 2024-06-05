@@ -93,7 +93,6 @@ import { ReturnHandlingDetailDsfComponent } from "app/NEW-NAP/DSF/business-proce
 import { PlafondInstallmentSimulationPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-paging-dsf/plafond-installment-simulation-paging-dsf.component";
 import { ReturnHandlingEditNap4DsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component";
 import { PlafondInstallmentSimulationDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component";
-import { CreditApprovalResultExtensionApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/credit-apv-result-ext/approval/detail/detail-x.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
