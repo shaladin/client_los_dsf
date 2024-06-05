@@ -353,6 +353,7 @@ export class PathConstant {
     public static MOU_CUST_RVW_GENERAL = PathConstant.MOU_CUST + "/ReviewGeneral";
     public static MOU_CUST_RVW_FCTR = PathConstant.MOU_CUST + "/ReviewFactoring";
     public static MOU_CUST_RVW_DFLN = PathConstant.MOU_CUST + "/ReviewDLFN";
+    public static MOU_CUST_RVW_FCTR_X_DSF = PathConstant.MOU_CUST + '/ReviewFactoringXDsf';
     public static MOU_CUST_APPRV = PathConstant.MOU_CUST + "/Approval";
     public static MOU_CUST_APPRV_GENERAL = PathConstant.MOU_CUST + "/ApprovalGeneral";
     public static MOU_CUST_APPRV_FCTR = PathConstant.MOU_CUST + "/ApprovalFactoring";

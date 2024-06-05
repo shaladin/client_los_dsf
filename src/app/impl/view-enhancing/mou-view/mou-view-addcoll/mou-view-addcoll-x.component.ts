@@ -9,6 +9,11 @@ import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { MouCustCollateralStatXObj } from 'app/impl/shared/model/MouCustCollateralStatXObj.Model';
 import { MouCustCollateralDocObj } from 'app/shared/model/mou-cust-collateral-doc-obj.model';
 import { MouCustCollateralObj } from 'app/shared/model/mou-cust-collateral-obj.model';
+import { ReqMouCustDsfObj } from 'app/shared/model/mou-cust-dsf-obj.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { RequestMouCustDsfObj } from 'app/shared/model/req-mou-cust-dsf-obj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 
 @Component({
   selector: 'app-mou-view-addcoll-x',
@@ -27,19 +32,90 @@ export class MouViewAddcollXComponent implements OnInit {
   collateralObj: MouCustCollateralObj;
   collateralRegistrationObj: any;
   CollateralStatObj: MouCustCollateralStatXObj;
+  ReqMouCustDsfObj: ReqMouCustDsfObj = new ReqMouCustDsfObj();
+  RequestMouCustDsfObj: RequestMouCustDsfObj = new RequestMouCustDsfObj();
+
+  //CR Change Self Custom
+  AddCollDataForm = this.fb.group({
+    // CR Change Self Custom
+    TotalCollateralActive: [0, Validators.required],
+    DealerEquity: [0],
+    IsDealerEquityManual: [false],
+    AdjEquity: [100.000000, [Validators.required, Validators.min(CommonConstant.PrcntMinValue), Validators.max(100)]],
+    NetDealerEquity: [0],
+    NotesNewCalculation: [''],
+    DealerGrading: [''],
+    DealerGradingMultiplier: [''],
+    Networth: [0],
+    IsNetworthManual: [false],
+    CeilingCollateral: [0],
+    IsCeilingCollateralManual: [false],
+    CeilingNetworth: [0],
+    IsCeilingNetworthManual: [false]
+    // CR Change Self Custom
+  })
+
+  mouType: string;
+  dealerGrading: string;
+  dealerRating: number;
+  //CR Change Self Custom
+  generalSettingObj: GeneralSettingObj;
+  returnGeneralSettingObj: GeneralSettingObj;
+  isFactNewCalc: boolean = false;
+  //CR Change Self Custom
+  //CR Change Self Custom
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
+    //CR Change Self Custom
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.GsCode = "IS_FACT_NEW_CALC";
+    let obj = {
+      Code: this.generalSettingObj.GsCode
+    }
+    this.http.post(URLConstant.GetGeneralSettingByCode, obj).subscribe(
+      (response: GeneralSettingObj) => {
+        this.returnGeneralSettingObj = response;
+        this.isFactNewCalc = Boolean(this.returnGeneralSettingObj == null ? 0 : this.returnGeneralSettingObj.GsValue);
+      });
+    //CR Change Self Custom
     var mouCustObj = { Id: this.MouCustId }
     this.http.post(URLConstant.GetMouCustCollateralForMouViewByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       })
+    
+    // CR Change Self Custom
+    this.RequestMouCustDsfObj = new RequestMouCustDsfObj();
+    this.RequestMouCustDsfObj.MouCustId = this.MouCustId;
+    this.RequestMouCustDsfObj.ChangeMouCustId = 0;
+    this.http.post<ReqMouCustDsfObj>(URLConstantDsf.GetMouCustXDsf, this.RequestMouCustDsfObj).subscribe(
+      (response) => {
+          this.AddCollDataForm.patchValue({
+            TotalCollateralActive: response.TotalCollateralActive,
+            DealerEquity: response.DealerEquity,
+            IsDealerEquityManual: response.IsDealerEquityManual,
+            AdjEquity: response.AdjEquity,
+            NetDealerEquity: response.NetDealerEquity,
+            NotesNewCalculation: response.Notes,
+            DealerGrading: response.DealerGrading,
+            DealerGradingMultiplier: response.DealerGradingMultiplier,
+            Networth: response.Networth,
+            IsNetworthManual: response.IsNetworthManual,
+            CeilingCollateral: response.CeilingCollateral,
+            IsCeilingCollateralManual: response.IsCeilingCollateralManual,
+            CeilingNetworth: response.CeilingNetworth,
+            IsCeilingNetworthManual: response.IsCeilingNetworthManual
+          });
+
+          this.dealerGrading = response.DealerGrading;
+          this.dealerRating = response.DealerGradingMultiplier;
+        }
+    )
+    // CR Change Self Custom
   }
 
-  AddCollDataForm = this.fb.group({
-  })
   ViewColl(MouCustCollateralId) {
     this.listMouCustCollateralDocObj = new Array<any>();
     this.MouCustCollateralId = MouCustCollateralId;

@@ -27,6 +27,9 @@
               <span style="float: center;" translate class="thead-header" name='Installment'>Installment</span>
             </th>
             <th>
+              <span style="float: center;" translate class="thead-header" name='CSPPercentage'>%CSP</span>
+            </th>
+            <th>
               <span style="float: center;"  translate class="thead-header" name='Periode'>Periode</span>
             </th>
             <th>
@@ -44,8 +47,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngIf="ExstAgrmnt == undefined || ExstAgrmnt?.length == 0">
-            <td align="center" colspan="11">No data found</td>
+          <tr *ngIf="ExstAgrmnt?.resAgrmntObjX == undefined || ExstAgrmnt?.resAgrmntObjX.length == 0">
+            <td align="center" colspan="13">No data found</td>
           </tr>
           <tr *ngFor="let item of ExstAgrmnt.resAgrmntObjX; let i = index">
             <td>{{i+1}}</td>
@@ -68,6 +71,8 @@
                 {{item.InstAmount | number:'.2':'en-US'}}
             </td>
             <td *ngIf="item.InstAmount==null"> - </td>
+            <td *ngIf="item.CspPercentage!=null">{{item.CspPercentage | number: '1.0-0'}} %</td>
+            <td *ngIf="item.CspPercentage==null"> - </td>
             <td *ngIf="item.Periode!=null">{{item.Periode}}</td>
             <td *ngIf="item.Periode==null"> - </td>
             <td *ngIf="item.DayOverdue!=null">{{item.DayOverdue}}</td>
@@ -123,6 +128,14 @@
           <label class="label-control"> {{ TotalOSAR | number:'.2':'en-US' }} </label>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="label-control" translate> Total %CSP</label>
+        </div>
+        <div class="col-md-3">
+          <label class="label-control"> {{ TotalCSPPercentage | number: '1.0-0'}} %</label>
+        </div>
+      </div>
     </div>
     <lib-ucSubsection [id]="'appRjcId'" [title]="'Application Reject'" [panel]="'appRjc'">
     </lib-ucSubsection>
@@ -149,6 +162,9 @@
               <span style="float: center;" translate class="thead-header" name='Installment'>Installment</span>
             </th>
             <th>
+              <span style="float: center;" translate class="thead-header" name='CSPPercentage'>%CSP</span>
+            </th>
+            <th>
               <span style="float: center;" translate class="thead-header" name='Period'>Period</span>
             </th>
             <th>
@@ -158,7 +174,7 @@
         </thead>
         <tbody>
           <tr *ngIf="AppRjct == undefined || AppRjct?.length == 0">
-            <td align="center" colspan="8">No data found</td>
+            <td align="center" colspan="9">No data found</td>
           </tr>
           <tr *ngFor="let item of AppRjct; let i = index">
             <td>{{i+1}}</td>
@@ -174,6 +190,8 @@
             <td *ngIf="item.TotalNTF==null"> - </td>
             <td *ngIf="item.InstAmount!=null">{{item.InstAmount | number:'.2':'en-US'}}</td>
             <td *ngIf="item.InstAmount==null"> - </td>
+            <td *ngIf="item.CspPercentage!=null">{{item.CspPercentage | number: '1.0-0'}} %</td>
+            <td *ngIf="item.CspPercentage==null"> - </td>
             <td *ngIf="item.NumOfInst!=null">{{item.NumOfInst}}</td>  <!-- belum clear. sementaran menggunakan NumOfInst -->
             <td *ngIf="item.NumOfInst==null"> - </td>
             <td *ngIf="item.AppStat!=null">{{item.AppStat}}</td>  <!-- belum clear. sementaran menggunakan NumOfInst -->
@@ -209,6 +227,14 @@
           <label class="label-control" translate>{{TotalRejectedInstallment | number:'.2':'en-US'}}</label>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="label-control" translate> Total %CSP</label>
+        </div>
+        <div class="col-md-3">
+          <label class="label-control"> {{ TotalRjcCSPPercentage | number: '1.0-0'}} %</label>
+        </div>
+      </div>
     </div>
     <lib-ucSubsection [id]="'appPrcId'" [title]="'Application In Process'" [panel]="'appPrc'">
     </lib-ucSubsection>
@@ -235,6 +261,9 @@
               <span style="float: center;" translate class="thead-header" name='Installment'>Installment</span>
             </th>
             <th>
+              <span style="float: center;" translate class="thead-header" name='CSPPercentage'>%CSP</span>
+            </th>
+            <th>
               <span style="float: center;" translate class="thead-header" name='Period'>Period</span>
             </th>
             <th>
@@ -244,7 +273,7 @@
         </thead>
         <tbody>
           <tr *ngIf="AppPrcs.resAppXV2Obj == undefined || AppPrcs?.resAppXV2Obj.length == 0">
-            <td align="center" colspan="8">No data found</td>
+            <td align="center" colspan="9">No data found</td>
           </tr>
           <tr *ngFor="let item of AppPrcs.resAppXV2Obj; let i = index">
             <td>{{i+1}}</td>
@@ -263,6 +292,8 @@
             <td *ngIf="item.TotalNTF==null"> - </td>
             <td *ngIf="item.InstAmount!=null">{{item.InstAmount | number:'.2':'en-US'}}</td>
             <td *ngIf="item.InstAmount==null"> - </td>
+            <td *ngIf="item.CspPercentage!=null">{{item.CspPercentage | number: '1.0-0'}} %</td>
+            <td *ngIf="item.CspPercentage==null"> - </td>
             <td *ngIf="item.NumOfInst!=null">{{item.NumOfInst}}</td>  <!-- belum clear. sementaran menggunakan NumOfInst -->
             <td *ngIf="item.NumOfInst==null"> - </td>
             <td *ngIf="item.AppCurrStep!=null">{{item.AppCurrStep}}</td>
@@ -298,6 +329,14 @@
           <label class="label-control" translate>{{TotalProcessInstallment | number:'.2':'en-US'}}</label>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="label-control" translate> Total %CSP</label>
+        </div>
+        <div class="col-md-3">
+          <label class="label-control"> {{ TotalPrcsCSPPercentage | number: '1.0-0'}} %</label>
+        </div>
+      </div>
     </div>
     <lib-ucSubsection [id]="'expiredAppId'" [title]="'Application Expired'" [panel]="'expiredApp'">
     </lib-ucSubsection>
@@ -327,6 +366,9 @@
               <span style="float: center;" translate class="thead-header" name='Installment'>Installment</span>
             </th>
             <th>
+              <span style="float: center;" translate class="thead-header" name='CSPPercentage'>%CSP</span>
+            </th>
+            <th>
               <span style="float: center;"  translate class="thead-header" name='Periode'>Periode</span>
             </th>
             <th>
@@ -345,7 +387,7 @@
         </thead>
         <tbody>
           <tr *ngIf="ExpiredApp.resAgrmntExpiredObjX == undefined || ExpiredApp?.resAgrmntExpiredObjX.length == 0">
-            <td align="center" colspan="11">No data found</td>
+            <td align="center" colspan="13">No data found</td>
           </tr>
           <tr *ngFor="let item of ExpiredApp.resAgrmntExpiredObjX; let i = index">
             <td>{{i+1}}</td>
@@ -371,6 +413,8 @@
                 {{item.InstAmount | number:'.2':'en-US'}}
             </td>
             <td *ngIf="item.InstAmount==null"> - </td>
+            <td *ngIf="item.CspPercentage!=null">{{item.CspPercentage | number: '1.0-0'}} %</td>
+            <td *ngIf="item.CspPercentage==null"> - </td>
             <td *ngIf="item.Periode!=null">{{item.Periode}}</td>
             <td *ngIf="item.Periode==null"> - </td>
             <td *ngIf="item.MaxOverdue!=null">{{item.MaxOverdue}}</td>
@@ -404,6 +448,14 @@
         </div>
         <div class="col-md-3">
           <label class="label-control"> {{ TotalExpiredAR | number:'.2':'en-US' }} </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label class="label-control" translate> Total %CSP</label>
+        </div>
+        <div class="col-md-3">
+          <label class="label-control"> {{ TotalExpCSPPercentage | number: '1.0-0'}} %</label>
         </div>
       </div>
     </div>

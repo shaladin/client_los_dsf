@@ -205,4 +205,29 @@ export class PathConstantDsf {
     public static PLAFOND_INSTALLMENT_SIMULATION_DETAIL = "PlafondInstallmentSimulationDsf" + "/" + PathConstant.DETAIL;
 
     public static VIEW_FOU_CUST_TRUST_SOC = "Customer/CustTrustSocDsf";
+    public static MOU_REQ_PAGING_X_DSF = PathConstant.MOU_REQ + "/" + PathConstantDsf.PAGING_X;
+    public static MOU_REQ_DETAIL_X_DSF = PathConstant.MOU_REQ + '/' + PathConstantDsf.DETAIL_X;
+    public static MOU_CUST_REQ_ADD_COLL_X_DSF = PathConstant.MOU_CUST + '/RequestAddCollXDsf';
+    public static MOU_CUST_RVW_PAGING_DSF = PathConstant.MOU_CUST + "/ReviewPagingDsf";
+    public static MOU_CUST_RVW_FCTR_X_DSF = PathConstant.MOU_CUST + '/ReviewFactoringXDsf';
+    public static MOU_EXECUTION_DETAIL_X_DSF = PathConstant.MOU_EXECUTION + '/' + PathConstantDsf.DETAIL_X;
+    public static MOU_EXECUTION_PAGING_X_DSF = PathConstant.MOU_EXECUTION + "/" + PathConstantDsf.PAGING_X;
+    public static MOU_CUST_APPRV_X_DSF = PathConstant.MOU_CUST + "/ApprovalXDsf";
+    public static MOU_CUST_APPRV_FCTR_X_DSF = PathConstant.MOU_CUST + '/ApprovalFactoringXDsf';
+    public static MOU_EDIT_CUST_PAGING_DSF = "EditMouCustomerDsf/" + PathConstantDsf.PAGING;
+    public static CHANGE_MOU_REQ_PAGING_X_DSF = PathConstant.CHANGE_MOU_REQ + "/" + PathConstantDsf.PAGING_X;
+    public static CHANGE_MOU_REQ_DETAIL_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL_X;
+    public static MOU_CUSTOMER_X = 'CustomerXDsf';
+    public static CHANGE_MOU_REQ_DETAIL_CUST_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL + '/' + PathConstantDsf.MOU_CUSTOMER_X;
+    public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE_X_DSF = PathConstant.CHANGE_MOU_REQ + '/' + PathConstantDsf.DETAIL + '/' + PathConstantDsf.MOU_CUSTOMER_X + '/:MOUType';
+    public static CHANGE_MOU_REQ_ADD_COLL_X_DSF = PathConstant.CHANGE_MOU + '/RequestAddCollXDsf';
+    public static CHANGE_MOU_RVW_PAGING_DSF = PathConstant.CHANGE_MOU + "/ReviewPagingDsf";
+    public static CHANGE_MOU_RVW_DETAIL_FCTR_X_DSF = PathConstant.CHANGE_MOU + '/ReviewDetailFctrXDsf';
+    public static CHANGE_MOU_RTN_PAGING_DSF = PathConstant.CHANGE_MOU + "/ReturnPagingDsf";
+    public static CHANGE_MOU_APV_DETAIL_FCTR_X_DSF = PathConstant.CHANGE_MOU + '/ApvDetailFctrXDsf';
+    public static CHANGE_MOU_APV_PAGING_X_DSF = PathConstant.CHANGE_MOU + "/ApvPagingXDsf";
+    public static FACTORING_REVIEW_DSF = "FactoringReviewDsf";
+    public static FACTORING_REVIEW_DETAIL_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstant.DETAIL;
+    public static FACTORING_REVIEW_ASSIGN_PROD_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstantX.ASSIGN_PROD;
+    public static FACTORING_REVIEW_PAGING_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstant.PAGING;
 }

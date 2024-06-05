@@ -75,18 +75,31 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
         trxNo = e.RowObj.TransactionNo;
         //get auto debit regis berdasarkan trxno
         this.http.post(URLConstantX.GetAutoDebitRegistrationByNo, { TrxNo: e.RowObj.TransactionNo }).subscribe(
-          (response: AutoDebitRegistrationObj) => {
+          async (response: AutoDebitRegistrationObj) => {
             let adr: AutoDebitRegistrationObj = response;
 
             //if(bank bca)
             if (adr.BankCode == this.bankBCA) {
+              const reqGsObj: object = {
+                code: CommonConstantX.GS_CODE_AUTO_DEBIT_BCA_WEBVIEW_DOMAIN
+              }
+              const domain = await this.http.post(URLConstant.GetGeneralSettingByCode, reqGsObj)
+                .toPromise()
+                .then((res) => {
+                  if (res['GsValue'] !== undefined && res['GsValue'] !== null && res['GsValue'] !== '') {
+                    return res['GsValue']
+                  }
+
+                  return ''
+                })
+
               //get log bca
               this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, { TrxNo: e.RowObj.TransactionNo }).subscribe(
                 (response1) => {
                   //if (currDt < expDt)
                   if (new Date() < new Date(response1["ExpiredDt"]) && response1["RequestId"] != null) {
                     //window.open
-                    this.windowSkpr = window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response1["RequestId"] + "&verification=" + response1["Verification"]);
+                    this.windowSkpr = window.open("https://" + domain + "/id/skpr/registration?req-id=" + response1["RequestId"] + "&verification=" + response1["Verification"]);
                     $(document).ready(() => {
                       window.addEventListener("message", receiveMessage.bind(this), false);
                     });
@@ -102,7 +115,7 @@ export class AutoDebitRegistrationPagingComponent implements OnInit {
                         else {
                           this.http.post(URLConstantX.GetListStgAutoDebitRegisLog, { TrxNo: e.RowObj.TransactionNo }).subscribe(
                             (response3) => {
-                              this.windowSkpr = window.open("https://pare.u-appspecto.com/id/skpr/registration?req-id=" + response3["RequestId"] + "&verification=" + response3["Verification"]);
+                              this.windowSkpr = window.open("https://" + domain + "/id/skpr/registration?req-id=" + response3["RequestId"] + "&verification=" + response3["Verification"]);
                               $(document).ready(() => {
                                 window.addEventListener("message", receiveMessage.bind(this), false);
                               });

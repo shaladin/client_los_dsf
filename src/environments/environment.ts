@@ -13,7 +13,7 @@ export const environment = {
   DMSUrl : "http://qanonlp-ldms-web.corp.dipostar.com/LiteDMS/Integration/ViewDoc.aspx",
   AMSUrl : "http://r3app-server.ad-ins.com/AMS_DEMO",
   LMSUrl : "http://r3app-server.ad-ins.com/LMS_DEMO",
-  ApprovalR3Url: 'http://foundation-be.confins.one:8888/Approval',
+  ApprovalR3Url: 'http://approval-be.confins.one:8888',
   //ApprovalR3Url: 'http://localhost:5000/Approval',
   ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
   FoundationR3Web:'http://foundation-be.confins.one:8888',

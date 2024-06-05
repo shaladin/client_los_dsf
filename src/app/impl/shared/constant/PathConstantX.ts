@@ -122,6 +122,7 @@ export class PathConstantX {
   public static MOU_CUST_APPRV_FCTR_X = PathConstant.MOU_CUST + '/ApprovalFactoringX';
   public static MOU_CUST_APPRV_GENERAL_X = PathConstant.MOU_CUST + '/ApprovalGeneralX';
   public static MOU_CUST_RVW_FCTR_X = PathConstant.MOU_CUST + '/ReviewFactoringX';
+  public static MOU_CUST_RVW_FCTR_X_DSF = PathConstant.MOU_CUST + '/ReviewFactoringXDsf';
   public static MOU_CUST_RVW_DFLN_X = PathConstant.MOU_CUST + '/ReviewDLFNX';
   public static MOU_CUST_RVW_GENERAL_X = PathConstant.MOU_CUST + '/ReviewGeneralX';
   public static MOU_EXECUTION_DETAIL_X = PathConstant.MOU_EXECUTION + '/' + PathConstantX.DETAIL_X;
