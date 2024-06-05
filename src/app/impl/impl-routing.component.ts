@@ -24,6 +24,9 @@ import { EditCommAfterApprovalInquiryDetailComponent } from './NEW-NAP/business-
 import { EditCommAfterApprovalInquiryPagingComponent } from './NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-inquiry-paging/edit-comm-after-approval-inquiry-paging.component';
 import { EditCommAfterApprovalPagingXComponent } from './NEW-NAP/business-process/additional-process/edit-comm-after-approval/edit-comm-after-approval-paging/edit-comm-after-approval-paging-x.component';
 import { PathConstantX } from './shared/constant/PathConstantX';
+import { FactoringReviewPagingDsfComponent } from 'app/dsf/impl/cessie/factoring-review-paging-dsf/factoring-review-paging-dsf.component';
+import { FactoringReviewDetailDsfComponent } from 'app/dsf/impl/cessie/factoring-review-detail-dsf/factoring-review-detail-dsf.component';
+import { FactoringReviewAssignProductDsfComponent } from 'app/dsf/impl/cessie/factoring-review-assign-product-dsf/factoring-review-assign-product-dsf.component';
 
 const routes: Routes = [
   {
@@ -51,6 +54,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.FACTORING_REVIEW_PAGING_DSF,
+        component: FactoringReviewPagingDsfComponent,
+        data: {
+          title: 'Cessie Factoring Review Paging DSF'
+        }
+      },
+      {
         path: PathConstantX.FACTORING_REVIEW_ASSIGN_PROD,
         component: FactoringReviewAssignProductComponent,
         data: {
@@ -58,10 +68,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.FACTORING_REVIEW_ASSIGN_PROD_DSF,
+        component: FactoringReviewAssignProductDsfComponent,
+        data: {
+          title: 'Cessie Factoring Review Assign Product Dsf'
+        }
+      },
+      {
         path: PathConstantX.FACTORING_REVIEW_DETAIL,
         component: FactoringReviewDetailComponent,
         data: {
           title: 'Cessie Factoring Review Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.FACTORING_REVIEW_DETAIL_DSF,
+        component: FactoringReviewDetailDsfComponent,
+        data: {
+          title: 'Cessie Factoring Review Detail DSF'
         }
       },
       {

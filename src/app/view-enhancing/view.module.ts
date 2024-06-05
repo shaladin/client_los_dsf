@@ -33,6 +33,7 @@ import { CrdRvwViewModule } from "./crd-rvw-view/crd-rvw-view.module";
 import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 import { MouMainInfoXComponent } from 'app/impl/view-enhancing/mou-main-info/mou-main-info-x.component';
 import { CessieViewComponent } from "app/impl/view-enhancing/cessie-view/cessie-view.component";
+import { MouMainInfoXDsfComponent } from "app/dsf/impl/view-enhancing/mou-main-info-x-dsf/mou-main-info-x-dsf.component";
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { CessieViewComponent } from "app/impl/view-enhancing/cessie-view/cessie-
   declarations: [
     LeadMainInfoComponent,
     MouMainInfoComponent,
-    MouMainInfoXComponent
+    MouMainInfoXComponent,
+    MouMainInfoXDsfComponent
   ],
   providers: [
     NGXToastrService
@@ -84,7 +86,8 @@ import { CessieViewComponent } from "app/impl/view-enhancing/cessie-view/cessie-
   ],
   exports: [
     MouMainInfoComponent,
-    MouMainInfoXComponent
+    MouMainInfoXComponent,
+    MouMainInfoXDsfComponent
   ]
 
 })
