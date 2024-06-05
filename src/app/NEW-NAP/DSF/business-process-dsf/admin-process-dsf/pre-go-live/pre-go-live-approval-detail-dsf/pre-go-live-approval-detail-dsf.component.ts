@@ -29,6 +29,7 @@ import { AgrmntFinDataObj } from 'app/shared/model/agrmnt-fin-data.model';
 import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
 import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail-dsf',
@@ -135,14 +136,16 @@ export class PreGoLiveApprovalDetailDsfComponent implements OnInit {
       Tasks: event.Tasks
     }
 
+    // Self Custom CR MPF Validation
     await this.http.post(URLConstantDsf.PreGoLiveApproval, ReqPreGoLiveApvCustomObj).toPromise().then(
       () => 
       {
 
       }
     );
+    // Self Custom CR MPF Validation
 
-    await this.http.post(URLConstant.PreGoLiveApproval, ReqPreGoLiveApvCustomObj).toPromise().then(
+    await this.http.post(URLConstantX.PreGoLiveApprovalV2X, ReqPreGoLiveApvCustomObj).toPromise().then(
       () => {
         
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_ADM_PRCS_PGL_APPRVL_PAGING_DSF],{ "BizTemplateCode": this.bizTemplateCode });

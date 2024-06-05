@@ -131,7 +131,24 @@ export class NavigationConstantDsf {
      public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_PAGING; //'/Nap/AddProcess/ReturnHandlingDsf/PagingX'
      public static NAP_ADD_PRCS_RETURN_HANDLING_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_DETAIL; //'/Nap/AddProcess/ReturnHandlingDsf/Detail'
      public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_NAP4; //"/Nap/AddProcess/ReturnHandlingDsf/NAP4"
-  
 
-}
+     public static MOU_CUST_RVW_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_RVW_PAGING_DSF; //'/Mou/Cust/ReviewPaging'
+     public static MOU_EXECUTION_DETAIL_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EXECUTION_DETAIL_X_DSF; //"/Mou/Execution/DetailX"
+     public static MOU_EXECUTION_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EXECUTION_PAGING_X_DSF; //"/Mou/Execution/PagingX"
+     public static MOU_CUST_APPRV_FCTR_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_APPRV_FCTR_X_DSF; //'/Mou/Cust/ApprovalFactoringX'
+     public static MOU_CUST_APPRV_X_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_APPRV_X_DSF;
+     public static CHANGE_MOU_REQ_DETAIL_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_DETAIL_X_DSF; //"/Mou/ChangeMouRequest/DetailX"
+     public static CHANGE_MOU_REQ_DETAIL_CUSTOMER_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_DETAIL_CUST_X_DSF; //"/Mou/ChangeMouRequest/Detail/CustomerX"
+     public static CHANGE_MOU_REQ_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_REQ_PAGING_X_DSF; //"/Mou/ChangeMouRequest/PagingX"
+     public static CHANGE_MOU_RVW_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_RVW_PAGING_DSF; //"/Mou/ChangeMou/ReviewPagingX"
+     public static CHANGE_MOU_RTN_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_RTN_PAGING_DSF; //"/Mou/ChangeMou/ReturnPaging"
+     public static MOU_EDIT_CUST_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EDIT_CUST_PAGING_DSF; //"/Mou/EditMouCustomer/Paging"
+     public static CHANGE_MOU_APV_DETAIL_FCTR_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_APV_DETAIL_FCTR_X_DSF; //"/Mou/ChangeMou/ApvDetailFctrX"
+     public static CHANGE_MOU_APV_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_APV_PAGING_X_DSF; //"/Mou/ChangeMou/ApvPaging"
+     public static MOU_REQ_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_REQ_PAGING_X_DSF; //"/Mou/Request/PagingX"
+
+     public static CESSIE_FACTORING_REVIEW_DETAIL_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_DETAIL_DSF; //'/Impl/Cessie/Process/FactoringReview/Detail'
+     public static CESSIE_FACTORING_REVIEW_ASSIGN_PROD_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_ASSIGN_PROD_DSF; //'/Impl/Cessie/Process/FactoringReview/AssignProd'
+     public static CESSIE_FACTORING_REVIEW_PAGING_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_PAGING_DSF; //'/Impl/Cessie/Monitoring'
+    }
 

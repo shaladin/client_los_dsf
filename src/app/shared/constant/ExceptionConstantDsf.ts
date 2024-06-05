@@ -17,5 +17,7 @@ export class ExceptionConstantDsf {
 
     public static VALIDATE_MIN_PLAFOND = "Max Plafond Master Agreement is Not Yet Sufficient Plafond Limit";
     public static VALIDATE_TENOR_LIMIT = "Minimum Tenor is Not Yet Sufficient";
+
+    public static PLAFOND_USED_GREATER = "Plafond Used Greater Than Plafond Based on Collateral";
 }
 

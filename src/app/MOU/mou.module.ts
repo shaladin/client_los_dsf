@@ -60,7 +60,7 @@ import { SimilarMouCompanyDataComponent } from './mou-dup-check/similar-mou-comp
 import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
 import { ExistingMouCompanyComponent } from './mou-dup-check/existing-mou-company/existing-mou-company.component';
 import { ExistingMouPersonalComponent } from './mou-dup-check/existing-mou-personal/existing-mou-personal.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { MouViewComponentsModule } from 'app/components/general/mou-view/mou-view.components.module';
 import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
@@ -157,6 +157,28 @@ import { ChangeMouHistoryVersionXComponent } from 'app/impl/MOU/change-mou/chang
 import { ChangeMouViewModule } from 'app/view-enhancing/change-mou-view/change-mou-view.module';
 import { ChangeMouAddcollHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history-x.component';
 import { ChangeMouDetailHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-detail-history/change-mou-detail-history-x.component';
+import { MouCustomerRequestXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-x-dsf/mou-customer-request-x-dsf.component';
+import { MouCustomerDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-detail-x-dsf/mou-customer-detail-x-dsf.component';
+import { MouCustomerRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-request-detail-x-dsf/mou-customer-request-detail-x-dsf.component';
+import { MouRequestAddcollXDsfComponent } from 'app/dsf/impl/MOU/mou-request-addcoll-x-dsf/mou-request-addcoll-x-dsf.component';
+import { MouReviewPagingDsfComponent } from 'app/dsf/impl/MOU/mou-review-paging-dsf/mou-review-paging-dsf.component';
+import { MouExecutionDetailXDsfComponent } from 'app/dsf/impl/MOU/mou-execution-detail-x-dsf/mou-execution-detail-x-dsf.component';
+import { MouExecutionPagingXDsfComponent } from 'app/dsf/impl/MOU/mou-execution-paging-x-dsf/mou-execution-paging-x-dsf.component';
+import { MouReviewFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-review-factoring-x-dsf/mou-review-factoring-x-dsf.component';
+import { MouCustomerApprovalXDsfComponent } from 'app/dsf/impl/MOU/mou-customer-approval-x-dsf/mou-customer-approval-x-dsf.component';
+import { MouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/mou-approval-factoring-x-dsf/mou-approval-factoring-x-dsf.component';
+import { EditMouCustomerDsfComponent } from 'app/dsf/impl/MOU/edit-mou-customer-dsf/edit-mou-customer-dsf.component';
+import { ChangeMouRequestPagingXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-paging-x-dsf/change-mou-request-paging-x-dsf.component';
+import { ChangeMouRequestDetailCustomerXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-detail-customer-x-dsf/change-mou-request-detail-customer-x-dsf.component';
+import { ChangeMouRequestDetailXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-detail-x-dsf/change-mou-request-detail-x-dsf.component';
+import { ChangeMouRequestAddcollXDsfComponent } from 'app/dsf/impl/MOU/change-mou-request-addcoll-x-dsf/change-mou-request-addcoll-x-dsf.component';
+import { ChangeMouReviewPagingDsfComponent } from 'app/dsf/impl/MOU/change-mou-review-paging-dsf/change-mou-review-paging-dsf.component';
+import { ChangeMouReviewFactoringXDsfComponent } from 'app/dsf/impl/MOU/change-mou-review-factoring-x-dsf/change-mou-review-factoring-x-dsf.component';
+import { ChangeMouAddcollXDsfComponent } from 'app/dsf/impl/MOU/change-mou-addcoll-x-dsf/change-mou-addcoll-x-dsf.component';
+import { ChangeMouReturnPagingDsfComponent } from 'app/dsf/impl/MOU/change-mou-return-paging-dsf/change-mou-return-paging-dsf.component';
+import { ChangeMouApprovalFactoringXDsfComponent } from 'app/dsf/impl/MOU/change-mou-approval-factoring-x-dsf/change-mou-approval-factoring-x-dsf.component';
+import { ChangeMouApprovalPagingXDsfComponent } from 'app/dsf/impl/MOU/change-mou-approval-paging-x-dsf/change-mou-approval-paging-x-dsf.component';
+import { ChangeMouDetailXDsfComponent } from 'app/dsf/impl/MOU/change-mou-detail-x-dsf/change-mou-detail-x-dsf.component';
 import { MouUnfreezeApvDetailXComponent } from 'app/impl/MOU/mou-unfreeze/mou-unfreeze-apv-detail/mou-unfreeze-apv-detail-x.component';
 
 export const customCurrencyMaskConfig = {
@@ -185,6 +207,7 @@ export const customCurrencyMaskConfig = {
     MatTabsModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ReactiveFormsModule,
+    FormsModule,
     SharingComponentModule,
     MatCheckboxModule,
     MatRadioModule,
@@ -210,6 +233,7 @@ export const customCurrencyMaskConfig = {
     CustomerDocPrintingPagingComponent,
     DocSignerComponent,
     MouReviewPagingComponent,
+    MouReviewPagingDsfComponent,
     MouReviewFactoringComponent,
     MouDetailGeneralComponent,
     MouDetailFactoringComponent,
@@ -223,10 +247,12 @@ export const customCurrencyMaskConfig = {
     MouRequestAddcollComponent,
     DocSignerDetailComponent,
     EditMouCustomerComponent,
+    EditMouCustomerDsfComponent,
     LegalReviewPagingComponent,
     LegalReviewDetailComponent,
     MouCustomerApprovalComponent,
     MouCustomerApprovalXComponent,
+    MouCustomerApprovalXDsfComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouReviewGeneralComponent,
@@ -271,6 +297,7 @@ export const customCurrencyMaskConfig = {
     ChangeMouApprovalGeneralComponent,
     ChangeMouApprovalPagingComponent,
     ChangeMouApprovalPagingXComponent,
+    ChangeMouApprovalPagingXDsfComponent,
     ChangeMouCancelComponent,
     ChangeMouExecutionDetailComponent,
     ChangeMouExecutionPagingComponent,
@@ -286,10 +313,12 @@ export const customCurrencyMaskConfig = {
     ChangeMouRequestPagingComponent,
     ChangeMouReturnDetailComponent,
     ChangeMouReturnPagingComponent,
+    ChangeMouReturnPagingDsfComponent,
     ChangeMouReviewFactoringComponent,
     ChangeMouReviewFinancingComponent,
     ChangeMouReviewGeneralComponent,
     ChangeMouReviewPagingComponent,
+    ChangeMouReviewPagingDsfComponent,
     ChangeMouAddcollComponent,
     ChangeMouDetailComponent,
     MouDetailFinancingComponent,
@@ -301,30 +330,44 @@ export const customCurrencyMaskConfig = {
     MouUnfreezeInquiryComponent,
     MouUnfreezeViewComponent,
     MouCustomerDetailXComponent,
+    MouCustomerDetailXDsfComponent,
     MouRequestAddcollXComponent,
+    MouRequestAddcollXDsfComponent,
     ChangeMouRequestDetailCustomerXComponent,
+    ChangeMouRequestDetailCustomerXDsfComponent,
     ChangeMouRequestAddcollXComponent,
+    ChangeMouRequestAddcollXDsfComponent,
     MouCustomerRequestDetailXComponent,
+    MouCustomerRequestDetailXDsfComponent,
     MouReviewDlfnXComponent,
     MouReviewFactoringXComponent,
+    MouReviewFactoringXDsfComponent,
     MouApprovalGeneralXComponent,
     MouApprovalFactoringXComponent,
+    MouApprovalFactoringXDsfComponent,
     MouExecutionDetailXComponent,
+    MouExecutionDetailXDsfComponent,
     ChangeMouRequestDetailXComponent,
+    ChangeMouRequestDetailXDsfComponent,
     ChangeMouReviewFactoringXComponent,
+    ChangeMouReviewFactoringXDsfComponent,
     ChangeMouReviewFinancingXComponent,
     ChangeMouReviewGeneralXComponent,
     ChangeMouApprovalFactoringXComponent,
+    ChangeMouApprovalFactoringXDsfComponent,
     ChangeMouApprovalFinancingXComponent,
     ChangeMouApprovalGeneralXComponent,
     ChangeMouExecutionDetailXComponent,
     ChangeMouAddcollXComponent,
+    ChangeMouAddcollXDsfComponent,
     MouReviewGeneralXComponent,
     MouReviewDlfnXComponent,
     ChangeMouInquiryXComponent,
     ChangeMouDetailXComponent,
+    ChangeMouDetailXDsfComponent,
     ChangeMouReviewPagingXComponent,
     MouExecutionPagingXComponent,
+    MouExecutionPagingXDsfComponent,
     MouCustFeeXComponent,
     MouDetailFactoringXComponent,
     MouCustListedCustFctrXComponent,
@@ -341,8 +384,10 @@ export const customCurrencyMaskConfig = {
     ChangeMouDetailHistoryComponent,
     ChangeMouHistoryVersionComponent,
     MouCustomerRequestXComponent,
+    MouCustomerRequestXDsfComponent,
     MouCustomerInquiryXComponent,
     ChangeMouRequestPagingXComponent,
+    ChangeMouRequestPagingXDsfComponent,
     ChangeMouHistoryVersionXComponent,
     ChangeMouAddcollHistoryXComponent,
     ChangeMouDetailHistoryXComponent
@@ -355,6 +400,7 @@ export const customCurrencyMaskConfig = {
     MouCustAssetDetailComponent,
     MouCustomerApprovalComponent,
     MouCustomerApprovalXComponent,
+    MouCustomerApprovalXDsfComponent,
     MouApprovalGeneralComponent,
     MouApprovalFactoringComponent,
     MouRequestAddcollComponent,
