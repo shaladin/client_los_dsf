@@ -94,6 +94,10 @@ import { ReturnHandlingEditNap4DsfComponent } from "app/NEW-NAP/DSF/business-pro
 import { PlafondInstallmentSimulationDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component";
 
 import { CreditApprovalResultExtensionApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/credit-apv-result-ext/approval/detail/detail-x.component";
+import { ReturnHandlingCollateralPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component";
+import { ReturnHandlingCollateralEditXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component";
+import { EditAppAfterApprovalAssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-detail-x-dsf/edit-app-after-approval-asset-data-x-dsf/edit-app-after-approval-asset-data-x-dsf.component";
+
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -153,7 +157,9 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingPhoneVerifPagingComponent,
     ReturnHandlingSurveyComponent,
     ReturnHandlingCollateralPagingComponent,
+    ReturnHandlingCollateralPagingXComponent,
     ReturnHandlingCollateralEditComponent,
+    ReturnHandlingCollateralEditXComponent,
     ReturnHandlingCollateralDetailComponent,
     CopyCancelledApplicationComponent,
     ReturnHandlingAdditionalTcPagingComponent,
@@ -178,6 +184,7 @@ export const customCurrencyMaskConfig = {
     EditAppAfterApprovalDetailComponent,
     EditAppAfterApprovalAssetDataComponent,
     EditAppAfterApprovalAssetDataXComponent,
+    EditAppAfterApprovalAssetDataXDsfComponent,
     EditAppAfterApprovalPurchaseOrderDataComponent,
     CreditApprovalResultExtensionApprovalDetailComponent,
     CreditApprovalResultExtensionApprovalDetailXComponent,

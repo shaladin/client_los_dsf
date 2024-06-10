@@ -162,6 +162,9 @@ import { SchmStepUpStepDownCummulativeXDsfComponent } from "app/dsf/impl/NEW-NAP
 import { SchmStepUpStepDownLeasingXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-leasing-x-dsf/schm-step-up-step-down-leasing-x-dsf.component";
 import { SchmStepUpStepDownNormalXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/schm-step-up-step-down-normal-x-dsf/schm-step-up-step-down-normal-x-dsf.component";
 import { FeeXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/financial-data-x-dsf/component/fee-x-dsf/fee-x-dsf.component";
+import { CollateralAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component";
+import { AssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/asset-data-x-dsf/asset-data-x-dsf.component";
+import { AssetDataAddEditXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data-x-dsf/asset-data-add-edit-x-dsf/asset-data-add-edit-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -224,7 +227,9 @@ export const customCurrencyMaskConfig = {
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
     AssetDataAddEditXComponent,
+    AssetDataAddEditXDsfComponent,
     CollateralAddEditComponent,
+    CollateralAddEditXComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
     FinancialDataFctrComponent,
@@ -315,6 +320,7 @@ export const customCurrencyMaskConfig = {
     MultiAssetDataXComponent,
     AssetDataPagingXComponent,
     AssetDataXComponent,
+    AssetDataXDsfComponent,
     CollateralDataCfnaXComponent,
     CollateralDataCfnaPagingXComponent,
     InsuranceMultiAssetDataXComponent,
@@ -386,7 +392,9 @@ export const customCurrencyMaskConfig = {
     AssetDataPagingComponent,
     AssetDataAddEditComponent,
     AssetDataAddEditXComponent,
+    AssetDataAddEditXDsfComponent,
     CollateralAddEditComponent,
+    CollateralAddEditXComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
     FinancialDataFctrComponent,
@@ -477,6 +485,7 @@ export const customCurrencyMaskConfig = {
     MultiAssetDataXComponent,
     AssetDataPagingXComponent,
     AssetDataXComponent,
+    AssetDataXDsfComponent,
     CollateralDataCfnaXComponent,
     CollateralDataCfnaPagingXComponent,
     InsuranceMultiAssetDataXComponent,
