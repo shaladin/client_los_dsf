@@ -85,7 +85,19 @@ export class URLConstantDsf {
     public static GetAgrmntListForCustHistDsf = environment.losUrl + "/AgrmntDsf/GetAgrmntListForCustHistDsf"; 
     public static GetAppListForCustHistDsf = environment.losUrl + "/AppDsf/GetAppListForCustHistDsf";
 
+    public static AddEditAppCrdRvwHDsf    = environment.losUrl + "/v1/CrdRvwX/AddEditAppCrdRvwHDsf";
+    public static GetAppCrdRvwHDsfByAppId = environment.losUrl + "/v1/CrdRvwX/GetAppCrdRvwHDsfByAppId";
+
     public static GetProvisionFeeByAppId = environment.losUrl + "/AppDsf/GetAppProvisionFeeByAppIdDsf";
+
+    public static CheckIsNegCustAllowedCreateAppDsf = environment.FoundationR3Url + "/CustDsf/CheckIsNegCustAllowedCreateAppDsf"
+    public static GetListRunnerActivationDsf = environment.losUrl + "/AppAssetDsf/GetListRunnerActivationDsf";
+    public static AddEditAppAssetDsf = environment.losUrl + "/AppAssetDsf/AddEditAppAssetDsf";
+    public static DeleteAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteAppAssetDsf";
+    public static DeleteListAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteListAppAssetDsf";
+    public static GetAppAssetByAppAssetIdDsf = environment.losUrl + "/AppAssetDsf/GetAppAssetByAppAssetIdDsf";
+    public static GetListAppAssetForCopyByAppIdDsf = environment.losUrl + "/AppAssetDsf/GetListAppAssetForCopyByAppIdDsf";
+    public static CopyAppAssetDsf = environment.losUrl + "/AppAssetDsf/CopyAppAssetDsf";
 
     public static GetMouMainInfoByIdXDsf = environment.losUrl + "/MouCustXDsf/GetMouMainInfoByIdXDsf";
     public static GetMouCustXDsf = environment.losUrl + "/MouCustXDsf/GetMouCustXDsf";
@@ -94,4 +106,10 @@ export class URLConstantDsf {
     public static EditMouCustNewCalculationXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustNewCalculationXDsf";
     public static SubmitReviewDsf = environment.losUrl + "/MouCustXDsf/SubmitReviewDsf";
     public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
+
+    public static GetClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/GetClaimTaskLeadDsf";
+    public static AddClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/AddClaimTaskLeadDsf";
+    public static EditClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/EditClaimTaskLeadDsf";
+    public static SubmitWorkflowLeadQCV2Dsf = environment.losUrl + "/v2" + "/LeadX/SubmitWorkflowLeadQC";
+    public static SimpleLeadReturnDsf = environment.losUrl + "/v2" + "/LeadX/SimpleLeadReturnDsf";
 }

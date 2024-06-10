@@ -96,6 +96,7 @@ import { PlafondInstallmentSimulationDetailDsfComponent } from "app/NEW-NAP/DSF/
 import { CreditApprovalResultExtensionApprovalDetailXComponent } from "app/impl/NEW-NAP/business-process/additional-process/credit-apv-result-ext/approval/detail/detail-x.component";
 import { ReturnHandlingCollateralPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component";
 import { ReturnHandlingCollateralEditXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component";
+import { EditAppAfterApprovalAssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-detail-x-dsf/edit-app-after-approval-asset-data-x-dsf/edit-app-after-approval-asset-data-x-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -183,6 +184,7 @@ export const customCurrencyMaskConfig = {
     EditAppAfterApprovalDetailComponent,
     EditAppAfterApprovalAssetDataComponent,
     EditAppAfterApprovalAssetDataXComponent,
+    EditAppAfterApprovalAssetDataXDsfComponent,
     EditAppAfterApprovalPurchaseOrderDataComponent,
     CreditApprovalResultExtensionApprovalDetailComponent,
     CreditApprovalResultExtensionApprovalDetailXComponent,

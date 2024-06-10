@@ -57,7 +57,7 @@ export class MouViewXComponent implements OnInit {
     this.http.post(URLConstant.GetGeneralSettingByCode, obj).subscribe(
       (response: GeneralSettingObj) => {
         this.returnGeneralSettingObj = response;
-        this.isFactNewCalc = Boolean(this.returnGeneralSettingObj.GsValue ?? 0);
+        this.isFactNewCalc = Boolean(this.returnGeneralSettingObj == null ? 0 : this.returnGeneralSettingObj.GsValue);
       });
     //CR Change Self Custom
     this.mouCustObj = new MouCustObj();
