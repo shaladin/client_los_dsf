@@ -65,6 +65,7 @@ import { AutoDebitRegistrationPagingComponent } from 'app/impl/NEW-NAP/business-
 import { AutoDebitRegistrationInquiryComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-inquiry/auto-debit-registration-inquiry.component';
 import { AutoDebitRegistrationCancelComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-cancel/auto-debit-registration-cancel.component';
 import { AutoDebitTestComponent } from 'app/impl/NEW-NAP/business-process/additional-process/auto-debit-registration/auto-debit-registration-paging/auto-debit-test.component';
+import { CreditApprovalResultExtensionApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/credit-apv-result-ext/approval/detail/detail-x.component';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { ReturnHandlingNewEditAppPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-new-edit-app-paging-dsf/return-handling-new-edit-app-paging-dsf.component';
 import { ReturnHandlingPagingXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-paging-x-dsf/return-handling-paging-x-dsf.component';
@@ -76,7 +77,6 @@ import { CreditApprovalResultExtensionApprovalDetailXComponent } from 'app/impl/
 import { CollateralAddEditXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component';
 import { ReturnHandlingCollateralPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component';
 import { ReturnHandlingCollateralEditXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component';
-
 
 const routes: Routes = [
   {

@@ -1,0 +1,20 @@
+<lib-ucSubsection [id]="'IcaVerdictId'" [title]="'ICA Verdict'" [panel]="'IcaVerdict'">
+</lib-ucSubsection>
+<div *ngIf="IsView" id="IcaVerdict">
+  <div class="card-body">
+    <div class="form-group row">
+      <label class="col-md-1" translate>Color</label>
+      <div class="col-md-1 text-center">
+        <i *ngIf="!IsIcaVerdictEmpty" [ngStyle]="{'color': IcaVerdictColor}" class="fa fa-circle font-medium-3 tooltips"></i>
+        <label *ngIf="IsIcaVerdictEmpty" translate>-</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-1" translate>Value</label>
+      <div class="col-md-1 text-center">
+        <label *ngIf="!IsIcaVerdictEmpty" translate>{{IcaVerdictValue}}</label>
+        <label *ngIf="IsIcaVerdictEmpty" translate>-</label>
+      </div>
+    </div>
+  </div>
+</div>

@@ -167,6 +167,7 @@ export const customCurrencyMaskConfig = {
     PreGoLiveRequestForApprovalComponent,
     PreGoLiveApprovalDetailComponent,
     PreGoLiveApprovalDetailXComponent,
+    PreGoLiveApprovalDetailDsfComponent,
     PreGoLiveApprovalPagingComponent,
     PreGoLiveApprovalPagingXComponent,
     PreGoLiveApprovalPagingXDsfComponent,

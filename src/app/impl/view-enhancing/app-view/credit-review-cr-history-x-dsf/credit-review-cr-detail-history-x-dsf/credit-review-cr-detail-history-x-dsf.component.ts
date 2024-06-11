@@ -47,6 +47,9 @@ export class CreditReviewCrDetailHistoryXDsfComponent implements OnInit {
   RFAInfo: Object = new Object();
   apvSchmCode: string = "";
   OriOfficeCode: string;
+  //Self Custom EFORM 404303
+  IsShowIcaVerdict: boolean = false
+  //Self Custom EFORM 404303
 
 
 
@@ -208,6 +211,10 @@ export class CreditReviewCrDetailHistoryXDsfComponent implements OnInit {
       this.IsMPF = true;
     }
     //End Self Custom Rework DSL-444
+
+    //Self Custom EFORM 404303
+    this.IsShowIcaVerdict = this.lobCode == "CF" || this.lobCode == "LS" || this.lobCode == "SLB"
+    //Self Custom EFORM 404303
   }
 
   async GetCreditScoring(appNo: string) {

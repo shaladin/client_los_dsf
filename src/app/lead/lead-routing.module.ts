@@ -58,6 +58,8 @@ import {NewFraudVerifDetailDsfComponent} from 'app/dsf/lead/new-fraud-verif-dsf/
 import {LeadCancelDsfComponent} from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-dsf/lead-cancel-dsf.component';
 import { LeadCancelConfirmDsfComponent } from 'app/dsf/lead/lead-cancel-dsf/lead-cancel-confirm-dsf/lead-cancel-confirm-dsf.component';
 import { NewLeadInputPageXDsfComponent } from 'app/dsf/lead/new-lead-input/new-lead-input-page-x-dsf/new-lead-input-page-x-dsf.component';
+import { NewLeadQcDsfComponent } from 'app/dsf/lead/new-lead-qc-dsf/new-lead-qc-dsf.component';
+import { NewLeadQcDetailDsfComponent } from 'app/dsf/lead/new-lead-qc-detail-dsf/new-lead-qc-detail-dsf.component';
 
 const routes: Routes = [
   {
@@ -316,6 +318,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.SIMPLE_LEAD_DETAIL_QC,
+        component: NewLeadQcDetailDsfComponent,
+        data: {
+          title: 'Lead Detail QC Dsf'
+        }
+      },
+      {
         path: PathConstantX.SIMPLE_LEAD_DETAIL,
         component: NewLeadInputPageXComponent,
         data: {
@@ -390,6 +399,13 @@ const routes: Routes = [
         component: NewLeadUpdateDsfComponent,
         data: {
           title: 'Lead Update Paging Dsf'
+        }
+      },
+      {
+        path: PathConstantDsf.SIMPLE_LEAD_QC_PAGING,
+        component: NewLeadQcDsfComponent,
+        data: {
+          title: 'Lead QC Paging Dsf'
         }
       },
       {

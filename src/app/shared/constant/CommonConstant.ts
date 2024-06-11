@@ -478,6 +478,7 @@ export class CommonConstant {
   public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
   public static RefReasonTypeCodeReturnHandlingGeneral = "RTN_H_GEN";
   public static RefReasonTypeCodeOfferingValidityReqApv = "OFF_VLD_REQ_APV";
+  public static RefReasonTypeCodeSimpleLead = "SIMPLE_LEAD";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -1064,6 +1065,7 @@ export class CommonConstant {
   public static WF_CODE_SIMPLE_LEAD = "WF_SIMPLE_LEAD";
   public static ACT_CODE_SIMPLE_FRAUD_VERIFICATION = "SIMPLE_FRAUD_VERIFICATION";
   public static ACT_CODE_SIMPLE_LEAD_UPD = "SIMPLE_LEAD_UPD";
+  public static ACT_CODE_SIMPLE_LEAD_QC = "SIMPLE_LEAD_QC";
   public static ACT_CODE_TELE_VERIFICATION = "TELE_VERIFICATION";
   public static ACT_CODE_LEAD_UPD = "LEAD_UPD";
   public static ACT_CODE_LEAD_VERIFICATION = "LEAD_VERIFICATION";
@@ -1105,6 +1107,7 @@ export class CommonConstant {
   public static LeadStepLeadVerf = "LVR";
   public static LeadStepTeleVerf = "TVR";
   public static LeadStepLeadUpd = "LUP";
+  public static LeadStepLeadRtn = "RTN";
 
   // Financial Data
   public static FinancialPriceLabel = "Asset Price (Incl. Accessory)";
