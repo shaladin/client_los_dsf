@@ -23,6 +23,7 @@ import { GeneralSettingObj } from 'app/shared/model/general-setting-obj.model';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { ReqThirdPartyRsltHByTrxNoAndSvcTypeCodeXObj } from 'app/impl/shared/model/ReqThirdPartyRsltHByTrxNoAndSvcTypeCodeXObj';
 import { ThirdPartyDataRobotObj } from 'app/shared/model/third-party-data/ThirdPartyDataRobotObj.Model';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-crd-rvw-third-party-checking-x-dsf',
@@ -181,7 +182,8 @@ export class CrdRvwThirdPartyCheckingXDsfComponent implements OnInit {
   modalContainer: any;
   urlLink: string = "";
   trustingSocialHandler(model) {
-    this.urlLink = environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_TRUST_SOC + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo;
+    const token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+    this.urlLink = environment.FoundationR3Web + NavigationConstantDsf.VIEW_FOU_CUST_TRUST_SOC + "?CustNo=" + this.CrdRvwCustInfoObj.CustNo+"&Token="+token;
     // window.open(this.urlLink);
     this.modalContainer = this.modalService.open(model);
     this.modalContainer.result.then((result) => {

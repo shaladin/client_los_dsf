@@ -31,6 +31,11 @@ import { ProdHoPagingXComponent } from 'app/impl/product/product-ho/prod-ho-pagi
 import { ProdHoAddXComponent } from 'app/impl/product/product-ho/prod-ho-add-x/prod-ho-add-x.component';
 import { ProdHoAddDetailXComponent } from 'app/impl/product/product-ho/prod-ho-add-detail-x/prod-ho-add-detail-x.component';
 import { ProdHoReturnPagingXComponent } from 'app/impl/product/product-ho/prod-ho-return-paging-x/prod-ho-return-paging-x.component';
+import { ProdHoApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-detail-x/prod-ho-apv-detail-x.component';
+import { ProdHoApvPagingXComponent } from 'app/impl/product/product-ho/prod-ho-apv-x/prod-ho-apv-paging-x/prod-ho-apv-paging-x.component';
+import { ProdHoDeactApvDetailXComponent } from 'app/impl/product/product-ho/prod-ho-deact-apv/prod-ho-deact-apv-detail/prod-ho-deact-apv-detail-x.component';
+import { ProdOfferingApvDetailXComponent } from 'app/impl/product/product-offering/prod-offering-apv-detail/prod-offering-apv-detail-x.component';
+import { ProdOfferingDeactApvDetailXComponent } from 'app/impl/product/product-offering/prod-offering-deact-apv/prod-offering-deact-apv-detail/prod-offering-deact-apv-detail-x.component';
 
 const routes: Routes = [
   {
@@ -107,15 +112,15 @@ const routes: Routes = [
       }
     },
     {
-      path: PathConstant.HO_APPRV,
-      component: ProdHoApvPagingComponent,
+      path: PathConstantX.HO_APPRV_X,
+      component: ProdHoApvPagingXComponent,
       data: {
         title: 'Product HO Approval'
       }
     },
     {
-      path: PathConstant.HO_APPRV_DETAIL,
-      component: ProdHoApvDetailComponent,
+      path: PathConstantX.HO_APPRV_DETAIL_X,
+      component: ProdHoApvDetailXComponent,
       data: {
         title: 'Product HO Approval Detail'
       }
@@ -135,6 +140,13 @@ const routes: Routes = [
       }
     },
     {
+      path: PathConstantX.OFFERING_APPRV_DETAIL,
+      component: ProdOfferingApvDetailXComponent,
+      data: {
+        title: 'Product Offering Approval Detail'
+      }
+    },
+    {
       path: PathConstant.HO_DEACTIVATE_APPRV,
       component: ProdHoDeactApvPagingComponent,
       data: {
@@ -144,6 +156,13 @@ const routes: Routes = [
     {
       path: PathConstant.HO_DEACTIVATE_APPRV_DETAIL,
       component: ProdHoDeactApvDetailComponent,
+      data: {
+        title: 'Product HO Deactivate Approval Detail'
+      }
+    },
+    {
+      path: PathConstantX.HO_DEACTIVATE_APPRV_DETAIL,
+      component: ProdHoDeactApvDetailXComponent,
       data: {
         title: 'Product HO Deactivate Approval Detail'
       }
@@ -172,6 +191,13 @@ const routes: Routes = [
     {
       path: PathConstant.OFFERING_DEACTIVATE_APPRV_DETAIL,
       component: ProdOfferingDeactApvDetailComponent,
+      data: {
+        title: 'Product Offering Deactivate Approval Detail'
+      }
+    },
+    {
+      path: PathConstantX.OFFERING_DEACTIVATE_APPRV_DETAIL,
+      component: ProdOfferingDeactApvDetailXComponent,
       data: {
         title: 'Product Offering Deactivate Approval Detail'
       }

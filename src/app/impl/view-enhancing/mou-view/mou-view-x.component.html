@@ -4,7 +4,10 @@
       <div class="px-3">
         <div class="form-body">
           <h4 class="form-section card-title" translate>MOU View</h4>
-          <app-mou-main-info-x [MouCustId]="MouCustId"></app-mou-main-info-x>
+          <!-- CR Change Self Custom -->
+          <app-mou-main-info-x-dsf [MouCustId]="MouCustId" *ngIf="isFactNewCalc"></app-mou-main-info-x-dsf>
+          <app-mou-main-info-x [MouCustId]="MouCustId" *ngIf="!isFactNewCalc"></app-mou-main-info-x>
+          <!-- CR Change Self Custom -->
           <mat-tab-group>
             <mat-tab label="MoU Customer">
               <ng-template matTabContent>                
@@ -15,8 +18,12 @@
             </mat-tab>
             <mat-tab label="MoU Detail">
               <ng-template matTabContent>
-                <app-mou-view-detail-x *ngIf="IsResponseProcessed == true" [MouCustId]="MouCustId"
+                <!-- CR Change Self Custom -->
+                <app-mou-view-detail-x-dsf *ngIf="IsResponseProcessed == true && isFactNewCalc" [MouCustId]="MouCustId"
+                  [MouType]="MrMouTypeCode"></app-mou-view-detail-x-dsf>
+                  <app-mou-view-detail-x *ngIf="IsResponseProcessed == true && !isFactNewCalc" [MouCustId]="MouCustId"
                   [MouType]="MrMouTypeCode"></app-mou-view-detail-x>
+                  <!-- CR Change Self Custom -->
               </ng-template>
             </mat-tab>
             <mat-tab label="Fee">

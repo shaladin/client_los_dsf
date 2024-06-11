@@ -54,6 +54,7 @@ import { MouViewCustomerCompFinDataComponent } from "./mou-view-customer-comp-fi
 import { MouViewCustomerCompContactInfoComponent } from "./mou-view-customer-comp-contact-info/mou-view-customer-comp-contact-info.component";
 import { MouViewCustomerPersonalContactInfoComponent } from "./mou-view-customer-personal-contact-info/mou-view-customer-personal-contact-info.component";
 import { MouViewCustomerPersonalPersonalFinDataComponent } from "./mou-view-customer-personal-personal-fin-data/mou-view-customer-personal-personal-fin-data.component";
+import { MouViewDetailXDsfComponent } from "app/dsf/impl/MOU/mou-view-detail-x-dsf/mou-view-detail-x-dsf.component";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -99,6 +100,7 @@ import { MouViewCustomerPersonalPersonalFinDataComponent } from "./mou-view-cust
         MouViewXComponent,
         MouViewAddcollXComponent,
         MouViewDetailXComponent,
+        MouViewDetailXDsfComponent,
         MouViewCustomerComponent,
         MouViewCustomerPersonalComponent,
         MouViewCustomerCompanyComponent,
@@ -122,7 +124,8 @@ import { MouViewCustomerPersonalPersonalFinDataComponent } from "./mou-view-cust
     ],
     exports: [
         MouViewAddcollXComponent,
-        MouViewDetailXComponent
+        MouViewDetailXComponent,
+        MouViewDetailXDsfComponent
     ]
 
 })

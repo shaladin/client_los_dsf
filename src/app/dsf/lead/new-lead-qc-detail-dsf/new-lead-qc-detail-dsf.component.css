@@ -1,0 +1,3 @@
+::ng-deep form.form-horizontal .form-group .label-control {
+    padding-top: 0px !important;
+}

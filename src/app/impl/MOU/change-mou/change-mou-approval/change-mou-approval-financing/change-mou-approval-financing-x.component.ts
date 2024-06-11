@@ -115,7 +115,7 @@ export class ChangeMouApprovalFinancingXComponent implements OnInit {
       Tasks: event.Tasks
     };
 
-    this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
+    this.http.post(URLConstantX.MouApproval, ReqMouApvCustomObj).subscribe(
       () => {
         this.toastr.successMessage("Success");
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});

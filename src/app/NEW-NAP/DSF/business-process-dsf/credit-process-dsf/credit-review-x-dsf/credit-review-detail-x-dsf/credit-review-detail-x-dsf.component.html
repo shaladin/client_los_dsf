@@ -46,29 +46,74 @@
 
       </div>
       <form class="form form-horizontal" *ngIf="!isReturnOn" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
-            #enjiForm="ngForm">
+        #enjiForm="ngForm">
         <div class="form-body">
-
-            <div class="px-3">
-              <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
-              </lib-ucSubsection>
-              <div class="form-body" [id]="'formCreditAnalysis'" formArrayName="arr">
-                <div *ngFor="let item of FormObj.controls.arr['controls']; let i = index;">
-                  <div [formGroupName]="i">    
-                    <div class="form-group row">
-                      <div class="form-group col-md-4 adins-required">
-                        <label class="adInsLabel" translate>{{item.controls.Question.value}}</label>
-                      </div>
-                      <div class="col-md-8">
-                        <textarea type="textarea" class="form-control adInsInput width-50-per" formControlName="Answer"></textarea>
-                        <lib-uc-show-errors [control]="item.controls.Answer" [submit]="enjiForm.submitted">
-                        </lib-uc-show-errors>
-                      </div>
-                    </div>    
+          
+          <div class="px-3">
+            <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
+            </lib-ucSubsection>
+            <div class="form-body" [id]="'formCreditAnalysis'" formArrayName="arr">
+              <div *ngFor="let item of FormObj.controls.arr['controls']; let i = index;">
+                <div [formGroupName]="i">
+                  <div class="form-group row">
+                    <div class="form-group col-md-4 adins-required">
+                      <label class="adInsLabel" translate>{{item.controls.Question.value}}</label>
+                    </div>
+                    <div class="col-md-8">
+                      <textarea type="textarea" class="form-control adInsInput width-50-per" formControlName="Answer"></textarea>
+                      <lib-uc-show-errors [control]="item.controls.Answer" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div *ngIf="IsShowIcaVerdict">
+              <lib-ucSubsection [id]="'formIcaVerdictId'" [title]="'ICA Verdict'" [panel]="'formIcaVerdict'">
+              </lib-ucSubsection>
+              <div class="row">
+                <label class="col-md-2" translate>ICA Verdict</label>
+                <div class="col-md-10">
+                  <input type="checkbox" [checked]="IsEnableIcaVerdict" (change)="toggleIcaVerdict($event)" />
+                </div>
+              </div>
+              <div *ngIf="IsEnableIcaVerdict" class="form-body" id="formIcaVerdict">
+                  <div class="form-group row">
+                    <div class="form-group col-md-2">
+                      <label class="adins-required-label">Color</label>
+                    </div>
+                    <div class="col-md-10">
+                      <select class="form-control adInsInput"
+                        [ngStyle]="{'width': 'auto', 'background-color': FormObj.controls.IcaVerdictColor.value}"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.IcaVerdictColor.invalid }"
+                        formControlName="IcaVerdictColor" (change)="onChangeIcaVerdictColor($event)">
+                        <option value="">Select One</option>
+                        <option *ngFor="let it of DDLIcaVerdictColor" [ngStyle]="{'background-color': it}" value="{{it}}">
+                          {{it}} </option>
+                      </select>
+                      <lib-uc-show-errors [control]="FormObj.controls.IcaVerdictColor" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="form-group col-md-2">
+                      <label class="adins-required-label">Value</label>
+                    </div>
+                    <div class="col-md-10">
+                      <select class="form-control adInsInput" style="width: auto;"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.IcaVerdictValue.invalid }"
+                        formControlName="IcaVerdictValue">
+                        <option value="">Select One</option>
+                        <option *ngFor="let it of DDLIcaVerdictValue" value="{{it}}">
+                          {{it}} </option>
+                      </select>
+                      <lib-uc-show-errors [control]="FormObj.controls.IcaVerdictValue" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
           <br>
           <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="!isReturnOn && IsReady" #ApprovalComponent></lib-ucapprovalcreate>
         </div>

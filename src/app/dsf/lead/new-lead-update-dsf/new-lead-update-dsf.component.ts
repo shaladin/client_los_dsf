@@ -57,8 +57,8 @@ export class NewLeadUpdateDsfComponent implements OnInit {
       let AddCrit = new CriteriaObj();
       AddCrit.DataType = "text";
       AddCrit.propName = "L.LEAD_STEP";
-      AddCrit.restriction = AdInsConstant.RestrictionEq;
-      AddCrit.value = CommonConstant.LeadStepLeadUpd;
+      AddCrit.restriction = AdInsConstant.RestrictionIn;
+      AddCrit.listValue = [CommonConstant.LeadStepLeadUpd, CommonConstant.LeadStepLeadRtn];
       this.inputPagingObj.addCritInput.push(AddCrit);
     }
   }
@@ -77,7 +77,7 @@ export class NewLeadUpdateDsfComponent implements OnInit {
         response => {
           this.toastr.successMessage(response["Message"]);
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/Lead/SimpleLeadUpdate/Paging']);
+            this.router.navigate(['/Lead/SimpleLeadUpdateDsf/Paging']);
           });
         }
       );
