@@ -414,6 +414,8 @@ export class NavigationConstant {
   public static SIMPLE_LEAD_UPD_PAGING_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_UPD_PAGING; //'/Lead/SimpleLeadUpdateDsf/Paging'
   public static SIMPLE_LEAD_MAIN_INFO_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLeadDsf/MainInfo'
   public static SIMPLE_LEAD_DETAIL_X_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_DETAIL_X; //'/Lead/SimpleLeadDsf/DetailX'
+  public static SIMPLE_LEAD_QC_DETAIL_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_DETAIL_QC; //'/Lead/SimpleLeadDsf/Detail'
+  public static SIMPLE_LEAD_QC_PAGING_DSF = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.SIMPLE_LEAD_QC_PAGING; //'/Lead/SimpleLeadDsf/Detail'
   //#endregion
 
   //#region LTKM

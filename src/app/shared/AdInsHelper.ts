@@ -188,6 +188,15 @@ public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: Http
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_NEW_FORM_DSF + "?CustId=" + CustId + "&CustType=COMPANY" + "&From=" + From, "_blank");
   }
+  public static EditCustomerMainDataXDSFPersonalByCustIdFromLead(CustId, From, ClaimBy, LeadId) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_NEW_FORM_DSF + "?CustId=" + CustId + "&CustType=PERSONAL" + "&From=" + From + "&ClaimBy=" + ClaimBy + "&LeadId=" + LeadId, "_blank");
+  }
+
+  public static EditCustomerMainDataXDSFCompanyByCustIdFromLead(CustId, From, ClaimBy, LeadId) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + NavigationConstantDsf.CUST_NEW_FORM_DSF + "?CustId=" + CustId + "&CustType=COMPANY" + "&From=" + From + "&ClaimBy=" + ClaimBy + "&LeadId=" + LeadId, "_blank");
+  }
 
   public static OpenPefindoView(CustNo: string, IsLos: boolean, Token: string = "") {
     if (Token != "")

@@ -3,21 +3,61 @@
   "exportExcel": false,
   "component": [
       {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "L.ORI_OFFICE_CODE",
+        "id": "OfficeNameId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "isQueryIn": true,
+        "url": "",
+        "environment": "FOU",
+        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "label": "Office Name",
+        "items": [],
+        "itemsUrl": []
+      },
+      {
+          "type": "datepicker",
+          "name": "L.LEAD_DT",
+          "id": "LeadDtId",
+          "value": "",
+          "label": "Lead Date >=",
+          "restriction": "gte",
+          "placeholder": "Placeholder"
+      },
+      {
           "type": "dropdown",
-          "datatype": "text",
-          "name": "L.ORI_OFFICE_CODE",
-          "id": "OfficeNameId",
+          "name": "CASE WHEN COALESCE(ACT.CLAIM_BY, '') <> '' THEN 'CLAIMED' ELSE 'UNCLAIMED' END",
+          "id": "ActiveStatusId",
+          "label": "Task Claim Status",
+          "ddlType": "all",          
           "value": "",
           "placeholder": "Placeholder",
-          "isFromURL": true,
-          "ddlType": "all",
-          "isQueryIn" : true,
-          "url": "",
-          "environment": "FOU",
-          "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
-          "label": "Office Name",
-          "items": [],
+          "isFromURL": false,
+          "isSelectOne": true,
+          "items": [
+              {
+                  "key": "CLAIMED",
+                  "value": "CLAIMED"
+              },
+              {
+                  "key": "UNCLAIMED",
+                  "value": "UNCLAIMED"
+              }
+          ],
           "itemsUrl": []
+      },
+      {
+          "type": "datepicker",
+          "name": "L.LEAD_DT",
+          "id": "LeadDtId",
+          "value": "",
+          "label": "Lead Date <=",
+          "restriction": "lte",
+          "placeholder": "Placeholder"
       },
       {
           "type": "dropdown",
@@ -46,27 +86,29 @@
           "placeholder": "Placeholder"
       },
       {
-          "type": "textbox",
-          "name": "LC.MR_CUST_TYPE_CODE",
-          "id": "CustTypeId",
-          "value": "",
-          "label": "Customer Type",
-          "placeholder": "Placeholder"
-      },
-      {
-          "type": "textbox",
-          "name": "LA.FULL_ASSET_NAME",
-          "id": "FullAssetNameId",
-          "value": "",
-          "label": "Full Asset Name",
-          "placeholder": "Placeholder"
+        "type": "dropdown",
+        "name": "LC.MR_CUST_TYPE_CODE",
+        "id": "CustTypeId",
+        "value": "",
+        "placeholder": "Placeholder",
+        "datatype": "text",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "path": "/RefMaster/GetListKeyValueActiveByCode",
+        "label": "Customer Type",
+        "criteriaPropName": "RefMasterTypeCode",
+        "criteriaPropValue": "CUST_TYPE",
+        "items": [],
+        "itemsUrl": [],
+        "environment": "FOU"
       },
       {
           "type": "textbox",
           "name": "LC.CUST_NAME",
           "id": "CustNameId",
           "value": "",
-          "label": "Customer Name",
+          "label": "Customer Name ",
           "placeholder": "Placeholder"
       },
       {
@@ -76,7 +118,15 @@
         "value": "",
         "label": "Lead Type",
         "placeholder": "Placeholder"
-    }
+      },
+      {
+          "type": "textbox",
+          "name": "ISNULL(ACT.CLAIM_BY, '')",
+          "id": "ClaimById",
+          "value": "",
+          "label": "Claim By",
+          "placeholder": "Placeholder"
+      }
   ],
 "querystring": {
   "name": "searchNewLeadToBeFollowUpDsf"
@@ -88,6 +138,12 @@
           "label": "Lead No",
           "name": "L.LEAD_NO"
       },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Claim By",
+        "name": "ISNULL(ACT.CLAIM_BY, '')"
+    },
       {
           "type": "sort",
           "position": "left",
@@ -115,14 +171,14 @@
       {
           "type": "sort",
           "position": "left",
-          "label": "Full Asset Name",
-          "name": "LA.FULL_ASSET_NAME"
-      },
-      {
-          "type": "sort",
-          "position": "left",
           "label": "Lead Type",
           "name": "L.ORDER_NO"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Lead Date",
+        "name": "L.LEAD_DT"
       },
       {
           "type": "label",
@@ -143,6 +199,11 @@
                   "property" : "LeadId"
               }
           ]
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "ClaimBy"
       },
       {
           "type": "text",
@@ -167,21 +228,53 @@
       {
           "type": "text",
           "position": "left",
-          "property": "FullAssetName"
+          "property": "OrderNo"
       },
       {
-          "type": "text",
-          "position": "left",
-          "property": "OrderNo"
+        "type": "date",
+        "position": "left",
+        "property": "LeadDt"
       },
       {
           "type": "action",
           "position": "center",
           "action": [
               {
-                  "type": "callback",
-                  "key": "Edit",
-                  "icon": "ft-edit-2"
+                  "type": "switch",
+                  "case": [
+                      {
+                          "conditions": [
+                              {
+                                  "isUser": true,
+                                  "property": "ClaimBy",
+                                  "value": "",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "callback",
+                              "key": "Edit",
+                              "icon": "ft-edit-2"
+                          },
+                          "isHide": false
+                      },
+                      {
+                          "conditions": [
+                              {
+                                  "isUser": false,
+                                  "property": "ClaimBy",
+                                  "value": "",
+                                  "restriction": "EQ"
+                              }
+                          ],
+                          "result": {
+                              "type": "callback",
+                              "key": "Edit",
+                              "icon": "ft-edit-2"
+                          },
+                          "isHide": false
+                      }
+                  ]
               }
           ]
       }

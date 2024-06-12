@@ -84,7 +84,6 @@ export class URLConstantDsf {
     public static UpdateLeadStepStatBulkByLeadId = environment.losUrl + "/v1" + "/PubSubDsf/UpdateLeadStepStatBulkByLeadId";
     public static GetAgrmntListForCustHistDsf = environment.losUrl + "/AgrmntDsf/GetAgrmntListForCustHistDsf"; 
     public static GetAppListForCustHistDsf = environment.losUrl + "/AppDsf/GetAppListForCustHistDsf";
-
     public static AddEditAppCrdRvwHDsf    = environment.losUrl + "/v1/CrdRvwX/AddEditAppCrdRvwHDsf";
     public static GetAppCrdRvwHDsfByAppId = environment.losUrl + "/v1/CrdRvwX/GetAppCrdRvwHDsfByAppId";
 
@@ -105,11 +104,11 @@ export class URLConstantDsf {
     public static EditMouCustXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustXDsf";
     public static EditMouCustNewCalculationXDsf = environment.losUrl + "/MouCustXDsf/EditMouCustNewCalculationXDsf";
     public static SubmitReviewDsf = environment.losUrl + "/MouCustXDsf/SubmitReviewDsf";
-    public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
 
     public static GetClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/GetClaimTaskLeadDsf";
     public static AddClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/AddClaimTaskLeadDsf";
     public static EditClaimTaskLeadDsf = environment.losUrl + "/v1" + "/LeadX/EditClaimTaskLeadDsf";
     public static SubmitWorkflowLeadQCV2Dsf = environment.losUrl + "/v2" + "/LeadX/SubmitWorkflowLeadQC";
     public static SimpleLeadReturnDsf = environment.losUrl + "/v2" + "/LeadX/SimpleLeadReturnDsf";
+    public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
 }

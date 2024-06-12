@@ -36,6 +36,7 @@ import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { DMSLabelValueObj } from 'app/shared/model/dms/dms-label-value-obj.model';
 import { AppCustObj } from 'app/shared/model/app-cust-obj.model';
 import { formatDate } from '@angular/common';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-credit-review-detail-x-dsf',
@@ -69,6 +70,13 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   dmsObj: DMSObj;
   isDmsReady: boolean = false;
   usingDmsAdins: string;
+  IsShowIcaVerdict: boolean = false
+  IsEnableIcaVerdict: boolean = false
+
+  IcaVerdictValueArr = new Array();
+  DDLIcaVerdictColor = new Array();
+  DDLIcaVerdictValue = new Array();
+  AppCrdRvwHDsf: any
 
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
@@ -83,7 +91,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
-    CreditScoring: ['']
+    CreditScoring: [''],
+    IcaVerdictColor: '',
+    IcaVerdictValue: '',
   });
 
   FormReturnObj  =this.fb.group({
@@ -142,6 +152,8 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     this.initInputApprovalObj();
     await this.CreditReviewvalidation();
     await this.InitDms();
+    await this.GetIcaVerdictGS();
+    await this.GetAppCrdRvwHDsfByAppId();
   }
 
   async InitDms() {
@@ -299,6 +311,10 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
       if(this.BizTemplateCode == CommonConstant.CFNA && this.lobCode == "FD"){
         this.IsFD = true;
       }
+
+    //Self Custom EFORM 404303
+    this.IsShowIcaVerdict = this.lobCode == "CF" || this.lobCode == "LS" || this.lobCode == "SLB"
+    //Self Custom EFORM 404303
   }
 
   async GetCreditScoring(appNo: string) {
@@ -505,6 +521,9 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     let CrdRvwMakeNewApprovalUrl = environment.isCore ? URLConstant.CrdRvwMakeNewApprovalV2 : URLConstant.CrdRvwMakeNewApproval;
     this.http.post(CrdRvwMakeNewApprovalUrl, apiObj).subscribe(
       (response) => {
+        if (response && response["StatusCode"] == "200") {
+          this.AddEditAppCrdRvwHDsf()
+        }
         // Self Custom Change
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.NAP_CRD_PRCS_CRD_REVIEW_PAGING_X], { "BizTemplateCode": this.BizTemplateCode });
         // End Self Custom Change
@@ -609,4 +628,111 @@ export class CreditReviewDetailXDsfComponent implements OnInit {
     return result;
   }
 
+  async GetIcaVerdictGS(){
+    this.DDLIcaVerdictColor = (await this.GetGeneralSettingValueByCode('ICA_VERDICT_COLOR')).split(',')
+    this.IcaVerdictValueArr = (await this.GetGeneralSettingValueByCode('ICA_VERDICT_VALUE')).split('|')
+  }
+
+  async GetGeneralSettingValueByCode(code: string)
+  {
+    let req = {code: code};
+    let gsValue = ''
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, req).toPromise().then(
+      (response) => {
+        gsValue = response["GsValue"];
+      });
+
+    return gsValue
+  }
+
+  async BindDDLIcaVerdictValue(idx :number){
+    if(idx <= 0){
+      this.DDLIcaVerdictValue = []
+      return
+    }
+    this.DDLIcaVerdictValue = this.IcaVerdictValueArr[idx-1].split(",")
+  }
+
+  toggleIcaVerdict(event: any){
+    this.IsEnableIcaVerdict = event.target.checked;
+    this.FormObj.patchValue(
+      {
+        IcaVerdictColor: '',
+        IcaVerdictValue: ''
+      }
+    );
+
+    if (this.IsEnableIcaVerdict) {
+      this.enableIcaVerdict()
+    }
+    else {
+      this.disableIcaVerdict();
+    }
+
+    this.FormObj.controls.IcaVerdictColor.updateValueAndValidity()
+    this.FormObj.controls.IcaVerdictValue.updateValueAndValidity()
+  }
+
+  enableIcaVerdict(){
+    this.defaultICAVerdict()
+    this.FormObj.controls.IcaVerdictColor.enable()
+    this.FormObj.controls.IcaVerdictValue.enable()
+    this.FormObj.controls.IcaVerdictColor.setValidators(Validators.required)
+    this.FormObj.controls.IcaVerdictValue.setValidators(Validators.required)
+  }
+
+  disableIcaVerdict(){
+    this.FormObj.patchValue(
+      {
+        IcaVerdictColor: '',
+        IcaVerdictValue: ''
+      }
+    );
+
+    this.DDLIcaVerdictValue = []
+    this.FormObj.controls.IcaVerdictColor.disable()
+    this.FormObj.controls.IcaVerdictValue.disable()
+  }
+
+  onChangeIcaVerdictColor(ev){
+    this.FormObj.patchValue({ IcaVerdictValue: '' });
+    this.BindDDLIcaVerdictValue(ev.target.selectedIndex)
+  }
+
+  async AddEditAppCrdRvwHDsf(){
+    if (!(this.IsEnableIcaVerdict || this.AppCrdRvwHDsf['AppCrdRvwHDsfId'] > 0)) { return }
+
+    let req = {
+      AppId: this.appId,
+      IcaVerdictColor: this.FormObj.controls.IcaVerdictColor.value,
+      IcaVerdictValue: this.FormObj.controls.IcaVerdictValue.value
+    }
+
+    this.http.post(URLConstantDsf.AddEditAppCrdRvwHDsf, req).subscribe(() => {});
+  }
+
+  async GetAppCrdRvwHDsfByAppId() {
+    let req = {
+      AppId: this.appId
+    }
+
+    this.http.post(URLConstantDsf.GetAppCrdRvwHDsfByAppId, req).subscribe(
+      (response) => {
+        this.AppCrdRvwHDsf = response
+        this.IsEnableIcaVerdict = this.AppCrdRvwHDsf['AppCrdRvwHDsfId'] > 0 && this.AppCrdRvwHDsf['IcaVerdictColor'] && this.AppCrdRvwHDsf['IcaVerdictColor'];
+        this.defaultICAVerdict()
+      });
+  }
+
+  async defaultICAVerdict(){
+    this.FormObj.patchValue(
+      {
+        IcaVerdictColor: this.AppCrdRvwHDsf['IcaVerdictColor'] ? this.AppCrdRvwHDsf['IcaVerdictColor'] : '',
+        IcaVerdictValue: this.AppCrdRvwHDsf['IcaVerdictValue'] ? this.AppCrdRvwHDsf['IcaVerdictValue'] : ''
+      }
+    );
+
+    let colorIdx = this.DDLIcaVerdictColor.indexOf(this.AppCrdRvwHDsf['IcaVerdictColor']);
+    this.BindDDLIcaVerdictValue(colorIdx + 1);
+  }
 }
