@@ -61,7 +61,7 @@ export class ChangeMouRequestPagingXDsfComponent implements OnInit {
             AdInsHelper.RedirectUrl(
               this.router,
               [
-                NavigationConstantDsf.CHANGE_MOU_REQ_DETAIL_DSF
+                NavigationConstant.CHANGE_MOU_REQ_DETAIL
               ],
               { MouCustId: ev.RowObj["MouCustId"] }
             );

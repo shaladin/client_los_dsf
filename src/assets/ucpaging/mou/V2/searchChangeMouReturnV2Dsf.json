@@ -239,6 +239,11 @@
                                     "property": "Assignee",
                                     "value": null,
                                     "restriction": "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
                                 }
                             ],
                             "result": {
@@ -281,11 +286,204 @@
                                     "property": "Assignee",
                                     "value": null,
                                     "restriction": "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FACTORING",
+                                    "restriction": "EQ"
                                 }
                             ],
                             "result": {
                                 "type": "url",
                                 "path": "CHANGE_MOU_REQ_DETAIL_DSF",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "return"
+                                    },
+                                    {
+                                        "type": "MrMouTypeCode",
+                                        "property": "MrMouTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    },
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "CHANGE_MOU_REQ_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "return"
+                                    },
+                                    {
+                                        "type": "MrMouTypeCode",
+                                        "property": "MrMouTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    },
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "GENERAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "CHANGE_MOU_REQ_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "return"
+                                    },
+                                    {
+                                        "type": "MrMouTypeCode",
+                                        "property": "MrMouTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    },
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FINANCING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "CHANGE_MOU_REQ_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "return"
+                                    },
+                                    {
+                                        "type": "MrMouTypeCode",
+                                        "property": "MrMouTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "Id"
+                                    },
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "Assignee",
+                                    "value": null,
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FINANCING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "CHANGE_MOU_REQ_DETAIL",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
