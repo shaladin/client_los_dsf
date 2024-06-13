@@ -136,6 +136,8 @@ export class NavigationConstantDsf {
      public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING_DSF = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.EDIT_APP_AFT_APV_PAGING_X_DSF;//"/Nap/AddProcess/EditAppAftApvDsf/PagingX"
      public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL_DSF = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.EDIT_APP_AFT_APV_DETAIL_X_DSF;//"/Nap/AddProcess/EditAppAftApvDsf/DetailX"
      
+     public static VIEW_FOU_CUST_TRUST_SOC = "/" + PathConstant.VIEW + "/" + PathConstantDsf.VIEW_FOU_CUST_TRUST_SOC; //'/View/Customer/CustTrustSocDsf'
+
      public static MOU_CUST_RVW_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_RVW_PAGING_DSF; //'/Mou/Cust/ReviewPaging'
      public static MOU_EXECUTION_DETAIL_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EXECUTION_DETAIL_X_DSF; //"/Mou/Execution/DetailX"
      public static MOU_EXECUTION_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_EXECUTION_PAGING_X_DSF; //"/Mou/Execution/PagingX"
@@ -150,8 +152,6 @@ export class NavigationConstantDsf {
      public static CHANGE_MOU_APV_DETAIL_FCTR_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_APV_DETAIL_FCTR_X_DSF; //"/Mou/ChangeMou/ApvDetailFctrX"
      public static CHANGE_MOU_APV_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.CHANGE_MOU_APV_PAGING_X_DSF; //"/Mou/ChangeMou/ApvPaging"
      public static MOU_REQ_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_REQ_PAGING_X_DSF; //"/Mou/Request/PagingX"
-
-     public static VIEW_FOU_CUST_TRUST_SOC = "/" + PathConstant.VIEW + "/" + PathConstantDsf.VIEW_FOU_CUST_TRUST_SOC; //'/View/Customer/CustTrustSocDsf'
 
      public static CESSIE_FACTORING_REVIEW_DETAIL_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_DETAIL_DSF; //'/Impl/Cessie/Process/FactoringReview/Detail'
      public static CESSIE_FACTORING_REVIEW_ASSIGN_PROD_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_ASSIGN_PROD_DSF; //'/Impl/Cessie/Process/FactoringReview/AssignProd'

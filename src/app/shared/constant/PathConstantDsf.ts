@@ -212,6 +212,7 @@ export class PathConstantDsf {
     public static EDIT_APP_AFT_APV_PAGING_X_DSF = PathConstantDsf.EDIT_APP_AFT_APV_DSF + "/" + PathConstantX.PAGING;
     public static EDIT_APP_AFT_APV_DETAIL_X_DSF = PathConstantDsf.EDIT_APP_AFT_APV_DSF + "/" + PathConstantX.DETAIL_X;
     
+    public static VIEW_FOU_CUST_TRUST_SOC = "Customer/CustTrustSocDsf";
     public static MOU_REQ_PAGING_X_DSF = PathConstant.MOU_REQ + "/" + PathConstantDsf.PAGING_X;
     public static MOU_REQ_DETAIL_X_DSF = PathConstant.MOU_REQ + '/' + PathConstantDsf.DETAIL_X;
     public static MOU_CUST_REQ_ADD_COLL_X_DSF = PathConstant.MOU_CUST + '/RequestAddCollXDsf';
@@ -237,5 +238,4 @@ export class PathConstantDsf {
     public static FACTORING_REVIEW_DETAIL_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstant.DETAIL;
     public static FACTORING_REVIEW_ASSIGN_PROD_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstantX.ASSIGN_PROD;
     public static FACTORING_REVIEW_PAGING_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstant.PAGING;
-    public static VIEW_FOU_CUST_TRUST_SOC = "Customer/CustTrustSocDsf";
 }
