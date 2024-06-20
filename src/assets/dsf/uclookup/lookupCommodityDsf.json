@@ -20,10 +20,10 @@
       },
       {
         "type": "textbox",
-        "name": "RESERVE_FIELD_1",
-        "id": "ReserveField1Id",
+        "name": "RESERVE_FIELD_4",
+        "id": "ReserveField4Id",
         "value": "",
-        "label": "Commodity Category",
+        "label": "Commodit_21",
         "placeholder": ""
       }
 
@@ -47,8 +47,8 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Commodity Category",
-            "name": "ReserveField1"
+            "label": "Commodity_21",
+            "name": "ReserveField4"
         },
         {
             "type": "label",
@@ -70,7 +70,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "ReserveField1"
+            "property": "ReserveField4"
         },
         {
             "type": "action",
