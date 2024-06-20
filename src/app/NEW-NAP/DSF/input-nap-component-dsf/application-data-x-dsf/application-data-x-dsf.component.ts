@@ -1057,9 +1057,11 @@ export class ApplicationDataXDsfComponent implements OnInit {
 
     //Lookup Commodity
     this.inputLookupCommodityObj = new InputLookupObj();
-    this.inputLookupCommodityObj.urlJson = "./assets/impl/uclookup/lookupCommodity.json";
-    this.inputLookupCommodityObj.pagingJson = "./assets/impl/uclookup/lookupCommodity.json";
-    this.inputLookupCommodityObj.genericJson = "./assets/impl/uclookup/lookupCommodity.json";
+    // Self Custom Changes CR API Data Robot 413750
+    this.inputLookupCommodityObj.urlJson = "./assets/dsf/uclookup/lookupCommodityDsf.json";
+    this.inputLookupCommodityObj.pagingJson = "./assets/dsf/uclookup/lookupCommodityDsf.json";
+    this.inputLookupCommodityObj.genericJson = "./assets/dsf/uclookup/lookupCommodityDsf.json";
+    // Self Custom Changes CR API Data Robot 413750
     if (this.BizTemplateCode != CommonConstant.CF4W && this.BizTemplateCode != CommonConstant.FL4W) {
       this.inputLookupCommodityObj.isRequired = false;
     }
