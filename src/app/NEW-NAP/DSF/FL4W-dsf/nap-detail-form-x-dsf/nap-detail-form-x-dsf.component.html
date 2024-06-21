@@ -119,9 +119,11 @@
               </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-FL4W-x *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady"
+              <!-- Self Custom Changes CR API Data Robot 413750 -->
+              <app-application-data-x-FL4W-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady"
                                            [AppId]="appId" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-              </app-application-data-FL4W-x>
+              </app-application-data-x-FL4W-dsf>
+              <!-- Self Custom Changes CR API Data Robot 413750 -->
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data-x *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady"
@@ -232,10 +234,12 @@
               </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
+              <!-- Self Custom Changes CR API Data Robot 413750 -->
+              <app-application-data-x-cf4w-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
                                       [BizTemplateCode]="BizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')"
                                       (outputCancel)="Cancel()">
-              </app-application-data-x>
+              </app-application-data-x-cf4w-dsf>
+              <!-- Self Custom Changes CR API Data Robot 413750 -->
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data-x *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
