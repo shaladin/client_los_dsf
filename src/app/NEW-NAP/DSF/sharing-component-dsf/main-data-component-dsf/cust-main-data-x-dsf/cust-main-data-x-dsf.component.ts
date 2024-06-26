@@ -2386,8 +2386,7 @@ export class CustMainDataXDsfComponent implements OnInit {
       this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required]);
     }
     else {
-      this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
-      this.npwpKtpChecking()
+      this.CustMainDataForm.get("TaxIdNo").setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
     }
     this.CustMainDataForm.get("TaxIdNo").updateValueAndValidity();
   }
