@@ -46,7 +46,7 @@ import { CessieMonitoringDsfComponent } from "app/dsf/impl/cessie/cessie-upload-
 import { FactoringReviewPagingDsfComponent } from "app/dsf/impl/cessie/factoring-review-paging-dsf/factoring-review-paging-dsf.component";
 import { FactoringReviewDetailDsfComponent } from "app/dsf/impl/cessie/factoring-review-detail-dsf/factoring-review-detail-dsf.component";
 import { FactoringReviewAssignProductDsfComponent } from "app/dsf/impl/cessie/factoring-review-assign-product-dsf/factoring-review-assign-product-dsf.component";
-import { CrdRvwListAssetComponent } from "./NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-list-asset/crd-rvw-list-asset.component";
+// import { CrdRvwListAssetComponent } from "./NEW-NAP/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-list-asset/crd-rvw-list-asset.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -112,7 +112,7 @@ export const customCurrencyMaskConfig = {
     EditCommAfterApprovalPagingXComponent,
     EditCommV2XComponent,
     FormEditCommGenerateXComponent,
-    CrdRvwListAssetComponent,
+    // CrdRvwListAssetComponent,
   ]
 })
 
