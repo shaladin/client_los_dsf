@@ -177,7 +177,7 @@
       </div>
       <label class="col-md-2  adins-required-label" translate>Id Type </label>
       <div class="col-md-4">
-        <select class="form-control" id="idType" formControlName="MrIdTypeCode" (change)="onOptionsSelected()"
+        <select class="form-control" id="idType" formControlName="MrIdTypeCode" 
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppAssetForm.controls.MrIdTypeCode.invalid }"
                 style="width:50%">
           <option value="">-Select One-</option>
@@ -205,7 +205,7 @@
       </div>
       <label class="col-md-2  adInsLabel" translate>Owner Id No </label>
       <div class="col-md-4">
-        <input type="text" class="form-control" formControlName="OwnerIdNo" [readonly]="isReadOnly">
+        <input type="text" class="form-control" formControlName="OwnerIdNo" >
         <lib-uc-show-errors [control]="EditAppAssetForm.controls.OwnerIdNo" [submit]="enjiForm.submitted">
         </lib-uc-show-errors>
       </div>
