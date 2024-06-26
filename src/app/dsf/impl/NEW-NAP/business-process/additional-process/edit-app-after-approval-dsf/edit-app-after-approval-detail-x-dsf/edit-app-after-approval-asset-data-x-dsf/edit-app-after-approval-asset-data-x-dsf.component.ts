@@ -131,9 +131,6 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
   returnAppAssetDsfObj: any;
   // End Self Custom Changes CR Runner KTB 398912
 
-  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
-  isReadOnly:boolean = false;
-
   constructor(
     private fb: FormBuilder,
     private toastr: NGXToastrService,
@@ -206,7 +203,6 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
       }
     );
     // End Self Custom Changes CR Runner KTB 398912
-    this.onOptionsSelected()
   }
 
   async SetAssetTypeData()
@@ -342,16 +338,6 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
 
   }
 
-  onOptionsSelected(){
-    if(this.npwpOrKtp.includes(this.EditAppAssetForm.controls.MrIdTypeCode.value)){
-      this.EditAppAssetForm.controls.OwnerIdNo.setValidators([Validators.required,Validators.maxLength(16),Validators.minLength(16),Validators.pattern("^[0-9]+$")])
-    }
-    else{
-      this.EditAppAssetForm.controls.OwnerIdNo.setValidators(Validators.maxLength(50))
-    }
-    this.EditAppAssetForm.controls.OwnerIdNo.updateValueAndValidity();
-  }
-
   async GetAppData() {
     let reqGetAppById : GenericObj = new GenericObj();
     reqGetAppById.Id = this.AppId;
@@ -466,7 +452,7 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
       this.InputLookupProfessionObj.isDisable = true;
       this.EditAppAssetForm.controls["OwnerName"].disable();
       this.EditAppAssetForm.controls["MrIdTypeCode"].disable();
-      this.isReadOnly = true
+      this.EditAppAssetForm.controls["OwnerIdNo"].disable();
       this.EditAppAssetForm.controls["MrOwnerRelationshipCode"].disable();
       this.EditAppAssetForm.controls["OwnerMobilePhnNo"].disable();
       this.EditAppAssetForm.controls["ownerData"].disable();
@@ -477,7 +463,7 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
       this.InputLookupProfessionObj.isDisable = false;
       this.EditAppAssetForm.controls["OwnerName"].enable();
       this.EditAppAssetForm.controls["MrIdTypeCode"].enable();
-      this.isReadOnly = false;
+      this.EditAppAssetForm.controls["OwnerIdNo"].enable();
       this.EditAppAssetForm.controls["MrOwnerRelationshipCode"].enable();
       this.EditAppAssetForm.controls["OwnerMobilePhnNo"].enable();
       this.EditAppAssetForm.controls["ownerData"].enable();

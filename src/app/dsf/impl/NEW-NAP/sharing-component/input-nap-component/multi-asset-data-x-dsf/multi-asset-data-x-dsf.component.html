@@ -14,7 +14,7 @@
     <app-asset-data-paging-x-dsf [showCancel]="showCancel" *ngIf="mode == 'paging'" [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" (outputValue)="terimaValue($event)" (outputCancel)="Cancel()"></app-asset-data-paging-x-dsf>
     <app-asset-data-add-edit-x-dsf *ngIf="mode == 'addAsset' || mode =='editAsset'" [mode] = "this.mode" [BizTemplateCode]="BizTemplateCode" [AppAssetId]="this.AppAssetId" [AppId]="AppId" (assetValue)="terimaValue($event)"></app-asset-data-add-edit-x-dsf>
     <!-- End Self Custom Changes CR Runner KTB 398912 -->
-    <app-collateral-add-edit-x *ngIf="mode == ModeAddColl || mode == ModeEditColl" [mode] = "this.mode" [AppId]="AppId" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"></app-collateral-add-edit-x>
+    <app-collateral-add-edit *ngIf="mode == ModeAddColl || mode == ModeEditColl" [mode] = "this.mode" [AppId]="AppId" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"></app-collateral-add-edit>
   </div>
 </div>
 
