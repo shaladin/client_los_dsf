@@ -76,6 +76,9 @@ import { PlafondInstallmentSimulationDetailDsfComponent } from 'app/NEW-NAP/DSF/
 // import { CollateralAddEditXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component';
 // import { ReturnHandlingCollateralPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component';
 // import { ReturnHandlingCollateralEditXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component';
+// import { EditAppAfterApprovalPagingXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-paging-x-dsf/edit-app-after-approval-paging-x-dsf.component';
+// import { EditAppAfterApprovalDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-detail-x-dsf/edit-app-after-approval-detail-x-dsf.component';
+
 
 const routes: Routes = [
   {
