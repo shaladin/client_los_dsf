@@ -73,9 +73,12 @@ import { ReturnHandlingDetailDsfComponent } from 'app/NEW-NAP/DSF/business-proce
 import { ReturnHandlingEditNap4DsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component';
 import { PlafondInstallmentSimulationPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-paging-dsf/plafond-installment-simulation-paging-dsf.component';
 import { PlafondInstallmentSimulationDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component';
-import { CollateralAddEditXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component';
-import { ReturnHandlingCollateralPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component';
-import { ReturnHandlingCollateralEditXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component';
+// import { CollateralAddEditXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component';
+// import { ReturnHandlingCollateralPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component';
+// import { ReturnHandlingCollateralEditXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component';
+// import { EditAppAfterApprovalPagingXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-paging-x-dsf/edit-app-after-approval-paging-x-dsf.component';
+// import { EditAppAfterApprovalDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-detail-x-dsf/edit-app-after-approval-detail-x-dsf.component';
+
 
 const routes: Routes = [
   {
@@ -278,21 +281,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.RETURN_HANDLING_COLL_PAGING,
-        component: ReturnHandlingCollateralPagingXComponent,
-        data: {
-          title: 'Return Handling Collateral'
-        }
-      },
-      {
         path: PathConstant.RETURN_HANDLING_COLL_EDIT,
         component: ReturnHandlingCollateralEditComponent,
-        data: {
-          title: 'Return Handling Collateral Edit'
-        }
-      },      {
-        path: PathConstantX.RETURN_HANDLING_COLL_EDIT,
-        component: ReturnHandlingCollateralEditXComponent,
         data: {
           title: 'Return Handling Collateral Edit'
         }
@@ -300,13 +290,6 @@ const routes: Routes = [
       {
         path: PathConstant.RETURN_HANDLING_COLL_DETAIL,
         component: CollateralAddEditComponent,
-        data: {
-          title: 'Return Handling Collateral Detail'
-        }
-      },
-      {
-        path: PathConstantX.RETURN_HANDLING_COLL_DETAIL,
-        component: CollateralAddEditXComponent,
         data: {
           title: 'Return Handling Collateral Detail'
         }
