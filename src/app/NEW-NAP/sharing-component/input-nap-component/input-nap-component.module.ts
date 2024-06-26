@@ -168,7 +168,7 @@ import { AssetDataPagingXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-compo
 import { AssetDataAddEditXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data-x-dsf/asset-data-add-edit-x-dsf/asset-data-add-edit-x-dsf.component";
 import { UcInsuranceXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data-dsf/uc-insurance-x-dsf/uc-insurance-x-dsf.component";
 import { InsuranceMultiAssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data-dsf/insurance-multi-asset-data-x-dsf/insurance-multi-asset-data-x-dsf.component";
-import { CollateralAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component";
+// import { CollateralAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component";
 import { ApplicationDataXCf4wDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-x-cf4w-dsf/application-data-x-cf4w-dsf.component";
 
 export const customCurrencyMaskConfig = {
@@ -234,7 +234,6 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditXComponent,
     AssetDataAddEditXDsfComponent,
     CollateralAddEditComponent,
-    CollateralAddEditXComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
     MultiAssetDataXDsfComponent,
@@ -404,7 +403,6 @@ export const customCurrencyMaskConfig = {
     AssetDataAddEditXComponent,
     AssetDataAddEditXDsfComponent,
     CollateralAddEditComponent,
-    CollateralAddEditXComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
     MultiAssetDataXDsfComponent,

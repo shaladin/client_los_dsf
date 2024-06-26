@@ -281,21 +281,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstantX.RETURN_HANDLING_COLL_PAGING,
-        component: ReturnHandlingCollateralPagingXComponent,
-        data: {
-          title: 'Return Handling Collateral'
-        }
-      },
-      {
         path: PathConstant.RETURN_HANDLING_COLL_EDIT,
         component: ReturnHandlingCollateralEditComponent,
-        data: {
-          title: 'Return Handling Collateral Edit'
-        }
-      },      {
-        path: PathConstantX.RETURN_HANDLING_COLL_EDIT,
-        component: ReturnHandlingCollateralEditXComponent,
         data: {
           title: 'Return Handling Collateral Edit'
         }
@@ -303,13 +290,6 @@ const routes: Routes = [
       {
         path: PathConstant.RETURN_HANDLING_COLL_DETAIL,
         component: CollateralAddEditComponent,
-        data: {
-          title: 'Return Handling Collateral Detail'
-        }
-      },
-      {
-        path: PathConstantX.RETURN_HANDLING_COLL_DETAIL,
-        component: CollateralAddEditXComponent,
         data: {
           title: 'Return Handling Collateral Detail'
         }
