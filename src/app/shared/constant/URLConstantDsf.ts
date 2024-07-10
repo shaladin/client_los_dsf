@@ -110,4 +110,5 @@ export class URLConstantDsf {
     public static GetAppAssetByAppAssetIdDsf = environment.losUrl + "/AppAssetDsf/GetAppAssetByAppAssetIdDsf";
     public static GetListAppAssetForCopyByAppIdDsf = environment.losUrl + "/AppAssetDsf/GetListAppAssetForCopyByAppIdDsf";
     public static CopyAppAssetDsf = environment.losUrl + "/AppAssetDsf/CopyAppAssetDsf";
+    public static GenerateAgrmntDocNoDsf = environment.losUrl + "/DocumentDsf/GenerateAgrmntDocNoDsf"
 }
