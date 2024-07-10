@@ -9,6 +9,7 @@ import { ViewInsuranceComponent } from './view-insurance/view-insurance.componen
 import { ViewCollateralDataComponent } from './view-collateral-data/view-collateral-data.component';
 import { AdInsSharedModule } from 'app/components/adins-module/adIns-shared.module';
 import { ViewAssetDataXComponent } from 'app/impl/general/app-view/view-asset-data/view-asset-data-x.component';
+import { ViewCollateralDataDsfComponent } from 'app/dsf/impl/view-enhancing/app-view/view-collateral-data-dsf/view-collateral-data-dsf.component';
 
 @NgModule({
     imports: [
@@ -23,14 +24,16 @@ import { ViewAssetDataXComponent } from 'app/impl/general/app-view/view-asset-da
         ViewAssetDataComponent,
         ViewAssetDataXComponent,
         ViewInsuranceComponent,
-        ViewCollateralDataComponent
+        ViewCollateralDataComponent,
+        ViewCollateralDataDsfComponent
     ],
     exports: [
         AppTcComponent,
         ViewAssetDataComponent,
         ViewAssetDataXComponent,
         ViewInsuranceComponent,
-        ViewCollateralDataComponent
+        ViewCollateralDataComponent,
+        ViewCollateralDataDsfComponent
     ]
 })
 export class AppViewComponentsModule { }

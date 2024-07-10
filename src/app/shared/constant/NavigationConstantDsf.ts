@@ -152,5 +152,9 @@ export class NavigationConstantDsf {
      public static CESSIE_FACTORING_REVIEW_DETAIL_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_DETAIL_DSF; //'/Impl/Cessie/Process/FactoringReview/Detail'
      public static CESSIE_FACTORING_REVIEW_ASSIGN_PROD_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_ASSIGN_PROD_DSF; //'/Impl/Cessie/Process/FactoringReview/AssignProd'
      public static CESSIE_FACTORING_REVIEW_PAGING_DSF = "/" + PathConstantX.LR_IMPL + "/" + PathConstantDsf.FACTORING_REVIEW_PAGING_DSF; //'/Impl/Cessie/Monitoring'
+     public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.DO_MULTI_ASSET_PAGING_DSF; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
+     public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING_DSF = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.EDIT_APP_AFT_APV_PAGING_X_DSF;//"/Nap/AddProcess/EditAppAftApvDsf/PagingX"
+     public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL_DSF = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.EDIT_APP_AFT_APV_DETAIL_X_DSF;//"/Nap/AddProcess/EditAppAftApvDsf/DetailX"
+       
     }
 

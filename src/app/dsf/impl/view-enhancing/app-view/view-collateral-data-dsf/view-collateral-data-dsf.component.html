@@ -1,0 +1,121 @@
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <div *ngIf="isMulti">
+        <span>
+          <button type="button" class="btn btn-raised btn-warning mr-1 mt-3" (click)="Back()" translate><i class="ft-arrow-left"></i>&nbsp;<span translate>Back</span></button>
+        </span>
+      </div>
+    </div>
+    <div class="px-3">
+      <lib-ucSubsection [id]="'appCollateralId'" [title]="'Collateral Information'" [panel]="'collateral'">
+      </lib-ucSubsection>
+      <div id="asset">
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Type</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.AssetTypeName? AppCollateral.AssetTypeName : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>Collateral Name</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.FullAssetName? AppCollateral.FullAssetName : "-"}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Price</label>
+          <label class="col-md-4  adinslabel text-right" translate>{{AppCollateral?.CollateralValueAmt? (AppCollateral.CollateralValueAmt | number:'.2':'en-US') : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>Manufacturing Year</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.ManufacturingYear? AppCollateral.ManufacturingYear : "-"}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Condition</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.MrCollateralConditionCodeDesc? AppCollateral.MrCollateralConditionCodeDesc : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>{{SerialNoLabelCollateralList[0]? SerialNoLabelCollateralList[0] : ""}}</label>
+          <label class="col-md-4  adinslabel" translate>{{SerialNoLabelCollateralList[0]? (AppCollateral?.SerialNo1? AppCollateral.SerialNo1 : "-") : ""}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Usage</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.MrCollateralUsageDesc? AppCollateral.MrCollateralUsageDesc : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>{{SerialNoLabelCollateralList[1]? SerialNoLabelCollateralList[1] : ""}}</label>
+          <label class="col-md-4  adinslabel" translate>{{SerialNoLabelCollateralList[1]? (AppCollateral?.SerialNo2? AppCollateral.SerialNo2 : "-") : ""}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Collateral Tax Date</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.AssetTaxDt? (AppCollateral.AssetTaxDt | date : "dd-MMM-yyyy") : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>{{SerialNoLabelCollateralList[2]? SerialNoLabelCollateralList[2] : ""}}</label>
+          <label class="col-md-4  adinslabel" translate>{{SerialNoLabelCollateralList[2]? (AppCollateral?.SerialNo3? AppCollateral.SerialNo3 : "-") : ""}}</label>
+        </div>
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Portion Percentage</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.CollateralPrcnt? (AppCollateral.CollateralPrcnt | number:'.6':'en-US') + " %" : "-"}}</label>
+          <label class="col-md-2  adInsLabel" translate>Notes</label>
+          <label class="col-md-4  adinslabel" translate>{{AppCollateral?.CollateralNotes? AppCollateral?.CollateralNotes : "-"}}</label>
+        </div>
+        <!-- Self Custom Changes CR Runner KTB 398912 -->
+        <div class="row">
+          <label class="col-md-2  adInsLabel" translate>Runner Activation</label>
+          <label class="col-md-4  adinslabel" translate>{{AppAssetDsf?.RunnerActivation? AppAssetDsf?.RunnerActivation : "-"}}</label>
+        </div>
+        <!-- End Self Custom Changes CR Runner KTB 398912 -->
+      </div>
+    </div>
+    <div class="px-3">
+      <div *ngIf="AppCollateralDocs?.length">
+        <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
+        </lib-ucSubsection>
+        <div class="form-body" id="AddCollDocument" style="overflow-x: auto;">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header">Document</span></th>
+                <th><span translate class="thead-header">Received</span></th>
+                <th><span translate class="thead-header">Document No</span></th>
+                <th><span translate class="thead-header">Expired Date</span></th>
+                <th><span translate class="thead-header">Document Notes</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of this.AppCollateralDocs">
+                <td>
+                  {{item.DocName}}
+                </td>
+                <td *ngIf="item.IsReceived == true">
+                  Yes
+                </td>
+                <td *ngIf="item.IsReceived == false">
+                  No
+                </td>
+                <td>
+                  {{item.DocNo}}
+                </td>
+                <td>
+                  {{item.ExpiredDt | date: 'yyyy-MM-dd'}}
+                </td>
+                <td>
+                  {{item.DocNotes}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <lib-ucSubsection *ngIf="AppCollateralAttrObjs?.length" [id]="'collAttrId'"
+        [title]="'Collateral Attribute'" [panel]="'collAttr'">
+      </lib-ucSubsection>
+      <div class="col-md-12" id="collAttr">
+        <div  class="row" *ngIf="AppCollateralAttrObjs?.length">
+          <div class="col-md-12">
+            <div class="col-md-12" *ngFor="let item of this.AppCollateralAttrObjs;">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel"> {{item.CollateralAttrName}} </label>
+                <label class="col-md-9 adInsLabel"> {{item.AttrValue}} </label>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <lib-ucSubsection [id]="'collateralAccessoriesId'" [title]="'Collateral Accessories'" [panel]="'collateralAccessories'">
+      </lib-ucSubsection>
+      <div id="collateralAccessories">
+        <lib-ucgridview [gridInput]="inputGridObj"></lib-ucgridview>
+      </div>
+    </div>
+    <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewUOLObj"></lib-ucviewgeneric>
+  </div>
+</div>

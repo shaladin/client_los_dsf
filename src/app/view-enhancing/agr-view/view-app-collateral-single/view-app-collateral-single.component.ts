@@ -9,6 +9,7 @@ import { AppCollateralAttrObj } from 'app/shared/model/app-collateral-attr-obj.m
 import { AppCollateralAccessoryObj } from 'app/shared/model/app-collateral-accessory-obj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'app-view-app-collateral-single',
@@ -30,6 +31,9 @@ export class ViewAppCollateralSingleComponent implements OnInit {
   AppCollateralAttrObjs : Array<AppCollateralAttrObj> = new Array<AppCollateralAttrObj>();
   AppCollateralAccessoryObjs : Array<AppCollateralAccessoryObj> = new Array<AppCollateralAccessoryObj>();
   inputGridObj: InputGridObj = new InputGridObj();
+  // Self Custom Changes CR Runner KTB 398912
+  AppAssetDsf: any;
+  // End Self Custom Changes CR Runner KTB 398912
 
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private httpClient: HttpClient) {
@@ -77,6 +81,10 @@ export class ViewAppCollateralSingleComponent implements OnInit {
         this.AppCollateral = response;
 
         this.GetSerialNoList();
+        // Self Custom Changes CR Runner KTB 398912
+        let appAssetDsfObj = { Id:  this.AppCollateral.AppAssetId };
+        this.GetAllAssetDataDsf(appAssetDsfObj);
+        // End Self Custom Changes CR Runner KTB 398912
       }
     );
 
@@ -113,4 +121,15 @@ export class ViewAppCollateralSingleComponent implements OnInit {
         }
       });
   }
+
+
+  // Self Custom Changes CR Runner KTB 398912
+  async GetAllAssetDataDsf(obj: any) {
+    await this.http.post(URLConstantDsf.GetAppAssetByAppAssetIdDsf, obj).toPromise().then(
+      (response) => {
+        this.AppAssetDsf = response;
+      }
+    );
+  }
+  // End Self Custom Changes CR Runner KTB 398912
 }

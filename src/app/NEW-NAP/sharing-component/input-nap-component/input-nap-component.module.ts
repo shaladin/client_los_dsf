@@ -165,6 +165,10 @@ import { FeeXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-n
 // import { CollateralAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component";
 import { AssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/asset-data-x-dsf/asset-data-x-dsf.component";
 import { AssetDataAddEditXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data-x-dsf/asset-data-add-edit-x-dsf/asset-data-add-edit-x-dsf.component";
+import { MultiAssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data-x-dsf/multi-asset-data-x-dsf.component";
+import { AssetDataPagingXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data-x-dsf/asset-data-paging-x-dsf/asset-data-paging-x-dsf.component";
+import { UcInsuranceXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data-dsf/uc-insurance-x-dsf/uc-insurance-x-dsf.component";
+import { InsuranceMultiAssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data-dsf/insurance-multi-asset-data-x-dsf/insurance-multi-asset-data-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -231,6 +235,7 @@ export const customCurrencyMaskConfig = {
     CollateralAddEditComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
+    MultiAssetDataXDsfComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent,
     SchmEvenPrincipalFctrComponent,
@@ -318,11 +323,13 @@ export const customCurrencyMaskConfig = {
     ViewSubsidyXComponent,
     MultiAssetDataXComponent,
     AssetDataPagingXComponent,
+    AssetDataPagingXDsfComponent,
     AssetDataXComponent,
     AssetDataXDsfComponent,
     CollateralDataCfnaXComponent,
     CollateralDataCfnaPagingXComponent,
     InsuranceMultiAssetDataXComponent,
+    InsuranceMultiAssetDataXDsfComponent,
     ApplicationDataDlfnXComponent,
     FinancialDataDlfnXComponent,
     SingleInstDlfnXComponent,
@@ -395,6 +402,7 @@ export const customCurrencyMaskConfig = {
     CollateralAddEditComponent,
     MultiAssetDataComponent,
     MultiAssetDataXComponent,
+    MultiAssetDataXDsfComponent,
     FinancialDataFctrComponent,
     SchmRegulerFixFctrComponent,
     SchmEvenPrincipalFctrComponent,
@@ -482,11 +490,13 @@ export const customCurrencyMaskConfig = {
     ViewSubsidyXComponent,
     MultiAssetDataXComponent,
     AssetDataPagingXComponent,
+    AssetDataPagingXDsfComponent,
     AssetDataXComponent,
     AssetDataXDsfComponent,
     CollateralDataCfnaXComponent,
     CollateralDataCfnaPagingXComponent,
     InsuranceMultiAssetDataXComponent,
+    InsuranceMultiAssetDataXDsfComponent,
     ApplicationDataDlfnXComponent,
     FinancialDataDlfnXComponent,
     SingleInstDlfnXComponent,
@@ -501,6 +511,7 @@ export const customCurrencyMaskConfig = {
     UcInsuranceDetailComponent,
     UcInsurancePagingComponent,
     UcInsuranceXComponent,
+    UcInsuranceXDsfComponent,
     UcInsuranceDetailXComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent, ReferantorDataNewDetailComponent],
