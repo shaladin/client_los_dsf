@@ -252,6 +252,8 @@ export class DocumentViewXDsfComponent implements OnInit {
           }
         ]
 
+        if(!item.DocNo){ await this.http.post(URLConstantDsf.GenerateAgrmntDocNoDsf, { AgrmntDocDsfId : item.AgrmntDocId }).toPromise() }
+
         if(environment.isCore){
           let arrSubreportObj: Array<SubreportXObj> = new Array();
           let reqObj = {
