@@ -2381,7 +2381,7 @@ export class AssetDataAddEditXDsfComponent implements OnInit {
   }
 
   ChangeMrIdTypeCode(MrIdTypeCode: string){
-    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP || MrIdTypeCode == CommonConstant.ID_TYPE_NPWP) {
+    if (MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
       this.AssetDataForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
       this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
     }

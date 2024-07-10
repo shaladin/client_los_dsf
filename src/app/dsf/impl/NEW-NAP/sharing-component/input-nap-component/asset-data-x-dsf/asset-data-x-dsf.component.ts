@@ -3430,6 +3430,7 @@ export class AssetDataXDsfComponent implements OnInit {
             obj = text;
             return obj;
           });
+          console.log(this.AppAssetAttrObj[j]);
           this.AppAssetAttrObj[j].AttrQuestionValue = attrQuestionValue;
           for (let k = 0; k < AssetAttrR2.length; k++) {
             if (AssetAttrR2[k].AssetAttrCode == this.AppAssetAttrObj[j].AttrCode)

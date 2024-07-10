@@ -73,6 +73,16 @@
           <label class="col-md-9 adInsLabel">{{appAsset?.AssetNotes || '-'}}</label>
         </div>
       </div>
+
+      <!-- Self Custom Changes CR Runner KTB 398912 -->
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3  adInsLabel" translate>Runner Activation</label>
+          <label class="col-md-9  adinslabel" translate>{{AppAssetDsf?.RunnerActivation? AppAssetDsf?.RunnerActivation : "-"}}</label>
+        </div>
+      </div>
+      <!-- End Self Custom Changes CR Runner KTB 398912 -->
+
     </div>
   </div>
   <lib-ucSubsection [id]="'assetAttrId'"

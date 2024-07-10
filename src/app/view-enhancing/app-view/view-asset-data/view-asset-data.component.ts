@@ -6,6 +6,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AllAssetDataObj } from 'app/shared/model/all-asset-data-obj.model';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { GenericListByCodeObj } from 'app/shared/model/generic/generic-list-by-code-obj.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: "view-asset-data",
@@ -27,6 +28,9 @@ export class ViewAssetDataComponent implements OnInit {
   
   AppObj: any;
   AppAssetObj: any;
+  // Self Custom Changes CR Runner KTB 398912
+  AppAssetDsfObj: any;
+  // End Self Custom Changes CR Runner KTB 398912
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
   listAsset: Array<any> = new Array<any>();
@@ -71,6 +75,9 @@ export class ViewAssetDataComponent implements OnInit {
         this.initSingleAssetUrl();
         this.appAssetObj.Id = this.appAssetId;
         await this.GetAllAssetData(this.appAssetObj);
+        // Self Custom Changes CR Runner KTB 398912
+        await this.GetAllAssetDataDsf(this.AppAssetObj);
+        // End Self Custom Changes CR Runner KTB 398912
       }
       else {
         this.initUrl();
@@ -171,6 +178,15 @@ export class ViewAssetDataComponent implements OnInit {
       }
     );
   }
+  // Self Custom Changes CR Runner KTB 398912
+  async GetAllAssetDataDsf(obj: any) {
+    await this.http.post(URLConstantDsf.GetAppAssetByAppAssetIdDsf, obj).toPromise().then(
+      (response) => {
+        this.AppAssetDsfObj = response;
+      }
+    );
+  }
+  // End Self Custom Changes CR Runner KTB 398912
 
   async GetListAllAssetData() {
     await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appObj).toPromise().then(

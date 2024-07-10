@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AppCollateralAccessoryObj } from 'app/shared/model/app-collateral-accessory-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
@@ -24,6 +25,9 @@ export class ViewDeliveryOrderAssetSingleComponent implements OnInit {
   appCollateralDoc: any;
   inputGridObj: InputGridObj = new InputGridObj();
   AppCollateralAccessoryObjs : Array<AppCollateralAccessoryObj> = new Array<AppCollateralAccessoryObj>();
+  // Self Custom Changes CR Runner KTB 398912
+  AppAssetDsf: any;
+  // End Self Custom Changes CR Runner KTB 398912
 
   constructor(private http: HttpClient, public activeModal: NgbActiveModal) { }
 
@@ -39,6 +43,10 @@ export class ViewDeliveryOrderAssetSingleComponent implements OnInit {
     this.getAssetType(this.appAsset.AssetTypeCode);
     this.getOwnerProfessionDesc(this.appCollateralRegistration.OwnerProfessionCode)
     this.getCollateralAccData();
+    // Self Custom Changes CR Runner KTB 398912
+    let appAssetDsfObj = { Id:  this.AppAssetId };
+    this.GetAllAssetDataDsf(appAssetDsfObj);
+    // End Self Custom Changes CR Runner KTB 398912
   }
 
   async getDOAsset() {
@@ -129,4 +137,15 @@ export class ViewDeliveryOrderAssetSingleComponent implements OnInit {
       }
     );
   }
+
+  // Self Custom Changes CR Runner KTB 398912
+  async GetAllAssetDataDsf(obj: any) {
+    await this.http.post(URLConstantDsf.GetAppAssetByAppAssetIdDsf, obj).toPromise().then(
+      (response) => {
+        this.AppAssetDsf = response;
+      }
+    );
+  }
+  // End Self Custom Changes CR Runner KTB 398912
+  
 }
