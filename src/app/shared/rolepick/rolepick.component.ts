@@ -148,7 +148,7 @@ export class RolepickComponent implements OnInit, AfterViewInit {
         });
     }
     else {
-      this.http.post(AdInsConstant.LoginByRole, roleObject).subscribe(
+      this.http.post(AdInsConstant.LoginByRoleV2, roleObject).subscribe(
         (response) => {
           //Cookie sudah diambil dari BE (Di set manual dulu)
           
