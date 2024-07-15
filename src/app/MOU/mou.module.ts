@@ -141,7 +141,7 @@ import { ChangeMouDetailDealerFinancingXComponent } from 'app/impl/MOU/change-mo
 import { ChangeMouDetailFactoringXComponent } from 'app/impl/MOU/change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring-x.component';
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { MouCancelDetailComponent } from './mou-cancel/mou-cancel-detail/mou-cancel-detail.component';
-import { MouCustMgmntShrholderPublicComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
+import { MouCustMgmntShrholderPublicComponent } from "app/MOU/mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public.component";
 import { MouCustTabXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-tab-x.component';
 import { MouCustAttrContentComponentComponent } from "./mou-customer-request/mou-cust-tab/mou-cust-attr-content-component/mou-cust-attr-content-component.component";
 import { ChangeMouAddcollHistoryComponent } from "./change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history.component";
@@ -158,6 +158,10 @@ import { ChangeMouViewModule } from 'app/view-enhancing/change-mou-view/change-m
 import { ChangeMouAddcollHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-addcoll-history/change-mou-addcoll-history-x.component';
 import { ChangeMouDetailHistoryXComponent } from 'app/impl/MOU/change-mou/change-mou-view/change-mou-detail-history/change-mou-detail-history-x.component';
 import { MouUnfreezeApvDetailXComponent } from 'app/impl/MOU/mou-unfreeze/mou-unfreeze-apv-detail/mou-unfreeze-apv-detail-x.component';
+import { MouCustCompanyMainXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-company-main/mou-cust-company-main-x.component';
+import { MouCustPersonalMainXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-personal-main/mou-cust-personal-main-x.component';
+import { MouCustMgmntShrholderXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mou-cust-mgmnt-shrholder-x.component';
+import { MouCustMgmntShrholderPublicXComponent } from 'app/impl/MOU/mou-customer-request/mou-cust-tab/mou-cust-mgmnt-shrholder/mgmnt-shrholder-public/mou-cust-mgmnt-shrholder-public-x.component';
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -253,12 +257,16 @@ export const customCurrencyMaskConfig = {
     MouCustSocmedComponent,
     MouCustGrpMbrComponent,
     MouCustPersonalMainComponent,
+    MouCustPersonalMainXComponent,
     MouCustCompanyContactInfoComponent,
     MouCustCompanyFinancialComponent,
     MouCustCompanyMainComponent,
+    MouCustCompanyMainXComponent,
     MouCustLegalDocComponent,
     MouCustMgmntShrholderComponent,
+    MouCustMgmntShrholderXComponent,
     MouCustMgmntShrholderPublicComponent,
+    MouCustMgmntShrholderPublicXComponent,
     SimilarMouPersonalDataComponent,
     SimilarMouCompanyDataComponent,
     MouDupCheckPagingComponent,
