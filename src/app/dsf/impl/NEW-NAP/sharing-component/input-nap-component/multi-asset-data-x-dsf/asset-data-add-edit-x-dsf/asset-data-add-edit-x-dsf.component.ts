@@ -328,6 +328,8 @@ export class AssetDataAddEditXDsfComponent implements OnInit {
     });
   }
 
+  isReadOnly:boolean = false
+
   back() {
     this.assetValue.emit({ mode: 'paging' });
   }
@@ -2501,7 +2503,7 @@ export class AssetDataAddEditXDsfComponent implements OnInit {
       this.InputLookupProfessionObj.isDisable = true;
       this.AssetDataForm.controls["OwnerName"].disable();
       this.AssetDataForm.controls["MrIdTypeCode"].disable();
-      this.AssetDataForm.controls["OwnerIdNo"].disable();
+      this.isReadOnly = true
       this.AssetDataForm.controls["MrOwnerRelationshipCode"].disable();
       this.AssetDataForm.controls["OwnerMobilePhnNo"].disable();
       this.AssetDataForm.controls["ownerData"].disable();
@@ -2514,7 +2516,7 @@ export class AssetDataAddEditXDsfComponent implements OnInit {
       this.InputLookupProfessionObj.isDisable = false;
       this.AssetDataForm.controls["OwnerName"].enable();
       this.AssetDataForm.controls["MrIdTypeCode"].enable();
-      this.AssetDataForm.controls["OwnerIdNo"].enable();
+      this.isReadOnly = false
       this.AssetDataForm.controls["MrOwnerRelationshipCode"].enable();
       this.AssetDataForm.controls["OwnerMobilePhnNo"].enable();
       this.AssetDataForm.controls["ownerData"].enable();
@@ -2522,6 +2524,7 @@ export class AssetDataAddEditXDsfComponent implements OnInit {
       this.AssetDataForm.controls["OwnerProfessionCode"].enable();
       this.AssetDataForm.controls["MrOwnerTypeCode"].enable();
     };
+    this.ChangeMrIdTypeCode(this.AssetDataForm.controls.MrIdTypeCode.value)
   }
   inputAddressObjForOwner: InputAddressObj = new InputAddressObj();
   inputFieldOwnerAddrObj: InputFieldObj = new InputFieldObj();
@@ -2602,6 +2605,11 @@ export class AssetDataAddEditXDsfComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
+          if(this.mode != "editAsset" ){
+            this.AssetDataForm.controls.MrIdTypeCode.setValue( CommonConstant.ID_TYPE_NPWP)
+            this.AssetDataForm.controls.OwnerIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+            this.AssetDataForm.controls.OwnerIdNo.updateValueAndValidity();
+          }
       }
     );
   }

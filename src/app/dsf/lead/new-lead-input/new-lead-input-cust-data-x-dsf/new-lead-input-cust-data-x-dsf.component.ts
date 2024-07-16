@@ -131,7 +131,9 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   customPattern: Array<CustomPatternObj>;
   resultPattern: Array<KeyValueObj>;
   Max17YO: Date;
+  // Self Custom Changes
   custNo: string = "";
+  // Self Custom Changes
   context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   isReadOnly:boolean = false;
@@ -147,8 +149,10 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService,
+    // Self Custom Changes
     private elementRef: ElementRef,
     private renderer: Renderer2
+    // Self Custom Changes
   ) {
   }
 
@@ -179,7 +183,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showOwnership = false;
     if (this.typePage != "update") {
-    this.inputAddressObjForLegalAddr.isRequired = false;
+      this.inputAddressObjForLegalAddr.isRequired = false;
     }
     this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isRequired = false;
 
@@ -274,7 +278,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     );
     this.genderType = new RefMasterObj();
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).toPromise().then(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).subscribe(
       (response) => {
         this.tempGender = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ Gender: this.tempGender[0].Key });
@@ -283,7 +287,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
 
     this.idTypeCode = new RefMasterObj();
     this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).toPromise().then(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).subscribe(
       (response) => {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -291,7 +295,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
 
     this.maritalStatCode = new RefMasterObj();
     this.maritalStatCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).toPromise().then(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).subscribe(
       (response) => {
         this.tempMrMaritalStatCode = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -301,7 +305,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     this.custModel = new RefMasterObj();
     this.custModel.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
     this.custModel.MappingCode = CommonConstant.CustTypePersonal;
-    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).toPromise().then(
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).subscribe(
       (response) => {
         this.listCustModel = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -618,9 +622,11 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
               (response: LeadCustAddrObj) => {
                 this.resLeadCustAddrResObj = response;
 
-                if(this.typePage == "update" && this.resLeadCustAddrLegalObj.Addr == ""){
+                // Self Custom Changes
+		if(this.typePage == "update" && this.resLeadCustAddrLegalObj.Addr == ""){
                   this.resLeadCustAddrLegalObj.Addr = "-";
                 }
+		// Self Custom Changes
 
                 this.residenceAddressObj = new LeadCustAddrObj();
                 this.residenceAddressObj.Addr = this.resLeadCustAddrResObj.Addr;
@@ -662,10 +668,11 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
             this.http.post(URLConstant.GetLeadCustPersonalByLeadCustId, obj).subscribe(
               (response: LeadCustPersonalObj) => {
                 this.resLeadCustPersonalObj = response;
-
+                // Self Custom Changes
                 if(this.typePage == "update" && this.resLeadCustPersonalObj.BirthPlace == ""){
                   this.resLeadCustPersonalObj.BirthPlace = "-";
                 }
+		// Self Custom Changes
 
                 this.CustomerDataForm.patchValue({
                   Gender: this.resLeadCustPersonalObj.MrGenderCode,
@@ -734,7 +741,9 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     }
     this.IsReady = true;
     this.getInitPattern();
+    // Self Custom Changes
     this.collapsOnInit();
+    // Self Custom Changes
   }
   npwpKtpChecking(){
     this.isReadOnly=false
@@ -787,13 +796,17 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     if (pattern != undefined) {
       if (this.CustomerDataForm.controls.MrIdTypeCode.value == 'EKTP') {
         if (pattern != "") {
+	  // Self Custom Changes
           if(this.typePage == "update" || this.typePage == "edit" || this.typePage == null){
+	  // Self Custom Changes
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
           }else{
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
           }
         } else {
+	  // Self Custom Changes
           if(this.typePage == "update" || this.typePage == "edit" || this.typePage == null){
+	  // Self Custom Changes
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
           }else{
             this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern("^[0-9]+$")]);
@@ -802,14 +815,18 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
       }
       else {
         this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
+	// Self Custom Changes
         if(this.typePage == "update" || this.typePage == "edit" || this.typePage == null){
+	// Self Custom Changes
           this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
         }
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
     } else {
       this.CustomerDataForm.controls.IdNo.clearValidators();
+      // Self Custom Changes
       if(this.typePage == "update" || this.typePage == "edit" || this.typePage == null){
+      // Self Custom Changes
         this.CustomerDataForm.controls.IdNo.setValidators([Validators.required]);
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
@@ -881,12 +898,14 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   setLegalAddr() {
     this.leadInputObj.LeadCustLegalAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal
     
+    // Self Custom Changes
     if(this.typePage == "update" && this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value == ""){
       this.leadInputObj.LeadCustLegalAddrObj.Addr = "-";
     }
     else{
       this.leadInputObj.LeadCustLegalAddrObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
     }
+    // Self Custom Changes
     
     this.leadInputObj.LeadCustLegalAddrObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
     this.leadInputObj.LeadCustLegalAddrObj.AreaCode3 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode3.value;
@@ -942,7 +961,9 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   setLeadCust() {
     this.leadInputObj.LeadCustObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
     this.leadInputObj.LeadCustObj.LeadId = this.LeadId;
+    // Self Custom Changes
     this.leadInputObj.LeadCustObj.CustNo = this.custNo;
+    // Self Custom Changes
     this.leadInputObj.LeadCustObj.CustName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustObj.MrIdTypeCode = this.CustomerDataForm.controls["MrIdTypeCode"].value;
     this.leadInputObj.LeadCustObj.MrCustModelCode = this.CustomerDataForm.controls["CustModel"].value;
@@ -962,12 +983,14 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     this.leadInputObj.LeadCustPersonalObj.CustFullName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustPersonalObj.MrGenderCode = this.CustomerDataForm.controls["Gender"].value;
     
+    // Self Custom Changes
     if(this.typePage == "update" && this.CustomerDataForm.controls["BirthPlace"].value == ""){
       this.leadInputObj.LeadCustPersonalObj.BirthPlace = "-";
     }
     else{
       this.leadInputObj.LeadCustPersonalObj.BirthPlace = this.CustomerDataForm.controls["BirthPlace"].value;
     }
+    // Self Custom Changes
 
     this.leadInputObj.LeadCustPersonalObj.BirthPlace = this.CustomerDataForm.controls["BirthPlace"].value;
     this.leadInputObj.LeadCustPersonalObj.BirthDt = this.CustomerDataForm.controls["BirthDate"].value;
@@ -1133,7 +1156,9 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
             IdNo: this.resLeadCustObj.IdNo,
             Npwp: this.resLeadCustObj.TaxIdNo,
           });
+	  // Self Custom Changes
           this.custNo = this.resLeadCustObj.CustNo;
+	  // Self Custom Changes
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           let obj = {
@@ -1320,6 +1345,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     }
   }
 
+  // Self Custom Changes
   collapsOnInit() {
     //handle icon
     const legalAddrIdElement = this.elementRef.nativeElement.querySelector("#legalAddrId");
@@ -1370,6 +1396,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
       this.renderer.setStyle(custFinDataElement, 'display', 'none');
     }
   }
+  // Self Custom Changes
 
   confirmFraudCheck() {
     let inputLeadCustObj = new LeadCustCompareObj();
