@@ -60,6 +60,9 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   MaxDate: Date;
 
+  npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
+  isReadOnly:boolean = false
+
   constructor(
     private regexService: RegexService,
     private fb: FormBuilder, 
@@ -101,6 +104,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
         NoOfDependents: ['0'],
         IsAffiliateWithMf:[false]
       }));
+      this.isReadOnly = true
     }else{
       this.parentForm.addControl(this.identifier, this.fb.group({
         CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
@@ -113,7 +117,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
         BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
         BirthDt: ['', [Validators.required]],
         MrNationalityCode: ['', Validators.maxLength(50)],
-        TaxIdNo: ['', [Validators.maxLength(50)]],
+        TaxIdNo: ['', [Validators.minLength(16),Validators.maxLength(16), Validators.pattern("^[0-9]+$")]],
         MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
         MrEducationCode: ['', Validators.maxLength(50)],
         MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -128,10 +132,26 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
         NoOfDependents: ['0', [Validators.pattern("^[0-9]+$")]],
         IsAffiliateWithMf:[false]
       }));
+      this.isReadOnly = false
     }
     this.initLookup();
     await this.bindAllRefMasterObj();
     this.bindCustData();
+    this.npwpKtpChecking()
+  }
+
+  onChangeIdNo(){
+    this.npwpKtpChecking()
+  }
+ 
+  npwpKtpChecking(){
+    if(!this.isLockMode){
+      this.isReadOnly= false
+    }
+    if(this.npwpOrKtp.includes(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value)){
+      this.isReadOnly = true
+      this.parentForm.controls[this.identifier]['controls']["TaxIdNo"].setValue(this.parentForm.controls[this.identifier]['controls']["IdNo"].value)
+    }
   }
 
   CopyCustomerEvent(event) {
@@ -142,6 +162,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
+        this.npwpKtpChecking()
       });
 
   }
@@ -161,6 +182,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
       this.selectedCustNo = response["CustObj"].CustNo;
       this.parentForm.controls[this.identifier]['controls']["MrIdTypeCode"].disable();
       this.parentForm.controls[this.identifier]['controls']["IdNo"].disable();
+      this.isReadOnly = true
     }
     
     if(response["CustPersonalObj"] != undefined){
@@ -292,6 +314,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
       this.InputLookupCountryObj.isDisable = true;
       this.InputLookupCountryObj.isRequired = false;
     }
+    this.npwpKtpChecking()
   }
 
   async bindAllRefMasterObj(){
@@ -310,12 +333,14 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
         IdExpiredDt: '',
       });
     }
-    if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "NPWP") {
-      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.clearValidators();
+    if (this.npwpOrKtp.includes(this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value)) {
+      this.parentForm.controls[this.identifier]['controls'].IdNo.setValidators([Validators.required,Validators.minLength(16),Validators.maxLength(16), Validators.pattern("^[0-9]+$")])
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.required,Validators.minLength(16),Validators.maxLength(16), Validators.pattern("^[0-9]+$")]);
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     else {
-      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.clearValidators();
+      this.parentForm.controls[this.identifier]['controls'].IdNo.setValidators([Validators.required,Validators.maxLength(50)])
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.minLength(16),Validators.maxLength(16), Validators.pattern("^[0-9]+$")]);
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
@@ -327,6 +352,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
     idExpiredDate.updateValueAndValidity();
 
     this.setValidatorPattern();
+    this.npwpKtpChecking();
   }
 
   async bindIdTypeObj(){
@@ -568,6 +594,7 @@ export class LtkmCustPersonalMainDataXComponent implements OnInit {
     if (pattern != undefined) {
       if(!this.isLockMode)
       {
+        this.isReadOnly = false
         this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].setValidators([Validators.required, Validators.pattern(pattern)]);
         this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].updateValueAndValidity();
       }

@@ -47,7 +47,6 @@ import { CessieMonitoringDsfComponent } from "app/dsf/impl/cessie/cessie-upload-
 import { FactoringReviewPagingDsfComponent } from "app/dsf/impl/cessie/factoring-review-paging-dsf/factoring-review-paging-dsf.component";
 import { FactoringReviewDetailDsfComponent } from "app/dsf/impl/cessie/factoring-review-detail-dsf/factoring-review-detail-dsf.component";
 import { FactoringReviewAssignProductDsfComponent } from "app/dsf/impl/cessie/factoring-review-assign-product-dsf/factoring-review-assign-product-dsf.component";
-
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
