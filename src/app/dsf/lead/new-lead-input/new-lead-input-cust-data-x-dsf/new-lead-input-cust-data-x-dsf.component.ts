@@ -183,7 +183,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showOwnership = false;
     if (this.typePage != "update") {
-      this.inputAddressObjForLegalAddr.isRequired = false;
+    this.inputAddressObjForLegalAddr.isRequired = false;
     }
     this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isRequired = false;
 

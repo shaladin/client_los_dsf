@@ -1279,7 +1279,7 @@ export class CustMainDataXDsfComponent implements OnInit {
     }
 
     this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
-    this.npwpKtpChecking()
+    
   }
 
   setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj, CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {

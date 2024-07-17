@@ -90,6 +90,14 @@ export class URLConstantDsf {
     public static GetProvisionFeeByAppId = environment.losUrl + "/AppDsf/GetAppProvisionFeeByAppIdDsf";
 
     public static CheckIsNegCustAllowedCreateAppDsf = environment.FoundationR3Url + "/CustDsf/CheckIsNegCustAllowedCreateAppDsf"
+    public static GetListRunnerActivationDsf = environment.losUrl + "/AppAssetDsf/GetListRunnerActivationDsf";
+    public static AddEditAppAssetDsf = environment.losUrl + "/AppAssetDsf/AddEditAppAssetDsf";
+    public static DeleteAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteAppAssetDsf";
+    public static DeleteListAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteListAppAssetDsf";
+    public static GetAppAssetByAppAssetIdDsf = environment.losUrl + "/AppAssetDsf/GetAppAssetByAppAssetIdDsf";
+    public static GetListAppAssetForCopyByAppIdDsf = environment.losUrl + "/AppAssetDsf/GetListAppAssetForCopyByAppIdDsf";
+    public static CopyAppAssetDsf = environment.losUrl + "/AppAssetDsf/CopyAppAssetDsf";
+
     public static GetMouMainInfoByIdXDsf = environment.losUrl + "/MouCustXDsf/GetMouMainInfoByIdXDsf";
     public static GetMouCustXDsf = environment.losUrl + "/MouCustXDsf/GetMouCustXDsf";
     public static AddMouCustXDsf = environment.losUrl + "/MouCustXDsf/AddMouCustXDsf";
@@ -103,11 +111,4 @@ export class URLConstantDsf {
     public static SubmitWorkflowLeadQCV2Dsf = environment.losUrl + "/v2" + "/LeadX/SubmitWorkflowLeadQC";
     public static SimpleLeadReturnDsf = environment.losUrl + "/v2" + "/LeadX/SimpleLeadReturnDsf";
     public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
-    public static GetListRunnerActivationDsf = environment.losUrl + "/AppAssetDsf/GetListRunnerActivationDsf";
-    public static AddEditAppAssetDsf = environment.losUrl + "/AppAssetDsf/AddEditAppAssetDsf";
-    public static DeleteAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteAppAssetDsf";
-    public static DeleteListAppAssetDsf = environment.losUrl + "/AppAssetDsf/DeleteListAppAssetDsf";
-    public static GetAppAssetByAppAssetIdDsf = environment.losUrl + "/AppAssetDsf/GetAppAssetByAppAssetIdDsf";
-    public static GetListAppAssetForCopyByAppIdDsf = environment.losUrl + "/AppAssetDsf/GetListAppAssetForCopyByAppIdDsf";
-    public static CopyAppAssetDsf = environment.losUrl + "/AppAssetDsf/CopyAppAssetDsf";
 }

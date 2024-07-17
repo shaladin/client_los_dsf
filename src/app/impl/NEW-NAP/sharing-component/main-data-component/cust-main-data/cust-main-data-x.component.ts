@@ -794,6 +794,7 @@ export class CustMainDataXComponent implements OnInit {
     this.npwpKtpChecking()
   }
 
+
   async getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -1051,7 +1052,7 @@ export class CustMainDataXComponent implements OnInit {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
           this.isReadOnly = true 
         });
-    }
+      }
     await this.disableInput();
   }
 
