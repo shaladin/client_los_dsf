@@ -184,7 +184,7 @@ export class EditAppAfterApprovalAssetDataXDsfComponent implements OnInit {
     if (this.EditAppAssetForm.controls['SelfOwner'].value) this.SelfOwnerChange({ 'checked': this.EditAppAssetForm.controls['SelfOwner'].value }, this.EditAppAssetForm.controls['MrOwnerTypeCode'].value);
 
     if (this.EditAppAssetForm.controls['MrOwnerTypeCode'].value) this.OwnerTypeChange(this.EditAppAssetForm.controls['MrOwnerTypeCode'].value, !this.isFromDB);
-
+    this.onOptionsSelected()
     // Self Custom Changes CR Runner KTB 398912
     console.log(this.AppAssetObj);
     let appAssetDsfObj = { Id: this.AppAssetId };
