@@ -93,14 +93,11 @@ import { ReturnHandlingDetailDsfComponent } from "app/NEW-NAP/DSF/business-proce
 import { PlafondInstallmentSimulationPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-paging-dsf/plafond-installment-simulation-paging-dsf.component";
 import { ReturnHandlingEditNap4DsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component";
 import { PlafondInstallmentSimulationDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component";
-// import { ReturnHandlingCollateralPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component";
-// import { ReturnHandlingCollateralEditXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component";
 import { EditAppAfterApprovalAssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-detail-x-dsf/edit-app-after-approval-asset-data-x-dsf/edit-app-after-approval-asset-data-x-dsf.component";
-
 import { EditAppAfterApprovalDetailXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-detail-x-dsf/edit-app-after-approval-detail-x-dsf.component";
 import { EditAppAfterApprovalPagingXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-paging-x-dsf/edit-app-after-approval-paging-x-dsf.component";
-// import { ReturnHandlingCollateralPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component";
-// import { ReturnHandlingCollateralEditXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component";
+import { ReturnHandlingCollateralPagingXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component";
+import { ReturnHandlingCollateralEditXComponent } from "app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -161,7 +158,9 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingPhoneVerifPagingComponent,
     ReturnHandlingSurveyComponent,
     ReturnHandlingCollateralPagingComponent,
+    ReturnHandlingCollateralPagingXComponent,
     ReturnHandlingCollateralEditComponent,
+    ReturnHandlingCollateralEditXComponent,
     ReturnHandlingCollateralDetailComponent,
     CopyCancelledApplicationComponent,
     ReturnHandlingAdditionalTcPagingComponent,
