@@ -118,9 +118,11 @@
               </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
+              <!-- Self Custom Changes CR API Data Robot 413750 -->
+              <app-application-data-x-cf4w-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
                                       [BizTemplateCode]="bizTemplateCode"  [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-              </app-application-data-x>
+              </app-application-data-x-cf4w-dsf>
+              <!-- End Self Custom Changes CR API Data Robot 413750 -->
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <!-- Self Custom Changes CR Runner KTB 398912 -->
@@ -224,9 +226,11 @@
               </app-referantor-data-new>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-x *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
+              <!-- Self Custom Changes CR API Data Robot 413750 -->
+              <app-application-data-x-cf4w-dsf *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
                                       [BizTemplateCode]="bizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-              </app-application-data-x>
+              </app-application-data-x-cf4w-dsf>
+              <!-- End Self Custom Changes CR API Data Robot 413750 -->
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <!-- Self Custom Changes CR Runner KTB 398912 -->
