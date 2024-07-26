@@ -112,4 +112,6 @@ export class URLConstantDsf {
     public static SimpleLeadReturnDsf = environment.losUrl + "/v2" + "/LeadX/SimpleLeadReturnDsf";
     public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
     public static GenerateAgrmntDocNoDsf = environment.losUrl + "/DocumentDsf/GenerateAgrmntDocNoDsf"
+
+    public static ReloadAppTcDsf = environment.losUrl + "/AppTcDsf/ReloadAppTcDsf";
 }

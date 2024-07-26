@@ -1,0 +1,81 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="AppTcForm" (ngSubmit)="AppTcForm.valid && SaveData()" #enjiForm="ngForm">
+            <div class="form-body">
+              <!-- Self Custom Changes CR Addition Reload Button TC 459737 -->
+              <app-term-conditions-x-dsf [AppId]="AppId" [parentForm]="AppTcForm" [enjiForm]="enjiForm" (OutputMode)="SetMode($event)" [IsNap]="'true'">
+              </app-term-conditions-x-dsf>
+              <!-- End Self Custom Changes CR Addition Reload Button TC 459737 -->
+              <!-- <ng-container formArrayName="AppTc">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th><span translate class="thead-header">No</span></th>
+                        <th><span translate class="thead-header" name='DocName'>Document Name</span></th>
+                        <th><span translate class="thead-header" name='PriorTo'>Prior To</span>
+                        </th>
+                        <th><span translate class="thead-header" name='Required'>Required</span>
+                        </th>
+                        <th><span translate class="thead-header" name='Check'>Check</span>
+                        </th>
+                        <th><span translate class="thead-header" name='PromisedDt'>Promise Date</span>
+                        </th>
+                        <th><span translate class="thead-header" name='ExpiredDt'>Expired Date</span>
+                        </th>
+                        <th><span translate class="thead-header" name='Notes'>Notes</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let apptc of AppTcForm['controls']['AppTc']['controls']; let i = index">
+                        <td [formGroupName]="i" class="text-center">
+                          {{i + 1}}
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <label>{{AppTcForm.controls['AppTc'].value[i].TcName}}</label>
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <label>{{AppTcForm.controls['AppTc'].value[i].PriorTo}}</label>
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <label *ngIf="AppTcForm.controls['AppTc'].value[i].IsMandatory == true">YES</label>
+                          <label *ngIf="AppTcForm.controls['AppTc'].value[i].IsMandatory != true">NO</label>
+                        </td>
+                        <td [formGroupName]="i" class="text-center"><input type="checkbox" class="form-check-input" (change)="ReconstructForm()" formControlName="IsChecked"></td>
+                        <td [formGroupName]="i" class="text-center">
+                          <input type="date" class="form-control adInsInput width-100-per" formControlName="PromisedDt"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AppTcForm['controls']['AppTc']['controls'][i]['controls'].PromisedDt.invalid }">
+                          <lib-uc-show-errors [control]="AppTcForm['controls']['AppTc']['controls'][i]['controls'].PromisedDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <input type="date" class="form-control adInsInput width-100-per" formControlName="ExpiredDt"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AppTcForm['controls']['AppTc']['controls'][i]['controls'].ExpiredDt.invalid }">
+                          <lib-uc-show-errors [control]="AppTcForm['controls']['AppTc']['controls'][i]['controls'].ExpiredDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>  
+                        </td>
+                        <td [formGroupName]="i" class="text-center">
+                          <input type="text" class="form-control adInsInput width-100-per" formControlName="Notes"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </ng-container> -->
+              <div class="form-actions right">
+                <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()">
+                  <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+                </button>
+                <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Test()" translate>
+                  <i class="ft-x"></i> test
+                </button> -->
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="far fa-check-square"></i>&nbsp;<span translate>Save</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
