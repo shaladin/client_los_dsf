@@ -57,8 +57,8 @@
       <br><br>
       <!-- <div class="bs-stepper-content"> -->
       <div id="customer-data-tab" class="content" role="tabpanel" aria-labelledby="customer-data-tab-trigger">
-        <app-new-lead-input-cust-data-dsf *ngIf="isCustData == true" (outputTab)="getValue($event)" [showCancelButton]="true" (outputCancel)="cancelHandler()">
-        </app-new-lead-input-cust-data-dsf>
+        <app-new-lead-input-cust-data-x-dsf *ngIf="isCustData == true" (outputTab)="getValue($event)" [showCancelButton]="true" (outputCancel)="cancelHandler()">
+        </app-new-lead-input-cust-data-x-dsf>
       </div>
       <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
         <app-new-lead-input-lead-data-x-dsf *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue"[showCancelButton]="true" (outputCancel)="cancelHandler()">

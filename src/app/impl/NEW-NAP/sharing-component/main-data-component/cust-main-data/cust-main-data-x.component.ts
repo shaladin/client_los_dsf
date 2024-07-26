@@ -774,6 +774,7 @@ export class CustMainDataXComponent implements OnInit {
     );
   }
 
+
   async getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -1030,7 +1031,7 @@ export class CustMainDataXComponent implements OnInit {
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
-    }
+      }
     await this.disableInput();
   }
 

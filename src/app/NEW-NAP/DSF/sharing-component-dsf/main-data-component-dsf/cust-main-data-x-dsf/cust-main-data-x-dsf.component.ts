@@ -63,7 +63,8 @@ import { CurrentUserContext } from 'app/shared/model/current-user-context.model'
 @Component({
   selector: 'app-cust-main-data-x-dsf',
   templateUrl: './cust-main-data-x-dsf.component.html',
-  styleUrls: ['./cust-main-data-x-dsf.component.css']
+  styleUrls: ['./cust-main-data-x-dsf.component.css'],
+  providers: [RegexService]
 })
 export class CustMainDataXDsfComponent implements OnInit {
 
@@ -1255,6 +1256,7 @@ export class CustMainDataXDsfComponent implements OnInit {
     }
 
     this.setDataLegalAddr(CustAddrLegalObj, IsCopyCust);
+    
   }
 
   setDataCustomerCompany(CustObj, CustCompanyObj, CustAddrLegalObj, CustCompanyMgmntShrholderObj, IsCopyCust: boolean = false) {

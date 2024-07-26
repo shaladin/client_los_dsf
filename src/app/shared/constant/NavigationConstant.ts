@@ -36,6 +36,7 @@ export class NavigationConstant {
 
   //#region NAP
   public static NAP_VIEW_ASSET = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_VIEW_ASSET; //"/Nap/ViewAsset"
+  public static NAP_VIEW_ASSET_DSF = "/" + PathConstant.LR_NAP + "/" + PathConstantDsf.NAP_VIEW_ASSET_DSF; //"/Nap/ViewAssetDsf"
 
   //#region MainData
   public static NAP_MAIN_DATA_NAP1_PAGING = "/" + PathConstant.LR_NAP + "/" + PathConstant.NAP_MAIN_DATA + "/" + PathConstantX.NAP1_PAGING; //"/Nap/MainData/NAP1/PagingX"
@@ -120,6 +121,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_DO_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DO_DETAIL; //'/Nap/AdminProcess/DeliveryOrder/Detail'
   public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.DO_MULTI_ASSET_PAGING_X; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
   public static NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.DO_MULTI_ASSET_DETAIL_X; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Detail"
+  public static NAP_ADM_PRCS_DO_MULTI_ASSET_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.DO_MULTI_ASSET_DETAIL_X_DSF; //"/Nap/AdminProcess/DeliveryOrderMultiAssetDsf/Detail"
   public static NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/DocumentSigner/Paging'
   public static NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_DOC_SIGNER_DETAIL; //'/Nap/AdminProcess/DocumentSigner/Detail'
   public static NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NAP_CFNA_DOC_SIGNER_PAGING; //'/Nap/AdminProcess/NewDocumentSigner/Paging'  => '/Nap/AdminProcess/CfnaDocumentSigner/Paging'
@@ -392,7 +394,7 @@ export class NavigationConstant {
   public static LEAD_UPLOAD = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_MONITORING; //'/Lead/Monitoring'
   public static LEAD_REVIEW_MONITORING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_RVW_MONITORING_PAGING; //'/Lead/ReviewMonitoring/Paging'
   public static SIMPLE_LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLead/Paging'
-  public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLeadDsf/Detail'
+  public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstantX.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLeadDsf/Detail'
   public static SIMPLE_LEAD_MAIN_INFO = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLead/MainInfo'
   public static SIMPLE_LEAD_FRAUD_VERIF_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING; //'/Lead/SimpleLeadFraudVerif/Paging'
   public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_DETAIL; //'/Lead/SimpleLeadFraudVerif/Detail'

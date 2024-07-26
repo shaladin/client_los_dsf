@@ -40,7 +40,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-new-lead-input-cust-data-x-dsf',
   templateUrl: './new-lead-input-cust-data-x-dsf.component.html',
-  styleUrls: ['./new-lead-input-cust-data-x-dsf.component.css']
+  styleUrls: ['./new-lead-input-cust-data-x-dsf.component.css'],
+  providers: [RegexService]
 })
 export class NewLeadInputCustDataXDsfComponent implements OnInit {
 
@@ -98,9 +99,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     BirthDate: ['', [Validators.required]],
     MrIdTypeCode: [''],
     MotherName: [''],
-    // Rework Self Custom by CR Batch DSL 037
-    IdNo: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16), Validators.required]],
-    // Rework Self Custom by CR Batch DSL 037
+    IdNo: [''],
     MrMaritalStatCode: [''],
     Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]],
     Email: ['', [Validators.pattern(CommonConstant.regexEmail)]],
@@ -179,11 +178,9 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
     this.inputAddressObjForLegalAddr.title = "Legal Address";
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showOwnership = false;
-
-    // Rework Self Custom by CR Batch DSL 037
+    if (this.typePage != "update") {
     this.inputAddressObjForLegalAddr.isRequired = false;
-    // Rework Self Custom by CR Batch DSL 037
-
+    }
     this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isRequired = false;
 
 
@@ -1420,18 +1417,18 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   setValidatorForUpdate() {
     if (this.typePage == "update") {
       this.IsSimpleLeadUpdate = true;
-      // this.CustomerDataForm.controls['Gender'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['Gender'].updateValueAndValidity();
-      // this.CustomerDataForm.controls['BirthPlace'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['BirthPlace'].updateValueAndValidity();
-      // this.CustomerDataForm.controls['MrIdTypeCode'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['MrIdTypeCode'].updateValueAndValidity();
-      // this.CustomerDataForm.controls['MotherName'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['MotherName'].updateValueAndValidity();
+      this.CustomerDataForm.controls['Gender'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['Gender'].updateValueAndValidity();
+      this.CustomerDataForm.controls['BirthPlace'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['BirthPlace'].updateValueAndValidity();
+      this.CustomerDataForm.controls['MrIdTypeCode'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['MrIdTypeCode'].updateValueAndValidity();
+      this.CustomerDataForm.controls['MotherName'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['MotherName'].updateValueAndValidity();
       this.CustomerDataForm.controls['IdNo'].setValidators([Validators.required]);
       this.CustomerDataForm.controls['IdNo'].updateValueAndValidity();
-      // this.CustomerDataForm.controls['MrMaritalStatCode'].setValidators([Validators.required]);
-      // this.CustomerDataForm.controls['MrMaritalStatCode'].updateValueAndValidity();
+      this.CustomerDataForm.controls['MrMaritalStatCode'].setValidators([Validators.required]);
+      this.CustomerDataForm.controls['MrMaritalStatCode'].updateValueAndValidity();
       // this.inputAddressObjForLegalAddr.isRequired = true;
     }
   }

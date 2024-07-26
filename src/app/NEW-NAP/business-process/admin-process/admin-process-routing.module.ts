@@ -90,6 +90,8 @@ import { PreGoLiveXDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/adm
 import { PreGoLivePagingXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-paging-x/pre-go-live-paging-x.component';
 import { PreGoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-process/admin-process/pre-go-live/pre-go-live-approval-detail/pre-go-live-approval-detail-x.component';
 import { OfferingValidityCheckingApprovalDetailXComponent } from 'app/impl/NEW-NAP/admin-process/offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail-x.component';
+import { DeliveryOrderMultiAssetDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/delivery-order-multi-asset-dsf.component';
+import { DeliveryOrderMultiAssetDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/delivery-order-multi-asset-detail-x-dsf/delivery-order-multi-asset-detail-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -439,6 +441,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.DO_MULTI_ASSET_PAGING_DSF,
+        component: DeliveryOrderMultiAssetDsfComponent,
+        data: {
+          title: 'Delivery Order Detail Dsf'
+        }
+      },
+      {
         path: PathConstant.DO_MULTI_ASSET_DETAIL,
         component: DeliveryOrderMultiAssetDetailComponent,
         data: {
@@ -590,6 +599,13 @@ const routes: Routes = [
         component: DeliveryOrderMultiAssetDetailXComponent,
         data: {
           title: 'Delivery Order'
+        }
+      },
+      {
+        path: PathConstantDsf.DO_MULTI_ASSET_DETAIL_X_DSF,
+        component: DeliveryOrderMultiAssetDetailXDsfComponent,
+        data: {
+          title: 'Delivery Order Dsf'
         }
       },
       {

@@ -73,6 +73,14 @@ import { ReturnHandlingDetailDsfComponent } from 'app/NEW-NAP/DSF/business-proce
 import { ReturnHandlingEditNap4DsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/return-handling-dsf/return-handling-edit-nap4-dsf/return-handling-edit-nap4-dsf.component';
 import { PlafondInstallmentSimulationPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-paging-dsf/plafond-installment-simulation-paging-dsf.component';
 import { PlafondInstallmentSimulationDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/additional-process-dsf/plafond-installment-simulation-detail-dsf/plafond-installment-simulation-detail-dsf.component';
+// import { CollateralAddEditXComponent } from 'app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component';
+// import { ReturnHandlingCollateralPagingXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-paging/return-handling-collateral-paging-x.component';
+// import { ReturnHandlingCollateralEditXComponent } from 'app/impl/NEW-NAP/business-process/additional-process/return-handling/return-handling-collateral-edit/return-handling-collateral-edit-x.component';
+// import { EditAppAfterApprovalPagingXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-paging-x-dsf/edit-app-after-approval-paging-x-dsf.component';
+// import { EditAppAfterApprovalDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-detail-x-dsf/edit-app-after-approval-detail-x-dsf.component';
+
+import { EditAppAfterApprovalPagingXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-paging-x-dsf/edit-app-after-approval-paging-x-dsf.component';
+import { EditAppAfterApprovalDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/additional-process/edit-app-after-approval-dsf/edit-app-after-approval-detail-x-dsf/edit-app-after-approval-detail-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -412,6 +420,11 @@ const routes: Routes = [
         data: {title: 'Edit Application After Approval Request Paging'}
       },
       {
+        path: PathConstantDsf.EDIT_APP_AFT_APV_PAGING_X_DSF,
+        component: EditAppAfterApprovalPagingXDsfComponent,
+        data: {title: 'Edit Application After Approval Request Paging Dsf'}
+      },
+      {
         path: PathConstant.EDIT_APP_AFT_APV_INQUIRY,
         component: EditAppAfterApprovalInquiryComponent,
         data: {title: 'Edit Application After Approval Request Inquiry'}
@@ -491,6 +504,11 @@ const routes: Routes = [
         path: PathConstantX.EDIT_APP_AFT_APV_DETAIL_X,
         component: EditAppAfterApprovalDetailXComponent,
         data: {title: 'Edit Application After Approval Request Detail'}
+      },
+      {
+        path: PathConstantDsf.EDIT_APP_AFT_APV_DETAIL_X_DSF,
+        component: EditAppAfterApprovalDetailXDsfComponent,
+        data: {title: 'Edit Application After Approval Request Detail Dsf'}
       },
       {
         path: PathConstantX.CUST_SYNC_PAGING,

@@ -6,6 +6,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/input-grid-obj.model';
 import { GenericObj } from 'app/shared/model/generic/generic-obj.model';
+import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 
 @Component({
   selector: 'view-asset-collateral-detail',
@@ -26,6 +27,9 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
   assetCondition: string;
   assetUserRelationship: string;
   inputGridObj: InputGridObj = new InputGridObj();
+  // Self Custom Changes CR Runner KTB 398912
+  AppAssetDsf: any;
+  // End Self Custom Changes CR Runner KTB 398912
 
   constructor(private httpClient: HttpClient,
     public activeModal: NgbActiveModal) { }
@@ -72,6 +76,12 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
         this.getAssetType(this.appAsset.AssetTypeCode);
       }
     );
+
+    // Self Custom Changes CR Runner KTB 398912
+    let appAssetDsfObj = { Id:  this.AppAssetId };
+    this.GetAllAssetDataDsf(appAssetDsfObj);
+    // End Self Custom Changes CR Runner KTB 398912
+    
   }
 
   getAssetUsageDesc(Code: string){
@@ -113,4 +123,14 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
       }
     );
   }
+
+  // Self Custom Changes CR Runner KTB 398912
+  async GetAllAssetDataDsf(obj: any) {
+    await this.httpClient.post(URLConstantDsf.GetAppAssetByAppAssetIdDsf, obj).toPromise().then(
+      (response) => {
+        this.AppAssetDsf = response;
+      }
+    );
+  }
+  // End Self Custom Changes CR Runner KTB 398912
 }
