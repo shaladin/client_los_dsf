@@ -153,9 +153,11 @@
               </app-financial-data-x-dsf>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data-x *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
+              <!-- Self Custom Changes CR Addition Reload Button TC 459737 -->
+              <app-tc-data-x-dsf *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
                            [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="'true'">
-              </app-tc-data-x>
+              </app-tc-data-x-dsf>
+              <!-- End Self Custom Changes CR Addition Reload Button TC 459737 -->
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe
@@ -264,8 +266,10 @@
               </app-financial-data-x-dsf>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data-x *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
-                           [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()"></app-tc-data-x>
+              <!-- Self Custom Changes CR Addition Reload Button TC 459737 -->
+              <app-tc-data-x-dsf *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
+                           [showCancel]="showCancel" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()"></app-tc-data-x-dsf>
+              <!-- End Self Custom Changes CR Addition Reload Button TC 459737 -->
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe
