@@ -113,4 +113,6 @@ export class URLConstantDsf {
     public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
     
     public static GenerateAgrmntDocNoDsf = environment.losUrl + "/DocumentDsf/GenerateAgrmntDocNoDsf"
+
+    public static ReloadAppTcDsf = environment.losUrl + "/AppTcDsf/ReloadAppTcDsf";
 }

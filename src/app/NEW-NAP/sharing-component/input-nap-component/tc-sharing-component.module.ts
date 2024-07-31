@@ -5,11 +5,13 @@ import { AdInsModule } from "app/components/adins-module/adins.module";
 import { TermConditionsComponent } from "./term-conditions/term-conditions.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
 import { TermConditionsXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/term-conditions/term-conditions-x.component";
+import { TermConditionsXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/term-conditions-x-dsf/term-conditions-x-dsf.component";
 
 @NgModule({
     exports: [
         TermConditionsComponent,
-        TermConditionsXComponent
+        TermConditionsXComponent,
+        TermConditionsXDsfComponent,
     ],
     imports: [
         CommonModule,
@@ -19,6 +21,7 @@ import { TermConditionsXComponent } from "app/impl/NEW-NAP/sharing-component/inp
     declarations: [
         TermConditionsComponent,
         TermConditionsXComponent,
+        TermConditionsXDsfComponent,
     ],
     providers: [
         NGXToastrService

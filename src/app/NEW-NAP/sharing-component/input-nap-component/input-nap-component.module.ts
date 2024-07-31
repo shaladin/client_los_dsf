@@ -170,6 +170,7 @@ import { UcInsuranceXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component
 import { InsuranceMultiAssetDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/insurance-data-dsf/insurance-multi-asset-data-x-dsf/insurance-multi-asset-data-x-dsf.component";
 import { ApplicationDataXCf4wDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-x-cf4w-dsf/application-data-x-cf4w-dsf.component";
 import { CollateralAddEditXComponent } from "app/impl/NEW-NAP/sharing-component/input-nap-component/multi-asset-data/collateral-add-edit/collateral-add-edit-x.component";
+import { TcDataXDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/input-nap-component/tc-data-x-dsf/tc-data-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -221,6 +222,7 @@ export const customCurrencyMaskConfig = {
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions
     TcDataXComponent, // sementara nanti dicross check sama term-conditions
+    TcDataXDsfComponent,
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
@@ -392,6 +394,7 @@ export const customCurrencyMaskConfig = {
     FeeComponent,
     TcDataComponent, // sementara nanti dicross check sama term-conditions,
     TcDataXComponent, // sementara nanti dicross check sama term-conditions,
+    TcDataXDsfComponent,
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
