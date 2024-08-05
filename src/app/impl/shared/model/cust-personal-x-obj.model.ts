@@ -1,0 +1,67 @@
+export class CustPersonalXObj {
+  CustPersonalId: number;
+  CustId: number;
+  CustFullName: string;
+  CustPrefixName: string;
+  CustSuffixName: string;
+  NickName: string;
+  BirthPlace: string;
+  BirthDt: Date;
+  MotherMaidenName: string;
+  MrGenderCode: string;
+  MrReligionCode: string;
+  MrEducationCode: string;
+  MrNationalityCode: string;
+  WnaCountryCode: string;
+  MrMaritalStatCode: string;
+  MobilePhnNo1: string;
+  MobilePhnNo2: string;
+  MobilePhnNo3: string;
+  Email1: string;
+  Email2: string;
+  Email3: string;
+  FamilyCardNo: string;
+  NoOfDependents: string;
+  NoOfResidence: string;
+  IsRestInPeace: boolean;
+  MrSalutationCode: string;
+  IsVip: boolean;
+  VipNotes: string;
+  IsAffiliateWithMf: boolean;
+  ParentCustId: number;
+  RowVersion: string;
+
+  constructor() {
+    this.CustPersonalId = 0;
+    this.CustId = 0;
+    this.CustFullName = "";
+    this.CustPrefixName = "";
+    this.CustSuffixName = "";
+    this.NickName = "";
+    this.BirthPlace = "";
+    this.BirthDt = new Date();
+    this.MotherMaidenName = "";
+    this.MrGenderCode = "";
+    this.MrReligionCode = "";
+    this.MrEducationCode = "";
+    this.MrNationalityCode = "";
+    this.WnaCountryCode = "";
+    this.MrMaritalStatCode = "";
+    this.MobilePhnNo1 = "";
+    this.MobilePhnNo2 = "";
+    this.MobilePhnNo3 = "";
+    this.Email1 = "";
+    this.Email2 = "";
+    this.Email3 = "";
+    this.FamilyCardNo = "";
+    this.NoOfDependents = "";
+    this.NoOfResidence = "";
+    this.IsRestInPeace = false;
+    this.MrSalutationCode = "";
+    this.IsVip = false;
+    this.VipNotes = "";
+    this.IsAffiliateWithMf = false;
+    this.ParentCustId = 0;
+    this.RowVersion = "";
+  }
+}

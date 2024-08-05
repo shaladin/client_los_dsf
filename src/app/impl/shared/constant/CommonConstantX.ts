@@ -169,4 +169,53 @@ export class CommonConstantX {
     public static GS_CODE_AUTO_DEBIT_BCA_WEBVIEW_DOMAIN = 'AUTO_DEBIT_BCA_WEBVIEW_DOMAIN'
     //#endregion
 
+    public static MR_CUST_TYPE_CODE_PERSONAL = "PERSONAL";
+    //FILE EXTENSION
+    public static FileExtensionDoc = ".doc";
+    public static FileExtensionDocx = ".docx";
+    public static FileExtensionPdf = ".pdf";
+    public static FileExtensionJpg = ".jpg";
+    public static FileExtensionJpeg = ".jpeg";
+    public static FileExtensionGif = ".gif";
+    public static FileExtensionPng = ".png";
+    public static FileExtensionBmp = ".bmp";
+
+
+    public static RefMasterTypeCodeCustDocType = "CUST_DOC_TYPE";
+    public static ASLI_RI_SELFIE = "PHOTO SELFIE";
+    public static MasterCodeCustDocTypeSpouseId = "APGEN03";
+    public static MR_MARITAL_STAT_CODE_SINGLE = "SINGLE";
+    public static GsPefindoMultiResultMax = "PEFINDO_MULTI_RESULT_MAX";
+    public static GsInqPefindoCustReq = "INQ_PEFINDO_CUST_REQ";
+
+        //TRUSTING SOCIAL
+        public static TrustingSocialRelationCust = "Customer";
+        public static TrustingSocialDummyIdType = "DUMMY";
+        public static TrustingSocialDummyIdNo = "1234567890123456"
+        public static CustomerCompany = "COMPANY";
+        public static CustomerPersonal = "PERSONAL";
+                public static CustomerPublic = "PUBLIC";
+                public static RefMasterTypeCodePefindoInquiryReason = "PEFINDO_INQUIRY_REASON";
+                public static MasterSequenceCodeCustomerThirdParty = "CTP";
+    //ASLI RI
+    public static ASLI_RI_PROF = "ASLIRI_PROF";
+    public static ASLI_RI_PHN_AGE = "ASLIRI_PHN_AGE";
+    public static ASLI_RI_HOME_ADDR = "ASLIRI_HOME_ADDR";
+    public static ASLI_RI_TAX_EXTRA = "ASLIRI_TAX_EXTRA";
+    public static ASLI_RI_TAX_COY = "ASLIRI_TAX_COY";
+    public static ASLI_RI_WORKPLACE = "ASLIRI_WORKPLACE";
+    public static ASLI_RI_INCOME_GRADE = "ASLIRI_INCOME_GRADE";
+
+        // CUST MODEL
+        public static CUST_MODEL_EMP = "EMP";
+        public static CUST_MODEL_PROF = "PROF";
+        public static CUST_MODEL_SME = "SME";
+        public static CUST_MODEL_SMETBU = "SMETBU";
+        public static CUST_MODEL_SMEBU = "SMEBU";
+        public static CUST_MODEL_NONPROF = "NONPROF";
+
+        public static REQ_SOCIAL = "REQ_SOCIAL";
+        public static REQ_ASLIRI = "REQ_ASLIRI";
+        public static REQ_PEFINDO = "REQ_PEFINDO";
+        public static THIRD_PARTY_RSLT_H_GROUP_NO = "ThirdPartyRsltHGroupNo";
 }

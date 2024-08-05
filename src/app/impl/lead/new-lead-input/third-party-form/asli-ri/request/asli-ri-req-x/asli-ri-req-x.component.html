@@ -1,0 +1,139 @@
+<form class="form form-horizontal" [formGroup]="AsliRIForm" #enjiForm="ngForm" (ngSubmit)="AsliRIForm.valid && next()">
+  <div class="modal-header">
+    <h4 class="modal-title" translate>Request Asli RI Checking</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="isReady">
+    <div id="mainInformation">
+      <div class="row">
+        <label class="col-md-2  adInsLabel" translate>Customer Type</label>
+        <label class="col-md-4  adinslabel" translate>{{ MrCustTypeCode }}</label>
+        <label class="col-md-2  adInsLabel" translate>Customer Model</label>
+        <label class="col-md-4  adinslabel" translate>{{ MrCustModelName }}</label>
+      </div>
+      <div class="row">
+        <label class="col-md-2  adInsLabel" translate>Customer Name</label>
+        <label class="col-md-4  adinslabel" translate>{{ parent.CustName }}</label>
+        <label class="col-md-2  adInsLabel" translate>ID Type / ID No</label>
+        <label class="col-md-4  adinslabel" translate>{{ this.parent.MrIdTypeCode? IDType : "-" }} / {{ parent.IdNo?
+          parent.IdNo : "-" }}</label>
+      </div>
+    </div>
+    <div class="form-body">
+      <div *ngIf="isPhoneAgeVerification">
+        <lib-ucSubsection [id]="'phoneAgeVerificationId'" [title]="'Phone Age Verification'"
+          [panel]="'phoneAgeVerification'">
+        </lib-ucSubsection>
+        <div id="phoneAgeVerification">
+          <div class="px-3">
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Phone</label>
+              <label class="col-md-8  adinslabel" translate>{{ parent.MobilePhnNo1 }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isHomeAddressPercentageVerification">
+        <lib-ucSubsection [id]="'homeAddressPercentageVerificationId'" [title]="'Home Address Percentage Verification'"
+          [panel]="'homeAddressPercentageVerification'">
+        </lib-ucSubsection>
+        <div id="homeAddressPercentageVerification">
+          <div class="px-3">
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Address</label>
+              <label class="col-md-8  adinslabel" translate>{{ address }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isTaxCompanyVerification">
+        <lib-ucSubsection [id]="'taxCompanyVerificationId'" [title]="'Tax Company Verification'"
+          [panel]="'taxCompanyVerification'">
+        </lib-ucSubsection>
+        <div id="taxCompanyVerification">
+          <div class="px-3">
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label class="adInsLabel" translate>NPWP Company</label>
+              </div>
+              <div class="form-group col-md-8">
+                <input type="text" class="form-control adInsInput col-md-6" formControlName="NPWPCompany"
+                  [attr.disabled]="MrCustTypeCode=='COMPANY'? true : null"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && AsliRIForm.controls.NPWPCompany.invalid}">
+                <lib-uc-show-errors [control]="AsliRIForm.controls.NPWPCompany"></lib-uc-show-errors>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label class="adInsLabel" translate>Annual Revenue</label>
+              </div>
+              <div class="form-group col-md-8">
+                <input type="text" currencyMask class="form-control adInsInput text-right col-md-6"
+                  formControlName="AnnualRevenue">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isWorkplaceVerification">
+        <lib-ucSubsection [id]="'workplaceVerificationId'" [title]="'Workplace Verification'"
+          [panel]="'workplaceVerification'">
+        </lib-ucSubsection>
+        <div id="workplaceVerification">
+          <div class="px-3">
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label class="adInsLabel" translate>Company Name</label>
+              </div>
+              <div class="form-group col-md-8">
+                <input type="text" class="form-control adInsInput col-md-6" formControlName="CompanyName">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label class="adInsLabel" translate>Company Phone</label>
+              </div>
+              <div class="form-group col-md-8">
+                <input type="text" class="form-control adInsInput col-md-6" formControlName="CompanyPhone">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isIncomeGradeVerification">
+        <lib-ucSubsection [id]="'incomeGradeVerificationId'" [title]="'Income Grade Verification'" [panel]="'incomeGradeVerification'">
+        </lib-ucSubsection>
+        <div id="incomeGradeVerification">
+          <div class="px-3">
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>NPWP Personal</label>
+              <label class="col-md-8  adinslabel" translate>{{ parent.TaxIdNo != "" ? parent.TaxIdNo : "-" }}</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Id No</label>
+              <label class="col-md-8  adinslabel" translate>{{ parent.IdNo? parent.IdNo : "-" }}</label>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="button-right">
+      <span class="mr-1">
+        <button type="button" class="btn btn-warning btn-raised mr-1" (click)="cancel()">
+          <i class="far fa-window-close"></i>&nbsp;<span translate>Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary btn-raised mr-1" [attr.disabled]="isSelfieValid? null : true">
+          <i class="far fa-check-square"></i>&nbsp;<span translate>Next</span>
+        </button>
+      </span>
+    </div>
+  </div>
+</form>

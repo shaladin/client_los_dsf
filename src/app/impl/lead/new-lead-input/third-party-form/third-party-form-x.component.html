@@ -1,0 +1,59 @@
+<div *ngIf="IsUseDigitalization == '1' && (IsUseTs || IsUsePefindo)">
+  <lib-ucSubsection [id]="'documentId'" [title]="'Document'" [panel]="'document'">
+  </lib-ucSubsection>
+  <div id="document">
+    <div *ngFor="let item of CustDocFileFormObjs; let i=index" class="form-group row">
+      <label [ngClass]="{'adins-required-label': CustDocFileFormObjs[i]?.IsRequired}" class="col-md-2" translate>{{item.DocTypeName}}</label>
+      <div class="col-md-4">
+        <label [for]="'doc' + i" class="btn btn-primary btn-sm afu-select-btn">Choose File</label>
+        <input type="file" [id]="'doc' + i" style="display: none" (change)="HandleFileInput($event.target.files, i)"
+        *ngIf="item.DocTypeName != 'PHOTO SELFIE'" [accept]="ExtStr"/>
+        <input type="file" [id]="'doc' + i" style="display: none" (change)="HandleFileInputAsliRI($event.target.files, $event, i)"
+         *ngIf="item.DocTypeName == 'PHOTO SELFIE'" [accept]="ExtStrAsliRI"/>
+        <div [hidden]="!CustDocFileFormObjs[i].File" style="padding-left: 15px" class="row afu-valid-file">
+          <p class="col-xs-3 textOverflow"><span class="text-primary">{{CustDocFileFormObjs[i]?.File?.name}}</span></p>
+          <p class="col-xs-3 padMarg sizeC">
+            <strong>({{ConvertSize(CustDocFileFormObjs[i]?.File?.size)}})</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lib-ucSubsection [id]="'thirdPartyCheckingId'" [title]="'3rd Party Checking'" [panel]="'thirdPartyChecking'">
+  </lib-ucSubsection>
+  <div id="thirdPartyChecking">
+    <div *ngIf="IsUsePefindo" class="form-group row">
+      <label class="col-md-2" translate>Pefindo</label>
+      <div class="col-md-4">
+        <button type="button" (click)="ReqPefindo()" class="btn btn-raised btn-primary mr-1" translate>
+          Request
+        </button>
+        <button type="button" (click)="ViewPefindo()" class="btn btn-raised btn-primary" translate>
+          View
+        </button>
+      </div>
+    </div>
+    <div *ngIf="IsUseTs" class="form-group row">
+      <label class="col-md-2" translate>Trusting Social</label>
+      <div class="col-md-4">
+        <button type="button" (click)="ReqTrustingSocial()" class="btn btn-raised btn-primary mr-1" translate>
+          Request
+        </button>
+        <button type="button" (click)="ViewTrustingSocial()" class="btn btn-raised btn-primary" translate>
+          View
+        </button>
+      </div>
+    </div>
+    <div *ngIf="IsUseAsliRI" class="form-group row">
+      <label class="col-md-2" translate>Asli RI</label>
+      <div class="col-md-4">
+        <button type="button" (click)="ReqASLIRI()" class="btn btn-raised btn-primary mr-1" translate>
+          Request
+        </button>
+        <button type="button" (click)="ViewASLIRI()" class="btn btn-raised btn-primary" translate>
+          View
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
