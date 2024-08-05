@@ -1,0 +1,51 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Request Asli RI Checking</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" translate>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" *ngIf="isReady && reqAddTrxSrcDataForAsliRIObjInput.ListReqVerificationType.length == 0">
+  <div class="col-md-12 text-center"><label>Please back and complete the preview data to verify the information</label></div>
+</div>
+<div class="modal-body" *ngIf="isReady && reqAddTrxSrcDataForAsliRIObjInput.ListReqVerificationType.length > 0">
+  <div class="col-md-12 text-center"><label>Are you sure want to verify following information from ASLI RI?</label></div>
+  <div class="col-md-12">
+    <table style="margin-left:auto;margin-right:auto">
+      <tbody>
+        <tr><td><br></td></tr>
+      </tbody>
+      <tbody *ngFor="let item of reqAddTrxSrcDataForAsliRIObjInput.ListReqVerificationType; let i = index">
+        <tr *ngIf="item == 'ASLIRI_PHN_AGE'">
+          <td><label><i class="far fa-check-square"></i>&nbsp;<span translate>Phone Age Verification</span></label></td>
+        </tr>
+        <tr *ngIf="item == 'ASLIRI_HOME_ADDR'">
+          <td><label><i class="far fa-check-square"></i>&nbsp;<span translate>Home Address Percentage Verification</span></label></td>
+        </tr>
+        <tr *ngIf="item == 'ASLIRI_TAX_EXTRA'">
+          <td><label><i class="far fa-check-square"></i>&nbsp;<span translate>Tax Personal Verification</span></label></td>
+        </tr>
+        <tr *ngIf="item == 'ASLIRI_TAX_COY'">
+          <td><label><i class="far fa-check-square"></i>&nbsp;<span translate>Tax Company Verification</span></label></td>
+        </tr>
+        <tr *ngIf="item == 'ASLIRI_WORKPLACE'">
+          <td><label><i class="far fa-check-square"></i>&nbsp;<span translate>Workplace Verification</span></label></td>
+        </tr>
+        <tr *ngIf="item == 'ASLIRI_INCOME_GRADE'">
+          <td><label><i class="far fa-check-square"></i>&nbsp;<span translate>Income Grade Verification</span></label></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="button-right">
+    <span class="mr-1">
+        <button type="button" class="btn btn-warning btn-raised mr-1" (click)="back()">
+            <i class="far fa-window-close"></i>&nbsp;<span translate>Back</span>
+        </button>
+        <button type="submit" class="btn btn-primary btn-raised mr-1" *ngIf="reqAddTrxSrcDataForAsliRIObjInput.ListReqVerificationType.length > 0" (click)="save()">
+          <i class="far fa-check-square"></i>&nbsp;<span translate>Yes</span>
+        </button>
+    </span>
+  </div>
+</div>

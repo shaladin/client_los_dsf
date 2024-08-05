@@ -36,6 +36,7 @@ import { RegexService } from 'app/shared/services/regex.services';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 
 @Component({
   selector: 'app-new-lead-input-cust-data',
@@ -1039,7 +1040,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
       this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
       this.setLeadCustPersonalFinData();
       if (this.confirmFraudCheck()) {
-        this.http.post(URLConstant.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
+        this.http.post(URLConstantX.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.outputTab.emit({ stepMode: "next" });

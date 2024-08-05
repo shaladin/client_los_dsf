@@ -1,0 +1,246 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>View Asli RI Checking</h4>
+  <button *ngIf="ActiveModal" type="button" class="close" aria-label="Close" (click)="ActiveModal.dismiss('')" translate>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body" *ngIf="!isReady">
+  <div class="col-md-12 text-center">
+    <label class="adInsLabel">Please wait for a moment</label>
+  </div> 
+</div>
+
+<div class="modal-body" *ngIf="isReady">
+  <div class="col-md-12 text-center" *ngIf="isRequestDtNull && !isFailedGetDataAsliRI">
+    <label class="adInsLabel">No Data Available</label>
+  </div> 
+  <div id="mainInformation" *ngIf="!isRequestDtNull || isFailedGetDataAsliRI">
+    <div class="row">
+      <label class="col-md-2  adInsLabel" translate>Customer Type</label>
+      <label class="col-md-4  adinslabel" translate>{{ custObj.MrCustTypeCode }}</label>
+      <label class="col-md-2  adInsLabel" translate>Customer Model</label>
+      <label class="col-md-4  adinslabel" translate>{{ MrCustModelName }}</label>
+    </div>
+    <div class="row">
+      <label class="col-md-2  adInsLabel" translate>Customer Name</label>
+      <label class="col-md-4  adinslabel" translate>{{ custObj.CustName }}</label>
+      <label class="col-md-2  adInsLabel" translate>ID Type / ID No</label>
+      <label class="col-md-4  adinslabel" translate>{{ IDType }} / {{ custObj.IdNo }}</label>
+    </div>
+    <div class="row">
+      <label class="col-md-2  adInsLabel" translate>Request Date</label>
+      <label class="col-md-4  adinslabel" translate>{{ (DataAsliRi != undefined && DataAsliRi != null && DataAsliRi.RequestDt != undefined && DataAsliRi.RequestDt != null) ? (DataAsliRi.RequestDt | date: 'dd-MMM-yyyy HH:mm') : "-"}}</label>
+      <label class="col-md-2  adInsLabel" translate>Result Date</label>
+      <label class="col-md-4  adinslabel" translate>{{ (DataAsliRi != undefined && DataAsliRi != null && DataAsliRi.ResultDt != undefined && DataAsliRi.ResultDt != null) ? (DataAsliRi.ResultDt | date: 'dd-MMM-yyyy HH:mm') : "-"}}</label>
+    </div>
+  </div>
+  <div *ngIf="DataAsliRi.ResultDt != null">
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && (IsOkAsliRiPhnAge || IsOkAsliRiHomeAddr || ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && IsOkAsliRiIncomeGrade) || (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && IsOkAsliRiWorkplace)))">
+      <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_PHN_AGE')">
+        <lib-ucSubsection [id]="'phoneAgeVerificationId'" [title]="'Phone Age Verification'" [panel]="'phoneAgeVerification'">
+        </lib-ucSubsection>
+        <div id="phoneAgeVerification">
+          <div class="px-3" *ngIf="IsOkAsliRiPhnAge">
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Phone - {{ DataAsliRi.ReqAsliRiObj.Phone }}</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.PhnAgePhn == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.PhnAgePhn == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.PhnAgePhn == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Phone Age</label>
+              <label class="col-md-8  adinslabel" translate *ngIf="DataAsliRi.ResAsliRiObj.PhnAgeAge != null">{{ DataAsliRi.ResAsliRiObj.PhnAgeAge }}</label>
+              <label class="col-md-8  adinslabel" translate *ngIf="DataAsliRi.ResAsliRiObj.PhnAgeAge == null">-</label>
+            </div>
+          </div>
+          <div class="px-3" *ngIf="!IsOkAsliRiPhnAge">
+            <div class="alert alert-danger text-center" role="alert">
+              <span class="text-dark">Error in Asli RI, Please contact IT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_HOME_ADDR')">
+        <lib-ucSubsection [id]="'homeAddressPercentageVerificationId'" [title]="'Home Address Percentage Verification'" [panel]="'homeAddressPercentageVerification'">
+        </lib-ucSubsection>
+        <div id="homeAddressPercentageVerification">
+          <div class="px-3" *ngIf="IsOkAsliRiHomeAddr">
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Address - {{ DataAsliRi.ReqAsliRiObj.Address }}</label>
+              <label class="col-md-8  adinslabel" translate *ngIf="DataAsliRi.ResAsliRiObj.HomeAddrPrcntgLocationPrcntg != null">{{ DataAsliRi.ResAsliRiObj.HomeAddrPrcntgLocationPrcntg }} %</label>
+              <label class="col-md-8  adinslabel" translate *ngIf="DataAsliRi.ResAsliRiObj.HomeAddrPrcntgLocationPrcntg == null">-</label>
+            </div>
+          </div>
+          <div class="px-3" *ngIf="!IsOkAsliRiHomeAddr">
+            <div class="alert alert-danger text-center" role="alert">
+              <span class="text-dark">Error in Asli RI, Please contact IT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE')">
+        <lib-ucSubsection [id]="'workplaceVerificationId'" [title]="'Workplace Verification'" [panel]="'workplaceVerification'">
+        </lib-ucSubsection>
+        <div id="workplaceVerification">
+          <div class="px-3" *ngIf="IsOkAsliRiWorkplace">
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>NIK - {{ DataAsliRi.ReqAsliRiObj.Nik }}</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceNik == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceNik == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceNik == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Name - {{ DataAsliRi.ReqAsliRiObj.CustName }}</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceName == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceName == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceName == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>Company Name - {{ DataAsliRi.ReqAsliRiObj.CompanyName }}</label>
+              <label class="col-md-8  adinslabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceCompanyName">{{ DataAsliRi.ResAsliRiObj.WorkPlaceCompanyName }}</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="!DataAsliRi.ResAsliRiObj.WorkPlaceCompanyName && DataAsliRi.ResAsliRiObj.WorkPlaceCompany == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="!DataAsliRi.ResAsliRiObj.WorkPlaceCompanyName && DataAsliRi.ResAsliRiObj.WorkPlaceCompany == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="!DataAsliRi.ResAsliRiObj.WorkPlaceCompanyName && DataAsliRi.ResAsliRiObj.WorkPlaceCompany == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>Company Phone - {{ DataAsliRi.ReqAsliRiObj.CompanyPhone }}</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceCompanyPhone == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceCompanyPhone == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.WorkPlaceCompanyPhone == null">-</label>
+            </div>
+          </div>
+          <div class="px-3" *ngIf="!IsOkAsliRiWorkplace">
+            <div class="alert alert-danger text-center" role="alert">
+              <span class="text-dark">Error in Asli RI, Please contact IT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE')">
+        <lib-ucSubsection [id]="'incomeGradeVerificationId'" [title]="'Income Grade Verification'" [panel]="'incomeGradeVerification'">
+        </lib-ucSubsection>
+        <div id="incomeGradeVerification">
+          <div class="px-3" *ngIf="IsOkAsliRiIncomeGrade">
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>NPWP Personal - {{ DataAsliRi.ReqAsliRiObj.NpwpPersonal }}</label>
+              <label class="col-md-8 adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.IncomeGradeNpwp == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8 adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.IncomeGradeNpwp == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8 adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.IncomeGradeNpwp == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>Match Result</label>
+              <label class="col-md-8 adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.IncomeGradeMatchResult == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8 adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.IncomeGradeMatchResult == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8 adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.IncomeGradeMatchResult == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>Income Grade</label>
+              <label class="col-md-8 adInsLabel" translate>{{GradeIncome}}</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>Income Range</label>
+              <label class="col-md-8 adInsLabel" translate *ngIf="IsUseFromOnly">{{ (IncomeRangeFrom == IncomeRangeTo) ? 0 : ">" + (IncomeRangeFrom | number:'.2':'en-US') }}</label>
+              <label class="col-md-8 adInsLabel" translate *ngIf="!IsUseFromOnly">{{ IncomeRangeFrom | number:'.2':'en-US' }} - {{ IncomeRangeTo | number:'.2':'en-US' }}</label>
+            </div>
+          </div>
+          <div class="px-3" *ngIf="!IsOkAsliRiIncomeGrade">
+            <div class="alert alert-danger text-center" role="alert">
+              <span class="text-dark">Error in Asli RI, Please contact IT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge && !IsOkAsliRiHomeAddr && ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && !IsOkAsliRiIncomeGrade) && (!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE')))">
+      <div class="alert alert-danger ml-2 mt-2 text-center" role="alert">
+        <span class="text-dark">Error in Asli RI, Please contact IT</span>
+      </div>
+    </div>
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge && !IsOkAsliRiHomeAddr && ((!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE')) && (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && !IsOkAsliRiWorkplace))">
+      <div class="alert alert-danger ml-2 mt-2 text-center" role="alert">
+        <span class="text-dark">Error in Asli RI, Please contact IT</span>
+      </div>
+    </div>
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge && !IsOkAsliRiHomeAddr && ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && !IsOkAsliRiIncomeGrade) && (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && !IsOkAsliRiWorkplace))">
+      <div class="alert alert-danger ml-2 mt-2 text-center" role="alert">
+        <span class="text-dark">Error in Asli RI, Please contact IT</span>
+      </div>
+    </div>
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge && !IsOkAsliRiHomeAddr && ((!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE')) && (!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE')))">
+      <div class="alert alert-danger ml-2 mt-2 text-center" role="alert">
+        <span class="text-dark">Error in Asli RI, Please contact IT</span>
+      </div>
+    </div>
+    
+    <div *ngIf="custObj.MrCustTypeCode != 'PERSONAL'">
+      <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_TAX_EXTRA') && isVisibleForTaxPersonalVerification">
+        <lib-ucSubsection [id]="'taxExtraVerificationId'" [title]="'Tax Personal Verification'" [panel]="'taxExtraVerification'">
+        </lib-ucSubsection>
+        <div id="taxExtraVerification">
+          <div class="px-3">
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>NPWP Personal - {{ DataAsliRi.ReqAsliRiObj.NpwpPersonal }}</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraNpwpPersonal == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraNpwpPersonal == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraNpwpPersonal == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>NIK - {{ DataAsliRi.ReqAsliRiObj.Nik }}</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraNik == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraNik == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraNik == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Match Result</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraMatchResult == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraMatchResult == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxExtraMatchResult == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4  adInsLabel" translate>Monthly Income - {{ DataAsliRi.ReqAsliRiObj.MonthlyIncome | number:'.2':'en-US'}}</label>
+              <label class="col-md-8  adInsLabel">{{ DataAsliRi.ResAsliRiObj.TaxExtraIncome != null? DataAsliRi.ResAsliRiObj.TaxExtraIncome : "-" }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_TAX_COY')">
+        <lib-ucSubsection [id]="'taxCompanyVerificationId'" [title]="'Tax Company Verification'" [panel]="'taxCompanyVerification'">
+        </lib-ucSubsection>
+        <div id="taxCompanyVerification">
+          <div class="px-3">
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>NPWP Company - {{ DataAsliRi.ReqAsliRiObj.NpwpCompany }}</label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxCompanyNpwpCompany == true"><i class="far ft-check" style="color:green;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxCompanyNpwpCompany == false"><i class="far ft-x" style="color:#8d0000;"></i></label>
+              <label class="col-md-8  adInsLabel" translate *ngIf="DataAsliRi.ResAsliRiObj.TaxCompanyNpwpCompany == null">-</label>
+            </div>
+            <div class="row">
+              <label class="col-md-4 adInsLabel" translate>Annual Revenue - {{ DataAsliRi.ReqAsliRiObj.AnnualRevenue | number:'.2':'en-US'}}</label>
+              <label class="col-md-8  adinslabel" translate>{{ DataAsliRi.ResAsliRiObj.TaxCompanyIncome != null? DataAsliRi.ResAsliRiObj.TaxCompanyIncome : "-" }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="DataAsliRi.ResultDt == null">
+    <div class="col-md-12 text-center">
+      <label class="adInsLabel"><br>Please wait until the checking process finished</label>
+    </div> 
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="button-right">
+    <span class="mr-1">
+        <button *ngIf="ActiveModal" type="button" class="btn btn-warning btn-raised mr-1" (click)="ActiveModal.dismiss('')">
+            <i class="far fa-window-close"></i>&nbsp;<span translate>close</span>
+        </button>
+    </span>
+  </div>
+</div>

@@ -103,7 +103,7 @@
                   translate>ID
                   No</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput" formControlName="IdNo" (input)="onChangeIdNo()"
+                  <input type="text" class="form-control adInsInput" formControlName="IdNo"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.IdNo.invalid}">
                   <lib-uc-show-errors [customPattern]="customPattern"  [control]="CustomerDataForm.controls.IdNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -124,7 +124,7 @@
               <div class="form-group row">
                 <label class="col-md-2 adInsLabel" translate>Tax Id No</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control adInsInput" [readonly]="isReadOnly" min="0" formControlName="Npwp" 
+                  <input type="text" class="form-control adInsInput" min="0" formControlName="Npwp"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.Npwp.invalid}">
                   <lib-uc-show-errors [control]="CustomerDataForm.controls.Npwp" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
@@ -272,6 +272,7 @@
                 </div>
               </div>
             </div>
+            <app-third-party-form-x *ngIf="showThirdParty" [parentForm]="CustomerDataForm" [thirdPartyTrxNo]="thirdPartyTrxNo" [custObj]="custObj" [CustDataMode]="CustDataMode" [MrCustTypeCode]="CustTypePersonal" (OutputCustObj)="SetThirdPartyTrxNoAndRowVersion($event)" (OutputUploadFile)="SetCustFileFormObjs($event)"></app-third-party-form-x>
             <!-- </div> -->
           </div>
           <div class="form-actions right" style="text-align: right;">

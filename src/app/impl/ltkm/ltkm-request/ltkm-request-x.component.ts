@@ -2126,7 +2126,7 @@ export class LtkmRequestXComponent implements OnInit {
             this.ltkmCustGrpObjs = event["CustGrpObjs"];
             
             var ReqCustId = { Id: event["CustObj"]["CustId"] };
-            this.http.post(URLConstant.GetListCustGrpForCustViewById, ReqCustId).subscribe(
+            this.http.post(URLConstantX.GetListCustGrpForCustViewById, ReqCustId).subscribe(
               response => {
                 if(response["ParentCustGrp"] != null){
                     this.ltkmCustGrpParentObjs = response["ParentCustGrp"];
@@ -2277,7 +2277,7 @@ export class LtkmRequestXComponent implements OnInit {
             this.ltkmCustGrpObjs = event["CustGrpObjs"];
             
             var ReqCustId = { Id: event["CustObj"]["CustId"] };
-            this.http.post(URLConstant.GetListCustGrpForCustViewById, ReqCustId).subscribe(
+            this.http.post(URLConstantX.GetListCustGrpForCustViewById, ReqCustId).subscribe(
               response => {
                 if(response["ParentCustGrp"] != null){
                     this.ltkmCustGrpParentObjs = response["ParentCustGrp"];

@@ -1,0 +1,290 @@
+<div class="modal-header">
+    <h4 class="modal-title" translate>Request</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()" translate>
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="card">
+        <div class="card-body">
+          <div class="px-3" *ngIf="pefindoMultiResMax == 0">
+            <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="PefindoForm">
+            
+              <!-- Menu Customer Pefindo Req -->
+              <lib-ucSubsection *ngIf="IsCustPefindoReq" [id]="'PefindoRequestId'" [title]="'Pefindo Request'"
+                [panel]="'PefindoRequest'">
+              </lib-ucSubsection>
+              <div id="PefindoRequestId" *ngIf="IsCustPefindoReq">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Inquiry Reason</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" formControlName="PefindoInquiryReason" (change)="changeDDL()"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && PefindoForm.controls.PefindoInquiryReason.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of DictUcDDLObj[RefMasterTypeCodePefindoInquiryReason]" value="{{it.Key}}">
+                        {{it.Value}} </option>
+                    </select>
+                    <lib-uc-show-errors [control]="PefindoForm.controls.PefindoInquiryReason"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="viewData()"
+                      *ngIf="pefindoMultiResMax == 0">View</button>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'PefindoId'" [title]="'Detail'" [panel]="'Pefindo'"
+                *ngIf="IsCustPefindoReq && toDisplay && this.PefindoForm.controls.PefindoInquiryReason.value != ''">
+              </lib-ucSubsection>
+              <div id="Pefindo" *ngIf="IsCustPefindoReq && toDisplay && this.PefindoForm.controls.PefindoInquiryReason.value != ''">
+                <div style="overflow-x: auto;">
+                  <table *ngIf="ReqPefindoSmartSearchObj.CustType == CustTypePersonal"
+                    class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-left"><span class="thead-header" name='pefindoId' translate>PEFINDO ID</span> </th>
+                        <th class="text-left"><span class="thead-header" name='idCardNumber' translate>ID CARD NUMBER</span></th>
+                        <th class="text-left"><span class="thead-header" name='name' translate>NAME</span> </th>
+                        <th class="text-left"><span class="thead-header" name='dob' translate>DATE OF BIRTH</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>ADDRESS</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>REQUEST</span> </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="PefindoSmartSearchPersonalObjs.length == 0">
+                      <tr *ngIf="!IsSmartSearchResultReady">
+                        <td colspan="100%"><i class="fa fa-spinner fa-spin"></i>&nbsp; <span translate>Please Wait...</span></td>
+                      </tr>
+                      <tr *ngIf="IsSmartSearchResultReady">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="PefindoSmartSearchPersonalObjs.length > 0">
+                      <tr *ngFor="let item of PefindoSmartSearchPersonalObjs; let i = index">
+                        <td class="text-left">{{item.PefindoId}}</td>
+                        <td class="text-left">{{item.KTP}}</td>
+                        <td class="text-left">{{item.FullName}}</td>
+                        <td class="text-left">{{item.DateOfBirth | date: 'dd-MMM-yyyy'}}</td>
+                        <td class="text-left">{{item.Address}}</td>
+                        <td class="text-left"><a class="primary p-0 bold" (click)="RequestPersonal(item)">REQUEST</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="overflow-x: auto;">
+                  <table *ngIf="ReqPefindoSmartSearchObj.CustType == CustTypeCompany"
+                    class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-left"><span class="thead-header" name='pefindoId' translate>PEFINDO ID</span> </th>
+                        <th class="text-left"><span class="thead-header" name='idCardNumber' translate>NPWP</span></th>
+                        <th class="text-left"><span class="thead-header" name='name' translate>NAME</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>ADDRESS</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>REQUEST</span> </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="PefindoSmartSearchCoyObjs.length == 0">
+                      <tr *ngIf="!IsSmartSearchResultReady">
+                        <td colspan="100%"><i class="fa fa-spinner fa-spin"></i>&nbsp; <span translate>Please Wait...</span></td>
+                      </tr>
+                      <tr *ngIf="IsSmartSearchResultReady">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="PefindoSmartSearchCoyObjs.length > 0">
+                      <tr *ngFor="let item of PefindoSmartSearchCoyObjs; let i = index">
+                        <td class="text-left">{{item.PefindoId}}</td>
+                        <td class="text-left">{{item.NPWP}}</td>
+                        <td class="text-left">{{item.CompanyName}}</td>
+                        <td class="text-left">{{item.Address}}</td>
+                        <td class="text-left"><a class="primary p-0 bold" (click)="RequestCompany(item)">REQUEST</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            
+              <!-- Menu Customer -->
+              <lib-ucSubsection [id]="'PefindoId'" [title]="'Detail'" [panel]="'Pefindo'" *ngIf="!IsCustPefindoReq">
+              </lib-ucSubsection>
+              <div id="Pefindo" *ngIf="!IsCustPefindoReq">
+                <div style="overflow-x: auto;">
+                  <table *ngIf="ReqPefindoSmartSearchObj.CustType == CustTypePersonal"
+                    class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-left"><span class="thead-header" name='pefindoId' translate>PEFINDO ID</span> </th>
+                        <th class="text-left"><span class="thead-header" name='idCardNumber' translate>ID CARD NUMBER</span></th>
+                        <th class="text-left"><span class="thead-header" name='name' translate>NAME</span> </th>
+                        <th class="text-left"><span class="thead-header" name='dob' translate>DATE OF BIRTH</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>ADDRESS</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>REQUEST</span> </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="PefindoSmartSearchPersonalObjs.length == 0">
+                      <tr *ngIf="!IsSmartSearchResultReady">
+                        <td colspan="100%"><i class="fa fa-spinner fa-spin"></i>&nbsp; <span translate>Please Wait...</span></td>
+                      </tr>
+                      <tr *ngIf="IsSmartSearchResultReady">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="PefindoSmartSearchPersonalObjs.length > 0">
+                      <tr *ngFor="let item of PefindoSmartSearchPersonalObjs; let i = index">
+                        <td class="text-left">{{item.PefindoId}}</td>
+                        <td class="text-left">{{item.KTP}}</td>
+                        <td class="text-left">{{item.FullName}}</td>
+                        <td class="text-left">{{item.DateOfBirth | date: 'dd-MMM-yyyy'}}</td>
+                        <td class="text-left">{{item.Address}}</td>
+                        <td class="text-left"><a class="primary p-0 bold" (click)="RequestPersonal(item)">REQUEST</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="overflow-x: auto;">
+                  <table *ngIf="ReqPefindoSmartSearchObj.CustType == CustTypeCompany"
+                    class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-left"><span class="thead-header" name='pefindoId' translate>PEFINDO ID</span> </th>
+                        <th class="text-left"><span class="thead-header" name='idCardNumber' translate>NPWP</span></th>
+                        <th class="text-left"><span class="thead-header" name='name' translate>NAME</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>ADDRESS</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>REQUEST</span> </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="PefindoSmartSearchCoyObjs.length == 0">
+                      <tr *ngIf="!IsSmartSearchResultReady">
+                        <td colspan="100%"><i class="fa fa-spinner fa-spin"></i>&nbsp; <span translate>Please Wait...</span></td>
+                      </tr>
+                      <tr *ngIf="IsSmartSearchResultReady">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="PefindoSmartSearchCoyObjs.length > 0">
+                      <tr *ngFor="let item of PefindoSmartSearchCoyObjs; let i = index">
+                        <td class="text-left">{{item.PefindoId}}</td>
+                        <td class="text-left">{{item.NPWP}}</td>
+                        <td class="text-left">{{item.CompanyName}}</td>
+                        <td class="text-left">{{item.Address}}</td>
+                        <td class="text-left"><a class="primary p-0 bold" (click)="RequestCompany(item)">REQUEST</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="px-3" *ngIf="pefindoMultiResMax > 0">
+            <form class="form form-horizontal" #enjiForm="ngForm" [formGroup]="PefindoForm">
+              
+              <!-- Menu Customer Pefindo Req -->
+              <lib-ucSubsection *ngIf="IsCustPefindoReq" [id]="'PefindoRequestId'" [title]="'Pefindo Request'" [panel]="'PefindoRequest'">
+              </lib-ucSubsection>
+              <div id="PefindoRequestId" *ngIf="IsCustPefindoReq">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Inquiry Reason</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" formControlName="PefindoInquiryReason" (change)="changeDDL()"
+                      [ngClass]="{ 'is-invalid': PefindoForm.submitted && PefindoForm.controls.PefindoInquiryReason.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let it of DictUcDDLObj[RefMasterTypeCodePefindoInquiryReason]" value="{{it.Key}}">
+                        {{it.Value}} </option>
+                    </select>
+                    <lib-uc-show-errors [control]="PefindoForm.controls.PefindoInquiryReason"
+                      [submit]="PefindoForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="viewData()" *ngIf="pefindoMultiResMax > 0">View</button>
+                  </div>
+                </div>
+              </div>
+              <lib-ucSubsection [id]="'PefindoId'" [title]="'Detail'" [panel]="'Pefindo'" *ngIf="IsCustPefindoReq && toDisplay && this.PefindoForm.controls.PefindoInquiryReason.value != ''">
+              </lib-ucSubsection>
+              <div id="Pefindo" *ngIf="IsCustPefindoReq && toDisplay && this.PefindoForm.controls.PefindoInquiryReason.value != ''">
+                <div class="form-body" formArrayName="PefindoArr" style="overflow-x: auto;">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-left"><span class="thead-header" name='checked' translate></span></th>
+                        <th class="text-left"><span class="thead-header" name='pefindoId' translate>PEFINDO ID</span> </th>
+                        <th class="text-left"><span class="thead-header" name='idCardNumber' translate>ID CARD NUMBER</span></th>
+                        <th class="text-left"><span class="thead-header" name='name' translate>NAME</span> </th>
+                        <th class="text-left" *ngIf="ReqPefindoSmartSearchObj.CustType == CustTypePersonal"><span class="thead-header" name='dob' translate>DATE OF BIRTH</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>ADDRESS</span> </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="PefindoForm.controls.PefindoArr.length == 0">
+                      <tr *ngIf="!IsSmartSearchResultReady">
+                        <td colspan="100%"><i class="fa fa-spinner fa-spin"></i>&nbsp; <span translate>Please Wait...</span></td>
+                      </tr>
+                      <tr *ngIf="IsSmartSearchResultReady">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="PefindoForm.controls.PefindoArr.length > 0">
+                      <tr *ngFor="let item of PefindoForm.controls.PefindoArr.controls; let i = index" [formGroupName]="i">
+                        <td>
+                          <input type="checkbox" class="border-primary" formControlName="IsChecked" style="height: auto;">
+                        </td>
+                        <td class="text-left">{{item.controls.PefindoId.value}}</td>
+                        <td class="text-left">{{item.controls.IdCardNumber.value}}</td>
+                        <td class="text-left">{{item.controls.Name.value}}</td>
+                        <td class="text-left" *ngIf="ReqPefindoSmartSearchObj.CustType == CustTypePersonal">{{item.controls.BirthDt.value | date: 'dd-MMM-yyyy'}}</td>
+                        <td class="text-left">{{item.controls.Address.value}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Menu Customer -->
+              <lib-ucSubsection [id]="'PefindoId'" [title]="'Detail'" [panel]="'Pefindo'" *ngIf="!IsCustPefindoReq">
+              </lib-ucSubsection>
+              <div id="Pefindo" *ngIf="!IsCustPefindoReq">
+                <div class="form-body" formArrayName="PefindoArr" style="overflow-x: auto;">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-left"><span class="thead-header" name='checked' translate></span></th>
+                        <th class="text-left"><span class="thead-header" name='pefindoId' translate>PEFINDO ID</span> </th>
+                        <th class="text-left"><span class="thead-header" name='idCardNumber' translate>ID CARD NUMBER</span></th>
+                        <th class="text-left"><span class="thead-header" name='name' translate>NAME</span> </th>
+                        <th class="text-left" *ngIf="ReqPefindoSmartSearchObj.CustType == CustTypePersonal"><span class="thead-header" name='dob' translate>DATE OF BIRTH</span> </th>
+                        <th class="text-left"><span class="thead-header" name='checkedDate' translate>ADDRESS</span> </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="PefindoForm.controls.PefindoArr.length == 0">
+                      <tr *ngIf="!IsSmartSearchResultReady">
+                        <td colspan="100%"><i class="fa fa-spinner fa-spin"></i>&nbsp; <span translate>Please Wait...</span></td>
+                      </tr>
+                      <tr *ngIf="IsSmartSearchResultReady">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="PefindoForm.controls.PefindoArr.length > 0">
+                      <tr *ngFor="let item of PefindoForm.controls.PefindoArr.controls; let i = index" [formGroupName]="i">
+                        <td>
+                          <input type="checkbox" class="border-primary" formControlName="IsChecked" style="height: auto;">
+                        </td>
+                        <td class="text-left">{{item.controls.PefindoId.value}}</td>
+                        <td class="text-left">{{item.controls.IdCardNumber.value}}</td>
+                        <td class="text-left">{{item.controls.Name.value}}</td>
+                        <td class="text-left" *ngIf="ReqPefindoSmartSearchObj.CustType == CustTypePersonal">{{item.controls.BirthDt.value | date: 'dd-MMM-yyyy'}}</td>
+                        <td class="text-left">{{item.controls.Address.value}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-raised btn-warning" (click)="Request()" *ngIf="pefindoMultiResMax > 0 && IsCustPefindoReq && toDisplay && this.PefindoForm.controls.PefindoInquiryReason.value != ''">Request</button>
+  <button type="button" class="btn btn-raised btn-warning" (click)="Request()" *ngIf="pefindoMultiResMax > 0 && !IsCustPefindoReq">Request</button>
+  <button type="button" class="btn btn-raised btn-warning" (click)="activeModal.dismiss()">
+    <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+  </button>
+</div>
