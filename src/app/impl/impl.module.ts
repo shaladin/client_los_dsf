@@ -47,6 +47,7 @@ import { FactoringReviewPagingDsfComponent } from "app/dsf/impl/cessie/factoring
 import { FactoringReviewDetailDsfComponent } from "app/dsf/impl/cessie/factoring-review-detail-dsf/factoring-review-detail-dsf.component";
 import { FactoringReviewAssignProductDsfComponent } from "app/dsf/impl/cessie/factoring-review-assign-product-dsf/factoring-review-assign-product-dsf.component";
 import { CrdRvwListAssetComponent } from './new-nap/sharing-component/credit-review-component/crd-rvw-cust-info-x/component/crd-rvw-list-asset/crd-rvw-list-asset.component';
+
 export const customCurrencyMaskConfig = {
   align: "right",
   allowNegative: true,

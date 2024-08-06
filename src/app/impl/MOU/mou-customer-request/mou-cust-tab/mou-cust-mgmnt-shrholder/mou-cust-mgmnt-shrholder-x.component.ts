@@ -209,7 +209,8 @@ export class MouCustMgmntShrholderXComponent implements OnInit {
     this.clearForm();
     this.mode = "edit";
     this.currentEditedIndex = i;
-    this.isReadOnly = true
+    this.isReadOnly = true;
+    this.isReadOnlyIdNo = true;
     if (this.listShareholder[i].MrShrholderTypeCode == CommonConstant.CustTypePersonal) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
