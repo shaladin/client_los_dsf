@@ -1,0 +1,2 @@
+<app-trusting-social-req-consent-x *ngIf="ThirdPartyRsltHObj.Consent == null" [CustObj]="CustObj" [CustPersonalObj]="CustPersonalObj" (outUpload)="OutUpload($event)" (outCustObj)="OutCustObj($event)"></app-trusting-social-req-consent-x>
+<app-trusting-social-req-detail-x *ngIf="ThirdPartyRsltHObj.Consent != null" [CustObj]="CustObj" [CustPersonalObj]="CustPersonalObj"></app-trusting-social-req-detail-x>

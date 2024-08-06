@@ -7,6 +7,7 @@ export class URLConstantX {
   public static GetListAgrmntParentByCustNoX = environment.losUrl + '/v1' + '/AgrmntX/GetListAgrmntParentByCustNo';
   public static CheckAgrmntParentOverdueByCustNo = environment.losUrl + '/v1' + '/AgrmntX/CheckAgrmntParentOverdueByCustNo';
 
+
   public static SubmitDeliveryOrderDataX = environment.losUrl+ "/v1" + "/DeliveryOrderX/SubmitDeliveryOrderData";
   public static AddCustCnfrmX = environment.losUrl+ "/v1" + "/CustCnfrmX/AddCustCnfrm";
   public static AddPreGoLiveX = environment.losUrl+ "/v1" + "/PreGoLiveX/AddPreGoLive";
@@ -385,4 +386,30 @@ export class URLConstantX {
   public static ProdOfferingApproval = environment.losUrl + "/v1" + "/ApprovalX/ProdOfferingApproval";
   // DigitalizationX
   public static GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX = environment.FoundationR3Url + "/v1" + "/DigitalizationX/GetLatestThirdPartyRsltHByTrxNoAndSvcTypeCodeX";
+
+
+  //CHANGES
+  public static GetListCustDocFileByCustId = environment.FoundationR3Url + "/v1" + "/CustDocFile/GetListCustDocFileByCustId";
+  public static SaveCustDocFile = environment.FoundationR3Url + "/v2" + "/Cust/SaveCustDocFile";
+  public static PefindoSmartSearchV2 = environment.FoundationR3Url + "/v2" + "/Pefindo/PefindoSmartSearch";
+  //public static PefindoSmartSearchV2XY = environment.FoundationR3UrlXY + "/v2" + "/Pefindo/PefindoSmartSearch";
+  public static AddTrxSrcDataForPefindoMultiResultV2 = environment.FoundationR3Url + "/v2" + "/Digitalization/AddTrxSrcDataForPefindoMultiResult";
+  //public static AddTrxSrcDataForPefindoMultiResultV2XY = environment.FoundationR3UrlXY + "/v2" + "/Digitalization/AddTrxSrcDataForPefindoMultiResult";
+  public static AddTrxSrcDataForPefindo = environment.FoundationR3Url + "/v1" + "/Digitalization/AddTrxSrcDataForPefindo";
+  public static AddTrxSrcDataForPefindoV2 = environment.FoundationR3Url + "/v2" + "/Digitalization/AddTrxSrcDataForPefindo";
+  public static SaveCustThirdPartyTrxNo = environment.FoundationR3Url + "/v2" + "/Cust/SaveCustThirdPartyTrxNo";
+  public static GenerateTransactionNoFromRedis = environment.FoundationR3Url + "/v1" + "/MasterSequence/GenerateTransactionNoFromRedis";
+  public static AddTrxScrDataForAsliRi = environment.FoundationR3Url + "/v1" + "/IntegratorAsliRi/AddTrxSrcDataForAsliRi";
+  public static UploadConsentTrustingSocialV21 = environment.FoundationR3Url + "/v2.1" + "/ThirdPartyRslt/UploadConsentTrustingSocial";
+  public static GetFirstRequestedThirdPartyRsltHByTrxNoAndSvcTypeCode = environment.FoundationR3Url + "/v1" + "/ThirdPartyRslt/GetFirstRequestedThirdPartyRsltHByTrxNoAndSvcTypeCode";
+  public static AddTrxSrcDataForTrustingSocial = environment.FoundationR3Url + "/v1" + "/Digitalization/AddTrxSrcDataForTrustingSocial";
+  public static AddTrxSrcDataForTrustingSocialV2 = environment.FoundationR3Url + "/v2" + "/Digitalization/AddTrxSrcDataForTrustingSocial";
+  public static GetIncomeGradeRange = environment.FoundationR3Url + "/v1" + "/IncomeGradingVerification/GetIncomeGradeRange";
+  public static GetTrxSrcDataForAsliRi = environment.FoundationR3Url + "/v1" + "/IntegratorAsliRi/GetTrxResultDataForAsliRi";
+  public static GetListThirdPartyTrustingSocialByTrxNo = environment.FoundationR3Url + "/v1" + "/ThirdPartyRslt/GetListThirdPartyTrustingSocialByTrxNo";
+  public static EditSimpleLeadCustTypeUpdate = environment.losUrl + "/v1" + "/LeadCustX/EditSimpleLeadCustTypeUpdate";
+  //public static EditSimpleLeadCustTypeUpdate = environment.losUrl + "/v1" + "/LeadCust/EditSimpleLeadCustTypeUpdate";
+  public static GetListReqVerificationTypeForAsliRi = environment.FoundationR3Url + "/v1" + "/IntegratorAsliRi/GetListReqVerificationType";
+  //public static GetListReqVerificationTypeForAsliRiX = environment.FoundationR3UrlX + "/v1" + "/IntegratorAsliRi/GetListReqVerificationType";
+  public static GetListCustGrpForCustViewById = environment.losUrl +"/v1" + "/CustGrp/GetListCustGrpForCustViewById";
 }

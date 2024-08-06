@@ -28,7 +28,7 @@ import { LeadCustPersonalFinDataObj } from 'app/shared/model/lead-cust-personal-
 import { LeadCustPersonalJobDataObj } from 'app/shared/model/lead-cust-personal-job-data-obj.model';
 import { LeadCustPersonalObj } from 'app/shared/model/lead-cust-personal-obj.model';
 import { LeadCustSocmedObj } from 'app/shared/model/lead-cust-socmed-obj.model';
-import { LeadInputObj } from 'app/shared/model/lead-input-obj.model';
+import { LeadInputXObj } from 'app/shared/model/lead-input-x-obj.model';
 import { RefMasterObj } from 'app/shared/model/ref-master-obj.model';
 import { RefProfessionObj } from 'app/shared/model/ref-profession-obj.model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/third-party-result-h-for-fraud-chck-obj.model';
@@ -36,7 +36,11 @@ import { RegexService } from 'app/shared/services/regex.services';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-
+import { CustXObj } from 'app/impl/shared/model/cust-x-obj.model';
+import { CustDocFileFormXObj } from 'app/impl/shared/model/cust-doc-file-form-x-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { Subject } from 'rxjs';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 @Component({
   selector: 'app-new-lead-input-cust-data-x',
   templateUrl: './new-lead-input-cust-data-x.component.html',
@@ -63,7 +67,12 @@ export class NewLeadInputCustDataXComponent implements OnInit {
   tempMrMaritalStatCode: Array<KeyValueObj>;
   custModel: RefMasterObj;
   listCustModel: Array<KeyValueObj>;
-  leadInputObj: LeadInputObj = new LeadInputObj();
+  leadInputObj: LeadInputXObj = new LeadInputXObj();
+
+  //
+
+  //
+
   // leadCustFacebookObj: LeadCustSocmedObj;
   // leadCustInstagramObj: LeadCustSocmedObj;
   // leadCustTwitterObj: LeadCustSocmedObj;
@@ -99,10 +108,12 @@ export class NewLeadInputCustDataXComponent implements OnInit {
     MotherName: [''],
     IdNo: [''],
     MrMaritalStatCode: [''],
-    Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]],
+    //MrCustModelCode nya dimana njir this makes the view of the asli ri sux ass like fr fr
+    Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     Email: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$"), Validators.required]],
     MobilePhone2: ['', Validators.pattern("^[0-9]+$")],
+    
     // Facebook: [''],
     // Instagram: [''],
     // Twitter: [''],
@@ -120,6 +131,7 @@ export class NewLeadInputCustDataXComponent implements OnInit {
   returnLeadObj: LeadObj;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   leadNo: string;
+  showThirdParty:boolean = false;
   latestReqDtCheckIntegrator: string;
   thirdPartyRsltHId: number;
   reqLatestJson: any;
@@ -129,11 +141,10 @@ export class NewLeadInputCustDataXComponent implements OnInit {
   customPattern: Array<CustomPatternObj>;
   resultPattern: Array<KeyValueObj>;
   Max17YO: Date;
+  custNo: string = "";
   context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
   isReadOnly:boolean = false;
   npwpOrKtp:Array<string> = [CommonConstant.MrIdTypeCodeEKTP, CommonConstant.MrIdTypeCodeNPWP]
-
   constructor(
     private regexService: RegexService,
     private route: ActivatedRoute,
@@ -148,7 +159,11 @@ export class NewLeadInputCustDataXComponent implements OnInit {
   }
 
   async ngOnInit() {
-
+    this.cookieService.remove(CommonConstantX.REQ_ASLIRI);
+    this.cookieService.remove(CommonConstantX.REQ_PEFINDO);
+    this.cookieService.remove(CommonConstantX.THIRD_PARTY_RSLT_H_GROUP_NO);
+    this.cookieService.remove(CommonConstantX.REQ_SOCIAL);
+    
     this.customPattern = new Array<CustomPatternObj>();
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -165,7 +180,9 @@ export class NewLeadInputCustDataXComponent implements OnInit {
         this.WfTaskListId = params["WfTaskListId"];
       }
     });
-
+    if (this.typePage == "update") {
+      this.showThirdParty = true;
+    }
     this.setValidatorForUpdate();
 
     this.inputAddressObjForLegalAddr = new InputAddressObj();
@@ -269,7 +286,7 @@ export class NewLeadInputCustDataXComponent implements OnInit {
     );
     this.genderType = new RefMasterObj();
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).toPromise().then(
       (response) => {
         this.tempGender = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ Gender: this.tempGender[0].Key });
@@ -278,7 +295,7 @@ export class NewLeadInputCustDataXComponent implements OnInit {
 
     this.idTypeCode = new RefMasterObj();
     this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).toPromise().then(
       (response) => {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -286,17 +303,16 @@ export class NewLeadInputCustDataXComponent implements OnInit {
 
     this.maritalStatCode = new RefMasterObj();
     this.maritalStatCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).toPromise().then(
       (response) => {
         this.tempMrMaritalStatCode = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
-
     this.custModel = new RefMasterObj();
     this.custModel.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
     this.custModel.MappingCode = CommonConstant.CustTypePersonal;
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).toPromise().then(
       (response) => {
         this.listCustModel = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -722,7 +738,6 @@ export class NewLeadInputCustDataXComponent implements OnInit {
   }
   npwpKtpChecking(){
     this.isReadOnly=false
-
     if(this.npwpOrKtp.includes(this.CustomerDataForm.get("MrIdTypeCode").value)){
       this.isReadOnly=true
       this.CustomerDataForm.get("Npwp").setValue(this.CustomerDataForm.get("IdNo").value)
@@ -731,7 +746,6 @@ export class NewLeadInputCustDataXComponent implements OnInit {
   onChangeIdNo(){
     this.npwpKtpChecking()
   }
-
   ChangeIdType(IdType: string) {
     this.npwpKtpChecking()
     this.setValidatorPattern();
@@ -918,6 +932,7 @@ export class NewLeadInputCustDataXComponent implements OnInit {
   setLeadCust() {
     this.leadInputObj.LeadCustObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
     this.leadInputObj.LeadCustObj.LeadId = this.LeadId;
+    this.leadInputObj.LeadCustObj.CustNo = this.custNo;
     this.leadInputObj.LeadCustObj.CustName = this.CustomerDataForm.controls["CustName"].value;
     this.leadInputObj.LeadCustObj.MrIdTypeCode = this.CustomerDataForm.controls["MrIdTypeCode"].value;
     this.leadInputObj.LeadCustObj.MrCustModelCode = this.CustomerDataForm.controls["CustModel"].value;
@@ -994,7 +1009,7 @@ export class NewLeadInputCustDataXComponent implements OnInit {
   SaveForm() {
     if (this.typePage == "edit") {
       if (this.resLeadCustObj.LeadCustId != 0) {
-        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj = new LeadInputXObj();
         this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
         this.setLeadCust();
@@ -1018,7 +1033,7 @@ export class NewLeadInputCustDataXComponent implements OnInit {
           );
         }
       } else {
-        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj = new LeadInputXObj();
         this.setLeadCust();
         if (!this.setLeadCustPersonal()) return;
         // this.setLeadCustSocmed();
@@ -1036,32 +1051,61 @@ export class NewLeadInputCustDataXComponent implements OnInit {
         }
       }
     } else if (this.typePage == "update") {
-      this.leadInputObj = new LeadInputObj();
-      this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-      this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
-      this.setLeadCust();
-      this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
-      if (!this.setLeadCustPersonal()) return;
-      // this.setLeadCustSocmed();
-      this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
-      this.setLegalAddr();
-      this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
-      this.setResidenceAddr();
-      this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
-      this.setLeadCustPersonalJobData();
-      this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
-      this.setLeadCustPersonalFinData();
-      if (this.confirmFraudCheck()) {
-        this.http.post(URLConstant.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.outputTab.emit({ stepMode: "next" });
-          }
-        );
+      var contextSocial = AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_SOCIAL);
+      var contextAsliRI = AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_ASLIRI);
+      var contextPefindo = AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_PEFINDO);
+      if (contextSocial !== 'done') {
+        this.toastr.warningMessage("Please request Social Score first.");
+      } else if (contextAsliRI !== 'done') {
+        this.toastr.warningMessage("Please request Asli RI first.");
+      }else if(contextPefindo !== 'done') {
+        this.toastr.warningMessage("Please request Credit Bureau Checking first");
       }
+      // var contextSocial = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_SOCIAL));
+      // var contextAsliRI = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_ASLIRI));
+      // //var contextPefindo = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_PEFINDO));
+      // if(contextSocial != 'done'){
+      //   this.toastr.warningMessage("Please request Social Score first.");
+      // }
+      // else if(contextAsliRI != 'done'){
+      //   this.toastr.warningMessage("Please request Asli RI first.");
+      // }
+      //else if(contextPefindo != ""){
+      //   this.toastr.warningMessage("Please request Credit Bureau Checking first.");
+      // }
+      else{
+        this.leadInputObj = new LeadInputXObj();
+        this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+        this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
+        this.setLeadCust();
+        this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
+        if (!this.setLeadCustPersonal()) return;
+        // this.setLeadCustSocmed();
+        this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
+        this.setLegalAddr();
+        this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
+        this.setResidenceAddr();
+        this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
+        this.setLeadCustPersonalJobData();
+        this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
+        this.setLeadCustPersonalFinData();
+        this.leadInputObj.ThirdPartyGrpNo = AdInsHelper.GetCookie(this.cookieService, CommonConstantX.THIRD_PARTY_RSLT_H_GROUP_NO);
+        //sebelum di save harus di validasi ud third party blum
+
+        if (this.confirmFraudCheck()) {
+
+          this.http.post(URLConstantX.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputTab.emit({ stepMode: "next" });
+            }
+          );
+        }
+      }
+
     }
     else {
-      this.leadInputObj = new LeadInputObj();
+      this.leadInputObj = new LeadInputXObj();
       this.setLeadCust();
       if (!this.setLeadCustPersonal()) return;
       // this.setLeadCustSocmed();
@@ -1100,6 +1144,7 @@ export class NewLeadInputCustDataXComponent implements OnInit {
             IdNo: this.resLeadCustObj.IdNo,
             Npwp: this.resLeadCustObj.TaxIdNo,
           });
+          this.custNo = this.resLeadCustObj.CustNo;
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           let obj = {
@@ -1246,7 +1291,7 @@ export class NewLeadInputCustDataXComponent implements OnInit {
 
   checkIntegrator() {
     if (this.isNeedCheckBySystem == "0") {
-      this.leadInputObj = new LeadInputObj();
+      this.leadInputObj = new LeadInputXObj();
       this.setLeadCust();
       if (!this.setLeadCustPersonal()) return;
       this.setLegalAddr();
@@ -1356,7 +1401,20 @@ export class NewLeadInputCustDataXComponent implements OnInit {
     this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
     this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
   }
-
+  thirdPartyTrxNo: string = null;
+  thirdPartyTrxGroupNo: string = null;
+  custObj: CustXObj = new CustXObj();
+  CustDocFileFormObjs: Array<CustDocFileFormXObj> = new Array<CustDocFileFormXObj>();
+  readonly CustTypePersonal: string = CommonConstantX.CustomerPersonal;
+  @Input() CustDataMode: string = CommonConstant.CustMainDataModeCust;
+  SetThirdPartyTrxNoAndRowVersion(e){
+    this.thirdPartyTrxGroupNo = e.ThirdPartyGroupTrxNo;
+    this.thirdPartyTrxNo = e.ThirdPartyTrxNo;
+    if (this.custObj.CustId > 0) this.custObj.RowVersion = e.RowVersion;
+  }
+  SetCustFileFormObjs(e){
+    this.CustDocFileFormObjs = e;
+  }
   Cancel(){
     this.outputCancel.emit();
   }

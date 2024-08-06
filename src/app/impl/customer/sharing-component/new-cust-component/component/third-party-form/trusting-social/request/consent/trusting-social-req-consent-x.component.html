@@ -1,0 +1,53 @@
+<form class="form-horizontal" [formGroup]="ConsentForm"
+  (ngSubmit)="ConsentForm.valid && UploadConsent()" #enjiForm="ngForm">
+  <div class="modal-header">
+    <h4 class="modal-title" translate>Consent</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(CustObj)" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-body">
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Customer Type</label>
+        <label class="col-md-4 adInsLabel" translate>{{CustTypeName}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>NPWP</label>
+        <label class="col-md-4 adInsLabel" translate>{{CustObj.TaxIdNo}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Customer Name</label>
+        <label class="col-md-4 adInsLabel" translate>{{CustObj.CustName}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>FPP</label>
+        <label class="col-md-4 adInsLabel" translate>{{CustObj.CustNo == "" ? CustObj.ThirdPartyTrxNo : CustObj.CustNo}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Upload Consent</label>
+        <div class="col-md-4">
+          <label for="consent" class="btn btn-primary btn-sm afu-select-btn">Choose File</label>
+          <input type="file" id="consent" style="display: none" (change)="HandleFileInput($event.target.files)"
+            formControlName="Consent" [accept]="'.doc, .docx, .pdf'"/>
+          <lib-uc-show-errors [control]="ConsentForm.controls.Consent" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+          <div [hidden]="!FileToUpload" style="padding-left: 15px" class="row afu-valid-file">
+            <p class="col-xs-3 textOverflow"><span class="text-primary">{{FileToUpload?.name}}</span></p>
+            <p class="col-xs-3 padMarg sizeC">
+              <strong>({{ConvertSize(FileToUpload?.size)}})</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </p>
+          </div>
+        </div>       
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="activeModal.close(CustObj)">
+      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary">
+      <i class="far fa-check-square"></i>&nbsp;<span translate>Next</span>
+    </button>
+  </div>
+</form>

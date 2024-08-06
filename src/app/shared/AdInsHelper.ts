@@ -65,7 +65,10 @@ public static ClearAllLog(cookieService: CookieService) {
     localStorage.setItem("Version", version);
     cookieService.removeAll();
 }
-
+public static OpenPefindoMultiResultView(TrxNo: string, MrCustTypeCode: string) {
+  var url = environment.FoundationR3Web + "/View/Pefindo?GroupTrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode;
+  window.open(url, "_blank");
+}
 public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: HttpClient) {
     var url = environment.FoundationR3Url + URLConstant.LogoutAuth;
     http.post(url, {}).subscribe();
@@ -207,7 +210,10 @@ public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: Http
 
     window.open(environment.FoundationR3Web + "/View/Pefindo?CustNo=" + CustNo + "&IsLos=" + IsLos);
   }
-
+  public static OpenPefindoViewX(TrxNo: string, MrCustTypeCode: string) {
+    var url = environment.FoundationR3Web + "/View/Pefindo?TrxNo=" + TrxNo + "&MrCustTypeCode=" + MrCustTypeCode;
+    window.open(url, "_blank");
+}
   public static OpenPefindoViewV2(CustNo: string, IsLos: boolean, Token: string = "", IsCtpg: boolean, TrxNo: string, MrCustTypeCode: string) {
     if (Token != "")
     {

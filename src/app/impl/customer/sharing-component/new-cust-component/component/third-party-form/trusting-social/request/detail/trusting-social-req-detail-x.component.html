@@ -1,0 +1,87 @@
+<form class="form-horizontal" [formGroup]="DetailForm"
+  (ngSubmit)="DetailForm.valid && SaveForm()" #enjiForm="ngForm">
+  <div class="modal-header">
+    <h4 class="modal-title" translate>Detail</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(CustObj)" translate>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-body">
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Customer Type</label>
+        <label class="col-md-4 adInsLabel" translate>{{CustTypeName}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>NPWP</label>
+        <label class="col-md-4 adInsLabel" translate>{{CustObj.TaxIdNo}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Customer Name</label>
+        <label class="col-md-4 adInsLabel" translate>{{CustObj.CustName}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>FPP</label>
+        <label class="col-md-4 adInsLabel" translate>{{CustObj.CustNo == "" ? CustObj.ThirdPartyTrxNo : CustObj.CustNo}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 adInsLabel" translate>Consent Uploaded</label>     
+      </div>
+      <div class="form-actions right">
+        <button type="button" (click)="AddNewData()" class="btn btn-raised btn-primary" translate>
+          Add New Data
+        </button>
+      </div>
+    </div>
+    <div formArrayName="ThirdPartyTrustsocRslts" style="overflow-x: auto;">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th class="text-center"><span translate>No</span></th>
+            <th class="text-left"><span translate>Relation</span></th>
+            <th class="text-left"><span translate>Name</span></th>
+            <th class="text-left"><span translate>Phone No</span></th>
+            <th class="text-center"><span translate>Action</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of DetailForm.controls['ThirdPartyTrustsocRslts']['controls'];let i = index">
+            <td [formGroupName]="i" class="text-center">
+              {{i + 1}}
+            </td>
+            <td [formGroupName]="i" class="text-left">
+              <label *ngIf="i == 0" class="adInsLabel">{{DetailForm.value.ThirdPartyTrustsocRslts[i].Relation}}</label>
+              <input *ngIf="i > 0" type="text" class="form-control adInsInput" formControlName="Relation"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailForm.controls['ThirdPartyTrustsocRslts']['controls'][i]['controls'].Relation.invalid }">
+              <lib-uc-show-errors [control]="DetailForm.controls['ThirdPartyTrustsocRslts']['controls'][i]['controls'].Relation" [submit]="enjiForm.submitted"></lib-uc-show-errors></td>
+            <td [formGroupName]="i" class="text-left">
+              <label *ngIf="i == 0" class="adInsLabel">{{DetailForm.value.ThirdPartyTrustsocRslts[i].Name}}</label>
+              <input *ngIf="i > 0" type="text" class="form-control adInsInput" formControlName="Name" 
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailForm.controls['ThirdPartyTrustsocRslts']['controls'][i]['controls'].Name.invalid }">
+              <lib-uc-show-errors [control]="DetailForm.controls['ThirdPartyTrustsocRslts']['controls'][i]['controls'].Name" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
+            </td>
+            <td [formGroupName]="i" class="text-left">
+              <label *ngIf="i == 0 && CustObj.MrCustTypeCode == CustTypePersonal" class="adInsLabel">{{DetailForm.value.ThirdPartyTrustsocRslts[i].MobilePhnNo}}</label>
+              <input *ngIf="i > 0 || CustObj.MrCustTypeCode != CustTypePersonal" type="text" class="form-control adInsInput" formControlName="MobilePhnNo"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailForm.controls['ThirdPartyTrustsocRslts']['controls'][i]['controls'].MobilePhnNo.invalid }">
+              <lib-uc-show-errors [control]="DetailForm.controls['ThirdPartyTrustsocRslts']['controls'][i]['controls'].MobilePhnNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
+            </td>
+            <td [formGroupName]="i" class="text-center">
+              <a *ngIf="i > 0" class="danger p-0" (click)="DeleteData(i)">
+                <i class="ft-trash-2 font-medium-3 mr-2"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="activeModal.close(CustObj)">
+      <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary">
+      <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
+    </button>
+  </div>
+</form>

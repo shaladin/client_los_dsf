@@ -27,7 +27,8 @@ import { RoTelemkOfferVerifComponent } from './potential-ro/ro-telemk-offer-deta
 import { RoPotentialInquiryComponent } from './potential-ro/ro-potential-inquiry/ro-potential-inquiry.component';
 import { NewLeadInputMainInfoComponent } from './new-lead-input/new-lead-input-main-info/new-lead-input-main-info.component';
 import { NewLeadInputComponent } from './new-lead-input/new-lead-input.component';
-import { NewLeadInputCustDataComponent } from './new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data.component';
+//import { NewLeadInputCustDataComponent } from './new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data.component';
+import { NewLeadInputCustDataXComponent } from 'app/impl/lead/new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data-x.component';
 import { NewFraudVerifComponent } from './new-fraud-verif/new-fraud-verif.component';
 import { NewFraudVerifDetailComponent } from './new-fraud-verif/new-fraud-verif-detail/new-fraud-verif-detail.component';
 import { NewLeadUpdateComponent } from './new-lead-update/new-lead-update.component';

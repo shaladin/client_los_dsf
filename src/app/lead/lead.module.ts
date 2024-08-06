@@ -34,7 +34,7 @@ import { RoTelemkOfferVerifComponent } from "./potential-ro/ro-telemk-offer-deta
 import { RoPotentialInquiryComponent } from "./potential-ro/ro-potential-inquiry/ro-potential-inquiry.component";
 import { NewLeadInputComponent } from './new-lead-input/new-lead-input.component';
 import { NewLeadInputMainInfoComponent } from './new-lead-input/new-lead-input-main-info/new-lead-input-main-info.component';
-import { NewLeadInputCustDataComponent } from './new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data.component';
+//import { NewLeadInputCustDataComponent } from './new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data.component';
 import { NewFraudVerifComponent } from './new-fraud-verif/new-fraud-verif.component';
 import { NewFraudVerifDetailComponent } from './new-fraud-verif/new-fraud-verif-detail/new-fraud-verif-detail.component';
 import { NewLeadUpdateComponent } from './new-lead-update/new-lead-update.component';
@@ -80,6 +80,21 @@ import { NewLeadInputPageXDsfComponent } from "app/dsf/lead/new-lead-input/new-l
 import { NewLeadQcDsfComponent } from "app/dsf/lead/new-lead-qc-dsf/new-lead-qc-dsf.component";
 import { NewLeadQcDetailDsfComponent } from "app/dsf/lead/new-lead-qc-detail-dsf/new-lead-qc-detail-dsf.component";
 import { NewLeadInputCustDataXComponent } from "app/impl/lead/new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data-x.component";
+import { ThirdPartyFormXComponent } from "app/impl/lead/new-lead-input/third-party-form/third-party-form-x.component";
+import { ThirdPartyUploadXService } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/services/ThirdPartyUploadX.Service";
+import { AsliRiViewXComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/asli-ri/view/asli-ri-view-x/asli-ri-view-x.component";
+import { CustomerViewAsliRiXComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/customer-view-asli-ri-x/customer-view-asli-ri-x.component";
+import { PefindoReqXComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/pefindo/request/pefindo-req-x.component";
+import { TrustingSocialReqHeaderXComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/trusting-social/request/trusting-social-req-header-x.component";
+import { AsliRiReqHeaderXComponent } from "app/impl/lead/new-lead-input/third-party-form/asli-ri/request/asli-ri-req-header-x.component";
+import { TrustingSocialReqConsentXComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/trusting-social/request/consent/trusting-social-req-consent-x.component";
+import { TrustingSocialReqDetailXComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/trusting-social/request/detail/trusting-social-req-detail-x.component";
+import { AsliRiReqXComponent } from "app/impl/lead/new-lead-input/third-party-form/asli-ri/request/asli-ri-req-x/asli-ri-req-x.component";
+import { AsliRiReqConfirmationXComponent } from "app/impl/lead/new-lead-input/third-party-form/asli-ri/request/asli-ri-req-confirmation-x/asli-ri-req-confirmation-x.component";
+import { TrustingSocialViewHeaderXComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/trusting-social/view/trusting-social-view-header-x.component";
+//import { CustomerViewTrustingSocialComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/customer-view-trusting-social/customer-view-trusting-social-x.component";
+import { CustomerViewTrustingSocialXModule } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/customer-view-trusting-social/customer-view-trusting-social-x.module";
+import { NewLeadInputCustDataComponent } from "./new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -106,7 +121,8 @@ export const customCurrencyMaskConfig = {
     CustSharingComponentModule,
     SharedModule,
     AdInsModule,
-    UcreportModule
+    UcreportModule,
+    CustomerViewTrustingSocialXModule
   ],
   declarations: [
     LeadVerifComponent,
@@ -144,6 +160,7 @@ export const customCurrencyMaskConfig = {
     NewLeadInputPageDsfComponent,
     NewLeadQcDetailDsfComponent,
     NewLeadInputCustDataDsfComponent,
+    LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent, NewLeadInputComponent, NewLeadInputMainInfoComponent,NewLeadInputCustDataXComponent, NewFraudVerifComponent, NewFraudVerifDetailComponent, NewLeadUpdateComponent, NewLeadInputLeadDataComponent, NewLeadInputPageComponent, SimpleLeadMonitoringComponent, SimpleLeadMonitoringReviewComponent, SimpleLeadMonitoringReviewDetailComponent,
     NewLeadInputPageXComponent,
     NewLeadInputPageXDsfComponent,
     NewLeadInputCustDataXDsfComponent,
@@ -151,7 +168,6 @@ export const customCurrencyMaskConfig = {
     NewLeadInputLeadDataXComponent,
     NewLeadUpdateDsfComponent,
     NewLeadQcDsfComponent,
-    NewLeadInputDsfComponent,
     NewLeadInputMainInfoDsfComponent,
     GeneratePotentialRoXComponent,
     SimpleLeadReportDsfComponent,
@@ -160,14 +176,33 @@ export const customCurrencyMaskConfig = {
     NewFraudVerifDsfComponent,
     NewFraudVerifDetailDsfComponent,
     LeadCancelDsfComponent,
-    LeadCancelConfirmDsfComponent
+    LeadCancelConfirmDsfComponent,
+    GeneratePotentialRoXComponent,
+    ThirdPartyFormXComponent,
+    CustomerViewAsliRiXComponent,
+    PefindoReqXComponent,
+    TrustingSocialReqHeaderXComponent,
+    AsliRiReqHeaderXComponent,
+    TrustingSocialReqConsentXComponent,
+    TrustingSocialReqDetailXComponent,
+    AsliRiReqXComponent,
+    AsliRiReqConfirmationXComponent,
+    TrustingSocialViewHeaderXComponent,
+    NewLeadInputCustDataComponent,
+    //CustomerViewTrustingSocialComponent
   ],
   entryComponents: [
-    UclookupgenericComponent,
-    UcviewgenericComponent
+    UcviewgenericComponent,
+    AsliRiViewXComponent,
+    PefindoReqXComponent,
+    TrustingSocialReqHeaderXComponent,
+    AsliRiReqHeaderXComponent,
+    TrustingSocialViewHeaderXComponent,
+    //CustomerViewTrustingSocialComponent
   ],
   providers: [
-    NGXToastrService
+    NGXToastrService,
+    ThirdPartyUploadXService
   ]
 })
 
