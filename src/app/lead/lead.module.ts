@@ -162,6 +162,7 @@ export const customCurrencyMaskConfig = {
     NewLeadInputCustDataDsfComponent,
     LeadMonitoringComponent, LeadMonitoringReviewComponent, LeadMonitoringReviewDetailComponent, NewLeadInputComponent, NewLeadInputMainInfoComponent,NewLeadInputCustDataXComponent, NewFraudVerifComponent, NewFraudVerifDetailComponent, NewLeadUpdateComponent, NewLeadInputLeadDataComponent, NewLeadInputPageComponent, SimpleLeadMonitoringComponent, SimpleLeadMonitoringReviewComponent, SimpleLeadMonitoringReviewDetailComponent,
     NewLeadInputPageXComponent,
+    NewLeadInputDsfComponent,
     NewLeadInputPageXDsfComponent,
     NewLeadInputCustDataXDsfComponent,
     NewLeadInputCustDataXComponent,
@@ -189,6 +190,7 @@ export const customCurrencyMaskConfig = {
     AsliRiReqConfirmationXComponent,
     TrustingSocialViewHeaderXComponent,
     NewLeadInputCustDataComponent,
+    AsliRiViewXComponent
     //CustomerViewTrustingSocialComponent
   ],
   entryComponents: [
