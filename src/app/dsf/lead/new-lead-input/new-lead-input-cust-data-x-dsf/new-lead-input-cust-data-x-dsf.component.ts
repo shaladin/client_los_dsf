@@ -36,6 +36,11 @@ import { RegexService } from 'app/shared/services/regex.services';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { LeadInputXObj } from 'app/shared/model/lead-input-x-obj.model';
+import { CommonConstantX } from 'app/impl/shared/constant/CommonConstantX';
+import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
+import { CustXObj } from 'app/impl/shared/model/cust-x-obj.model';
+import { CustDocFileFormXObj } from 'app/impl/shared/model/cust-doc-file-form-x-obj.model';
 
 @Component({
   selector: 'app-new-lead-input-cust-data-x-dsf',
@@ -65,7 +70,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   tempMrMaritalStatCode: Array<KeyValueObj>;
   custModel: RefMasterObj;
   listCustModel: Array<KeyValueObj>;
-  leadInputObj: LeadInputObj = new LeadInputObj();
+  leadInputObj: LeadInputXObj = new LeadInputXObj();
   // leadCustFacebookObj: LeadCustSocmedObj;
   // leadCustInstagramObj: LeadCustSocmedObj;
   // leadCustTwitterObj: LeadCustSocmedObj;
@@ -122,6 +127,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   returnLeadObj: LeadObj;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   leadNo: string;
+  showThirdParty:boolean = false;
   latestReqDtCheckIntegrator: string;
   thirdPartyRsltHId: number;
   reqLatestJson: any;
@@ -157,6 +163,10 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.cookieService.remove(CommonConstantX.REQ_ASLIRI);
+    this.cookieService.remove(CommonConstantX.REQ_PEFINDO);
+    this.cookieService.remove(CommonConstantX.THIRD_PARTY_RSLT_H_GROUP_NO);
+    this.cookieService.remove(CommonConstantX.REQ_SOCIAL);
 
     this.customPattern = new Array<CustomPatternObj>();
     this.route.queryParams.subscribe(params => {
@@ -175,6 +185,9 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
       }
     });
 
+    if (this.typePage == "update") {
+      this.showThirdParty = true;
+    }
     this.setValidatorForUpdate();
 
     this.inputAddressObjForLegalAddr = new InputAddressObj();
@@ -1050,7 +1063,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
   SaveForm() {
     if (this.typePage == "edit") {
       if (this.resLeadCustObj.LeadCustId != 0) {
-        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj = new LeadInputXObj();
         this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
         this.setLeadCust();
@@ -1074,7 +1087,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
           );
         }
       } else {
-        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj = new LeadInputXObj();
         this.setLeadCust();
         if (!this.setLeadCustPersonal()) return;
         // this.setLeadCustSocmed();
@@ -1092,32 +1105,60 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
         }
       }
     } else if (this.typePage == "update") {
-      this.leadInputObj = new LeadInputObj();
-      this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-      this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
-      this.setLeadCust();
-      this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
-      if (!this.setLeadCustPersonal()) return;
-      // this.setLeadCustSocmed();
-      this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
-      this.setLegalAddr();
-      this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
-      this.setResidenceAddr();
-      this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
-      this.setLeadCustPersonalJobData();
-      this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
-      this.setLeadCustPersonalFinData();
-      if (this.confirmFraudCheck()) {
-        this.http.post(URLConstant.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            this.outputTab.emit({ stepMode: "next" });
-          }
-        );
+      var contextSocial = AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_SOCIAL);
+      var contextAsliRI = AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_ASLIRI);
+      var contextPefindo = AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_PEFINDO);
+      if (contextSocial !== 'done') {
+        this.toastr.warningMessage("Please request Social Score first.");
+      } else if (contextAsliRI !== 'done') {
+        this.toastr.warningMessage("Please request Asli RI first.");
+      }else if(contextPefindo !== 'done') {
+        this.toastr.warningMessage("Please request Credit Bureau Checking first");
+      }
+      // var contextSocial = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_SOCIAL));
+      // var contextAsliRI = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_ASLIRI));
+      // //var contextPefindo = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstantX.REQ_PEFINDO));
+      // if(contextSocial != 'done'){
+      //   this.toastr.warningMessage("Please request Social Score first.");
+      // }
+      // else if(contextAsliRI != 'done'){
+      //   this.toastr.warningMessage("Please request Asli RI first.");
+      // }
+      //else if(contextPefindo != ""){
+      //   this.toastr.warningMessage("Please request Credit Bureau Checking first.");
+      // }
+      else{
+        this.leadInputObj = new LeadInputXObj();
+        this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+        this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
+        this.setLeadCust();
+        this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
+        if (!this.setLeadCustPersonal()) return;
+        // this.setLeadCustSocmed();
+        this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
+        this.setLegalAddr();
+        this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
+        this.setResidenceAddr();
+        this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
+        this.setLeadCustPersonalJobData();
+        this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
+        this.setLeadCustPersonalFinData();
+        this.leadInputObj.ThirdPartyGrpNo = AdInsHelper.GetCookie(this.cookieService, CommonConstantX.THIRD_PARTY_RSLT_H_GROUP_NO);
+        //sebelum di save harus di validasi ud third party blum
+
+        if (this.confirmFraudCheck()) {
+
+          this.http.post(URLConstantX.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputTab.emit({ stepMode: "next" });
+            }
+          );
+        }
       }
     }
     else {
-      this.leadInputObj = new LeadInputObj();
+      this.leadInputObj = new LeadInputXObj();
       this.setLeadCust();
       if (!this.setLeadCustPersonal()) return;
       // this.setLeadCustSocmed();
@@ -1305,7 +1346,7 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
 
   checkIntegrator() {
     if (this.isNeedCheckBySystem == "0") {
-      this.leadInputObj = new LeadInputObj();
+      this.leadInputObj = new LeadInputXObj();
       this.setLeadCust();
       if (!this.setLeadCustPersonal()) return;
       this.setLegalAddr();
@@ -1466,6 +1507,21 @@ export class NewLeadInputCustDataXDsfComponent implements OnInit {
 
     this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isDisable = false;
     this.inputAddressObjForResidenceAddr.inputField.inputLookupObj.isReadonly = false;
+  }
+
+  thirdPartyTrxNo: string = null;
+  thirdPartyTrxGroupNo: string = null;
+  custObj: CustXObj = new CustXObj();
+  CustDocFileFormObjs: Array<CustDocFileFormXObj> = new Array<CustDocFileFormXObj>();
+  readonly CustTypePersonal: string = CommonConstantX.CustomerPersonal;
+  @Input() CustDataMode: string = CommonConstant.CustMainDataModeCust;
+  SetThirdPartyTrxNoAndRowVersion(e){
+    this.thirdPartyTrxGroupNo = e.ThirdPartyGroupTrxNo;
+    this.thirdPartyTrxNo = e.ThirdPartyTrxNo;
+    if (this.custObj.CustId > 0) this.custObj.RowVersion = e.RowVersion;
+  }
+  SetCustFileFormObjs(e){
+    this.CustDocFileFormObjs = e;
   }
 
   Cancel(){
