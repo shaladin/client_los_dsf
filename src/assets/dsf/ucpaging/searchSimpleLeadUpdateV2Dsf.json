@@ -224,7 +224,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "SIMPLE_LEAD_DETAIL_DSF",
+                                "path": "SIMPLE_LEAD_DETAIL_X_DSF",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -254,7 +254,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "SIMPLE_LEAD_DETAIL_DSF",
+                                "path": "SIMPLE_LEAD_DETAIL_X_DSF",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

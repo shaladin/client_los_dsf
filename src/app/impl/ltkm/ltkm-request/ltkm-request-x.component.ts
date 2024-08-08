@@ -72,6 +72,7 @@ import { LtkmCcContactInformationTabXComponent } from './additional-component/co
 import { CustParentChildObj } from 'app/shared/model/ltkm/cust-parent-child-obj';
 import { URLConstantX } from 'app/impl/shared/constant/URLConstantX';
 import { AppObj } from 'app/shared/model/app/app.model';
+import { LtkmCustCompanyMainDataXComponent } from './additional-component/company/cust-company-main-data/cust-company-main-data-x.component';
 @Component({
     selector: 'app-ltkm-request-x',
     templateUrl: './ltkm-request-x.component.html',
@@ -89,7 +90,7 @@ export class LtkmRequestXComponent implements OnInit {
     @ViewChild(LtkmLegalDocComponent) custCompanyLegalDocComponent;
     @ViewChild(LtkmMgmntShrholderComponent) custCompanyManagementShareholderComponent;
     @ViewChild(LtkmBankSectionComponent) custLtkmBankSectionComponent;
-    @ViewChild(LtkmCustCompanyMainDataComponent) LtkmCustCompanyMainDataComponent;
+    @ViewChild(LtkmCustCompanyMainDataXComponent) LtkmCustCompanyMainDataComponent;
     @ViewChild(LtkmEmergencyContactComponent) LtkmEmergencyContactComponent;
     @ViewChild(LtkmFamilyMainDataPagingComponent) LtkmFamilyMainDataPagingComponent;
 
