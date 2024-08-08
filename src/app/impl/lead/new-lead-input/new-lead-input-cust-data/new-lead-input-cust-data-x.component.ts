@@ -108,7 +108,6 @@ export class NewLeadInputCustDataXComponent implements OnInit {
     MotherName: [''],
     IdNo: [''],
     MrMaritalStatCode: [''],
-    //MrCustModelCode nya dimana njir this makes the view of the asli ri sux ass like fr fr
     Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     Email: ['', [Validators.pattern(CommonConstant.regexEmail)]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$"), Validators.required]],
