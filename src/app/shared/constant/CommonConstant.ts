@@ -60,6 +60,7 @@ export class CommonConstant {
   public static BUSINESS_DT = "BusinessDt";
   public static BUSINESS_DATE = "BusinessDate";
   public static TOKEN = "XSRF-TOKEN";
+  public static JWT_TOKEN = "jtoken";
   public static BIZ_TEMPLATE_CODE = "BizTemplateCode";
   public static BUSINESS_DATE_RAW = "BusinessDateRaw";
   public static VERSION = "Version";
