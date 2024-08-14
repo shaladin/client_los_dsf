@@ -237,5 +237,8 @@ export class PathConstantDsf {
     public static EDIT_APP_AFT_APV_DSF = "EditAppAftApvDsf";
     public static EDIT_APP_AFT_APV_PAGING_X_DSF = PathConstantDsf.EDIT_APP_AFT_APV_DSF + "/" + PathConstantX.PAGING;
     public static EDIT_APP_AFT_APV_DETAIL_X_DSF = PathConstantDsf.EDIT_APP_AFT_APV_DSF + "/" + PathConstantX.DETAIL_X;
-    
+    public static PO_DSF = "PurchaseOrderDsf";
+    public static PO_PAGING_X_DSF = PathConstantDsf.PO_DSF + "/" + PathConstantX.PAGING_X;
+    public static PO_PO_EXT_X_DSF = PathConstantDsf.PO_DSF + "/" + PathConstantX.PO_EXT_X;
+    public static PO_PO_EXT_DETAIL_X_DSF = PathConstantDsf.PO_PO_EXT_X_DSF + "/" + PathConstantX.DETAIL_X;
 }
