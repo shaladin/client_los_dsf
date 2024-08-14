@@ -114,4 +114,5 @@ export class URLConstantDsf {
     public static GenerateAgrmntDocNoDsf = environment.losUrl + "/DocumentDsf/GenerateAgrmntDocNoDsf"
 
     public static ReloadAppTcDsf = environment.losUrl + "/AppTcDsf/ReloadAppTcDsf";
+    public static ReloadAgrmntTcDsf = environment.losUrl + "/AgrmntTcDsf/ReloadAgrmntTcDsf";
 }

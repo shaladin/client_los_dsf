@@ -152,6 +152,7 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_PGL_APPRVL_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.PGL_APPRVL_DETAIL; //"/Nap/AdminProcess/PreGoLive/Approval/Detail"
   public static NAP_ADM_PRCS_PGL_APPRVL_DETAIL_X = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PGL_APPRVL_DETAIL_X; //"/Nap/AdminProcess/PreGoLive/Approval/DetailX"
   public static NAP_ADM_PRCS_PO_PO_EXT = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PO_EXT_X; //'/Nap/AdminProcess/PurchaseOrder/PO'
+  public static NAP_ADM_PRCS_PO_PO_EXT_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.PO_PO_EXT_X_DSF; //'/Nap/AdminProcess/PurchaseOrderDsf/POX'
   public static NAP_ADM_PRCS_PO_PO_EXT_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PO_EXT_DETAIL_X; //"/Nap/AdminProcess/PurchaseOrder/PO/Detail"
   public static NAP_ADM_PRCS_PO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantX.PO_PAGING_X; //"/Nap/AdminProcess/PurchaseOrder/Paging"
   public static NAP_ADM_PRCS_NEW_PO_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.NEW_PO_PAGING; //'/Nap/AdminProcess/NewPurchaseOrder/Paging'

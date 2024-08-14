@@ -155,6 +155,8 @@ export class NavigationConstantDsf {
      public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.DO_MULTI_ASSET_PAGING_DSF; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
      public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING_DSF = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.EDIT_APP_AFT_APV_PAGING_X_DSF;//"/Nap/AddProcess/EditAppAftApvDsf/PagingX"
      public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL_DSF = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.EDIT_APP_AFT_APV_DETAIL_X_DSF;//"/Nap/AddProcess/EditAppAftApvDsf/DetailX"
-       
+     public static NAP_ADM_PRCS_PO_PAGING_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.PO_PAGING_X_DSF; //"/Nap/AdminProcess/PurchaseOrderDsf/PagingX"
+     public static NAP_ADM_PRCS_PO_PO_EXT_DETAIL_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.PO_PO_EXT_DETAIL_X_DSF; //"/Nap/AdminProcess/PurchaseOrderDsf/POX/DetailX"
+    
     }
 

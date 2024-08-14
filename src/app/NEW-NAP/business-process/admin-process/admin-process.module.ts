@@ -121,6 +121,9 @@ import { DeliveryOrderMultiAssetDsfComponent } from "app/dsf/impl/NEW-NAP/busine
 import { DoAssetDetailXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/do-asset-detail-x-dsf/do-asset-detail-x-dsf.component";
 import { DeliveryOrderMultiAssetDetailXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/delivery-order-multi-asset-detail-x-dsf/delivery-order-multi-asset-detail-x-dsf.component";
 import { CreateDoMultiAssetXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/create-do-multi-asset-x-dsf/create-do-multi-asset-x-dsf.component";
+import { PurchaseOrderPagingXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging-x-dsf/purchase-order-paging-x-dsf.component";
+import { PurchaseOrderDetailXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail-x-dsf/purchase-order-detail-x-dsf.component";
+import { PurchaseOrderXDsfComponent } from "app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-x-dsf/purchase-order-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -236,8 +239,11 @@ export const customCurrencyMaskConfig = {
     InsuranceOrderPagingXComponent,
     InsuranceOrderDetailXComponent,
     PurchaseOrderPagingXComponent,
+    PurchaseOrderPagingXDsfComponent,
     PurchaseOrderXComponent,
+    PurchaseOrderXDsfComponent,
     PurchaseOrderDetailXComponent,
+    PurchaseOrderDetailXDsfComponent,
     AgrmntActivationDetailXComponent,
     DocumentViewXComponent,
     DocumentViewXDsfComponent,

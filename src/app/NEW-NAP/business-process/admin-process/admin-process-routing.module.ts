@@ -92,6 +92,9 @@ import { PreGoLiveApprovalDetailXComponent } from 'app/impl/NEW-NAP/business-pro
 import { OfferingValidityCheckingApprovalDetailXComponent } from 'app/impl/NEW-NAP/admin-process/offering-validity-checking-approval/offering-validity-checking-approval-detail/offering-validity-checking-approval-detail-x.component';
 import { DeliveryOrderMultiAssetDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/delivery-order-multi-asset-dsf.component';
 import { DeliveryOrderMultiAssetDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/delivery-order-multi-asset-dsf/delivery-order-multi-asset-detail-x-dsf/delivery-order-multi-asset-detail-x-dsf.component';
+import { PurchaseOrderPagingXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging-x-dsf/purchase-order-paging-x-dsf.component';
+import { PurchaseOrderXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-x-dsf/purchase-order-x-dsf.component';
+import { PurchaseOrderDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail-x-dsf/purchase-order-detail-x-dsf.component';
 
 const routes: Routes = [
   {
@@ -644,6 +647,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.PO_PAGING_X_DSF,
+        component: PurchaseOrderPagingXDsfComponent,
+        data: {
+          title: 'Purchase Order Paging Dsf'
+        }
+      },
+      {
         path: PathConstantX.PO_PO_EXT_X,
         component: PurchaseOrderXComponent,
         data: {
@@ -651,10 +661,24 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.PO_PO_EXT_X_DSF,
+        component: PurchaseOrderXDsfComponent,
+        data: {
+          title: 'Purchase Order Dsf'
+        }
+      },
+      {
         path: PathConstantX.PO_PO_EXT_DETAIL_X,
         component: PurchaseOrderDetailXComponent,
         data: {
           title: 'Purchase Order Detail'
+        }
+      },
+      {
+        path: PathConstantDsf.PO_PO_EXT_DETAIL_X_DSF,
+        component: PurchaseOrderDetailXDsfComponent,
+        data: {
+          title: 'Purchase Order Detail Dsf'
         }
       },
       {
