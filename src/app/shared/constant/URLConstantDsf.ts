@@ -111,8 +111,8 @@ export class URLConstantDsf {
     public static SubmitWorkflowLeadQCV2Dsf = environment.losUrl + "/v2" + "/LeadX/SubmitWorkflowLeadQC";
     public static SimpleLeadReturnDsf = environment.losUrl + "/v2" + "/LeadX/SimpleLeadReturnDsf";
     public static CheckVendorGradingFactoringXDsf = environment.losUrl + "/MouCustXDsf/CheckVendorGradingFactoringXDsf";
-    
     public static GenerateAgrmntDocNoDsf = environment.losUrl + "/DocumentDsf/GenerateAgrmntDocNoDsf"
 
     public static ReloadAppTcDsf = environment.losUrl + "/AppTcDsf/ReloadAppTcDsf";
+    public static ReloadAgrmntTcDsf = environment.losUrl + "/AgrmntTcDsf/ReloadAgrmntTcDsf";
 }

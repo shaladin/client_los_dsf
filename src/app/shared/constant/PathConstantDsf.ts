@@ -238,4 +238,15 @@ export class PathConstantDsf {
     public static FACTORING_REVIEW_DETAIL_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstant.DETAIL;
     public static FACTORING_REVIEW_ASSIGN_PROD_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstantX.ASSIGN_PROD;
     public static FACTORING_REVIEW_PAGING_DSF = PathConstantX.CESSIE + "/" + PathConstantX.PROCESS + "/" + PathConstantDsf.FACTORING_REVIEW_DSF + "/" + PathConstant.PAGING;
+    public static NAP_VIEW_ASSET_DSF = "ViewAssetDsf";
+    public static DO_MULTI_ASSET_DSF = "DeliveryOrderMultiAssetDsf";
+    public static DO_MULTI_ASSET_DETAIL_X_DSF = PathConstantDsf.DO_MULTI_ASSET_DSF + '/' + PathConstantX.DETAIL_X;
+    public static DO_MULTI_ASSET_PAGING_DSF = PathConstantDsf.DO_MULTI_ASSET_DSF + "/" + PathConstant.PAGING;
+    public static EDIT_APP_AFT_APV_DSF = "EditAppAftApvDsf";
+    public static EDIT_APP_AFT_APV_PAGING_X_DSF = PathConstantDsf.EDIT_APP_AFT_APV_DSF + "/" + PathConstantX.PAGING;
+    public static EDIT_APP_AFT_APV_DETAIL_X_DSF = PathConstantDsf.EDIT_APP_AFT_APV_DSF + "/" + PathConstantX.DETAIL_X;
+    public static PO_DSF = "PurchaseOrderDsf";
+    public static PO_PAGING_X_DSF = PathConstantDsf.PO_DSF + "/" + PathConstantX.PAGING_X;
+    public static PO_PO_EXT_X_DSF = PathConstantDsf.PO_DSF + "/" + PathConstantX.PO_EXT_X;
+    public static PO_PO_EXT_DETAIL_X_DSF = PathConstantDsf.PO_PO_EXT_X_DSF + "/" + PathConstantX.DETAIL_X;
 }

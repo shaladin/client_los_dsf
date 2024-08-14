@@ -219,8 +219,10 @@
             <mat-tab-group>
               <mat-tab label="Term & Conditions">
                 <ng-template matTabContent>
-                  <app-agrmnt-tc [AgrmntId]="agrmntId" [parentForm]="AppTcForm" [enjiForm]="enjiForm">
-                  </app-agrmnt-tc>
+                  <!-- Self Custom Changes CR Addition Reload Button TC 459737 -->
+                  <app-agrmnt-tc-dsf [AgrmntId]="agrmntId" [parentForm]="AppTcForm" [enjiForm]="enjiForm">
+                  </app-agrmnt-tc-dsf>
+                  <!-- End Self Custom Changes CR Addition Reload Button TC 459737 -->
                 </ng-template>
               </mat-tab>
               <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">

@@ -6,12 +6,14 @@ import { VerfQuestionComponent } from "./verf-question/verf-question.component";
 import { CustHistoryComponent } from "./cust-history/cust-history.component";
 import { AgrmntTcComponent } from "./agrmnt-tc/agrmnt-tc.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { AgrmntTcDsfComponent } from "app/dsf/impl/NEW-NAP/sharing-component/process-component/agrmnt-tc-dsf/agrmnt-tc-dsf.component";
 
 @NgModule({
     exports: [
         VerfQuestionComponent,
         CustHistoryComponent,
-        AgrmntTcComponent
+        AgrmntTcComponent,
+        AgrmntTcDsfComponent
     ],
     imports: [
         CommonModule,
@@ -21,7 +23,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     declarations: [
         VerfQuestionComponent,
         CustHistoryComponent,
-        AgrmntTcComponent
+        AgrmntTcComponent,
+        AgrmntTcDsfComponent
     ],
     providers: [
         NGXToastrService
