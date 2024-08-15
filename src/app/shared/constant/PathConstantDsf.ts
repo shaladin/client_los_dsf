@@ -204,14 +204,6 @@ export class PathConstantDsf {
     public static PLAFOND_INSTALLMENT_SIMULATION_PAGING = PathConstantDsf.PLAFOND_INSTALLMENT_SIMULATION + "/" + PathConstant.PAGING;
     public static PLAFOND_INSTALLMENT_SIMULATION_DETAIL = "PlafondInstallmentSimulationDsf" + "/" + PathConstant.DETAIL;
 
-    public static NAP_VIEW_ASSET_DSF = "ViewAssetDsf";
-    public static DO_MULTI_ASSET_DSF = "DeliveryOrderMultiAssetDsf";
-    public static DO_MULTI_ASSET_DETAIL_X_DSF = PathConstantDsf.DO_MULTI_ASSET_DSF + '/' + PathConstantX.DETAIL_X;
-    public static DO_MULTI_ASSET_PAGING_DSF = PathConstantDsf.DO_MULTI_ASSET_DSF + "/" + PathConstant.PAGING;
-    public static EDIT_APP_AFT_APV_DSF = "EditAppAftApvDsf";
-    public static EDIT_APP_AFT_APV_PAGING_X_DSF = PathConstantDsf.EDIT_APP_AFT_APV_DSF + "/" + PathConstantX.PAGING;
-    public static EDIT_APP_AFT_APV_DETAIL_X_DSF = PathConstantDsf.EDIT_APP_AFT_APV_DSF + "/" + PathConstantX.DETAIL_X;
-    
     public static VIEW_FOU_CUST_TRUST_SOC = "Customer/CustTrustSocDsf";
     public static MOU_REQ_PAGING_X_DSF = PathConstant.MOU_REQ + "/" + PathConstantDsf.PAGING_X;
     public static MOU_REQ_DETAIL_X_DSF = PathConstant.MOU_REQ + '/' + PathConstantDsf.DETAIL_X;

@@ -131,11 +131,7 @@ export class NavigationConstantDsf {
      public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_PAGING; //'/Nap/AddProcess/ReturnHandlingDsf/PagingX'
      public static NAP_ADD_PRCS_RETURN_HANDLING_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_DETAIL; //'/Nap/AddProcess/ReturnHandlingDsf/Detail'
      public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.RETURN_HANDLING_NAP4; //"/Nap/AddProcess/ReturnHandlingDsf/NAP4"
-  
-     public static NAP_ADM_PRCS_DO_MULTI_ASSET_PAGING_DSF = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstantDsf.DO_MULTI_ASSET_PAGING_DSF; //"/Nap/AdminProcess/DeliveryOrderMultiAsset/Paging"
-     public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING_DSF = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.EDIT_APP_AFT_APV_PAGING_X_DSF;//"/Nap/AddProcess/EditAppAftApvDsf/PagingX"
-     public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL_DSF = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstantDsf.EDIT_APP_AFT_APV_DETAIL_X_DSF;//"/Nap/AddProcess/EditAppAftApvDsf/DetailX"
-     
+       
      public static VIEW_FOU_CUST_TRUST_SOC = "/" + PathConstant.VIEW + "/" + PathConstantDsf.VIEW_FOU_CUST_TRUST_SOC; //'/View/Customer/CustTrustSocDsf'
 
      public static MOU_CUST_RVW_PAGING_DSF = "/" + PathConstant.LR_MOU + "/" + PathConstantDsf.MOU_CUST_RVW_PAGING_DSF; //'/Mou/Cust/ReviewPaging'
