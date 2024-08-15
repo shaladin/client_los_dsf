@@ -36,7 +36,7 @@
     </div>
   </div>
   <div *ngIf="DataAsliRi.ResultDt != null">
-    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && (IsOkAsliRiPhnAge || IsOkAsliRiHomeAddr || ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && IsOkAsliRiIncomeGrade) || (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && IsOkAsliRiWorkplace)))">
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && (IsOkAsliRiPhnAge  || ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && IsOkAsliRiIncomeGrade) || (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && IsOkAsliRiWorkplace)))">
       <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_PHN_AGE')">
         <lib-ucSubsection [id]="'phoneAgeVerificationId'" [title]="'Phone Age Verification'" [panel]="'phoneAgeVerification'">
         </lib-ucSubsection>
@@ -62,24 +62,6 @@
         </div>
       </div>
 
-      <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_HOME_ADDR')">
-        <lib-ucSubsection [id]="'homeAddressPercentageVerificationId'" [title]="'Home Address Percentage Verification'" [panel]="'homeAddressPercentageVerification'">
-        </lib-ucSubsection>
-        <div id="homeAddressPercentageVerification">
-          <div class="px-3" *ngIf="IsOkAsliRiHomeAddr">
-            <div class="row">
-              <label class="col-md-4  adInsLabel" translate>Address - {{ DataAsliRi.ReqAsliRiObj.Address }}</label>
-              <label class="col-md-8  adinslabel" translate *ngIf="DataAsliRi.ResAsliRiObj.HomeAddrPrcntgLocationPrcntg != null">{{ DataAsliRi.ResAsliRiObj.HomeAddrPrcntgLocationPrcntg }} %</label>
-              <label class="col-md-8  adinslabel" translate *ngIf="DataAsliRi.ResAsliRiObj.HomeAddrPrcntgLocationPrcntg == null">-</label>
-            </div>
-          </div>
-          <div class="px-3" *ngIf="!IsOkAsliRiHomeAddr">
-            <div class="alert alert-danger text-center" role="alert">
-              <span class="text-dark">Error in Asli RI, Please contact IT</span>
-            </div>
-          </div>
-        </div>
-      </div>
     
       <div *ngIf="DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE')">
         <lib-ucSubsection [id]="'workplaceVerificationId'" [title]="'Workplace Verification'" [panel]="'workplaceVerification'">
@@ -156,22 +138,22 @@
       </div>
     </div>
 
-    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge && !IsOkAsliRiHomeAddr && ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && !IsOkAsliRiIncomeGrade) && (!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE')))">
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge  && ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && !IsOkAsliRiIncomeGrade) && (!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE')))">
       <div class="alert alert-danger ml-2 mt-2 text-center" role="alert">
         <span class="text-dark">Error in Asli RI, Please contact IT</span>
       </div>
     </div>
-    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge && !IsOkAsliRiHomeAddr && ((!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE')) && (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && !IsOkAsliRiWorkplace))">
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge  && ((!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE')) && (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && !IsOkAsliRiWorkplace))">
       <div class="alert alert-danger ml-2 mt-2 text-center" role="alert">
         <span class="text-dark">Error in Asli RI, Please contact IT</span>
       </div>
     </div>
-    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge && !IsOkAsliRiHomeAddr && ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && !IsOkAsliRiIncomeGrade) && (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && !IsOkAsliRiWorkplace))">
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge  && ((DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE') && !IsOkAsliRiIncomeGrade) && (DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && !IsOkAsliRiWorkplace))">
       <div class="alert alert-danger ml-2 mt-2 text-center" role="alert">
         <span class="text-dark">Error in Asli RI, Please contact IT</span>
       </div>
     </div>
-    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge && !IsOkAsliRiHomeAddr && ((!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE')) && (!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE')))">
+    <div *ngIf="custObj.MrCustTypeCode == 'PERSONAL' && !IsOkAsliRiPhnAge  && ((!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_INCOME_GRADE')) && (!DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE')))">
       <div class="alert alert-danger ml-2 mt-2 text-center" role="alert">
         <span class="text-dark">Error in Asli RI, Please contact IT</span>
       </div>
