@@ -36,20 +36,6 @@
         </div>
       </div>
 
-      <div *ngIf="isHomeAddressPercentageVerification">
-        <lib-ucSubsection [id]="'homeAddressPercentageVerificationId'" [title]="'Home Address Percentage Verification'"
-          [panel]="'homeAddressPercentageVerification'">
-        </lib-ucSubsection>
-        <div id="homeAddressPercentageVerification">
-          <div class="px-3">
-            <div class="row">
-              <label class="col-md-4  adInsLabel" translate>Address</label>
-              <label class="col-md-8  adinslabel" translate>{{ address }}</label>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div *ngIf="isTaxCompanyVerification">
         <lib-ucSubsection [id]="'taxCompanyVerificationId'" [title]="'Tax Company Verification'"
           [panel]="'taxCompanyVerification'">

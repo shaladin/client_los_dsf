@@ -26,7 +26,6 @@ export class AsliRiReqConfirmationXComponent implements OnInit {
               private cookieService: CookieService) { }
 
   @Input() isPhoneAgeVerifValid: boolean;
-  @Input() isHomeAddressPercentageVerifValid: boolean;
   @Input() AsliRIForm: FormGroup;
   @Input() custDocFileFormObj: CustDocFileFormXObj;
   @Output() nextConfirm = new EventEmitter<boolean>();
