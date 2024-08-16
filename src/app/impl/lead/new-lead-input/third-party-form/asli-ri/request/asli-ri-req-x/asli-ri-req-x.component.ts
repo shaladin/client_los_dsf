@@ -42,7 +42,6 @@ export class AsliRiReqXComponent implements OnInit {
   isSelfieValid: boolean = true;
   isSelfieAvailable: boolean = false;
   isPhoneAgeVerification: boolean = false;
-  isHomeAddressPercentageVerification: boolean = false;
   isTaxExtraVerification: boolean = false;
   isTaxCompanyVerification: boolean = false;
   isWorkplaceVerification: boolean = false;
@@ -132,10 +131,6 @@ export class AsliRiReqXComponent implements OnInit {
         })
       }
     }
-
-    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.isHomeAddressPercentageVerification = true;
-    }
   }
 
   CheckValidationSelfie() {
@@ -185,7 +180,6 @@ export class AsliRiReqXComponent implements OnInit {
     this.reqAddTrxSrcDataForAsliRIObj.AnnualRevenue = this.AsliRIForm.controls.AnnualRevenue.value;
 
     this.isPhoneAgeVerification ? this.reqAddTrxSrcDataForAsliRIObj.ListReqVerificationType.push(CommonConstantX.ASLI_RI_PHN_AGE) : null;
-    this.isHomeAddressPercentageVerification ? this.reqAddTrxSrcDataForAsliRIObj.ListReqVerificationType.push(CommonConstantX.ASLI_RI_HOME_ADDR) : null;
     if (this.isTaxExtraVerification && this.parent.TaxIdNo != "" && this.AsliRIForm.controls.MonthlyIncome.value != 0) {
       this.reqAddTrxSrcDataForAsliRIObj.ListReqVerificationType.push(CommonConstantX.ASLI_RI_TAX_EXTRA)
     }

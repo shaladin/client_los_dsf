@@ -154,7 +154,6 @@ export class CustomerViewAsliRiXComponent implements OnInit {
   }
 
   IsOkAsliRiPhnAge: boolean = true;
-  IsOkAsliRiHomeAddr: boolean = true;
   IsOkAsliRiIncomeGrade: boolean = true;
   IsOkAsliRiWorkplace: boolean = true;
   async GetData() {
@@ -182,13 +181,6 @@ export class CustomerViewAsliRiXComponent implements OnInit {
               }
             }else{
               this.IsOkAsliRiPhnAge = false;
-            }
-            if(this.DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_HOME_ADDR') && typeof statusCode.ASLIRI_HOME_ADDR != undefined){
-              if(statusCode.ASLIRI_HOME_ADDR != 200){
-                this.IsOkAsliRiHomeAddr = false;
-              }
-            }else{
-              this.IsOkAsliRiHomeAddr = false;
             }
             if(this.DataAsliRi.ReqAsliRiObj.ListReqVerificationType.includes('ASLIRI_WORKPLACE') && typeof statusCode.ASLIRI_WORKPLACE != undefined){
               if(statusCode.ASLIRI_WORKPLACE != 200){
