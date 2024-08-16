@@ -16,12 +16,14 @@ import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { CustomerViewTrustingSocialXRoutingModule } from "./customer-view-trusting-social-x-routing.module";
 import { CustomerViewTrustingSocialXComponent } from "./customer-view-trusting-social-x.component";
 import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.module";
+import { CustomerViewTrustingSocialXDsfComponent } from "app/dsf/impl/customer/sharing-component/new-cust-component/component/third-party-form/customer-view-trusting-social-x-dsf/customer-view-trusting-social-x-dsf.component";
 
 
 
 @NgModule({
   exports: [
-    CustomerViewTrustingSocialXComponent
+    CustomerViewTrustingSocialXComponent,
+    CustomerViewTrustingSocialXDsfComponent
   ],
   imports: [
     CustomerViewTrustingSocialXRoutingModule,
@@ -43,7 +45,8 @@ import { AdInsSharedModule } from "app/components/adins-module/adIns-shared.modu
     UcShowErrorsModule,
   ],
   declarations: [
-   CustomerViewTrustingSocialXComponent
+   CustomerViewTrustingSocialXComponent,
+   CustomerViewTrustingSocialXDsfComponent
   ],
   entryComponents: [
     UcviewgenericComponent,

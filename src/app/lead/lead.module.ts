@@ -95,6 +95,8 @@ import { TrustingSocialViewHeaderXComponent } from "app/impl/customer/sharing-co
 //import { CustomerViewTrustingSocialComponent } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/customer-view-trusting-social/customer-view-trusting-social-x.component";
 import { CustomerViewTrustingSocialXModule } from "app/impl/customer/sharing-component/new-cust-component/component/third-party-form/customer-view-trusting-social/customer-view-trusting-social-x.module";
 import { NewLeadInputCustDataComponent } from "./new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data.component";
+import { ThirdPartyFormXDsfComponent } from "app/dsf/impl/lead/new-lead-input/third-party-form-x-dsf/third-party-form-x-dsf.component";
+import { TrustingSocialViewHeaderXDsfComponent } from "app/dsf/impl/customer/sharing-component/new-cust-component/component/third-party-form/trusting-social/view/trusting-social-view-header-x-dsf/trusting-social-view-header-x-dsf.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -180,6 +182,7 @@ export const customCurrencyMaskConfig = {
     LeadCancelConfirmDsfComponent,
     GeneratePotentialRoXComponent,
     ThirdPartyFormXComponent,
+    ThirdPartyFormXDsfComponent,
     CustomerViewAsliRiXComponent,
     PefindoReqXComponent,
     TrustingSocialReqHeaderXComponent,
@@ -189,6 +192,7 @@ export const customCurrencyMaskConfig = {
     AsliRiReqXComponent,
     AsliRiReqConfirmationXComponent,
     TrustingSocialViewHeaderXComponent,
+    TrustingSocialViewHeaderXDsfComponent,
     NewLeadInputCustDataComponent,
     AsliRiViewXComponent
     //CustomerViewTrustingSocialComponent
@@ -200,6 +204,7 @@ export const customCurrencyMaskConfig = {
     TrustingSocialReqHeaderXComponent,
     AsliRiReqHeaderXComponent,
     TrustingSocialViewHeaderXComponent,
+    TrustingSocialViewHeaderXDsfComponent,
     //CustomerViewTrustingSocialComponent
   ],
   providers: [

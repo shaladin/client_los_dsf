@@ -272,7 +272,9 @@
                 </div>
               </div>
             </div>
-            <app-third-party-form-x *ngIf="showThirdParty" [parentForm]="CustomerDataForm" [thirdPartyTrxNo]="thirdPartyTrxNo" [custObj]="custObj" [CustDataMode]="CustDataMode" [MrCustTypeCode]="CustTypePersonal" (OutputCustObj)="SetThirdPartyTrxNoAndRowVersion($event)" (OutputUploadFile)="SetCustFileFormObjs($event)"></app-third-party-form-x>
+            <!-- Rework BATCH-DSL-056 -->
+            <app-third-party-form-x-dsf *ngIf="showThirdParty" [parentForm]="CustomerDataForm" [thirdPartyTrxNo]="thirdPartyTrxNo" [custObj]="custObj" [CustDataMode]="CustDataMode" [MrCustTypeCode]="CustTypePersonal" (OutputCustObj)="SetThirdPartyTrxNoAndRowVersion($event)" (OutputUploadFile)="SetCustFileFormObjs($event)"></app-third-party-form-x-dsf>
+            <!-- End Rework BATCH-DSL-056 -->
             <!-- </div> -->
           </div>
           <div class="form-actions right" style="text-align: right;">

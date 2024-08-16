@@ -115,4 +115,6 @@ export class URLConstantDsf {
 
     public static ReloadAppTcDsf = environment.losUrl + "/AppTcDsf/ReloadAppTcDsf";
     public static ReloadAgrmntTcDsf = environment.losUrl + "/AgrmntTcDsf/ReloadAgrmntTcDsf";
+    public static GetTrustingSocialListByTrxNoDsf = environment.FoundationR3Url + "/ThirdPartyDsf/GetTrustingSocialListByTrxNoDsf";
+
 }

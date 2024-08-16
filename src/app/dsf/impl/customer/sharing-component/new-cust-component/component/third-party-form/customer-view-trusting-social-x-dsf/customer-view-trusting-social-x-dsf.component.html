@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <lib-ucSubsection [id]="'TrustSocId'" [title]="'Trusting Social'" [panel]="'TrustSoc'">
+      </lib-ucSubsection>
+      <div id="TrustSoc" style="overflow-x: auto;">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th class="text-center"><span class="thead-header" name='no' translate>NO</span> </th>
+              <th class="text-center"><span class="thead-header" name='relation' translate>RELATION</span></th>
+              <th class="text-left"><span class="thead-header" name='name' translate>NAME</span> </th>
+              <th class="text-center"><span class="thead-header" name='phoneNo' translate>PHONE NO</span> </th>
+              <th class="text-center"><span class="thead-header" name='checkedDate' translate>CHECKED DATE</span> </th>
+              <th class="text-center"><span class="thead-header" name='score' translate>SCORE</span> </th>
+              <!-- Rework BATCH-DSL-056 -->
+			  <th class="text-center"><span class="thead-header" name='category' translate>CATEGORY</span> </th>
+              <th class="text-center"><span class="thead-header" name='notes' translate>NOTES</span> </th>
+              <!-- End Rework BATCH-DSL-056 -->
+            </tr>
+          </thead>
+          <tbody *ngIf="ThirdPartyTsObjs.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="ThirdPartyTsObjs.length > 0">
+            <tr *ngFor="let item of ThirdPartyTsObjs; let i = index">
+              <td class="text-center">{{i+1}}</td>
+              <td class="text-center">{{item.Relation}}</td>
+              <td class="text-left">{{item.Name}}</td>
+              <td class="text-center">{{item.MobilePhnNo}}</td>
+              <td class="text-center">{{item.ResultDt | date: 'dd-MMM-yyyy hh:mm:ss a'}}</td>
+              <td class="text-center">{{item.Score}}</td>
+              <!-- Rework BATCH-DSL-056 -->
+              <td class="text-center">{{item.Category}}</td>
+              <td *ngIf="item.Score==null||item.Score==''"  class="text-center"> {{item.Notes}} </td>
+              <td *ngIf="item.Score!=null&&item.Score!=''"></td>
+              <!-- End Rework BATCH-DSL-056 -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
