@@ -363,24 +363,4 @@ public static ClearAllLogAndRemoveToken(cookieService: CookieService, http: Http
   public static RedirectUnauthorized(router: Router) {
     this.RedirectUrl(router, [NavigationConstant.UNAUTHORIZE_PAGE], {});
   }
-  public static StoreSession(response: any, cookieService: CookieService) {
-    const DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
-    let Identity = response["Identity"];
-    Identity['Token'] = response['Token'];
-    
-    AdInsHelper.SetCookie(cookieService, CommonConstant.TOKEN, response['Token']);
-    AdInsHelper.SetCookie(cookieService, "BusinessDateRaw", formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US'));
-    AdInsHelper.SetCookie(cookieService, "BusinessDate", DateParse);
-    AdInsHelper.SetCookie(cookieService, "UserAccess", JSON.stringify(Identity));
-    AdInsHelper.SetCookie(cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
-    if(typeof response["Identity_JWT"] === 'string')
-    {
-      AdInsHelper.SetCookie(cookieService, CommonConstant.JWT_TOKEN, response["Identity_JWT"] == null ? "" : response["Identity_JWT"]);
-    }
-    else
-    {
-      AdInsHelper.SetCookie(cookieService, CommonConstant.JWT_TOKEN, "");              
-    }
-    AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
-  }
 }

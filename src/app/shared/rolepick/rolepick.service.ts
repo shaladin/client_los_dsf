@@ -71,19 +71,25 @@ export class RolePickService {
                 var roleObject = {
                     UserName: data.user,
                     Password: data.pwd,
-                    OfficeCode: item.RefUserRoles[0].OfficeCode,
-                    RoleCode: item.RefUserRoles[0].Roles[0].RoleCode,
-                    JobTitleCode: item.RefUserRoles[0].Roles[0].JobTitleCode,
+                    OfficeCode: item.OfficeCode,
+                    RoleCode: item.RoleCode,
+                    JobTitleCode: item.JobTitleCode,
                     RequestDateTime: item.BusinessDt,
                     ModuleCode: "LOS",
                     RowVersion: "",
                     UserIdentityObj: UserIdentityObj
                 };
-                this.http.post(AdInsConstant.LoginByRole, roleObject, { withCredentials: true }).subscribe(
+                this.http.post(AdInsConstant.LoginByRoleV2, roleObject, { withCredentials: true }).subscribe(
                     (response) => {
                         //Cookie sudah diambil dari BE (Di set manual dulu)
 
-                        AdInsHelper.StoreSession(response, this.cookieService);
+                        var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+                        AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, response['Token']);
+                        AdInsHelper.SetCookie(this.cookieService, "BusinessDateRaw", formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US'));
+                        AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
+                        AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
+                        AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
+                        AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
 
                         this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: item.RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
                             (response) => {

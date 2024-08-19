@@ -128,7 +128,13 @@ export class RolepickComponent implements OnInit, AfterViewInit {
         (response) => {
           //Cookie sudah diambil dari BE (Di set manual dulu)
 
-          AdInsHelper.StoreSession(response, this.cookieService);
+          var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+          AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, response['Token']);
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDateRaw", formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US'));
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
+          AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
+          AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
+          AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
 
           this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: item.RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
             (response) => {
@@ -142,15 +148,20 @@ export class RolepickComponent implements OnInit, AfterViewInit {
         });
     }
     else {
-      this.http.post(AdInsConstant.LoginByRole, roleObject).subscribe(
+      this.http.post(AdInsConstant.LoginByRoleV2, roleObject).subscribe(
         (response) => {
           //Cookie sudah diambil dari BE (Di set manual dulu)
           
           this.http.post(AdInsConstant.CheckUserSessionLog, roleObject, { withCredentials: true }).subscribe(
             (response) => {});
 
-          AdInsHelper.StoreSession(response, this.cookieService);
-
+          var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+          AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, response['Token']);
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDateRaw", formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US'));
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
+          AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
+          AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
+          AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
 
           this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: item.RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
             (response) => {
@@ -200,7 +211,14 @@ export class RolepickComponent implements OnInit, AfterViewInit {
       this.http.post(AdInsConstant.UpdateTokenV2_1, roleObject).subscribe(
         (response) => {
           //Cookie sudah diambil dari BE (Di set manual dulu)
-          AdInsHelper.StoreSession(response, this.cookieService);
+          var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+          AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, response['Token']);
+          AdInsHelper.SetCookie(this.cookieService, "XSRF-TOKEN", response['Token']);
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDateRaw", formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US'));
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
+          AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
+          AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
+          AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
 
           this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: this.listRole[this.selectedOffice].Roles[this.selectedRole].RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
             (response) => {
@@ -223,8 +241,14 @@ export class RolepickComponent implements OnInit, AfterViewInit {
           this.http.post(AdInsConstant.CheckUserSessionLog, roleObject).subscribe(
             (response) => {});
           
-          AdInsHelper.StoreSession(response, this.cookieService);
-
+          var DateParse = formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US');
+          AdInsHelper.SetCookie(this.cookieService, CommonConstant.TOKEN, response['Token']);
+          AdInsHelper.SetCookie(this.cookieService, "XSRF-TOKEN", response['Token']);
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDateRaw", formatDate(response["Identity"].BusinessDt, 'yyyy/MM/dd', 'en-US'));
+          AdInsHelper.SetCookie(this.cookieService, "BusinessDate", DateParse);
+          AdInsHelper.SetCookie(this.cookieService, "UserAccess", JSON.stringify(response["Identity"]));
+          AdInsHelper.SetCookie(this.cookieService, "Username", JSON.stringify(response["Identity"]["UserName"]));
+          AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
 
           this.http.post(AdInsConstant.GetAllActiveRefFormByRoleCodeAndModuleCode, { RoleCode: this.listRole[this.selectedOffice].Roles[this.selectedRole].RoleCode, ModuleCode: environment.Module }, { withCredentials: true }).subscribe(
             (response) => {
