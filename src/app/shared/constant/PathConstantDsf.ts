@@ -241,4 +241,7 @@ export class PathConstantDsf {
     public static PO_PAGING_X_DSF = PathConstantDsf.PO_DSF + "/" + PathConstantX.PAGING_X;
     public static PO_PO_EXT_X_DSF = PathConstantDsf.PO_DSF + "/" + PathConstantX.PO_EXT_X;
     public static PO_PO_EXT_DETAIL_X_DSF = PathConstantDsf.PO_PO_EXT_X_DSF + "/" + PathConstantX.DETAIL_X;
+    public static NEW_PO_DSF = "NewPurchaseOrderDsf";
+    public static NEW_PO_PAGING_DSF = PathConstantDsf.NEW_PO_DSF + "/" + PathConstant.PAGING;
+    public static NEW_PO_DETAIL_DSF =  PathConstantDsf.NEW_PO_DSF + "/" + PathConstantX.DETAIL_X;
 }

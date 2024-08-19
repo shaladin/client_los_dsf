@@ -95,6 +95,8 @@ import { OfferingValidityCheckingApprovalDetailXComponent } from 'app/impl/NEW-N
 import { PurchaseOrderPagingXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-paging-x-dsf/purchase-order-paging-x-dsf.component';
 import { PurchaseOrderXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-x-dsf/purchase-order-x-dsf.component';
 import { PurchaseOrderDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/purchase-order/purchase-order-detail-x-dsf/purchase-order-detail-x-dsf.component';
+import { NewPurchaseOrderDetailXDsfComponent } from 'app/dsf/impl/NEW-NAP/business-process/admin-process/new-purchase-order/new-purchase-order-detail-x-dsf/new-purchase-order-detail-x-dsf.component';
+import { NewPurchaseOrderDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/admin-process-dsf/new-purchase-order-dsf/new-purchase-order-dsf.component';
 
 const routes: Routes = [
   {
@@ -124,6 +126,13 @@ const routes: Routes = [
       {
         path: PathConstant.NEW_PO_PAGING,
         component: NewPurchaseOrderComponent,
+        data: {
+          title: "Purchase Order Paging"
+        }
+      },
+      {
+        path: PathConstantDsf.NEW_PO_PAGING_DSF,
+        component: NewPurchaseOrderDsfComponent,
         data: {
           title: "Purchase Order Paging"
         }
@@ -684,6 +693,13 @@ const routes: Routes = [
       {
         path: PathConstantX.NEW_PO_DETAIL,
         component: NewPurchaseOrderDetailXComponent,
+        data: {
+          title: "Purchase Order Detail"
+        }
+      },
+      {
+        path: PathConstantDsf.NEW_PO_DETAIL_DSF,
+        component: NewPurchaseOrderDetailXDsfComponent,
         data: {
           title: "Purchase Order Detail"
         }
