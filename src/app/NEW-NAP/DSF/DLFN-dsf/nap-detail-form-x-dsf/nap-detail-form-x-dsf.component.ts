@@ -16,18 +16,16 @@ import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
 import {URLConstantX} from 'app/impl/shared/constant/URLConstantX';
-import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
+import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
 import { DMSObj } from 'app/shared/model/dms/dms-obj.model';
 import { ResSysConfigResultObj } from 'app/shared/model/response/res-sys-config-result-obj.model';
-import { ReturnHandlingDObj } from 'app/shared/model/return-handling/return-handling-d-obj.model';
-import { UcViewGenericObj } from 'app/shared/model/uc-view-generic-obj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/dms-label-value-obj.model';
+import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf';
 
 @Component({
   selector: 'app-nap-detail-form-x-dsf',
-  templateUrl: './nap-detail-form-x-dsf.component.html',
-  styleUrls: ['./nap-detail-form-x-dsf.component.css'],
-  providers: [NGXToastrService]
+  templateUrl: './nap-detail-form-x-dsf.component.html'
 })
 export class NapDetailFormXDsfComponent implements OnInit {
 
@@ -46,7 +44,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
   wfTaskListId: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
-  NapObj: AppObj;  
+  NapObj: AppObj;
   IsMultiAsset: boolean = false;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
@@ -54,7 +52,8 @@ export class NapDetailFormXDsfComponent implements OnInit {
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  BizTemplateCode: string = CommonConstant.DF;
+  BizTemplateCode: string;
+  readonly AppCurrStepNap2 = CommonConstant.AppCurrStepNap2;
 
   AppStep = {
     "NAPD": 1,
@@ -74,6 +73,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   appNo: string;
   isDmsReady: boolean = false;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
 
   constructor(
     private route: ActivatedRoute,
@@ -98,14 +98,39 @@ export class NapDetailFormXDsfComponent implements OnInit {
     });
   }
   //---
-  ngOnInit() {
+  async ngOnInit() {
     this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
-        this.SysConfigResultObj = response;        
+        this.SysConfigResultObj = response;
       });
 
-    let appObj = { Id: this.appId };
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    this.ClaimTask();
+    this.viewGenericObj.viewInput = "./assets/impl/ucviewgeneric/viewNapAppDlfnMainInformationX.json";
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+    ];
+
+    this.stepper = new Stepper(document.querySelector("#stepper1"), {
+      linear: false,
+      animation: true,
+    });
+
+    this.NapObj = new AppObj();
+    this.NapObj.AppId = this.appId;
+
+    const appObj = { Id: this.appId };
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
@@ -122,6 +147,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
               this.initDms();
             }
           }
+          this.BizTemplateCode = this.NapObj.BizTemplateCode;
         } else {
           this.AppStepIndex = 0;
           this.stepper.to(this.AppStepIndex);
@@ -129,45 +155,6 @@ export class NapDetailFormXDsfComponent implements OnInit {
       }
     );
 
-    this.ClaimTask();
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
-    this.NapObj = new AppObj();
-    this.NapObj.AppId = this.appId;
-
-    let obj = {
-      Id: this.appId
-    }
-
-    this.http.post(URLConstant.GetAppById, obj).subscribe(
-      (response: AppObj) => {
-        if (response) {
-          this.AppStepIndex = this.AppStep[response.AppCurrStep];
-          this.stepper.to(this.AppStepIndex);
-        } else {
-          this.AppStepIndex = 0;
-          this.stepper.to(this.AppStepIndex);
-        }
-      }
-    );
-
-    this.stepper = new Stepper(document.querySelector("#stepper1"), {
-      linear: false,
-      animation: true,
-    });
     this.MakeViewReturnInfoObj();
   }
 
@@ -187,7 +174,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
             let trxNo;
             this.appNo = this.NapObj.AppNo;
             this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
             let isExisting = response['IsExistingCust'];
             if (isExisting) {
               trxNo = response['CustNo'];
@@ -222,7 +209,7 @@ export class NapDetailFormXDsfComponent implements OnInit {
         response => {
           this.appNo = this.NapObj.AppNo;
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadDownloadView));
           let isExisting = response['IsExistingCust'];
           if (isExisting) {
             let custNo = response['CustNo'];
@@ -323,6 +310,16 @@ export class NapDetailFormXDsfComponent implements OnInit {
   }
 
   NextStep(Step) {
+    if (this.AppStepIndex == this.AppStep[CommonConstant.AppStepApp]) {
+      const appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
+        (response: AppObj) => {
+          if (response) {
+            this.NapObj = response;
+          }
+        }
+      );
+    }
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
@@ -374,8 +371,32 @@ export class NapDetailFormXDsfComponent implements OnInit {
     );        
   }
 
+  Submit() {
+    if (this.ReturnHandlingHId > 0) {
+      const ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+
+      const EditReturnHandlingDUrl = environment.isCore ? URLConstant.EditReturnHandlingDV2 : URLConstant.EditReturnHandlingD;
+      this.http.post(EditReturnHandlingDUrl, ReturnHandlingResult).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: this.BizTemplateCode });
+        }
+      )
+    }
+  }
+
   Cancel() {
+    // Self Custom Changes
     AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.BizTemplateCode });
+    // End Self Custom Changes
   }
 
   ClaimTask() {
@@ -403,7 +424,22 @@ export class NapDetailFormXDsfComponent implements OnInit {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }
       );
-    } else {
+    } 
+    else if (ev.Key == "Customer") {
+      var custObj = {
+        CustNo: ev.ViewObj.CustNo
+      };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        (response) => {
+          if(response['MrCustTypeCode'] == CommonConstant.CustTypePersonal) {
+            AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
+          } else if(response['MrCustTypeCode'] == CommonConstant.CustTypeCompany) {
+            AdInsHelper.OpenCustomerCoyViewByCustId(response['CustId']);
+          }
+        }
+      )
+    }
+    else {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }

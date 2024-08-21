@@ -3,9 +3,8 @@
     <div class="px-3">
       <div class="form-action pull-right">
         <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-          [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'CFNA'}"
-          translate>
-          <i class="ft-x"></i> Cancel
+          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'DLFN'}">
+          <i class="ft-x"></i>&nbsp;<span translate>Cancel</span>
         </button>
       </div>
     </div>
@@ -46,7 +45,7 @@
             <!-- your steps here -->
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
-                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('APP')">
+                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab(AppCurrStepNap2.APP)">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label">Application Data</span>
               </button>
@@ -54,7 +53,7 @@
             <div class="line"></div>
             <div class="step" data-target="#invoice-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="invoice-tab" id="invoice-tab-trigger"
-                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('INVOICE')">
+                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab(AppCurrStepNap2.INVOICE)">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Invoice Data</span>
               </button>
@@ -62,7 +61,7 @@
             <div class="line"></div>
             <div class="step" data-target="#financial-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
-                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('FIN')">
+                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab(AppCurrStepNap2.FIN)">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label">Financial Data</span>
               </button>
@@ -70,7 +69,7 @@
             <div class="line"></div>
             <div class="step" data-target="#TC-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
-                [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('TC')">
+                [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab(AppCurrStepNap2.TC)">
                 <span class="bs-stepper-circle">4</span>
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
@@ -78,7 +77,7 @@
             <div class="line" [hidden]="SysConfigResultObj?.ConfigValue == 0"></div>
             <div class="step" data-target="#upload-tab" [hidden]="SysConfigResultObj?.ConfigValue == 0">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab('UPL_DOC')">
+                      [disabled]="!(AppStepIndex >= 5)" (click)="ChangeTab(AppCurrStepNap2.UPL_DOC)">
                 <span class="bs-stepper-circle">5</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -88,23 +87,25 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-dlfn-x-dsf *ngIf="AppStepIndex == 1" [AppId]="appId"
+              <app-application-data-dlfn-x-dsf *ngIf="AppStepIndex == 1" [AppId]="appId" [showCancel]="showCancel"
                 (outputTab)="NextStep('INVOICE')" (outputCancel)="Cancel()"></app-application-data-dlfn-x-dsf>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
-              <app-invoice-data-dlfn *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
+              <app-invoice-data-dlfn *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-invoice-data-dlfn>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-dlfn-x *ngIf="AppStepIndex == 3" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              <app-financial-data-dlfn-x *ngIf="AppStepIndex == 3" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-financial-data-dlfn-x>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <!-- Self Custom Changes CR Addition Reload Button TC 459737 -->
+              <app-tc-data-x-dsf *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data-x-dsf>
+              <!-- End Self Custom Changes CR Addition Reload Button TC 459737 -->
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 5 && isDmsReady && SysConfigResultObj?.ConfigValue == 1"
-                              (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="true"
+                              (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="ReturnHandlingHId == 0"
                               [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
@@ -114,19 +115,18 @@
   </div>
 </div>
 <br>
-<!-- <div class="col-md-12">
+<div class="col-md-12"*ngIf="ReturnHandlingHId > 0 && IsLastStep">
   <div class="form-action pull-right">
   </div>
-  <div class="card" *ngIf="ReturnHandlingHId > 0">
+  <div class="card">
     <div class="card-body">
       <div class="px-3">
         <div class="form-action pull-right">
-          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary">
-            <i class="far fa-check-square"></i> Submit
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i>&nbsp;<span translate>Submit</span>
           </button>
         </div>
       </div>
     </div>
   </div>
-</div> -->
+</div>
