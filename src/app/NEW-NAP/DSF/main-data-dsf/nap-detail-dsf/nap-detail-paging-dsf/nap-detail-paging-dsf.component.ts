@@ -292,8 +292,10 @@ export class NapDetailPagingDsfComponent implements OnInit, OnDestroy {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true });
           break;
         case CommonConstant.DF :
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true});
-        break;
+          // Self Custom Changes CR Addition Reload Button TC 459737
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstantDsf.NAP_DLFN_NAP2_X], { "AppId": ev.RowObj.AppId, "WfTaskListId": WfTaskListId, "IsMainData": true});
+          // End Self Custom Changes CR Addition Reload Button TC 459737
+          break;
       }
     }
   }
