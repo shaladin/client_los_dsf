@@ -210,7 +210,7 @@ export class ThirdPartyFormXComponent implements OnInit {
       reqPefindoSmartSearchObj.CustName = tempForm["ExistingCustName"]["value"];
     }
     reqPefindoSmartSearchObj.CustType = this.MrCustTypeCode;
-    reqPefindoSmartSearchObj.BirthDt = tempForm["BirthDt"];
+    reqPefindoSmartSearchObj.BirthDt = tempForm["BirthDate"];
 
     await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstantX.GsInqPefindoCustReq }).toPromise().then(
       (result) => {
